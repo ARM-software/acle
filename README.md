@@ -24,3 +24,8 @@ an email to arm.acle@arm.com.
 This is a work in progress. The document added to the repository will
 be referenced in this README file when added.
 
+## List of documents
+
+Document sources                                                           | Latest official release
+---                                                                        | ---
+[Morello Supplement to the Arm C Language Extensions](morello/morello.rst) | [pdf](https://developer.arm.com/documentation/102273/latest)
