@@ -29,3 +29,16 @@ be referenced in this README file when added.
 Document sources                                                           | Latest official release
 ---                                                                        | ---
 [Morello Supplement to the Arm C Language Extensions](morello/morello.rst) | [pdf](https://developer.arm.com/documentation/102273/latest)
+
+# License
+
+All the ACLE documents themselves are not dependent on any assets
+outside of their own directory and all have their own license file
+included in the directory. Currently all the ACLE documents are
+licenced under the Creative Commons Attribution-ShareAlike 4.0
+International License + grant of Patent License. Contributions to
+these files are accepted under the same license.
+
+The files in the sub-directories of the tools directory are provided
+under the Apache 2.0 license. Contributions to these files are
+accepted under the same license.
