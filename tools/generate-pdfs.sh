@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -ex
 
 # Copyright (c) 2021, Arm Limited
 # SPDX-License-Identifier: Apache-2.0
@@ -22,3 +23,9 @@ rst2pdf morello/morello.rst         \
         --repeat-table-rows         \
         --default-dpi=110           \
         -o pdfs/morello.pdf
+
+rst2pdf main/acle.rst         \
+	-s tools/rst2pdf-acle.style \
+        --repeat-table-rows         \
+        --default-dpi=110           \
+        -o pdfs/acle.pdf
