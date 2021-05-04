@@ -5046,7 +5046,7 @@ It is recommended that Advanced SIMD Intrinsics be used consistently:
   uint32_t y = vget_lane_s32 (x, 0);
 
 Availability of Advanced SIMD intrinsics and Extensions
--------------------------------------------------------
+=======================================================
 
 Availability of Advanced SIMD intrinsics
 ----------------------------------------
