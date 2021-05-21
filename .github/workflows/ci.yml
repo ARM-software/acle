@@ -16,6 +16,8 @@ jobs:
       run: pip install -r tools/requirements.txt
     - name: check .rst document syntax
       run: tools/check-rst-syntax.sh
+    - name: generate and check intrinsic specs (rst)
+      run: tools/generate-intrinsic-specs.sh
     - name: build PDFs
       run: tools/generate-pdfs.sh
     - uses: actions/upload-artifact@v2
