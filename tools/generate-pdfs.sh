@@ -18,17 +18,34 @@ set -ex
 
 mkdir -p pdfs
 
-rst2pdf morello/morello.rst         \
-	-s tools/rst2pdf-acle.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/morello.pdf
+# rst2pdf morello/morello.rst         \
+# 	-s tools/rst2pdf-acle.style \
+#         --repeat-table-rows         \
+#         --default-dpi=110           \
+#         -o pdfs/morello.pdf
 
-# the option `--inline-footnotes` is used to print the footnotes off
+# the option`--inline-footnotes` is used to print the footnotes off
 # the references "in place" in the `References` section.
-rst2pdf main/acle.rst         \
-	--inline-footnotes \
-	-s tools/rst2pdf-acle.style \
+# rst2pdf main/acle.rst         \
+#	--inline-footnotes \
+# 	-s tools/rst2pdf-acle.style \
+#         --repeat-table-rows         \
+#         --default-dpi=110           \
+#         -o pdfs/acle.pdf
+
+./tools/gen-intrinsics-specs.py --intrinsic-defs ./tools/intrinsic_db/advsimd.csv \
+				--classification ./tools/intrinsic_db/advsimd_classification.csv \
+				--template ./neon_intrinsics/advsimd.template.rst \
+				> neon_intrinsics/advsimd.rst
+
+rst2pdf neon_intrinsics/advsimd.rst         \
+	-s tools/rst2pdf-acle-intrinsics.style \
         --repeat-table-rows         \
         --default-dpi=110           \
-        -o pdfs/acle.pdf
+        -o pdfs/advsimd.pdf
+
+rst2pdf mve_intrinsics/mve.rst         \
+	-s tools/rst2pdf-acle-intrinsics.style \
+        --repeat-table-rows         \
+        --default-dpi=110           \
+        -o pdfs/mve.pdf
