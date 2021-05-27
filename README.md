@@ -2,6 +2,8 @@
    <img src="Arm_logo_blue_RGB.svg" />
 </div>
 
+![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
+
 # Arm C Language Extensions
 
 This repository contains the source material form which the
