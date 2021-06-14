@@ -3,14 +3,15 @@
    CC-BY-SA-4.0 AND Apache-Patent-License
    See LICENSE file for details
 
-.. |release| replace:: 00alpha
-.. |date-of-issue| replace:: 30\ :sup:`th` September 2020
+.. |release| replace:: development version, based on 00alpha
+.. |date-of-issue| replace:: unreleased
 .. |copyright-date| replace:: 2020-2021
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
 .. _ACLE-morello: http://github.com/arm-software/acle/morello
 .. _ACLE: https://developer.arm.com/documentation/101028/latest
+.. _CHERI: https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf
 
 ***************************************************
 Morello Supplement to the Arm C Language Extensions
@@ -45,13 +46,13 @@ Abstract
 --------
 
 This document specifies the Arm C Language Extensions to enable C/C++
-programmers to exploit the Morello architecture with minimal restrictions
+programmers to use the Morello architecture with minimal restrictions
 on source code portability.
 
 Keywords
 --------
 
-Predefined macros, builtin functions
+Predefined macros, built-in functions
 
 Latest release and defects report
 ---------------------------------
@@ -175,16 +176,20 @@ Change History
 
 .. table:: :align: left
 
-    +---------+---------------------+---------------+
-    | Issue   | Date                | Change        |
-    +---------+---------------------+---------------+
-    | 00alpha | 30th September 2020 | Alpha release |
-    +---------+---------------------+---------------+
+    +-----------+---------------------+--------------------------------+
+    | Issue     | Date                | Change                         |
+    +-----------+---------------------+--------------------------------+
+    | 00alpha   | 30th September 2020 | Alpha release                  |
+    +-----------+---------------------+--------------------------------+
+    | |release| | |date-of-issue|     | Open source release. NFCI.     |
+    +-----------+---------------------+--------------------------------+
 
 References
 ----------
 
 This document refers to, or is referred to by, the following documents.
+
+.. class:: morello-table-references
 
 .. table:: :align: left
 
@@ -195,7 +200,7 @@ This document refers to, or is referred to by, the following documents.
     +---------------+---------------------------------------------------------+-----------------------------------------------------+
     | ACLE_         | Document number: 101028                                 | Arm C Language Extensions                           |
     +---------------+---------------------------------------------------------+-----------------------------------------------------+
-    | `CHERI`       | https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf | CHERI C/C++ Programming Guide                       |
+    | CHERI_        | UCAM-CL-TR-947, SSN 1476-2986                           | CHERI C/C++ Programming Guide                       |
     +---------------+---------------------------------------------------------+-----------------------------------------------------+
 
 Terms & Abbreviations
@@ -224,10 +229,8 @@ Scope
 
 The Morello Supplement to the Arm C Language Extensions highlights the language
 features added on top of the CHERI programming language to further exploit the
-Morello architecture. We strongly recommend reading the CHERI Pure-Capability
-C/C++ Programming Guide as preliminary material:
-https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf
-
+Morello architecture. We strongly recommend reading the CHERI_ Pure-Capability
+C/C++ Programming Guide as preliminary material.
 
 Predefined macros
 =================
