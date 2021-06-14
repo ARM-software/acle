@@ -20,8 +20,8 @@
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
-.. |release| replace:: release: TBD
-.. |date-of-issue| replace:: TBD
+.. |release| replace:: development version, based on 2020Q3
+.. |date-of-issue| replace:: unreleased
 
 =========================
 Arm C Language Extensions
@@ -219,6 +219,10 @@ Change history
    | ACLE Q3 2020       | 31/10/20           | Arm                | Version ACLE Q3    |
    |                    |                    |                    | 2020.              |
    +--------------------+--------------------+--------------------+--------------------+
+   | |release|          | |date-of-issue|    | Arm                | Version ACLE Q2    |
+   |                    |                    |                    | 2021. Open source  |
+   |                    |                    |                    | version. NFCI.     |
+   +--------------------+--------------------+--------------------+--------------------+
 
 
 Changes between ACLE Q2 2020 and ACLE Q3 2020
@@ -359,11 +363,11 @@ architecture.
 The extensions include:
 
  * Predefined macros that provide information about the functionality of
-   the target architecture
+   the target architecture.
 
- * Intrinsic functions
+ * Intrinsic functions.
 
- * Attributes that can be applied to functions, data and other entities
+ * Attributes that can be applied to functions, data and other entities.
 
 This specification does not standardize command-line options,
 diagnostics or other external behavior of compilers.
@@ -371,16 +375,16 @@ diagnostics or other external behavior of compilers.
 The intended users of this specification are:
 
  * Application programmers wishing to adapt or hand-optimize
-   applications and libraries for Arm targets
+   applications and libraries for Arm targets.
 
  * System programmers needing low-level access to Arm targets beyond
-   what C/C++ provides for
+   what C/C++ provides for.
 
- * Compiler implementors, who will implement this specification
+ * Compiler implementors, who will implement this specification.
 
  * Implementors of IDEs, static analysis and other similar tools who wish to
    deal with the C/C++ source language extensions when encountered in
-   source code
+   source code.
 
 ACLE is not a hardware abstraction layer (HAL), and does not specify a
 library component but it may make it easier to write a HAL or other
@@ -397,7 +401,7 @@ Introduction
 
 The Arm architecture includes features that go beyond the set of operations
 available to C/C++ programmers. The intention of the Arm C Language
-Extensions (ACLE) is to allow the writing of applications and middleware
+Extensions (ACLE) is to allow the creation of applications and middleware
 code that is portable across compilers, and across Arm architecture
 variants, while exploiting the advanced features of the Arm architecture.
 
@@ -419,7 +423,7 @@ have proven to be of particular benefit in low-level and systems
 programming; examples include features for controlling the alignment and
 packing of data, and some common operations such as word rotation and
 reversal. As and when features become available in international
-standards (and implementations), it is recommended to use these in
+standards (and implementations), Arm recommends that you use these in
 preference to ACLE. When implementations are widely available, any
 ACLE-specific features can be expected to be deprecated.
 
