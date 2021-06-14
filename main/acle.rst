@@ -272,36 +272,36 @@ This document refers to the following documents.
 
 .. [ARMARM] Arm, Arm Architecture Reference Manual (7-A / 7-R), Arm DDI 0406C
 .. [ARMARMv8] Arm, Armv8-A Reference Manual (Issue A.b), Arm DDI0487A.B
-.. [ARMARMv81] Arm, Armv8.1 Extension, `http://community.arm.com/groups/processors/blog/2014/12/02/the-armv8-a-architecture-and-its-ongoing-development
+.. [ARMARMv81] Arm, Armv8.1 Extension, `The ARMv8-A architecture and its ongoing development
                <http://community.arm.com/groups/processors/blog/2014/12/02/the-armv8-a-architecture-and-its-ongoing-development>`__
-.. [ARMARMv82] Arm, Armv8.2 Extension, `https://community.arm.com/groups/processors/blog/2016/01/05/armv8-a-architecture-evolution
+.. [ARMARMv82] Arm, Armv8.2 Extension, `Armv8-A architecture evolution
                <https://community.arm.com/groups/processors/blog/2016/01/05/armv8-a-architecture-evolution>`__
-.. [ARMARMv83] Arm, Armv8.3 Extension, `https://community.arm.com/processors/b/blog/posts/armv8-a-architecture-2016-additions
+.. [ARMARMv83] Arm, Armv8.3 Extension, `Armv8-A architecture: 2016 additions
                <https://community.arm.com/processors/b/blog/posts/armv8-a-architecture-2016-additions>`__
-.. [ARMARMv84] Arm, Armv8.4 Extension, `https://community.arm.com/processors/b/blog/posts/introducing-2017s-extensions-to-the-arm-architecture
+.. [ARMARMv84] Arm, Armv8.4 Extension, `Introducing 2017’s extensions to the Arm Architecture
                <https://community.arm.com/processors/b/blog/posts/introducing-2017s-extensions-to-the-arm-architecture>`__
-.. [ARMARMv85] Arm, Armv8.5 Extension, `https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-2018-developments-armv85a
+.. [ARMARMv85] Arm, Armv8.5 Extension, `Arm A-Profile Architecture Developments 2018: Armv8.5-A
                <https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-2018-developments-armv85a>`__
 .. [ARMv7M] Arm, Arm Architecture Reference Manual (7-M), Arm DDI 0403C
-.. [AAPCS] Arm, https://developer.arm.com/products/architecture/system-architectures/software-standards/abi
-.. [AAPCS64] Arm, https://developer.arm.com/products/architecture/system-architectures/software-standards/abi
+.. [AAPCS] Arm, `Application Binary Interface for the Arm Architecture <https://developer.arm.com/products/architecture/system-architectures/software-standards/abi>`__
+.. [AAPCS64] Arm, `Application Binary Interface for the Arm Architecture <https://developer.arm.com/products/architecture/system-architectures/software-standards/abi>`__
 .. [BA] Arm, EABI Addenda and Errata Build Attributes, Arm IHI 0045C
 .. [CPP11] ISO, Standard C++ (based on draft N3337), ISO/IEC 14882:2011
 .. [C11] ISO, Standard C (based on draft N1570), ISO/IEC 9899:2011
 .. [C99] ISO, Standard C (C99), ISO 9899:1999
-.. [cxxabi] Itanium C++ ABI, `https://itanium-cxx-abi.github.io/cxx-abi/ <https://itanium-cxx-abi.github.io/cxx-abi/>`__
+.. [cxxabi] `Itanium C++ ABI <https://itanium-cxx-abi.github.io/cxx-abi/>`__
 .. [G.191] ITU-T, Software Tool Library 2005 User's Manual, T-REC-G.191-200508-I
-.. [GCC] GNU/FSF, GNU C Compiler Collection, `http://gcc.gnu.org/onlinedocs <http://gcc.gnu.org/onlinedocs>`__
+.. [GCC] GNU/FSF, `GNU C Compiler Collection <http://gcc.gnu.org/onlinedocs>`__
 .. [IA-64] Intel, Intel Itanium Processor-Specific ABI, 245370-003
 .. [IEEE-FP] IEEE, IEEE Floating Point, IEEE 754-2008
 .. [CFP15] ISO/IEC, Floating point extensions for C, ISO/IEC TS 18661-3
-.. [Neon] Arm, https://developer.arm.com/technologies/neon/intrinsics
+.. [Neon] Arm, `Neon Intrinsics <https://developer.arm.com/technologies/neon/intrinsics>`__
 .. [MVE-spec] Arm, Arm v8-M Architecture Reference Manual, Arm DDI0553B.F
-.. [MVE] Arm, https://developer.arm.com/architectures/instruction-sets/simd-isas/helium/mve-intrinsics
+.. [MVE] Arm, `MVE Intrinsics <https://developer.arm.com/architectures/instruction-sets/simd-isas/helium/mve-intrinsics>`__
 .. [POSIX] IEEE / TOG, The Open Group Base Specifications, IEEE 1003.1
 .. [Warren] H. Warren, Hacker's Delight, pub. Addison-Wesley 2003
-.. [SVE-ACLE] Arm, Arm C Language Extensions for SVE, `https://developer.arm.com/architectures/system-architectures/software-standards/acle`
-.. [Bfloat16] Arm, BFloat16 processing for Neural Networks on Armv8-A, `https://community.arm.com/developer/ip-products/processors/b/ml-ip-blog/posts/bfloat16-processing-for-neural-networks-on-armv8_2d00_a`
+.. [SVE-ACLE] Arm, `Arm C Language Extensions for SVE <https://developer.arm.com/architectures/system-architectures/software-standards/acle>`__
+.. [Bfloat16] Arm, `BFloat16 processing for Neural Networks on Armv8-A <https://community.arm.com/developer/ip-products/processors/b/ml-ip-blog/posts/bfloat16-processing-for-neural-networks-on-armv8_2d00_a>`__
 
 Terms and abbreviations
 -----------------------
