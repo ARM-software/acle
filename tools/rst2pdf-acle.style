@@ -141,3 +141,7 @@ styles:
         fontSize: 10
         textColor: #0091bd
         alignment: TA_LEFT
+
+    morello-table-references:
+        parent : table
+        colWidths: [ 20%, 40%, 40% ]
