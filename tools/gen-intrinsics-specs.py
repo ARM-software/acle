@@ -40,6 +40,23 @@ __SECTION_TEXT_KEYWORD = '__section_text'
 __SECTION_KEYWORDS = [__INTRINSIC_TABLE_KEYWORD, __SECTION_TEXT_KEYWORD]
 
 
+def rst_literal_quote(mapping):
+    r"""
+    >>> rst_literal_quote('a; b')
+    ' ::\n\n    a \n    b \n\n'
+    """
+    if mapping == "":
+        return ""
+    
+    if ';' in mapping:
+        lines = mapping.split(';')
+        indented_lines = [f"    {line.strip()} " for line in lines] 
+        lines = [" ::", ""]+ indented_lines + ["\n"]
+        return '\n'.join(lines)
+    
+    return '\n'.join([" ::", "", f"     {mapping}","\n"])
+
+
 def get_intrinsic_name(signature):
     """
     Get the intrinsic name from the signature of the intrinsic.
@@ -86,13 +103,13 @@ class Intrinsic:
         self.signature = clear_builtin_constant(signature.strip())
         self.parameter_mapping = parameter_mapping.strip()
         self.asm = asm.strip()
-        self.result_mapping = result_mapping.strip()
+        self.result_mapping = result_mapping
         self.arch = arch.strip()
         self.asm_mnemonic = self.asm.split(' ')[0].strip()
         self.classification = classification
 
     def table_row(self):
-        return [quote_literal(self.signature), quote_literal(self.parameter_mapping), quote_literal(self.asm), quote_literal(self.result_mapping), quote_literal(self.arch)]
+        return [quote_literal(self.signature), quote_literal(self.parameter_mapping), quote_literal(self.asm), rst_literal_quote(self.result_mapping), quote_literal(self.arch)]
 
 
 def recurse_set(parent, section_levels, value, object_type_target):
