@@ -12,6 +12,8 @@
 <COMMENT>	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 <COMMENT>	See the License for the specific language governing permissions and
 <COMMENT>	limitations under the License.
+<COMMENT>	
+<COMMENT>	Classification provided by Chris Walsh @ Arm.
 float16x8_t [__arm_]vcreateq_f16(uint64_t a, uint64_t b)	a -> [Rt0, Rt1];b -> [Rt2, Rt3]	VMOV Qd[0], Rt0;VMOV Qd[1], Rt1;VMOV Qd[2], Rt2;VMOV Qd[3], Rt3	Qd -> result	MVE
 float32x4_t [__arm_]vcreateq_f32(uint64_t a, uint64_t b)	a -> [Rt0, Rt1];b -> [Rt2, Rt3]	VMOV Qd[0], Rt0;VMOV Qd[1], Rt1;VMOV Qd[2], Rt2;VMOV Qd[3], Rt3	Qd -> result	MVE
 int8x16_t [__arm_]vcreateq_s8(uint64_t a, uint64_t b)	a -> [Rt0, Rt1];b -> [Rt2, Rt3]	VMOV Qd[0], Rt0;VMOV Qd[1], Rt1;VMOV Qd[2], Rt2;VMOV Qd[3], Rt3	Qd -> result	MVE
