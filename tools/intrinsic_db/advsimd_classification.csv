@@ -12,6 +12,8 @@
 <COMMENT>	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 <COMMENT>	See the License for the specific language governing permissions and
 <COMMENT>	limitations under the License.
+<COMMENT>	
+<COMMENT>	Classification provided by Chris Walsh @ Arm.
 vadd_s8	Vector arithmetic|Add|Addition
 vaddq_s8	Vector arithmetic|Add|Addition
 vadd_s16	Vector arithmetic|Add|Addition
