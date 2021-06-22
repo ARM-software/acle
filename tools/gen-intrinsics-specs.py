@@ -44,6 +44,12 @@ def rst_literal_quote(mapping):
     r"""
     >>> rst_literal_quote('a; b')
     ' ::\n\n    a \n    b \n\n'
+
+    >>> rst_literal_quote('a b')
+    ' ::\n\n     a b\n\n'
+
+    >>> rst_literal_quote('')
+    ''
     """
     if mapping == "":
         return ""
@@ -101,7 +107,7 @@ class Intrinsic:
 
     def __init__(self, signature, parameter_mapping, asm, result_mapping, arch, classification):
         self.signature = clear_builtin_constant(signature.strip())
-        self.parameter_mapping = parameter_mapping.strip()
+        self.parameter_mapping = parameter_mapping
         self.asm = asm.strip()
         self.result_mapping = result_mapping
         self.arch = arch.strip()
@@ -109,7 +115,7 @@ class Intrinsic:
         self.classification = classification
 
     def table_row(self):
-        return [quote_literal(self.signature), quote_literal(self.parameter_mapping), quote_literal(self.asm), rst_literal_quote(self.result_mapping), quote_literal(self.arch)]
+        return [quote_literal(self.signature), rst_literal_quote(self.parameter_mapping), quote_literal(self.asm), rst_literal_quote(self.result_mapping), quote_literal(self.arch)]
 
 
 def recurse_set(parent, section_levels, value, object_type_target):
