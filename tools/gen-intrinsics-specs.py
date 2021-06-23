@@ -53,11 +53,12 @@ def rst_literal_quote(mapping):
     """
     if mapping == "":
         return ""
-    
+
     lines = mapping.split(';')
-    indented_lines = [f"    {line.strip()} " for line in lines] 
-    lines = [" ::", ""]+ indented_lines + ["\n"]
+    indented_lines = [f"    {line.strip()} " for line in lines]
+    lines = [" ::", ""] + indented_lines + ["\n"]
     return '\n'.join(lines)
+
 
 def quote_split_intrinsics(intrinsic):
     r"""
@@ -67,13 +68,14 @@ def quote_split_intrinsics(intrinsic):
     >>> quote_split_intrinsics('int f(int x)')
     '.. code:: c\n\n    int f(int x)\n'
     """
-    intrinsic_without_ending  = intrinsic.removesuffix(')')
+    intrinsic_without_ending = intrinsic.removesuffix(')')
     ret_def, par, signature = intrinsic_without_ending.partition('(')
     split_signature = signature.split(',')
     if len(split_signature) > 1:
         return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
     else:
         return f".. code:: c\n\n    {intrinsic}\n"
+
 
 def get_intrinsic_name(signature):
     """
@@ -99,6 +101,7 @@ def get_intrinsic_name(signature):
     tmp = tmp[1].split('(')
     return tmp[0]
 
+
 def clear_builtin_constant(s):
     """
     >>> clear_builtin_constant("__builtin_constant_p(lane)")
@@ -114,6 +117,7 @@ def clear_builtin_constant(s):
     """
     import re
     return re.sub(r'__builtin_constant_p\(([a-zA-Z0-9]+)\)', r'const int \1', s)
+
 
 class Intrinsic:
 
@@ -464,7 +468,7 @@ def is_section_text(item):
     return key == __SECTION_TEXT_KEYWORD
 
 
-def recurse_print_to_rst(item, section_level_list,tablefmt="rst"):
+def recurse_print_to_rst(item, section_level_list, tablefmt="rst"):
     """
     >>> table_item = ('__intrinsic_table', [[1,2,3,4,5], [6,7,8,9, 10]])
     >>> print(recurse_print_to_rst(table_item, ['=']))
@@ -557,7 +561,7 @@ def recurse_print_to_rst(item, section_level_list,tablefmt="rst"):
         # after the section title.
         if k == __SECTION_TEXT_KEYWORD:
             continue
-        body += "\n"+recurse_print_to_rst((k, v), rest,tablefmt)
+        body += "\n"+recurse_print_to_rst((k, v), rest, tablefmt)
     return body
 
 
@@ -641,7 +645,8 @@ def process_db(db, classification_db):
         print(f"Skipping line {db.line_num}: row = {row}", file=sys.stderr)
     body = ""
     for k, v in filtered.items():
-        body += "\n"+recurse_print_to_rst((k, v), rst_header_levels,tablefmt="grid")
+        body += "\n" + \
+            recurse_print_to_rst((k, v), rst_header_levels, tablefmt="grid")
     return body
 
 
