@@ -32,7 +32,7 @@ rst_header_levels = ['=', '~', '-', '_', '@']
 __CSV_SECTION_PREFIX = '<SECTION>'
 __CSV_COMMENT_PREFIX = '<COMMENT>'
 __intrinsic_table_header = ['Intrinsic', 'Argument preparation',
-                            'Instruction', 'Result', 'Supported architectures']
+                            'AArch64 Instruction', 'Result', 'Supported architectures']
 
 __INTRINSIC_TABLE_KEYWORD = '__intrinsic_table'
 __SECTION_TEXT_KEYWORD = '__section_text'
@@ -469,12 +469,12 @@ def recurse_print_to_rst(item, section_level_list,tablefmt="rst"):
     >>> table_item = ('__intrinsic_table', [[1,2,3,4,5], [6,7,8,9, 10]])
     >>> print(recurse_print_to_rst(table_item, ['=']))
     <BLANKLINE>
-    ===========  ======================  =============  ========  =========================
-      Intrinsic    Argument preparation    Instruction    Result    Supported architectures
-    ===========  ======================  =============  ========  =========================
-              1                       2              3         4                          5
-              6                       7              8         9                         10
-    ===========  ======================  =============  ========  =========================
+    ===========  ======================  =====================  ========  =========================
+      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
+    ===========  ======================  =====================  ========  =========================
+              1                       2                      3         4                          5
+              6                       7                      8         9                         10
+    ===========  ======================  =====================  ========  =========================
 
     >>> item = ('New section', {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]})
     >>> print(recurse_print_to_rst(item, ['=']))
@@ -482,12 +482,12 @@ def recurse_print_to_rst(item, section_level_list,tablefmt="rst"):
     New section
     ===========
     <BLANKLINE>
-    ===========  ======================  =============  ========  =========================
-      Intrinsic    Argument preparation    Instruction    Result    Supported architectures
-    ===========  ======================  =============  ========  =========================
-              1                       2              3         4                          5
-              6                       7              8         9                         10
-    ===========  ======================  =============  ========  =========================
+    ===========  ======================  =====================  ========  =========================
+      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
+    ===========  ======================  =====================  ========  =========================
+              1                       2                      3         4                          5
+              6                       7                      8         9                         10
+    ===========  ======================  =====================  ========  =========================
 
     >>> item = ('Section 1', {'Section 1.1': {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]}})
     >>> print(recurse_print_to_rst(item, ['=','~']))
@@ -498,12 +498,12 @@ def recurse_print_to_rst(item, section_level_list,tablefmt="rst"):
     Section 1.1
     ~~~~~~~~~~~
     <BLANKLINE>
-    ===========  ======================  =============  ========  =========================
-      Intrinsic    Argument preparation    Instruction    Result    Supported architectures
-    ===========  ======================  =============  ========  =========================
-              1                       2              3         4                          5
-              6                       7              8         9                         10
-    ===========  ======================  =============  ========  =========================
+    ===========  ======================  =====================  ========  =========================
+      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
+    ===========  ======================  =====================  ========  =========================
+              1                       2                      3         4                          5
+              6                       7                      8         9                         10
+    ===========  ======================  =====================  ========  =========================
 
     >>> item = ('Section 1', {'Section 1.1': { '__section_text': "Text for Section 1.1", '__intrinsic_table': [[1,2,3,4,5]]}})
     >>> print(recurse_print_to_rst(item, ['=','~']))
@@ -516,11 +516,11 @@ def recurse_print_to_rst(item, section_level_list,tablefmt="rst"):
     <BLANKLINE>
     Text for Section 1.1
     <BLANKLINE>
-    ===========  ======================  =============  ========  =========================
-      Intrinsic    Argument preparation    Instruction    Result    Supported architectures
-    ===========  ======================  =============  ========  =========================
-              1                       2              3         4                          5
-    ===========  ======================  =============  ========  =========================
+    ===========  ======================  =====================  ========  =========================
+      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
+    ===========  ======================  =====================  ========  =========================
+              1                       2                      3         4                          5
+    ===========  ======================  =====================  ========  =========================
 
     >>> item = ('Section 1', {'Section 1.1': { '__intrinsic_table': [[1,2,3,4,5]], '__section_text': "Text for Section 1.1" }})
     >>> print(recurse_print_to_rst(item, ['=','~']))
@@ -533,11 +533,11 @@ def recurse_print_to_rst(item, section_level_list,tablefmt="rst"):
     <BLANKLINE>
     Text for Section 1.1
     <BLANKLINE>
-    ===========  ======================  =============  ========  =========================
-      Intrinsic    Argument preparation    Instruction    Result    Supported architectures
-    ===========  ======================  =============  ========  =========================
-              1                       2              3         4                          5
-    ===========  ======================  =============  ========  =========================
+    ===========  ======================  =====================  ========  =========================
+      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
+    ===========  ======================  =====================  ========  =========================
+              1                       2                      3         4                          5
+    ===========  ======================  =====================  ========  =========================
     """
     key, value = item
     if is_intrinsic_table(item):
