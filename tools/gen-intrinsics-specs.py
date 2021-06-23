@@ -31,6 +31,7 @@ def quote_literal(val):
 rst_header_levels = ['=', '~', '-', '_', '@']
 __CSV_SECTION_PREFIX = '<SECTION>'
 __CSV_COMMENT_PREFIX = '<COMMENT>'
+__CSV_HEADER_PREFIX = '<HEADER>'
 __intrinsic_table_header = ['Intrinsic', 'Argument preparation',
                             'AArch64 Instruction', 'Result', 'Supported architectures']
 
@@ -468,7 +469,7 @@ def is_section_text(item):
     return key == __SECTION_TEXT_KEYWORD
 
 
-def recurse_print_to_rst(item, section_level_list, tablefmt="rst"):
+def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_header, tablefmt="rst"):
     """
     >>> table_item = ('__intrinsic_table', [[1,2,3,4,5], [6,7,8,9, 10]])
     >>> print(recurse_print_to_rst(table_item, ['=']))
@@ -545,7 +546,7 @@ def recurse_print_to_rst(item, section_level_list, tablefmt="rst"):
     """
     key, value = item
     if is_intrinsic_table(item):
-        return "\n" + str(tabulate(value, headers=__intrinsic_table_header, tablefmt=tablefmt))
+        return "\n" + str(tabulate(value, headers=headers, tablefmt=tablefmt))
 
     body = ""
     if start_new_section(item):
@@ -561,7 +562,7 @@ def recurse_print_to_rst(item, section_level_list, tablefmt="rst"):
         # after the section title.
         if k == __SECTION_TEXT_KEYWORD:
             continue
-        body += "\n"+recurse_print_to_rst((k, v), rest, tablefmt)
+        body += "\n"+recurse_print_to_rst((k, v), rest, headers, tablefmt)
     return body
 
 
@@ -600,6 +601,17 @@ def is_comment_line(row):
     """
     return len(row) >= 2 and row[0] == __CSV_COMMENT_PREFIX
 
+def is_table_header(row):
+    """Table headers are 6-columns with the first one being
+    __CSV_HEADER_PREFIX.
+
+    >>> is_table_header(['<HEADER>', '', '', '', '', ''])
+    True
+
+    >>> is_table_header(['<EADER>', '', '', '', '', ''])
+    False
+    """
+    return len(row) == 6 and row[0] == __CSV_HEADER_PREFIX
 
 def is_intrinsic_definition(row):
     return len(row) == 5
@@ -612,7 +624,7 @@ def get_section_data(row):
 
 def process_db(db, classification_db):
     filtered = {}
-    section, section_text = None, None
+    section, section_text,table_header = None, None, None
     for row in db:
         # Set section if the line in the file is starting with __CSV_SECTION_PREFIX.
         if is_section_command(row):
@@ -629,6 +641,14 @@ def process_db(db, classification_db):
         if is_comment_line(row):
             continue
 
+        if is_table_header(row):
+            # Only one <HEADER> command is allowed.
+            assert(table_header is None)
+            # Set the header.
+            table_header = row[1:]
+            assert(len(table_header) == 5)
+            continue
+
         if is_intrinsic_definition(row):
             classification = classification_db.get(
                 get_intrinsic_name(row[0]), "No category")
@@ -643,10 +663,13 @@ def process_db(db, classification_db):
             continue
 
         print(f"Skipping line {db.line_num}: row = {row}", file=sys.stderr)
+    # Make sure that the CSV has at a row that have set the tale
+    # header.
+    assert(table_header is not None)
     body = ""
     for k, v in filtered.items():
         body += "\n" + \
-            recurse_print_to_rst((k, v), rst_header_levels, tablefmt="grid")
+            recurse_print_to_rst((k, v), rst_header_levels, headers=table_header, tablefmt="grid")
     return body
 
 
