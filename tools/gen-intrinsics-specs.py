@@ -46,7 +46,7 @@ def rst_literal_quote(mapping):
     ' ::\n\n    a \n    b \n\n'
 
     >>> rst_literal_quote('a b')
-    ' ::\n\n     a b\n\n'
+    ' ::\n\n    a b \n\n'
 
     >>> rst_literal_quote('')
     ''
@@ -54,14 +54,20 @@ def rst_literal_quote(mapping):
     if mapping == "":
         return ""
     
-    if ';' in mapping:
-        lines = mapping.split(';')
-        indented_lines = [f"    {line.strip()} " for line in lines] 
-        lines = [" ::", ""]+ indented_lines + ["\n"]
-        return '\n'.join(lines)
-    
-    return '\n'.join([" ::", "", f"     {mapping}","\n"])
+    lines = mapping.split(';')
+    indented_lines = [f"    {line.strip()} " for line in lines] 
+    lines = [" ::", ""]+ indented_lines + ["\n"]
+    return '\n'.join(lines)
 
+def quote_split_intrinsics(intrinsic):
+    r"""
+    >>> quote_split_intrinsics('int f(int x, float y)')
+    '::\n\n    int f(\n        int x,\n        float y)'
+    """
+    intrinsic  = intrinsic.removesuffix(')')
+    ret_def, par, signature = intrinsic.partition('(')
+    split_signature = signature.split(',')
+    return f"::\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
 
 def get_intrinsic_name(signature):
     """
@@ -115,7 +121,7 @@ class Intrinsic:
         self.classification = classification
 
     def table_row(self):
-        return [quote_literal(self.signature), rst_literal_quote(self.parameter_mapping), quote_literal(self.asm), rst_literal_quote(self.result_mapping), quote_literal(self.arch)]
+        return [quote_split_intrinsics(self.signature), rst_literal_quote(self.parameter_mapping), rst_literal_quote(self.asm), rst_literal_quote(self.result_mapping), quote_literal(self.arch)]
 
 
 def recurse_set(parent, section_levels, value, object_type_target):
@@ -452,7 +458,7 @@ def is_section_text(item):
     return key == __SECTION_TEXT_KEYWORD
 
 
-def recurse_print_to_rst(item, section_level_list):
+def recurse_print_to_rst(item, section_level_list,tablefmt="rst"):
     """
     >>> table_item = ('__intrinsic_table', [[1,2,3,4,5], [6,7,8,9, 10]])
     >>> print(recurse_print_to_rst(table_item, ['=']))
@@ -529,7 +535,7 @@ def recurse_print_to_rst(item, section_level_list):
     """
     key, value = item
     if is_intrinsic_table(item):
-        return "\n" + str(tabulate(value, headers=__intrinsic_table_header, tablefmt="rst"))
+        return "\n" + str(tabulate(value, headers=__intrinsic_table_header, tablefmt=tablefmt))
 
     body = ""
     if start_new_section(item):
@@ -545,7 +551,7 @@ def recurse_print_to_rst(item, section_level_list):
         # after the section title.
         if k == __SECTION_TEXT_KEYWORD:
             continue
-        body += "\n"+recurse_print_to_rst((k, v), rest)
+        body += "\n"+recurse_print_to_rst((k, v), rest,tablefmt)
     return body
 
 
@@ -629,7 +635,7 @@ def process_db(db, classification_db):
         print(f"Skipping line {db.line_num}: row = {row}", file=sys.stderr)
     body = ""
     for k, v in filtered.items():
-        body += "\n"+recurse_print_to_rst((k, v), rst_header_levels)
+        body += "\n"+recurse_print_to_rst((k, v), rst_header_levels,tablefmt="grid")
     return body
 
 
