@@ -61,16 +61,6 @@ styles:
         backColor : white
         alignment : TA_LEFT
 
-    table:
-        commands: []
-            [VALIGN, [ 0, 0 ], [ -1, -1 ], TOP ]
-            [LINEBELOW, [0, 0], [-1, 0], 0.5, black]
-            [BOTTOMPADDING, [0, 1], [-1, -1], 5]
-            [TOPPADDING, [0, 1], [-1, -1], 5]
-            [ALIGN, [ 0, 0 ], [ -1, -1 ], LEFT ]
-            [INNERGRID, [ 0, 0 ], [ -1, -1 ], 0.25, black ]
-            [BOX, [ 0, 0 ], [ -1, -1 ], 0.25, black ]
-
     headertable:
         parent: table
         textColor: #383745
