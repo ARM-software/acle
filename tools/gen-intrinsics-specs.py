@@ -63,11 +63,17 @@ def quote_split_intrinsics(intrinsic):
     r"""
     >>> quote_split_intrinsics('int f(int x, float y)')
     '::\n\n    int f(\n        int x,\n        float y)'
+
+    >>> quote_split_intrinsics('int f(int x)')
+    '::\n\n    int f(int x)\n'
     """
-    intrinsic  = intrinsic.removesuffix(')')
-    ret_def, par, signature = intrinsic.partition('(')
+    intrinsic_without_ending  = intrinsic.removesuffix(')')
+    ret_def, par, signature = intrinsic_without_ending.partition('(')
     split_signature = signature.split(',')
-    return f"::\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
+    if len(split_signature) > 1:
+        return f"::\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
+    else:
+        return f"::\n\n    {intrinsic}\n"
 
 def get_intrinsic_name(signature):
     """
