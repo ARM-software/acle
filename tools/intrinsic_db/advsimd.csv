@@ -12,6 +12,7 @@
 <COMMENT>	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 <COMMENT>	See the License for the specific language governing permissions and
 <COMMENT>	limitations under the License.
+<HEADER>	Intrinsic	Argument preparation	AArch64 Instruction	Result	Supported architectures
 <SECTION>	Basic intrinsics	The intrinsics in this section are guarded by the macro ``__ARM_FEATURE_SVE``.
 int8x8_t vadd_s8(int8x8_t a, int8x8_t b)	a -> Vn.8B;b -> Vm.8B	ADD Vd.8B,Vn.8B,Vm.8B	Vd.8B -> result	v7/A32/A64
 int8x16_t vaddq_s8(int8x16_t a, int8x16_t b)	a -> Vn.16B;b -> Vm.16B	ADD Vd.16B,Vn.16B,Vm.16B	Vd.16B -> result	v7/A32/A64
