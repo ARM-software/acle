@@ -625,7 +625,9 @@ def get_section_data(row):
 def process_db(db, classification_db):
     filtered = {}
     section, section_text,table_header = None, None, None
+    line_num = 0
     for row in db:
+        line_num+=1
         # Set section if the line in the file is starting with __CSV_SECTION_PREFIX.
         if is_section_command(row):
             section, section_text = get_section_data(row)
@@ -634,7 +636,7 @@ def process_db(db, classification_db):
                             section_text, __SECTION_TEXT_KEYWORD)
 
             print(
-                f"Activating {__CSV_SECTION_PREFIX} command at line {db.line_num}, '{section}'", file=sys.stderr)
+                f"Activating {__CSV_SECTION_PREFIX} command at line {line_num}, '{section}'", file=sys.stderr)
             continue
 
         # Skip comment lines.
@@ -662,7 +664,7 @@ def process_db(db, classification_db):
 
             continue
 
-        print(f"Skipping line {db.line_num}: row = {row}", file=sys.stderr)
+        print(f"Skipping line {line_num}: row = {row}", file=sys.stderr)
     # Make sure that the CSV has at a row that have set the tale
     # header.
     assert(table_header is not None)
@@ -696,6 +698,10 @@ def read_template(path):
     with open(path) as f:
         return f.read()
 
+def get_intrinsics_db(path):
+    with open(path) as csvfile:
+        return list(csv.reader(csvfile, delimiter='\t'))
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate an RST file for the intrinsics specifications.")
 
@@ -709,11 +715,10 @@ if __name__ == "__main__":
                         help="CSV file that map the intrinsics to their classification.", required=True)
     cli_args = parser.parse_args()
 
-    with open(cli_args.intrinsic_defs) as csvfile:
-        classification_map = get_classification_map(cli_args.classification)
-        intrinsics_db = csv.reader(csvfile, delimiter='\t')
-        doc_template = read_template(cli_args.template)
-        print(doc_template.format(intrinsic_table=process_db(
+    classification_map = get_classification_map(cli_args.classification)
+    intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
+    doc_template = read_template(cli_args.template)
+    print(doc_template.format(intrinsic_table=process_db(
             intrinsics_db, classification_map)))
 
     # Always run the unit tests.
