@@ -713,14 +713,17 @@ if __name__ == "__main__":
 
     parser.add_argument("--classification", metavar="<path>", type=str,
                         help="CSV file that map the intrinsics to their classification.", required=True)
+    parser.add_argument("--outfile", metavar="<path>", type=str,
+                        help="Output file where the RST of the specs is written.", required=True)
     cli_args = parser.parse_args()
 
     classification_map = get_classification_map(cli_args.classification)
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
-    print(doc_template.format(intrinsic_table=process_db(
-            intrinsics_db, classification_map)))
-
+    rst_output = doc_template.format(intrinsic_table=process_db(
+            intrinsics_db, classification_map))
+    with (open(cli_args.outfile,'w')) as f:
+          f.write(rst_output)
     # Always run the unit tests.
     doctest.NORMALIZE_WHITESPACE
     doctest.testmod()
