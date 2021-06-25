@@ -694,16 +694,16 @@ def get_classification_map(classification_file):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="TODO")
+    parser = argparse.ArgumentParser(description="Generate an RST file for the intrinsics specifications.")
 
     parser.add_argument("--intrinsic-defs", metavar="<path>", type=str,
-                        help="TODO", required=True)
+                        help="CSV file with the database of the intrinsics.", required=True)
 
     parser.add_argument("--template", metavar="<path>", type=str,
-                        help="TODO", required=True)
+                        help="Template file for generating the RST of the specificaion.", required=True)
 
     parser.add_argument("--classification", metavar="<path>", type=str,
-                        help="TODO", required=True)
+                        help="CSV file that map the intrinsics to their classification.", required=True)
     cli_args = parser.parse_args()
 
     with open(cli_args.intrinsic_defs) as csvfile, open(cli_args.template) as template_file:
