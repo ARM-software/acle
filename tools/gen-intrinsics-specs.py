@@ -601,6 +601,7 @@ def is_comment_line(row):
     """
     return len(row) >= 2 and row[0] == __CSV_COMMENT_PREFIX
 
+
 def is_table_header(row):
     """Table headers are 6-columns with the first one being
     __CSV_HEADER_PREFIX.
@@ -613,6 +614,7 @@ def is_table_header(row):
     """
     return len(row) == 6 and row[0] == __CSV_HEADER_PREFIX
 
+
 def is_intrinsic_definition(row):
     return len(row) == 5
 
@@ -624,10 +626,10 @@ def get_section_data(row):
 
 def process_db(db, classification_db):
     filtered = {}
-    section, section_text,table_header = None, None, None
+    section, section_text, table_header = None, None, None
     line_num = 0
     for row in db:
-        line_num+=1
+        line_num += 1
         # Set section if the line in the file is starting with __CSV_SECTION_PREFIX.
         if is_section_command(row):
             section, section_text = get_section_data(row)
@@ -671,7 +673,8 @@ def process_db(db, classification_db):
     body = ""
     for k, v in filtered.items():
         body += "\n" + \
-            recurse_print_to_rst((k, v), rst_header_levels, headers=table_header, tablefmt="grid")
+            recurse_print_to_rst((k, v), rst_header_levels,
+                                 headers=table_header, tablefmt="grid")
     return body
 
 
@@ -694,23 +697,24 @@ def get_classification_map(classification_file):
 
     return classification_map
 
+
 def read_template(path):
     with open(path) as f:
         return f.read()
+
 
 def get_intrinsics_db(path):
     with open(path) as csvfile:
         return list(csv.reader(csvfile, delimiter='\t'))
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate an RST file for the intrinsics specifications.")
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Generate an RST file for the intrinsics specifications.")
     parser.add_argument("--intrinsic-defs", metavar="<path>", type=str,
                         help="CSV file with the database of the intrinsics.", required=True)
-
     parser.add_argument("--template", metavar="<path>", type=str,
                         help="Template file for generating the RST of the specificaion.", required=True)
-
     parser.add_argument("--classification", metavar="<path>", type=str,
                         help="CSV file that map the intrinsics to their classification.", required=True)
     parser.add_argument("--outfile", metavar="<path>", type=str,
@@ -722,8 +726,8 @@ if __name__ == "__main__":
     doc_template = read_template(cli_args.template)
     intrinsic_table = process_db(intrinsics_db, classification_map)
     rst_output = doc_template.format(intrinsic_table=intrinsic_table)
-    with (open(cli_args.outfile,'w')) as f:
-          f.write(rst_output)
+    with (open(cli_args.outfile, 'w')) as f:
+        f.write(rst_output)
     # Always run the unit tests.
     doctest.NORMALIZE_WHITESPACE
     doctest.testmod()
