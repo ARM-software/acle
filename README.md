@@ -11,6 +11,12 @@ specifications for the Arm C Language Extensions (ACLE) is derived.
 For the published documents please see the [Arm developer ACLE
 page](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
 
+## Contributing
+
+The branch ``main`` is the release branch, whose tip contains the
+latest release. Therefore, please submit your PR against the branch
+``next-release``.
+
 ## Defect reports
 
 Please report defects in or enhancements to the specifications in this folder to
