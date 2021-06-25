@@ -34,7 +34,7 @@ function check_changes() {
 function generate_rst_specs() {
     ./tools/gen-intrinsics-specs.py --intrinsic-defs $1 \
 				    --classification $2 \
-				    --template $3 > $4
+				    --template $3 --outfile $4
 }
 
 # Generate specs
