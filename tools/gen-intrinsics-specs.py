@@ -720,8 +720,8 @@ if __name__ == "__main__":
     classification_map = get_classification_map(cli_args.classification)
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
-    rst_output = doc_template.format(intrinsic_table=process_db(
-            intrinsics_db, classification_map))
+    intrinsic_table = process_db(intrinsics_db, classification_map)
+    rst_output = doc_template.format(intrinsic_table=intrinsic_table)
     with (open(cli_args.outfile,'w')) as f:
           f.write(rst_output)
     # Always run the unit tests.
