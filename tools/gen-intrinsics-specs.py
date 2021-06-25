@@ -692,6 +692,9 @@ def get_classification_map(classification_file):
 
     return classification_map
 
+def read_template(path):
+    with open(path) as f:
+        return f.read()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate an RST file for the intrinsics specifications.")
@@ -706,10 +709,10 @@ if __name__ == "__main__":
                         help="CSV file that map the intrinsics to their classification.", required=True)
     cli_args = parser.parse_args()
 
-    with open(cli_args.intrinsic_defs) as csvfile, open(cli_args.template) as template_file:
+    with open(cli_args.intrinsic_defs) as csvfile:
         classification_map = get_classification_map(cli_args.classification)
         intrinsics_db = csv.reader(csvfile, delimiter='\t')
-        doc_template = template_file.read()
+        doc_template = read_template(cli_args.template)
         print(doc_template.format(intrinsic_table=process_db(
             intrinsics_db, classification_map)))
 
