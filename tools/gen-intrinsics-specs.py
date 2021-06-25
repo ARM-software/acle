@@ -625,6 +625,73 @@ def get_section_data(row):
 
 
 def process_db(db, classification_db):
+    """Processes a list of intrinsics and their mappings to the
+    classification into a sequence of sections and RST tables.
+
+    >>> intrinsics = [
+    ... ['<HEADER>', 'T1', 'T2', 'T3', 'T4', 'T5'],
+    ... ['<SECTION>','Section 1 title', 'Section 1 description.'],
+    ... ['a A01()','a','aa','aaa','aaaa'],
+    ... ['b B01()','b','bb','bbb','bbbb'],
+    ... ['<SECTION>','Section 2 title', 'Section 2 description.'],
+    ... ['c C01()','c','cc','ccc','cccc'],
+    ... ]
+    >>> classification = {
+    ... 'B01': 'Section 1.1|Section 1.1.1',
+    ... 'C01': 'classX|subclassY'
+    ... }
+    >>> print(process_db(intrinsics, classification))
+    <BLANKLINE>
+    <BLANKLINE>
+    Section 1 title
+    ===============
+    <BLANKLINE>
+    Section 1 description.
+    <BLANKLINE>
+    No category
+    ~~~~~~~~~~~
+    <BLANKLINE>
+    +-------------+-------+--------+---------+----------+
+    | T1          | T2    | T3     | T4      | T5       |
+    +=============+=======+========+=========+==========+
+    | .. code:: c | ::    | ::     | ::      | ``aaaa`` |
+    |             |       |        |         |          |
+    |     a A01() |     a |     aa |     aaa |          |
+    +-------------+-------+--------+---------+----------+
+    <BLANKLINE>
+    Section 1.1
+    ~~~~~~~~~~~
+    <BLANKLINE>
+    Section 1.1.1
+    -------------
+    <BLANKLINE>
+    +-------------+-------+--------+---------+----------+
+    | T1          | T2    | T3     | T4      | T5       |
+    +=============+=======+========+=========+==========+
+    | .. code:: c | ::    | ::     | ::      | ``bbbb`` |
+    |             |       |        |         |          |
+    |     b B01() |     b |     bb |     bbb |          |
+    +-------------+-------+--------+---------+----------+
+    <BLANKLINE>
+    Section 2 title
+    ===============
+    <BLANKLINE>
+    Section 2 description.
+    <BLANKLINE>
+    classX
+    ~~~~~~
+    <BLANKLINE>
+    subclassY
+    ---------
+    <BLANKLINE>
+    +-------------+-------+--------+---------+----------+
+    | T1          | T2    | T3     | T4      | T5       |
+    +=============+=======+========+=========+==========+
+    | .. code:: c | ::    | ::     | ::      | ``cccc`` |
+    |             |       |        |         |          |
+    |     c C01() |     c |     cc |     ccc |          |
+    +-------------+-------+--------+---------+----------+
+    """
     filtered = {}
     section, section_text, table_header = None, None, None
     line_num = 0
