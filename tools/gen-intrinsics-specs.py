@@ -69,7 +69,8 @@ def quote_split_intrinsics(intrinsic):
     >>> quote_split_intrinsics('int f(int x)')
     '.. code:: c\n\n    int f(int x)\n'
     """
-    intrinsic_without_ending = intrinsic.removesuffix(')')
+    # Remove the suffix ')' from the intrinsic string.
+    intrinsic_without_ending = intrinsic[:-1]
     ret_def, par, signature = intrinsic_without_ending.partition('(')
     split_signature = signature.split(',')
     if len(split_signature) > 1:
