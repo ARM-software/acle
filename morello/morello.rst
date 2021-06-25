@@ -229,7 +229,7 @@ Scope
 
 The Morello Supplement to the Arm C Language Extensions highlights the language
 features added on top of the CHERI programming language to further exploit the
-Morello architecture. We strongly recommend reading the CHERI_ Pure-Capability
+Morello architecture. We recommend reading the CHERI_ Pure-Capability
 C/C++ Programming Guide as preliminary material.
 
 Predefined macros
