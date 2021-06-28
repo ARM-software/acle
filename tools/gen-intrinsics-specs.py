@@ -16,7 +16,7 @@
 # limitations under the License.
 
 import sys
-from tabulate import tabulate
+import tabulate as tbl
 import argparse
 import csv
 import doctest
@@ -547,7 +547,7 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     """
     key, value = item
     if is_intrinsic_table(item):
-        return "\n" + str(tabulate(value, headers=headers, tablefmt=tablefmt))
+        return "\n" + str(tbl.tabulate(value, headers=headers, tablefmt=tablefmt))
 
     body = ""
     if start_new_section(item):
@@ -788,6 +788,14 @@ if __name__ == "__main__":
     parser.add_argument("--outfile", metavar="<path>", type=str,
                         help="Output file where the RST of the specs is written.", required=True)
     cli_args = parser.parse_args()
+
+
+    # We require version 0.8.6 to be able to print multi-line records
+    # in tables.
+    if tbl.__version__ < "0.8.6":
+        print(f"Your version of package tabulate is too old ({tbl.__version__}). "
+              "Update it to be greater or equal to 0.8.6.", file=sys.stderr)
+        exit(1)
 
     classification_map = get_classification_map(cli_args.classification)
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
