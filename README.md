@@ -36,8 +36,10 @@ be referenced in this README file when added.
 
 Document sources                                                           | Latest official release
 ---                                                                        | ---
-[Arm C Language Extensions](main/acle.rst)                                 | [pdf](https://developer.arm.com/documentation/101028/latest)
-[Morello Supplement to the Arm C Language Extensions](morello/morello.rst) | [pdf](https://developer.arm.com/documentation/102273/latest)
+[Arm C Language Extensions](main/acle.rst)                                 | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
+[Morello Supplement to the Arm C Language Extensions](morello/morello.rst) | [01alpha](https://github.com/ARM-software/acle/releases/latest)
+[Arm MVE Intrinsics](mve_intrinsics/mve.rst)                               | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
+[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.rst)               | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
 
 # License
 
