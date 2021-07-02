@@ -1,6 +1,6 @@
 .. |copyright-date| replace:: 2014-2021
-.. |release| replace:: Development version based on ACLE Q32020
-.. |date-of-issue| replace:: unreleased
+.. |release| replace:: 2021Q2
+.. |date-of-issue| replace:: 02 July 2021
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 

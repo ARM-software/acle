@@ -20,8 +20,8 @@
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
-.. |release| replace:: development version, based on 2020Q3
-.. |date-of-issue| replace:: unreleased
+.. |release| replace:: 2021Q2
+.. |date-of-issue| replace:: 02 July 2021
 
 =========================
 Arm C Language Extensions
