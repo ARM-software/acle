@@ -3,8 +3,8 @@
    CC-BY-SA-4.0 AND Apache-Patent-License
    See LICENSE file for details
 
-.. |release| replace:: development version, based on 00alpha
-.. |date-of-issue| replace:: unreleased
+.. |release| replace:: 01alpha
+.. |date-of-issue| replace:: 02 July 2021
 .. |copyright-date| replace:: 2020-2021
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
