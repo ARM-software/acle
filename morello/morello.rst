@@ -57,13 +57,11 @@ Predefined macros, built-in functions
 Latest release and defects report
 ---------------------------------
 
-Please check `Arm C Language Extensions
-<https://github.com/ARM-software/acle>`_ for the latest
-release of this document.
+For the latest release of this document, see the `ACLE project on
+GitHub <https://github.com/ARM-software/acle>`_.
 
 Please report defects in this specification to the `issue tracker page
-on GitHub
-<https://github.com/ARM-software/acle/issues>`_.
+on GitHub <https://github.com/ARM-software/acle/issues>`_.
 
 License
 -------
