@@ -1,5 +1,5 @@
 .. |copyright-date| replace:: 2014-2021
-.. |release| replace:: release: development version based on ACLE Q32020
+.. |release| replace:: Development version based on ACLE Q32020
 .. |date-of-issue| replace:: unreleased
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
@@ -37,19 +37,17 @@ Abstract
 ========
 
 This document is complementary to the main Arm C Language Extensions
-(ACLE) specification, which can be found on developer.arm.com.
-
+(ACLE) specification, which can be found on the `ACLE project on
+GitHub <https://github.com/ARM-software/acle>`_.
 
 Latest release and defects report
 =================================
 
-Please check `Arm C Language Extensions
-<https://github.com/ARM-software/acle>`_ for the latest
-release of this document.
+For the latest release of this document, see the `ACLE project on
+GitHub <https://github.com/ARM-software/acle>`_.
 
 Please report defects in this specification to the `issue tracker page
-on GitHub
-<https://github.com/ARM-software/acle/issues>`_.
+on GitHub <https://github.com/ARM-software/acle/issues>`_.
 
 License
 =======
