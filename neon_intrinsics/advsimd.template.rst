@@ -1,6 +1,6 @@
 .. |copyright-date| replace:: 2014-2021
-.. |release| replace:: 2021Q2
-.. |date-of-issue| replace:: 02 July 2021
+.. |release| replace:: development version based on 2021Q2
+.. |date-of-issue| replace:: TBD
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
@@ -141,11 +141,15 @@ Document history
 +------------+-------------------------+-------------------------+
 |F           |30 May 2020              |Version ACLE Q2 2020     |
 +------------+-------------------------+-------------------------+
-|G           |30 October 2020          |Version ACLE Q2 2020     |
+|G           |30 October 2020          |Version ACLE Q3 2020     |
 +------------+-------------------------+-------------------------+
-|H           | |date-of-issue|         | |release|               |
+|H           |02 July 2021             |              2021Q2     |
 +------------+-------------------------+-------------------------+
 
+
+Changes between next release  and 2021Q2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Fixed the guard macro for the base intrinsics.
 
 List of Intrinsics
 ##################
