@@ -155,7 +155,7 @@ List of Intrinsics
 Basic intrinsics
 ================
 
-The intrinsics in this section are guarded by the macro ``__ARM_FEATURE_SVE``.
+The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 
 Vector arithmetic
 ~~~~~~~~~~~~~~~~~
