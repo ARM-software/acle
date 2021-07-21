@@ -147,12 +147,11 @@ Document history
 +------------+-------------------------+-------------------------+
 
 
-Changes between next release  and 2021Q2
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Changes between next release and 2021Q2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Fixed the guard macro for the base intrinsics.
 
 List of Intrinsics
 ##################
 
 {intrinsic_table}
-
