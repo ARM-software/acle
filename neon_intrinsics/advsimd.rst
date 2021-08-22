@@ -151,7 +151,7 @@ Changes between next release and 2021Q2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Fixed the guard macro for the base intrinsics.
 
-* Correct usdot specification on AArch32.
+* Correct ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
 
 List of Intrinsics
 ##################
@@ -25325,7 +25325,7 @@ Dot product
 |         int8x8_t b,             |     0 <= lane <= 1     |                                   |                     |                           |
 |         const int lane)         |                        |                                   |                     |                           |
 +---------------------------------+------------------------+-----------------------------------+---------------------+---------------------------+
-| .. code:: c                     | ::                     | ::                                | ::                  | ``A64``                   |
+| .. code:: c                     | ::                     | ::                                | ::                  | ``A32/A64``               |
 |                                 |                        |                                   |                     |                           |
 |     uint32x4_t vdotq_laneq_u32( |     r -> Vd.4S         |     UDOT Vd.4S,Vn.16B,Vm.4B[lane] |     Vd.4S -> result |                           |
 |         uint32x4_t r,           |     a -> Vn.16B        |                                   |                     |                           |
@@ -25333,7 +25333,7 @@ Dot product
 |         uint8x16_t b,           |     0 <= lane <= 3     |                                   |                     |                           |
 |         const int lane)         |                        |                                   |                     |                           |
 +---------------------------------+------------------------+-----------------------------------+---------------------+---------------------------+
-| .. code:: c                     | ::                     | ::                                | ::                  | ``A64``                   |
+| .. code:: c                     | ::                     | ::                                | ::                  | ``A32/A64``               |
 |                                 |                        |                                   |                     |                           |
 |     int32x4_t vdotq_laneq_s32(  |     r -> Vd.4S         |     SDOT Vd.4S,Vn.16B,Vm.4B[lane] |     Vd.4S -> result |                           |
 |         int32x4_t r,            |     a -> Vn.16B        |                                   |                     |                           |
@@ -25341,7 +25341,7 @@ Dot product
 |         int8x16_t b,            |     0 <= lane <= 3     |                                   |                     |                           |
 |         const int lane)         |                        |                                   |                     |                           |
 +---------------------------------+------------------------+-----------------------------------+---------------------+---------------------------+
-| .. code:: c                     | ::                     | ::                                | ::                  | ``A64``                   |
+| .. code:: c                     | ::                     | ::                                | ::                  | ``A32/A64``               |
 |                                 |                        |                                   |                     |                           |
 |     uint32x2_t vdot_laneq_u32(  |     r -> Vd.2S         |     UDOT Vd.2S,Vn.8B,Vm.4B[lane]  |     Vd.2S -> result |                           |
 |         uint32x2_t r,           |     a -> Vn.8B         |                                   |                     |                           |
@@ -25349,7 +25349,7 @@ Dot product
 |         uint8x16_t b,           |     0 <= lane <= 3     |                                   |                     |                           |
 |         const int lane)         |                        |                                   |                     |                           |
 +---------------------------------+------------------------+-----------------------------------+---------------------+---------------------------+
-| .. code:: c                     | ::                     | ::                                | ::                  | ``A64``                   |
+| .. code:: c                     | ::                     | ::                                | ::                  | ``A32/A64``               |
 |                                 |                        |                                   |                     |                           |
 |     int32x2_t vdot_laneq_s32(   |     r -> Vd.2S         |     SDOT Vd.2S,Vn.8B,Vm.4B[lane]  |     Vd.2S -> result |                           |
 |         int32x2_t r,            |     a -> Vn.8B         |                                   |                     |                           |
