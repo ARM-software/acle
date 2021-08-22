@@ -151,7 +151,7 @@ Changes between next release and 2021Q2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Fixed the guard macro for the base intrinsics.
 
-* Correct usdot specification on AArch32.
+* Correct ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
 
 List of Intrinsics
 ##################
