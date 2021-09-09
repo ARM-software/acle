@@ -271,6 +271,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Moved the [Future directions](#future-directions) chapter to the end.
 * Added a description of support levels in [Current Status and
   Anticipated Changes](#current-status-and-anticipated-changes).
+* Support added for [Function Multi Versioning](#function-multi-versioning).
 
 ### References
 
@@ -1887,6 +1888,142 @@ available in A32 state must be generated as calls to library functions
 or compiler-generated functions.
 
 This attribute does not apply to AArch64.
+
+## Function Multi Versioning
+
+The specification for Function Multi Versioning is in `BETA` state and may
+change or be extended in the future.
+
+Function Multi Versioning provides a convenient way to select the most
+appropriate version of a function at runtime. All versions of the function may
+be in the final binary. The compiler generates all supported versions and the
+runtime makes the selection at load time.
+
+The following attributes trigger the multi variant code generation:
+`target_version`, `target_clones`. These attributes can't be mixed. The
+"default" variant means the version of the function that would be generated
+without these attributes.
+
+This feature may be turned off in compile time. In this case the "default"
+variant shall be used.
+
+`__ARM_FEATURE_FUNCTION_MULTI_VERSIONING` is defined to 1 if available.
+
+``` c
+    __attribute__((target_version("name")))
+```
+
+when applied to a function it will become one of the versions. Function with the
+same name may exist with multiple versions in the same translation unit. One
+"default" version of the  function is required to be provided. Implicitly, when
+without attribute, or explicitly providing the "default" in the attribute. If
+only the "default" variant exist it should be linked directly.
+
+``` c
+    __attribute__((target_clones("name",...)))
+```
+
+when applied to a function the compiler emits multiple versions based on the
+arguments. One of them is implicitly the "default". If a name is not recognized
+the compiler should ignore it. If the default matches with an other explicitly
+provided version the compiler can emit only one function instead of the two.
+
+Dependent features names could be joined by the `+` sign.
+
+None of these attributes will enable the corresponding ACLE features.
+
+These attributes have no effect on the calling convention, all versions must
+use the same calling convertion.
+
+### Name mangling
+
+The default version is not mangled top of the normal mangling.
+
+Version to be mangled. `<vendor-specific suffix>` should hold the version
+information [[cxxabi]](#cxxabi) as:
+
+``` c
+    _(M<name>)*
+```
+name is from table below.
+
+If multiple features are requested then those shall be applied in priority order.
+
+### Mapping
+
+The following table lists the architecturesfeature mapping for AArch32
+
+   | **Priority** | **Architecture name**            | **Name**        | **Dependent feature registers** |
+   | ------------ | -------------------------------- | --------------- | ------------------------------- |
+   | 0            | N/A                              | default         | ```N/A```                       |
+   | 90           | CRC32 instructions               | crc32           | ```ID_ISAR5.CRC32 == 0b0001```  |
+   | 100          | SHA1 instructions                | sha1            | ```ID_ISAR5.SHA1 == 0b0001```   |
+   | 110          | SHA2 instructions                | sha256          | ```ID_ISAR5.SHA2 == 0b0001```   |
+   | 120          | AES instructions                 | aes             | ```ID_ISAR5.AES >= 0b0001```    |
+   | 130          | VMULL (polynomial) instructions  | vmull           | ```ID_ISAR5.AES == 0b0002```    |
+
+The following table lists the architecturesfeature mapping for AArch64
+
+   | **Priority**  | **Architecture name**    | **Name**      | **Dependent feature registers**           |
+   | ------------- | ------------------------ | ------------- | ----------------------------------------- |
+   | 0             | N/A                      | default       | N/A                                       |
+   | 10            | `FEAT_RNG`               | rng           | ```ID_AA64ISAR0_EL1.RNDR == 0b0001```     |
+   | 20            | `FEAT_FlagM`             | flagm         | ```ID_AA64ISAR0_EL1.TS == 0b0001 OR ``` <br> ```ID_AA64ISAR0_EL1.TS == 0b0010``` |
+   | 30            | `FEAT_FlagM2`            | flagm2        | ```ID_AA64ISAR0_EL1.TS == 0b0010```       |
+   | 40            | `FEAT_FHM`               | fhm           | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
+   | 50            | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP == 0b0001```       |
+   | 60            | `FEAT_SM3` && `FEAT_SM4` | sm            | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
+   | 70            | `FEAT_RDM`               | rdm           | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
+   | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.LSE == 0b0001```      |
+   | 90            | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
+   | 100           | Advanced SIMD            | advsimd       | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
+   | 110           | crc32                    | crc32         | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
+   | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
+   | 130           | `FEAT_SHA256`            | sha256        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
+   | 140           | `FEAT_SHA512`            | sha512        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0010```     |
+   | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES == 0b0001```      |
+   | 160           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
+   | 170           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT == 0b0001```       |
+   | 180           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
+   | 190           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0002```     |
+   | 200           | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT == 0b0001```    |
+   | 210           | `FEAT_FCMA`              | fcma          | ```ID_AA64ISAR1_EL1.FCMA == 0b0001```     |
+   | 220           | `FEAT_LRCPC`             | lrcpc         | ```ID_AA64ISAR1_EL1.LRCPC != 0b0000```    |
+   | 230           | `FEAT_LRCPC2`            | lrcpc2        | ```ID_AA64ISAR1_EL1.LRCPC == 0b0010```    |
+   | 240           | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS == 0b0001```  |
+   | 250           | SVE                      | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
+   | 260           | `FEAT_BF16`              | sve_bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
+   | 270           | `FEAT_EBF16`             | sve_ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
+   | 280           | `FEAT_I8MM`              | sve_i8mm      | ```ID_AA64ZFR0_EL1.I8MM == 0b00001```     |
+   | 290           | `FEAT_F32MM`             | sve_f32mm     | ```ID_AA64ZFR0_EL1.F32MM == 0b00001```    |
+   | 300           | `FEAT_F64MM`             | sve_f64mm     | ```ID_AA64ZFR0_EL1.F64MM == 0b00001```    |
+   | 310           | `FEAT_SVE2`              | sve2          | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0001``` |
+   | 320           | `FEAT_SVE_AES`           | sve_aes       | ```ID_AA64ZFR0_EL1.AES == 0b0001 OR ``` <br> ```ID_AA64ZFR0_EL1.AES == 0b0010``` |
+   | 330           | `FEAT_SVE_PMULL128`      | sve_pmull128  | ```ID_AA64ZFR0_EL1.AES == 0b0010```       |
+   | 340           | `FEAT_SVE_BitPerm`       | sve_bitperm   | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
+   | 350           | `FEAT_SVE_SHA3`          | sve_sha3      | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
+   | 360           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
+   | 370           | `FEAT_MTE`               | mte           | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
+   | 380           | `FEAT_MTE2`              | mte2          | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
+   | 390           | `FEAT_MTE3`              | mte3          | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
+   | 400           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB == 0b0001```       |
+   | 410           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS == 0b0001```      |
+   | 420           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS == 0b0010```      |
+   | 430           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.bt == 0b0010```        |
+
+### Selection
+
+The following rules shall be followed by all implementations. Implementation of
+the selection algorithm is platform dependent, where with platform means
+CPU/Vendor/OS as in the target triplet. The selection is permanent for the
+lifetime of the process. Only those versions could be considered where all
+dependent features are available.
+
+Rules of version selection are in order:
+
+1. Select the most specific version else
+2. select the version with the highest priority else
+3. "default" shall be selected if no other versions are suitable.
 
 ## Weak linkage
 
