@@ -20,8 +20,8 @@
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
-.. |release| replace:: 2021Q2
-.. |date-of-issue| replace:: 02 July 2021
+.. |release| replace:: Development version based on 2021Q2
+.. |date-of-issue| replace:: TBD
 
 =========================
 Arm C Language Extensions
@@ -217,7 +217,7 @@ Change history
    | ACLE Q3 2020       | 31/10/20           | Arm                | Version ACLE Q3    |
    |                    |                    |                    | 2020.              |
    +--------------------+--------------------+--------------------+--------------------+
-   | |release|          | |date-of-issue|    | Arm                | Version ACLE Q2    |
+   | 2021Q2             | 02/07/21           | Arm                | Version ACLE Q2    |
    |                    |                    |                    | 2021. Open source  |
    |                    |                    |                    | version. NFCI.     |
    +--------------------+--------------------+--------------------+--------------------+
