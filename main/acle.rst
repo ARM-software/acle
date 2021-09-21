@@ -732,7 +732,7 @@ values using standard C operators. ::
 Armv8 introduces floating point instructions to convert 64-bit to 16-bit
 i.e. from double to ``__fp16.`` They are not available in earlier
 architectures, therefore have to rely on emulation libraries or a
-sequence of instructions to achieve the conversion.
+sequence of instructions to achieve the conversion. 
 
 Providing emulation libraries for half-precision floating point
 conversions when not implemented in hardware is implementation-defined. ::
@@ -1642,7 +1642,7 @@ Javascript floating-point conversion
 
 ``__ARM_FEATURE_JCVT`` is defined to 1 if the FJCVTZS (AArch64) or
 VJCVT (AArch32) instruction and the associated intrinsic is available.
-
+ 
 .. _ssec-FPm:
 
 Floating-point model
@@ -2739,7 +2739,7 @@ Data prefetch
   void __pld(void const volatile *addr);
 
 Generates a data prefetch instruction, if available. The argument should
-be any expression that may designate a data address. The data is
+be any expression that may designate a data address. The data is 
 prefetched to the innermost level of cache, for reading.
 ::
 
@@ -3052,7 +3052,7 @@ Examples
 
   /* Count leading sign bits */
   inline unsigned int count_sign(int32_t x) { return __clz(x ^ (x << 1)); }
-
+  
   /* Count trailing zeroes */
   inline unsigned int count_trail(uint32_t x) {
   #if (__ARM_ARCH >= 6 && __ARM_ISA_THUMB >= 2) || __ARM_ARCH >= 7
@@ -5086,7 +5086,7 @@ This is indicated by the setting of bit 1 in ``__ARM_NEON_FP``
     /* 16-bit floating point vector types are available.  */
     float16x8_t storage;
   #endif
-
+  
 Availability of fused multiply-accumulate intrinsics
 ----------------------------------------------------
 
