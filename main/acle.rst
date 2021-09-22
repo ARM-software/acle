@@ -21,7 +21,7 @@
                       affiliates. All rights reserved.
 
 
-.. |release| replace:: development version based on 2021Q2
+.. |release| replace:: Development version based on 2021Q2
 .. |date-of-issue| replace:: TBD
 
 =========================
