@@ -20,6 +20,7 @@
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
+
 .. |release| replace:: Development version based on 2021Q2
 .. |date-of-issue| replace:: TBD
 
@@ -220,6 +221,9 @@ Change history
    | 2021Q2             | 02 July 2021       | Arm                | Version ACLE Q2    |
    |                    |                    |                    | 2021. Open source  |
    |                    |                    |                    | version. NFCI.     |
+   +--------------------+--------------------+--------------------+--------------------+
+   | |release|          | |date-of-issue|    | Arm                | Minor              |
+   |                    |                    |                    | re-wording. NFCI.  |
    +--------------------+--------------------+--------------------+--------------------+
 
 
@@ -4842,9 +4846,10 @@ input vector, and an operation is performed in parallel between
 this new vector and other input vectors.
 
 For example, ``vmul_lane_u16(a, b, 1)``, is a vector-by-lane intrinsic
-which takes two ``uint16x4_t`` vector elements. From ``b``, element ``1``
-is extracted, a new vector is formed which consists of four copies of ``b``,
-and this new vector is multiplied by ``a``.
+which takes two ``uint16x4_t`` vector elements. From ``b``, element
+``1`` is extracted, a new vector is formed which consists of four
+copies of element ``1`` of ``b``, and this new vector is multiplied by
+``a``.
 
 *Reduction*, *cross-lane*, and *pairwise* vector operations work on pairs
 of elements within a vector, or across the whole of a single vector
