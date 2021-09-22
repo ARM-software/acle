@@ -20,6 +20,7 @@
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
+
 .. |release| replace:: development version based on 2021Q2
 .. |date-of-issue| replace:: TBD
 
@@ -265,6 +266,10 @@ Changes between ACLE Q2 2017 and ACLE Q2 2018
 Most changes in ACLE Q2 2018 are updates to support features introduced in
 Armv8.3-A [ARMARMv83]_.  Support is added for the Complex addition and Complex MLA intrinsics.
 Armv8.4-A [ARMARMv84]_.  Support is added for the Dot Product intrinsics.
+
+Changes for next release
+~~~~~~~~~~~~~~~~~~~~~~~~
+* Fixed FP16 format description at ssec-fp16-type_.
 
 References
 ----------
@@ -1372,8 +1377,8 @@ Half-precision (16-bit) floating-point format
 
 ``__ARM_FP16_FORMAT_ALTERNATIVE`` is defined to 1 if the Arm
 alternative [ARMARM]_ 16-bit floating-point format is used. This format
-removes support for infinities and NaNs in order to provide an extra
-exponent bit.
+removes support for infinities and NaNs in order to provide an 
+additional binade.
 
 At most one of these macros will be defined. See ssec-fp16-type_
 for details of half-precision floating-point types.
