@@ -1868,6 +1868,19 @@ This macro may only ever be defined in the AArch64 execution state.
 Intrinsics for using these instructions are specified in
 ssec-LS64_.
 
+
+.. _ssec-MOPS:
+
+memcpy family of memory operations (MOPS) standarisation instructions
+=====================================================================
+
+``__ARM_FEATURE_MOPS`` is defined to 1 if the ``CPYF*``, ``CPY*``,
+``SET*`` and ``SETG*`` instructions for standarisation of the memcpy,
+memset, and memmove family of memory operations are supported.
+This macro may only ever be defined in the AArch64 execution state.
+Intrinsics for using these instructions are specified in
+ssec-MOPS-intrinsics_.
+
 Mapping of object build attributes to predefines
 ================================================
 
@@ -2153,6 +2166,12 @@ Summary of predefined macros
    | ``__ARM_WMMX``                      | Wireless MMX        | 1                  | ssec-WMMX_             |
    |                                     | extension           |                    |                        |
    |                                     | (32-bit-only)       |                    |                        |
+   +-------------------------------------+---------------------+--------------------+------------------------+
+   | ``__ARM_FEATURE_MOPS``              | memcpy, memset, and | 1                  | ssec-MOPS_,            |
+   |                                     | memmove family of   |                    | ssec-MOPS-intrinsics_  |
+   |                                     | operations          |                    |                        |
+   |                                     | standarisation      |                    |                        |
+   |                                     | instructions        |                    |                        |
    +-------------------------------------+---------------------+--------------------+------------------------+
 
 .. _sec-Attributes-and-pragmas:
@@ -5792,3 +5811,39 @@ Instructions
 +---------------------------------+----------------+------------+-----------------+
 
 These intrinsics are available when ``arm_acle.h`` is included.
+
+.. _sec-MOPS-intrinsics:
+
+memcpy family of memory operations (MOPS) intrinsics
+####################################################
+
+Introduction
+============
+
+This section describes the intrinsics for the new instructions introduced
+for memcpy, memmove and memset family of memory operations (MOPS).
+
+These intructions were designed to enable the standarisation of the software
+implementation of those operations. Therefore, most of the use cases for
+the new instructions should be covered by the compiler's code generation or
+by library implementations.
+
+An exception to that is the set of instructions covering the memset operation
+with memory tagging. An intrinsic is available to provide access to this
+operation. See ssec-MTE_ for more information on memory tagging.
+
+The ``<arm_acle.h>`` header should be included before using this intrinsic.
+
+Intrinsics
+==========
+
+This intrinsic is available when ``__ARM_FEATURE_MOPS`` is defined.
+::
+
+  void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
+
+This intrinsic performs a memset operation with tag setting on a memory block.
+The first ``size`` bytes of the block of memory pointed to by ``tagged_address``
+are set to the specified ``value``. The ``tagged_address`` is expected to
+contain the allocation tag on its bits 56-59.
+Similarly to C's memset, this intrinsic returns the ``tagged_address`` pointer.
