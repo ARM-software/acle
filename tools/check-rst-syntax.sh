@@ -17,8 +17,8 @@
 
 set -ex
 
-rstcheck --ignore-language=c,cpp --report=warning morello/morello.rst
+#rstcheck --ignore-language=c,cpp --report=warning morello/morello.rst
 rstcheck --ignore-language=c,cpp --report=warning main/acle.rst
 rstcheck --ignore-language=c,cpp --report=warning neon_intrinsics/advsimd.rst
 # We have to ignore the warning reported inline 223, as it seems reporting a false positive (bug in rstcheck?).
-rstcheck --ignore-messages="mve_intrinsics/mve.rst:223" --ignore-language=c,cpp --report=warning mve_intrinsics/mve.rst
+#rstcheck --ignore-messages="mve_intrinsics/mve.rst:223" --ignore-language=c,cpp --report=warning mve_intrinsics/mve.rst

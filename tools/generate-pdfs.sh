@@ -18,11 +18,11 @@ set -ex
 
 mkdir -p pdfs
 
-rst2pdf morello/morello.rst         \
-	-s tools/rst2pdf-acle.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/morello.pdf
+#rst2pdf morello/morello.rst         \
+#	-s tools/rst2pdf-acle.style \
+#        --repeat-table-rows         \
+#        --default-dpi=110           \
+#        -o pdfs/morello.pdf
 
 # the option`--inline-footnotes` is used to print the footnotes off
 # the references "in place" in the `References` section.
@@ -39,8 +39,8 @@ rst2pdf neon_intrinsics/advsimd.rst         \
         --default-dpi=110           \
         -o pdfs/advsimd.pdf
 
-rst2pdf mve_intrinsics/mve.rst         \
-	-s tools/rst2pdf-acle-intrinsics.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/mve.pdf
+#rst2pdf mve_intrinsics/mve.rst         \
+#	-s tools/rst2pdf-acle-intrinsics.style \
+#        --repeat-table-rows         \
+#        --default-dpi=110           \
+#        -o pdfs/mve.pdf

@@ -8,7 +8,8 @@
 
 The [Arm MVE Intrinsics Reference](mve.md) specifies the [TODO]
 
-The specifications in this document are in experimental format. [Official Release] (https://github.com/ARM-software/acle/releases/latest).
+The specifications in this document are in experimental format.
+[Official Release](https://github.com/ARM-software/acle/releases/latest).
 
 ## About the license
 
