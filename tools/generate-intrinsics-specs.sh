@@ -50,4 +50,4 @@ generate_rst_specs ./tools/intrinsic_db/mve.csv \
 
 # Check changes
 check_changes ./tmp/advsimd.new.rst ./neon_intrinsics/advsimd.rst
-check_changes ./tmp/mve.new.rst ./mve_intrinsics/mve.rst
+#check_changes ./tmp/mve.new.rst ./mve_intrinsics/mve.rst
