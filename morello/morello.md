@@ -18,6 +18,8 @@ Date of Issue: 02 July 2021
 ```{=pdf}
 PageBreak oneColumn
 ```
+The specifications in this document are in experimental format.
+[Official Release](https://github.com/ARM-software/acle/releases/latest).
 
 ------------------------------------------------------------------------
 
@@ -34,8 +36,6 @@ source code portability.
 Predefined macros, built-in functions
 
 ### Latest release and defects report
-
-The specifications in this document are in experimental format. [Official Release] (https://github.com/ARM-software/acle/releases/latest).
 
 For the latest release of this document, see the [ACLE project on
 GitHub](https://github.com/ARM-software/acle).
