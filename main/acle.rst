@@ -20,8 +20,8 @@
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
-.. |release| replace:: 2021Q2
-.. |date-of-issue| replace:: 02 July 2021
+.. |release| replace:: Development version based on 2021Q2
+.. |date-of-issue| replace:: TBD
 
 =========================
 Arm C Language Extensions
@@ -217,9 +217,12 @@ Change history
    | ACLE Q3 2020       | 31/10/20           | Arm                | Version ACLE Q3    |
    |                    |                    |                    | 2020.              |
    +--------------------+--------------------+--------------------+--------------------+
-   | |release|          | |date-of-issue|    | Arm                | Version ACLE Q2    |
+   | 2021Q2             | 02 July 2021       | Arm                | Version ACLE Q2    |
    |                    |                    |                    | 2021. Open source  |
    |                    |                    |                    | version. NFCI.     |
+   +--------------------+--------------------+--------------------+--------------------+
+   | |release|          | |date-of-issue|    | Arm                | Minor              |
+   |                    |                    |                    | re-wording. NFCI.  |
    +--------------------+--------------------+--------------------+--------------------+
 
 
@@ -262,6 +265,10 @@ Changes between ACLE Q2 2017 and ACLE Q2 2018
 Most changes in ACLE Q2 2018 are updates to support features introduced in
 Armv8.3-A [ARMARMv83]_.  Support is added for the Complex addition and Complex MLA intrinsics.
 Armv8.4-A [ARMARMv84]_.  Support is added for the Dot Product intrinsics.
+
+Changes for next release
+~~~~~~~~~~~~~~~~~~~~~~~~
+* Fixed FP16 format description at ssec-fp16-type_.
 
 References
 ----------
@@ -1369,8 +1376,8 @@ Half-precision (16-bit) floating-point format
 
 ``__ARM_FP16_FORMAT_ALTERNATIVE`` is defined to 1 if the Arm
 alternative [ARMARM]_ 16-bit floating-point format is used. This format
-removes support for infinities and NaNs in order to provide an extra
-exponent bit.
+removes support for infinities and NaNs in order to provide an 
+additional binade.
 
 At most one of these macros will be defined. See ssec-fp16-type_
 for details of half-precision floating-point types.
@@ -4838,9 +4845,10 @@ input vector, and an operation is performed in parallel between
 this new vector and other input vectors.
 
 For example, ``vmul_lane_u16(a, b, 1)``, is a vector-by-lane intrinsic
-which takes two ``uint16x4_t`` vector elements. From ``b``, element ``1``
-is extracted, a new vector is formed which consists of four copies of ``b``,
-and this new vector is multiplied by ``a``.
+which takes two ``uint16x4_t`` vector elements. From ``b``, element
+``1`` is extracted, a new vector is formed which consists of four
+copies of element ``1`` of ``b``, and this new vector is multiplied by
+``a``.
 
 *Reduction*, *cross-lane*, and *pairwise* vector operations work on pairs
 of elements within a vector, or across the whole of a single vector
