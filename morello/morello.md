@@ -1,23 +1,16 @@
 # Morello Supplement to the Arm C Language Extensions
 
-::: version
+[//]: # (version)
 01alpha
-:::
 
-::: issued
+[//]: # (issued)
 Date of Issue: 02 July 2021
-:::
 
-::: logo
+[//]: # (logo)
 ![image](Arm_logo_blue_RGB.svg)
-:::
 
-::: section-numbering
-:::
+numbersections: true
 
-```{=pdf}
-PageBreak oneColumn
-```
 The specifications in this document are in experimental format.
 [Official Release](https://github.com/ARM-software/acle/releases/latest).
 
@@ -97,7 +90,7 @@ under the same terms as those in the LICENSE file.
 
 The text of and illustrations in this document are licensed by Arm under
 a Creative Commons Attribution--Share Alike 4.0 International license
-(\"CC-BY-SA-4.0"), with an additional clause on patents. The Arm
+(\"CC-BY-SA-4.0\"), with an additional clause on patents. The Arm
 trademarks featured here are registered trademarks or trademarks of Arm
 Limited (or its subsidiaries) in the US and/or elsewhere. All rights
 reserved. Please visit <https://www.arm.com/company/policies/trademarks>
@@ -117,87 +110,76 @@ reserved.
 The following support level definitions are used by the ACLE
 specifications:
 
-**Release**
+_**Release**_
 
-:   Arm considers this specification to have enough implementations,
-    which have received sufficient testing, to verify that it is
-    correct. The details of these criteria are dependent on the scale
-    and complexity of the change over previous versions: small, simple
-    changes might only require one implementation, but more complex
-    changes require multiple independent implementations, which have
-    been rigorously tested for cross-compatibility. Arm anticipates that
-    future changes to this specification will be limited to
-    typographical corrections, clarifications and compatible extensions.
+|   Arm considers this specification to have enough implementations,
+|   which have received sufficient testing, to verify that it is
+|   correct. The details of these criteria are dependent on the scale
+|   and complexity of the change over previous versions: small, simple
+|   changes might only require one implementation, but more complex
+|   changes require multiple independent implementations, which have
+|   been rigorously tested for cross-compatibility. Arm anticipates that
+|   future changes to this specification will be limited to
+|   typographical corrections, clarifications and compatible extensions.
 
-**Beta**
+_**Beta**_
 
-:   Arm considers this specification to be complete, but existing
-    implementations do not meet the requirements for confidence in its
-    release quality. Arm may need to make incompatible changes if issues
-    emerge from its implementation.
+|   Arm considers this specification to be complete, but existing
+|   implementations do not meet the requirements for confidence in its
+|   release quality. Arm may need to make incompatible changes if issues
+|   emerge from its implementation.
 
-**Alpha**
+_**Alpha**_
 
-:   The content of this specification is a draft, and Arm considers the
-    likelihood of future incompatible changes to be significant.
+|   The content of this specification is a draft, and Arm considers the
+|   likelihood of future incompatible changes to be significant.
 
 All content in this document is at the **Alpha** quality level.
 
 #### Change History
 
-  ----------- --------------------- --------------------------------
-  Issue       Date                  Change
-
-  00alpha     30th September 2020   Alpha release
-
-  01alpha     02 July 2021          Open source release. NFCI.
-  ----------- --------------------- --------------------------------
-
-  : :align: left
+| Issue      | Date                  | Change                           |
+| :---       | :---                  | :---                             |
+| 00alpha    | 30th September 2020   | Alpha release                    |
+| 01alpha    | 02 July 2021          | Open source release. NFCI.       |
 
 ### References
 
 This document refers to, or is referred to by, the following documents.
 
-::: morello-table-references
-  ------------------------------------------------------------------ -------------------------------- -----------------------------
-  Ref                                                                URL or other reference           Title
+[//]: # (morello-table-references)
 
-  [ACLE-morello](http://github.com/arm-software/acle/morello)        This document                    Morello Supplement to the Arm
-                                                                                                      C Language Extensions
-
-  [ACLE](https://developer.arm.com/documentation/101028/latest)      Document number: 101028          Arm C Language Extensions
-
-  [CHERI](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf)   UCAM-CL-TR-947, SSN 1476-2986    CHERI C/C++ Programming Guide
-  ------------------------------------------------------------------ -------------------------------- -----------------------------
-
-  : :align: left
-:::
+| Ref                                                              |  URL or other reference        |  Title                         |
+| :---                                                             |  :---                          |  :---                          |
+| [ACLE-morello](http://github.com/arm-software/acle/morello)      |  This document                 |  Morello Supplement to the Arm |
+|                                                                  |                                |  C Language Extensions         |
+| [ACLE](https://developer.arm.com/documentation/101028/latest)    |  Document number: 101028       |  Arm C Language Extensions     |
+| [CHERI](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf) |  UCAM-CL-TR-947, SSN 1476-2986 |  CHERI C/C++ Programming Guide |
 
 ### Terms & Abbreviations
 
-Capability
+_**Capability**_
 
-:   The capability data type is an unforgeable token of authority which
-    provides a foundation for fine grained memory protection and strong
-    compartmentalisation.
+|   The capability data type is an unforgeable token of authority which
+|   provides a foundation for fine grained memory protection and strong
+|   compartmentalisation.
 
-Permissions
+_**Permissions**_
 
-:   The permissions mask controls how the capability can be used - for
-    example, by authorizing the loading and storing of data and/or
-    capabilities.
+|   The permissions mask controls how the capability can be used - for
+|   example, by authorizing the loading and storing of data and/or
+|   capabilities.
 
-Deriving a capability
+_**Deriving a capability**_
 
-:   A capability value CV2 is said to be derived from a capability value
-    CV1 when CV2 is a copy of CV1 with optionally removed permissions
-    and/or optionally narrowed bounds (base increased or limit reduced).
+|   A capability value CV2 is said to be derived from a capability value
+|   CV1 when CV2 is a copy of CV1 with optionally removed permissions
+|   and/or optionally narrowed bounds (base increased or limit reduced).
 
-Sealing a capability
+_**Sealing a capability**_
 
-:   When a capability is sealed it cannot be modified or dereferenced,
-    but it can be used to implement opaque pointer types.
+|   When a capability is sealed it cannot be modified or dereferenced,
+|   but it can be used to implement opaque pointer types.
 
 ## Scope
 
@@ -220,19 +202,13 @@ This macro indicates that the code is being compiled for the C64 ISA.
 
 The following macros indicate capability permissions:
 
-+---------------------------------------------+-----------+
-| > **Name**                                  | **Value** |
-+---------------------------------------------+-----------+
-| `__ARM_CAP_PERMISSION_EXECUTIVE__`          | 2         |
-+---------------------------------------------+-----------+
-| `__ARM_CAP_PERMISSION_MUTABLE_LOAD__`       | 64        |
-+---------------------------------------------+-----------+
-| `__ARM_CAP_PERMISSION_COMPARTMENT_ID__`     | 128       |
-+---------------------------------------------+-----------+
-| `__ARM_CAP_PERMISSION_BRANCH_SEALED_PAIR__` | 256       |
-+---------------------------------------------+-----------+
 
-: :align: left
+| Name                                        | Value     |
+| :---                                        | :---      |
+| `__ARM_CAP_PERMISSION_EXECUTIVE__`          | 2         |
+| `__ARM_CAP_PERMISSION_MUTABLE_LOAD__`       | 64        |
+| `__ARM_CAP_PERMISSION_COMPARTMENT_ID__`     | 128       |
+| `__ARM_CAP_PERMISSION_BRANCH_SEALED_PAIR__` | 256       |
 
 Those can be used to form a bitmask that is acceptable for
 `cheri_perms_and()` and `cheri_perms_clear()`. The value of each macro
