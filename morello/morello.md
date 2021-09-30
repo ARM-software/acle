@@ -1,15 +1,8 @@
 # Morello Supplement to the Arm C Language Extensions
 
-[//]: # (version)
 01alpha
-
-[//]: # (issued)
 Date of Issue: 02 July 2021
-
-[//]: # (logo)
 ![image](Arm_logo_blue_RGB.svg)
-
-numbersections: true
 
 The specifications in this document are in experimental format.
 [Official Release](https://github.com/ARM-software/acle/releases/latest).
@@ -90,7 +83,7 @@ under the same terms as those in the LICENSE file.
 
 The text of and illustrations in this document are licensed by Arm under
 a Creative Commons Attribution--Share Alike 4.0 International license
-(\"CC-BY-SA-4.0\"), with an additional clause on patents. The Arm
+("CC-BY-SA-4.0"), with an additional clause on patents. The Arm
 trademarks featured here are registered trademarks or trademarks of Arm
 Limited (or its subsidiaries) in the US and/or elsewhere. All rights
 reserved. Please visit <https://www.arm.com/company/policies/trademarks>
@@ -112,27 +105,27 @@ specifications:
 
 _**Release**_
 
-|   Arm considers this specification to have enough implementations,
-|   which have received sufficient testing, to verify that it is
-|   correct. The details of these criteria are dependent on the scale
-|   and complexity of the change over previous versions: small, simple
-|   changes might only require one implementation, but more complex
-|   changes require multiple independent implementations, which have
-|   been rigorously tested for cross-compatibility. Arm anticipates that
-|   future changes to this specification will be limited to
-|   typographical corrections, clarifications and compatible extensions.
+   Arm considers this specification to have enough implementations,
+   which have received sufficient testing, to verify that it is
+   correct. The details of these criteria are dependent on the scale
+   and complexity of the change over previous versions: small, simple
+   changes might only require one implementation, but more complex
+   changes require multiple independent implementations, which have
+   been rigorously tested for cross-compatibility. Arm anticipates that
+   future changes to this specification will be limited to
+   typographical corrections, clarifications and compatible extensions.
 
 _**Beta**_
 
-|   Arm considers this specification to be complete, but existing
-|   implementations do not meet the requirements for confidence in its
-|   release quality. Arm may need to make incompatible changes if issues
-|   emerge from its implementation.
+   Arm considers this specification to be complete, but existing
+   implementations do not meet the requirements for confidence in its
+   release quality. Arm may need to make incompatible changes if issues
+   emerge from its implementation.
 
 _**Alpha**_
 
-|   The content of this specification is a draft, and Arm considers the
-|   likelihood of future incompatible changes to be significant.
+   The content of this specification is a draft, and Arm considers the
+   likelihood of future incompatible changes to be significant.
 
 All content in this document is at the **Alpha** quality level.
 
@@ -147,8 +140,6 @@ All content in this document is at the **Alpha** quality level.
 
 This document refers to, or is referred to by, the following documents.
 
-[//]: # (morello-table-references)
-
 | Ref                                                              |  URL or other reference        |  Title                         |
 | :---                                                             |  :---                          |  :---                          |
 | [ACLE-morello](http://github.com/arm-software/acle/morello)      |  This document                 |  Morello Supplement to the Arm |
@@ -160,26 +151,26 @@ This document refers to, or is referred to by, the following documents.
 
 _**Capability**_
 
-|   The capability data type is an unforgeable token of authority which
-|   provides a foundation for fine grained memory protection and strong
-|   compartmentalisation.
+   The capability data type is an unforgeable token of authority which
+   provides a foundation for fine grained memory protection and strong
+   compartmentalisation.
 
 _**Permissions**_
 
-|   The permissions mask controls how the capability can be used - for
-|   example, by authorizing the loading and storing of data and/or
-|   capabilities.
+   The permissions mask controls how the capability can be used - for
+   example, by authorizing the loading and storing of data and/or
+   capabilities.
 
 _**Deriving a capability**_
 
-|   A capability value CV2 is said to be derived from a capability value
-|   CV1 when CV2 is a copy of CV1 with optionally removed permissions
-|   and/or optionally narrowed bounds (base increased or limit reduced).
+   A capability value CV2 is said to be derived from a capability value
+   CV1 when CV2 is a copy of CV1 with optionally removed permissions
+   and/or optionally narrowed bounds (base increased or limit reduced).
 
 _**Sealing a capability**_
 
-|   When a capability is sealed it cannot be modified or dereferenced,
-|   but it can be used to implement opaque pointer types.
+   When a capability is sealed it cannot be modified or dereferenced,
+   but it can be used to implement opaque pointer types.
 
 ## Scope
 
