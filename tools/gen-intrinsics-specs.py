@@ -20,6 +20,7 @@ import tabulate as tbl
 import argparse
 import csv
 import doctest
+import re
 
 
 def quote_literal(val):
@@ -625,7 +626,7 @@ def get_section_data(row):
     return [row[1], section_text]
 
 
-def process_db(db, classification_db):
+def process_db(db, classification_db, file_format):
     """Processes a list of intrinsics and their mappings to the
     classification into a sequence of sections and RST tables.
 
@@ -641,7 +642,8 @@ def process_db(db, classification_db):
     ... 'B01': 'Section 1.1|Section 1.1.1',
     ... 'C01': 'classX|subclassY'
     ... }
-    >>> print(process_db(intrinsics, classification))
+    >>> file_format = 'rst'
+    >>> print(process_db(intrinsics, classification, file_format))
     <BLANKLINE>
     <BLANKLINE>
     Section 1 title
@@ -740,9 +742,14 @@ def process_db(db, classification_db):
     assert(table_header is not None)
     body = ""
     for k, v in filtered.items():
-        body += "\n" + \
-            recurse_print_to_rst((k, v), rst_header_levels,
-                                 headers=table_header, tablefmt="grid")
+        if file_format=="rst":
+            body += "\n" + \
+                recurse_print_to_rst((k, v), rst_header_levels,
+                                     headers=table_header, tablefmt="grid")
+        elif file_format=="md":
+            body += "\n" + \
+                recurse_print_to_rst((k, v), rst_header_levels,
+                                     headers=table_header, tablefmt="github")
     return body
 
 
@@ -775,6 +782,9 @@ def get_intrinsics_db(path):
     with open(path) as csvfile:
         return list(csv.reader(csvfile, delimiter='\t'))
 
+def get_table_of_contents(table): #stub method to demonstrate idea for table generation
+
+    return table
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -787,6 +797,10 @@ if __name__ == "__main__":
                         help="CSV file that map the intrinsics to their classification.", required=True)
     parser.add_argument("--outfile", metavar="<path>", type=str,
                         help="Output file where the RST of the specs is written.", required=True)
+    parser.add_argument("--format", metavar="<path>", type=str,
+                        help="The type of format(markdown or rst) the output file should be.", required=True)
+    parser.add_argument("--table_of_contents", metavar="<path>", type=str,
+                        help="Whether a table of contents needs to be generated for the document or not.", required=True)
     cli_args = parser.parse_args()
 
 
@@ -800,9 +814,14 @@ if __name__ == "__main__":
     classification_map = get_classification_map(cli_args.classification)
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
-    intrinsic_table = process_db(intrinsics_db, classification_map)
-    rst_output = doc_template.format(intrinsic_table=intrinsic_table)
-    with (open(cli_args.outfile, 'w')) as f:
+    output_file = cli_args.outfile
+    file_format = cli_args.format
+    intrinsic_table = process_db(intrinsics_db, classification_map, file_format)
+    table_of_contents = ""
+    if cli_args.table_of_contents == "true":
+        table_of_contents = get_table_of_contents("")
+    rst_output = doc_template.format(table_of_contents=table_of_contents, intrinsic_table=intrinsic_table)
+    with (open(output_file, 'w')) as f:
         f.write(rst_output)
     # Always run the unit tests.
     doctest.NORMALIZE_WHITESPACE
