@@ -626,7 +626,7 @@ def get_section_data(row):
     return [row[1], section_text]
 
 
-def process_db(db, classification_db, file_format):
+def process_db(db, classification_db, table_format):
     """Processes a list of intrinsics and their mappings to the
     classification into a sequence of sections and RST tables.
 
@@ -642,8 +642,8 @@ def process_db(db, classification_db, file_format):
     ... 'B01': 'Section 1.1|Section 1.1.1',
     ... 'C01': 'classX|subclassY'
     ... }
-    >>> file_format = 'rst'
-    >>> print(process_db(intrinsics, classification, file_format))
+    >>> table_format = 'grid'
+    >>> print(process_db(intrinsics, classification, table_format))
     <BLANKLINE>
     <BLANKLINE>
     Section 1 title
@@ -742,14 +742,9 @@ def process_db(db, classification_db, file_format):
     assert(table_header is not None)
     body = ""
     for k, v in filtered.items():
-        if file_format=="rst":
-            body += "\n" + \
-                recurse_print_to_rst((k, v), rst_header_levels,
-                                     headers=table_header, tablefmt="grid")
-        elif file_format=="md":
-            body += "\n" + \
-                recurse_print_to_rst((k, v), rst_header_levels,
-                                     headers=table_header, tablefmt="github")
+        body += "\n" + \
+            recurse_print_to_rst((k, v), rst_header_levels,
+                                 headers=table_header, tablefmt=table_format)
     return body
 
 
@@ -798,9 +793,7 @@ if __name__ == "__main__":
     parser.add_argument("--outfile", metavar="<path>", type=str,
                         help="Output file where the RST of the specs is written.", required=True)
     parser.add_argument("--format", metavar="<path>", type=str,
-                        help="The type of format(markdown or rst) the output file should be.", required=True)
-    parser.add_argument("--table_of_contents", metavar="<path>", type=str,
-                        help="Whether a table of contents needs to be generated for the document or not.", required=True)
+                        help="The type of format the table in the output file should be.", required=True)
     cli_args = parser.parse_args()
 
 
@@ -815,12 +808,9 @@ if __name__ == "__main__":
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
     output_file = cli_args.outfile
-    file_format = cli_args.format
-    intrinsic_table = process_db(intrinsics_db, classification_map, file_format)
-    table_of_contents = ""
-    if cli_args.table_of_contents == "true":
-        table_of_contents = get_table_of_contents("")
-    rst_output = doc_template.format(table_of_contents=table_of_contents, intrinsic_table=intrinsic_table)
+    table_format = cli_args.format
+    intrinsic_table = process_db(intrinsics_db, classification_map, table_format)
+    rst_output = doc_template.format(intrinsic_table=intrinsic_table)
     with (open(output_file, 'w')) as f:
         f.write(rst_output)
     # Always run the unit tests.
