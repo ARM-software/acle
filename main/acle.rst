@@ -20,8 +20,8 @@
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
-.. |release| replace:: Development version based on 2021Q2
-.. |date-of-issue| replace:: TBD
+.. |release| replace:: 2021Q3
+.. |date-of-issue| replace:: 30 September 2021
 
 =========================
 Arm C Language Extensions
@@ -221,7 +221,7 @@ Change history
    |                    |                    |                    | 2021. Open source  |
    |                    |                    |                    | version. NFCI.     |
    +--------------------+--------------------+--------------------+--------------------+
-   | |release|          | |date-of-issue|    | Arm                | Minor              |
+   | 2021Q3             | 30 September 2021  | Arm                | Minor              |
    |                    |                    |                    | re-wording. NFCI.  |
    +--------------------+--------------------+--------------------+--------------------+
 
