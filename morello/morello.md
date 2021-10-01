@@ -105,7 +105,7 @@ reserved.
 The following support level definitions are used by the ACLE
 specifications:
 
-_**Release**_
+**Release**
 
    Arm considers this specification to have enough implementations,
    which have received sufficient testing, to verify that it is
@@ -117,14 +117,14 @@ _**Release**_
    future changes to this specification will be limited to
    typographical corrections, clarifications and compatible extensions.
 
-_**Beta**_
+**Beta**
 
    Arm considers this specification to be complete, but existing
    implementations do not meet the requirements for confidence in its
    release quality. Arm may need to make incompatible changes if issues
    emerge from its implementation.
 
-_**Alpha**_
+**Alpha**
 
    The content of this specification is a draft, and Arm considers the
    likelihood of future incompatible changes to be significant.
@@ -151,25 +151,25 @@ This document refers to, or is referred to by, the following documents.
 
 ### Terms & Abbreviations
 
-_**Capability**_
+**Capability**
 
    The capability data type is an unforgeable token of authority which
    provides a foundation for fine grained memory protection and strong
    compartmentalisation.
 
-_**Permissions**_
+**Permissions**
 
    The permissions mask controls how the capability can be used - for
    example, by authorizing the loading and storing of data and/or
    capabilities.
 
-_**Deriving a capability**_
+**Deriving a capability**
 
    A capability value CV2 is said to be derived from a capability value
    CV1 when CV2 is a copy of CV1 with optionally removed permissions
    and/or optionally narrowed bounds (base increased or limit reduced).
 
-_**Sealing a capability**_
+**Sealing a capability**
 
    When a capability is sealed it cannot be modified or dereferenced,
    but it can be used to implement opaque pointer types.
