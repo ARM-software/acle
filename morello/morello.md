@@ -1,7 +1,9 @@
 # Morello Supplement to the Arm C Language Extensions
 
 01alpha
+
 Date of Issue: 02 July 2021
+
 ![image](Arm_logo_blue_RGB.svg)
 
 The specifications in this document are in experimental format.
