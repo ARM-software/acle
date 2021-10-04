@@ -266,9 +266,10 @@ Most changes in ACLE Q2 2018 are updates to support features introduced in
 Armv8.3-A [ARMARMv83]_.  Support is added for the Complex addition and Complex MLA intrinsics.
 Armv8.4-A [ARMARMv84]_.  Support is added for the Dot Product intrinsics.
 
-Changes for next release
-~~~~~~~~~~~~~~~~~~~~~~~~
+Changes between ACLE Q2 2021 and ACLE Q3 2021
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Fixed FP16 format description at ssec-fp16-type_.
+* Fixed the description of at ssec-NEON-intrinsics-concepts_.
 
 References
 ----------
@@ -4818,6 +4819,8 @@ in 64-bit and 128-bit vectors.
 The intrinsics in this section provide C and C++ programmers with a
 simple programming model allowing easy access to code-generation of the
 Advanced SIMD instructions for both AArch64 and AArch32 execution states.
+
+.. _ssec-NEON-intrinsics-concepts:
 
 Concepts
 --------
