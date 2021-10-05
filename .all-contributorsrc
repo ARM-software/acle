@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "TamarChristinaArm",
+      "name": "Tamar Christina",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48126768?v=4",
+      "profile": "https://github.com/TamarChristinaArm",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "acle",
+  "projectOwner": "ARM-software",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
