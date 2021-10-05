@@ -1,6 +1,6 @@
 <div align="center">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
    <img src="Arm_logo_blue_RGB.svg" />
 </div>
@@ -67,6 +67,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://tubafranz.me/"><img src="https://avatars.githubusercontent.com/u/25690309?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Francesco Petrogalli</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=fpetrogalli" title="Code">💻</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Afpetrogalli" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/ktkachov-arm"><img src="https://avatars.githubusercontent.com/u/74917949?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ktkachov-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=ktkachov-arm" title="Code">💻</a> <a href="#content-ktkachov-arm" title="Content">🖋</a> <a href="#infra-ktkachov-arm" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://github.com/sallyarmneale"><img src="https://avatars.githubusercontent.com/u/56446080?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sallyarmneale</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asallyarmneale" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
