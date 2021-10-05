@@ -7,8 +7,6 @@ Date of Issue: 02 July 2021
 
 ------------------------------------------------------------------------
 
-## Table of Contents   
-
 ## Preface                                                                  
 
 ### Abstract

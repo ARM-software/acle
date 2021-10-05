@@ -20,16 +20,15 @@ import tabulate as tbl
 import argparse
 import csv
 import doctest
-import re
 
-
-def quote_literal(val):
+def quote_literal(val, table_format):
     if len(val) > 0:
-        return f"``{val}``"
+        return f"``{val}``" if table_format == "grid" else f"```{val}```"
     return val
 
 
 rst_header_levels = ['=', '~', '-', '_', '@']
+md_header_levels = ['#', '##', '###', '####', '#####']
 __CSV_SECTION_PREFIX = '<SECTION>'
 __CSV_COMMENT_PREFIX = '<COMMENT>'
 __CSV_HEADER_PREFIX = '<HEADER>'
@@ -42,15 +41,23 @@ __SECTION_TEXT_KEYWORD = '__section_text'
 __SECTION_KEYWORDS = [__INTRINSIC_TABLE_KEYWORD, __SECTION_TEXT_KEYWORD]
 
 
-def rst_literal_quote(mapping):
+def literal_quote(mapping, table_format):
     r"""
-    >>> rst_literal_quote('a; b')
+    >>> literal_quote('a; b', 'grid')
     ' ::\n\n    a \n    b \n\n'
 
-    >>> rst_literal_quote('a b')
+    >>> literal_quote('a b', 'grid')
     ' ::\n\n    a b \n\n'
 
-    >>> rst_literal_quote('')
+    >>> literal_quote('', 'grid')
+    ''
+    >>> literal_quote('a; b', 'github')
+    '<br><br>    a <br>    b <br><br>'
+
+    >>> literal_quote('a b', 'github')
+    '<br><br>    a b <br><br>'
+
+    >>> literal_quote('', 'github')
     ''
     """
     if mapping == "":
@@ -58,26 +65,43 @@ def rst_literal_quote(mapping):
 
     lines = mapping.split(';')
     indented_lines = [f"    {line.strip()} " for line in lines]
-    lines = [" ::", ""] + indented_lines + ["\n"]
-    return '\n'.join(lines)
+
+    if table_format == "grid":
+        lines = [" ::", ""] + indented_lines + ["\n"]
+        return '\n'.join(lines)
+    elif table_format == "github":
+        lines = ["", ""] + indented_lines + ["<br>"]
+        return '<br>'.join(lines)
 
 
-def quote_split_intrinsics(intrinsic):
+def quote_split_intrinsics(intrinsic, table_format):
     r"""
-    >>> quote_split_intrinsics('int f(int x, float y)')
+    >>> quote_split_intrinsics('int f(int x, float y)', 'grid')
     '.. code:: c\n\n    int f(\n        int x,\n        float y)'
 
-    >>> quote_split_intrinsics('int f(int x)')
+    >>> quote_split_intrinsics('int f(int x)', 'grid')
     '.. code:: c\n\n    int f(int x)\n'
+
+    >>> quote_split_intrinsics('int f(int x, float y)', 'github')
+    '<br><br>   int f(<br>        int x,<br>        float y)'
+
+    >>> quote_split_intrinsics('int f(int x)', 'github')
+    '<br><br>    int f(int x)<br>'
     """
     # Remove the suffix ')' from the intrinsic string.
     intrinsic_without_ending = intrinsic[:-1]
     ret_def, par, signature = intrinsic_without_ending.partition('(')
     split_signature = signature.split(',')
     if len(split_signature) > 1:
-        return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
+        if table_format == "grid":
+            return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
+        elif table_format == "github":
+            return f"<br><br>   {ret_def}(<br>        " + ',<br>       '.join(split_signature) + ")"
     else:
-        return f".. code:: c\n\n    {intrinsic}\n"
+        if table_format == "grid":
+            return f".. code:: c\n\n    {intrinsic}\n"
+        elif table_format == "github":
+            return f"<br><br>    {intrinsic}<br>"
 
 
 def get_intrinsic_name(signature):
@@ -133,9 +157,12 @@ class Intrinsic:
         self.asm_mnemonic = self.asm.split(' ')[0].strip()
         self.classification = classification
 
-    def table_row(self):
-        return [quote_split_intrinsics(self.signature), rst_literal_quote(self.parameter_mapping), rst_literal_quote(self.asm), rst_literal_quote(self.result_mapping), quote_literal(self.arch)]
-
+    def table_row(self, table_format):
+        return [quote_split_intrinsics(self.signature, table_format), \
+                literal_quote(self.parameter_mapping, table_format), \
+                literal_quote(self.asm, table_format), \
+                literal_quote(self.result_mapping, table_format), \
+                quote_literal(self.arch, table_format)]
 
 def recurse_set(parent, section_levels, value, object_type_target):
     """Recursively fills the dictinoary `parent` with the keys provided in
@@ -553,8 +580,14 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     body = ""
     if start_new_section(item):
         title, *rest = section_level_list
-        body += f"\n{key}"
-        body += "\n" + title * len(key)+""
+
+        if tablefmt == "grid" or tablefmt == "rst":
+            body += f"\n{key}"
+            body += "\n" + title * len(key) + ""
+        elif tablefmt == "github":
+            body += "\n" + title + " "
+            body += f"{key}"
+
         # Print the value of the text for the section right after the
         # section title.
         if __SECTION_TEXT_KEYWORD in value:
@@ -642,8 +675,7 @@ def process_db(db, classification_db, table_format):
     ... 'B01': 'Section 1.1|Section 1.1.1',
     ... 'C01': 'classX|subclassY'
     ... }
-    >>> table_format = 'grid'
-    >>> print(process_db(intrinsics, classification, table_format))
+    >>> print(process_db(intrinsics, classification, 'grid'))
     <BLANKLINE>
     <BLANKLINE>
     Section 1 title
@@ -694,6 +726,50 @@ def process_db(db, classification_db, table_format):
     |             |       |        |         |          |
     |     c C01() |     c |     cc |     ccc |          |
     +-------------+-------+--------+---------+----------+
+    >>> intrinsics = [
+    ... ['<HEADER>', 'T1', 'T2', 'T3', 'T4', 'T5'],
+    ... ['<SECTION>','Section 1 title', 'Section 1 description.'],
+    ... ['a A01()','a','aa','aaa','aaaa'],
+    ... ['b B01()','b','bb','bbb','bbbb'],
+    ... ['<SECTION>','Section 2 title', 'Section 2 description.'],
+    ... ['c C01()','c','cc','ccc','cccc'],
+    ... ]
+    >>> classification = {
+    ... 'B01': 'Section 1.1|Section 1.1.1',
+    ... 'C01': 'classX|subclassY'
+    ... }
+    >>> print(process_db(intrinsics, classification, 'github'))
+    <BLANKLINE>
+    <BLANKLINE>
+    # Section 1 title
+    <BLANKLINE>
+    Section 1 description.
+    <BLANKLINE>
+    ## No category
+    <BLANKLINE>
+    | T1                      | T2                     | T3                      | T4                       | T5         |
+    |-------------------------|------------------------|-------------------------|--------------------------|------------|
+    | <br><br>    a A01()<br> | <br><br>    a <br><br> | <br><br>    aa <br><br> | <br><br>    aaa <br><br> | ```aaaa``` |
+    <BLANKLINE>
+    ## Section 1.1
+    <BLANKLINE>
+    ### Section 1.1.1
+    <BLANKLINE>
+    | T1                      | T2                     | T3                      | T4                       | T5         |
+    |-------------------------|------------------------|-------------------------|--------------------------|------------|
+    | <br><br>    b B01()<br> | <br><br>    b <br><br> | <br><br>    bb <br><br> | <br><br>    bbb <br><br> | ```bbbb``` |
+    <BLANKLINE>
+    # Section 2 title
+    <BLANKLINE>
+    Section 2 description.
+    <BLANKLINE>
+    ## classX
+    <BLANKLINE>
+    ### subclassY
+    <BLANKLINE>
+    | T1                      | T2                     | T3                      | T4                       | T5         |
+    |-------------------------|------------------------|-------------------------|--------------------------|------------|
+    | <br><br>    c C01()<br> | <br><br>    c <br><br> | <br><br>    cc <br><br> | <br><br>    ccc <br><br> | ```cccc``` |
     """
     filtered = {}
     section, section_text, table_header = None, None, None
@@ -732,7 +808,7 @@ def process_db(db, classification_db, table_format):
             if section:
                 classification_list = [section]+classification_list
             recurse_set(filtered, classification_list,
-                        intrinsic.table_row(), __INTRINSIC_TABLE_KEYWORD)
+                        intrinsic.table_row(table_format), __INTRINSIC_TABLE_KEYWORD)
 
             continue
 
@@ -743,7 +819,7 @@ def process_db(db, classification_db, table_format):
     body = ""
     for k, v in filtered.items():
         body += "\n" + \
-            recurse_print_to_rst((k, v), rst_header_levels,
+            recurse_print_to_rst((k, v), rst_header_levels if table_format == "grid" else md_header_levels,
                                  headers=table_header, tablefmt=table_format)
     return body
 
@@ -777,10 +853,6 @@ def get_intrinsics_db(path):
     with open(path) as csvfile:
         return list(csv.reader(csvfile, delimiter='\t'))
 
-def get_table_of_contents(table): #stub method to demonstrate idea for table generation
-
-    return table
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Generate an RST file for the intrinsics specifications.")
@@ -796,7 +868,6 @@ if __name__ == "__main__":
                         help="The type of format the table in the output file should be.", required=True)
     cli_args = parser.parse_args()
 
-
     # We require version 0.8.6 to be able to print multi-line records
     # in tables.
     if tbl.__version__ < "0.8.6":
@@ -807,11 +878,9 @@ if __name__ == "__main__":
     classification_map = get_classification_map(cli_args.classification)
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
-    output_file = cli_args.outfile
-    table_format = cli_args.format
-    intrinsic_table = process_db(intrinsics_db, classification_map, table_format)
+    intrinsic_table = process_db(intrinsics_db, classification_map, cli_args.format)
     rst_output = doc_template.format(intrinsic_table=intrinsic_table)
-    with (open(output_file, 'w')) as f:
+    with (open(cli_args.outfile, 'w')) as f:
         f.write(rst_output)
     # Always run the unit tests.
     doctest.NORMALIZE_WHITESPACE
