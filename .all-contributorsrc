@@ -25,6 +25,15 @@
         "content",
         "infra"
       ]
+    },
+    {
+      "login": "sallyarmneale",
+      "name": "sallyarmneale",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56446080?v=4",
+      "profile": "https://github.com/sallyarmneale",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
