@@ -12,6 +12,15 @@
       "profile": "https://github.com/TamarChristinaArm",
       "contributions": [
         "code"
+    },
+    {
+      "login": "fpetrogalli",
+      "name": "Francesco Petrogalli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25690309?v=4",
+      "profile": "http://tubafranz.me/",
+      "contributions": [
+        "code",
+        "review"
       ]
     }
   ],

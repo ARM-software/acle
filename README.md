@@ -66,6 +66,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/TamarChristinaArm"><img src="https://avatars.githubusercontent.com/u/48126768?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tamar Christina</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=TamarChristinaArm" title="Code">💻</a></td>
+    <td align="center"><a href="http://tubafranz.me/"><img src="https://avatars.githubusercontent.com/u/25690309?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Francesco Petrogalli</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=fpetrogalli" title="Code">💻</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Afpetrogalli" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
