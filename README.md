@@ -3,14 +3,10 @@ layout: default
 ---
 
 <div align="center">
-<<<<<<< HEAD
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
    <img id="index_logo" src="Arm_logo_blue_RGB.svg" />
-=======
-   <img src="Arm_logo_blue_RGB.svg" />
->>>>>>> [readme] Fix position of the all-contributors badge.
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
@@ -50,12 +46,21 @@ be referenced in this README file when added.
 
 ## List of documents
 
+<<<<<<< HEAD
 Document sources                                                            | Latest official release
 ---                                                                         | ---
 [Arm C Language Extensions](main/acle.rst)                                  | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
 [Morello Supplement to the Arm C Language Extensions](morello/morello.html) | [01alpha](https://github.com/ARM-software/acle/releases/latest)
 [Arm MVE Intrinsics](mve_intrinsics/mve.html)                               | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
 [Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.rst)                | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
+=======
+Document sources                                                           | Latest official release
+---                                                                        | ---
+[Arm C Language Extensions](main/acle.rst)                                 | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+[Morello Supplement to the Arm C Language Extensions](morello/morello.rst) | [01alpha](https://github.com/ARM-software/acle/releases/latest)
+[Arm MVE Intrinsics](mve_intrinsics/mve.rst)                               | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
+[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.rst)               | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+>>>>>>> [2021Q3] Update versions in README file.
 
 # License
 
