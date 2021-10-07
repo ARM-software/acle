@@ -89,7 +89,7 @@ def quote_split_intrinsics(intrinsic, source_syntax):
     '.. code:: c\n\n    int f(int x)\n'
 
     >>> quote_split_intrinsics('int f(int x, float y)', 'markdown')
-    '`int f`(<br>&nbsp;&nbsp;&nbsp;&nbsp;`int x`,<br>&nbsp;&nbsp;&nbsp;&nbsp;` float y`)'
+    '`int f(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int x`,<br>&nbsp;&nbsp;&nbsp;&nbsp;` float y)`'
 
     >>> quote_split_intrinsics('int f(int x)', 'markdown')
     '`int f(int x)`'
@@ -98,11 +98,13 @@ def quote_split_intrinsics(intrinsic, source_syntax):
     intrinsic_without_ending = intrinsic[:-1]
     ret_def, par, signature = intrinsic_without_ending.partition('(')
     split_signature = signature.split(',')
+    whitespace_indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
+
     if len(split_signature) > 1:
         if source_syntax == "rst":
             return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
         elif source_syntax == "markdown":
-            return f"`{ret_def}`(<br>&nbsp;&nbsp;&nbsp;&nbsp;`" + '`,<br>&nbsp;&nbsp;&nbsp;&nbsp;`'.join(split_signature) + "`)"
+            return f"`{ret_def}(`<br>" + whitespace_indent + "`" + ('`,<br>'+ whitespace_indent + '`').join(split_signature) + ")`"
     else:
         if source_syntax == "rst":
             return f".. code:: c\n\n    {intrinsic}\n"
@@ -515,7 +517,21 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
               1                       2                      3         4                          5
               6                       7                      8         9                         10
     ===========  ======================  =====================  ========  =========================
-
+    >>> print(recurse_print_to_rst(table_item, ['#'], tablefmt='github'))
+    <BLANKLINE>
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    |-------------|------------------------|-----------------------|----------|---------------------------|
+    |           1 |                      2 |                     3 |        4 |                         5 |
+    |           6 |                      7 |                     8 |        9 |                        10 |
+    >>> print(recurse_print_to_rst(table_item, ['='], tablefmt='grid'))
+    <BLANKLINE>
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    +=============+========================+=======================+==========+===========================+
+    |           1 |                      2 |                     3 |        4 |                         5 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |           6 |                      7 |                     8 |        9 |                        10 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
     >>> item = ('New section', {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]})
     >>> print(recurse_print_to_rst(item, ['=']))
     <BLANKLINE>
@@ -528,64 +544,6 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
               1                       2                      3         4                          5
               6                       7                      8         9                         10
     ===========  ======================  =====================  ========  =========================
-
-    >>> item = ('Section 1', {'Section 1.1': {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]}})
-    >>> print(recurse_print_to_rst(item, ['=','~']))
-    <BLANKLINE>
-    Section 1
-    =========
-    <BLANKLINE>
-    Section 1.1
-    ~~~~~~~~~~~
-    <BLANKLINE>
-    ===========  ======================  =====================  ========  =========================
-      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
-    ===========  ======================  =====================  ========  =========================
-              1                       2                      3         4                          5
-              6                       7                      8         9                         10
-    ===========  ======================  =====================  ========  =========================
-
-    >>> item = ('Section 1', {'Section 1.1': { '__section_text': "Text for Section 1.1", '__intrinsic_table': [[1,2,3,4,5]]}})
-    >>> print(recurse_print_to_rst(item, ['=','~']))
-    <BLANKLINE>
-    Section 1
-    =========
-    <BLANKLINE>
-    Section 1.1
-    ~~~~~~~~~~~
-    <BLANKLINE>
-    Text for Section 1.1
-    <BLANKLINE>
-    ===========  ======================  =====================  ========  =========================
-      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
-    ===========  ======================  =====================  ========  =========================
-              1                       2                      3         4                          5
-    ===========  ======================  =====================  ========  =========================
-
-    >>> item = ('Section 1', {'Section 1.1': { '__intrinsic_table': [[1,2,3,4,5]], '__section_text': "Text for Section 1.1" }})
-    >>> print(recurse_print_to_rst(item, ['=','~']))
-    <BLANKLINE>
-    Section 1
-    =========
-    <BLANKLINE>
-    Section 1.1
-    ~~~~~~~~~~~
-    <BLANKLINE>
-    Text for Section 1.1
-    <BLANKLINE>
-    ===========  ======================  =====================  ========  =========================
-      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
-    ===========  ======================  =====================  ========  =========================
-              1                       2                      3         4                          5
-    ===========  ======================  =====================  ========  =========================
-    >>> table_item = ('__intrinsic_table', [[1,2,3,4,5], [6,7,8,9, 10]])
-    >>> print(recurse_print_to_rst(table_item, ['#'], tablefmt='github'))
-    <BLANKLINE>
-    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
-    |-------------|------------------------|-----------------------|----------|---------------------------|
-    |           1 |                      2 |                     3 |        4 |                         5 |
-    |           6 |                      7 |                     8 |        9 |                        10 |
-    >>> item = ('New section', {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]})
     >>> print(recurse_print_to_rst(item, ['#'], tablefmt='github'))
     <BLANKLINE>
     # New section
@@ -594,52 +552,6 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |-------------|------------------------|-----------------------|----------|---------------------------|
     |           1 |                      2 |                     3 |        4 |                         5 |
     |           6 |                      7 |                     8 |        9 |                        10 |
-    >>> item = ('Section 1', {'Section 1.1': {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]}})
-    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
-    <BLANKLINE>
-    # Section 1
-    <BLANKLINE>
-    ## Section 1.1
-    <BLANKLINE>
-    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
-    |-------------|------------------------|-----------------------|----------|---------------------------|
-    |           1 |                      2 |                     3 |        4 |                         5 |
-    |           6 |                      7 |                     8 |        9 |                        10 |
-    >>> item = ('Section 1', {'Section 1.1': { '__section_text': "Text for Section 1.1", '__intrinsic_table': [[1,2,3,4,5]]}})
-    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
-    <BLANKLINE>
-    # Section 1
-    <BLANKLINE>
-    ## Section 1.1
-    <BLANKLINE>
-    Text for Section 1.1
-    <BLANKLINE>
-    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
-    |-------------|------------------------|-----------------------|----------|---------------------------|
-    |           1 |                      2 |                     3 |        4 |                         5 |
-    >>> item = ('Section 1', {'Section 1.1': { '__intrinsic_table': [[1,2,3,4,5]], '__section_text': "Text for Section 1.1" }})
-    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
-    <BLANKLINE>
-    # Section 1
-    <BLANKLINE>
-    ## Section 1.1
-    <BLANKLINE>
-    Text for Section 1.1
-    <BLANKLINE>
-    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
-    |-------------|------------------------|-----------------------|----------|---------------------------|
-    |           1 |                      2 |                     3 |        4 |                         5 |
-    >>> table_item = ('__intrinsic_table', [[1,2,3,4,5], [6,7,8,9, 10]])
-    >>> print(recurse_print_to_rst(table_item, ['='], tablefmt='grid'))
-    <BLANKLINE>
-    +-------------+------------------------+-----------------------+----------+---------------------------+
-    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
-    +=============+========================+=======================+==========+===========================+
-    |           1 |                      2 |                     3 |        4 |                         5 |
-    +-------------+------------------------+-----------------------+----------+---------------------------+
-    |           6 |                      7 |                     8 |        9 |                        10 |
-    +-------------+------------------------+-----------------------+----------+---------------------------+
-    >>> item = ('New section', {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]})
     >>> print(recurse_print_to_rst(item, ['='], tablefmt='grid'))
     <BLANKLINE>
     New section
@@ -653,6 +565,30 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |           6 |                      7 |                     8 |        9 |                        10 |
     +-------------+------------------------+-----------------------+----------+---------------------------+
     >>> item = ('Section 1', {'Section 1.1': {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]}})
+    >>> print(recurse_print_to_rst(item, ['=','~']))
+    <BLANKLINE>
+    Section 1
+    =========
+    <BLANKLINE>
+    Section 1.1
+    ~~~~~~~~~~~
+    <BLANKLINE>
+    ===========  ======================  =====================  ========  =========================
+      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
+    ===========  ======================  =====================  ========  =========================
+              1                       2                      3         4                          5
+              6                       7                      8         9                         10
+    ===========  ======================  =====================  ========  =========================
+    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
+    <BLANKLINE>
+    # Section 1
+    <BLANKLINE>
+    ## Section 1.1
+    <BLANKLINE>
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    |-------------|------------------------|-----------------------|----------|---------------------------|
+    |           1 |                      2 |                     3 |        4 |                         5 |
+    |           6 |                      7 |                     8 |        9 |                        10 |
     >>> print(recurse_print_to_rst(item, ['=','~'], tablefmt='grid'))
     <BLANKLINE>
     Section 1
@@ -669,6 +605,32 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |           6 |                      7 |                     8 |        9 |                        10 |
     +-------------+------------------------+-----------------------+----------+---------------------------+
     >>> item = ('Section 1', {'Section 1.1': { '__section_text': "Text for Section 1.1", '__intrinsic_table': [[1,2,3,4,5]]}})
+    >>> print(recurse_print_to_rst(item, ['=','~']))
+    <BLANKLINE>
+    Section 1
+    =========
+    <BLANKLINE>
+    Section 1.1
+    ~~~~~~~~~~~
+    <BLANKLINE>
+    Text for Section 1.1
+    <BLANKLINE>
+    ===========  ======================  =====================  ========  =========================
+      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
+    ===========  ======================  =====================  ========  =========================
+              1                       2                      3         4                          5
+    ===========  ======================  =====================  ========  =========================
+    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
+    <BLANKLINE>
+    # Section 1
+    <BLANKLINE>
+    ## Section 1.1
+    <BLANKLINE>
+    Text for Section 1.1
+    <BLANKLINE>
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    |-------------|------------------------|-----------------------|----------|---------------------------|
+    |           1 |                      2 |                     3 |        4 |                         5 |
     >>> print(recurse_print_to_rst(item, ['=','~'], tablefmt='grid'))
     <BLANKLINE>
     Section 1
@@ -685,6 +647,32 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |           1 |                      2 |                     3 |        4 |                         5 |
     +-------------+------------------------+-----------------------+----------+---------------------------+
     >>> item = ('Section 1', {'Section 1.1': { '__intrinsic_table': [[1,2,3,4,5]], '__section_text': "Text for Section 1.1" }})
+    >>> print(recurse_print_to_rst(item, ['=','~']))
+    <BLANKLINE>
+    Section 1
+    =========
+    <BLANKLINE>
+    Section 1.1
+    ~~~~~~~~~~~
+    <BLANKLINE>
+    Text for Section 1.1
+    <BLANKLINE>
+    ===========  ======================  =====================  ========  =========================
+      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
+    ===========  ======================  =====================  ========  =========================
+              1                       2                      3         4                          5
+    ===========  ======================  =====================  ========  =========================
+    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
+    <BLANKLINE>
+    # Section 1
+    <BLANKLINE>
+    ## Section 1.1
+    <BLANKLINE>
+    Text for Section 1.1
+    <BLANKLINE>
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    |-------------|------------------------|-----------------------|----------|---------------------------|
+    |           1 |                      2 |                     3 |        4 |                         5 |
     >>> print(recurse_print_to_rst(item, ['=','~'], tablefmt='grid'))
     <BLANKLINE>
     Section 1
