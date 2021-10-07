@@ -89,7 +89,7 @@ def quote_split_intrinsics(intrinsic, source_syntax):
     '.. code:: c\n\n    int f(int x)\n'
 
     >>> quote_split_intrinsics('int f(int x, float y)', 'markdown')
-    '`int f(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int x`,<br>&nbsp;&nbsp;&nbsp;&nbsp;` float y)`'
+    '`int f(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int x,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float y)`'
 
     >>> quote_split_intrinsics('int f(int x)', 'markdown')
     '`int f(int x)`'
@@ -104,7 +104,7 @@ def quote_split_intrinsics(intrinsic, source_syntax):
         if source_syntax == "rst":
             return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
         elif source_syntax == "markdown":
-            return f"`{ret_def}(`<br>" + whitespace_indent + "`" + ('`,<br>'+ whitespace_indent + '`').join(split_signature) + ")`"
+            return f"`{ret_def}(`<br>" + whitespace_indent + "`" + (',`<br>'+ whitespace_indent + '`').join(split_signature) + ")`"
     else:
         if source_syntax == "rst":
             return f".. code:: c\n\n    {intrinsic}\n"
@@ -969,7 +969,8 @@ if __name__ == "__main__":
     parser.add_argument("--outfile", metavar="<path>", type=str,
                         help="Output file where the RST of the specs is written.", required=True)
     parser.add_argument("--source_syntax", metavar="<path>", type=str,
-                        help="The type of syntax the output file should be rendered in. Can be rst or markdown.", required=True)
+                        help="The type of syntax the output file should be rendered in. Can be rst or markdown.", required=True,
+                        choices=['rst', 'markdown'])
     cli_args = parser.parse_args()
 
     # We require version 0.8.6 to be able to print multi-line records
