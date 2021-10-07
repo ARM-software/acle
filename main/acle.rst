@@ -5812,7 +5812,7 @@ Instructions
 
 These intrinsics are available when ``arm_acle.h`` is included.
 
-.. _sec-MOPS-intrinsics:
+.. _ssec-MOPS-intrinsics:
 
 memcpy family of memory operations (MOPS) intrinsics
 ####################################################
