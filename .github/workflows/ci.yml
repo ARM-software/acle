@@ -19,6 +19,14 @@ jobs:
     - name: setup nvm
       shell: bash -l -eo pipefail {0}
       run: nvm install 8.10.0 && nvm use 8.10.0
+    - name: add config package dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: npm-${{ hashFiles('package-lock.json') }}
+        restore-keys: npm-
+    - name: install ci dependencies
+      run: npm ci --ignore-scripts
     - name: install markdown-link-check
       run: npm install -g markdown-link-check
     - name: generate and check intrinsic specs (md)
