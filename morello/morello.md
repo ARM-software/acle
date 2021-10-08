@@ -144,7 +144,7 @@ This document refers to, or is referred to by, the following documents.
 
 | Ref                                                              |  URL or other reference        |  Title                         |
 | :---                                                             |  :---                          |  :---                          |
-| [ACLE-morello](http://github.com/arm-software/acle/morello)      |  This document                 |  Morello Supplement to the Arm |
+| [ACLE-morello](https://arm-software.github.io/acle/morello/)     |  This document                 |  Morello Supplement to the Arm |
 |                                                                  |                                |  C Language Extensions         |
 | [ACLE](https://developer.arm.com/documentation/101028/latest)    |  Document number: 101028       |  Arm C Language Extensions     |
 | [CHERI](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf) |  UCAM-CL-TR-947, SSN 1476-2986 |  CHERI C/C++ Programming Guide |
