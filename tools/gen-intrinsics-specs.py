@@ -28,7 +28,7 @@ def quote_literal(val, source_syntax):
 
 header_levels = {
     "rst" : ['=', '~', '-', '_', '@'],
-    "markdown" : ['#', '##', '###', '####', '#####']
+    "markdown" : ['###', '####', '#####', '######', '#######']
 }
 table_format = {
     "rst" : "grid",
@@ -845,31 +845,31 @@ def process_db(db, classification_db, source_syntax):
     >>> print(process_db(intrinsics, classification, 'markdown'))
     <BLANKLINE>
     <BLANKLINE>
-    # Section 1 title
+    ### Section 1 title
     <BLANKLINE>
     Section 1 description.
     <BLANKLINE>
-    ## No category
+    #### No category
     <BLANKLINE>
     | T1        | T2   | T3   | T4    | T5     |
     |-----------|------|------|-------|--------|
     | `a A01()` | `a`  | `aa` | `aaa` | `aaaa` |
     <BLANKLINE>
-    ## Section 1.1
+    #### Section 1.1
     <BLANKLINE>
-    ### Section 1.1.1
+    ##### Section 1.1.1
     <BLANKLINE>
     | T1        | T2   | T3   | T4    | T5     |
     |-----------|------|------|-------|--------|
     | `b B01()` | `b`  | `bb` | `bbb` | `bbbb` |
     <BLANKLINE>
-    # Section 2 title
+    ### Section 2 title
     <BLANKLINE>
     Section 2 description.
     <BLANKLINE>
-    ## classX
+    #### classX
     <BLANKLINE>
-    ### subclassY
+    ##### subclassY
     <BLANKLINE>
     | T1        | T2   | T3   | T4    | T5     |
     |-----------|------|------|-------|--------|
