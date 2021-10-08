@@ -19,6 +19,11 @@ jobs:
     - name: setup nvm
       shell: bash -l -eo pipefail {0}
       run: nvm install 8.10.0 && nvm use 8.10.0
+    - name: setup npm
+      shell: bash -l -eo pipefail {0}
+      run: |
+        npm config set spin false
+        npm install -g npm
     - name: install markdown-link-check
       run: npm install -g markdown-link-check
     - name: generate and check intrinsic specs (md)
