@@ -16,7 +16,15 @@ jobs:
       run: pip install -r tools/requirements.txt
     - name: check .rst document syntax
       run: tools/check-rst-syntax.sh
-    - name: generate and check intrinsic specs (rst)
+    - name: install curl
+      run: apt install curl
+    - name: install nvm
+      run: curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+    - name: load nvm environment
+      run: source ~/.profile
+    - name: install markdown-link-check
+      run: npm install -g markdown-link-check
+    - name: generate and check intrinsic specs (md)
       run: tools/generate-intrinsics-specs.sh
     - name: build PDFs
       run: tools/generate-pdfs.sh
