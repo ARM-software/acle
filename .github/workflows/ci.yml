@@ -3,12 +3,6 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  markdown-link-check:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: gaurav-nelson/github-action-markdown-link-check@v1
-
   build:
     runs-on: ubuntu-latest
 
@@ -30,3 +24,9 @@ jobs:
       with:
         name: pdfs
         path: pdfs
+
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
