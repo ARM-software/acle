@@ -39,8 +39,6 @@ rst2pdf neon_intrinsics/advsimd.rst         \
         --default-dpi=110           \
         -o pdfs/advsimd.pdf
 
-#rst2pdf mve_intrinsics/mve.rst         \
-#	-s tools/rst2pdf-acle-intrinsics.style \
-#        --repeat-table-rows         \
-#        --default-dpi=110           \
-#        -o pdfs/mve.pdf
+inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
+tail -n +10 tmp/mve.new.md | pandoc --template=tools/acle_template.tex --metadata-file=mve_intrinsics/mve.yaml $1 -o pdfs/mve.pdf
+tail -n +9 morello/morello.md | pandoc --template=tools/acle_template.tex --metadata-file=morello/morello.yaml $1 -o pdfs/morello.pdf

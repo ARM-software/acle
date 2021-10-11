@@ -1,0 +1,15 @@
+title: Morello Supplement to the Arm C Language Extensions
+subtitle: 01alpha
+date: 02 July 2021
+logo: ./tools/Arm-logo-blue-RGB.pdf
+documentclass: report
+toc: true
+numbersections: true
+geometry: margin=2cm
+fontfamily: helvet
+classoption: 12pt
+fontcolor: darkgray
+colorlinks: citecolor=darkgray
+chapter-formatting: true
+papersize: a4
+indent: false

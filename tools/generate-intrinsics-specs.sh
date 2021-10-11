@@ -53,3 +53,11 @@ generate_rst_specs ./tools/intrinsic_db/mve.csv \
 
 # Check changes
 check_changes ./tmp/advsimd.new.rst ./neon_intrinsics/advsimd.rst
+check_changes ./tmp/mve.new.md ./mve_intrinsics/mve.md
+
+# Generate tmp file for pdfs
+generate_rst_specs ./tools/intrinsic_db/mve.csv \
+       	./tools/intrinsic_db/mve_classification.csv \
+				./mve_intrinsics/mve.template.md \
+ 				./tmp/mve.new.md \
+ 				pdf
