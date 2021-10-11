@@ -5838,7 +5838,7 @@ The ``<arm_acle.h>`` header should be included before using this intrinsic.
 
 This intrinsic is available when ``__ARM_FEATURE_MOPS`` is defined.
 
-.. code:: c
+::
 
   void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
 
