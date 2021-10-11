@@ -1876,11 +1876,11 @@ memcpy family of memory operations (MOPS) standarisation instructions
 =====================================================================
 
 ``__ARM_FEATURE_MOPS`` is defined to 1 if the ``CPYF*``, ``CPY*``,
-``SET*`` and ``SETG*`` instructions for standarisation of the memcpy,
-memset, and memmove family of memory operations are supported.
+``SET*`` and ``SETG*`` instructions introduced in the Armv8.8-A and Armv9.3-A
+architecture updates for standarisation of the memcpy, memset, and memmove
+family of memory operations are supported.
 This macro may only ever be defined in the AArch64 execution state.
-Intrinsics for using these instructions are specified in
-ssec-MOPS-intrinsics_.
+Intrinsics for using these instructions are specified in ssec-MOPS-intrinsics_.
 
 Mapping of object build attributes to predefines
 ================================================
@@ -5821,8 +5821,9 @@ memcpy family of memory operations (MOPS) intrinsics
 Introduction
 ============
 
-This section describes the intrinsic for the new instructions introduced
-for memcpy, memmove and memset family of memory operations (MOPS).
+This section describes the intrinsic for the new instructions introduced in the
+Armv8.8-A and Armv9.3-A architecture updates for the memcpy, memmove and memset
+family of memory operations (MOPS).
 
 These intructions were designed to enable the standardisation of the software
 implementation of those operations. Therefore, most of the use cases for
