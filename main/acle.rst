@@ -266,6 +266,7 @@ Armv8.4-A [ARMARMv84]_.  Support is added for the Dot Product intrinsics.
 Changes for next release
 ~~~~~~~~~~~~~~~~~~~~~~~~
 * Fixed FP16 format description at ssec-fp16-type_.
+* Added feature detection macro and intrinsics for the memcpy family of memory operations (MOPS).
 
 References
 ----------
@@ -2170,7 +2171,7 @@ Summary of predefined macros
    | ``__ARM_FEATURE_MOPS``              | memcpy, memset, and | 1                  | ssec-MOPS_,            |
    |                                     | memmove family of   |                    | ssec-MOPS-intrinsics_  |
    |                                     | operations          |                    |                        |
-   |                                     | standarisation      |                    |                        |
+   |                                     | standardisation     |                    |                        |
    |                                     | instructions        |                    |                        |
    +-------------------------------------+---------------------+--------------------+------------------------+
 
@@ -5820,10 +5821,10 @@ memcpy family of memory operations (MOPS) intrinsics
 Introduction
 ============
 
-This section describes the intrinsics for the new instructions introduced
+This section describes the intrinsic for the new instructions introduced
 for memcpy, memmove and memset family of memory operations (MOPS).
 
-These intructions were designed to enable the standarisation of the software
+These intructions were designed to enable the standardisation of the software
 implementation of those operations. Therefore, most of the use cases for
 the new instructions should be covered by the compiler's code generation or
 by library implementations.
@@ -5834,11 +5835,9 @@ operation. See ssec-MTE_ for more information on memory tagging.
 
 The ``<arm_acle.h>`` header should be included before using this intrinsic.
 
-Intrinsics
-==========
-
 This intrinsic is available when ``__ARM_FEATURE_MOPS`` is defined.
-::
+
+.. code:: c
 
   void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
 
