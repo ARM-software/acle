@@ -6,24 +6,24 @@ Date of Issue: 02 July 2021
 
 ![image](Arm_logo_blue_RGB.svg)
 
+# Preamble
+
 The specifications in this document are in experimental format.
 [Official Release](https://github.com/ARM-software/acle/releases/latest).
 
 ------------------------------------------------------------------------
 
-## Preamble
-
-### Abstract
+## Abstract
 
 This document specifies the Arm C Language Extensions to enable C/C++
 programmers to use the Morello architecture with minimal restrictions on
 source code portability.
 
-### Keywords
+## Keywords
 
 Predefined macros, built-in functions
 
-### Latest release and defects report
+## Latest release and defects report
 
 For the latest release of this document, see the [ACLE project on
 GitHub](https://github.com/ARM-software/acle).
@@ -31,7 +31,7 @@ GitHub](https://github.com/ARM-software/acle).
 Please report defects in this specification to the [issue tracker page
 on GitHub](https://github.com/ARM-software/acle/issues).
 
-### License
+## License
 
 This work is licensed under the Creative Commons Attribution-ShareAlike
 4.0 International License. To view a copy of this license, visit
@@ -75,13 +75,13 @@ of defensive termination applies to "any licenses granted to You"
 intended to help maintain a healthy ecosystem by providing additional
 protection to the community against patent litigation claims.
 
-### Contributions
+## Contributions
 
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
 under the same terms as those in the LICENSE file.
 
-### Trademark notice
+## Trademark notice
 
 The text of and illustrations in this document are licensed by Arm under
 a Creative Commons Attribution--Share Alike 4.0 International license
@@ -91,16 +91,16 @@ Limited (or its subsidiaries) in the US and/or elsewhere. All rights
 reserved. Please visit <https://www.arm.com/company/policies/trademarks>
 for more information about Arm's trademarks.
 
-### Copyright
+## Copyright
 
 Copyright (c) 2020-2021, Arm Limited and its affiliates. All rights
 reserved.
 
-## About This Document
+# About This Document
 
-### Change Control
+## Change Control
 
-#### Current Status and Anticipated Changes
+### Current Status and Anticipated Changes
 
 The following support level definitions are used by the ACLE
 specifications:
@@ -131,14 +131,14 @@ specifications:
 
 All content in this document is at the **Alpha** quality level.
 
-#### Change History
+### Change History
 
 | Issue      | Date                  | Change                           |
 | :---       | :---                  | :---                             |
 | 00alpha    | 30th September 2020   | Alpha release                    |
 | 01alpha    | 02 July 2021          | Open source release. NFCI.       |
 
-### References
+## References
 
 This document refers to, or is referred to by, the following documents.
 
@@ -149,7 +149,7 @@ This document refers to, or is referred to by, the following documents.
 | [ACLE](https://developer.arm.com/documentation/101028/latest)          |  Document number: 101028       |  Arm C Language Extensions     |
 | [CHERI](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf)       |  UCAM-CL-TR-947, SSN 1476-2986 |  CHERI C/C++ Programming Guide |
 
-### Terms & Abbreviations
+## Terms & Abbreviations
 
 **Capability**
 
