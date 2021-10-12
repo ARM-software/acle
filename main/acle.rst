@@ -266,7 +266,8 @@ Armv8.4-A [ARMARMv84]_.  Support is added for the Dot Product intrinsics.
 Changes for next release
 ~~~~~~~~~~~~~~~~~~~~~~~~
 * Fixed FP16 format description at ssec-fp16-type_.
-* Added feature detection macro and intrinsics for the memcpy family of memory operations (MOPS).
+* Added feature detection macro and intrinsics for the memcpy family of memory
+  operations (MOPS).
 
 References
 ----------

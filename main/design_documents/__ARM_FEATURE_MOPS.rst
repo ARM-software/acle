@@ -4,7 +4,7 @@ Introducing extensions for memcpy family of memory operations
 
 Following the announcement of the `2021 Architecture Extensions
 <https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-developments-2021>`_,
-I'd like to propose these aditions to the ACLE to support the new instructions
+we are proposing these aditions to the ACLE to support the new instructions
 that standardise the memcpy family of operations.
 
 Here's the rationale behind the contents:
@@ -13,8 +13,8 @@ Feature test macro
 ##################
 
 In order for users to determine the availability of the new memory operation
-instructions, as well of new potential intrinsics related to them, I would like
-to propose the addition of the following feature test macro, to be defined to 1
+instructions, as well of new potential intrinsics related to them, we are
+proposing the addition of the following feature test macro, to be defined to 1
 if the new extension is available:
 
 ::
@@ -28,7 +28,7 @@ Intrinsics
 Given that the purpose of the new instructions is not only optimizing but also
 standardising the software implementation of memcpy, memmove and memset
 operations, the general use of these instructions should be covered by the code
-generation of compilers and library implementations. Therefore, I feel there
+generation of compilers and library implementations. Therefore, we feel there
 might be no motivation to introduce new intrinsics covering this scenario.
 
 The new extension also introduces a few variations of such instructions covering
@@ -52,19 +52,19 @@ Temporal/non-temporal variations
 
 Currently, in section 15.1.7 ("Memory access with non-temporal hints"), the
 ACLE mentions that language extensions to support cacheability hints are
-currently being investigated. I believe that introducing new intrinsics for
+currently being investigated. We believe that introducing new intrinsics for
 non-temporal memory operations could overlap with the support under
-investiation, so I would suggest waiting for the investigation outcomes to
-provide a coherent solution.
+investiation, so we suggest waiting for the investigation outcomes to provide
+a coherent solution.
 
 Tag setting memset variation
 ============================
 
 The ability to tag a memory address during a memset operation seems highly
 useful for MTE users - for writting a custom allocator, for example. As it's
-also not covered by the regular code generation and library flows, I'd like to
-propose the introduction of a new intrinsic to cover this scenario. I would
-suggest the following:
+also not covered by the regular code generation and library flows, we propose
+the introduction of a new intrinsic to cover this scenario. We suggest the
+following:
 
 ::
 
