@@ -18,10 +18,9 @@ jobs:
       run: tools/check-rst-syntax.sh
     - name: generate and check intrinsic specs (md)
       run: tools/generate-intrinsics-specs.sh
-    - name: setup pandoc pdf generation
-      shell: bash -l -eo pipefail {0}
-      before_install: tools/pandoc-pdf-setup.sh
     - name: build PDFs
+      shell: bash -l -eo pipefail {0}
+      install: tools/pandoc-pdf-setup.sh
       run: tools/generate-pdfs.sh
     - uses: actions/upload-artifact@v2
       with:
