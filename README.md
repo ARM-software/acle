@@ -3,12 +3,19 @@ layout: default
 ---
 
 <div align="center">
+<<<<<<< HEAD
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
    <img id="index_logo" src="Arm_logo_blue_RGB.svg" />
+=======
+   <img src="Arm_logo_blue_RGB.svg" />
+>>>>>>> [readme] Fix position of the all-contributors badge.
 </div>
 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
 # Arm C Language Extensions
@@ -63,8 +70,7 @@ these files are accepted under the same license.
 The files in the sub-directories of the tools directory are provided
 under the Apache 2.0 license. Contributions to these files are
 accepted under the same license.
-<<<<<<< HEAD
-=======
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -86,4 +92,3 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
->>>>>>> docs: add fpetrogalli as a contributor for code, review (#33)
