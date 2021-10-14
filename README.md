@@ -73,7 +73,12 @@ accepted under the same license.
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+The list below represents the list of (wonderful!) people that have
+been contributing since July 2021 ([emoji
+key](https://allcontributors.org/docs/en/emoji-key)), when the ACLE
+specifications were released with an open source license.
+
+Before that time many other people contributed to ACLE.
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
