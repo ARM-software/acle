@@ -6,12 +6,14 @@ Date of Issue: 02 July 2021
 
 ![image](Arm_logo_blue_RGB.svg)
 
-# Preamble
+------------------------------------------------------------------------
+
+# Preface
+
+## Warning
 
 The specifications in this document are in experimental format.
 [Official Release](https://github.com/ARM-software/acle/releases/latest).
-
-------------------------------------------------------------------------
 
 ## Abstract
 
