@@ -1,4 +1,5 @@
-# Arm MVE Intrinsics                                                    
+# Arm MVE Intrinsics   
+                                                 
 ![image](Arm_logo_blue_RGB.svg)                                          
 
 2021Q2                                                                   
@@ -7,15 +8,15 @@ Date of Issue: 02 July 2021
 
 ------------------------------------------------------------------------
 
-## Preface                                                                  
+# Preface                                                                  
 
-### Abstract
+## Abstract
 
 This document is complementary to the main Arm C Language Extensions
 (ACLE) specification, which can be found on the [ACLE project on
 GitHub](https://github.com/ARM-software/acle).
 
-### Latest release and defects report
+## Latest release and defects report
 
 For the latest release of this document, see the [ACLE project on
 GitHub](https://github.com/ARM-software/acle).
@@ -23,7 +24,7 @@ GitHub](https://github.com/ARM-software/acle).
 Please report defects in this specification to the [issue tracker page
 on GitHub](https://github.com/ARM-software/acle/issues).
 
-### License
+## License
 
 This work is licensed under the Creative Commons Attribution-ShareAlike
 4.0 International License. To view a copy of this license, visit
@@ -67,13 +68,13 @@ of defensive termination applies to "any licenses granted to You"
 intended to help maintain a healthy ecosystem by providing additional
 protection to the community against patent litigation claims.
 
-### Contributions
+## Contributions
 
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
 under the same terms as those in the LICENSE file.
 
-### Trademark notice
+## Trademark notice
 
 The text of and illustrations in this document are licensed by Arm under
 a Creative Commons Attribution--Share Alike 4.0 International license
@@ -83,12 +84,12 @@ Limited (or its subsidiaries) in the US and/or elsewhere. All rights
 reserved. Please visit <https://www.arm.com/company/policies/trademarks>
 for more information about Arm's trademarks.
 
-### Copyright
+## Copyright
 
 Copyright (c) 2019-2021, Arm Limited and its affiliates. All rights
 reserved.
 
-### Document history
+## Document history
 
 | Issue     | Date              | Change               |
 | :---      | :---              | :---                 |
@@ -98,14 +99,14 @@ reserved.
 | Q220-00   | 30 May 2020       | Version ACLE Q2 2020 |
 | 2021Q2    | 02 July 2021      | Open source release  |
 
-## List of Intrinsics
+# List of Intrinsics
 
 ------------------------------------------------------------------------
 
 
-### Vector manipulation
+## Vector manipulation
 
-#### Create vector
+### Create vector
 
 | Intrinsic                                                                                                                                                                                                                                                                  | Argument preparation                                                           | Instruction                                                                      | Result                       | Supported architectures   |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|----------------------------------------------------------------------------------|------------------------------|---------------------------|
@@ -216,7 +217,7 @@ reserved.
 | `float16x8_t [__arm_]vdupq_x_n_f16(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                                                                                                               | `a -> Rt`<br>`p -> Rp`                                                         | `VMSR P0, Rp`<br>`VPST`<br>`VDUPT.16 Qd, Rt`                                     | `Qd -> result`               | `MVE`                     |
 | `float32x4_t [__arm_]vdupq_x_n_f32(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                                                                                                               | `a -> Rt`<br>`p -> Rp`                                                         | `VMSR P0, Rp`<br>`VPST`<br>`VDUPT.32 Qd, Rt`                                     | `Qd -> result`               | `MVE`                     |
 
-#### Reverse elements
+### Reverse elements
 
 | Intrinsic                                                                                                                                                                            | Argument preparation                       | Instruction                                    | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|------------------------------------------------|----------------|---------------------------|
@@ -266,7 +267,7 @@ reserved.
 | `float16x8_t [__arm_]vrev64q_x[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VREV64T.16 Qd, Qm` | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vrev64q_x[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VREV64T.32 Qd, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Extract one element from vector
+### Extract one element from vector
 
 | Intrinsic                                                                                                                      | Argument preparation          | Instruction                 | Result                | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------|-------------------------------|-----------------------------|-----------------------|---------------------------|
@@ -281,7 +282,7 @@ reserved.
 | `uint32_t [__arm_]vgetq_lane[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int idx)`   | `a -> Qn`<br>`0 <= idx <= 3`  | `VMOV.32 Rt, Qn[idx]`       | `Rt -> result`        | `MVE/NEON`                |
 | `uint64_t [__arm_]vgetq_lane[_u64](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint64x2_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int idx)`   | `a -> Qn`<br>`0 <= idx <= 1`  | `VMOV Rt1, Rt2, D(2*n+idx)` | `[Rt1,Rt2] -> result` | `MVE/NEON`                |
 
-#### Set vector lane
+### Set vector lane
 
 | Intrinsic                                                                                                                                                                   | Argument preparation                             | Instruction                 | Result         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|-----------------------------|----------------|---------------------------|
@@ -296,7 +297,7 @@ reserved.
 | `uint32x4_t [__arm_]vsetq_lane[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int idx)`    | `a -> Rt`<br>`b -> Qd`<br>`0 <= idx <= 3`        | `VMOV.32 Qd[idx], Rt`       | `Qd -> result` | `MVE/NEON`                |
 | `uint64x2_t [__arm_]vsetq_lane[_u64](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint64_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint64x2_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int idx)`    | `a -> [Rt1,Rt2]`<br>`b -> Qd`<br>`0 <= idx <= 1` | `VMOV D(2*d+idx), Rt1, Rt2` | `Qd -> result` | `MVE/NEON`                |
 
-#### Create uninitialized vector
+### Create uninitialized vector
 
 | Intrinsic                                            | Argument preparation   | Instruction   | Result         | Supported architectures   |
 |------------------------------------------------------|------------------------|---------------|----------------|---------------------------|
@@ -321,9 +322,9 @@ reserved.
 | `float16x8_t [__arm_]vuninitializedq(float16x8_t t)` | `t -> Do Not Evaluate` |               | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vuninitializedq(float32x4_t t)` | `t -> Do Not Evaluate` |               | `Qd -> result` | `MVE`                     |
 
-### Compare
+## Compare
 
-#### Equal to
+### Equal to
 
 | Intrinsic                                                                                                                                                                      | Argument preparation                | Instruction                                                        | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------|----------------|---------------------------|
@@ -360,7 +361,7 @@ reserved.
 | `mve_pred16_t [__arm_]vcmpeqq_m[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.I16 eq, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 | `mve_pred16_t [__arm_]vcmpeqq_m[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.I32 eq, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 
-#### Not equal to
+### Not equal to
 
 | Intrinsic                                                                                                                                                                      | Argument preparation                | Instruction                                                        | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------|----------------|---------------------------|
@@ -397,7 +398,7 @@ reserved.
 | `mve_pred16_t [__arm_]vcmpneq_m[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.I16 ne, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 | `mve_pred16_t [__arm_]vcmpneq_m[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.I32 ne, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 
-#### Greater than or equal to
+### Greater than or equal to
 
 | Intrinsic                                                                                                                                                                      | Argument preparation                | Instruction                                                        | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------|----------------|---------------------------|
@@ -434,7 +435,7 @@ reserved.
 | `mve_pred16_t [__arm_]vcmpcsq_m[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.U16 cs, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 | `mve_pred16_t [__arm_]vcmpcsq_m[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.U32 cs, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 
-#### Greater than
+### Greater than
 
 | Intrinsic                                                                                                                                                                      | Argument preparation                | Instruction                                                        | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------|----------------|---------------------------|
@@ -471,7 +472,7 @@ reserved.
 | `mve_pred16_t [__arm_]vcmphiq_m[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.U16 hi, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 | `mve_pred16_t [__arm_]vcmphiq_m[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.U32 hi, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 
-#### Less than or equal to
+### Less than or equal to
 
 | Intrinsic                                                                                                                                                                      | Argument preparation                | Instruction                                                        | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------|----------------|---------------------------|
@@ -496,7 +497,7 @@ reserved.
 | `mve_pred16_t [__arm_]vcmpleq_m[_n_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`     | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.S16 le, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 | `mve_pred16_t [__arm_]vcmpleq_m[_n_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`     | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.S32 le, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 
-#### Less than
+### Less than
 
 | Intrinsic                                                                                                                                                                      | Argument preparation                | Instruction                                                        | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------------------------|----------------|---------------------------|
@@ -521,9 +522,9 @@ reserved.
 | `mve_pred16_t [__arm_]vcmpltq_m[_n_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`     | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.S16 lt, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 | `mve_pred16_t [__arm_]vcmpltq_m[_n_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`     | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMPT.S32 lt, Qn, Rm`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 
-### Vector arithmetic
+## Vector arithmetic
 
-#### Minimum
+### Minimum
 
 | Intrinsic                                                                                                                                                                                                                         | Argument preparation                                    | Instruction                                         | Result          | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------------|-----------------|---------------------------|
@@ -588,7 +589,7 @@ reserved.
 | `float16_t [__arm_]vminnmavq_p[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                       | `a -> Rda`<br>`b -> Qm`<br>`p -> Rp`                    | `VMSR P0, Rp`<br>`VPST`<br>`VMINNMAVT.F16 Rda, Qm`  | `Rda -> result` | `MVE`                     |
 | `float32_t [__arm_]vminnmavq_p[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                       | `a -> Rda`<br>`b -> Qm`<br>`p -> Rp`                    | `VMSR P0, Rp`<br>`VPST`<br>`VMINNMAVT.F32 Rda, Qm`  | `Rda -> result` | `MVE`                     |
 
-#### Maximum
+### Maximum
 
 | Intrinsic                                                                                                                                                                                                                         | Argument preparation                                    | Instruction                                         | Result          | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------------|-----------------|---------------------------|
@@ -653,9 +654,9 @@ reserved.
 | `float16_t [__arm_]vmaxnmavq_p[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                       | `a -> Rda`<br>`b -> Qm`<br>`p -> Rp`                    | `VMSR P0, Rp`<br>`VPST`<br>`VMAXNMAVT.F16 Rda, Qm`  | `Rda -> result` | `MVE`                     |
 | `float32_t [__arm_]vmaxnmavq_p[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                       | `a -> Rda`<br>`b -> Qm`<br>`p -> Rp`                    | `VMSR P0, Rp`<br>`VPST`<br>`VMAXNMAVT.F32 Rda, Qm`  | `Rda -> result` | `MVE`                     |
 
-#### Absolute
+### Absolute
 
-##### Absolute difference and accumulate
+#### Absolute difference and accumulate
 
 | Intrinsic                                                                                                                                                                                                         | Argument preparation                              | Instruction                                         | Result          | Supported architectures   |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------|-----------------------------------------------------|-----------------|---------------------------|
@@ -672,7 +673,7 @@ reserved.
 | `uint32_t [__arm_]vabavq_p[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t c,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Rda`<br>`b -> Qn`<br>`c -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VABAVT.U16 Rda, Qn, Qm` | `Rda -> result` | `MVE`                     |
 | `uint32_t [__arm_]vabavq_p[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t c,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Rda`<br>`b -> Qn`<br>`c -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VABAVT.U32 Rda, Qn, Qm` | `Rda -> result` | `MVE`                     |
 
-##### Absolute difference
+#### Absolute difference
 
 | Intrinsic                                                                                                                                                                                                                       | Argument preparation                                    | Instruction                                       | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------|----------------|---------------------------|
@@ -701,7 +702,7 @@ reserved.
 | `float16x8_t [__arm_]vabdq_x[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VABDT.F16 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vabdq_x[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VABDT.F32 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-##### Absolute value
+#### Absolute value
 
 | Intrinsic                                                                                                                                                                          | Argument preparation                       | Instruction                                    | Result         | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|------------------------------------------------|----------------|---------------------------|
@@ -727,9 +728,9 @@ reserved.
 | `int16x8_t [__arm_]vqabsq_m[_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int16x8_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`      | `inactive -> Qd`<br>`a -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQABST.S16 Qd, Qm` | `Qd -> result` | `MVE`                     |
 | `int32x4_t [__arm_]vqabsq_m[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`      | `inactive -> Qd`<br>`a -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQABST.S32 Qd, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Add
+### Add
 
-##### Addition
+#### Addition
 
 | Intrinsic                                                                                                                                                                                                                                                                       | Argument preparation                                                      | Instruction                                                                                                                                                                                  | Result                               | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|---------------------------|
@@ -876,7 +877,7 @@ reserved.
 | `uint16x8_t [__arm_]vrhaddq_x[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                                                                      | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                                       | `VMSR P0, Rp`<br>`VPST`<br>`VRHADDT.U16 Qd, Qn, Qm`                                                                                                                                          | `Qd -> result`                       | `MVE`                     |
 | `uint32x4_t [__arm_]vrhaddq_x[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                                                                      | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                                       | `VMSR P0, Rp`<br>`VPST`<br>`VRHADDT.U32 Qd, Qn, Qm`                                                                                                                                          | `Qd -> result`                       | `MVE`                     |
 
-##### Saturating addition
+#### Saturating addition
 
 | Intrinsic                                                                                                                                                                                                                    | Argument preparation                                    | Instruction                                        | Result         | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------|----------------|---------------------------|
@@ -905,9 +906,9 @@ reserved.
 | `uint16x8_t [__arm_]vqaddq_m[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `inactive -> Qd`<br>`a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQADDT.U16 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vqaddq_m[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `inactive -> Qd`<br>`a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQADDT.U32 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Multiply
+### Multiply
 
-##### Multiplication
+#### Multiplication
 
 | Intrinsic                                                                                                                                                                                                                          | Argument preparation                                    | Instruction                                         | Result         | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------------|----------------|---------------------------|
@@ -1044,7 +1045,7 @@ reserved.
 | `uint16x8_t [__arm_]vrmulhq_x[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                         | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VRMULHT.U16 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vrmulhq_x[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                         | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VRMULHT.U32 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-##### Saturating multiply-accumulate
+#### Saturating multiply-accumulate
 
 | Intrinsic                                                                                                                                                                                                                     | Argument preparation                                    | Instruction                                             | Result          | Supported architectures   |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------|-----------------|---------------------------|
@@ -1121,7 +1122,7 @@ reserved.
 | `int16x8_t [__arm_]vqrdmlsdhxq_m[_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int16x8_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `inactive -> Qd`<br>`a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQRDMLSDHXT.S16 Qd, Qn, Qm` | `Qd -> result`  | `MVE`                     |
 | `int32x4_t [__arm_]vqrdmlsdhxq_m[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `inactive -> Qd`<br>`a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQRDMLSDHXT.S32 Qd, Qn, Qm` | `Qd -> result`  | `MVE`                     |
 
-##### Saturating multiply
+#### Saturating multiply
 
 | Intrinsic                                                                                                                                                                                                                   | Argument preparation                                    | Instruction                                           | Result         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------|----------------|---------------------------|
@@ -1166,7 +1167,7 @@ reserved.
 | `int32x4_t [__arm_]vqdmulltq_m[_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `inactive -> Qd`<br>`a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQDMULLTT.S16 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `int64x2_t [__arm_]vqdmulltq_m[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int64x2_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `inactive -> Qd`<br>`a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQDMULLTT.S32 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-##### Multiply-accumulate
+#### Multiply-accumulate
 
 | Intrinsic                                                                                                                                                                                                                 | Argument preparation                                            | Instruction                                                         | Result                    | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|---------------------------------------------------------------------|---------------------------|---------------------------|
@@ -1315,7 +1316,7 @@ reserved.
 | `int64_t [__arm_]vrmlsldavhxq[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t b)`                                                                                                | `a -> Qn`<br>`b -> Qm`                                          | `VRMLSLDAVHX.S32 RdaLo, RdaHi, Qn, Qm`                              | `[RdaHi,RdaLo] -> result` | `MVE`                     |
 | `int64_t [__arm_]vrmlsldavhxq_p[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                             | `VMSR P0, Rp`<br>`VPST`<br>`VRMLSLDAVHXT.S32 RdaLo, RdaHi, Qn, Qm`  | `[RdaHi,RdaLo] -> result` | `MVE`                     |
 
-##### Fused multiply-accumulate
+#### Fused multiply-accumulate
 
 | Intrinsic                                                                                                                                                                                                                     | Argument preparation                                  | Instruction                                         | Result          | Supported architectures   |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|-----------------------------------------------------|-----------------|---------------------------|
@@ -1336,9 +1337,9 @@ reserved.
 | `float16x8_t [__arm_]vfmsq_m[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t add,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t m1,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t m2,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`  | `add -> Qda`<br>`m1 -> Qn`<br>`m2 -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VFMST.F16 Qda, Qn, Qm`  | `Qda -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vfmsq_m[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t add,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t m1,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t m2,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`  | `add -> Qda`<br>`m1 -> Qn`<br>`m2 -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VFMST.F32 Qda, Qn, Qm`  | `Qda -> result` | `MVE`                     |
 
-#### Subtract
+### Subtract
 
-##### Subtraction
+#### Subtraction
 
 | Intrinsic                                                                                                                                                                                                                                                                       | Argument preparation                                                      | Instruction                                                                                                                                                                                  | Result                               | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|---------------------------|
@@ -1435,7 +1436,7 @@ reserved.
 | `uint16x8_t [__arm_]vhsubq_x[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                                                                       | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                                       | `VMSR P0, Rp`<br>`VPST`<br>`VHSUBT.U16 Qd, Qn, Qm`                                                                                                                                           | `Qd -> result`                       | `MVE`                     |
 | `uint32x4_t [__arm_]vhsubq_x[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                                                                       | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                                       | `VMSR P0, Rp`<br>`VPST`<br>`VHSUBT.U32 Qd, Qn, Qm`                                                                                                                                           | `Qd -> result`                       | `MVE`                     |
 
-##### Saturating subtract
+#### Saturating subtract
 
 | Intrinsic                                                                                                                                                                                                                    | Argument preparation                                    | Instruction                                        | Result         | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------|----------------|---------------------------|
@@ -1464,7 +1465,7 @@ reserved.
 | `uint16x8_t [__arm_]vqsubq_m[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `inactive -> Qd`<br>`a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQSUBT.U16 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vqsubq_m[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `inactive -> Qd`<br>`a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQSUBT.U32 Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Rounding
+### Rounding
 
 | Intrinsic                                                                                                                                                                           | Argument preparation                       | Instruction                                     | Result         | Supported architectures   |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|-------------------------------------------------|----------------|---------------------------|
@@ -1505,9 +1506,9 @@ reserved.
 | `float16x8_t [__arm_]vrndxq_x[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VRINTXT.F16 Qd, Qm` | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vrndxq_x[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VRINTXT.F32 Qd, Qm` | `Qd -> result` | `MVE`                     |
 
-### Bit manipulation
+## Bit manipulation
 
-#### Count leading sign bits
+### Count leading sign bits
 
 | Intrinsic                                                                                                                                                                    | Argument preparation                       | Instruction                                   | Result         | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|-----------------------------------------------|----------------|---------------------------|
@@ -1521,7 +1522,7 @@ reserved.
 | `int16x8_t [__arm_]vclsq_x[_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                   | `a -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VCLST.S16 Qd, Qm` | `Qd -> result` | `MVE`                     |
 | `int32x4_t [__arm_]vclsq_x[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                   | `a -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VCLST.S32 Qd, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Count leading zeros
+### Count leading zeros
 
 | Intrinsic                                                                                                                                                                       | Argument preparation                       | Instruction                                   | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|-----------------------------------------------|----------------|---------------------------|
@@ -1544,7 +1545,7 @@ reserved.
 | `uint16x8_t [__arm_]vclzq_x[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                    | `a -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VCLZT.I16 Qd, Qm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vclzq_x[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                    | `a -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VCLZT.I32 Qd, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Bitwise clear
+### Bitwise clear
 
 | Intrinsic                                                                                                                                                                                                                       | Argument preparation                                    | Instruction                                      | Result          | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|--------------------------------------------------|-----------------|---------------------------|
@@ -1581,9 +1582,9 @@ reserved.
 | `uint16x8_t [__arm_]vbicq_m_n[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const uint16_t imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                | `a -> Qda`<br>`imm in AdvSIMDExpandImm`<br>`p -> Rp`    | `VMSR P0, Rp`<br>`VPST`<br>`VBICT.I16 Qda, #imm` | `Qda -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vbicq_m_n[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const uint32_t imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                | `a -> Qda`<br>`imm in AdvSIMDExpandImm`<br>`p -> Rp`    | `VMSR P0, Rp`<br>`VPST`<br>`VBICT.I32 Qda, #imm` | `Qda -> result` | `MVE`                     |
 
-### Logical
+## Logical
 
-#### Negate
+### Negate
 
 | Intrinsic                                                                                                                                                                          | Argument preparation                       | Instruction                                    | Result         | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|------------------------------------------------|----------------|---------------------------|
@@ -1609,7 +1610,7 @@ reserved.
 | `int16x8_t [__arm_]vqnegq_m[_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int16x8_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`      | `inactive -> Qd`<br>`a -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQNEGT.S16 Qd, Qm` | `Qd -> result` | `MVE`                     |
 | `int32x4_t [__arm_]vqnegq_m[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t inactive,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`      | `inactive -> Qd`<br>`a -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQNEGT.S32 Qd, Qm` | `Qd -> result` | `MVE`                     |
 
-#### AND
+### AND
 
 | Intrinsic                                                                                                                                                                                                                       | Argument preparation                                    | Instruction                                   | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------|----------------|---------------------------|
@@ -1638,7 +1639,7 @@ reserved.
 | `float16x8_t [__arm_]vandq_x[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VANDT Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vandq_x[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VANDT Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Exclusive OR
+### Exclusive OR
 
 | Intrinsic                                                                                                                                                                                                                       | Argument preparation                                    | Instruction                                   | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------|----------------|---------------------------|
@@ -1667,7 +1668,7 @@ reserved.
 | `float16x8_t [__arm_]veorq_x[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VEORT Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]veorq_x[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VEORT Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Bitwise NOT
+### Bitwise NOT
 
 | Intrinsic                                                                                                                                                                               | Argument preparation                                       | Instruction                                     | Result         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|-------------------------------------------------|----------------|---------------------------|
@@ -1702,7 +1703,7 @@ reserved.
 | `uint16x8_t [__arm_]vmvnq_x_n_u16(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`const uint16_t imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                      | `imm in AdvSIMDExpandImm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VMVNT.I16 Qd, #imm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vmvnq_x_n_u32(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`const uint32_t imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                      | `imm in AdvSIMDExpandImm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VMVNT.I32 Qd, #imm` | `Qd -> result` | `MVE`                     |
 
-#### OR-NOT
+### OR-NOT
 
 | Intrinsic                                                                                                                                                                                                                       | Argument preparation                                    | Instruction                                   | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------|----------------|---------------------------|
@@ -1731,7 +1732,7 @@ reserved.
 | `uint16x8_t [__arm_]vornq_x[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                        | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VORNT Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vornq_x[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                        | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VORNT Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-#### OR
+### OR
 
 | Intrinsic                                                                                                                                                                                                                       | Argument preparation                                    | Instruction                                      | Result          | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|--------------------------------------------------|-----------------|---------------------------|
@@ -1768,9 +1769,9 @@ reserved.
 | `uint16x8_t [__arm_]vorrq_m_n[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const uint16_t imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                | `a -> Qda`<br>`imm in AdvSIMDExpandImm`<br>`p -> Rp`    | `VMSR P0, Rp`<br>`VPST`<br>`VORRT.I16 Qda, #imm` | `Qda -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vorrq_m_n[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const uint32_t imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                | `a -> Qda`<br>`imm in AdvSIMDExpandImm`<br>`p -> Rp`    | `VMSR P0, Rp`<br>`VPST`<br>`VORRT.I32 Qda, #imm` | `Qda -> result` | `MVE`                     |
 
-### Complex arithmetic
+## Complex arithmetic
 
-#### Complex addition
+### Complex addition
 
 | Intrinsic                                                                                                                                                                                                                               | Argument preparation                                    | Instruction                                               | Result         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------------------|----------------|---------------------------|
@@ -1841,7 +1842,7 @@ reserved.
 | `int16x8_t [__arm_]vhcaddq_rot270_x[_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                          | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VHCADDT.S16 Qd, Qn, Qm, #270` | `Qd -> result` | `MVE`                     |
 | `int32x4_t [__arm_]vhcaddq_rot270_x[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                          | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VHCADDT.S32 Qd, Qn, Qm, #270` | `Qd -> result` | `MVE`                     |
 
-#### Complex multiply-accumulate
+### Complex multiply-accumulate
 
 | Intrinsic                                                                                                                                                                                                                        | Argument preparation                              | Instruction                                               | Result          | Supported architectures   |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------|-----------------------------------------------------------|-----------------|---------------------------|
@@ -1862,7 +1863,7 @@ reserved.
 | `float16x8_t [__arm_]vcmlaq_rot270_m[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t c,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qda`<br>`b -> Qn`<br>`c -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMLAT.F16 Qda, Qn, Qm, #270` | `Qda -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vcmlaq_rot270_m[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t c,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qda`<br>`b -> Qn`<br>`c -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCMLAT.F32 Qda, Qn, Qm, #270` | `Qda -> result` | `MVE`                     |
 
-#### Complex multiply
+### Complex multiply
 
 | Intrinsic                                                                                                                                                                                                                               | Argument preparation                                    | Instruction                                              | Result         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------------|----------------|---------------------------|
@@ -1891,9 +1892,9 @@ reserved.
 | `float16x8_t [__arm_]vcmulq_rot270_x[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VCMULT.F16 Qd, Qn, Qm, #270` | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vcmulq_rot270_x[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VCMULT.F32 Qd, Qn, Qm, #270` | `Qd -> result` | `MVE`                     |
 
-### Load
+## Load
 
-#### Stride
+### Stride
 
 | Intrinsic                                                                                                                              | Argument preparation      | Instruction                                                                                                              | Result                                                                                              | Supported architectures   |
 |----------------------------------------------------------------------------------------------------------------------------------------|---------------------------|--------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|---------------------------|
@@ -1930,7 +1931,7 @@ reserved.
 | `float16x8_t [__arm_]vld1q_z[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16_t const *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `base -> Rn`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VLDRHT.16 Qd, [Rn]`                                                                          | `Qd -> result`                                                                                      | `MVE`                     |
 | `float32x4_t [__arm_]vld1q_z[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32_t const *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `base -> Rn`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VLDRWT.32 Qd, [Rn]`                                                                          | `Qd -> result`                                                                                      | `MVE`                     |
 
-#### Consecutive
+### Consecutive
 
 | Intrinsic                                                                                                                             | Argument preparation      | Instruction                                      | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------|---------------------------|--------------------------------------------------|----------------|---------------------------|
@@ -1963,7 +1964,7 @@ reserved.
 | `uint32x4_t [__arm_]vldrwq_z_u32(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t const *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `base -> Rn`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VLDRWT.32 Qd, [Rn]`  | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vldrwq_z_f32(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32_t const *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `base -> Rn`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VLDRWT.32 Qd, [Rn]`  | `Qd -> result` | `MVE`                     |
 
-#### Gather
+### Gather
 
 | Intrinsic                                                                                                                                                                                                      | Argument preparation                                    | Instruction                                                   | Result                          | Supported architectures   |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------------|---------------------------------|---------------------------|
@@ -2040,9 +2041,9 @@ reserved.
 | `int64x2_t [__arm_]vldrdq_gather_base_wb_z_s64(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint64x2_t *addr,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int offset,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                  | `*addr -> Qn`<br>`offset in +/-8*[0..127]`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VLDRDT.U64 Qd, [Qn, #offset]!`    | `Qd -> result`<br>`Qn -> *addr` | `MVE`                     |
 | `uint64x2_t [__arm_]vldrdq_gather_base_wb_z_u64(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint64x2_t *addr,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int offset,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                 | `*addr -> Qn`<br>`offset in +/-8*[0..127]`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VLDRDT.U64 Qd, [Qn, #offset]!`    | `Qd -> result`<br>`Qn -> *addr` | `MVE`                     |
 
-### Store
+## Store
 
-#### Stride
+### Stride
 
 | Intrinsic                                                                                                                                                                  | Argument preparation                                                                                            | Instruction                                                                                                              | Result   | Supported architectures   |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|----------|---------------------------|
@@ -2079,7 +2080,7 @@ reserved.
 | `void [__arm_]vst1q_p[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16_t *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `base -> Rn`<br>`value -> Qd`<br>`p -> Rp`                                                                      | `VMSR P0, Rp`<br>`VPST`<br>`VSTRHT.16 Qd, [Rn]`                                                                          |          | `MVE`                     |
 | `void [__arm_]vst1q_p[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32_t *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `base -> Rn`<br>`value -> Qd`<br>`p -> Rp`                                                                      | `VMSR P0, Rp`<br>`VPST`<br>`VSTRWT.32 Qd, [Rn]`                                                                          |          | `MVE`                     |
 
-#### Consecutive
+### Consecutive
 
 | Intrinsic                                                                                                                                                                   | Argument preparation                       | Instruction                                     | Result   | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|-------------------------------------------------|----------|---------------------------|
@@ -2112,7 +2113,7 @@ reserved.
 | `void [__arm_]vstrwq_p[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `base -> Rn`<br>`value -> Qd`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSTRWT.32 Qd, [Rn]` |          | `MVE`                     |
 | `void [__arm_]vstrwq_p[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32_t *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `base -> Rn`<br>`value -> Qd`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSTRWT.32 Qd, [Rn]` |          | `MVE`                     |
 
-#### Scatter
+### Scatter
 
 | Intrinsic                                                                                                                                                                                                                                           | Argument preparation                                                     | Instruction                                                  | Result        | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------------------------------------------------|---------------|---------------------------|
@@ -2189,9 +2190,9 @@ reserved.
 | `void [__arm_]vstrdq_scatter_shifted_offset_p[_s64](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int64_t *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint64x2_t offset,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int64x2_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`     | `base -> Rn`<br>`offset -> Qm`<br>`value -> Qd`<br>`p -> Rp`             | `VMSR P0, Rp`<br>`VPST`<br>`VSTRDT.64 Qd, [Rn, Qm, UXTW #3]` |               | `MVE`                     |
 | `void [__arm_]vstrdq_scatter_shifted_offset_p[_u64](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint64_t *base,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint64x2_t offset,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint64x2_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`   | `base -> Rn`<br>`offset -> Qm`<br>`value -> Qd`<br>`p -> Rp`             | `VMSR P0, Rp`<br>`VPST`<br>`VSTRDT.64 Qd, [Rn, Qm, UXTW #3]` |               | `MVE`                     |
 
-### Data type conversion
+## Data type conversion
 
-#### Conversions
+### Conversions
 
 | Intrinsic                                                                                                                                                                                                                             | Argument preparation                                            | Instruction                                             | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|---------------------------------------------------------|----------------|---------------------------|
@@ -2302,7 +2303,7 @@ reserved.
 | `uint16x8_t [__arm_]vcvtq_x_n_u16_f16(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm6,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                       | `a -> Qm`<br>`1 <= imm6 <= 16`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VCVTT.U16.F16 Qd, Qm, imm6` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vcvtq_x_n_u32_f32(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm6,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                       | `a -> Qm`<br>`1 <= imm6 <= 32`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VCVTT.U32.F32 Qd, Qm, imm6` | `Qd -> result` | `MVE`                     |
 
-#### Reinterpret casts
+### Reinterpret casts
 
 | Intrinsic                                                    | Argument preparation   | Instruction   | Result         | Supported architectures   |
 |--------------------------------------------------------------|------------------------|---------------|----------------|---------------------------|
@@ -2397,11 +2398,11 @@ reserved.
 | `uint64x2_t [__arm_]vreinterpretq_u64[_f16](float16x8_t a)`  | `a -> Qd`              | `NOP`         | `Qd -> result` | `MVE/NEON`                |
 | `int64x2_t [__arm_]vreinterpretq_s64[_f16](float16x8_t a)`   | `a -> Qd`              | `NOP`         | `Qd -> result` | `MVE/NEON`                |
 
-### Shift
+## Shift
 
-#### Right
+### Right
 
-##### Vector bit reverse and shift right
+#### Vector bit reverse and shift right
 
 | Intrinsic                                                                                                                                                                                                                      | Argument preparation                                    | Instruction                                       | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------|----------------|---------------------------|
@@ -2430,7 +2431,7 @@ reserved.
 | `float16x8_t [__arm_]vbrsrq_x[_n_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VBRSRT.16 Qd, Qn, Rm` | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vbrsrq_x[_n_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                     | `a -> Qn`<br>`b -> Rm`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VBRSRT.32 Qd, Qn, Rm` | `Qd -> result` | `MVE`                     |
 
-##### Vector saturating rounding shift right and narrow
+#### Vector saturating rounding shift right and narrow
 
 | Intrinsic                                                                                                                                                                                                                   | Argument preparation                                    | Instruction                                              | Result         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------------|----------------|---------------------------|
@@ -2483,7 +2484,7 @@ reserved.
 | `uint8x16_t [__arm_]vqshruntq_m[_n_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint8x16_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`  | `a -> Qd`<br>`b -> Qm`<br>`1 <= imm <= 8`<br>`p -> Rp`  | `VMSR P0, Rp`<br>`VPST`<br>`VQSHRUNTT.S16 Qd, Qm, #imm`  | `Qd -> result` | `MVE`                     |
 | `uint16x8_t [__arm_]vqshruntq_m[_n_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`  | `a -> Qd`<br>`b -> Qm`<br>`1 <= imm <= 16`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQSHRUNTT.S32 Qd, Qm, #imm`  | `Qd -> result` | `MVE`                     |
 
-##### Vector rounding shift right and narrow
+#### Vector rounding shift right and narrow
 
 | Intrinsic                                                                                                                                                                                                                  | Argument preparation                                    | Instruction                                            | Result         | Supported architectures   |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|--------------------------------------------------------|----------------|---------------------------|
@@ -2504,7 +2505,7 @@ reserved.
 | `uint8x16_t [__arm_]vrshrntq_m[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint8x16_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`1 <= imm <= 8`<br>`p -> Rp`  | `VMSR P0, Rp`<br>`VPST`<br>`VRSHRNTT.I16 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 | `uint16x8_t [__arm_]vrshrntq_m[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`1 <= imm <= 16`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VRSHRNTT.I32 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 
-##### Vector rounding shift right
+#### Vector rounding shift right
 
 | Intrinsic                                                                                                                                                                                                                       | Argument preparation                                           | Instruction                                          | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|------------------------------------------------------|----------------|---------------------------|
@@ -2527,7 +2528,7 @@ reserved.
 | `uint16x8_t [__arm_]vrshrq_x[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                    | `a -> Qm`<br>`1 <= imm <= 16`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VRSHRT.U16 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vrshrq_x[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                    | `a -> Qm`<br>`1 <= imm <= 32`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VRSHRT.U32 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 
-##### Vector shift right and narrow
+#### Vector shift right and narrow
 
 | Intrinsic                                                                                                                                                                                                                 | Argument preparation                                    | Instruction                                           | Result         | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------|----------------|---------------------------|
@@ -2548,7 +2549,7 @@ reserved.
 | `uint8x16_t [__arm_]vshrntq_m[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint8x16_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`1 <= imm <= 8`<br>`p -> Rp`  | `VMSR P0, Rp`<br>`VPST`<br>`VSHRNTT.I16 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 | `uint16x8_t [__arm_]vshrntq_m[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`1 <= imm <= 16`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSHRNTT.I32 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 
-##### Vector shift right
+#### Vector shift right
 
 | Intrinsic                                                                                                                                                                                                                      | Argument preparation                                           | Instruction                                         | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|-----------------------------------------------------|----------------|---------------------------|
@@ -2571,7 +2572,7 @@ reserved.
 | `uint16x8_t [__arm_]vshrq_x[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                    | `a -> Qm`<br>`1 <= imm <= 16`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VSHRT.U16 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vshrq_x[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                    | `a -> Qm`<br>`1 <= imm <= 32`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VSHRT.U32 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 
-##### Vector shift right and insert
+#### Vector shift right and insert
 
 | Intrinsic                                                                                                                                                                                                               | Argument preparation                                    | Instruction                                        | Result         | Supported architectures   |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------|----------------|---------------------------|
@@ -2588,9 +2589,9 @@ reserved.
 | `uint16x8_t [__arm_]vsriq_m[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`1 <= imm <= 16`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSRIT.16 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vsriq_m[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`1 <= imm <= 32`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSRIT.32 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 
-#### Left
+### Left
 
-##### Vector saturating rounding shift left
+#### Vector saturating rounding shift left
 
 | Intrinsic                                                                                                                                                                                                                    | Argument preparation                                    | Instruction                                         | Result                    | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------------|---------------------------|---------------------------|
@@ -2623,7 +2624,7 @@ reserved.
 | `uint64_t [__arm_]uqshll(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint64_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int shift)`                                                                                                       | `value -> [RdaHi,RdaLo]`<br>`1 <= shift <= 32`          | `UQSHLL RdaLo, RdaHi, #shift`                       | `[RdaHi,RdaLo] -> result` | `MVE`                     |
 | `uint32_t [__arm_]uqrshl(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t shift)`                                                                                                         | `value -> Rda`<br>`shift -> Rm`                         | `UQRSHL Rda, Rm`                                    | `Rda -> result`           | `MVE`                     |
 
-##### Vector saturating shift left
+#### Vector saturating shift left
 
 | Intrinsic                                                                                                                                                                                                                       | Argument preparation                                           | Instruction                                           | Result                    | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|-------------------------------------------------------|---------------------------|---------------------------|
@@ -2673,7 +2674,7 @@ reserved.
 | `uint32_t [__arm_]uqshl(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int shift)`                                                                                                           | `value -> Rda`<br>`1 <= shift <= 32`                           | `UQSHL Rda, #shift`                                   | `Rda -> result`           | `MVE`                     |
 | `int32_t [__arm_]sqshl(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int shift)`                                                                                                             | `value -> Rda`<br>`1 <= shift <= 32`                           | `SQSHL Rda, #shift`                                   | `Rda -> result`           | `MVE`                     |
 
-##### Vector rounding shift left
+#### Vector rounding shift left
 
 | Intrinsic                                                                                                                                                                                                                   | Argument preparation                                    | Instruction                                        | Result          | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------|-----------------|---------------------------|
@@ -2708,7 +2709,7 @@ reserved.
 | `uint16x8_t [__arm_]vrshlq_x[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                    | `a -> Qm`<br>`b -> Qn`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VRSHLT.U16 Qd, Qm, Qn` | `Qd -> result`  | `MVE`                     |
 | `uint32x4_t [__arm_]vrshlq_x[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                    | `a -> Qm`<br>`b -> Qn`<br>`p -> Rp`                     | `VMSR P0, Rp`<br>`VPST`<br>`VRSHLT.U32 Qd, Qm, Qn` | `Qd -> result`  | `MVE`                     |
 
-##### Whole vector left shift with carry
+#### Whole vector left shift with carry
 
 | Intrinsic                                                                                                                                                                                                             | Argument preparation                                       | Instruction                                        | Result                         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|----------------------------------------------------|--------------------------------|---------------------------|
@@ -2725,7 +2726,7 @@ reserved.
 | `uint16x8_t [__arm_]vshlcq_m[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32_t *b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qda`<br>`*b -> Rdm`<br>`1 <= imm <= 32`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSHLCT Qda, Rdm, #imm` | `Qda -> result`<br>`Rdm -> *b` | `MVE`                     |
 | `uint32x4_t [__arm_]vshlcq_m[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32_t *b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qda`<br>`*b -> Rdm`<br>`1 <= imm <= 32`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSHLCT Qda, Rdm, #imm` | `Qda -> result`<br>`Rdm -> *b` | `MVE`                     |
 
-##### Vector shift left
+#### Vector shift left
 
 | Intrinsic                                                                                                                                                                                                                        | Argument preparation                                           | Instruction                                           | Result          | Supported architectures   |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|-------------------------------------------------------|-----------------|---------------------------|
@@ -2802,7 +2803,7 @@ reserved.
 | `uint16x8_t [__arm_]vshlq_m_r[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                          | `a -> Qda`<br>`b -> Rm`<br>`p -> Rp`                           | `VMSR P0, Rp`<br>`VPST`<br>`VSHLT.U16 Qda, Rm`        | `Qda -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vshlq_m_r[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`                                                          | `a -> Qda`<br>`b -> Rm`<br>`p -> Rp`                           | `VMSR P0, Rp`<br>`VPST`<br>`VSHLT.U32 Qda, Rm`        | `Qda -> result` | `MVE`                     |
 
-##### Vector shift left and insert
+#### Vector shift left and insert
 
 | Intrinsic                                                                                                                                                                                                               | Argument preparation                                    | Instruction                                        | Result         | Supported architectures   |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------|----------------|---------------------------|
@@ -2819,9 +2820,9 @@ reserved.
 | `uint16x8_t [__arm_]vsliq_m[_n_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`0 <= imm <= 15`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSLIT.16 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 | `uint32x4_t [__arm_]vsliq_m[_n_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` const int imm,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`0 <= imm <= 31`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VSLIT.32 Qd, Qm, #imm` | `Qd -> result` | `MVE`                     |
 
-### Move
+## Move
 
-#### Vector move
+### Vector move
 
 | Intrinsic                                                                                                                                                                         | Argument preparation                       | Instruction                                     | Result         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|-------------------------------------------------|----------------|---------------------------|
@@ -2866,7 +2867,7 @@ reserved.
 | `uint8x16_t [__arm_]vmovntq_m[_u16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint8x16_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`        | `a -> Qd`<br>`b -> Qm`<br>`p -> Rp`        | `VMSR P0, Rp`<br>`VPST`<br>`VMOVNTT.I16 Qd, Qm` | `Qd -> result` | `MVE`                     |
 | `uint16x8_t [__arm_]vmovntq_m[_u32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` uint32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)`        | `a -> Qd`<br>`b -> Qm`<br>`p -> Rp`        | `VMSR P0, Rp`<br>`VPST`<br>`VMOVNTT.I32 Qd, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Vector saturating move and narrow
+### Vector saturating move and narrow
 
 | Intrinsic                                                                                                                                                                   | Argument preparation                | Instruction                                       | Result         | Supported architectures   |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|---------------------------------------------------|----------------|---------------------------|
@@ -2895,15 +2896,15 @@ reserved.
 | `uint8x16_t [__arm_]vqmovuntq_m[_s16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint8x16_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQMOVUNTT.S16 Qd, Qm` | `Qd -> result` | `MVE`                     |
 | `uint16x8_t [__arm_]vqmovuntq_m[_s32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qd`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VQMOVUNTT.S32 Qd, Qm` | `Qd -> result` | `MVE`                     |
 
-### Predication
+## Predication
 
-#### Vector Predicate NOT
+### Vector Predicate NOT
 
 | Intrinsic                                    | Argument preparation   | Instruction                               | Result         | Supported architectures   |
 |----------------------------------------------|------------------------|-------------------------------------------|----------------|---------------------------|
 | `mve_pred16_t [__arm_]vpnot(mve_pred16_t a)` | `a -> Rp`              | `VMSR P0, Rp`<br>`VPNOT`<br>`VMRS Rt, P0` | `Rt -> result` | `MVE`                     |
 
-#### Predicated select
+### Predicated select
 
 | Intrinsic                                                                                                                                                                  | Argument preparation                | Instruction                         | Result         | Supported architectures   |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|-------------------------------------|----------------|---------------------------|
@@ -2918,7 +2919,7 @@ reserved.
 | `float16x8_t [__arm_]vpselq[_f16](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float16x8_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float16x8_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPSEL Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 | `float32x4_t [__arm_]vpselq[_f32](`<br>&nbsp;&nbsp;&nbsp;&nbsp;`float32x4_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float32x4_t b,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Qn`<br>`b -> Qm`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPSEL Qd, Qn, Qm` | `Qd -> result` | `MVE`                     |
 
-#### Create vector tail predicate
+### Create vector tail predicate
 
 | Intrinsic                                                                                                                | Argument preparation   | Instruction                                               | Result         | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------------|------------------------|-----------------------------------------------------------|----------------|---------------------------|
@@ -2931,21 +2932,21 @@ reserved.
 | `mve_pred16_t [__arm_]vctp32q_m(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Rn`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCTPT.32 Rn`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 | `mve_pred16_t [__arm_]vctp64q_m(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint32_t a,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` mve_pred16_t p)` | `a -> Rn`<br>`p -> Rp` | `VMSR P0, Rp`<br>`VPST`<br>`VCTPT.64 Rn`<br>`VMRS Rd, P0` | `Rd -> result` | `MVE`                     |
 
-### 64-bit arithmetic
+## 64-bit arithmetic
 
-#### Logical shift left long
+### Logical shift left long
 
 | Intrinsic                                                                                                          | Argument preparation                      | Instruction             | Result                    | Supported architectures   |
 |--------------------------------------------------------------------------------------------------------------------|-------------------------------------------|-------------------------|---------------------------|---------------------------|
 | `uint64_t [__arm_]lsll(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`uint64_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t shift)` | `value -> [RdaHi,RdaLo]`<br>`shift -> Rm` | `LSLL RdaLo, RdaHi, Rm` | `[RdaHi,RdaLo] -> result` | `MVE`                     |
 
-#### Arithmetic shift right long
+### Arithmetic shift right long
 
 | Intrinsic                                                                                                        | Argument preparation                      | Instruction             | Result                    | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------|-------------------------------------------|-------------------------|---------------------------|---------------------------|
 | `int64_t [__arm_]asrl(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int64_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t shift)` | `value -> [RdaHi,RdaLo]`<br>`shift -> Rm` | `ASRL RdaLo, RdaHi, Rm` | `[RdaHi,RdaLo] -> result` | `MVE`                     |
 
-#### Saturating rounding shift right long
+### Saturating rounding shift right long
 
 | Intrinsic                                                                                                                 | Argument preparation                      | Instruction                     | Result                    | Supported architectures   |
 |---------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|---------------------------------|---------------------------|---------------------------|
@@ -2953,7 +2954,7 @@ reserved.
 | `int64_t [__arm_]sqrshrl_sat48(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int64_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t shift)` | `value -> [RdaHi,RdaLo]`<br>`shift -> Rm` | `SQRSHRL RdaLo, RdaHi, #48, Rm` | `[RdaHi,RdaLo] -> result` | `MVE`                     |
 | `int32_t [__arm_]sqrshr(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int32_t value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` int32_t shift)`        | `value -> Rda`<br>`shift -> Rm`           | `SQRSHR Rda, Rm`                | `Rda -> result`           | `MVE`                     |
 
-#### Rounding shift right long
+### Rounding shift right long
 
 | Intrinsic                                                                                                              | Argument preparation                           | Instruction                   | Result                    | Supported architectures   |
 |------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|-------------------------------|---------------------------|---------------------------|
