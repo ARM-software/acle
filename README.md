@@ -16,9 +16,8 @@ page](https://developer.arm.com/architectures/system-architectures/software-stan
 
 ## Contributing
 
-The branch ``main`` is the release branch, whose tip contains the
-latest release. Therefore, please submit your PR against the branch
-``next-release``.
+Contributions of any kind are always welcome! Please check the
+[contributions guidelines](CONTRIBUTING.md) for details.
 
 ## Defect reports
 
