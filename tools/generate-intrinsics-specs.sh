@@ -35,7 +35,7 @@ function generate_rst_specs() {
     ./tools/gen-intrinsics-specs.py --intrinsic-defs $1 \
 			    --classification $2 \
 			    --template $3 --outfile $4 \
-			    --source_syntax $5
+			    --workflow $5
 }
 
 # Generate specs
@@ -57,7 +57,7 @@ check_changes ./tmp/mve.new.md ./mve_intrinsics/mve.md
 
 # Generate tmp file for pdfs
 generate_rst_specs ./tools/intrinsic_db/mve.csv \
-       	./tools/intrinsic_db/mve_classification.csv \
-				./mve_intrinsics/mve.template.md \
- 				./tmp/mve.new.md \
- 				pdf
+		   ./tools/intrinsic_db/mve_classification.csv \
+		   ./mve_intrinsics/mve.template.md \
+		   ./tmp/mve.for-pdf.md \
+		   pdf

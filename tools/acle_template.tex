@@ -11,6 +11,23 @@
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+
+\makeatletter
+  \patchcmd{\f@nch@foot}{\rlap}{\color{$if(fontcolor)$$fontcolor$$else$black$endif$}\rlap}{}{}
+  \patchcmd{\footrule}{\hrule}{\color{$if(fontcolor)$$fontcolor$$else$black$endif$}\hrule}{}{}
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\small \emph{Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.}}
+\fancyfoot[R]{\small \thepage}
+\renewcommand{\footrulewidth}{0.4pt}
 
 $if(linestretch)$
   \usepackage{setspace}
@@ -39,10 +56,6 @@ $else$
     \setlength{\parindent}{0pt}
     \setlength{\parskip}{6pt plus 2pt minus 1pt}
   }
-$endif$
-
-$if(geometry)$
-  \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
 
 $if(highlighting-macros)$
@@ -119,6 +132,7 @@ $if(toc-title)$
 $endif$
   \setcounter{tocdepth}{$toc-depth$}
   \tableofcontents
+  \thispagestyle{empty}
   \newpage
 $endif$
 

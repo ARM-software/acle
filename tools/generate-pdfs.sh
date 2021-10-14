@@ -33,6 +33,11 @@ rst2pdf neon_intrinsics/advsimd.rst         \
         --default-dpi=110           \
         -o pdfs/advsimd.pdf
 
+#convert svg image to pdf for use in pdf generation via pandoc
 inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
-tail -n +10 tmp/mve.new.md | pandoc --template=tools/acle_template.tex --metadata-file=mve_intrinsics/mve.yaml $1 -o pdfs/mve.pdf
-tail -n +9 morello/morello.md | pandoc --template=tools/acle_template.tex --metadata-file=morello/morello.yaml $1 -o pdfs/morello.pdf
+
+tail -n +$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' tmp/mve.for-pdf.md) tmp/mve.for-pdf.md | \
+	pandoc --template=tools/acle_template.tex --metadata-file=mve_intrinsics/mve_pdf_conf.yaml $1 -o pdfs/mve.pdf
+
+tail -n +$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' morello/morello.md) morello/morello.md | \
+	pandoc --template=tools/acle_template.tex --metadata-file=morello/morello_pdf_conf.yaml $1 -o pdfs/morello.pdf
