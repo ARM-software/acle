@@ -1,7 +1,7 @@
-# Rationale
+# Thank you for considering to contribute!
 
 Contributions are always welcome. We accept [bug fixes](#bugs),
-[proposals and new ideas](#proposal), or simply [editorial
+[proposals and new ideas](#proposals-for-new-content), or simply [editorial
 improvements](#editorial-improvements).
 
 By submitting a pull request you are implicitly adhering to the
@@ -14,24 +14,22 @@ You can report a bug by creating an
 it yourself with a [pull
 request](https://github.com/ARM-software/acle/pulls).
 
-## Proposals
+## Proposals for new content
 
 We are open to any proposal, including the introduction of new sets of
-intrinsics. We _do not_ require copyright assignment for the
-introduction of new specifications. The original contributor will
-retain the copyright.
+intrinsics.
 
 For adding new intrinsics or preprocessor macros, we recommend
 presenting them in a [pull
 request](https://github.com/ARM-software/acle/pulls), together with
-the following information:
+the following helpful information:
 
-1. A rationale covering why these intrinsics or macros are needed.
+1. A rationale covering why these intrinsics or macros.
 2. A design document to keep track of the reasoning that made the
    proposal reach its current state.
 
 Please note that this extra information is not a requirement for
-submitting proposals. Contributors are trusted to use their judgment
+submitting new content. Contributors are trusted to use their judgment
 in deciding whether or not the proposal needs these extra
 documents. Providing the documents is recommended to make it easier
 for new ideas to be discussed and possibly accepted, especially for
@@ -69,3 +67,6 @@ PR](https://github.com/ARM-software/acle/pull/19) for an example.
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
 under the same terms as those in the [LICENSE](LICENSE) file.
+
+We _do not_ require copyright assignment. The original contributor
+will retain the copyright.
