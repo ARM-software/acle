@@ -80,6 +80,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "kbeyls",
+      "name": "Kristof Beyls",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19591946?v=4",
+      "profile": "https://github.com/kbeyls",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
