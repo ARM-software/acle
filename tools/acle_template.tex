@@ -24,15 +24,14 @@ $endif$
 \makeatother
 
 \pagestyle{fancy}
-
 \fancyhf{}
-$if(footertext)$\fancyfoot[L]{\small \emph{$footertext$}}$endif$
+$if(copyright-text)$\fancyfoot[L]{\small \emph{$copyright-text$}}$endif$
 \fancyfoot[R]{\small \thepage}
 \renewcommand{\footrulewidth}{0.4pt}
 
 \fancypagestyle{plain}{%
   \fancyhf{}
-  $if(footertext)$\fancyfoot[L]{\small \emph{$footertext$}}$endif$
+  $if(copyright-text)$\fancyfoot[L]{\small \emph{$copyright-text$}}$endif$
   \fancyfoot[R]{\small \thepage}
   \renewcommand{\footrulewidth}{0.4pt}
 }

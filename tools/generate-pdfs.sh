@@ -17,30 +17,31 @@ set -ex
 # limitations under the License.
 
 function generate_pdfs_from_md() {
-		inputMdFile=$1
-		outputPdfFile=$2
-		configYamlFile=$3
-		headingLineNum=$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' $inputMdFile)
-		
-		tail -n +$headingLineNum $inputMdFile | pandoc --template=tools/acle_template.tex --metadata-file=$configYamlFile -o $outputPdfFile
+	inputMdFile=$1
+	outputPdfFile=$2
+	configYamlFile=$3
+	headingLineNum=$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' $inputMdFile)
+
+	tail -n +$headingLineNum $inputMdFile | \
+	pandoc --template=tools/acle_template.tex --metadata-file=$configYamlFile -o $outputPdfFile
 }
 
 mkdir -p pdfs
 
 # the option`--inline-footnotes` is used to print the footnotes off
 # the references "in place" in the `References` section.
-#rst2pdf main/acle.rst         \
-#	--inline-footnotes \
-#	-s tools/rst2pdf-acle.style \
-#        --repeat-table-rows         \
-#        --default-dpi=110           \
-#        -o pdfs/acle.pdf
+rst2pdf main/acle.rst         \
+	--inline-footnotes \
+	-s tools/rst2pdf-acle.style \
+        --repeat-table-rows         \
+        --default-dpi=110           \
+        -o pdfs/acle.pdf
 
-#rst2pdf neon_intrinsics/advsimd.rst         \
-#	-s tools/rst2pdf-acle-intrinsics.style \
-#        --repeat-table-rows         \
-#        --default-dpi=110           \
-#        -o pdfs/advsimd.pdf
+rst2pdf neon_intrinsics/advsimd.rst         \
+	-s tools/rst2pdf-acle-intrinsics.style \
+        --repeat-table-rows         \
+        --default-dpi=110           \
+        -o pdfs/advsimd.pdf
 
 #convert svg image to pdf for use in pdf generation via pandoc
 inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
