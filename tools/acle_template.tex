@@ -1,0 +1,147 @@
+% Copyright (c) 2014--2021, John MacFarlane
+% Based on default.latex template released with Pandoc (www.pandoc.org).
+% License: BSD 3-clause
+% See `data/templates` in `COPYRIGHT` at https://github.com/jgm/pandoc
+
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{longtable,booktabs}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+
+\makeatletter
+  \patchcmd{\f@nch@foot}{\rlap}{\color{$if(fontcolor)$$fontcolor$$else$black$endif$}\rlap}{}{}
+  \patchcmd{\footrule}{\hrule}{\color{$if(fontcolor)$$fontcolor$$else$black$endif$}\hrule}{}{}
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\small \emph{$copyright-text$}}
+\fancyfoot[R]{\small \thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[L]{\small \emph{$copyright-text$}}
+  \fancyfoot[R]{\small \thepage}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
+
+$if(linestretch)$
+  \usepackage{setspace}
+  \setstretch{$linestretch$}
+$endif$
+
+$if(fontfamily)$
+  \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+  \renewcommand*\familydefault{\sfdefault}
+$else$
+  \usepackage{lmodern}
+$endif$
+
+$if(chapter-formatting)$
+  \usepackage{titlesec}
+  \titleformat{\chapter}[block]
+    {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
+  \titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+$endif$
+
+$if(indent)$
+$else$
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}
+  }
+$endif$
+
+$if(highlighting-macros)$
+  $highlighting-macros$
+$endif$
+
+$if(numbersections)$
+  \setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+$else$
+  \setcounter{secnumdepth}{0}
+$endif$
+
+$if(pagestyle)$
+  \pagestyle{$pagestyle$}
+$endif$
+
+$if(title)$
+  \title{%
+    $title$ $if(subtitle)$\\[4ex]
+    \LARGE $subtitle$$endif$
+    $if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+
+$if(author)$
+  \author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+
+$if(date)$
+  \date{$date$}
+$endif$
+
+$if(logo)$
+  \usepackage{graphicx}
+$endif$
+
+\hypersetup{
+  $if(title-meta)$
+            pdftitle={$title-meta$},
+  $endif$
+  $if(author-meta)$
+            pdfauthor={$author-meta$},
+  $endif$
+  $if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+  $endif$
+  $if(colorlinks)$
+            colorlinks=true,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$black$endif$,
+            filecolor=$if(filecolor)$$filecolor$$else$black$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$black$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$black$endif$,
+  $endif$
+            breaklinks=true}
+
+\begin{document}
+\color{$if(fontcolor)$$fontcolor$$else$black$endif$}{ %start of fontcolor
+$if(title)$
+\makeatletter
+    \begin{titlepage}
+        \begin{center}
+            \vspace*{4cm}
+            $if(title)${\huge \bfseries  \@title }\\[8ex]$endif$
+            $if(logo)$\includegraphics[width=40mm]{$logo$}\\[4ex]$endif$
+            $if(author)${\LARGE  \@author}\\[4ex]$endif$
+            $if(date)${\large \@date}\\[4ex]$endif$
+        \end{center}
+    \end{titlepage}
+\makeatother
+$endif$
+
+$if(toc)$
+$if(toc-title)$
+  \renewcommand*\contentsname{$toc-title$}
+$endif$
+  \setcounter{tocdepth}{$toc-depth$}
+  \tableofcontents
+  \newpage
+$endif$
+
+$body$ } %end of fontcolor
+
+\end{document}

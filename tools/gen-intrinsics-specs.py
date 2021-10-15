@@ -21,18 +21,20 @@ import argparse
 import csv
 import doctest
 
-def quote_literal(val, source_syntax):
+def quote_literal(val, workflow):
     if len(val) > 0:
-        return f"``{val}``" if source_syntax == "rst" else f"`{val}`"
+        return f"``{val}``" if workflow == "rst" else f"`{val}`"
     return val
 
 header_levels = {
     "rst" : ['=', '~', '-', '_', '@'],
-    "markdown" : ['##', '###', '####', '#####', '######']
+    "markdown" : ['##', '###', '####', '#####', '######'],
+    "pdf" : ['##', '###', '####', '#####', '######']
 }
 table_format = {
     "rst" : "grid",
-    "markdown" : "github"
+    "markdown" : "github",
+    "pdf" : "grid"
 }
 
 __CSV_SECTION_PREFIX = '<SECTION>'
@@ -47,7 +49,7 @@ __SECTION_TEXT_KEYWORD = '__section_text'
 __SECTION_KEYWORDS = [__INTRINSIC_TABLE_KEYWORD, __SECTION_TEXT_KEYWORD]
 
 
-def rst_literal_quote(mapping, source_syntax):
+def rst_literal_quote(mapping, workflow):
     r"""
     >>> rst_literal_quote('a; b', 'rst')
     ' ::\n\n    a \n    b \n\n'
@@ -65,22 +67,33 @@ def rst_literal_quote(mapping, source_syntax):
 
     >>> rst_literal_quote('', 'markdown')
     ''
+
+    >>> rst_literal_quote('a; b', 'pdf')
+    '```\na\n b\n```'
+
+    >>> rst_literal_quote('a b', 'pdf')
+    '```\na b\n```'
+
+    >>> rst_literal_quote('', 'pdf')
+    ''
     """
     if mapping == "":
         return ""
 
     lines = mapping.split(';')
 
-    if source_syntax == "rst":
+    if workflow == "rst":
         indented_lines = [f"    {line.strip()} " for line in lines]
         lines = [" ::", ""] + indented_lines + ["\n"]
         return '\n'.join(lines)
-    elif source_syntax == "markdown":
+    elif workflow == "markdown":
         indented_lines = [f"`{line.strip()}`" for line in lines]
         return '<br>'.join(indented_lines)
+    elif workflow == "pdf":
+        return '```\n' + '\n'.join(lines) + '\n```'
 
 
-def quote_split_intrinsics(intrinsic, source_syntax):
+def quote_split_intrinsics(intrinsic, workflow):
     r"""
     >>> quote_split_intrinsics('int f(int x, float y)', 'rst')
     '.. code:: c\n\n    int f(\n        int x,\n        float y)'
@@ -93,6 +106,12 @@ def quote_split_intrinsics(intrinsic, source_syntax):
 
     >>> quote_split_intrinsics('int f(int x)', 'markdown')
     '`int f(int x)`'
+
+    >>> quote_split_intrinsics('int f(int x, float y)', 'pdf')
+    '``` c\nint f(\n  int x,\n  float y)\n```'
+
+    >>> quote_split_intrinsics('int f(int x)', 'pdf')
+    '`int f(int x)`'
     """
     # Remove the suffix ')' from the intrinsic string.
     intrinsic_without_ending = intrinsic[:-1]
@@ -101,14 +120,18 @@ def quote_split_intrinsics(intrinsic, source_syntax):
     whitespace_indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
 
     if len(split_signature) > 1:
-        if source_syntax == "rst":
+        if workflow == "rst":
             return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
-        elif source_syntax == "markdown":
+        elif workflow == "markdown":
             return f"`{ret_def}(`<br>" + whitespace_indent + "`" + (',`<br>'+ whitespace_indent + '`').join(split_signature) + ")`"
+        elif workflow == "pdf":
+            return f"``` c\n{ret_def}(\n  " + (',\n ').join(split_signature) + ")\n```"
     else:
-        if source_syntax == "rst":
+        if workflow == "rst":
             return f".. code:: c\n\n    {intrinsic}\n"
-        elif source_syntax == "markdown":
+        elif workflow == "markdown":
+            return f"`{intrinsic}`"
+        elif workflow == "pdf":
             return f"`{intrinsic}`"
 
 
@@ -165,12 +188,12 @@ class Intrinsic:
         self.asm_mnemonic = self.asm.split(' ')[0].strip()
         self.classification = classification
 
-    def table_row(self, source_syntax):
-        return [quote_split_intrinsics(self.signature, source_syntax),
-                rst_literal_quote(self.parameter_mapping, source_syntax),
-                rst_literal_quote(self.asm, source_syntax),
-                rst_literal_quote(self.result_mapping, source_syntax),
-                quote_literal(self.arch, source_syntax)]
+    def table_row(self, workflow):
+        return [quote_split_intrinsics(self.signature, workflow),
+                rst_literal_quote(self.parameter_mapping, workflow),
+                rst_literal_quote(self.asm, workflow),
+                rst_literal_quote(self.result_mapping, workflow),
+                quote_literal(self.arch, workflow)]
 
 def recurse_set(parent, section_levels, value, object_type_target):
     """Recursively fills the dictinoary `parent` with the keys provided in
@@ -506,24 +529,25 @@ def is_section_text(item):
     return key == __SECTION_TEXT_KEYWORD
 
 
-def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_header, tablefmt="rst"):
+def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_header, workflow="rst"):
     """
     >>> table_item = ('__intrinsic_table', [[1,2,3,4,5], [6,7,8,9, 10]])
-    >>> print(recurse_print_to_rst(table_item, ['=']))
-    <BLANKLINE>
-    ===========  ======================  =====================  ========  =========================
-      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
-    ===========  ======================  =====================  ========  =========================
-              1                       2                      3         4                          5
-              6                       7                      8         9                         10
-    ===========  ======================  =====================  ========  =========================
-    >>> print(recurse_print_to_rst(table_item, ['#'], tablefmt='github'))
+    >>> print(recurse_print_to_rst(table_item, ['#'], workflow='markdown'))
     <BLANKLINE>
     |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
     |-------------|------------------------|-----------------------|----------|---------------------------|
     |           1 |                      2 |                     3 |        4 |                         5 |
     |           6 |                      7 |                     8 |        9 |                        10 |
-    >>> print(recurse_print_to_rst(table_item, ['='], tablefmt='grid'))
+    >>> print(recurse_print_to_rst(table_item, ['='], workflow='rst'))
+    <BLANKLINE>
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    +=============+========================+=======================+==========+===========================+
+    |           1 |                      2 |                     3 |        4 |                         5 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |           6 |                      7 |                     8 |        9 |                        10 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    >>> print(recurse_print_to_rst(table_item, ['='], workflow='pdf'))
     <BLANKLINE>
     +-------------+------------------------+-----------------------+----------+---------------------------+
     |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
@@ -533,18 +557,7 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |           6 |                      7 |                     8 |        9 |                        10 |
     +-------------+------------------------+-----------------------+----------+---------------------------+
     >>> item = ('New section', {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]})
-    >>> print(recurse_print_to_rst(item, ['=']))
-    <BLANKLINE>
-    New section
-    ===========
-    <BLANKLINE>
-    ===========  ======================  =====================  ========  =========================
-      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
-    ===========  ======================  =====================  ========  =========================
-              1                       2                      3         4                          5
-              6                       7                      8         9                         10
-    ===========  ======================  =====================  ========  =========================
-    >>> print(recurse_print_to_rst(item, ['#'], tablefmt='github'))
+    >>> print(recurse_print_to_rst(item, ['#'], workflow='markdown'))
     <BLANKLINE>
     # New section
     <BLANKLINE>
@@ -552,10 +565,21 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |-------------|------------------------|-----------------------|----------|---------------------------|
     |           1 |                      2 |                     3 |        4 |                         5 |
     |           6 |                      7 |                     8 |        9 |                        10 |
-    >>> print(recurse_print_to_rst(item, ['='], tablefmt='grid'))
+    >>> print(recurse_print_to_rst(item, ['='], workflow='rst'))
     <BLANKLINE>
     New section
     ===========
+    <BLANKLINE>
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    +=============+========================+=======================+==========+===========================+
+    |           1 |                      2 |                     3 |        4 |                         5 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |           6 |                      7 |                     8 |        9 |                        10 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    >>> print(recurse_print_to_rst(item, ['#'], workflow='pdf'))
+    <BLANKLINE>
+    # New section
     <BLANKLINE>
     +-------------+------------------------+-----------------------+----------+---------------------------+
     |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
@@ -565,21 +589,7 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |           6 |                      7 |                     8 |        9 |                        10 |
     +-------------+------------------------+-----------------------+----------+---------------------------+
     >>> item = ('Section 1', {'Section 1.1': {'__intrinsic_table': [[1,2,3,4,5], [6,7,8,9, 10]]}})
-    >>> print(recurse_print_to_rst(item, ['=','~']))
-    <BLANKLINE>
-    Section 1
-    =========
-    <BLANKLINE>
-    Section 1.1
-    ~~~~~~~~~~~
-    <BLANKLINE>
-    ===========  ======================  =====================  ========  =========================
-      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
-    ===========  ======================  =====================  ========  =========================
-              1                       2                      3         4                          5
-              6                       7                      8         9                         10
-    ===========  ======================  =====================  ========  =========================
-    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
+    >>> print(recurse_print_to_rst(item, ['#','##'], workflow='markdown'))
     <BLANKLINE>
     # Section 1
     <BLANKLINE>
@@ -589,13 +599,26 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |-------------|------------------------|-----------------------|----------|---------------------------|
     |           1 |                      2 |                     3 |        4 |                         5 |
     |           6 |                      7 |                     8 |        9 |                        10 |
-    >>> print(recurse_print_to_rst(item, ['=','~'], tablefmt='grid'))
+    >>> print(recurse_print_to_rst(item, ['=','~'], workflow='rst'))
     <BLANKLINE>
     Section 1
     =========
     <BLANKLINE>
     Section 1.1
     ~~~~~~~~~~~
+    <BLANKLINE>
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    +=============+========================+=======================+==========+===========================+
+    |           1 |                      2 |                     3 |        4 |                         5 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |           6 |                      7 |                     8 |        9 |                        10 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    >>> print(recurse_print_to_rst(item, ['#','##'], workflow='pdf'))
+    <BLANKLINE>
+    # Section 1
+    <BLANKLINE>
+    ## Section 1.1
     <BLANKLINE>
     +-------------+------------------------+-----------------------+----------+---------------------------+
     |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
@@ -605,22 +628,7 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |           6 |                      7 |                     8 |        9 |                        10 |
     +-------------+------------------------+-----------------------+----------+---------------------------+
     >>> item = ('Section 1', {'Section 1.1': { '__section_text': "Text for Section 1.1", '__intrinsic_table': [[1,2,3,4,5]]}})
-    >>> print(recurse_print_to_rst(item, ['=','~']))
-    <BLANKLINE>
-    Section 1
-    =========
-    <BLANKLINE>
-    Section 1.1
-    ~~~~~~~~~~~
-    <BLANKLINE>
-    Text for Section 1.1
-    <BLANKLINE>
-    ===========  ======================  =====================  ========  =========================
-      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
-    ===========  ======================  =====================  ========  =========================
-              1                       2                      3         4                          5
-    ===========  ======================  =====================  ========  =========================
-    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
+    >>> print(recurse_print_to_rst(item, ['#','##'], workflow='markdown'))
     <BLANKLINE>
     # Section 1
     <BLANKLINE>
@@ -631,7 +639,7 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
     |-------------|------------------------|-----------------------|----------|---------------------------|
     |           1 |                      2 |                     3 |        4 |                         5 |
-    >>> print(recurse_print_to_rst(item, ['=','~'], tablefmt='grid'))
+    >>> print(recurse_print_to_rst(item, ['=','~'], workflow='rst'))
     <BLANKLINE>
     Section 1
     =========
@@ -646,23 +654,21 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     +=============+========================+=======================+==========+===========================+
     |           1 |                      2 |                     3 |        4 |                         5 |
     +-------------+------------------------+-----------------------+----------+---------------------------+
-    >>> item = ('Section 1', {'Section 1.1': { '__intrinsic_table': [[1,2,3,4,5]], '__section_text': "Text for Section 1.1" }})
-    >>> print(recurse_print_to_rst(item, ['=','~']))
+    >>> print(recurse_print_to_rst(item, ['#','##'], workflow='pdf'))
     <BLANKLINE>
-    Section 1
-    =========
+    # Section 1
     <BLANKLINE>
-    Section 1.1
-    ~~~~~~~~~~~
+    ## Section 1.1
     <BLANKLINE>
     Text for Section 1.1
     <BLANKLINE>
-    ===========  ======================  =====================  ========  =========================
-      Intrinsic    Argument preparation    AArch64 Instruction    Result    Supported architectures
-    ===========  ======================  =====================  ========  =========================
-              1                       2                      3         4                          5
-    ===========  ======================  =====================  ========  =========================
-    >>> print(recurse_print_to_rst(item, ['#','##'], tablefmt='github'))
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    +=============+========================+=======================+==========+===========================+
+    |           1 |                      2 |                     3 |        4 |                         5 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    >>> item = ('Section 1', {'Section 1.1': { '__intrinsic_table': [[1,2,3,4,5]], '__section_text': "Text for Section 1.1" }})
+    >>> print(recurse_print_to_rst(item, ['#','##'], workflow='markdown'))
     <BLANKLINE>
     # Section 1
     <BLANKLINE>
@@ -673,13 +679,26 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
     |-------------|------------------------|-----------------------|----------|---------------------------|
     |           1 |                      2 |                     3 |        4 |                         5 |
-    >>> print(recurse_print_to_rst(item, ['=','~'], tablefmt='grid'))
+    >>> print(recurse_print_to_rst(item, ['=','~'], workflow='rst'))
     <BLANKLINE>
     Section 1
     =========
     <BLANKLINE>
     Section 1.1
     ~~~~~~~~~~~
+    <BLANKLINE>
+    Text for Section 1.1
+    <BLANKLINE>
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    |   Intrinsic |   Argument preparation |   AArch64 Instruction |   Result |   Supported architectures |
+    +=============+========================+=======================+==========+===========================+
+    |           1 |                      2 |                     3 |        4 |                         5 |
+    +-------------+------------------------+-----------------------+----------+---------------------------+
+    >>> print(recurse_print_to_rst(item, ['#','##'], workflow='pdf'))
+    <BLANKLINE>
+    # Section 1
+    <BLANKLINE>
+    ## Section 1.1
     <BLANKLINE>
     Text for Section 1.1
     <BLANKLINE>
@@ -691,16 +710,19 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
     """
     key, value = item
     if is_intrinsic_table(item):
-        return "\n" + str(tbl.tabulate(value, headers=headers, tablefmt=tablefmt))
+        return "\n" + str(tbl.tabulate(value, headers=headers, tablefmt=table_format[workflow]))
 
     body = ""
     if start_new_section(item):
         title, *rest = section_level_list
 
-        if tablefmt == "grid" or tablefmt == "rst":
+        if workflow == "rst":
             body += f"\n{key}"
             body += "\n" + title * len(key) + ""
-        elif tablefmt == "github":
+        elif workflow == "markdown":
+            body += "\n" + title + " "
+            body += f"{key}"
+        elif workflow == "pdf":
             body += "\n" + title + " "
             body += f"{key}"
 
@@ -713,7 +735,7 @@ def recurse_print_to_rst(item, section_level_list, headers=__intrinsic_table_hea
         # after the section title.
         if k == __SECTION_TEXT_KEYWORD:
             continue
-        body += "\n"+recurse_print_to_rst((k, v), rest, headers, tablefmt)
+        body += "\n"+recurse_print_to_rst((k, v), rest, headers, workflow)
     return body
 
 
@@ -775,7 +797,7 @@ def get_section_data(row):
     return [row[1], section_text]
 
 
-def process_db(db, classification_db, source_syntax):
+def process_db(db, classification_db, workflow):
     """Processes a list of intrinsics and their mappings to the
     classification into a sequence of sections and RST tables.
 
@@ -874,6 +896,50 @@ def process_db(db, classification_db, source_syntax):
     | T1        | T2   | T3   | T4    | T5     |
     |-----------|------|------|-------|--------|
     | `c C01()` | `c`  | `cc` | `ccc` | `cccc` |
+    >>> print(process_db(intrinsics, classification, 'pdf'))
+    <BLANKLINE>
+    <BLANKLINE>
+    ## Section 1 title
+    <BLANKLINE>
+    Section 1 description.
+    <BLANKLINE>
+    ### No category
+    <BLANKLINE>
+    +-----------+------+------+------+--------+
+    | T1        | T2   | T3   | T4   | T5     |
+    +===========+======+======+======+========+
+    | `a A01()` | ```  | ```  | ```  | `aaaa` |
+    |           | a    | aa   | aaa  |        |
+    |           | ```  | ```  | ```  |        |
+    +-----------+------+------+------+--------+
+    <BLANKLINE>
+    ### Section 1.1
+    <BLANKLINE>
+    #### Section 1.1.1
+    <BLANKLINE>
+    +-----------+------+------+------+--------+
+    | T1        | T2   | T3   | T4   | T5     |
+    +===========+======+======+======+========+
+    | `b B01()` | ```  | ```  | ```  | `bbbb` |
+    |           | b    | bb   | bbb  |        |
+    |           | ```  | ```  | ```  |        |
+    +-----------+------+------+------+--------+
+    <BLANKLINE>
+    ## Section 2 title
+    <BLANKLINE>
+    Section 2 description.
+    <BLANKLINE>
+    ### classX
+    <BLANKLINE>
+    #### subclassY
+    <BLANKLINE>
+    +-----------+------+------+------+--------+
+    | T1        | T2   | T3   | T4   | T5     |
+    +===========+======+======+======+========+
+    | `c C01()` | ```  | ```  | ```  | `cccc` |
+    |           | c    | cc   | ccc  |        |
+    |           | ```  | ```  | ```  |        |
+    +-----------+------+------+------+--------+
     """
     filtered = {}
     section, section_text, table_header = None, None, None
@@ -912,7 +978,7 @@ def process_db(db, classification_db, source_syntax):
             if section:
                 classification_list = [section]+classification_list
             recurse_set(filtered, classification_list,
-                        intrinsic.table_row(source_syntax), __INTRINSIC_TABLE_KEYWORD)
+                        intrinsic.table_row(workflow), __INTRINSIC_TABLE_KEYWORD)
 
             continue
 
@@ -923,8 +989,8 @@ def process_db(db, classification_db, source_syntax):
     body = ""
     for k, v in filtered.items():
         body += "\n" + \
-            recurse_print_to_rst((k, v), header_levels[source_syntax],
-                                 headers=table_header, tablefmt=table_format[source_syntax])
+            recurse_print_to_rst((k, v), header_levels[workflow],
+                                 headers=table_header, workflow=workflow)
     return body
 
 
@@ -968,9 +1034,11 @@ if __name__ == "__main__":
                         help="CSV file that map the intrinsics to their classification.", required=True)
     parser.add_argument("--outfile", metavar="<path>", type=str,
                         help="Output file where the RST of the specs is written.", required=True)
-    parser.add_argument("--source_syntax", metavar="<path>", type=str,
-                        help="The type of syntax the output file should be rendered in. Can be rst or markdown.", required=True,
-                        choices=['rst', 'markdown'])
+    parser.add_argument("--workflow", metavar="<path>", type=str,
+                        help="The type of workflow the output file should be rendered in." \
+                             "Can be rst with grid tables, markdown with github tables or pdf with markdown syntax and grid tables.",
+                        required=True,
+                        choices=['rst', 'markdown', 'pdf'])
     cli_args = parser.parse_args()
 
     # We require version 0.8.6 to be able to print multi-line records
@@ -983,7 +1051,7 @@ if __name__ == "__main__":
     classification_map = get_classification_map(cli_args.classification)
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
-    intrinsic_table = process_db(intrinsics_db, classification_map, cli_args.source_syntax)
+    intrinsic_table = process_db(intrinsics_db, classification_map, cli_args.workflow)
     rst_output = doc_template.format(intrinsic_table=intrinsic_table)
     with (open(cli_args.outfile, 'w')) as f:
         f.write(rst_output)

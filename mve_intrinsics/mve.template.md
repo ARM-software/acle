@@ -1,5 +1,5 @@
 # Arm MVE Intrinsics   
-                                                 
+
 ![image](Arm_logo_blue_RGB.svg)                                          
 
 2021Q2                                                                   
@@ -8,6 +8,7 @@ Date of Issue: 02 July 2021
 
 ------------------------------------------------------------------------
 
+<!---END_OF_HTML_HEADER--->
 # Preface                                                                  
 
 ## Abstract

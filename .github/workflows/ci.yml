@@ -16,8 +16,10 @@ jobs:
       run: pip install -r tools/requirements.txt
     - name: check .rst document syntax
       run: tools/check-rst-syntax.sh
-    - name: generate and check intrinsic specs (rst)
+    - name: generate and check intrinsic specs (md)
       run: tools/generate-intrinsics-specs.sh
+    - name: install pandoc and dependencies
+      run: sudo apt-get -y --no-install-recommends install pandoc texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra inkscape
     - name: build PDFs
       run: tools/generate-pdfs.sh
     - uses: actions/upload-artifact@v2

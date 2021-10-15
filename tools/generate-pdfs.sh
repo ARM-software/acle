@@ -16,13 +16,23 @@ set -ex
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-mkdir -p pdfs
+function generate_pdfs_from_md() {
+	inputMdFile=$1
+	if ! [ -f "$inputMdFile" ]; then
+		echo "**** WARNING! $inputMdFile does not exist. Please enter valid file path."
+		echo "**** WARNING! Please make sure to run tools/generate-intrinsics-specs.sh before building the PDFs."
+		exit 1
+	fi
 
-#rst2pdf morello/morello.rst         \
-#	-s tools/rst2pdf-acle.style \
-#        --repeat-table-rows         \
-#        --default-dpi=110           \
-#        -o pdfs/morello.pdf
+	outputPdfFile=$2
+	configYamlFile=$3
+	headingLineNum=$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' $inputMdFile)
+
+	tail -n +$headingLineNum $inputMdFile | \
+	pandoc --template=tools/acle_template.tex --metadata-file=$configYamlFile -o $outputPdfFile
+}
+
+mkdir -p pdfs
 
 # the option`--inline-footnotes` is used to print the footnotes off
 # the references "in place" in the `References` section.
@@ -39,8 +49,8 @@ rst2pdf neon_intrinsics/advsimd.rst         \
         --default-dpi=110           \
         -o pdfs/advsimd.pdf
 
-#rst2pdf mve_intrinsics/mve.rst         \
-#	-s tools/rst2pdf-acle-intrinsics.style \
-#        --repeat-table-rows         \
-#        --default-dpi=110           \
-#        -o pdfs/mve.pdf
+#convert svg image to pdf for use in pdf generation via pandoc
+inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
+
+generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf ./morello/morello_pdf_conf.yaml
+generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf ./mve_intrinsics/mve_pdf_conf.yaml
