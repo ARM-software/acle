@@ -108,7 +108,7 @@ def quote_split_intrinsics(intrinsic, workflow):
     '`int f(int x)`'
 
     >>> quote_split_intrinsics('int f(int x, float y)', 'pdf')
-    '```c\nint f(\nint x,\n float y)```'
+    '``` c\nint f(\n  int x,\n  float y)\n```'
 
     >>> quote_split_intrinsics('int f(int x)', 'pdf')
     '`int f(int x)`'
@@ -125,7 +125,7 @@ def quote_split_intrinsics(intrinsic, workflow):
         elif workflow == "markdown":
             return f"`{ret_def}(`<br>" + whitespace_indent + "`" + (',`<br>'+ whitespace_indent + '`').join(split_signature) + ")`"
         elif workflow == "pdf":
-            return f"```c\n{ret_def}(\n" + (',\n').join(split_signature) + ")```"
+            return f"``` c\n{ret_def}(\n  " + (',\n ').join(split_signature) + ")\n```"
     else:
         if workflow == "rst":
             return f".. code:: c\n\n    {intrinsic}\n"

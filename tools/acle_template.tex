@@ -24,10 +24,18 @@ $endif$
 \makeatother
 
 \pagestyle{fancy}
+
 \fancyhf{}
-\fancyfoot[L]{\small \emph{Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.}}
+$if(footertext)$\fancyfoot[L]{\small \emph{$footertext$}}$endif$
 \fancyfoot[R]{\small \thepage}
 \renewcommand{\footrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  $if(footertext)$\fancyfoot[L]{\small \emph{$footertext$}}$endif$
+  \fancyfoot[R]{\small \thepage}
+  \renewcommand{\footrulewidth}{0.4pt}
+}
 
 $if(linestretch)$
   \usepackage{setspace}
@@ -132,7 +140,6 @@ $if(toc-title)$
 $endif$
   \setcounter{tocdepth}{$toc-depth$}
   \tableofcontents
-  \thispagestyle{empty}
   \newpage
 $endif$
 

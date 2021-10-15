@@ -10,6 +10,7 @@ fontfamily: helvet
 classoption: 12pt
 fontcolor: darkgray
 colorlinks: citecolor=darkgray
+footertext: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.
 chapter-formatting: true
 papersize: a4
 indent: false

@@ -16,28 +16,34 @@ set -ex
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+function generate_pdfs_from_md() {
+		inputMdFile=$1
+		outputPdfFile=$2
+		configYamlFile=$3
+		headingLineNum=$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' $inputMdFile)
+		
+		tail -n +$headingLineNum $inputMdFile | pandoc --template=tools/acle_template.tex --metadata-file=$configYamlFile -o $outputPdfFile
+}
+
 mkdir -p pdfs
 
 # the option`--inline-footnotes` is used to print the footnotes off
 # the references "in place" in the `References` section.
-rst2pdf main/acle.rst         \
-	--inline-footnotes \
-	-s tools/rst2pdf-acle.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/acle.pdf
+#rst2pdf main/acle.rst         \
+#	--inline-footnotes \
+#	-s tools/rst2pdf-acle.style \
+#        --repeat-table-rows         \
+#        --default-dpi=110           \
+#        -o pdfs/acle.pdf
 
-rst2pdf neon_intrinsics/advsimd.rst         \
-	-s tools/rst2pdf-acle-intrinsics.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/advsimd.pdf
+#rst2pdf neon_intrinsics/advsimd.rst         \
+#	-s tools/rst2pdf-acle-intrinsics.style \
+#        --repeat-table-rows         \
+#        --default-dpi=110           \
+#        -o pdfs/advsimd.pdf
 
 #convert svg image to pdf for use in pdf generation via pandoc
 inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
 
-tail -n +$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' tmp/mve.for-pdf.md) tmp/mve.for-pdf.md | \
-	pandoc --template=tools/acle_template.tex --metadata-file=mve_intrinsics/mve_pdf_conf.yaml $1 -o pdfs/mve.pdf
-
-tail -n +$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' morello/morello.md) morello/morello.md | \
-	pandoc --template=tools/acle_template.tex --metadata-file=morello/morello_pdf_conf.yaml $1 -o pdfs/morello.pdf
+generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf ./morello/morello_pdf_conf.yaml
+generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf ./mve_intrinsics/mve_pdf_conf.yaml
