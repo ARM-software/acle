@@ -25,13 +25,13 @@ $endif$
 
 \pagestyle{fancy}
 \fancyhf{}
-$if(copyright-text)$\fancyfoot[L]{\small \emph{$copyright-text$}}$endif$
+\fancyfoot[L]{\small \emph{$copyright-text$}}
 \fancyfoot[R]{\small \thepage}
 \renewcommand{\footrulewidth}{0.4pt}
 
 \fancypagestyle{plain}{%
   \fancyhf{}
-  $if(copyright-text)$\fancyfoot[L]{\small \emph{$copyright-text$}}$endif$
+  \fancyfoot[L]{\small \emph{$copyright-text$}}
   \fancyfoot[R]{\small \thepage}
   \renewcommand{\footrulewidth}{0.4pt}
 }

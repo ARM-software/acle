@@ -20,6 +20,7 @@ function generate_pdfs_from_md() {
 	inputMdFile=$1
 	if ! [ -f "$inputMdFile" ]; then
 		echo "**** WARNING! $inputMdFile does not exist. Please enter valid file path."
+		echo "**** WARNING! Please make sure to run tools/generate-intrinsics-specs.sh before building the PDFs."
 		exit 1
 	fi
 
