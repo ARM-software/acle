@@ -6,8 +6,6 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
-
 # Arm C Language Extensions
 
 This repository contains the source material form which the
@@ -57,6 +55,17 @@ these files are accepted under the same license.
 The files in the sub-directories of the tools directory are provided
 under the Apache 2.0 license. Contributions to these files are
 accepted under the same license.
+
+## Past contributors
+
+The [list below](#contributors) represents the list of people that
+have been contributing since July 2021, when the ACLE specifications
+were released with an open source license.
+
+However, the ACLE is a collective project that was started few years
+ago, and that since then has seen the contribution of many people
+before it was released as an open source project.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -67,6 +76,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/MattPD"><img src="https://avatars.githubusercontent.com/u/130135?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matt</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=MattPD" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ValeriaDaneva"><img src="https://avatars.githubusercontent.com/u/90907783?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ValeriaDaneva</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=ValeriaDaneva" title="Code">💻</a></td>
     <td align="center"><a href="http://tubafranz.me/"><img src="https://avatars.githubusercontent.com/u/25690309?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Francesco Petrogalli</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=fpetrogalli" title="Code">💻</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Afpetrogalli" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/ktkachov-arm"><img src="https://avatars.githubusercontent.com/u/74917949?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ktkachov-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=ktkachov-arm" title="Code">💻</a> <a href="#content-ktkachov-arm" title="Content">🖋</a> <a href="#infra-ktkachov-arm" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     <td align="center"><a href="https://github.com/sallyarmneale"><img src="https://avatars.githubusercontent.com/u/56446080?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sallyarmneale</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asallyarmneale" title="Reviewed Pull Requests">👀</a></td>
