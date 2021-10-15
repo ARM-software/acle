@@ -12,6 +12,25 @@
       "profile": "https://github.com/TamarChristinaArm",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "MattPD",
+      "name": "Matt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/130135?v=4",
+      "profile": "https://github.com/MattPD",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ValeriaDaneva",
+      "name": "ValeriaDaneva",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90907783?v=4",
+      "profile": "https://github.com/ValeriaDaneva",
+      "contributions": [
+        "code"
+      ]
     },
     {
       "login": "fpetrogalli",
@@ -20,6 +39,26 @@
       "profile": "http://tubafranz.me/",
       "contributions": [
         "code",
+        "review"
+      ]
+    },
+    {
+      "login": "ktkachov-arm",
+      "name": "ktkachov-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74917949?v=4",
+      "profile": "https://github.com/ktkachov-arm",
+      "contributions": [
+        "code",
+        "content",
+        "infra"
+      ]
+    },
+    {
+      "login": "sallyarmneale",
+      "name": "sallyarmneale",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56446080?v=4",
+      "profile": "https://github.com/sallyarmneale",
+      "contributions": [
         "review"
       ]
     }
