@@ -6,6 +6,15 @@
   "commit": false,
   "contributors": [
     {
+      "login": "TamarChristinaArm",
+      "name": "Tamar Christina",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48126768?v=4",
+      "profile": "https://github.com/TamarChristinaArm",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
       "login": "MattPD",
       "name": "Matt",
       "avatar_url": "https://avatars.githubusercontent.com/u/130135?v=4",
