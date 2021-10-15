@@ -30,15 +30,16 @@ the following information:
 2. A design document to keep track of the reasoning that made the
    proposal reach its current state.
 
-Please note that this information is not a requirement for submitting
-proposals. Contributors are trusted to use their judgment in deciding
-whether or not the proposal needs such data. Providing the data is
-recommended to make it easier for new ideas to be discussed and
-possibly accepted, especially for changes of great impact.
+Please note that this extra information is not a requirement for
+submitting proposals. Contributors are trusted to use their judgment
+in deciding whether or not the proposal needs these extra
+documents. Providing the documents is recommended to make it easier
+for new ideas to be discussed and possibly accepted, especially for
+changes of great impact.
 
 ## Editorial improvements
 
-You always check the outcome of your changes by running the script
+You can check the outcome of your changes by running the script
 `tools/generate-pdfs.sh`. Please notice that changes that touch the
 intrinsic database in `tools/intrinsic_db` will need to be reflected
 in the correspondent specification file by re-running the script
