@@ -14,7 +14,7 @@ layout: default
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -90,6 +90,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
+    <td align="center"><a href="https://github.com/MattPD"><img src="https://avatars.githubusercontent.com/u/130135?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matt</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=MattPD" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ValeriaDaneva"><img src="https://avatars.githubusercontent.com/u/90907783?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ValeriaDaneva</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=ValeriaDaneva" title="Code">💻</a></td>
     <td align="center"><a href="http://tubafranz.me/"><img src="https://avatars.githubusercontent.com/u/25690309?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Francesco Petrogalli</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=fpetrogalli" title="Code">💻</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Afpetrogalli" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/ktkachov-arm"><img src="https://avatars.githubusercontent.com/u/74917949?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ktkachov-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=ktkachov-arm" title="Code">💻</a> <a href="#content-ktkachov-arm" title="Content">🖋</a> <a href="#infra-ktkachov-arm" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
