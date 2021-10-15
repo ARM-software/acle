@@ -57,14 +57,19 @@ The files in the sub-directories of the tools directory are provided
 under the Apache 2.0 license. Contributions to these files are
 accepted under the same license.
 
+## Past contributors
+
+The [list below](#contributors) represents the list of people that
+have been contributing since July 2021, when the ACLE specifications
+were released with an open source license.
+
+However, the ACLE is a collective project that was started few years
+ago, and that since then has seen the contribution of many people
+before it was released as an open source project.
+
 ## Contributors ✨
 
-The list below represents the list of (wonderful!) people that have
-been contributing since July 2021 ([emoji
-key](https://allcontributors.org/docs/en/emoji-key)), when the ACLE
-specifications were released with an open source license.
-
-Before that time many other people contributed to ACLE.
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
