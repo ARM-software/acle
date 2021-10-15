@@ -18,6 +18,11 @@ set -ex
 
 function generate_pdfs_from_md() {
 	inputMdFile=$1
+	if ! [ -f "$inputMdFile" ]; then
+		echo "**** WARNING! $inputMdFile does not exist. Please enter valid file path."
+		exit 1
+	fi
+
 	outputPdfFile=$2
 	configYamlFile=$3
 	headingLineNum=$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' $inputMdFile)
