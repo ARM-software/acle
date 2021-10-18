@@ -24,7 +24,7 @@ presenting them in a [pull
 request](https://github.com/ARM-software/acle/pulls), together with
 the following helpful information:
 
-1. A rationale covering why these intrinsics or macros.
+1. A rationale in favour of these intrinsics or macros.
 2. A design document to keep track of the reasoning that made the
    proposal reach its current state.
 
