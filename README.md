@@ -17,7 +17,7 @@ page](https://developer.arm.com/architectures/system-architectures/software-stan
 ## Contributing
 
 Contributions of any kind are always welcome! Please check the
-[contributions guidelines](CONTRIBUTING.md) for details.
+[contribution guidelines](CONTRIBUTING.md) for details.
 
 ## Defect reports
 
