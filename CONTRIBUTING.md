@@ -30,8 +30,8 @@ the following helpful information:
 
 Please note that this extra information is not a requirement for
 submitting new content. Contributors are trusted to use their judgment
-in deciding whether or not the proposal needs these extra
-documents. Providing the documents is recommended to make it easier
+in deciding whether or not the proposal needs this information.
+Providing the information is recommended to make it easier
 for new ideas to be discussed and possibly accepted, especially for
 changes of great impact.
 
