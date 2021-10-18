@@ -1,4 +1,4 @@
-# Thank you for considering to contribute!
+# Thank you for considering contributing!
 
 Contributions are always welcome. We accept [bug fixes](#bugs),
 [proposals and new ideas](#proposals-for-new-content), or simply [editorial
