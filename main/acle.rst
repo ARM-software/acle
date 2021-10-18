@@ -270,6 +270,8 @@ Changes between ACLE Q2 2021 and ACLE Q3 2021
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Fixed FP16 format description at ssec-fp16-type_.
 * Fixed the description of at ssec-NEON-intrinsics-concepts_.
+* Introduce ``__ARM_FEATURE_PAUTH`` and ``__ARM_FEATURE_BTI`` in sections
+  ssec-PAC_ and ssec-BTI_ respectively.
 
 References
 ----------
@@ -1795,6 +1797,9 @@ Identification extension is used to protect branch destinations by default.
 The protection applied to any particular function may be overriden by
 mechanisms such as function attributes.
 
+``__ARM_FEATURE_BTI`` is defined to 1 if Branch Target Identification
+extension is available on the target. It is undefined otherwise.
+
 .. _ssec-PAC:
 
 Pointer Authentication
@@ -1820,6 +1825,9 @@ extension is used to protect function entry points, including leaf functions,
 using the A key for signing.
 The protection applied to any particular function may be overriden by
 mechanisms such as function attributes.
+
+``__ARM_FEATURE_PAUTH`` is defined to 1 if Pointer Authentication extension
+is available on the target. It is undefined otherwise.
 
 .. _ssec-MatMul:
 
