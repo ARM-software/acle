@@ -38,7 +38,7 @@ changes of great impact.
 ## Editorial improvements
 
 You can check the outcome of your changes by running the script
-`tools/generate-pdfs.sh`. Please notice that changes that touch the
+`tools/generate-pdfs.sh`. Please note that changes that touch the
 intrinsic database in `tools/intrinsic_db` will need to be reflected
 in the correspondent specification file by re-running the script
 `tools/generate-intrinsics-specs.sh`.
