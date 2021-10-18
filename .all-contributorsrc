@@ -98,6 +98,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "avieira-arm",
+      "name": "Andre Vieira",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68072104?v=4",
+      "profile": "https://github.com/avieira-arm",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
