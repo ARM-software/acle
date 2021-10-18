@@ -1,13 +1,12 @@
-=============================================================
-Introducing extensions for memcpy family of memory operations
-=============================================================
+======================================
+Design Document for __ARM_FEATURE_MOPS
+======================================
 
 Following the announcement of the `2021 Architecture Extensions
 <https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-developments-2021>`_,
 we are proposing these aditions to the ACLE to support the new instructions
-that standardise the memcpy family of operations.
-
-Here's the rationale behind the contents:
+that standardise the memcpy family of operations, which were introduced in
+Armv8.8-A and Armv9.3-A.
 
 Feature test macro
 ##################
@@ -62,10 +61,9 @@ Tag setting memset variation
 ============================
 
 The ability to tag a memory address during a memset operation is highly useful
-for MTE users - for writting a custom allocator, for example. As it's also not
+for MTE users - for writing a custom allocator, for example. As it's also not
 covered by the regular code generation and library flows, we propose the
-introduction of a new intrinsic to cover this scenario. We suggest the
-following:
+introduction of the following intrinsic to cover this scenario:
 
 ::
 
