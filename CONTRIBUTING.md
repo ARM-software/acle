@@ -19,33 +19,33 @@ request](https://github.com/ARM-software/acle/pulls).
 We are open to any proposal, including the introduction of new sets of
 intrinsics.
 
-For adding new intrinsics or preprocessor macros, we recommend
-presenting them in a [pull
-request](https://github.com/ARM-software/acle/pulls), together with
-the following helpful information:
+To add new intrinsics or preprocessor macros, Arm recommends that you
+present them in a [pull
+request](https://github.com/ARM-software/acle/pulls), along with the
+following details:
 
 1. A rationale in favour of these intrinsics or macros.
 2. A design document to keep track of the reasoning that made the
    proposal reach its current state.
 
 Please note that this extra information is not a requirement for
-submitting new content. Contributors are trusted to use their judgment
-in deciding whether or not the proposal needs this information.
-Providing the information is recommended to make it easier
-for new ideas to be discussed and possibly accepted, especially for
-changes of great impact.
+submitting new content. Contributors are trusted to use their
+judgement to decide whether or not the proposal needs this
+information. Arm recommends that you add this information so that it
+is easier for new ideas to be discussed and possibly accepted,
+especially for changes of great impact.
 
 ## Editorial improvements
 
-You can check the outcome of your changes by running the script
-`tools/generate-pdfs.sh`. Please note that changes that touch the
-intrinsic database in `tools/intrinsic_db` will need to be reflected
-in the correspondent specification file by re-running the script
-`tools/generate-intrinsics-specs.sh`.
+To check the outcome of your changes, run the script
+`tools/generate-pdfs.sh`. Note that changes that impact the intrinsic
+database in `tools/intrinsic_db` should be reflected in the associated
+specification file. To do this, re-run the script
+`tools/generate-instrinsics-spec.sh`.
 
-These scripts are run in the CI configuration of the projects - the
-PDFs are generated automatically in response to a pull request, and
-can be downloaded in the `Actions` tab of a pull request.
+The scripts run in the CI configuration of the project. PDFs are
+generated automatically in response to a pull request. You can
+download the PDFs in the `Actions` tab of any pull request.
 
 # Branches and pull requests.
 
@@ -53,14 +53,14 @@ The branch `main` is the release branch, which contains the code used
 to build the PDFs of the [latest official
 release](https://github.com/ARM-software/acle/releases/latest).
 
-New development (bug-fixes, proposals, extensions, ...) is done on the
-branch `next-release`. Therefore, please submit your PR against the
-branch `next-release`.
+New development (bug-fixes, proposals, extensions, and so on) is
+committed on the `next-release` branch. Therefore, please submit your
+PR against the branch `next-release`.
 
-It is good practice to keep track of the changes in the `Changelog`
-section of the document being modified, under the section `Changes for
-next release`. Please see [this
-PR](https://github.com/ARM-software/acle/pull/19) for an example.
+It is good practice to track changes. In the section `Changes for next
+release`, please list any changes that you have made to the
+document. For an example, see [this
+PR](https://github.com/ARM-software/acle/pull/19).
 
 # Contribution agreement
 
