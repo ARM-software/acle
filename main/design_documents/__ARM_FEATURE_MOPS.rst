@@ -51,7 +51,7 @@ Temporal/non-temporal variations
 ================================
 
 Currently, in section `15.1.7 ("Memory access with non-temporal hints")
-<../acle.rst#Memory access with non-temporal hints>`__, the ACLE mentions that
+<../acle.rst#Memory access with non-temporal hints>`_, the ACLE mentions that
 language extensions to support cacheability hints are currently being
 investigated. Introducing new intrinsics for non-temporal memory operations
 could overlap with the support under investigation, so we suggest waiting for
@@ -69,6 +69,9 @@ introduction of the following intrinsic to cover this scenario:
 
   void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
 
-* ``tagged_address``: destination address to be set, containing the allocation tag in its bits [59:56].
+* ``tagged_address``: destination address to be set, containing the allocation
+  tag in its bits [59:56] (See the `SETG* instructions specification
+  <https://developer.arm.com/documentation/ddi0596/2021-09/Base-Instructions/SETGP--SETGM--SETGE--Memory-Set-with-tag-setting-?lang=en#sa_xd>`_
+  for more details).
 * ``value``: fill value
 * ``size``: number of bytes to fill
