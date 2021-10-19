@@ -24,16 +24,16 @@ present them in a [pull
 request](https://github.com/ARM-software/acle/pulls), along with the
 following details:
 
-1. A rationale in favour of these intrinsics or macros.
+1. A rationale in support of these intrinsics or macros.
 2. A design document to keep track of the reasoning that made the
    proposal reach its current state.
 
 Please note that this extra information is not a requirement for
-submitting new content. Contributors are trusted to use their
-judgement to decide whether or not the proposal needs this
-information. Arm recommends that you add this information so that it
-is easier for new ideas to be discussed and possibly accepted,
-especially for changes of great impact.
+submitting new content. Contributors are trusted to use their judgment
+to decide whether or not the proposal needs this information. Arm
+recommends that you add this information so that it is easier for new
+ideas to be discussed and possibly accepted, especially for changes of
+great impact.
 
 ## Editorial improvements
 
