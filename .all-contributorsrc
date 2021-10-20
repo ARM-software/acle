@@ -1,0 +1,118 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "TamarChristinaArm",
+      "name": "Tamar Christina",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48126768?v=4",
+      "profile": "https://github.com/TamarChristinaArm",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "MattPD",
+      "name": "Matt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/130135?v=4",
+      "profile": "https://github.com/MattPD",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ValeriaDaneva",
+      "name": "ValeriaDaneva",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90907783?v=4",
+      "profile": "https://github.com/ValeriaDaneva",
+      "contributions": [
+        "code",
+        "infra"
+      ]
+    },
+    {
+      "login": "fpetrogalli",
+      "name": "Francesco Petrogalli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25690309?v=4",
+      "profile": "http://tubafranz.me/",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "ktkachov-arm",
+      "name": "ktkachov-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74917949?v=4",
+      "profile": "https://github.com/ktkachov-arm",
+      "contributions": [
+        "code",
+        "content",
+        "infra"
+      ]
+    },
+    {
+      "login": "sallyarmneale",
+      "name": "sallyarmneale",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56446080?v=4",
+      "profile": "https://github.com/sallyarmneale",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "statham-arm",
+      "name": "Simon Tatham",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54840944?v=4",
+      "profile": "https://github.com/statham-arm",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "sam-ellis",
+      "name": "Sam Ellis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6695726?v=4",
+      "profile": "https://github.com/sam-ellis",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "kbeyls",
+      "name": "Kristof Beyls",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19591946?v=4",
+      "profile": "https://github.com/kbeyls",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "sbaranga-arm",
+      "name": "sbaranga-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24250117?v=4",
+      "profile": "https://github.com/sbaranga-arm",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "avieira-arm",
+      "name": "Andre Vieira",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68072104?v=4",
+      "profile": "https://github.com/avieira-arm",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "acle",
+  "projectOwner": "ARM-software",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
