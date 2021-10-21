@@ -20,8 +20,8 @@
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
-.. |release| replace:: Development version based on 2021Q2
-.. |date-of-issue| replace:: TBD
+.. |release| replace:: 2021Q3
+.. |date-of-issue| replace:: 30 September 2021
 
 =========================
 Arm C Language Extensions
@@ -221,6 +221,9 @@ Change history
    |                    |                    |                    | 2021. Open source  |
    |                    |                    |                    | version. NFCI.     |
    +--------------------+--------------------+--------------------+--------------------+
+   | 2021Q3             | 30 September 2021  | Arm                | Minor              |
+   |                    |                    |                    | re-wording. NFCI.  |
+   +--------------------+--------------------+--------------------+--------------------+
 
 
 Changes between ACLE Q2 2020 and ACLE Q3 2020
@@ -263,9 +266,15 @@ Most changes in ACLE Q2 2018 are updates to support features introduced in
 Armv8.3-A [ARMARMv83]_.  Support is added for the Complex addition and Complex MLA intrinsics.
 Armv8.4-A [ARMARMv84]_.  Support is added for the Dot Product intrinsics.
 
+Changes between ACLE Q2 2021 and ACLE Q3 2021
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Fixed FP16 format description at ssec-fp16-type_.
+* Fixed the description of at ssec-NEON-intrinsics-concepts_.
+* Introduce ``__ARM_FEATURE_PAUTH`` and ``__ARM_FEATURE_BTI`` in sections
+  ssec-PAC_ and ssec-BTI_ respectively.
+
 Changes for next release
 ~~~~~~~~~~~~~~~~~~~~~~~~
-* Fixed FP16 format description at ssec-fp16-type_.
 * Added feature detection macro for the memcpy family of memory operations
   (MOPS) at ssec-MOPS_.
 * Added intrinsic for the memcpy family of memory operations (MOPS) at
@@ -1795,6 +1804,9 @@ Identification extension is used to protect branch destinations by default.
 The protection applied to any particular function may be overriden by
 mechanisms such as function attributes.
 
+``__ARM_FEATURE_BTI`` is defined to 1 if Branch Target Identification
+extension is available on the target. It is undefined otherwise.
+
 .. _ssec-PAC:
 
 Pointer Authentication
@@ -1820,6 +1832,9 @@ extension is used to protect function entry points, including leaf functions,
 using the A key for signing.
 The protection applied to any particular function may be overriden by
 mechanisms such as function attributes.
+
+``__ARM_FEATURE_PAUTH`` is defined to 1 if Pointer Authentication extension
+is available on the target. It is undefined otherwise.
 
 .. _ssec-MatMul:
 
@@ -4839,6 +4854,8 @@ The intrinsics in this section provide C and C++ programmers with a
 simple programming model allowing easy access to code-generation of the
 Advanced SIMD instructions for both AArch64 and AArch32 execution states.
 
+.. _ssec-NEON-intrinsics-concepts:
+
 Concepts
 --------
 
@@ -4865,9 +4882,10 @@ input vector, and an operation is performed in parallel between
 this new vector and other input vectors.
 
 For example, ``vmul_lane_u16(a, b, 1)``, is a vector-by-lane intrinsic
-which takes two ``uint16x4_t`` vector elements. From ``b``, element ``1``
-is extracted, a new vector is formed which consists of four copies of ``b``,
-and this new vector is multiplied by ``a``.
+which takes two ``uint16x4_t`` vector elements. From ``b``, element
+``1`` is extracted, a new vector is formed which consists of four
+copies of element ``1`` of ``b``, and this new vector is multiplied by
+``a``.
 
 *Reduction*, *cross-lane*, and *pairwise* vector operations work on pairs
 of elements within a vector, or across the whole of a single vector
