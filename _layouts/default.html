@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+  </head>
+  <body>
+    <h1 id="title"> {{ page.title }} </h1>
+      {% include navbar.html %}
+    <div id="#content">
+      {{ content }}
+    </div>
+  </body>
+</html>

@@ -1,13 +1,13 @@
-# Morello Supplement to the Arm C Language Extensions
+---
+layout: default
+permalink: /morello/morello.html
+title: Morello Supplement to the Arm C Language Extensions
+version: 01alpha
+date-of-issue: 02 July 2021
+---
 
-01alpha
-
-Date of Issue: 02 July 2021
-
-![image](Arm_logo_blue_RGB.svg)
-
-------------------------------------------------------------------------
-
+* TOC
+{:toc}
 <!---END_OF_HTML_HEADER--->
 # Preface
 
