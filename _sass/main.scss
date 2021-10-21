@@ -1,7 +1,13 @@
+/*
+SPDX-License-Identifier: Apache-2.0
+The colors used for formatting have been added in accordance with corporate guidelines:
+https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
+*/
 body {
   margin: 100px 60px;
   counter-reset: h1counter;
   color: #333E48;
+  font-family: sans-serif;
 }
 
 div > h1:before {
@@ -80,6 +86,10 @@ a, a:hover, a:active, a:visited {
   padding: 20px 0px 20px 20px;
 }
 
+/*
+This logo image has been added in accordance with corporate guidelines:
+https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
+*/
 #logo {
   height: 60px;
   float: right;
