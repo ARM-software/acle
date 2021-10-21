@@ -1,6 +1,6 @@
 .. |copyright-date| replace:: 2014-2021
-.. |release| replace:: development version based on 2021Q2
-.. |date-of-issue| replace:: TBD
+.. |release| replace:: 2021Q3
+.. |date-of-issue| replace:: 30 September 2021
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
@@ -149,8 +149,8 @@ Document history
 
 Changes between next release and 2021Q2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Fixed the guard macro for the base intrinsics.
 
+* Fixed the guard macro for the base intrinsics.
 * Correct ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
 
 List of Intrinsics
