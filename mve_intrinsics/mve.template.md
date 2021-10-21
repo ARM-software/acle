@@ -1,13 +1,13 @@
-# Arm MVE Intrinsics   
+---
+layout: default
+permalink: /mve_intrinsics/mve.html
+title: Arm MVE Intrinsics
+version: 2021Q2
+date-of-issue: 02 July 2021
+---
 
-![image](Arm_logo_blue_RGB.svg)                                          
-
-2021Q2                                                                   
-
-Date of Issue: 02 July 2021                                            
-
-------------------------------------------------------------------------
-
+* TOC
+{{:toc}}
 <!---END_OF_HTML_HEADER--->
 # Preface                                                                  
 

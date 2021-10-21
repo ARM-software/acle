@@ -1,0 +1,91 @@
+body {
+  margin: 100px 60px;
+  counter-reset: h1counter;
+  color: #333E48;
+}
+
+div > h1:before {
+  content: counter(h1counter) ".\0000a0\0000a0";
+  counter-increment: h1counter;
+}
+
+div > h1 {
+  counter-reset: h2counter;
+}
+
+div > h2:before {
+  content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0";
+  counter-increment: h2counter;
+}
+
+div > h2 {
+  counter-reset: h3counter;
+}
+
+div > h3:before {
+  content:  counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+  counter-increment: h3counter;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li:before {
+  counter-increment: mycounter;
+  content: counters(mycounter, ".") ". ";
+}
+
+ul:first-of-type {
+  counter-reset: mycounter;
+}
+
+a, a:hover, a:active, a:visited {
+  color: #0091BD;
+  text-decoration: none;
+}
+
+#header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  background-color: #0091BD;
+  color: white;
+  font-size: 14pt;
+}
+
+#header a, #header a:visited {
+  color: white;
+}
+
+#header a {
+  padding: 20px 40px;
+  margin: 0;
+}
+
+#header a:active, #header a:hover {
+  background-color: white;
+  color: #0091BD;
+}
+
+#left-side {
+  float: left;
+  padding: 20px 20px 20px 0px;
+}
+
+#right-side {
+  float: right;
+  padding: 20px 0px 20px 20px;
+}
+
+#logo {
+  height: 60px;
+  float: right;
+  margin: 0;
+}
+
+#index_logo {
+  height: 160px;
+}

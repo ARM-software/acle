@@ -1,0 +1,14 @@
+<nav id="header">
+  <span id="left-side">
+    <a href="/">Home</a>
+    <a href="/main/acle.html">Acle</a>
+    <a href="/mve_intrinsics/mve.html">MVE</a>
+    <a href="/morello/morello.html">Morello</a>
+    <a href="/neon_intrinsics/advsimd.html">Neon</a>
+  </span>
+  <img id="logo" src="/assets/images/Arm-logo-reverse-white.svg" alt="Logo">
+  <span id="right-side">
+    {% if page.version %} Version: {{ page.version }} &nbsp;:::&nbsp; {% endif %}
+    {% if page.date-of-issue %} Date: {{ page.date-of-issue }} &nbsp;:::&nbsp; {% endif %}
+  </span>
+</nav>
