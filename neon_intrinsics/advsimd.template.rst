@@ -1,6 +1,6 @@
 .. |copyright-date| replace:: 2014-2021
-.. |release| replace:: 2021Q2
-.. |date-of-issue| replace:: 02 July 2021
+.. |release| replace:: 2021Q3
+.. |date-of-issue| replace:: 30 September 2021
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates. All rights reserved.
 
@@ -141,14 +141,19 @@ Document history
 +------------+-------------------------+-------------------------+
 |F           |30 May 2020              |Version ACLE Q2 2020     |
 +------------+-------------------------+-------------------------+
-|G           |30 October 2020          |Version ACLE Q2 2020     |
+|G           |30 October 2020          |Version ACLE Q3 2020     |
 +------------+-------------------------+-------------------------+
-|H           | |date-of-issue|         | |release|               |
+|H           |02 July 2021             |              2021Q2     |
 +------------+-------------------------+-------------------------+
 
+
+Changes between next release and 2021Q2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Fixed the guard macro for the base intrinsics.
+* Correct ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
 
 List of Intrinsics
 ##################
 
 {intrinsic_table}
-

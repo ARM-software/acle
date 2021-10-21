@@ -13,7 +13,7 @@
 <COMMENT>	See the License for the specific language governing permissions and
 <COMMENT>	limitations under the License.
 <HEADER>	Intrinsic	Argument preparation	AArch64 Instruction	Result	Supported architectures
-<SECTION>	Basic intrinsics	The intrinsics in this section are guarded by the macro ``__ARM_FEATURE_SVE``.
+<SECTION>	Basic intrinsics	The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 int8x8_t vadd_s8(int8x8_t a, int8x8_t b)	a -> Vn.8B;b -> Vm.8B	ADD Vd.8B,Vn.8B,Vm.8B	Vd.8B -> result	v7/A32/A64
 int8x16_t vaddq_s8(int8x16_t a, int8x16_t b)	a -> Vn.16B;b -> Vm.16B	ADD Vd.16B,Vn.16B,Vm.16B	Vd.16B -> result	v7/A32/A64
 int16x4_t vadd_s16(int16x4_t a, int16x4_t b)	a -> Vn.4H;b -> Vm.4H	ADD Vd.4H,Vn.4H,Vm.4H	Vd.4H -> result	v7/A32/A64
@@ -4078,10 +4078,10 @@ uint32x4_t vdotq_u32(uint32x4_t r, uint8x16_t a, uint8x16_t b)	r -> Vd.4S;a -> V
 int32x4_t vdotq_s32(int32x4_t r, int8x16_t a, int8x16_t b)	r -> Vd.4S;a -> Vn.16B;b -> Vm.16B	SDOT Vd.4S,Vn.16B,Vm.16B	Vd.4S -> result	A32/A64
 uint32x2_t vdot_lane_u32(uint32x2_t r, uint8x8_t a, uint8x8_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B;0 <= lane <= 1	UDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A32/A64
 int32x2_t vdot_lane_s32(int32x2_t r, int8x8_t a, int8x8_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B;0 <= lane <= 1	SDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A32/A64
-uint32x4_t vdotq_laneq_u32(uint32x4_t r, uint8x16_t a, uint8x16_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B;0 <= lane <= 3	UDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A64
-int32x4_t vdotq_laneq_s32(int32x4_t r, int8x16_t a, int8x16_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B;0 <= lane <= 3	SDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A64
-uint32x2_t vdot_laneq_u32(uint32x2_t r, uint8x8_t a, uint8x16_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B;0 <= lane <= 3	UDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A64
-int32x2_t vdot_laneq_s32(int32x2_t r, int8x8_t a, int8x16_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B;0 <= lane <= 3	SDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A64
+uint32x4_t vdotq_laneq_u32(uint32x4_t r, uint8x16_t a, uint8x16_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B;0 <= lane <= 3	UDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A32/A64
+int32x4_t vdotq_laneq_s32(int32x4_t r, int8x16_t a, int8x16_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B;0 <= lane <= 3	SDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A32/A64
+uint32x2_t vdot_laneq_u32(uint32x2_t r, uint8x8_t a, uint8x16_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B;0 <= lane <= 3	UDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A32/A64
+int32x2_t vdot_laneq_s32(int32x2_t r, int8x8_t a, int8x16_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B;0 <= lane <= 3	SDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A32/A64
 uint32x4_t vdotq_lane_u32(uint32x4_t r, uint8x16_t a, uint8x8_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B;0 <= lane <= 1	UDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A32/A64
 int32x4_t vdotq_lane_s32(int32x4_t r, int8x16_t a, int8x8_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B;0 <= lane <= 1	SDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A32/A64
 <SECTION>	Armv8.4-a intrinsics.
@@ -4258,13 +4258,13 @@ int32x4_t vusmmlaq_s32(int32x4_t r, uint8x16_t a, int8x16_t b)	r -> Vd.4S;a -> V
 int32x2_t vusdot_s32(int32x2_t r, uint8x8_t a, int8x8_t b)	r -> Vd.2S;a -> Vn.8B;b -> Vm.8B	USDOT Vd.2S,Vn.8B,Vm.8B	Vd.2S -> result	A32/A64
 int32x2_t vusdot_lane_s32(int32x2_t r, uint8x8_t a, int8x8_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 1	USDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A32/A64
 int32x2_t vsudot_lane_s32(int32x2_t r, int8x8_t a, uint8x8_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 1	SUDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A32/A64
-int32x2_t vusdot_laneq_s32(int32x2_t r, uint8x8_t a, int8x16_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 3	USDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A64
-int32x2_t vsudot_laneq_s32(int32x2_t r, int8x8_t a, uint8x16_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 3	SUDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A64
-int32x4_t vusdotq_s32(int32x4_t r, uint8x16_t a, int8x16_t b)	r -> Vd.4S;a -> Vn.16B;b -> Vm.16B	USDOT Vd.4S,Vn.16B,Vm.16B	Vd.4S -> result	A64
+int32x2_t vusdot_laneq_s32(int32x2_t r, uint8x8_t a, int8x16_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 3	USDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A32/A64
+int32x2_t vsudot_laneq_s32(int32x2_t r, int8x8_t a, uint8x16_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 3	SUDOT Vd.2S,Vn.8B,Vm.4B[lane]	Vd.2S -> result	A32/A64
+int32x4_t vusdotq_s32(int32x4_t r, uint8x16_t a, int8x16_t b)	r -> Vd.4S;a -> Vn.16B;b -> Vm.16B	USDOT Vd.4S,Vn.16B,Vm.16B	Vd.4S -> result	A32/A64
 int32x4_t vusdotq_lane_s32(int32x4_t r, uint8x16_t a, int8x8_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B; 0 <= lane <= 1	USDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A32/A64
 int32x4_t vsudotq_lane_s32(int32x4_t r, int8x16_t a, uint8x8_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 1	SUDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A32/A64
-int32x4_t vusdotq_laneq_s32(int32x4_t r, uint8x16_t a, int8x16_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B; 0 <= lane <= 3	USDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A64
-int32x4_t vsudotq_laneq_s32(int32x4_t r, int8x16_t a, uint8x16_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 3	SUDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A64
+int32x4_t vusdotq_laneq_s32(int32x4_t r, uint8x16_t a, int8x16_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.16B;b -> Vm.4B; 0 <= lane <= 3	USDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A32/A64
+int32x4_t vsudotq_laneq_s32(int32x4_t r, int8x16_t a, uint8x16_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.8B;b -> Vm.4B; 0 <= lane <= 3	SUDOT Vd.4S,Vn.16B,Vm.4B[lane]	Vd.4S -> result	A32/A64
 
 <SECTION>	Bfloat16 intrinsics Requires the +bf16 architecture extension.
 bfloat16x4_t vcreate_bf16(uint64_t a)	a -> Xn	INS Vd.D[0],Xn	Vd.4H -> result	A32/A64
