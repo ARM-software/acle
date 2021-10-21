@@ -3,7 +3,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -88,6 +88,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/kbeyls"><img src="https://avatars.githubusercontent.com/u/19591946?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kristof Beyls</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Akbeyls" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/sbaranga-arm"><img src="https://avatars.githubusercontent.com/u/24250117?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sbaranga-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=sbaranga-arm" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/avieira-arm"><img src="https://avatars.githubusercontent.com/u/68072104?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andre Vieira</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=avieira-arm" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/tejas-belagod-arm"><img src="https://avatars.githubusercontent.com/u/92718852?v=4?s=100" width="100px;" alt=""/><br /><sub><b>tejas-belagod-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=tejas-belagod-arm" title="Code">💻</a></td>
   </tr>
 </table>
 
