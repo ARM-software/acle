@@ -47,6 +47,22 @@ The scripts run in the CI configuration of the project. PDFs are
 generated automatically in response to a pull request. You can
 download the PDFs in the `Actions` tab of any pull request.
 
+# Continuous integration
+
+The full sequence executed by the continuous integrations bot is as
+follows:
+
+```
+./tools/generate-intrinsics-specs.sh
+./tools/check-rst-syntax.sh
+./tools/generate-pdfs.sh
+```
+
+An additional step uses
+[``markdown-link-check```](https://github.com/tcort/markdown-link-check)
+to check that all the links in the markdown files are resolving
+correcly.
+
 # Branches and pull requests.
 
 The branch `main` is the release branch, which contains the code used
