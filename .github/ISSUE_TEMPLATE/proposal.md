@@ -11,5 +11,5 @@ We are looking forward to evaluate your proposal, and if possible to
 make it part of the Arm C Language Extension (ACLE) specifications.
 
 We would like to encourage you reading through the [contribution
-guidelines](CONTRIBUTING.md), in particular the section on [submitting
-a proposal](CONTRIBUTING.md#proposals-for-new-content).
+guidelines](../../CONTRIBUTING.md), in particular the section on [submitting
+a proposal](../../CONTRIBUTING.md#proposals-for-new-content).
