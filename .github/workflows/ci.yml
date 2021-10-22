@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Copyright 2021 Francesco Petrogalli <francesco.petrogalli@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021 Valeria Daneva <valeria.daneva@arm.com>
+#
+# SPDX-License-Identifier: Apache-2.0
 name: CI
 
 on: [push, pull_request]

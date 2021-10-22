@@ -1,3 +1,5 @@
+<!-- SPDX-FileCopyrightText: Copyright 2021 Francesco Petrogalli <francesco.petrogalli@arm.com> -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 # Thank you for considering contributing!
 
 Contributions are always welcome. We accept [bug fixes](#bugs),
@@ -82,7 +84,7 @@ PR](https://github.com/ARM-software/acle/pull/19).
 
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
-under the same terms as those in the [LICENSE](LICENSE) file.
+under the same terms as those in the [LICENSE](LICENSE.md) file.
 
 We _do not_ require copyright assignment. The original contributor
 will retain the copyright.

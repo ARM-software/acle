@@ -1,3 +1,8 @@
+..
+   SPDX-FileCopyrightText: Copyright 2021 Tejas Belagod <tejas.belagod@arm.com>
+
+   CC-BY-SA-4.0 AND Apache-Patent-License
+   See LICENSE.md file for details
 
 Pointer Authentication(PAC) and Branch Target Identification (BTI) Target Feature Macros.
 =========================================================================================

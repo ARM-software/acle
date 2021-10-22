@@ -1,4 +1,10 @@
-The text of and illustrations in this document are licensed by Arm
+<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited <www.arm.com> -->
+<!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
+<!-- See LICENSE.md file for details -->
+
+# Trademark notice
+
+The text of and illustrations in this folder are licensed by Arm
 under a Creative Commons Attribution–Share Alike 4.0 International
 license ("CC-BY-SA-4.0”), with an additional clause on patents.
 The Arm trademarks featured here are registered trademarks or

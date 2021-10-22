@@ -1,13 +1,14 @@
 ..
-   Copyright (c) 2018-2020, Arm Limited and its affiliates.  All rights reserved.
+   SPDX-FileCopyrightText: Copyright 2018-2021 Arm Limited and its affiliates.  <www.arm.com>
+
    CC-BY-SA-4.0 AND Apache-Patent-License
-   See LICENSE file for details
+   See LICENSE.md file for details
 
 .. |release| replace:: 01alpha
 .. |date-of-issue| replace:: 02 July 2021
-.. |copyright-date| replace:: 2020-2021
+.. |copyright-date| replace:: 2018-2021
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
-                      affiliates. All rights reserved.
+                      affiliates.
 
 .. _ACLE-morello: http://github.com/arm-software/acle/morello
 .. _ACLE: https://developer.arm.com/documentation/101028/latest
@@ -118,6 +119,9 @@ Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
 under the same terms as those in the LICENSE file.
 
+We do not require copyright assignment. The original contributor will
+retain the copyright.
+
 Trademark notice
 ----------------
 
@@ -130,11 +134,12 @@ elsewhere. All rights reserved. Please visit
 https://www.arm.com/company/policies/trademarks for more information
 about Arm’s trademarks.
 
+.. _ssec-copyright:
+
 Copyright
 ---------
 
-Copyright (c) |copyright-date|, Arm Limited and its affiliates.  All rights
-reserved.
+Copyright 2018-2021 Arm Limited and its affiliates.  <www.arm.com>
 
 About This Document
 ===================
@@ -181,6 +186,11 @@ Change History
     +-----------+---------------------+--------------------------------+
     | |release| | |date-of-issue|     | Open source release. NFCI.     |
     +-----------+---------------------+--------------------------------+
+
+Changes for next release
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Update copyright statement in ssec-copyright_.
 
 References
 ----------

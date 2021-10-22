@@ -1,8 +1,17 @@
+..
+   SPDX-FileCopyrightText: Copyright 2014-2021 Arm Limited and its affiliates <www.arm.com>
+   SPDX-FileCopyrightText: Copyright 2021 Francesco Petrogalli <francesco.petrogalli@arm.com>
+   SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
+   SPDX-FileCopyrightText: Copyright 2021 Tamar Christina <tamar.christina@arm.com>
+
+   CC-BY-SA-4.0 AND Apache-Patent-License
+   See LICENSE.md file for details
+
 .. |copyright-date| replace:: 2014-2021
 .. |release| replace:: 2021Q3
 .. |date-of-issue| replace:: 30 September 2021
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
-                      affiliates. All rights reserved.
+                      affiliates.
 
 =============================
 Arm Neon Intrinsics Reference
@@ -102,7 +111,10 @@ Contributions
 
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
-under the same terms as those in the LICENSE file.
+under the same terms as those in the License_ section.
+
+We do not require copyright assignment. The original contributor will
+retain the copyright.
 
 Trademark notice
 ================
@@ -116,11 +128,15 @@ elsewhere. All rights reserved. Please visit
 https://www.arm.com/company/policies/trademarks for more information
 about Arm’s trademarks.
 
+.. _ssec-copyright:
+
 Copyright
 =========
 
-Copyright (c) |copyright-date|, Arm Limited and its affiliates.  All rights
-reserved.
+* Copyright 2014-2021 Arm Limited and its affiliates <www.arm.com>
+* Copyright 2021 Francesco Petrogalli <francesco.petrogalli@arm.com>
+* Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
+* Copyright 2021 Tamar Christina <tamar.christina@arm.com>
 
 Document history
 ================
@@ -157,6 +173,7 @@ Changes for next release
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Fix typo in signature of ``vaddq_s16``.
+* Update copyright statement in ssec-copyright_.
 
 List of Intrinsics
 ##################

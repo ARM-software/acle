@@ -1,3 +1,9 @@
+<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited <www.arm.com> -->
+<!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
+<!-- See LICENSE.md file for details -->
+
+# License
+
 This work is licensed under the Creative Commons
 Attribution-ShareAlike 4.0 International License. To view a copy of
 this license, visit http://creativecommons.org/licenses/by-sa/4.0/ or

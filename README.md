@@ -1,3 +1,4 @@
+<!-- SPDX-FileCopyrightText: Copyright 2021 Francesco Petrogalli <francesco.petrogalli@arm.com> -->
 <div align="center">
    <img src="Arm_logo_blue_RGB.svg" />
 </div>

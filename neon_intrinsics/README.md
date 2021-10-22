@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: Copyright 2021 Francesco Petrogalli <francesco.petrogalli@arm.com> -->
+<!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
+<!-- See LICENSE.md file for details -->
 <div align="center">
    <img src="Arm_logo_blue_RGB.svg" />
 </div>

@@ -1,8 +1,12 @@
+..
+   SPDX-FileCopyrightText: Copyright 2019-2021 Arm Limited and its affiliates <www.arm.com>
+
+   CC-BY-SA-4.0 AND Apache-Patent-License
+   See LICENSE.md file for details
+
 .. |copyright-date| replace:: 2019-2021
-.. |release| replace:: 2021Q2
-.. |date-of-issue| replace:: 02 July 2021
-.. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
-                      affiliates. All rights reserved.
+.. |release| replace:: Development version based on 2021Q2
+.. |date-of-issue| replace:: TBD
 
 ==================
 Arm MVE Intrinsics
@@ -104,6 +108,9 @@ Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
 under the same terms as those in the LICENSE file.
 
+We do not require copyright assignment. The original contributor will
+retain the copyright.
+
 Trademark notice
 ================
 
@@ -116,11 +123,12 @@ elsewhere. All rights reserved. Please visit
 https://www.arm.com/company/policies/trademarks for more information
 about Arm’s trademarks.
 
+.. _ssec-copyright:
+
 Copyright
 =========
 
-Copyright (c) |copyright-date|, Arm Limited and its affiliates.  All rights
-reserved. 
+Copyright 2019-2021 Arm Limited and its affiliates <www.arm.com>
 
 Document history
 ================
@@ -139,6 +147,10 @@ Document history
 | |release| | |date-of-issue| |Open source release. |
 +-----------+-----------------+---------------------+
 
+Changes for next release
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Update copyright statement in ssec-copyright_.
 
 List of Intrinsics
 ##################
