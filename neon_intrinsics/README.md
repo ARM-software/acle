@@ -13,7 +13,7 @@ The [Arm Neon Intrinsics Reference](advsimd.rst) specifies the [TODO]
 
 ## About the license
 
-As identified more fully in the [LICENSE](LICENSE) file, this project
+As identified more fully in the [LICENSE](LICENSE.md) file, this project
 is licensed under CC-BY-SA-4.0 along with an additional patent
 license.  The language in the additional patent license is largely
 identical to that in Apache-2.0 (specifically, Section 3 of Apache-2.0
