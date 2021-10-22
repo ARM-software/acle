@@ -34,23 +34,10 @@ function generate_pdfs_from_md() {
 
 mkdir -p pdfs
 
-# the option`--inline-footnotes` is used to print the footnotes off
-# the references "in place" in the `References` section.
-rst2pdf main/acle.rst         \
-	--inline-footnotes \
-	-s tools/rst2pdf-acle.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/acle.pdf
-
-rst2pdf neon_intrinsics/advsimd.rst         \
-	-s tools/rst2pdf-acle-intrinsics.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/advsimd.pdf
-
 #convert svg image to pdf for use in pdf generation via pandoc
 inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
 
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf ./morello/morello_pdf_conf.yaml
+generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf ./main/acle_pdf_conf.yaml
 generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf ./mve_intrinsics/mve_pdf_conf.yaml
+generate_pdfs_from_md ./tmp/advsimd.for-pdf.md ./pdfs/advsimd.pdf ./neon_intrinsics/advsimd_pdf_conf.yaml
