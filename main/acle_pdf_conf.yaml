@@ -1,0 +1,16 @@
+title: Arm C Language Extensions
+subtitle: 2021Q2
+date: 02 July 2021
+logo: ./tools/Arm-logo-blue-RGB.pdf
+documentclass: article
+toc: true
+numbersections: true
+geometry: landscape,top=3cm,bottom=3cm,left=2cm,right=2cm
+fontfamily: helvet
+classoption: 10pt
+fontcolor: darkgray
+colorlinks: citecolor=darkgray
+copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.
+chapter-formatting: true
+papersize: a3
+indent: false
