@@ -1,6 +1,5 @@
 ---
 layout: default
-permalink: /mve_intrinsics/mve.html
 title: Arm MVE Intrinsics
 version: 2021Q2
 date-of-issue: 02 July 2021
