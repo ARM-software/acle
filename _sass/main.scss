@@ -11,40 +11,17 @@ body {
   font-family: sans-serif;
 }
 
-div > h1:before {
-  content: counter(h1counter) ".\0000a0\0000a0";
-  counter-increment: h1counter;
-}
-
-div > h1 {
-  counter-reset: h2counter;
-}
-
-div > h2:before {
-  content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0";
-  counter-increment: h2counter;
-}
-
-div > h2 {
-  counter-reset: h3counter;
-}
-
-div > h3:before {
-  content:  counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
-  counter-increment: h3counter;
-}
-
 ul {
   list-style: none;
 }
 
 ul li:before {
-  counter-increment: mycounter;
-  content: counters(mycounter, ".") ". ";
+  counter-increment: toccounter;
+  content: counters(toccounter, ".") ". ";
 }
 
 ul:first-of-type {
-  counter-reset: mycounter;
+  counter-reset: toccounter;
 }
 
 a, a:hover, a:active, a:visited {

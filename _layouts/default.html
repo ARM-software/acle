@@ -1,11 +1,12 @@
-<!--- SPDX-License-Identifier: Apache-2.0 --->
+<!-- SPDX-FileCopyrightText: Copyright 2021 Valeria Daneva <valeria.daneva@arm.com> -->
 
 <!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/default_style.css">
+    {% if page.header_counter %} <link rel="stylesheet" href="/assets/css/header_counter.css"> {% endif %}
   </head>
   <body>
     <h1 id="title"> {{ page.title }} </h1>
