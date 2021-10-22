@@ -8,8 +8,8 @@
    See LICENSE.md file for details
 
 .. |copyright-date| replace:: 2014-2021
-.. |release| replace:: 2021Q3
-.. |date-of-issue| replace:: 30 September 2021
+.. |release| replace:: Development version based on 2021Q3
+.. |date-of-issue| replace:: TBD
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates.
 

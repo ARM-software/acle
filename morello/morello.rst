@@ -4,8 +4,8 @@
    CC-BY-SA-4.0 AND Apache-Patent-License
    See LICENSE.md file for details
 
-.. |release| replace:: 01alpha
-.. |date-of-issue| replace:: 02 July 2021
+.. |release| replace:: Development version based on 01alpha
+.. |date-of-issue| replace:: TBD
 .. |copyright-date| replace:: 2018-2021
 .. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
                       affiliates.
@@ -184,7 +184,7 @@ Change History
     +-----------+---------------------+--------------------------------+
     | 00alpha   | 30th September 2020 | Alpha release                  |
     +-----------+---------------------+--------------------------------+
-    | |release| | |date-of-issue|     | Open source release. NFCI.     |
+    | 01alpha   | 02 July 2021        | Open source release. NFCI.     |
     +-----------+---------------------+--------------------------------+
 
 Changes for next release
