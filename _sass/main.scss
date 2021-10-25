@@ -1,4 +1,5 @@
 /*
+SPDX-FileCopyrightText: Copyright 2021 Arm Limited <open-source-office@arm.com>
 SPDX-License-Identifier: Apache-2.0
 The colors used for formatting have been added in accordance with corporate guidelines:
 https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
@@ -9,19 +10,6 @@ body {
   counter-reset: h1counter;
   color: #333E48;
   font-family: sans-serif;
-}
-
-ul {
-  list-style: none;
-}
-
-ul li:before {
-  counter-increment: toccounter;
-  content: counters(toccounter, ".") ". ";
-}
-
-ul:first-of-type {
-  counter-reset: toccounter;
 }
 
 a, a:hover, a:active, a:visited {
@@ -70,9 +58,9 @@ https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
 */
 
 #logo {
-  height: 60px;
+  height: 20px;
   float: right;
-  margin: 0;
+  margin: 20px;
 }
 
 #index_logo {

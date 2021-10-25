@@ -1,4 +1,5 @@
 /*
+SPDX-FileCopyrightText: Copyright 2021 Arm Limited <open-source-office@arm.com>
 SPDX-License-Identifier: Apache-2.0
 The colors used for formatting have been added in accordance with corporate guidelines:
 https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
@@ -28,4 +29,17 @@ div > h2 {
 div > h3:before {
   content:  counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
   counter-increment: h3counter;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li:before {
+  counter-increment: toccounter;
+  content: counters(toccounter, ".") ". ";
+}
+
+ul:first-of-type {
+  counter-reset: toccounter;
 }
