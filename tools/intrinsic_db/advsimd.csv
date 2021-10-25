@@ -17,7 +17,7 @@
 int8x8_t vadd_s8(int8x8_t a, int8x8_t b)	a -> Vn.8B;b -> Vm.8B	ADD Vd.8B,Vn.8B,Vm.8B	Vd.8B -> result	v7/A32/A64
 int8x16_t vaddq_s8(int8x16_t a, int8x16_t b)	a -> Vn.16B;b -> Vm.16B	ADD Vd.16B,Vn.16B,Vm.16B	Vd.16B -> result	v7/A32/A64
 int16x4_t vadd_s16(int16x4_t a, int16x4_t b)	a -> Vn.4H;b -> Vm.4H	ADD Vd.4H,Vn.4H,Vm.4H	Vd.4H -> result	v7/A32/A64
-int16x8_t vaddq_s16(int16x8_t a, int16x8q_t b)	a -> Vn.8H;b -> Vm.8H	ADD Vd.8H,Vn.8H,Vm.8H	Vd.8H -> result	v7/A32/A64
+int16x8_t vaddq_s16(int16x8_t a, int16x8_t b)	a -> Vn.8H;b -> Vm.8H	ADD Vd.8H,Vn.8H,Vm.8H	Vd.8H -> result	v7/A32/A64
 int32x2_t vadd_s32(int32x2_t a, int32x2_t b)	a -> Vn.2S;b -> Vm.2S	ADD Vd.2S,Vn.2S,Vm.2S	Vd.2S -> result	v7/A32/A64
 int32x4_t vaddq_s32(int32x4_t a, int32x4_t b)	a -> Vn.4S;b -> Vm.4S	ADD Vd.4S,Vn.4S,Vm.4S	Vd.4S -> result	v7/A32/A64
 int64x1_t vadd_s64(int64x1_t a, int64x1_t b)	a -> Dn;b -> Dm	ADD Dd,Dn,Dm	Dd -> result	v7/A32/A64
