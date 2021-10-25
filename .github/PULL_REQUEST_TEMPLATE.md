@@ -18,8 +18,8 @@ We are looking forward to evaluate your proposal, and if possible to
 make it part of the Arm C Language Extension (ACLE) specifications.
 
 We would like to encourage you reading through the [contribution
-guidelines](../../CONTRIBUTING.md), in particular the section on [submitting
-a proposal](../../CONTRIBUTING.md#proposals-for-new-content).
+guidelines](../CONTRIBUTING.md), in particular the section on [submitting
+a proposal](../CONTRIBUTING.md#proposals-for-new-content).
 
 Please use the proposal label.
 
@@ -45,7 +45,7 @@ Checklist: (mark with ``X`` those which apply)
 * [ ] I have run the CI scripts (if applicable, as they might be
       tricky to set up on non-*nix machines). The sequence can be
       found in the [contribution
-      guidelines](../../CONTRIBUTING.md#continuous-integration). Don't
+      guidelines](../CONTRIBUTING.md#continuous-integration). Don't
       worry if you cannot run these scripts on your machine, your
       patch will be automatically checked in the Actions of the pull
       request.
