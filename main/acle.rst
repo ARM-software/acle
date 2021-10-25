@@ -2189,7 +2189,7 @@ Summary of predefined macros
    | ``__ARM_FEATURE_MOPS``              | memcpy, memset, and | 1                  | ssec-MOPS_,            |
    |                                     | memmove family of   |                    | ssec-MOPS-intrinsics_  |
    |                                     | operations          |                    |                        |
-   |                                     | standardisation     |                    |                        |
+   |                                     | standardization     |                    |                        |
    |                                     | instructions        |                    |                        |
    +-------------------------------------+---------------------+--------------------+------------------------+
 
@@ -5846,10 +5846,10 @@ This section describes the intrinsic for the new instructions introduced in the
 Armv8.8-A and Armv9.3-A architecture updates for the memcpy, memmove and memset
 family of memory operations (MOPS).
 
-These intructions were designed to enable the standardisation of the software
+These intructions are designed to enable the standardization of the software
 implementation of those operations. Therefore, most of the use cases for
-the new instructions should be covered by the compiler's code generation or
-by library implementations.
+the new instructions are covered by the compiler's code generation or by library
+implementations.
 
 An exception to that is the set of instructions covering the memset operation
 with memory tagging. An intrinsic is available to provide access to this
@@ -5864,7 +5864,14 @@ This intrinsic is available when ``__ARM_FEATURE_MOPS`` is defined.
   void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
 
 This intrinsic performs a memset operation with tag setting on a memory block.
-The first ``size`` bytes of the block of memory pointed to by ``tagged_address``
-are set to the specified ``value``. The ``tagged_address`` is expected to
-contain the allocation tag on its bits 56-59.
+
+The parameters of ``__arm_mops_memset_tag`` are:
+
+* ``tagged_address``: destination address to be set, containing the allocation
+  tag in its bits [59:56] (See the `SETG* instructions specification
+  <https://developer.arm.com/documentation/ddi0596/2021-09/Base-Instructions/SETGP--SETGM--SETGE--Memory-Set-with-tag-setting-?lang=en#sa_xd>`_
+  for more details).
+* ``value``: fill value
+* ``size``: number of bytes to fill
+
 Similarly to C's memset, this intrinsic returns the ``tagged_address`` pointer.
