@@ -13,8 +13,8 @@ Feature test macro
 
 In order for users to determine the availability of the memory instructions
 introduced in Armv8.8-A and Armv9.3-A, as well of new potential intrinsics
-related to them, we are adding of the following feature test macro, to be
-defined to 1 if the new extension is available:
+related to them, we are adding the following feature test macro, to be defined
+to 1 if the new extension is available:
 
 ::
 
