@@ -153,6 +153,11 @@ Changes between next release and 2021Q2
 * Fixed the guard macro for the base intrinsics.
 * Correct ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
 
+Changes for next release
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Fix typo in signature of ``vaddq_s16``.
+
 List of Intrinsics
 ##################
 
@@ -197,7 +202,7 @@ ________
 |                            |                        |                              |                      |                           |
 |     int16x8_t vaddq_s16(   |     a -> Vn.8H         |     ADD Vd.8H,Vn.8H,Vm.8H    |     Vd.8H -> result  |                           |
 |         int16x8_t a,       |     b -> Vm.8H         |                              |                      |                           |
-|         int16x8q_t b)      |                        |                              |                      |                           |
+|         int16x8_t b)       |                        |                              |                      |                           |
 +----------------------------+------------------------+------------------------------+----------------------+---------------------------+
 | .. code:: c                | ::                     | ::                           | ::                   | ``v7/A32/A64``            |
 |                            |                        |                              |                      |                           |
