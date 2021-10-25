@@ -1,13 +1,16 @@
-# Arm MVE Intrinsics   
+---
+layout: default
+title: Arm MVE Intrinsics
+version: 2021Q2
+date-of-issue: 02 July 2021
+header_counter: true
+---
 
-![image](Arm_logo_blue_RGB.svg)                                          
+<!---Do not remove!
 
-2021Q2                                                                   
-
-Date of Issue: 02 July 2021                                            
-
-------------------------------------------------------------------------
-
+This token is necessary to generate the Table of Contents via Jekyll. --->
+* TOC
+{{:toc}}
 <!---END_OF_HTML_HEADER--->
 # Preface                                                                  
 

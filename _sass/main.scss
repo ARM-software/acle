@@ -1,0 +1,68 @@
+/*
+SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-License-Identifier: Apache-2.0
+The colors used for formatting have been added in accordance with corporate guidelines:
+https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
+*/
+
+body {
+  margin: 100px 60px;
+  counter-reset: h1counter;
+  color: #333E48;
+  font-family: sans-serif;
+}
+
+a, a:hover, a:active, a:visited {
+  color: #0091BD;
+  text-decoration: none;
+}
+
+#header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  background-color: #0091BD;
+  color: white;
+  font-size: 14pt;
+}
+
+#header a, #header a:visited {
+  color: white;
+}
+
+#header a {
+  padding: 20px 40px;
+  margin: 0;
+}
+
+#header a:active, #header a:hover {
+  background-color: white;
+  color: #0091BD;
+}
+
+#left-side {
+  float: left;
+  padding: 20px 20px 20px 0px;
+}
+
+#right-side {
+  float: right;
+  padding: 20px 0px 20px 20px;
+}
+
+/*
+This logo image has been added in accordance with corporate guidelines:
+https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
+*/
+
+#logo {
+  height: 20px;
+  float: right;
+  margin: 20px;
+}
+
+#index_logo {
+  height: 160px;
+}

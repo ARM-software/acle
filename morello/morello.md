@@ -1,13 +1,16 @@
-# Morello Supplement to the Arm C Language Extensions
+---
+layout: default
+title: Morello Supplement to the Arm C Language Extensions
+version: 01alpha
+date-of-issue: 02 July 2021
+header_counter: true
+---
 
-01alpha
+<!---Do not remove!
 
-Date of Issue: 02 July 2021
-
-![image](Arm_logo_blue_RGB.svg)
-
-------------------------------------------------------------------------
-
+This token is necessary to generate the Table of Contents via Jekyll. --->
+* TOC
+{:toc}
 <!---END_OF_HTML_HEADER--->
 # Preface
 

@@ -1,5 +1,9 @@
+---
+layout: default
+---
+
 <div align="center">
-   <img src="Arm_logo_blue_RGB.svg" />
+   <img id="index_logo" src="Arm_logo_blue_RGB.svg" />
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
