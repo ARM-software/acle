@@ -1,5 +1,5 @@
 ..
-   SPDX-FileCopyrightText: Copyright 2018-2021 Arm Limited and its affiliates.  <www.arm.com>
+   SPDX-FileCopyrightText: Copyright 2021 Arm Limited <open-source-office@arm.com>
 
    CC-BY-SA-4.0 AND Apache-Patent-License
    See LICENSE.md file for details
@@ -139,7 +139,7 @@ about Arm’s trademarks.
 Copyright
 ---------
 
-Copyright 2018-2021 Arm Limited and its affiliates.  <www.arm.com>
+Copyright 2021 Arm Limited <open-source-office@arm.com>.
 
 About This Document
 ===================

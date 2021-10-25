@@ -1,17 +1,12 @@
 ..
-   SPDX-FileCopyrightText: Copyright 2014-2021 Arm Limited and its affiliates <www.arm.com>
-   SPDX-FileCopyrightText: Copyright 2021 Francesco Petrogalli <francesco.petrogalli@arm.com>
+   SPDX-FileCopyrightText: Copyright 2014-2021 Arm Limited <open-source-office@arm.com>
    SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
-   SPDX-FileCopyrightText: Copyright 2021 Tamar Christina <tamar.christina@arm.com>
 
    CC-BY-SA-4.0 AND Apache-Patent-License
    See LICENSE.md file for details
 
-.. |copyright-date| replace:: 2014-2021
 .. |release| replace:: Development version based on 2021Q3
 .. |date-of-issue| replace:: TBD
-.. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
-                      affiliates.
 
 =============================
 Arm Neon Intrinsics Reference
@@ -133,10 +128,8 @@ about Arm’s trademarks.
 Copyright
 =========
 
-* Copyright 2014-2021 Arm Limited and its affiliates <www.arm.com>
-* Copyright 2021 Francesco Petrogalli <francesco.petrogalli@arm.com>
+* Copyright 2014-2021 Arm Limited <open-source-office@arm.com>
 * Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
-* Copyright 2021 Tamar Christina <tamar.christina@arm.com>
 
 Document history
 ================

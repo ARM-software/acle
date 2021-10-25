@@ -1,13 +1,10 @@
 ..
-   SPDX-FileCopyrightText: Copyright 2011-2021, Arm Limited and its affiliates.
-   SPDX-FileCopyrightText: Copyright 2021 Valeria Daneva <valeria.daneva@arm.com>
-   SPDX-FileCopyrightText: Copyright 2021 Tejas Belagod <tejas.belagod@arm.com>
+   SPDX-FileCopyrightText: Copyright 2011-2021 Arm Limited <open-source-office@arm.com>
 
    CC-BY-SA-4.0 AND Apache-Patent-License
    See LICENSE.md file for details
 
-.. |copyright-date| replace:: 2011-2021
-.. |regp|    unicode:: U+000AE .. REGISTERED TRADEMARK SIGN (no trim)
+
 .. |tradep|  unicode:: U+02122 .. TRADEMARK SIGN (no trim)
 .. |reg|    unicode:: U+000AE .. REGISTERED TRADEMARK SIGN (with whitespace trim)
 .. |--|     unicode:: U+2013  .. EN DASH (no trim)
@@ -149,9 +146,7 @@ about Arm’s trademarks.
 Copyright
 =========
 
-* Copyright 2011-2021, Arm Limited and its affiliates.
-* Copyright 2021 Valeria Daneva <valeria.daneva@arm.com>
-* Copyright 2021 Tejas Belagod <tejas.belagod@arm.com>
+Copyright 2011-2021 Arm Limited <open-source-office@arm.com>.
 
 About this document
 ===================
