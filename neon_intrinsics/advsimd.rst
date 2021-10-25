@@ -1,5 +1,5 @@
 ..
-   SPDX-FileCopyrightText: Copyright 2014-2021 Arm Limited <open-source-office@arm.com>
+   SPDX-FileCopyrightText: Copyright 2014-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
    SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 
    CC-BY-SA-4.0 AND Apache-Patent-License
@@ -118,7 +118,7 @@ The text of and illustrations in this document are licensed by Arm
 under a Creative Commons Attribution–Share Alike 4.0 International
 license ("CC-BY-SA-4.0”), with an additional clause on patents.
 The Arm trademarks featured here are registered trademarks or
-trademarks of Arm Limited (or its subsidiaries) in the US and/or
+trademarks of Arm Limited and/or its affiliates (or its subsidiaries) in the US and/or
 elsewhere. All rights reserved. Please visit
 https://www.arm.com/company/policies/trademarks for more information
 about Arm’s trademarks.
@@ -128,7 +128,7 @@ about Arm’s trademarks.
 Copyright
 =========
 
-* Copyright 2014-2021 Arm Limited <open-source-office@arm.com>
+* Copyright 2014-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
 * Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 
 Document history
