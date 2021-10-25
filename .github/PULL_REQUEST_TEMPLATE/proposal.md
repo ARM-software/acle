@@ -1,6 +1,6 @@
-<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
-<!-- SPDX-License-Identifier: Apache-2.0 -->
 ---
+# SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-License-Identifier: Apache-2.0
 name: Proposing an extension
 about: Create new intrinsics, macros, and so on.
 title: "[proposal]"
