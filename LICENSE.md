@@ -14,7 +14,7 @@ This licence is applied to the content of the following folders and
 relative subfolders:
 
 * [main](main)
-* [morello](morello}
+* [morello](morello)
 * [mve_intrinsics](mve_intrinsics)
 * [neon_intrinsics](neon_intrinsics)
 
