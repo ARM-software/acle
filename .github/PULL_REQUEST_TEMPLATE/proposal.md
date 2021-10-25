@@ -2,6 +2,7 @@
 name: Proposing an extension
 about: Create new intrinsics, macros, and so on.
 title: "[proposal]"
+label: proposal
 
 ---
 
@@ -19,9 +20,10 @@ checklist (mark with ``X`` those which apply):
 
 * [ ] I have added/updated the `SPDX-FileCopyrightText` lines on top
       of any file I have edited. Format is `SPDX-FileCopyrightText:
-      Copyright {year} {name} <{email address}>`. You can specify
-      year ranges with hyphen (`2017-2019`) and commas to separate
-      gaps (`2018-2020, 2022`).
+      Copyright {year} {entity or name} <{contact informations}>`
+      (Please update existing copyright lines if applicable. You can
+      specify year ranges with hyphen , as in `2017-2019`, and use
+      commas to separate gaps, as in `2018-2020, 2022`).
 * [ ] I have udated the `Copyright` section of the sources of the
       specification I have edited (this will show up in the text
       rendered in the PDF and other output format supported). The

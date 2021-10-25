@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Technical issues, document format problems, bugs in scripts, and so on.
 title: "[BUG]"
 labels: bug
 assignees: fpetrogalli
