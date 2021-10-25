@@ -107,6 +107,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "tejas-belagod-arm",
+      "name": "tejas-belagod-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/92718852?v=4",
+      "profile": "https://github.com/tejas-belagod-arm",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "JamieCunliffe",
+      "name": "Jamie Cunliffe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29557119?v=4",
+      "profile": "https://github.com/JamieCunliffe",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
