@@ -4,6 +4,7 @@
    CC-BY-SA-4.0 AND Apache-Patent-License
    See LICENSE.md file for details
 
+.. |regp|    unicode:: U+000AE .. REGISTERED TRADEMARK SIGN (no trim)
 
 .. |tradep|  unicode:: U+02122 .. TRADEMARK SIGN (no trim)
 .. |reg|    unicode:: U+000AE .. REGISTERED TRADEMARK SIGN (with whitespace trim)
