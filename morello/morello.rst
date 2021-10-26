@@ -1,13 +1,14 @@
 ..
-   Copyright (c) 2018-2020, Arm Limited and its affiliates.  All rights reserved.
-   CC-BY-SA-4.0 AND Apache-Patent-License
-   See LICENSE file for details
+   SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
 
-.. |release| replace:: 01alpha
-.. |date-of-issue| replace:: 02 July 2021
-.. |copyright-date| replace:: 2020-2021
-.. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
-                      affiliates. All rights reserved.
+   CC-BY-SA-4.0 AND Apache-Patent-License
+   See LICENSE.md file for details
+
+.. |release| replace:: Development version based on 01alpha
+.. |date-of-issue| replace:: TBD
+.. |copyright-date| replace:: 2018-2021
+.. |footer| replace:: Copyright © |copyright-date|, Arm Limited and/or its affiliates and its
+                      affiliates.
 
 .. _ACLE-morello: http://github.com/arm-software/acle/morello
 .. _ACLE: https://developer.arm.com/documentation/101028/latest
@@ -118,6 +119,9 @@ Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
 under the same terms as those in the LICENSE file.
 
+We do not require copyright assignment. The original contributor will
+retain the copyright.
+
 Trademark notice
 ----------------
 
@@ -125,16 +129,17 @@ The text of and illustrations in this document are licensed by Arm
 under a Creative Commons Attribution–Share Alike 4.0 International
 license ("CC-BY-SA-4.0”), with an additional clause on patents.
 The Arm trademarks featured here are registered trademarks or
-trademarks of Arm Limited (or its subsidiaries) in the US and/or
+trademarks of Arm Limited and/or its affiliates (or its subsidiaries) in the US and/or
 elsewhere. All rights reserved. Please visit
 https://www.arm.com/company/policies/trademarks for more information
 about Arm’s trademarks.
 
+.. _ssec-copyright:
+
 Copyright
 ---------
 
-Copyright (c) |copyright-date|, Arm Limited and its affiliates.  All rights
-reserved.
+Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 
 About This Document
 ===================
@@ -179,8 +184,13 @@ Change History
     +-----------+---------------------+--------------------------------+
     | 00alpha   | 30th September 2020 | Alpha release                  |
     +-----------+---------------------+--------------------------------+
-    | |release| | |date-of-issue|     | Open source release. NFCI.     |
+    | 01alpha   | 02 July 2021        | Open source release. NFCI.     |
     +-----------+---------------------+--------------------------------+
+
+Changes for next release
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Update copyright statement in ssec-copyright_.
 
 References
 ----------

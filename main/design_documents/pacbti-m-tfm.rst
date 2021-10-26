@@ -1,3 +1,8 @@
+..
+   SPDX-FileCopyrightText: Copyright 2021 Arm Limited <open-source-office@arm.com>
+
+   CC-BY-SA-4.0 AND Apache-Patent-License
+   See LICENSE.md file for details
 
 Pointer Authentication(PAC) and Branch Target Identification (BTI) Target Feature Macros.
 =========================================================================================

@@ -1,3 +1,6 @@
+<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
+<!-- See LICENSE.md file for details -->
 <div align="center">
    <img src="Arm_logo_blue_RGB.svg" />
 </div>
@@ -10,7 +13,7 @@ The [Arm Neon Intrinsics Reference](advsimd.rst) specifies the [TODO]
 
 ## About the license
 
-As identified more fully in the [LICENSE](LICENSE) file, this project
+As identified more fully in the [LICENSE](LICENSE.md) file, this project
 is licensed under CC-BY-SA-4.0 along with an additional patent
 license.  The language in the additional patent license is largely
 identical to that in Apache-2.0 (specifically, Section 3 of Apache-2.0

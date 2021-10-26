@@ -1,8 +1,12 @@
-.. |copyright-date| replace:: 2014-2021
-.. |release| replace:: 2021Q3
-.. |date-of-issue| replace:: 30 September 2021
-.. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
-                      affiliates. All rights reserved.
+..
+   SPDX-FileCopyrightText: Copyright 2014-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+   SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
+
+   CC-BY-SA-4.0 AND Apache-Patent-License
+   See LICENSE.md file for details
+
+.. |release| replace:: Development version based on 2021Q3
+.. |date-of-issue| replace:: TBD
 
 =============================
 Arm Neon Intrinsics Reference
@@ -102,7 +106,10 @@ Contributions
 
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
-under the same terms as those in the LICENSE file.
+under the same terms as those in the License_ section.
+
+We do not require copyright assignment. The original contributor will
+retain the copyright.
 
 Trademark notice
 ================
@@ -111,16 +118,18 @@ The text of and illustrations in this document are licensed by Arm
 under a Creative Commons Attribution–Share Alike 4.0 International
 license ("CC-BY-SA-4.0”), with an additional clause on patents.
 The Arm trademarks featured here are registered trademarks or
-trademarks of Arm Limited (or its subsidiaries) in the US and/or
+trademarks of Arm Limited and/or its affiliates (or its subsidiaries) in the US and/or
 elsewhere. All rights reserved. Please visit
 https://www.arm.com/company/policies/trademarks for more information
 about Arm’s trademarks.
 
+.. _ssec-copyright:
+
 Copyright
 =========
 
-Copyright (c) |copyright-date|, Arm Limited and its affiliates.  All rights
-reserved.
+* Copyright 2014-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+* Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 
 Document history
 ================
@@ -157,6 +166,7 @@ Changes for next release
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Fix typo in signature of ``vaddq_s16``.
+* Update copyright statement in ssec-copyright_.
 
 List of Intrinsics
 ##################

@@ -1,10 +1,11 @@
 ..
-   Copyright (c) 2018-2020, Arm Limited and its affiliates.  All rights reserved.
-   CC-BY-SA-4.0 AND Apache-Patent-License
-   See LICENSE file for details
+   SPDX-FileCopyrightText: Copyright 2011-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
 
-.. |copyright-date| replace:: 2011-2021
+   CC-BY-SA-4.0 AND Apache-Patent-License
+   See LICENSE.md file for details
+
 .. |regp|    unicode:: U+000AE .. REGISTERED TRADEMARK SIGN (no trim)
+
 .. |tradep|  unicode:: U+02122 .. TRADEMARK SIGN (no trim)
 .. |reg|    unicode:: U+000AE .. REGISTERED TRADEMARK SIGN (with whitespace trim)
 .. |--|     unicode:: U+2013  .. EN DASH (no trim)
@@ -17,11 +18,9 @@
    :rtrim:
 .. |rdquo|    unicode:: U+201D .. RIGHT DOUBLE QUOTE (with whitespace trim)
    :ltrim:
-.. |footer| replace:: Copyright © |copyright-date|, Arm Limited and its
-                      affiliates. All rights reserved.
 
-.. |release| replace:: 2021Q3
-.. |date-of-issue| replace:: 30 September 2021
+.. |release| replace:: Development version based on 2021Q3
+.. |date-of-issue| replace:: TBD
 
 =========================
 Arm C Language Extensions
@@ -128,6 +127,9 @@ Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
 under the same terms as those in the LICENSE file.
 
+We do not require copyright assignment. The original contributor will
+retain the copyright.
+
 Trademark notice
 ================
 
@@ -135,16 +137,17 @@ The text of and illustrations in this document are licensed by Arm
 under a Creative Commons Attribution–Share Alike 4.0 International
 license ("CC-BY-SA-4.0”), with an additional clause on patents.
 The Arm trademarks featured here are registered trademarks or
-trademarks of Arm Limited (or its subsidiaries) in the US and/or
+trademarks of Arm Limited and/or its affiliates (or its subsidiaries) in the US and/or
 elsewhere. All rights reserved. Please visit
 https://www.arm.com/company/policies/trademarks for more information
 about Arm’s trademarks.
 
+.. _ssec-copyright:
+
 Copyright
 =========
 
-Copyright (c) |copyright-date|, Arm Limited and its affiliates.  All rights
-reserved.
+Copyright 2011-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 
 About this document
 ===================
@@ -272,6 +275,11 @@ Changes between ACLE Q2 2021 and ACLE Q3 2021
 * Fixed the description of at ssec-NEON-intrinsics-concepts_.
 * Introduce ``__ARM_FEATURE_PAUTH`` and ``__ARM_FEATURE_BTI`` in sections
   ssec-PAC_ and ssec-BTI_ respectively.
+
+Changes for next release
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Update copyright statement in ssec-copyright_.
 
 References
 ----------
