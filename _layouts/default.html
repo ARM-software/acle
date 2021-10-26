@@ -6,8 +6,8 @@
   <head>
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="/assets/css/default_style.css">
-    {% if page.header_counter %} <link rel="stylesheet" href="/assets/css/header_counter.css"> {% endif %}
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/default_style.css">
+    {% if page.header_counter %} <link rel="stylesheet" href="{{site.baseurl}}/assets/css/header_counter.css"> {% endif %}
   </head>
   <body>
     <h1 id="title"> {{ page.title }} </h1>
