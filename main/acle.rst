@@ -272,14 +272,17 @@ Armv8.4-A [ARMARMv84]_.  Support is added for the Dot Product intrinsics.
 Changes between ACLE Q2 2021 and ACLE Q3 2021
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Fixed FP16 format description at ssec-fp16-type_.
-* Fixed the description of at ssec-NEON-intrinsics-concepts_.
-* Introduce ``__ARM_FEATURE_PAUTH`` and ``__ARM_FEATURE_BTI`` in sections
-  ssec-PAC_ and ssec-BTI_ respectively.
+* Fixed the description of ``vmul_lane_u16`` at
+  ssec-NEON-intrinsics-concepts_.
 
 Changes for next release
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Update copyright statement in ssec-copyright_.
+* Introduce ``__ARM_FEATURE_PAUTH`` and ``__ARM_FEATURE_BTI`` in
+  sections ssec-PAC_ and ssec-BTI_ respectively.
+* Fix the changelog of 2021Q3, as is was missing the mentioning of the
+  intrinsic ``vmul_lane_u16`` in the second item.
 
 References
 ----------
