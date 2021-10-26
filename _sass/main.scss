@@ -17,6 +17,26 @@ a, a:hover, a:active, a:visited {
   text-decoration: none;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #0091BD;
+  color: white;
+}
+
+td, th {
+  border: 2px solid #0091BD;
+  text-align: left;
+  padding: 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
 #header {
   width: 100%;
   position: fixed;
