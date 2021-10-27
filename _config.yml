@@ -1,5 +1,2 @@
 url: https://arm-software.github.io
 baseurl: /acle
-
-sass:
-    sass_dir: _sass
