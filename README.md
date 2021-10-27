@@ -1,7 +1,3 @@
----
-layout: default
----
-
 <div align="center">
    <img id="index_logo" src="Arm_logo_blue_RGB.svg" />
 </div>

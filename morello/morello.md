@@ -1,9 +1,9 @@
 ---
-layout: default
 title: Morello Supplement to the Arm C Language Extensions
 version: 01alpha
 date-of-issue: 02 July 2021
 header_counter: true
+toc: true
 ---
 
 <!---Do not remove!
