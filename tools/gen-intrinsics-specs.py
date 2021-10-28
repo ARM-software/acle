@@ -102,10 +102,10 @@ def quote_split_intrinsics(intrinsic, workflow):
     '.. code:: c\n\n    int f(int x)\n'
 
     >>> quote_split_intrinsics('int f(int x, float y)', 'markdown')
-    '`int f(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int x,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float y)`'
+    '[`int f(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int x,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float y)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/f)'
 
     >>> quote_split_intrinsics('int f(int x)', 'markdown')
-    '`int f(int x)`'
+    '[`int f(int x)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/f)'
 
     >>> quote_split_intrinsics('int f(int x, float y)', 'pdf')
     '``` c\nint f(\n  int x,\n  float y)\n```'
@@ -119,18 +119,22 @@ def quote_split_intrinsics(intrinsic, workflow):
     split_signature = signature.split(',')
     whitespace_indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
 
+    intrinsic_type, par_space, intrinsic_link_id = ret_def.partition(' ')
+    developer_site_baseurl = "https://developer.arm.com/architectures/instruction-sets/intrinsics/"
+    formatted_site_link = f"({developer_site_baseurl}{intrinsic_link_id})"
+
     if len(split_signature) > 1:
         if workflow == "rst":
             return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
         elif workflow == "markdown":
-            return f"`{ret_def}(`<br>" + whitespace_indent + "`" + (',`<br>'+ whitespace_indent + '`').join(split_signature) + ")`"
+            return f"[`{ret_def}(`<br>{whitespace_indent}`" + (f",`<br>{whitespace_indent}`").join(split_signature) + f")`]{formatted_site_link}"
         elif workflow == "pdf":
             return f"``` c\n{ret_def}(\n  " + (',\n ').join(split_signature) + ")\n```"
     else:
         if workflow == "rst":
             return f".. code:: c\n\n    {intrinsic}\n"
         elif workflow == "markdown":
-            return f"`{intrinsic}`"
+            return f"[`{intrinsic}`]" + formatted_site_link
         elif workflow == "pdf":
             return f"`{intrinsic}`"
 
@@ -873,17 +877,17 @@ def process_db(db, classification_db, workflow):
     <BLANKLINE>
     ### No category
     <BLANKLINE>
-    | T1        | T2   | T3   | T4    | T5     |
-    |-----------|------|------|-------|--------|
-    | `a A01()` | `a`  | `aa` | `aaa` | `aaaa` |
+    | T1                                                                                   | T2   | T3   | T4    | T5     |
+    |--------------------------------------------------------------------------------------|------|------|-------|--------|
+    | [`a A01()`](https://developer.arm.com/architectures/instruction-sets/intrinsics/A01) | `a`  | `aa` | `aaa` | `aaaa` |
     <BLANKLINE>
     ### Section 1.1
     <BLANKLINE>
     #### Section 1.1.1
     <BLANKLINE>
-    | T1        | T2   | T3   | T4    | T5     |
-    |-----------|------|------|-------|--------|
-    | `b B01()` | `b`  | `bb` | `bbb` | `bbbb` |
+    | T1                                                                                   | T2   | T3   | T4    | T5     |
+    |--------------------------------------------------------------------------------------|------|------|-------|--------|
+    | [`b B01()`](https://developer.arm.com/architectures/instruction-sets/intrinsics/B01) | `b`  | `bb` | `bbb` | `bbbb` |
     <BLANKLINE>
     ## Section 2 title
     <BLANKLINE>
@@ -893,9 +897,9 @@ def process_db(db, classification_db, workflow):
     <BLANKLINE>
     #### subclassY
     <BLANKLINE>
-    | T1        | T2   | T3   | T4    | T5     |
-    |-----------|------|------|-------|--------|
-    | `c C01()` | `c`  | `cc` | `ccc` | `cccc` |
+    | T1                                                                                   | T2   | T3   | T4    | T5     |
+    |--------------------------------------------------------------------------------------|------|------|-------|--------|
+    | [`c C01()`](https://developer.arm.com/architectures/instruction-sets/intrinsics/C01) | `c`  | `cc` | `ccc` | `cccc` |
     >>> print(process_db(intrinsics, classification, 'pdf'))
     <BLANKLINE>
     <BLANKLINE>
