@@ -12,8 +12,8 @@
 
 # Arm C Language Extensions
 
-This repository contains the source material form which the
-specifications for the Arm C Language Extensions (ACLE) is derived.
+This repository contains the source material from which the
+specifications for the Arm C Language Extensions (ACLE) are derived.
 For the published documents please see the [Arm developer ACLE
 page](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
 
@@ -34,7 +34,7 @@ an email to arm.acle@arm.com.
 
 ## Transitioning the ACLE specifications
 
-This is a work in progress. The document added to the repository will
+This is a work in progress. Any document added to the repository will
 be referenced in this README file when added.
 
 ## List of documents
