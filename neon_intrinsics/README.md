@@ -9,7 +9,9 @@
 
 ## About this document
 
-The [Arm Neon Intrinsics Reference](advsimd.rst) specifies the [TODO]
+The [Arm Neon Intrinsics Reference](advsimd.rst) is a reference for
+the Advanced SIMD architecture extension (Neon) intrinsics for Armv7
+and Armv8 architectures.
 
 ## About the license
 

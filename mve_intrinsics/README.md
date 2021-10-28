@@ -9,7 +9,9 @@
 
 ## About this document
 
-The [Arm MVE Intrinsics Reference](mve.rst) specifies the [TODO]
+The [Arm MVE Intrinsics Reference](mve.rst) provides information about
+the M-Profile Vector Extension (MVE) for the Arm Cortex-M processor
+series.
 
 ## About the license
 
