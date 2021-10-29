@@ -1895,7 +1895,7 @@ memcpy family of memory operations (MOPS) standarisation instructions
 
 ``__ARM_FEATURE_MOPS`` is defined to 1 if the ``CPYF*``, ``CPY*``,
 ``SET*`` and ``SETG*`` instructions introduced in the Armv8.8-A and Armv9.3-A
-architecture updates for standarisation of the memcpy, memset, and memmove
+architecture updates for standardization of the memcpy, memset, and memmove
 family of memory operations are supported.
 This macro may only ever be defined in the AArch64 execution state.
 Intrinsics for using these instructions are specified in ssec-MOPS-intrinsics_.
@@ -5868,10 +5868,12 @@ This intrinsic performs a memset operation with tag setting on a memory block.
 The parameters of ``__arm_mops_memset_tag`` are:
 
 * ``tagged_address``: destination address to be set, containing the allocation
-  tag in its bits [59:56] (See the `SETG* instructions specification
+  tag in its bits [59:56]. The address should be aligned with the tag granule
+  size. (See the `SETG* instructions specification
   <https://developer.arm.com/documentation/ddi0596/2021-09/Base-Instructions/SETGP--SETGM--SETGE--Memory-Set-with-tag-setting-?lang=en#sa_xd>`_
-  for more details).
-* ``value``: fill value
-* ``size``: number of bytes to fill
+  for more details)
+* ``value``: fill value.
+* ``size``: number of bytes to fill. This should be a multiple of the tag
+  granule size.
 
 Similarly to C's memset, this intrinsic returns the ``tagged_address`` pointer.

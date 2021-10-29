@@ -12,7 +12,7 @@ Feature test macro
 ##################
 
 In order for users to determine the availability of the memory instructions
-introduced in Armv8.8-A and Armv9.3-A, as well of new potential intrinsics
+introduced in Armv8.8-A and Armv9.3-A, as well as of new potential intrinsics
 related to them, we are adding the following feature test macro, to be defined
 to 1 if the new extension is available:
 
@@ -72,8 +72,10 @@ the following intrinsic to cover this scenario:
 The parameters of ``__arm_mops_memset_tag`` are:
 
 * ``tagged_address``: destination address to be set, containing the allocation
-  tag in its bits [59:56] (See the `SETG* instructions specification
+  tag in its bits [59:56]. The address should be aligned with the tag granule
+  size. (See the `SETG* instructions specification
   <https://developer.arm.com/documentation/ddi0596/2021-09/Base-Instructions/SETGP--SETGM--SETGE--Memory-Set-with-tag-setting-?lang=en#sa_xd>`_
-  for more details).
-* ``value``: fill value
-* ``size``: number of bytes to fill
+  for more details)
+* ``value``: fill value.
+* ``size``: number of bytes to fill. This should be a multiple of the tag
+  granule size.
