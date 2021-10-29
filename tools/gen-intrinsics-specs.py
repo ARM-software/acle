@@ -116,12 +116,11 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     """
     # Remove the suffix ')' from the intrinsic string.
     intrinsic_without_ending = intrinsic[:-1]
-    ret_def, par, signature = intrinsic_without_ending.partition('(')
-    split_signature = signature.split(',')
     whitespace_indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
 
-    intrinsic_link_id = get_intrinsic_name(ret_def)
-    intrinsic_type = get_intrinsic_return_type(ret_def)
+    intrinsic_signature = get_signature(intrinsic_without_ending)
+    intrinsic_link_id = get_intrinsic_name(intrinsic_without_ending)
+    intrinsic_type = get_intrinsic_return_type(intrinsic_without_ending)
 
     # This replacement has been added in order to avoid issues with links
     # that contain square brackets.
@@ -129,24 +128,49 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     formatted_intrinsic_id = intrinsic_link_id.replace("[","%5B").replace("]","%5D")
     formatted_site_link = f"{baseurl}{formatted_intrinsic_id}"
 
-    if len(split_signature) > 1:
+    if len(intrinsic_signature) > 1:
         if workflow == "rst":
-            return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
+            return f".. code:: c\n\n    {intrinsic_type} {intrinsic_link_id}(\n        " + ',\n       '.join(intrinsic_signature) + ")"
         elif workflow == "markdown":
-            return f"<code>{intrinsic_type} <a href=\"{formatted_site_link}\" target=\"_blank\">{intrinsic_link_id}</a>(<br>{whitespace_indent} " + (f",<br>{whitespace_indent}").join(split_signature) + ")</code>"
+            return f"<code>{intrinsic_type} <a href=\"{formatted_site_link}\" target=\"_blank\">{intrinsic_link_id}</a>(<br>{whitespace_indent} " + (f",<br>{whitespace_indent}").join(intrinsic_signature) + ")</code>"
         elif workflow == "pdf":
-            return f"``` c\n{ret_def}(\n  " + (',\n ').join(split_signature) + ")\n```"
+            return f"``` c\n{intrinsic_type} {intrinsic_link_id}(\n  " + (',\n ').join(intrinsic_signature) + ")\n```"
     else:
         if workflow == "rst":
             return f".. code:: c\n\n    {intrinsic}\n"
         elif workflow == "markdown":
-            return f"<code>{intrinsic_type} <a href=\"{formatted_site_link}\" target=\"_blank\">{intrinsic_link_id}</a>({split_signature[0]})</code>"
+            return f"<code>{intrinsic_type} <a href=\"{formatted_site_link}\" target=\"_blank\">{intrinsic_link_id}</a>({intrinsic_signature[0]})</code>"
         elif workflow == "pdf":
             return f"`{intrinsic}`"
 
-def get_intrinsic_name(signature):
+def get_signature(intrinsic):
     """
-    Get the intrinsic name from the signature of the intrinsic.
+    Get the signature of the intrinsic.
+
+    >>> get_signature("int8x8_t vadd_s8(int8x8_t a, int8x8_t b")
+    ['int8x8_t a', ' int8x8_t b']
+
+    >>> get_signature("int32x4_t vaddl_high_s16(int16x8_t a, int16x8_t b")
+    ['int16x8_t a', ' int16x8_t b']
+
+    >>> get_signature("float64x2_t vfmsq_lane_f64(float64x2_t a, float64x2_t b, float64x1_t v, __builtin_constant_p(lane)")
+    ['float64x2_t a', ' float64x2_t b', ' float64x1_t v', ' __builtin_constant_p(lane)']
+
+    >>> get_signature("poly16x8_t vsriq_n_p16(poly16x8_t a, poly16x8_t b, __builtin_constant_p(n)")
+    ['poly16x8_t a', ' poly16x8_t b', ' __builtin_constant_p(n)']
+
+    >>> get_signature("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p")
+    ['uint8x16_t inactive', ' uint32_t a', ' const int imm', ' mve_pred16_t p']
+    """
+    tmp = intrinsic.split('(', 1)
+
+    tmp = tmp[1].split(',')
+
+    return tmp
+
+def get_intrinsic_name(intrinsic):
+    """
+    Get the name of the intrinsic.
 
     >>> get_intrinsic_name("int8x8_t vadd_s8(int8x8_t a, int8x8_t b)")
     'vadd_s8'
@@ -163,14 +187,15 @@ def get_intrinsic_name(signature):
     >>> get_intrinsic_name("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p)")
     '[__arm_]vddupq_m[_n_u8]'
     """
-    tmp = signature.split(' ')
+
+    tmp = intrinsic.split(' ')
 
     tmp = tmp[1].split('(')
     return tmp[0]
 
-def get_intrinsic_return_type(signature):
+def get_intrinsic_return_type(intrinsic):
     """
-    Get the intrinsic type from the signature of the intrinsic.
+    Get the type of the intrinsic.
 
     >>> get_intrinsic_return_type("int8x8_t vadd_s8(int8x8_t a, int8x8_t b)")
     'int8x8_t'
@@ -187,7 +212,7 @@ def get_intrinsic_return_type(signature):
     >>> get_intrinsic_return_type("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p)")
     'uint8x16_t'
     """
-    tmp = signature.split(' ')
+    tmp = intrinsic.split(' ')
     return tmp[0]
 
 
