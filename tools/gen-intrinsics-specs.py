@@ -121,7 +121,11 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     whitespace_indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
 
     intrinsic_link_id = get_intrinsic_name(ret_def)
-    intrinsic_type = get_intrinsic_type(ret_def)
+    intrinsic_type = get_intrinsic_return_type(ret_def)
+
+    # This replacement has been added in order to avoid issues with links
+    # that contain square brackets.
+    # See also: https://stackoverflow.com/questions/13013987/ruby-how-to-escape-url-with-square-brackets-and/17901435
     formatted_intrinsic_id = intrinsic_link_id.replace("[","%5B").replace("]","%5D")
     formatted_site_link = f"{baseurl}{formatted_intrinsic_id}"
 
@@ -164,23 +168,23 @@ def get_intrinsic_name(signature):
     tmp = tmp[1].split('(')
     return tmp[0]
 
-def get_intrinsic_type(signature):
+def get_intrinsic_return_type(signature):
     """
     Get the intrinsic type from the signature of the intrinsic.
 
-    >>> get_intrinsic_type("int8x8_t vadd_s8(int8x8_t a, int8x8_t b)")
+    >>> get_intrinsic_return_type("int8x8_t vadd_s8(int8x8_t a, int8x8_t b)")
     'int8x8_t'
 
-    >>> get_intrinsic_type("int32x4_t vaddl_high_s16(int16x8_t a, int16x8_t b)")
+    >>> get_intrinsic_return_type("int32x4_t vaddl_high_s16(int16x8_t a, int16x8_t b)")
     'int32x4_t'
 
-    >>> get_intrinsic_type("float64x2_t vfmsq_lane_f64(float64x2_t a, float64x2_t b, float64x1_t v, __builtin_constant_p(lane))")
+    >>> get_intrinsic_return_type("float64x2_t vfmsq_lane_f64(float64x2_t a, float64x2_t b, float64x1_t v, __builtin_constant_p(lane))")
     'float64x2_t'
 
-    >>> get_intrinsic_type("poly16x8_t vsriq_n_p16(poly16x8_t a, poly16x8_t b, __builtin_constant_p(n))")
+    >>> get_intrinsic_return_type("poly16x8_t vsriq_n_p16(poly16x8_t a, poly16x8_t b, __builtin_constant_p(n))")
     'poly16x8_t'
 
-    >>> get_intrinsic_type("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p)")
+    >>> get_intrinsic_return_type("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p)")
     'uint8x16_t'
     """
     tmp = signature.split(' ')
