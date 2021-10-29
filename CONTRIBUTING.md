@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Thank you for considering contributing!
 
 Contributions are always welcome. We accept [bug fixes](#bugs),

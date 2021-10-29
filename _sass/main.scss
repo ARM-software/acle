@@ -9,7 +9,7 @@ body {
   margin: 100px 60px;
   counter-reset: h1counter;
   color: #333E48;
-  font-family: sans-serif;
+  font: 16px sans-serif;
 }
 
 a, a:hover, a:active, a:visited {
@@ -45,31 +45,52 @@ tr:nth-child(even) {
   margin: 0;
   background-color: #0091BD;
   color: white;
-  font-size: 14pt;
+  font-size: 18px;
 }
 
-#header a, #header a:visited {
-  color: white;
-}
-
-#header a {
-  padding: 20px 40px;
-  margin: 0;
-}
-
-#header a:active, #header a:hover {
-  background-color: white;
-  color: #0091BD;
-}
-
+//left and right side of the navbar - this is how the button, logo and page links
+//are separated into halves
 #left-side {
   float: left;
-  padding: 20px 20px 20px 0px;
+  padding: 0px;
 }
 
 #right-side {
   float: right;
-  padding: 20px 0px 20px 20px;
+  padding: 0px;
+}
+
+.navbar_tab, .navbar_tab:visited {
+  color: white;
+}
+
+.navbar_tab {
+  display: table-cell;
+  padding: 20px;
+}
+
+.navbar_tab:active, .navbar_tab:hover {
+  background-color: white;
+  color: #0091BD;
+}
+
+.navbar_button {
+  display: table-cell;
+  border: 1px white solid;
+  border-radius: 6px;
+  color: white;
+  background-color: #0091BD;
+  font-size: 16px;
+  padding: 10px;
+  margin: 10px 3px;
+}
+
+.navbar_button:hover, .navbar_button:active {
+  border: 1px #0091BD solid;
+  border-radius: 6px;
+  color: #0091BD;
+  background-color: white;
+  cursor: pointer;
 }
 
 /*
