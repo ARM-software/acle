@@ -20,6 +20,7 @@ import tabulate as tbl
 import argparse
 import csv
 import doctest
+from urllib.parse import urljoin
 
 def quote_literal(val, workflow):
     if len(val) > 0:
@@ -125,20 +126,25 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     # that contain square brackets.
     # See also: https://stackoverflow.com/questions/13013987/ruby-how-to-escape-url-with-square-brackets-and/17901435
     formatted_intrinsic_id = intrinsic_link_id.replace("[","%5B").replace("]","%5D")
-    formatted_site_link = f"{baseurl}{formatted_intrinsic_id}"
+    formatted_site_link = urljoin(baseurl, formatted_intrinsic_id)
+    html_ref = "<code>%s <a href=\"%s\" target=\"_blank\">%s</a>(%s%s)</code>"
 
     if len(intrinsic_signature) > 1:
         if workflow == "rst":
             return f".. code:: c\n\n    {intrinsic_type} {intrinsic_link_id}(\n        " + ',\n       '.join(intrinsic_signature) + ")"
         elif workflow == "markdown":
-            return f"<code>{intrinsic_type} <a href=\"{formatted_site_link}\" target=\"_blank\">{intrinsic_link_id}</a>(<br>{whitespace_indent} " + (f",<br>{whitespace_indent}").join(intrinsic_signature) + ")</code>"
+            parameters = (f",<br>{whitespace_indent}").join(intrinsic_signature)
+            full_link = (html_ref % (intrinsic_type, formatted_site_link, intrinsic_link_id, f"<br>{whitespace_indent} ", parameters))
+            return full_link
         elif workflow == "pdf":
             return f"``` c\n{intrinsic_type} {intrinsic_link_id}(\n  " + (',\n ').join(intrinsic_signature) + ")\n```"
     else:
         if workflow == "rst":
             return f".. code:: c\n\n    {intrinsic}\n"
         elif workflow == "markdown":
-            return f"<code>{intrinsic_type} <a href=\"{formatted_site_link}\" target=\"_blank\">{intrinsic_link_id}</a>({intrinsic_signature[0]})</code>"
+            assert len(intrinsic_signature) == 1, "Intrinsics with no parameters are not supported."
+            full_link = (html_ref % (intrinsic_type, formatted_site_link, intrinsic_link_id, "", intrinsic_signature[0]))
+            return full_link
         elif workflow == "pdf":
             return f"`{intrinsic}`"
 
