@@ -20,7 +20,7 @@ import tabulate as tbl
 import argparse
 import csv
 import doctest
-from urllib.parse import urljoin
+from posixpath import join as urljoin
 
 def quote_literal(val, workflow):
     if len(val) > 0:
@@ -103,16 +103,16 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     >>> quote_split_intrinsics('int f(int x)', 'rst')
     '.. code:: c\n\n    int f(int x)\n'
 
-    >>> quote_split_intrinsics('int f(int x, float y)', 'markdown', 'baseurl/')
+    >>> quote_split_intrinsics('int f(int x, float y)', 'markdown', 'baseurl')
     '<code>int <a href="baseurl/f" target="_blank">f</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int x,<br>&nbsp;&nbsp;&nbsp;&nbsp; float y)</code>'
 
-    >>> quote_split_intrinsics('int f(int x)', 'markdown', 'baseurl/')
+    >>> quote_split_intrinsics('int f(int x)', 'markdown', 'baseurl')
     '<code>int <a href="baseurl/f" target="_blank">f</a>(int x)</code>'
 
-    >>> quote_split_intrinsics('int f(int x, float y)', 'pdf', 'baseurl/')
+    >>> quote_split_intrinsics('int f(int x, float y)', 'pdf', 'baseurl')
     '``` c\nint f(\n  int x,\n  float y)\n```'
 
-    >>> quote_split_intrinsics('int f(int x)', 'pdf', 'baseurl/')
+    >>> quote_split_intrinsics('int f(int x)', 'pdf', 'baseurl')
     '`int f(int x)`'
     """
 
@@ -127,6 +127,8 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     # See also: https://stackoverflow.com/questions/13013987/ruby-how-to-escape-url-with-square-brackets-and/17901435
     formatted_intrinsic_id = intrinsic_link_id.replace("[","%5B").replace("]","%5D")
     formatted_site_link = urljoin(baseurl, formatted_intrinsic_id)
+    indent = f"<br>{whitespace_indent} "
+    no_indent = ""
     html_ref = "<code>%s <a href=\"%s\" target=\"_blank\">%s</a>(%s%s)</code>"
 
     if len(intrinsic_signature) > 1:
@@ -134,7 +136,7 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
             return f".. code:: c\n\n    {intrinsic_type} {intrinsic_link_id}(\n        " + ',\n       '.join(intrinsic_signature) + ")"
         elif workflow == "markdown":
             parameters = (f",<br>{whitespace_indent}").join(intrinsic_signature)
-            full_link = (html_ref % (intrinsic_type, formatted_site_link, intrinsic_link_id, f"<br>{whitespace_indent} ", parameters))
+            full_link = (html_ref % (intrinsic_type, formatted_site_link, intrinsic_link_id, indent, parameters))
             return full_link
         elif workflow == "pdf":
             return f"``` c\n{intrinsic_type} {intrinsic_link_id}(\n  " + (',\n ').join(intrinsic_signature) + ")\n```"
@@ -143,7 +145,7 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
             return f".. code:: c\n\n    {intrinsic}\n"
         elif workflow == "markdown":
             assert len(intrinsic_signature) == 1, "Intrinsics with no parameters are not supported."
-            full_link = (html_ref % (intrinsic_type, formatted_site_link, intrinsic_link_id, "", intrinsic_signature[0]))
+            full_link = (html_ref % (intrinsic_type, formatted_site_link, intrinsic_link_id, no_indent, intrinsic_signature[0]))
             return full_link
         elif workflow == "pdf":
             return f"`{intrinsic}`"
@@ -920,7 +922,7 @@ def process_db(db, classification_db, workflow, baseurl=__ARMDEVELOPER):
     |             |       |        |         |          |
     |     c C01() |     c |     cc |     ccc |          |
     +-------------+-------+--------+---------+----------+
-    >>> print(process_db(intrinsics, classification, 'markdown', 'baseurl/'))
+    >>> print(process_db(intrinsics, classification, 'markdown', 'baseurl'))
     <BLANKLINE>
     <BLANKLINE>
     ## Section 1 title
