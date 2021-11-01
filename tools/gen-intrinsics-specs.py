@@ -114,13 +114,12 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     >>> quote_split_intrinsics('int f(int x)', 'pdf', 'baseurl/')
     '`int f(int x)`'
     """
-    # Remove the suffix ')' from the intrinsic string.
-    intrinsic_without_ending = intrinsic[:-1]
+
     whitespace_indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
 
-    intrinsic_signature = get_signature(intrinsic_without_ending)
-    intrinsic_link_id = get_intrinsic_name(intrinsic_without_ending)
-    intrinsic_type = get_intrinsic_return_type(intrinsic_without_ending)
+    intrinsic_signature = get_signature(intrinsic)
+    intrinsic_link_id = get_intrinsic_name(intrinsic)
+    intrinsic_type = get_intrinsic_return_type(intrinsic)
 
     # This replacement has been added in order to avoid issues with links
     # that contain square brackets.
@@ -147,22 +146,26 @@ def get_signature(intrinsic):
     """
     Get the signature of the intrinsic.
 
-    >>> get_signature("int8x8_t vadd_s8(int8x8_t a, int8x8_t b")
+    >>> get_signature("int8x8_t vadd_s8(int8x8_t a, int8x8_t b)")
     ['int8x8_t a', ' int8x8_t b']
 
-    >>> get_signature("int32x4_t vaddl_high_s16(int16x8_t a, int16x8_t b")
+    >>> get_signature("int32x4_t vaddl_high_s16(int16x8_t a, int16x8_t b)")
     ['int16x8_t a', ' int16x8_t b']
 
-    >>> get_signature("float64x2_t vfmsq_lane_f64(float64x2_t a, float64x2_t b, float64x1_t v, __builtin_constant_p(lane)")
+    >>> get_signature("float64x2_t vfmsq_lane_f64(float64x2_t a, float64x2_t b, float64x1_t v, __builtin_constant_p(lane))")
     ['float64x2_t a', ' float64x2_t b', ' float64x1_t v', ' __builtin_constant_p(lane)']
 
-    >>> get_signature("poly16x8_t vsriq_n_p16(poly16x8_t a, poly16x8_t b, __builtin_constant_p(n)")
+    >>> get_signature("poly16x8_t vsriq_n_p16(poly16x8_t a, poly16x8_t b, __builtin_constant_p(n))")
     ['poly16x8_t a', ' poly16x8_t b', ' __builtin_constant_p(n)']
 
-    >>> get_signature("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p")
+    >>> get_signature("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p)")
     ['uint8x16_t inactive', ' uint32_t a', ' const int imm', ' mve_pred16_t p']
     """
-    tmp = intrinsic.split('(', 1)
+
+    # Remove the suffix ')' from the intrinsic string.
+    intrinsic_without_ending = intrinsic[:-1]
+
+    tmp = intrinsic_without_ending.split('(', 1)
 
     tmp = tmp[1].split(',')
 
@@ -202,15 +205,6 @@ def get_intrinsic_return_type(intrinsic):
 
     >>> get_intrinsic_return_type("int32x4_t vaddl_high_s16(int16x8_t a, int16x8_t b)")
     'int32x4_t'
-
-    >>> get_intrinsic_return_type("float64x2_t vfmsq_lane_f64(float64x2_t a, float64x2_t b, float64x1_t v, __builtin_constant_p(lane))")
-    'float64x2_t'
-
-    >>> get_intrinsic_return_type("poly16x8_t vsriq_n_p16(poly16x8_t a, poly16x8_t b, __builtin_constant_p(n))")
-    'poly16x8_t'
-
-    >>> get_intrinsic_return_type("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p)")
-    'uint8x16_t'
     """
     tmp = intrinsic.split(' ')
     return tmp[0]
