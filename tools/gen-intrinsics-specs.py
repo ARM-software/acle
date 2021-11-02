@@ -123,9 +123,6 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     intrinsic_link_id = get_intrinsic_name(intrinsic)
     intrinsic_type = get_intrinsic_return_type(intrinsic)
 
-    # This replacement has been added in order to avoid issues with links
-    # that contain square brackets.
-    # See also: https://stackoverflow.com/questions/13013987/ruby-how-to-escape-url-with-square-brackets-and/17901435
     formatted_intrinsic_id = quote(intrinsic_link_id)
     formatted_site_link = urljoin(baseurl, formatted_intrinsic_id)
     indent = f"<br>{whitespace_indent} "
