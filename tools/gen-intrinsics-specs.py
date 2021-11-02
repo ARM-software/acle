@@ -20,7 +20,8 @@ import tabulate as tbl
 import argparse
 import csv
 import doctest
-from posixpath import join as urljoin
+from urllib.parse import urljoin
+from urllib.parse import quote
 
 def quote_literal(val, workflow):
     if len(val) > 0:
@@ -103,16 +104,16 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     >>> quote_split_intrinsics('int f(int x)', 'rst')
     '.. code:: c\n\n    int f(int x)\n'
 
-    >>> quote_split_intrinsics('int f(int x, float y)', 'markdown', 'baseurl')
-    '<code>int <a href="baseurl/f" target="_blank">f</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int x,<br>&nbsp;&nbsp;&nbsp;&nbsp; float y)</code>'
+    >>> quote_split_intrinsics('int f(int x, float y)', 'markdown', 'https://baseurl')
+    '<code>int <a href="https://baseurl/f" target="_blank">f</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int x,<br>&nbsp;&nbsp;&nbsp;&nbsp; float y)</code>'
 
-    >>> quote_split_intrinsics('int f(int x)', 'markdown', 'baseurl')
-    '<code>int <a href="baseurl/f" target="_blank">f</a>(int x)</code>'
+    >>> quote_split_intrinsics('int f(int x)', 'markdown', 'https://baseurl')
+    '<code>int <a href="https://baseurl/f" target="_blank">f</a>(int x)</code>'
 
-    >>> quote_split_intrinsics('int f(int x, float y)', 'pdf', 'baseurl')
+    >>> quote_split_intrinsics('int f(int x, float y)', 'pdf', 'https://baseurl')
     '``` c\nint f(\n  int x,\n  float y)\n```'
 
-    >>> quote_split_intrinsics('int f(int x)', 'pdf', 'baseurl')
+    >>> quote_split_intrinsics('int f(int x)', 'pdf', 'https://baseurl')
     '`int f(int x)`'
     """
 
@@ -125,7 +126,7 @@ def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     # This replacement has been added in order to avoid issues with links
     # that contain square brackets.
     # See also: https://stackoverflow.com/questions/13013987/ruby-how-to-escape-url-with-square-brackets-and/17901435
-    formatted_intrinsic_id = intrinsic_link_id.replace("[","%5B").replace("]","%5D")
+    formatted_intrinsic_id = quote(intrinsic_link_id)
     formatted_site_link = urljoin(baseurl, formatted_intrinsic_id)
     indent = f"<br>{whitespace_indent} "
     no_indent = ""
@@ -922,7 +923,7 @@ def process_db(db, classification_db, workflow, baseurl=__ARMDEVELOPER):
     |             |       |        |         |          |
     |     c C01() |     c |     cc |     ccc |          |
     +-------------+-------+--------+---------+----------+
-    >>> print(process_db(intrinsics, classification, 'markdown', 'baseurl'))
+    >>> print(process_db(intrinsics, classification, 'markdown', 'https://baseurl'))
     <BLANKLINE>
     <BLANKLINE>
     ## Section 1 title
@@ -931,17 +932,17 @@ def process_db(db, classification_db, workflow, baseurl=__ARMDEVELOPER):
     <BLANKLINE>
     ### No category
     <BLANKLINE>
-    | T1                                                             | T2   | T3   | T4    | T5     |
-    |----------------------------------------------------------------|------|------|-------|--------|
-    | <code>a <a href="baseurl/A01" target="_blank">A01</a>()</code> | `a`  | `aa` | `aaa` | `aaaa` |
+    | T1                                                                     | T2   | T3   | T4    | T5     |
+    |------------------------------------------------------------------------|------|------|-------|--------|
+    | <code>a <a href="https://baseurl/A01" target="_blank">A01</a>()</code> | `a`  | `aa` | `aaa` | `aaaa` |
     <BLANKLINE>
     ### Section 1.1
     <BLANKLINE>
     #### Section 1.1.1
     <BLANKLINE>
-    | T1                                                             | T2   | T3   | T4    | T5     |
-    |----------------------------------------------------------------|------|------|-------|--------|
-    | <code>b <a href="baseurl/B01" target="_blank">B01</a>()</code> | `b`  | `bb` | `bbb` | `bbbb` |
+    | T1                                                                     | T2   | T3   | T4    | T5     |
+    |------------------------------------------------------------------------|------|------|-------|--------|
+    | <code>b <a href="https://baseurl/B01" target="_blank">B01</a>()</code> | `b`  | `bb` | `bbb` | `bbbb` |
     <BLANKLINE>
     ## Section 2 title
     <BLANKLINE>
@@ -951,9 +952,9 @@ def process_db(db, classification_db, workflow, baseurl=__ARMDEVELOPER):
     <BLANKLINE>
     #### subclassY
     <BLANKLINE>
-    | T1                                                             | T2   | T3   | T4    | T5     |
-    |----------------------------------------------------------------|------|------|-------|--------|
-    | <code>c <a href="baseurl/C01" target="_blank">C01</a>()</code> | `c`  | `cc` | `ccc` | `cccc` |
+    | T1                                                                     | T2   | T3   | T4    | T5     |
+    |------------------------------------------------------------------------|------|------|-------|--------|
+    | <code>c <a href="https://baseurl/C01" target="_blank">C01</a>()</code> | `c`  | `cc` | `ccc` | `cccc` |
     >>> print(process_db(intrinsics, classification, 'pdf'))
     <BLANKLINE>
     <BLANKLINE>
