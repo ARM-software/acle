@@ -20,6 +20,8 @@ import tabulate as tbl
 import argparse
 import csv
 import doctest
+from urllib.parse import urljoin
+from urllib.parse import quote
 
 def quote_literal(val, workflow):
     if len(val) > 0:
@@ -47,6 +49,7 @@ __INTRINSIC_TABLE_KEYWORD = '__intrinsic_table'
 __SECTION_TEXT_KEYWORD = '__section_text'
 
 __SECTION_KEYWORDS = [__INTRINSIC_TABLE_KEYWORD, __SECTION_TEXT_KEYWORD]
+__ARMDEVELOPER = "https://developer.arm.com/architectures/instruction-sets/intrinsics/"
 
 
 def rst_literal_quote(mapping, workflow):
@@ -93,7 +96,7 @@ def rst_literal_quote(mapping, workflow):
         return '```\n' + '\n'.join(lines) + '\n```'
 
 
-def quote_split_intrinsics(intrinsic, workflow):
+def quote_split_intrinsics(intrinsic, workflow, baseurl=__ARMDEVELOPER):
     r"""
     >>> quote_split_intrinsics('int f(int x, float y)', 'rst')
     '.. code:: c\n\n    int f(\n        int x,\n        float y)'
@@ -101,43 +104,82 @@ def quote_split_intrinsics(intrinsic, workflow):
     >>> quote_split_intrinsics('int f(int x)', 'rst')
     '.. code:: c\n\n    int f(int x)\n'
 
-    >>> quote_split_intrinsics('int f(int x, float y)', 'markdown')
-    '`int f(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`int x,`<br>&nbsp;&nbsp;&nbsp;&nbsp;` float y)`'
+    >>> quote_split_intrinsics('int f(int x, float y)', 'markdown', 'https://baseurl')
+    '<code>int <a href="https://baseurl/f" target="_blank">f</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int x,<br>&nbsp;&nbsp;&nbsp;&nbsp; float y)</code>'
 
-    >>> quote_split_intrinsics('int f(int x)', 'markdown')
-    '`int f(int x)`'
+    >>> quote_split_intrinsics('int f(int x)', 'markdown', 'https://baseurl')
+    '<code>int <a href="https://baseurl/f" target="_blank">f</a>(int x)</code>'
 
-    >>> quote_split_intrinsics('int f(int x, float y)', 'pdf')
+    >>> quote_split_intrinsics('int f(int x, float y)', 'pdf', 'https://baseurl')
     '``` c\nint f(\n  int x,\n  float y)\n```'
 
-    >>> quote_split_intrinsics('int f(int x)', 'pdf')
+    >>> quote_split_intrinsics('int f(int x)', 'pdf', 'https://baseurl')
     '`int f(int x)`'
     """
-    # Remove the suffix ')' from the intrinsic string.
-    intrinsic_without_ending = intrinsic[:-1]
-    ret_def, par, signature = intrinsic_without_ending.partition('(')
-    split_signature = signature.split(',')
+
     whitespace_indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
 
-    if len(split_signature) > 1:
+    intrinsic_signature = get_signature(intrinsic)
+    intrinsic_link_id = get_intrinsic_name(intrinsic)
+    intrinsic_type = get_intrinsic_return_type(intrinsic)
+
+    formatted_intrinsic_id = quote(intrinsic_link_id)
+    formatted_site_link = urljoin(baseurl, formatted_intrinsic_id)
+    indent = f"<br>{whitespace_indent} "
+    no_indent = ""
+    html_ref = "<code>%s <a href=\"%s\" target=\"_blank\">%s</a>(%s%s)</code>"
+
+    if len(intrinsic_signature) > 1:
         if workflow == "rst":
-            return f".. code:: c\n\n    {ret_def}(\n        " + ',\n       '.join(split_signature) + ")"
+            return f".. code:: c\n\n    {intrinsic_type} {intrinsic_link_id}(\n        " + ',\n       '.join(intrinsic_signature) + ")"
         elif workflow == "markdown":
-            return f"`{ret_def}(`<br>" + whitespace_indent + "`" + (',`<br>'+ whitespace_indent + '`').join(split_signature) + ")`"
+            parameters = (f",<br>{whitespace_indent}").join(intrinsic_signature)
+            full_link = (html_ref % (intrinsic_type, formatted_site_link, intrinsic_link_id, indent, parameters))
+            return full_link
         elif workflow == "pdf":
-            return f"``` c\n{ret_def}(\n  " + (',\n ').join(split_signature) + ")\n```"
+            return f"``` c\n{intrinsic_type} {intrinsic_link_id}(\n  " + (',\n ').join(intrinsic_signature) + ")\n```"
     else:
         if workflow == "rst":
             return f".. code:: c\n\n    {intrinsic}\n"
         elif workflow == "markdown":
-            return f"`{intrinsic}`"
+            assert len(intrinsic_signature) == 1, "Intrinsics with no parameters are not supported."
+            full_link = (html_ref % (intrinsic_type, formatted_site_link, intrinsic_link_id, no_indent, intrinsic_signature[0]))
+            return full_link
         elif workflow == "pdf":
             return f"`{intrinsic}`"
 
-
-def get_intrinsic_name(signature):
+def get_signature(intrinsic):
     """
-    Get the intrinsic name from the signature of the intrinsic.
+    Get the signature of the intrinsic.
+
+    >>> get_signature("int8x8_t vadd_s8(int8x8_t a, int8x8_t b)")
+    ['int8x8_t a', ' int8x8_t b']
+
+    >>> get_signature("int32x4_t vaddl_high_s16(int16x8_t a, int16x8_t b)")
+    ['int16x8_t a', ' int16x8_t b']
+
+    >>> get_signature("float64x2_t vfmsq_lane_f64(float64x2_t a, float64x2_t b, float64x1_t v, __builtin_constant_p(lane))")
+    ['float64x2_t a', ' float64x2_t b', ' float64x1_t v', ' __builtin_constant_p(lane)']
+
+    >>> get_signature("poly16x8_t vsriq_n_p16(poly16x8_t a, poly16x8_t b, __builtin_constant_p(n))")
+    ['poly16x8_t a', ' poly16x8_t b', ' __builtin_constant_p(n)']
+
+    >>> get_signature("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p)")
+    ['uint8x16_t inactive', ' uint32_t a', ' const int imm', ' mve_pred16_t p']
+    """
+
+    # Remove the suffix ')' from the intrinsic string.
+    intrinsic_without_ending = intrinsic[:-1]
+
+    tmp = intrinsic_without_ending.split('(', 1)
+
+    tmp = tmp[1].split(',')
+
+    return tmp
+
+def get_intrinsic_name(intrinsic):
+    """
+    Get the name of the intrinsic.
 
     >>> get_intrinsic_name("int8x8_t vadd_s8(int8x8_t a, int8x8_t b)")
     'vadd_s8'
@@ -154,9 +196,23 @@ def get_intrinsic_name(signature):
     >>> get_intrinsic_name("uint8x16_t [__arm_]vddupq_m[_n_u8](uint8x16_t inactive, uint32_t a, const int imm, mve_pred16_t p)")
     '[__arm_]vddupq_m[_n_u8]'
     """
-    tmp = signature.split(' ')
+
+    tmp = intrinsic.split(' ')
 
     tmp = tmp[1].split('(')
+    return tmp[0]
+
+def get_intrinsic_return_type(intrinsic):
+    """
+    Get the type of the intrinsic.
+
+    >>> get_intrinsic_return_type("int8x8_t vadd_s8(int8x8_t a, int8x8_t b)")
+    'int8x8_t'
+
+    >>> get_intrinsic_return_type("int32x4_t vaddl_high_s16(int16x8_t a, int16x8_t b)")
+    'int32x4_t'
+    """
+    tmp = intrinsic.split(' ')
     return tmp[0]
 
 
@@ -188,8 +244,8 @@ class Intrinsic:
         self.asm_mnemonic = self.asm.split(' ')[0].strip()
         self.classification = classification
 
-    def table_row(self, workflow):
-        return [quote_split_intrinsics(self.signature, workflow),
+    def table_row(self, workflow, baseurl):
+        return [quote_split_intrinsics(self.signature, workflow, baseurl),
                 rst_literal_quote(self.parameter_mapping, workflow),
                 rst_literal_quote(self.asm, workflow),
                 rst_literal_quote(self.result_mapping, workflow),
@@ -797,7 +853,7 @@ def get_section_data(row):
     return [row[1], section_text]
 
 
-def process_db(db, classification_db, workflow):
+def process_db(db, classification_db, workflow, baseurl=__ARMDEVELOPER):
     """Processes a list of intrinsics and their mappings to the
     classification into a sequence of sections and RST tables.
 
@@ -864,7 +920,7 @@ def process_db(db, classification_db, workflow):
     |             |       |        |         |          |
     |     c C01() |     c |     cc |     ccc |          |
     +-------------+-------+--------+---------+----------+
-    >>> print(process_db(intrinsics, classification, 'markdown'))
+    >>> print(process_db(intrinsics, classification, 'markdown', 'https://baseurl'))
     <BLANKLINE>
     <BLANKLINE>
     ## Section 1 title
@@ -873,17 +929,17 @@ def process_db(db, classification_db, workflow):
     <BLANKLINE>
     ### No category
     <BLANKLINE>
-    | T1        | T2   | T3   | T4    | T5     |
-    |-----------|------|------|-------|--------|
-    | `a A01()` | `a`  | `aa` | `aaa` | `aaaa` |
+    | T1                                                                     | T2   | T3   | T4    | T5     |
+    |------------------------------------------------------------------------|------|------|-------|--------|
+    | <code>a <a href="https://baseurl/A01" target="_blank">A01</a>()</code> | `a`  | `aa` | `aaa` | `aaaa` |
     <BLANKLINE>
     ### Section 1.1
     <BLANKLINE>
     #### Section 1.1.1
     <BLANKLINE>
-    | T1        | T2   | T3   | T4    | T5     |
-    |-----------|------|------|-------|--------|
-    | `b B01()` | `b`  | `bb` | `bbb` | `bbbb` |
+    | T1                                                                     | T2   | T3   | T4    | T5     |
+    |------------------------------------------------------------------------|------|------|-------|--------|
+    | <code>b <a href="https://baseurl/B01" target="_blank">B01</a>()</code> | `b`  | `bb` | `bbb` | `bbbb` |
     <BLANKLINE>
     ## Section 2 title
     <BLANKLINE>
@@ -893,9 +949,9 @@ def process_db(db, classification_db, workflow):
     <BLANKLINE>
     #### subclassY
     <BLANKLINE>
-    | T1        | T2   | T3   | T4    | T5     |
-    |-----------|------|------|-------|--------|
-    | `c C01()` | `c`  | `cc` | `ccc` | `cccc` |
+    | T1                                                                     | T2   | T3   | T4    | T5     |
+    |------------------------------------------------------------------------|------|------|-------|--------|
+    | <code>c <a href="https://baseurl/C01" target="_blank">C01</a>()</code> | `c`  | `cc` | `ccc` | `cccc` |
     >>> print(process_db(intrinsics, classification, 'pdf'))
     <BLANKLINE>
     <BLANKLINE>
@@ -978,7 +1034,7 @@ def process_db(db, classification_db, workflow):
             if section:
                 classification_list = [section]+classification_list
             recurse_set(filtered, classification_list,
-                        intrinsic.table_row(workflow), __INTRINSIC_TABLE_KEYWORD)
+                        intrinsic.table_row(workflow, baseurl), __INTRINSIC_TABLE_KEYWORD)
 
             continue
 
