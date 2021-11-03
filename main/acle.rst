@@ -749,7 +749,7 @@ values using standard C operators. ::
 Armv8 introduces floating point instructions to convert 64-bit to 16-bit
 i.e. from double to ``__fp16.`` They are not available in earlier
 architectures, therefore have to rely on emulation libraries or a
-sequence of instructions to achieve the conversion. 
+sequence of instructions to achieve the conversion.
 
 Providing emulation libraries for half-precision floating point
 conversions when not implemented in hardware is implementation-defined. ::
@@ -1390,7 +1390,7 @@ Half-precision (16-bit) floating-point format
 
 ``__ARM_FP16_FORMAT_ALTERNATIVE`` is defined to 1 if the Arm
 alternative [ARMARM]_ 16-bit floating-point format is used. This format
-removes support for infinities and NaNs in order to provide an 
+removes support for infinities and NaNs in order to provide an
 additional binade.
 
 At most one of these macros will be defined. See ssec-fp16-type_
@@ -1659,7 +1659,7 @@ Javascript floating-point conversion
 
 ``__ARM_FEATURE_JCVT`` is defined to 1 if the FJCVTZS (AArch64) or
 VJCVT (AArch32) instruction and the associated intrinsic is available.
- 
+
 .. _ssec-FPm:
 
 Floating-point model
@@ -2291,8 +2291,8 @@ C that the spacing between array elements is equal to the element size.
 The aligned attribute does not act as a type qualifier. For example,
 given::
 
-  char x ``__attribute__((aligned(8)));``
-  int y ``__attribute__((aligned(1)));``
+  char x __attribute__((aligned(8)));
+  int y __attribute__((aligned(1)));
 
 the type of ``&x`` is ``char *`` and the type of ``&y`` is ``int *``. The
 following declarations are equivalent:
@@ -2629,7 +2629,7 @@ it on a queue.
   P2:
 
     /* busy-wait until work item appears */
-    while (!(work = ``queue_head))`` {}
+    while (!(work = queue_head)) {}
     /* no barrier needed: load of payload is data-dependent */
     /* use work->payload */
 
@@ -2762,7 +2762,7 @@ Data prefetch
   void __pld(void const volatile *addr);
 
 Generates a data prefetch instruction, if available. The argument should
-be any expression that may designate a data address. The data is 
+be any expression that may designate a data address. The data is
 prefetched to the innermost level of cache, for reading.
 ::
 
@@ -3075,7 +3075,7 @@ Examples
 
   /* Count leading sign bits */
   inline unsigned int count_sign(int32_t x) { return __clz(x ^ (x << 1)); }
-  
+
   /* Count trailing zeroes */
   inline unsigned int count_trail(uint32_t x) {
   #if (__ARM_ARCH >= 6 && __ARM_ISA_THUMB >= 2) || __ARM_ARCH >= 7
@@ -4884,14 +4884,14 @@ a ``uint16_t`` result containing the sum.
 Vector data types
 -----------------
 
-Vector data types are named as a lane type and a multiple. Lane type
-names are based on the types defined in ``<stdint.h>``. For example,.
-``int16x4_t`` is a vector of four ``int16_t`` values. The base types are
-``int8_t``, ``uint8_t``, ``int16_t``, ``uint16_t``, ``int32_t``,
-``uint32_t``, ``int64_t``, ``uint64_t``, ``float16_t``, ``float32_t``,
-``poly8_t``, ``poly16_t``, ``poly64_t``, ``poly128_t``  and ``bfloat16_t`. The multiples are
-such that the resulting vector types are 64-bit and 128-bit. In AArch64,
-``float64_t`` is also a base type.
+Vector data types are named as a lane type and a multiple. Lane type names are
+based on the types defined in ``<stdint.h>``. For example,.  ``int16x4_t`` is a
+vector of four ``int16_t`` values. The base types are ``int8_t``, ``uint8_t``,
+``int16_t``, ``uint16_t``, ``int32_t``, ``uint32_t``, ``int64_t``,
+``uint64_t``, ``float16_t``, ``float32_t``, ``poly8_t``, ``poly16_t``,
+``poly64_t``, ``poly128_t``  and ``bfloat16_t``. The multiples are such that
+the resulting vector types are 64-bit and 128-bit. In AArch64, ``float64_t`` is
+also a base type.
 
 Not all types can be used in all operations. Generally, the operations
 available on a type correspond to the operations available on the
@@ -5112,7 +5112,7 @@ This is indicated by the setting of bit 1 in ``__ARM_NEON_FP``
     /* 16-bit floating point vector types are available.  */
     float16x8_t storage;
   #endif
-  
+
 Availability of fused multiply-accumulate intrinsics
 ----------------------------------------------------
 
@@ -5367,16 +5367,18 @@ elements are picked from the equally typed ``int8x16_t`` argument ``a``.
 SIMD operations on selected lanes.  The MVE intrinsics expose vector predication
 by providing predicated intrinsic variants for instructions that support it.
 These intrinsics can be recognized by one of the four suffixes:
+
 * ``_m`` (merging) which indicates that false-predicated lanes are not written
-to and keep the same value as they had in the first argument of the intrinsic.
+  to and keep the same value as they had in the first argument of the
+  intrinsic.
 * ``_p`` (predicated) which indicates that false-predicated lanes are not used
-in the SIMD operation. For example ``vaddvq_p_s8``, where the false-predicated
-lanes are not added to the resulting sum.
+  in the SIMD operation. For example ``vaddvq_p_s8``, where the
+  false-predicated lanes are not added to the resulting sum.
 * ``_z`` (zero) which indicates that false-predicated lanes are filled with
-zeroes. These are only used for load instructions.
+  zeroes. These are only used for load instructions.
 * ``_x`` (dont-care) which indicates that the false-predicated lanes have
-undefined values. These are syntactic sugar for merge intrinsics with a
-``vuninitializedq`` inactive parameter.
+  undefined values. These are syntactic sugar for merge intrinsics with a
+  ``vuninitializedq`` inactive parameter.
 
 These predicated intrinsics can also be recognized by their last parameter
 being of type ``mve_pred16_t``.  This is an alias for the ``uint16_t`` type.
