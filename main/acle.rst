@@ -283,6 +283,8 @@ Changes for next release
   sections ssec-PAC_ and ssec-BTI_ respectively.
 * Fix the changelog of 2021Q3, as is was missing the mentioning of the
   intrinsic ``vmul_lane_u16`` in the second item.
+* Fixed item lists rendering in sec-MVE-intrinsics_.
+* Fixed superfluous and broken backticks in code examples throughout.
 
 References
 ----------
