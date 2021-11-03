@@ -1,15 +1,14 @@
 title: Arm MVE Intrinsics
-subtitle: 2021Q2
+version: 2021Q2
 date: 02 July 2021
 logo: ./tools/Arm-logo-blue-RGB.pdf
 documentclass: report
 toc: true
 numbersections: true
-geometry: landscape,top=1.5cm,bottom=1.5cm,left=1cm,right=1cm
+geometry: landscape,top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm
 fontfamily: helvet
 classoption: 10pt
 fontcolor: darkgray
-colorlinks: citecolor=darkgray
 copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.
 chapter-formatting: true
 papersize: a4
