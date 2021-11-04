@@ -126,6 +126,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "georges-arm",
+      "name": "George Steed",
+      "avatar_url": "https://avatars.githubusercontent.com/u/93212071?v=4",
+      "profile": "https://github.com/georges-arm",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
