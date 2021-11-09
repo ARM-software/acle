@@ -6,7 +6,6 @@ documentclass: report
 toc: true
 numbersections: true
 geometry: top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm
-fontfamily: helvet
 classoption: 10pt
 fontcolor: darkgray
 copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.

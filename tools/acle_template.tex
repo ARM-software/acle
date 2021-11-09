@@ -20,6 +20,10 @@
 \makeatletter
   \newcommand*{\currentname}{\TR@currentTitle}
 \makeatother
+\usepackage{charter}
+\usepackage[defaultsans,scale=0.95]{lato}
+\usepackage{inconsolata}
+\renewcommand*\familydefault{\sfdefault}
 
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
@@ -56,13 +60,6 @@ $endif$
 $if(linestretch)$
   \usepackage{setspace}
   \setstretch{$linestretch$}
-$endif$
-
-$if(fontfamily)$
-  \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
-  \renewcommand*\familydefault{\sfdefault}
-$else$
-  \usepackage{lmodern}
 $endif$
 
 $if(chapter-formatting)$
