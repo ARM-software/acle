@@ -6,7 +6,7 @@
 
 ## About this document
 
-The [Arm C Language Extensions](acle.rst) specifies the Arm C
+The [Arm C Language Extensions](acle.md) specifies the Arm C
 Language Extensions (ACLE) to enable C/C++ programmers to exploit the
 Arm architecture with minimal restrictions on source code portability.
 

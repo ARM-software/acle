@@ -6,7 +6,7 @@
 
 ## About this document
 
-The [Arm Neon Intrinsics Reference](advsimd.rst) specifies the [TODO]
+The [Arm Neon Intrinsics Reference](advsimd.md) specifies the [TODO]
 
 ## About the license
 
