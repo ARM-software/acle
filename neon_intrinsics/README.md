@@ -31,6 +31,6 @@ claims.
 
 ## Defects report
 
-Please report defects in the [Arm Neon Intrinsics Reference](advsimd.rst) to
+Please report defects in the [Arm Neon Intrinsics Reference](advsimd.md) to
 the [issue tracker page on
 GitHub](https://github.com/ARM-software/acle/issues).

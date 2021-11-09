@@ -33,6 +33,6 @@ claims.
 
 ## Defects report
 
-Please report defects in the [Arm C Language Extensions](acle.rst) to
+Please report defects in the [Arm C Language Extensions](acle.md) to
 the [issue tracker page on
 GitHub](https://github.com/ARM-software/acle/issues).

@@ -17,7 +17,6 @@ set -ex
 # limitations under the License.
 
 function generate_pdfs_from_md() {
-
 	inputMdFile=$1
 	if ! [ -f "$inputMdFile" ]; then
 		echo "**** WARNING! $inputMdFile does not exist. Please enter valid file path."
