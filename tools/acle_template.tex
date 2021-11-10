@@ -3,7 +3,7 @@
 % License: BSD 3-clause
 % See `data/templates` in `COPYRIGHT` at https://github.com/jgm/pandoc
 
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{report}
 \usepackage{xcolor}
 \definecolor{armblue}{HTML}{0091BD}
 \usepackage{sectsty}
@@ -20,6 +20,10 @@
 \makeatletter
   \newcommand*{\currentname}{\TR@currentTitle}
 \makeatother
+\usepackage{charter}
+\usepackage[defaultsans,scale=0.95]{lato}
+\usepackage{inconsolata}
+\renewcommand*\familydefault{\sfdefault}
 
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
@@ -56,13 +60,6 @@ $endif$
 $if(linestretch)$
   \usepackage{setspace}
   \setstretch{$linestretch$}
-$endif$
-
-$if(fontfamily)$
-  \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
-  \renewcommand*\familydefault{\sfdefault}
-$else$
-  \usepackage{lmodern}
 $endif$
 
 $if(chapter-formatting)$
