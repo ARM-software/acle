@@ -12,9 +12,9 @@
   <body>
       {% if page.title %} <h1 id="title"> {{ page.title }} </h1> {% endif %}
       {% include navbar.html %}
-      {% if page.toc %} <h1> Table of Contents </h1> {% endif %}
+      {% if page.toc %} <h1 id="toc-title"> Table of Contents </h1> {% endif %}
     <div id="#content">
-      {{ content }}
+      {% include anchor_headings.html html=content anchorBody="^" %}
     </div>
   </body>
 </html>
