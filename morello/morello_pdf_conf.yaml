@@ -2,7 +2,6 @@ title: Morello Supplement to the Arm C Language Extensions
 version: 01alpha
 date: 02 July 2021
 logo: ./tools/Arm-logo-blue-RGB.pdf
-documentclass: report
 toc: true
 numbersections: true
 geometry: top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm
