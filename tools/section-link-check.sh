@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-pandoc main/acle.md --verbose --fail-if-warnings -o pdfs/acle.pdf 2>&1 | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E  's/.*name\{([^}]+)\}.*/\1/' | sort | uniq
-pandoc morello/morello.md --verbose --fail-if-warnings -o pdfs/morello.pdf 2>&1 | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E  's/.*name\{([^}]+)\}.*/\1/' | sort | uniq
-pandoc mve_intrinsics/mve.md --verbose --fail-if-warnings -o pdfs/mve.pdf 2>&1 | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E  's/.*name\{([^}]+)\}.*/\1/' | sort | uniq
-pandoc neon_intrinsics/advsimd.md --verbose --fail-if-warnings -o pdfs/advsimd.pdf 2>&1 | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E  's/.*name\{([^}]+)\}.*/\1/' | sort | uniq
+for file in `find . -name "*.md" -type f`; do
+  echo "Checking $file..."
+  sections=$(pandoc $file --verbose --fail-if-warnings -o pdfs/tmp.pdf 2>&1 | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E  's/.*name\{([^}]+)\}.*/\1/' | sort | uniq)
+  if [[ $(wc -l <<< "$sections") -gt 0 ]]; then
+    echo "**** WARNING! These section links have been found to not be working: "
+    echo $sections | tr " " "\n"
+    exit 1
+  fi
+done
