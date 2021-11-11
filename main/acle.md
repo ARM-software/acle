@@ -1,5 +1,4 @@
 ---
-layout: default
 title: Arm C Language Extensions
 version: Development version based on 2021Q2
 date-of-issue: 02 July 2021
@@ -12,7 +11,6 @@ toc: true
 This token is necessary to generate the Table of Contents via Jekyll. --->
 * TOC
 {:toc}
-<!---END_OF_HTML_HEADER--->
 # Preface
 
 ## Warning

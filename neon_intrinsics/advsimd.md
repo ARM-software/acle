@@ -1,16 +1,17 @@
 ---
-layout: default
 title: Arm Neon Intrinsics Reference
 version: Development version based on 2021Q2
 date-of-issue: 02 July 2021
+landscape: true
 header_counter: true
 toc: true
 ---
 
+<!---Do not remove!
+
+This token is necessary to generate the Table of Contents via Jekyll. --->
 * TOC
 {:toc}
-<!---END_OF_HTML_HEADER--->
-
 # Preface
 
 This document is complementary to the main Arm C Language Extensions
