@@ -135,6 +135,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "peterwaller-arm",
+      "name": "Peter Waller",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52030119?v=4",
+      "profile": "https://github.com/peterwaller-arm",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
