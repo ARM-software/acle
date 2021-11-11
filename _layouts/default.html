@@ -14,7 +14,9 @@
       {% include navbar.html %}
       {% if page.toc %} <h1> Table of Contents </h1> {% endif %}
     <div id="#content">
-      {{ content }}
+      {% if page.toc %}{% include anchor_headings.html html=content anchorBody="^" %}
+      {% else %} {{ content }}
+      {% endif %}
     </div>
   </body>
 </html>
