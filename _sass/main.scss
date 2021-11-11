@@ -39,7 +39,7 @@ tr:nth-child(even) {
 
 //This is necessary to add since otherwise the toc links to each section and back will
 //get hidden behind the navbar.
-:target: {
+:target {
   padding-top: 80px;
   margin-top: -60px;
 }
