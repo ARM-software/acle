@@ -27,16 +27,16 @@ function generate_pdfs_from_md() {
 
 	outputPdfFile=$2
 
-	#this line replaces the ToC declaration in the md files with a blank space
-	#":a;N;$!ba;" is at the start so sed could recognise newline
-	#the rest is a regular expression
+	# This line replaces the ToC declaration in the md files with a blank space.
+	# ":a;N;$!ba;" is at the start so sed could recognise newline.
+	# The rest is a regular expression.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
 	pandoc --template=tools/acle_template.tex -o $outputPdfFile
 }
 
 mkdir -p pdfs
 
-#convert svg image to pdf for use in pdf generation via pandoc
+# Convert svg image to pdf for use in pdf generation via pandoc.
 inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
 
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
