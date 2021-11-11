@@ -39,7 +39,7 @@
 \fancyhf{}
 \fancyhead[L]{\small $title$ \\~}
 \fancyhead[R]{\small Version: $version$ \\ \currentname}
-\fancyfoot[C]{\small \emph{"Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved."}}
+\fancyfoot[C]{\small \emph{$copyright-text$}}
 \fancyfoot[R]{\small ~\\ Page \textbf{\thepage}\ of  \textbf{\pageref*{LastPage}}}
 \renewcommand{\footrulewidth}{0pt}
 \renewcommand{\headrulewidth}{0pt}
@@ -48,7 +48,7 @@
   \fancyhf{}
   \fancyhead[L]{\small $title$ \\~}
   \fancyhead[R]{\small Version: $version$ \\ \currentname}
-  \fancyfoot[C]{\small \emph{"Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved."}}
+  \fancyfoot[C]{\small \emph{$copyright-text$}}
   \fancyfoot[R]{\small ~\\ Page \textbf{\thepage}\ of  \textbf{\pageref*{LastPage}}}
   \renewcommand{\footrulewidth}{0pt}
   \renewcommand{\headrulewidth}{0pt}
@@ -63,12 +63,9 @@ $endif$
   {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
 \titlespacing*{\chapter}{0pt}{-19pt}{0pt}
 
-\IfFileExists{parskip.sty}{%
-  \usepackage{parskip}
-}{% else
-  \setlength{\parindent}{0pt}
-  \setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
 
 \setcounter{secnumdepth}{5}
 
