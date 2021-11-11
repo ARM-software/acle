@@ -122,7 +122,7 @@
         {% capture _hAttrToStrip %}{{ _hAttrToStrip | split: '>' | first }} {{ headerAttrs | replace: '%heading%', escaped_header | replace: '%html_id%', html_id }}>{% endcapture %}
       {% endif %}
 
-      {% capture anchor %}href="{{page.url | replace:\'.html\',\'.md\'}}#markdown-toc-{{ html_id }}"{% endcapture %}
+      {% capture anchor %}href="#markdown-toc-{{ html_id }}"{% endcapture %}
 
       {% if include.anchorClass %}
         {% capture anchor %}{{ anchor }} class="{{ include.anchorClass }}"{% endcapture %}
