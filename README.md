@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -87,12 +87,18 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/statham-arm"><img src="https://avatars.githubusercontent.com/u/54840944?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Simon Tatham</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Astatham-arm" title="Reviewed Pull Requests">👀</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/sam-ellis"><img src="https://avatars.githubusercontent.com/u/6695726?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sam Ellis</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asam-ellis" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/sam-ellis"><img src="https://avatars.githubusercontent.com/u/6695726?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sam Ellis</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asam-ellis" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ARM-software/acle/commits?author=sam-ellis" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/kbeyls"><img src="https://avatars.githubusercontent.com/u/19591946?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kristof Beyls</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Akbeyls" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/sbaranga-arm"><img src="https://avatars.githubusercontent.com/u/24250117?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sbaranga-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=sbaranga-arm" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/avieira-arm"><img src="https://avatars.githubusercontent.com/u/68072104?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andre Vieira</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=avieira-arm" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/tejas-belagod-arm"><img src="https://avatars.githubusercontent.com/u/92718852?v=4?s=100" width="100px;" alt=""/><br /><sub><b>tejas-belagod-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=tejas-belagod-arm" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/JamieCunliffe"><img src="https://avatars.githubusercontent.com/u/29557119?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jamie Cunliffe</b></sub></a><br /><a href="https://github.com/ARM-software/acle/issues?q=author%3AJamieCunliffe" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/georges-arm"><img src="https://avatars.githubusercontent.com/u/93212071?v=4?s=100" width="100px;" alt=""/><br /><sub><b>George Steed</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=georges-arm" title="Code">💻</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Ageorges-arm" title="Reviewed Pull Requests">👀</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/peterwaller-arm"><img src="https://avatars.githubusercontent.com/u/52030119?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Peter Waller</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Apeterwaller-arm" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/MDevereau"><img src="https://avatars.githubusercontent.com/u/81567778?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matthew Devereau</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=MDevereau" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/rsandifo-arm"><img src="https://avatars.githubusercontent.com/u/28043039?v=4?s=100" width="100px;" alt=""/><br /><sub><b>rsandifo-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Arsandifo-arm" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
