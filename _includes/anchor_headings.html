@@ -3,7 +3,7 @@
    SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
    SPDX-License-Identifier: MIT
    This code is derived from the file `anchor_headings.html` from the project:
-   https://github.com/allejo/jekyll-anchor-heading
+   https://github.com/allejo/jekyll-anchor-headings
    The file has been adapted for the ACLE project.
 {% endcomment %}
 {% capture headingsWorkspace %}
@@ -122,7 +122,7 @@
         {% capture _hAttrToStrip %}{{ _hAttrToStrip | split: '>' | first }} {{ headerAttrs | replace: '%heading%', escaped_header | replace: '%html_id%', html_id }}>{% endcapture %}
       {% endif %}
 
-      {% capture anchor %}href="#toc-title"{% endcapture %}
+      {% capture anchor %}href="{{page.url | replace:\'.html\',\'.md\'}}#markdown-toc-{{ html_id }}"{% endcapture %}
 
       {% if include.anchorClass %}
         {% capture anchor %}{{ anchor }} class="{{ include.anchorClass }}"{% endcapture %}

@@ -37,9 +37,9 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-//This is necessary to add since otherwise the toc links to each section will
+//This is necessary to add since otherwise the toc links to each section and back will
 //get hidden behind the navbar.
-h1, h2, h3, h4, h5, h6 {
+:target: {
   padding-top: 80px;
   margin-top: -60px;
 }
