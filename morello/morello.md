@@ -1,6 +1,6 @@
 ---
 title: Morello Supplement to the Arm C Language Extensions
-version: 01alpha
+version: Development version based on 01alpha
 date-of-issue: 02 July 2021
 header_counter: true
 toc: true
