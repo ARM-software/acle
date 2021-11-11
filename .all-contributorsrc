@@ -78,7 +78,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/6695726?v=4",
       "profile": "https://github.com/sam-ellis",
       "contributions": [
-        "review"
+        "review",
+        "code"
       ]
     },
     {
@@ -124,6 +125,43 @@
       "profile": "https://github.com/JamieCunliffe",
       "contributions": [
         "bug"
+      ]
+    },
+    {
+      "login": "georges-arm",
+      "name": "George Steed",
+      "avatar_url": "https://avatars.githubusercontent.com/u/93212071?v=4",
+      "profile": "https://github.com/georges-arm",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "peterwaller-arm",
+      "name": "Peter Waller",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52030119?v=4",
+      "profile": "https://github.com/peterwaller-arm",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "MDevereau",
+      "name": "Matthew Devereau",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81567778?v=4",
+      "profile": "https://github.com/MDevereau",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rsandifo-arm",
+      "name": "rsandifo-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28043039?v=4",
+      "profile": "https://github.com/rsandifo-arm",
+      "contributions": [
+        "review"
       ]
     }
   ],
