@@ -10,11 +10,21 @@ toc: true
 * TOC
 {{:toc}}
 <!---END_OF_HTML_HEADER--->
+
+# Preface
+
 This document is complementary to the main Arm C Language Extensions
 (ACLE) specification, which can be found on the [ACLE project on
 GitHub](https://github.com/ARM-software/acle).
 
-# Latest release and defects report
+## Warning
+
+The specifications in this document are presented via this website in
+an experimental format. Please refer to the [Official
+Release](https://github.com/ARM-software/acle/releases/latest) for
+production quality documentation.
+
+## Latest release and defects report
 
 For the latest release of this document, see the [ACLE project on
 GitHub](https://github.com/ARM-software/acle).
@@ -22,7 +32,7 @@ GitHub](https://github.com/ARM-software/acle).
 Please report defects in this specification to the [issue tracker page
 on GitHub](https://github.com/ARM-software/acle/issues).
 
-# License
+## License
 
 This work is licensed under the Creative Commons Attribution-ShareAlike
 4.0 International License. To view a copy of this license, visit
@@ -46,7 +56,7 @@ contributory patent infringement, then any licenses granted to You under
 this license for that Licensed Material shall terminate as of the date
 such litigation is filed.
 
-## About the license
+### About the license
 
 As identified more fully in the [License](#license) section, this
 project is licensed under CC-BY-SA-4.0 along with an additional patent
@@ -66,13 +76,13 @@ of defensive termination applies to “any licenses granted to You”
 intended to help maintain a healthy ecosystem by providing additional
 protection to the community against patent litigation claims.
 
-# Contributions
+## Contributions
 
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
 under the same terms as those in the LICENSE file.
 
-# Trademark notice
+## Trademark notice
 
 The text of and illustrations in this document are licensed by Arm under
 a Creative Commons Attribution–Share Alike 4.0 International license
@@ -82,12 +92,12 @@ Limited (or its subsidiaries) in the US and/or elsewhere. All rights
 reserved. Please visit <https://www.arm.com/company/policies/trademarks>
 for more information about Arm’s trademarks.
 
-# Copyright
+## Copyright
 
 Copyright (c) 2014-2021, Arm Limited and its affiliates. All rights
 reserved.
 
-# Document history
+## Document history
 
 |       |                 |                      |
 | ----- | --------------- | -------------------- |
