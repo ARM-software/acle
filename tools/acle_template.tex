@@ -5,7 +5,6 @@
 
 \documentclass[a4,10pt]{report}
 \usepackage{xcolor}
-\definecolor{armblue}{HTML}{0091BD}
 \usepackage{sectsty}
 \usepackage{hyperref}
 \usepackage{longtable,booktabs}
@@ -27,6 +26,12 @@
 \usepackage{graphicx}
 \usepackage[$if(landscape)$landscape,$endif$top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm]{geometry}
 \usepackage{lastpage}
+\usepackage{dblfloatfix}
+\usepackage{subcaption}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.83,0.83,0.83}
+\definecolor{armblue}{HTML}{0091BD}
 
 \makeatletter
   \patchcmd{\f@nch@foot}{\rlap}{\color{darkgray}\rlap}{}{}
@@ -79,33 +84,87 @@ $endif$
             urlcolor=armblue,
             breaklinks=true}
 
-\begin{document}
-\color{darkgray}{ %start of fontcolor
-
 \makeatletter
-    \begin{titlepage}
-        \begin{center}
-        \begin{flushleft}
-            {\huge \bfseries  $title$}\\[4ex]
-            {\large Release Date: $date-of-issue$}\\[4ex]
-            {\large \bfseries Version: $version$}\\[8ex]
-            {\normalsize $copyright-text$}
-            \end{flushleft}
+\renewcommand\maketitle{
+    \newgeometry{left=0.0cm,right=0.0cm,top=1.0cm,bottom=0.0cm}
+    \begin{flushleft}
+        \hspace{1.0cm} \includegraphics[height=0.6cm]{"./tools/Arm-logo-blue-RGB.pdf"}
+        \begin{minipage}[t][1.2cm][t]{\linewidth}
+            \phantom{empty}
+        \end{minipage}
+        \newline
+        \begin{minipage}[t]{4.0cm}
+            \phantom{empty}
+        \end{minipage}
+        \begin{minipage}[t]{14.0cm}
+            {\huge \bfseries  $title$}\\[2ex]
+            {\large Release Date: $date-of-issue$}\\[2ex]
+            {\large \bfseries Version: $version$}\\[3ex]
+        \end{minipage}
+        \newline
+        \begin{minipage}[t][0.47cm][t]{\linewidth}
+            \phantom{empty}
+        \end{minipage}
+        \newline
+        \begin{minipage}[t]{4.0cm}
+            \phantom{empty}
+        \end{minipage}
+        \begin{minipage}[t]{16.0cm}
+            \begin{minipage}[t]{9.0cm}
+                \textbf{$copyright-text$}\\[$if(landscape)$7ex$else$1ex$endif$]
+            \end{minipage}
+        \end{minipage}
+    \end{flushleft}
+    \begin{figure}[hbt!]
 
-            % This logo formatting option was used based on one of the answers given here:
-            %  https://tex.stackexchange.com/questions/373909/picture-in-top-left-corner-of-my-frontpage
-            \begin{tikzpicture}[remember picture,overlay]
-            \node[anchor=north west,yshift=-2.8cm,xshift=.4cm]%
-                at (current page.north west)
-                {\includegraphics[width=2cm]{"./tools/Arm-logo-blue-RGB.pdf"}};
+        \makebox[\paperwidth]{
+          $if(landscape)$\begin{subfigure}[b!]{13.8cm}$endif$
+            \begin{tikzpicture}[scale=\paperwidth/$if(landscape)$16.0cm$else$8.0cm$endif$,samples=200]
+                \draw[line width=0.0pt,color=white,fill=armblue] (5.005,0) rectangle (5.995,7);
+                \draw[line width=0.0pt,color=white,fill=armblue] (0,4.995) rectangle (8,4.005);
+                \foreach \y in {0,...,7} {
+                    \draw[lightgrey, thin] (0,\y) -- (8,\y);
+                }
+                \foreach \x in {1,...,7} {
+                    \draw[lightgrey, thin] (\x,0) -- (\x,7);
+                    \foreach \y in {1,...,7} {
+                        \draw[grey, thick] (\x,\y - 0.05) -- (\x,\y + 0.05);
+                        \draw[grey, thick] (\x - 0.05,\y) -- (\x + 0.05,\y);
+                        \draw[white, thick] (\x - 0.01,\y + 0.01) rectangle (\x + 0.01,\y - 0.01);
+                    }
+                }
             \end{tikzpicture}
-        \end{center}
-    \end{titlepage}
+          $if(landscape)$\end{subfigure}$endif$
+          $if(landscape)$\begin{subfigure}[b!]{13.8cm}
+            \begin{tikzpicture}[scale=\paperwidth/16.0cm,samples=200]
+                \draw[line width=0.0pt,color=white,fill=armblue] (5.005,0) rectangle (5.995,7);
+                \draw[line width=0.0pt,color=white,fill=armblue] (0,4.995) rectangle (8,4.005);
+                \foreach \y in {0,...,7} {
+                    \draw[lightgrey, thin] (0,\y) -- (8,\y);
+                }
+                \foreach \x in {0,...,7} {
+                    \draw[lightgrey, thin] (\x,0) -- (\x,7);
+                    \foreach \y in {1,...,7} {
+                        \draw[grey, thick] (\x,\y - 0.05) -- (\x,\y + 0.05);
+                        \draw[grey, thick] (\x - 0.05,\y) -- (\x + 0.05,\y);
+                        \draw[white, thick] (\x - 0.01,\y + 0.01) rectangle (\x + 0.01,\y - 0.01);
+                    }
+                }
+            \end{tikzpicture}
+          \end{subfigure}$endif$
+        }
+    \end{figure}
+    \clearpage
+    \restoregeometry
+}
 \makeatother
 
-\tableofcontents
-\newpage
+\begin{document}
 
+\color{darkgray}{ %start of fontcolor
+  \maketitle
+  \tableofcontents
+  \newpage
 $body$ } %end of fontcolor
 
 \end{document}
