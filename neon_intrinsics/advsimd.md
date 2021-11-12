@@ -2,20 +2,14 @@
 title: Arm Neon Intrinsics Reference
 version: Development version based on 2021Q2
 date-of-issue: 02 July 2021
-# LaTeX specific variables
 landscape: true
-copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.
-# Jekyll specific variables
 header_counter: true
 toc: true
 ---
 
-<!---
-**** Do not remove! ****
-The two lines following this comments are necessary
-to generate the Table of Contents via Jekyll.
-They are automatically removed by the scripts that generates the pdfs.
--->
+<!---Do not remove!
+
+This token is necessary to generate the Table of Contents via Jekyll. --->
 * TOC
 {:toc}
 # Preface
