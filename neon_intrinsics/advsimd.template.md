@@ -20,6 +20,8 @@ They are automatically removed by the scripts that generates the pdfs.
 {{:toc}}
 # Preface
 
+## Abstract
+
 This document is complementary to the main Arm C Language Extensions
 (ACLE) specification, which can be found on the [ACLE project on
 GitHub](https://github.com/ARM-software/acle).
