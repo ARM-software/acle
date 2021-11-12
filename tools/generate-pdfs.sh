@@ -26,11 +26,15 @@ function generate_pdfs_from_md() {
 	fi
 
 	outputPdfFile=$2
+	geometryForIntrinsics='\\newgeometry{landscape,top=3.7cm,bottom=2.7cm,left=1cm,right=1cm,headsep=1.5cm,footskip=.5cm}'
 
 	# This line replaces the ToC declaration in the md files with a blank space.
 	# ":a;N;$!ba;" is at the start so sed could recognise newline.
 	# The rest is a regular expression.
+	# The second replacement string is being used to format the "List of Intrinsics"
+	# sections, which contain large longtables.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
+	sed -u "s/#\sList\sof\sIntrinsics/${geometryForIntrinsics}\n# List of Intrinsics/" | \
 	pandoc --template=tools/acle_template.tex -o $outputPdfFile
 }
 
