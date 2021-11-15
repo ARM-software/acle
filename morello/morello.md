@@ -1,6 +1,6 @@
 ---
 title: Morello Supplement to the Arm C Language Extensions
-version: 01alpha
+version: Development version based on 01alpha
 date-of-issue: 02 July 2021
 header_counter: true
 toc: true
@@ -16,8 +16,10 @@ This token is necessary to generate the Table of Contents via Jekyll. --->
 
 ## Warning
 
-The specifications in this document are in experimental format.
-[Official Release](https://github.com/ARM-software/acle/releases/latest).
+The specifications documented on this website are in experimental
+format. Please refer to the [Official
+Release](https://github.com/ARM-software/acle/releases/latest) for
+production quality documentation.
 
 ## Abstract
 

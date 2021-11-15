@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Arm C Language Extensions
-version: 2021Q2
+version: Development version based on 2021Q2
 date-of-issue: 02 July 2021
 header_counter: true
 toc: true
@@ -14,6 +14,13 @@ This token is necessary to generate the Table of Contents via Jekyll. --->
 {:toc}
 <!---END_OF_HTML_HEADER--->
 # Preface
+
+## Warning
+
+The specifications documented on this website are in experimental
+format. Please refer to the [Official
+Release](https://github.com/ARM-software/acle/releases/latest) for
+production quality documentation.
 
 ## Abstract
 
