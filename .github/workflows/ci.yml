@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +17,26 @@ jobs:
     - name: generate and check intrinsic specs (md)
       run: tools/generate-intrinsics-specs.sh
     - name: install pandoc and dependencies
-      run: sudo apt-get -y --no-install-recommends install pandoc texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra inkscape
+      run: sudo apt-get -y --no-install-recommends install pandoc texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra imagemagick
+    - name: build PDFs
+      run: tools/generate-pdfs.sh
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pdfs
+        path: pdfs
+
+  build-osx:
+    runs-on: macosx-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: generate and check intrinsic specs (md)
+      run: tools/generate-intrinsics-specs.sh
+    - name: install pandoc and dependencies
+      run: |
+        brew update
+        brew install pandoc
+        brew install imagemagik
+        brew install --cask mactex-nogui
     - name: build PDFs
       run: tools/generate-pdfs.sh
     - uses: actions/upload-artifact@v2

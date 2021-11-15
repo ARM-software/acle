@@ -1,0 +1,83 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{acle}[2020/11/15 Configuration for Arm specification]
+%% colors
+\RequirePackage{xcolor}
+\definecolor{armblue}{HTML}{0091BD}
+
+%% Frontpage
+\RequirePackage{tikz}
+\makeatletter         
+\def\@maketitle{
+  \thispagestyle{empty}
+  \begin{center}
+    \begin{flushleft}
+      {\huge \bfseries \doctitle}\\[4ex]
+      {\large Release Date: 02 July 2021}\\[4ex]
+      {\large \bfseries Version: \docversion}\\[8ex]
+      {\normalsize \copyrighttext}
+    \end{flushleft}
+    
+    % This logo formatting option was used based on one of the answers given here:
+    % https://tex.stackexchange.com/questions/373909/picture-in-top-left-corner-of-my-frontpage
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north west,yshift=-2.8cm,xshift=.4cm]%
+      at (current page.north west)
+      {\includegraphics[width=2cm]{./tools/Arm-logo-blue-RGB.pdf}};
+    \end{tikzpicture}
+  \end{center}
+  \newpage
+}
+\makeatother
+
+%% Font selection
+\RequirePackage{charter}
+\RequirePackage[defaultsans,scale=0.95]{lato}
+\RequirePackage{inconsolata}
+\renewcommand*\familydefault{\sfdefault}
+
+
+%% Headers and footers
+\RequirePackage{lastpage}
+\RequirePackage{titleref}
+\RequirePackage{fancyhdr}
+\makeatletter
+  \newcommand*{\currentname}{\TR@currentTitle}
+\makeatother
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small \doctitle \\~}
+\fancyhead[R]{\small Version: \docversion \\ \currentname}
+\fancyfoot[C]{\small \emph{\copyrighttext}}
+\fancyfoot[R]{\small ~\\ Page \textbf{\thepage}\ of  \textbf{\pageref*{LastPage}}}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0pt}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[L]{\small \doctitle \\~}
+  \fancyhead[R]{\small Version: \docversion \\ \currentname}
+  \fancyfoot[C]{\small \emph{\copyrighttext}}
+  \fancyfoot[R]{\small ~\\ Page \textbf{\thepage}\ of  \textbf{\pageref*{LastPage}}}
+  \renewcommand{\footrulewidth}{0pt}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+%% Chapter formatting
+\RequirePackage{titlesec}
+\titleformat{\chapter}[block]
+{\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
+\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+
+%% hyperlinks
+\hypersetup{
+  pdftitle={\doctitle},
+  colorlinks=true,
+  linkcolor=armblue,
+  filecolor=armblue,
+  citecolor=armblue,
+  urlcolor=armblue,
+  breaklinks=true
+}
+
+%% Font color for the whole document
+\color{darkgray}

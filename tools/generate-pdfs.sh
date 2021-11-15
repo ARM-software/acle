@@ -17,7 +17,7 @@ set -ex
 # limitations under the License.
 
 function generate_pdfs_from_md() {
-	inputMdFile=$1
+    inputMdFile=$1
 	if ! [ -f "$inputMdFile" ]; then
 		echo "**** WARNING! $inputMdFile does not exist. Please enter valid file path."
 		echo "**** WARNING! Please make sure to run tools/generate-intrinsics-specs.sh before building the PDFs."
@@ -27,15 +27,20 @@ function generate_pdfs_from_md() {
 	outputPdfFile=$2
 	configYamlFile=$3
 	headingLineNum=$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' $inputMdFile)
-
+	
 	tail -n +$headingLineNum $inputMdFile | \
-	pandoc --template=tools/acle_template.tex --metadata-file=$configYamlFile -o $outputPdfFile
+	pandoc --metadata-file=$configYamlFile -o $outputPdfFile
 }
+
+
 
 mkdir -p pdfs
 
+# This is needed to find the acle.sty package.
+export TEXINPUTS=./tools/:$TEXINPUTS
+
 #convert svg image to pdf for use in pdf generation via pandoc
-inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
+magick Arm_logo_blue_RGB.svg tools/Arm-logo-blue-RGB.pdf
 
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf ./morello/morello_pdf_conf.yaml
 generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf ./main/acle_pdf_conf.yaml

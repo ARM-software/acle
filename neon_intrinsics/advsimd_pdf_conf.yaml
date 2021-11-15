@@ -11,3 +11,8 @@ copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All righ
 chapter-formatting: true
 papersize: a4
 indent: false
+header-includes:
+  - \newcommand\doctitle{Arm Neon Intrinsics Reference}
+  - \newcommand\copyrighttext{Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.}
+  - \newcommand\docversion{2021Q2}
+  - \usepackage{acle}
