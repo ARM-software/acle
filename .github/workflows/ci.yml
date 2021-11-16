@@ -41,7 +41,7 @@ jobs:
       run: |
         brew update
         brew install pandoc
-        brew install --cask mactex-nogui
+        brew install --cask mactex-no-gui
     - name: build PDFs
       run: tools/generate-pdfs.sh
     - uses: actions/upload-artifact@v2
