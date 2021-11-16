@@ -10,7 +10,8 @@ for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" ".
 
   if [[ $(wc -l <<< "$broken_refs") -gt 0 ]]; then
     echo "**** WARNING! These section links have been found to not be working: "
-    echo "$broken_refs" | tr " " "\n"
+    echo "$broken_refs" | tr " " "\n" > erroutput.txt
+    cat erroutput.txt
     exit 1
   fi
 done
