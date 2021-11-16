@@ -6,12 +6,12 @@ for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" ".
   echo "Checking $file..."
 
   pandoc $file --verbose --fail-if-warnings -o pdfs/tmp.pdf &> erroutput.txt
-  cat erroutput.txt | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E 's/.*name\{([^}]+)\}.*/\1/' | sort | uniq > list_of_broken_links
-  number_of_broken_refs=`wc -l < list_of_broken_links`
+  cat erroutput.txt | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E 's/.*name\{([^}]+)\}.*/\1/' | sort | uniq > list_of_broken_links.txt
+  number_of_broken_refs=`wc -l < list_of_broken_links.txt`
 
   if [[ "$number_of_broken_refs" -gt 0 ]]; then
       echo "**** WARNING! These section links have been found not to be working: "
-      cat list_of_broken_links
+      cat list_of_broken_links.txt
       exit 1
   fi
 done
