@@ -41,10 +41,13 @@ jobs:
       run: |
         brew update
         brew install --cask basictex
+        eval "$(/usr/libexec/path_helper)"
         tlmgr install collection-fontsrecommended
         brew install pandoc
     - name: build PDFs
-      run: tools/generate-pdfs.sh
+      run: |
+        eval "$(/usr/libexec/path_helper)"
+        tools/generate-pdfs.sh
     - uses: actions/upload-artifact@v2
       with:
         name: pdfs
