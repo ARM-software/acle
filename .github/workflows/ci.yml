@@ -42,6 +42,7 @@ jobs:
         brew update
         brew install --cask basictex
         eval "$(/usr/libexec/path_helper)"
+        sudo tlmgr update --self
         sudo tlmgr install collection-fontsrecommended
         brew install pandoc
     - name: build PDFs
