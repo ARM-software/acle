@@ -26,7 +26,7 @@ jobs:
         path: pdfs
 
   build-osx:
-    runs-on: macosx-latest
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
     - name: generate and check intrinsic specs (md)
