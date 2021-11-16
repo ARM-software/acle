@@ -42,6 +42,11 @@ jobs:
         brew update
         brew install pandoc
         brew install --cask mactex-no-gui
+        # This is needed becasue `brew install padoc` returns:
+        #
+        # > You must restart your terminal window for the installation of MacTex CLI tools to take effect.
+        # > Alternatively, Bash and Zsh users can run the command:
+        eval "$(/usr/libexec/path_helper)"
     - name: build PDFs
       run: tools/generate-pdfs.sh
     - uses: actions/upload-artifact@v2
