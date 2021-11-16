@@ -39,8 +39,8 @@ mkdir -p pdfs
 # This is needed to find the acle.sty package.
 export TEXINPUTS=./tools/:$TEXINPUTS
 
-#convert svg image to pdf for use in pdf generation via pandoc
-magick Arm_logo_blue_RGB.svg tools/Arm-logo-blue-RGB.pdf
+# Convert svg image to pdf for use in pdf generation.
+convert Arm_logo_blue_RGB.svg tools/Arm-logo-blue-RGB.pdf
 
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf ./morello/morello_pdf_conf.yaml
 generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf ./main/acle_pdf_conf.yaml
