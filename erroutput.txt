@@ -1,12 +1,12 @@
 [INFO] Not rendering RawBlock (Format "html") "<!---Do not remove!\n\nThis token is necessary to generate the Table of Contents via Jekyll. --->"
 [INFO] Not rendering RawInline (Format "html") "<!---END_OF_HTML_HEADER--->"
 [makePDF] temp dir:
-./tex2pdf.-4f7207c0964524dd
+./tex2pdf.-76b7bb7b91ddeda3
 [makePDF] Command line:
-pdflatex "-halt-on-error" "-interaction" "nonstopmode" "-output-directory" "./tex2pdf.-4f7207c0964524dd" "./tex2pdf.-4f7207c0964524dd/input.tex"
+pdflatex "-halt-on-error" "-interaction" "nonstopmode" "-output-directory" "./tex2pdf.-76b7bb7b91ddeda3" "./tex2pdf.-76b7bb7b91ddeda3/input.tex"
 
 [makePDF] Environment:
-("TEXINPUTS","./tex2pdf.-4f7207c0964524dd:")
+("TEXINPUTS","./tex2pdf.-76b7bb7b91ddeda3:")
 ("SHELL","/bin/bash")
 ("SESSION_MANAGER","local/valeriad-VirtualBox:@/tmp/.ICE-unix/1605,unix/valeriad-VirtualBox:/tmp/.ICE-unix/1605")
 ("QT_ACCESSIBILITY","1")
@@ -58,7 +58,7 @@ pdflatex "-halt-on-error" "-interaction" "nonstopmode" "-output-directory" "./te
 ("OLDPWD","/home/valeria-d/Documents/GitProjects/acle/acle")
 ("_","/usr/bin/pandoc")
 
-[makePDF] Contents of ./tex2pdf.-4f7207c0964524dd/input.tex:
+[makePDF] Contents of ./tex2pdf.-76b7bb7b91ddeda3/input.tex:
 \PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 %
@@ -6975,7 +6975,7 @@ These intrinsics are available when {arm\_acle.h} is included.
 This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
-(./tex2pdf.-4f7207c0964524dd/input.tex
+(./tex2pdf.-76b7bb7b91ddeda3/input.tex
 LaTeX2e <2020-02-02> patch level 2
 L3 programming layer <2020-02-14>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -7585,7 +7585,7 @@ al, Arm
 
 Package longtable Warning: Table widths have changed. Rerun LaTeX.
 
-[91] (./tex2pdf.-4f7207c0964524dd/input.aux)
+[91] (./tex2pdf.-76b7bb7b91ddeda3/input.aux)
 
 Package rerunfilecheck Warning: File `input.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
@@ -7848,15 +7848,15 @@ texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/
 lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/f
 onts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.
 pfb>
-Output written on ./tex2pdf.-4f7207c0964524dd/input.pdf (91 pages, 380822 bytes
+Output written on ./tex2pdf.-76b7bb7b91ddeda3/input.pdf (91 pages, 380822 bytes
 ).
-Transcript written on ./tex2pdf.-4f7207c0964524dd/input.log.
+Transcript written on ./tex2pdf.-76b7bb7b91ddeda3/input.log.
 
 [makePDF] Run #2
 This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
-(./tex2pdf.-4f7207c0964524dd/input.tex
+(./tex2pdf.-76b7bb7b91ddeda3/input.tex
 LaTeX2e <2020-02-02> patch level 2
 L3 programming layer <2020-02-14>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -7918,12 +7918,12 @@ Package fixltx2e Warning: fixltx2e is not required with releases after 2015
 (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/mdwtools/footnote.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def)
-(./tex2pdf.-4f7207c0964524dd/input.aux)
+(./tex2pdf.-76b7bb7b91ddeda3/input.aux)
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg)
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty))
-(./tex2pdf.-4f7207c0964524dd/input.out) (./tex2pdf.-4f7207c0964524dd/input.out)
+(./tex2pdf.-76b7bb7b91ddeda3/input.out) (./tex2pdf.-76b7bb7b91ddeda3/input.out)
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd)
 (/usr/share/texmf/tex/latex/lm/omllmm.fd)
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd)
@@ -7935,7 +7935,7 @@ Package fixltx2e Warning: fixltx2e is not required with releases after 2015
 
 LaTeX Warning: No \author given.
 
-(./tex2pdf.-4f7207c0964524dd/input.toc [1{/var/lib/texmf/fonts/map/pdftex/updma
+(./tex2pdf.-76b7bb7b91ddeda3/input.toc [1{/var/lib/texmf/fonts/map/pdftex/updma
 p/pdftex.map}] [2] [3] [4] [5]) (/usr/share/texmf/tex/latex/lm/ts1lmr.fd)
 [6] [7]
 Overfull \hbox (0.94044pt too wide) in paragraph at lines 183--184
@@ -8375,7 +8375,7 @@ Arm
 Underfull \hbox (badness 1242) in paragraph at lines 6883--6886
 []\T1/lmr/m/n/10 (+20) MVE-spec Arm, Arm v8-M Ar-chi-tec-ture Ref-er-ence Man-u
 al, Arm
-[96] (./tex2pdf.-4f7207c0964524dd/input.aux)
+[96] (./tex2pdf.-76b7bb7b91ddeda3/input.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
@@ -8633,15 +8633,15 @@ texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/
 lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/f
 onts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.
 pfb>
-Output written on ./tex2pdf.-4f7207c0964524dd/input.pdf (96 pages, 410014 bytes
+Output written on ./tex2pdf.-76b7bb7b91ddeda3/input.pdf (96 pages, 410014 bytes
 ).
-Transcript written on ./tex2pdf.-4f7207c0964524dd/input.log.
+Transcript written on ./tex2pdf.-76b7bb7b91ddeda3/input.log.
 
 [makePDF] Run #3
 This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
-(./tex2pdf.-4f7207c0964524dd/input.tex
+(./tex2pdf.-76b7bb7b91ddeda3/input.tex
 LaTeX2e <2020-02-02> patch level 2
 L3 programming layer <2020-02-14>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -8703,12 +8703,12 @@ Package fixltx2e Warning: fixltx2e is not required with releases after 2015
 (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/mdwtools/footnote.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def)
-(./tex2pdf.-4f7207c0964524dd/input.aux)
+(./tex2pdf.-76b7bb7b91ddeda3/input.aux)
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg)
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty))
-(./tex2pdf.-4f7207c0964524dd/input.out) (./tex2pdf.-4f7207c0964524dd/input.out)
+(./tex2pdf.-76b7bb7b91ddeda3/input.out) (./tex2pdf.-76b7bb7b91ddeda3/input.out)
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd)
 (/usr/share/texmf/tex/latex/lm/omllmm.fd)
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd)
@@ -8720,7 +8720,7 @@ Package fixltx2e Warning: fixltx2e is not required with releases after 2015
 
 LaTeX Warning: No \author given.
 
-(./tex2pdf.-4f7207c0964524dd/input.toc [1{/var/lib/texmf/fonts/map/pdftex/updma
+(./tex2pdf.-76b7bb7b91ddeda3/input.toc [1{/var/lib/texmf/fonts/map/pdftex/updma
 p/pdftex.map}] [2] [3] [4] [5]) (/usr/share/texmf/tex/latex/lm/ts1lmr.fd)
 [6] [7]
 Overfull \hbox (0.94044pt too wide) in paragraph at lines 183--184
@@ -9160,7 +9160,7 @@ Arm
 Underfull \hbox (badness 1242) in paragraph at lines 6883--6886
 []\T1/lmr/m/n/10 (+20) MVE-spec Arm, Arm v8-M Ar-chi-tec-ture Ref-er-ence Man-u
 al, Arm
-[96] (./tex2pdf.-4f7207c0964524dd/input.aux) )
+[96] (./tex2pdf.-76b7bb7b91ddeda3/input.aux) )
 (see the transcript file for additional information)pdfTeX warning (dest): name
 {ssec-TMEFailures} has been referenced but does not exist, replaced by a fixed 
 one
@@ -9414,7 +9414,7 @@ texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/
 lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/f
 onts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.
 pfb>
-Output written on ./tex2pdf.-4f7207c0964524dd/input.pdf (96 pages, 410003 bytes
+Output written on ./tex2pdf.-76b7bb7b91ddeda3/input.pdf (96 pages, 410003 bytes
 ).
-Transcript written on ./tex2pdf.-4f7207c0964524dd/input.log.
+Transcript written on ./tex2pdf.-76b7bb7b91ddeda3/input.log.
 
