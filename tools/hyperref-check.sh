@@ -5,8 +5,8 @@ set -x
 for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" "./neon_intrinsics/advsimd.md"; do
   echo "Checking $file..."
 
-  pandoc $file --verbose --fail-if-warnings -o pdfs/tmp.pdf &> erroutput.txt
-  cat erroutput.txt | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E 's/.*name\{([^}]+)\}.*/\1/' | sort | uniq > tools/list_of_broken_links.txt
+  pandoc $file --verbose --fail-if-warnings -o pdfs/tmp.pdf &> tools/erroutput.txt
+  cat tools/erroutput.txt | grep -E 'pdfTeX warning \(dest\): name{[^}]+}' | sed -E 's/.*name\{([^}]+)\}.*/\1/' | sort | uniq > tools/list_of_broken_links.txt
 
   if [[ $(wc -l <<< tools/list_of_broken_links.txt) -gt 0 ]]; then
       echo "**** WARNING! These section links have been found not to be working: "
