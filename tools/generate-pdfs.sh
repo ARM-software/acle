@@ -17,7 +17,7 @@ set -ex
 # limitations under the License.
 
 function generate_pdfs_from_md() {
-        inputMdFile=$1
+    inputMdFile=$1
 	if ! [ -f "$inputMdFile" ]; then
 		echo "**** WARNING! $inputMdFile does not exist. Please enter valid file path."
 		echo "**** WARNING! Please make sure to run tools/generate-intrinsics-specs.sh before building the PDFs."
@@ -35,6 +35,9 @@ function generate_pdfs_from_md() {
 
 
 mkdir -p pdfs
+
+# This is needed to find the acle.sty package.
+export TEXINPUTS=./tools/:$TEXINPUTS
 
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf ./morello/morello_pdf_conf.yaml
 generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf ./main/acle_pdf_conf.yaml

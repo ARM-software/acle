@@ -1,11 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{acle}[2020/11/15 Configuration for Arm specification]
 %% colors
-\usepackage{xcolor}
+\RequirePackage{xcolor}
 \definecolor{armblue}{HTML}{0091BD}
 
 %% Frontpage
-\usepackage{tikz}
+\RequirePackage{tikz}
 \makeatletter         
 \def\@maketitle{
   \thispagestyle{empty}
@@ -30,16 +30,16 @@
 \makeatother
 
 %% Font selection
-\usepackage{charter}
-\usepackage[defaultsans,scale=0.95]{lato}
-\usepackage{inconsolata}
+\RequirePackage{charter}
+\RequirePackage[defaultsans,scale=0.95]{lato}
+\RequirePackage{inconsolata}
 \renewcommand*\familydefault{\sfdefault}
 
 
 %% Headers and footers
-\usepackage{lastpage}
-\usepackage{titleref}
-\usepackage{fancyhdr}
+\RequirePackage{lastpage}
+\RequirePackage{titleref}
+\RequirePackage{fancyhdr}
 \makeatletter
   \newcommand*{\currentname}{\TR@currentTitle}
 \makeatother
@@ -63,7 +63,7 @@
 }
 
 %% Chapter formatting
-\usepackage{titlesec}
+\RequirePackage{titlesec}
 \titleformat{\chapter}[block]
 {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
 \titlespacing*{\chapter}{0pt}{-19pt}{0pt}

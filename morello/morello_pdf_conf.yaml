@@ -15,4 +15,4 @@ header-includes:
   - \newcommand\doctitle{Morello Supplement to the Arm C Language Extensions}
   - \newcommand\copyrighttext{Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.}
   - \newcommand\docversion{01alpha}
-  - \include{tools/acle.latex}
+  - \usepackage{acle}
