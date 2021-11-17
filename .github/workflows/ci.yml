@@ -8,7 +8,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: check the correctness of the sources and generates the PDFs
+    - name: check the correctness of the sources and generate the PDFs
       run: ./build_with_docker.sh
     - uses: actions/upload-artifact@v2
       with:
