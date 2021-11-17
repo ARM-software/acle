@@ -116,6 +116,8 @@ reserved.
 | Q220-00   | 30 May 2020       | Version ACLE Q2 2020 |
 | 2021Q2    | 02 July 2021      | Open source release  |
 
+<!--latex_geometry_conf-->
+
 # List of Intrinsics
 
 ------------------------------------------------------------------------

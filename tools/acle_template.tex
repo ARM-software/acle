@@ -120,7 +120,10 @@ $endif$
         \makebox[\paperwidth]{
           $if(landscape)$\begin{subfigure}[b!]{13.8cm}$endif$
             \begin{tikzpicture}[scale=\paperwidth/$if(landscape)$16.0cm$else$8.0cm$endif$,samples=200]
+                $if(landscape)$
+                $else$
                 \draw[line width=0.0pt,color=white,fill=armblue] (5.005,0) rectangle (5.995,7);
+                $endif$
                 \draw[line width=0.0pt,color=white,fill=armblue] (0,4.995) rectangle (8,4.005);
                 \foreach \y in {0,...,7} {
                     \draw[lightgrey, thin] (0,\y) -- (8,\y);

@@ -120,6 +120,8 @@ reserved.
 | G     | 30 October 2020 | Version ACLE Q2 2020 |
 | H     | 02 July 2021    | 2021Q2               |
 
+<!--latex_geometry_conf-->
+
 # List of Intrinsics
 
 {intrinsic_table}
