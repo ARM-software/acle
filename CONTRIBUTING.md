@@ -43,7 +43,7 @@ great impact.
 
 To check the outcome of your changes, run the script
 `build_with_docker.sh` (requires
-[docker](https://www.docker.com/)). The scripts generates the PDFs of
+[docker](https://www.docker.com/)). The scripts generate the PDFs of
 the specifications and stores them in the folder `pdfs`.
 
 The script runs in the CI configuration of the project. PDFs are
