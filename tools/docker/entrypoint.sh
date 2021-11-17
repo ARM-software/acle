@@ -11,3 +11,4 @@ ls -al
 # fails at any point, stop the docker run.
 /src/tools/generate-intrinsics-specs.sh || exit 1
 /src/tools/generate-pdfs.sh || exit 1
+/src/tools/hyperref-check.sh || exit 1
