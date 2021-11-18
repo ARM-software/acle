@@ -26,12 +26,6 @@
 \usepackage{graphicx}
 \usepackage[$if(landscape)$landscape,$endif$top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm]{geometry}
 \usepackage{lastpage}
-\usepackage{dblfloatfix}
-\usepackage{subcaption}
-
-\definecolor{grey}{rgb}{0.5,0.5,0.5}
-\definecolor{lightgrey}{rgb}{0.83,0.83,0.83}
-\definecolor{armblue}{HTML}{0091BD}
 
 \makeatletter
   \patchcmd{\f@nch@foot}{\rlap}{\color{darkgray}\rlap}{}{}
@@ -63,16 +57,21 @@ $if(highlighting-macros)$
   $highlighting-macros$
 $endif$
 
+% Remove "Chapter (Number)" before each new chapter and adjust title spacing.
 \usepackage{titlesec}
 \titleformat{\chapter}[block]
   {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
 \titlespacing*{\chapter}{0pt}{-19pt}{0pt}
 
+% Set the indent level of the paragraphs.
 \usepackage{parskip}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 
-\setcounter{secnumdepth}{5}
+% Set max depth of section numbering and ToC listing - 6 is used due to
+% headings going up to h6 in HTML.
+\setcounter{tocdepth}{6}
+\setcounter{secnumdepth}{6}
 
 \date{$date-of-issue$}
 
@@ -83,6 +82,14 @@ $endif$
             citecolor=armblue,
             urlcolor=armblue,
             breaklinks=true}
+
+\usepackage{dblfloatfix}
+\usepackage{subcaption}
+
+% These colours are used for rendering the grid image below
+\definecolor{armgray}{rgb}{0.5,0.5,0.5}
+\definecolor{armlightgray}{rgb}{0.83,0.83,0.83}
+\definecolor{armblue}{HTML}{0091BD}
 
 \makeatletter
 \renewcommand\maketitle{
@@ -115,6 +122,8 @@ $endif$
             \end{minipage}
         \end{minipage}
     \end{flushleft}
+
+    % This is the rendering of the grid image used on the title page
     \begin{figure}[hbt!]
 
         \makebox[\paperwidth]{
@@ -126,13 +135,13 @@ $endif$
                 $endif$
                 \draw[line width=0.0pt,color=white,fill=armblue] (0,4.995) rectangle (8,4.005);
                 \foreach \y in {0,...,7} {
-                    \draw[lightgrey, thin] (0,\y) -- (8,\y);
+                    \draw[armlightgray, thin] (0,\y) -- (8,\y);
                 }
                 \foreach \x in {1,...,7} {
-                    \draw[lightgrey, thin] (\x,0) -- (\x,7);
+                    \draw[armlightgray, thin] (\x,0) -- (\x,7);
                     \foreach \y in {1,...,7} {
-                        \draw[grey, thick] (\x,\y - 0.05) -- (\x,\y + 0.05);
-                        \draw[grey, thick] (\x - 0.05,\y) -- (\x + 0.05,\y);
+                        \draw[armgray, thick] (\x,\y - 0.05) -- (\x,\y + 0.05);
+                        \draw[armgray, thick] (\x - 0.05,\y) -- (\x + 0.05,\y);
                         \draw[white, thick] (\x - 0.01,\y + 0.01) rectangle (\x + 0.01,\y - 0.01);
                     }
                 }
@@ -143,13 +152,13 @@ $endif$
                 \draw[line width=0.0pt,color=white,fill=armblue] (5.005,0) rectangle (5.995,7);
                 \draw[line width=0.0pt,color=white,fill=armblue] (0,4.995) rectangle (8,4.005);
                 \foreach \y in {0,...,7} {
-                    \draw[lightgrey, thin] (0,\y) -- (8,\y);
+                    \draw[armlightgray, thin] (0,\y) -- (8,\y);
                 }
                 \foreach \x in {0,...,7} {
-                    \draw[lightgrey, thin] (\x,0) -- (\x,7);
+                    \draw[armlightgray, thin] (\x,0) -- (\x,7);
                     \foreach \y in {1,...,7} {
-                        \draw[grey, thick] (\x,\y - 0.05) -- (\x,\y + 0.05);
-                        \draw[grey, thick] (\x - 0.05,\y) -- (\x + 0.05,\y);
+                        \draw[armgray, thick] (\x,\y - 0.05) -- (\x,\y + 0.05);
+                        \draw[armgray, thick] (\x - 0.05,\y) -- (\x + 0.05,\y);
                         \draw[white, thick] (\x - 0.01,\y + 0.01) rectangle (\x + 0.01,\y - 0.01);
                     }
                 }
@@ -162,12 +171,12 @@ $endif$
 }
 \makeatother
 
+\color{darkgray}
 \begin{document}
 
-\color{darkgray}{ %start of fontcolor
   \maketitle
   \tableofcontents
   \newpage
-$body$ } %end of fontcolor
+  $body$
 
 \end{document}

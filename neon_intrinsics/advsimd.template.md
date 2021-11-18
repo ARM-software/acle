@@ -12,9 +12,9 @@ toc: true
 
 <!---
 **** Do not remove! ****
-The two lines following this comments are necessary
+The two lines following this comment are necessary
 to generate the Table of Contents via Jekyll.
-They are automatically removed by the scripts that generates the pdfs.
+They are automatically removed by the scripts that generate the pdfs.
 -->
 * TOC
 {{:toc}}
@@ -120,6 +120,12 @@ reserved.
 | G     | 30 October 2020 | Version ACLE Q2 2020 |
 | H     | 02 July 2021    | 2021Q2               |
 
+<!---
+**** Do not remove! ****
+The line following this comment is necessary to generate custom geometry settings
+for the intrinsics tables.
+It is automatically removed by the scripts that generate the pdfs.
+-->
 <!--latex_geometry_conf-->
 
 # List of Intrinsics

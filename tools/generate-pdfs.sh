@@ -18,7 +18,6 @@ set -ex
 
 function generate_pdfs_from_md() {
 	inputMdFile=$1
-
 	if ! [ -f "$inputMdFile" ]; then
 		echo "**** WARNING! $inputMdFile does not exist. Please enter valid file path."
 		echo "**** WARNING! Please make sure to run tools/generate-intrinsics-specs.sh before building the PDFs."
@@ -34,7 +33,7 @@ function generate_pdfs_from_md() {
 	# The second replacement string is being used to format the "List of Intrinsics"
 	# sections, which contain large longtables.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
-	sed -u "s/<!--latex_geometry_conf-->/${geometryForIntrinsics}/" | \
+	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
 	pandoc --template=tools/acle_template.tex -o $outputPdfFile
 }
 
