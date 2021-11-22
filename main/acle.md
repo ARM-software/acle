@@ -752,7 +752,7 @@ not be present in the Armv7-A architecture).
 ### FPU architecture
 
 For details of how to test FPU features in source code, see
-[ssec-HWFPSIMD](#floating-point,-advanced-simd-(neon)-and-mve-hardware). In particular, for testing which
+[ssec-HWFPSIMD](#floating-point-advanced-simd-neon-and-mve-hardware). In particular, for testing which
 precisions are supported in hardware, see
 `\_ssec-HWFP`.
 
@@ -1019,7 +1019,7 @@ supported for M and R-profiles. This macro is defined for AArch32 only.
 
 <span class="title-ref">\_\_ARM\_FEATURE\_SIMD32</span> is defined to 1
 if the 32-bit SIMD instructions are supported and the intrinsics defined
-in [ssec-32SIMD](#availability-of-32-bit-simd-intrinsics) are available. This also implies support
+in [ssec-32SIMD](#simd-intrinsics-for-32-bit-operations) are available. This also implies support
 for the GE global flags which indicate byte-by-byte comparison results.
 
 <span class="title-ref">\_\_ARM\_FEATURE\_SIMD32</span> is deprecated in
@@ -1563,7 +1563,7 @@ be found in [\[BA\]](#BA).
 | `__ARM_ARCH_ISA_A64` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                               | AArch64 ISA present                                                                                | 1           |
 | `__ARM_ARCH_ISA_ARM` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                               | Arm instruction set present                                                                        | 1           |
 | `__ARM_ARCH_ISA_THUMB` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                             | T32 instruction set present                                                                        | 2           |
-| `__ARM_ARCH_PROFILE` [[ssec-Archp]](#architectural-profile-(a,-r,-m-or-pre-cortex))                                               | Architecture profile                                                                               | `'A'`       |
+| `__ARM_ARCH_PROFILE` [[ssec-Archp]](#architectural-profile-a-r-m-or-pre-cortex)                                               | Architecture profile                                                                               | `'A'`       |
 | `__ARM_BIG_ENDIAN` [[ssec-Endi]](#endianness)                                                   | Memory is big-endian                                                                               | 1           |
 | `__ARM_FEATURE_COMPLEX` [[ssec-COMPLX]](#complex-number-intrinsics)                                          | Armv8.3-A extension                                                                                | 1           |
 | `__ARM_FEATURE_BTI_DEFAULT` [[ssec-BTI]](#branch-target-identification)                                            | Branch Target Identification                                                                       | 1           |
@@ -1579,7 +1579,7 @@ be found in [\[BA\]](#BA).
 | `__ARM_FEATURE_FMA` [[ssec-FMA]](#fused-multiply-accumulate-fma), [[ssec-Fpdpi]](#floating-point-data-processing-intrinsics)                       | Floating-point fused multiply-accumulate                                                           | 1           |
 | `__ARM_FEATURE_IDIV` [[ssec-HID]](#hardware-integer-divide)                                                   | Hardware Integer Divide                                                                            | 1           |
 | `__ARM_FEATURE_JCVT` [[ssec-JCVT]](#javascript-floating-point-conversion), [[ssec-Fpdpi]](#floating-point-data-processing-intrinsics)                    | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
-| `__ARM_FEATURE_LDREX` *(Deprecated)* [[ssec-LDREX]](#ldrexstrex), [[ssec-Sbahi]](#synchronization,-barrier,-and-hint-intrinsics)  | Load/store exclusive instructions                                                                  | 0x0F        |
+| `__ARM_FEATURE_LDREX` *(Deprecated)* [[ssec-LDREX]](#ldrexstrex), [[ssec-Sbahi]](#synchronization-barrier-and-hint-intrinsics)  | Load/store exclusive instructions                                                                  | 0x0F        |
 | `__ARM_FEATURE_MATMUL_INT8` [[ssec-MatMul]](#matrix-multiply-intrinsics), [[ssec-MatMulIns]](#availability-of-armv8.6-a-integer-matrix-multiply-intrinsics) | Integer Matrix Multiply extension (Armv8.6-A, optional Armv8.2-A, Armv8.3-A, Armv8.4-A, Armv8.5-A) | 1           |
 | `__ARM_FEATURE_MEMORY_TAGGING` [[ssec-MTE]](#memory-tagging)                                         | Memory Tagging (Armv8.5-A)                                                                         | 1           |
 | `__ARM_FEATURE_ATOMICS` [[ssec-ATOMICS]](#large-system-extensions)                                        | Large System Extensions                                                                            | 1           |
@@ -1590,19 +1590,19 @@ be found in [\[BA\]](#BA).
 | `__ARM_FEATURE_SHA2` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA2]](#sha2-extension)                    | SHA2 Crypto extension (Arm v8-A)                                                                   | 1           |
 | `__ARM_FEATURE_SHA512` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA512]](#sha512-extension)              | SHA2 Crypto ext. (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                       | 1           |
 | `__ARM_FEATURE_SHA3` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA3]](#sha3-extension)                    | SHA3 Crypto extension (Arm v8.4-A)                                                                 | 1           |
-| `__ARM_FEATURE_SIMD32` [[ssec-Satins]](#saturation-instructions), [[ssec-32SIMD]](#availability-of-32-bit-simd-intrinsics)            | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
+| `__ARM_FEATURE_SIMD32` [[ssec-Satins]](#saturation-instructions), [[ssec-32SIMD]](#simd-intrinsics-for-32-bit-operations)            | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
 | `__ARM_FEATURE_SM3` [[ssec-CrypE]](#crypto-extension), [[ssec-SM3]](#sm3-extension)                       | SM3 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | `__ARM_FEATURE_SM4` [[ssec-CrypE]](#crypto-extension), [[ssec-SM4]](#sm4-extension)                       | SM4 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | `__ARM_FEATURE_FP16_FML` [[ssec-FP16FML]](#fp16-fml-extension)                                       | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
 | `__ARM_FEATURE_UNALIGNED` [[ssec-Uasih]](#unaligned-access-supported-in-hardware)                                          | Hardware support for unaligned access                                                              | 1           |
 | `__ARM_FP` [[ssec-HWFP]](#hardware-floating-point)                                                           | Hardware floating-point                                                                            | 1           |
 | `__ARM_FP16_ARGS` [[ssec-FP16arg]](#half-precision-argument-and-result)                                              | `__fp16` argument and result                                                                       | 0x0C        |
-| `__ARM_FP16_FORMAT_ALTERNATIVE` [[ssec-FP16fmt]](#half-precision-(16-bit)-floating-point-format)                                | 16-bit floating-point, alternative format                                                          | 1           |
-| `__ARM_FP16_FORMAT_IEEE` [[ssec-FP16fmt]](#half-precision-(16-bit)-floating-point-format)                                       | 16-bit floating-point, IEEE format                                                                 | 1           |
+| `__ARM_FP16_FORMAT_ALTERNATIVE` [[ssec-FP16fmt]](#half-precision-16-bit-floating-point-format)                                | 16-bit floating-point, alternative format                                                          | 1           |
+| `__ARM_FP16_FORMAT_IEEE` [[ssec-FP16fmt]](#half-precision-16-bit-floating-point-format)                                       | 16-bit floating-point, IEEE format                                                                 | 1           |
 | `__ARM_FP_FAST` [[ssec-FPm]](#floating-point-model)                                                        | Accuracy-losing optimizations                                                                      | 1           |
 | `__ARM_FP_FENV_ROUNDING` [[ssec-FPm]](#floating-point-model)                                               | Rounding is configurable at runtime                                                                | 1           |
-| `__ARM_BF16_FORMAT_ALTERNATIVE` [[ssec-BF16fmt]](#brain-half-precision-(16-bit)-floating-point-format)                                | 16-bit brain floating-point, alternative format                                                    | 1           |
-| `__ARM_FEATURE_BF16` [[ssec-BF16fmt]](#brain-half-precision-(16-bit)-floating-point-format)                                           | 16-bit brain floating-point, vector instruction                                                    | 1           |
+| `__ARM_BF16_FORMAT_ALTERNATIVE` [[ssec-BF16fmt]](#brain-half-precision-16-bit-floating-point-format)                                | 16-bit brain floating-point, alternative format                                                    | 1           |
+| `__ARM_FEATURE_BF16` [[ssec-BF16fmt]](#brain-half-precision-16-bit-floating-point-format)                                           | 16-bit brain floating-point, vector instruction                                                    | 1           |
 | `__ARM_FEATURE_MVE` [[ssec-MVE]](#m-profile-vector-extension)                                                    | M-profile Vector Extension                                                                         | 1           |
 | `__ARM_FEATURE_CDE` [[ssec-CDE]](#custom-datapath-extension)                                                    | Custom Datapath Extension                                                                          | 0x01        |
 | `__ARM_FEATURE_CDE_COPROC` [[ssec-CDE]](#custom-datapath-extension)                                             | Custom Datapath Extension                                                                          | 0xf         |
@@ -2297,7 +2297,7 @@ set the Q flag.)
 
 The GE (Greater than or Equal to) flags are four bits in the APSR. They
 are used with the 32-bit SIMD intrinsics described in
-[ssec-32SIMD](#availability-of-32-bit-simd-intrinsics).
+[ssec-32SIMD](#simd-intrinsics-for-32-bit-operations).
 
 There are four GE flags, one for each 8-bit lane of a 32-bit SIMD
 operation. Certain non-saturating 32-bit SIMD intrinsics set the GE bits
@@ -2580,7 +2580,7 @@ operations [\[G.191\]](#G.191): :
 This example assumes the implementation preserves the Q flag on return
 from an inline function.
 
-## Availability of 32-bit SIMD intrinsics
+## SIMD intrinsics for 32-bit Operations
 
 ### Availability
 
@@ -4129,7 +4129,7 @@ To only enable support for the scalar 16-bit floating-point intrinsics,
 the header <span class="title-ref">\<arm\_fp16.h\></span> may be
 included directly.
 
-### 16-bit brain floating-point arithmetic scalar intrinsics
+### Availability of 16-bit brain floating-point arithmetic scalar intrinsics
 
 The architecture extensions introduced by Armv8.6-A
 [\[Bfloat16\]](#Bfloat16) provide a set of data processing instructions
@@ -4347,7 +4347,7 @@ This is indicated by
     #endif
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-bf16-scalar](#16-bit-brain-floating-point-arithmetic-scalar-intrinsics). Availability of
+instructions, see [ssec-bf16-scalar](#availability-of-16-bit-brain-floating-point-arithmetic-scalar-intrinsics). Availability of
 the scalar intrinsics is indicated by
 <span class="title-ref">\_\_ARM\_FEATURE\_BF16\_SCALAR\_ARITHMETIC</span>.
 :
