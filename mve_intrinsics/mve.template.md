@@ -2,17 +2,22 @@
 title: Arm MVE Intrinsics
 version: Development version based on 2021Q2
 date-of-issue: 02 July 2021
+# LaTeX specific variables
+landscape: true
+copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.
+# Jekyll specific variables
 header_counter: true
 toc: true
 ---
 
-<!---Do not remove!
-
-This token is necessary to generate the Table of Contents via Jekyll. --->
+<!---
+**** Do not remove! ****
+The two lines following this comment are necessary
+to generate the Table of Contents via Jekyll.
+They are automatically removed by the scripts that generate the pdfs.
+-->
 * TOC
 {{:toc}}
-<!---END_OF_HTML_HEADER--->
-
 # Preface                                                                  
 
 ## Warning
@@ -110,6 +115,14 @@ reserved.
 | Q419-00   | 31 December 2019  | Version ACLE Q4 2019 |
 | Q220-00   | 30 May 2020       | Version ACLE Q2 2020 |
 | 2021Q2    | 02 July 2021      | Open source release  |
+
+<!---
+**** Do not remove! ****
+The line following this comment is necessary to generate custom geometry settings
+for the intrinsics tables.
+It is automatically removed by the scripts that generate the pdfs.
+-->
+<!--latex_geometry_conf-->
 
 # List of Intrinsics
 

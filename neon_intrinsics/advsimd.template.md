@@ -1,17 +1,26 @@
 ---
-layout: default
 title: Arm Neon Intrinsics Reference
 version: Development version based on 2021Q2
 date-of-issue: 02 July 2021
+# LaTeX specific variables
+landscape: true
+copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.
+# Jekyll specific variables
 header_counter: true
 toc: true
 ---
 
+<!---
+**** Do not remove! ****
+The two lines following this comment are necessary
+to generate the Table of Contents via Jekyll.
+They are automatically removed by the scripts that generate the pdfs.
+-->
 * TOC
 {{:toc}}
-<!---END_OF_HTML_HEADER--->
-
 # Preface
+
+## Abstract
 
 This document is complementary to the main Arm C Language Extensions
 (ACLE) specification, which can be found on the [ACLE project on
@@ -110,6 +119,14 @@ reserved.
 | F     | 30 May 2020     | Version ACLE Q2 2020 |
 | G     | 30 October 2020 | Version ACLE Q2 2020 |
 | H     | 02 July 2021    | 2021Q2               |
+
+<!---
+**** Do not remove! ****
+The line following this comment is necessary to generate custom geometry settings
+for the intrinsics tables.
+It is automatically removed by the scripts that generate the pdfs.
+-->
+<!--latex_geometry_conf-->
 
 # List of Intrinsics
 

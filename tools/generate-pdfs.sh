@@ -25,19 +25,24 @@ function generate_pdfs_from_md() {
 	fi
 
 	outputPdfFile=$2
-	configYamlFile=$3
-	headingLineNum=$(awk '/<!---END_OF_HTML_HEADER--->/ { print NR; exit }' $inputMdFile)
+	geometryForIntrinsics='\\newgeometry{landscape,top=3.7cm,bottom=2.7cm,left=1cm,right=1cm,headsep=1.5cm,footskip=.5cm}'
 
-	tail -n +$headingLineNum $inputMdFile | \
-	pandoc --template=tools/acle_template.tex --metadata-file=$configYamlFile -o $outputPdfFile
+	# This line replaces the ToC declaration in the md files with a blank space.
+	# ":a;N;$!ba;" is at the start so sed could recognise newline.
+	# The rest is a regular expression.
+	# The second replacement string is being used to format the "List of Intrinsics"
+	# sections, which contain large longtables.
+	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
+	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
+	pandoc --template=tools/acle_template.tex -o $outputPdfFile
 }
 
 mkdir -p pdfs
 
-#convert svg image to pdf for use in pdf generation via pandoc
+# Convert svg image to pdf for use in pdf generation via pandoc.
 inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
 
-generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf ./morello/morello_pdf_conf.yaml
-generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf ./main/acle_pdf_conf.yaml
-generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf ./mve_intrinsics/mve_pdf_conf.yaml
-generate_pdfs_from_md ./tmp/advsimd.for-pdf.md ./pdfs/advsimd.pdf ./neon_intrinsics/advsimd_pdf_conf.yaml
+generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
+generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf
+generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf
+generate_pdfs_from_md ./tmp/advsimd.for-pdf.md ./pdfs/advsimd.pdf
