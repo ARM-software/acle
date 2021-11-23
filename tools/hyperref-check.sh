@@ -10,22 +10,19 @@ for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" ".
   # - Using grep to extract all unresolved links, eg "pdfTeX warning (dest): name{ssec-bf16-scalar}"
   # Note: Some broken links may be on mutiple lines. The -zoP flag is used to accomodate this. More info here:
   # https://unix.stackexchange.com/a/361707
-  # - Using the first tr to remove any line breaks in the middle of warning messages
-  # - Using sed to extract only the section name without the warning message eg "ssec-bf16-scalar"
-  # - Using to sort, uniq and tr to sort the links in alphabetical order, only
-  # output each link once and only one per line respectively
+  # - Using sed to output all the warnings on separate lines to allow them to be counted
   erroutput=`pandoc $file --verbose -o pdfs/tmp.pdf 2>&1`
-  broken_refs=`grep -zoP 'pdfTeX warning \(dest\): name[\n]?\{[\w|-]*[\n]?[\w|-]*\}' <<< "$erroutput" | \
-               tr -d "\n" | sed -E  's/pdfTeX warning \(dest\): name\{/ /g' | \
-               tr "} " "\n" | sort | uniq`
+  broken_refs=`grep -zoP 'pdfTeX warning \(dest\): name' <<< "$erroutput" | sed -E  's/name/\n/g'`
+
   # The -n option was added to prevent the adding of a newline character at the end of
   # the echo output, which wc counts as a line and thus the script throws an error
   # when there are no unresolved links.
   number_of_broken_refs=`echo -n "$broken_refs" | wc -l`
 
   if [[ $number_of_broken_refs -gt 0 ]]; then
-      echo "**** ERROR! List of unresolved internal references in $file: "
-      echo "$broken_refs"
+      echo "**** ERROR! There are $number_of_broken_refs unresolved internal references in $file."
+      echo "Please use this command on your local terminal for more information:"
+      echo "pandoc [md file] --verbose -o pdfs/tmp.pdf > [error output file]"
       exit 1
   fi
 done
