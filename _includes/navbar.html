@@ -3,11 +3,18 @@
 
 <nav id="header">
   <span id="left-side">
-    <a href="{{site.baseurl}}/" class="navbar_tab">Home</a>
-    <a href="{{site.baseurl}}/main/" class="navbar_tab">ACLE</a>
-    <a href="{{site.baseurl}}/mve_intrinsics/" class="navbar_tab">MVE</a>
-    <a href="{{site.baseurl}}/morello/" class="navbar_tab">Morello</a>
-    <a href="{{site.baseurl}}/neon_intrinsics/" class="navbar_tab">Neon</a>
+      <a href="{{site.baseurl}}/"
+        {% if "/" != page.url %} class="navbar_tab"
+        {% else %} class="navbar_tab_active"
+        {% endif %}>
+        Home</a>
+    {% for nav in site.data.navigation %}
+      <a href="{{site.baseurl}}{{nav.url}}"
+        {% if page.url contains nav.url %} class="navbar_tab_active"
+        {% else %} class="navbar_tab"
+        {% endif %}>
+        {{ nav.text }}</a>
+    {% endfor %}
   </span>
   <img id="logo" src="{{site.baseurl}}/assets/images/Arm_logo_white_RGB.svg" alt="Logo">
   <span id="right-side">
