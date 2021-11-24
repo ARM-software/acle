@@ -4,8 +4,7 @@
 <nav id="header">
   <span id="left-side">
       <a href="{{site.baseurl}}/"
-        {% assign homeurl = site.baseurl | prepend: site.url | append: '/' %}
-        {% if page.url != homeurl %} class="navbar_tab"
+        {% if page.url != '/' %} class="navbar_tab"
         {% else %} class="navbar_active_tab"
         {% endif %}>
         Home {{page.url}}</a>
