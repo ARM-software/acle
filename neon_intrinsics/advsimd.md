@@ -8,7 +8,6 @@ copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All righ
 # Jekyll specific variables
 header_counter: true
 toc: true
-show_title: true
 ---
 
 <!---
