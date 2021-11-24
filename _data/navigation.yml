@@ -1,8 +1,8 @@
 - text: ACLE
-  url: main/
+  url: /main/
 - text: Morello
-  url: morello/
+  url: /morello/
 - text: MVE
-  url: mve_intrinsics/
+  url: /mve_intrinsics/
 - text: Neon
-  url: neon_intrinsics/
+  url: /neon_intrinsics/
