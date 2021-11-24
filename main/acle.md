@@ -7,6 +7,7 @@ copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All righ
 # Jekyll specific variables
 header_counter: true
 toc: true
+show_title: true
 ---
 
 <!---
@@ -116,9 +117,8 @@ reserved.
 
 #### Change history
 
-|              |              |        |                                                                                                                      |
-| ------------ | ------------ | ------ | -------------------------------------------------------------------------------------------------------------------- |
 | **Issue**    | **Date**     | **By** | **Change**                                                                                                           |
+| ------------ | ------------ | ------ | -------------------------------------------------------------------------------------------------------------------- |
 | A            | 11/11/11     | AG     | First release                                                                                                        |
 | B            | 13/11/13     | AG     | Version 1.1. Editorial changes. Corrections and completions to intrinsics as detailed in 3.3. Updated for C11/C++11. |
 | C            | 09/05/14     | TB     | Version 2.0. Updated for Armv8 AArch32 and AArch64.                                                                  |
@@ -192,9 +192,8 @@ This document refers to the following documents.
 
 This document uses the following terms and abbreviations.
 
-|                  |                                                                                              |
-| ---------------- | -------------------------------------------------------------------------------------------- |
 | **Term**         | **Meaning**                                                                                  |
+| ---------------- | -------------------------------------------------------------------------------------------- |
 | AAPCS            | Arm Procedure Call Standard, part of the ABI, defined in [\[AAPCS\]](#AAPCS).                |
 | ABI              | Arm Application Binary Interface.                                                            |
 | ACLE             | Arm C Language Extensions, as defined in this document.                                      |
@@ -723,9 +722,8 @@ code, see [ssec-ATisa](#ssec-ATisa).
 The following table lists the architectures and the A32 and T32
 instruction set versions.
 
-|                 |                                                          |         |         |                        |
-| --------------- | -------------------------------------------------------- | ------- | ------- | ---------------------- |
 | **Name**        | **Features**                                             | **A32** | **T32** | **Example processor**  |
+| --------------- | -------------------------------------------------------- | ------- | ------- | ---------------------- |
 | Armv4           | Armv4                                                    | 4       |         | DEC/Intel StrongARM    |
 | Armv4T          | Armv4 with Thumb instruction set                         | 4       | 2       | Arm7TDMI               |
 | Armv5T          | Armv5 with Thumb instruction set                         | 5       | 2       | Arm10TDMI              |
@@ -756,9 +754,8 @@ For details of how to test FPU features in source code, see
 precisions are supported in hardware, see
 `\_ssec-HWFP`.
 
-|                  |                                                    |                                     |
-| ---------------- | -------------------------------------------------- | ----------------------------------- |
 | **Name**         | **Features**                                       | **Example processor**               |
+| ---------------- | -------------------------------------------------- | ----------------------------------- |
 | `VFPv2`          | VFPv2                                              | Arm1136JF-S                         |
 | `VFPv3`          | VFPv3                                              | Cortex-A8                           |
 | `VFPv3_FP16`     | VFPv3 with FP16                                    | Cortex-A9 (with Neon)               |
@@ -932,9 +929,8 @@ load/store-exclusive instructions (LDREX/STREX) are supported. Its value
 is a set of bits indicating available widths of the access, as powers of
 2. The following bits are used:
 
-|         |           |                  |                 |
-| ------- | --------- | ---------------- | --------------- |
 | **Bit** | **Value** | **Access width** | **Instruction** |
+| ------- | --------- | ---------------- | --------------- |
 | 0       | 0x01      | byte             | LDREXB/STREXB   |
 | 1       | 0x02      | halfword         | LDREXH/STREXH   |
 | 2       | 0x04      | word             | LDREX/STREX     |
@@ -945,9 +941,8 @@ Other bits are reserved.
 The following values of
 <span class="title-ref">\_\_ARM\_FEATURE\_LDREX</span> may occur:
 
-|                 |                                  |                          |
-| --------------- | -------------------------------- | ------------------------ |
 | **Macro value** | **Access widths**                | **Example architecture** |
+| --------------- | -------------------------------- | ------------------------ |
 | (undefined)     | none                             | Armv5, Armv6-M           |
 | 0x04            | word                             | Armv6                    |
 | 0x07            | word, halfword, byte             | Armv7-M                  |
@@ -1057,9 +1052,8 @@ instructions are supported in hardware and intrinsics defined in
 floating-point is available. The value is a set of bits indicating the
 floating-point precisions supported. The following bits are used:
 
-|         |           |                              |
-| ------- | --------- | ---------------------------- |
 | **Bit** | **Value** | **Precision**                |
+| ------- | --------- | ---------------------------- |
 | 1       | 0x02      | half (16-bit) data type only |
 | 2       | 0x04      | single (32-bit)              |
 | 3       | 0x08      | double (64-bit)              |
@@ -1071,9 +1065,8 @@ Currently, the following values of
 processor configuration option for hardware floating-point support is
 selected where available):
 
-|             |                      |                                                       |
-| ----------- | -------------------- | ----------------------------------------------------- |
 | **Value**   | **Precisions**       | **Example processor**                                 |
+| ----------- | -------------------- | ----------------------------------------------------- |
 | (undefined) | none                 | any processor without hardware floating-point support |
 | 0x04        | single               | Cortex-R5 when configured with SP only                |
 | 0x06        | single, half         | Cortex-M4.fp                                          |
@@ -1184,9 +1177,8 @@ fused-multiply instructions are available in Neon also.
 <span class="title-ref">\_\_ARM\_FEATURE\_MVE</span> is defined as a
 bitmap to indicate M-profile Vector Extension (MVE) support.
 
-|         |           |                    |
-| ------- | --------- | ------------------ |
 | **Bit** | **Value** | **Support**        |
+| ------- | --------- | ------------------ |
 | 0       | 0x01      | Integer MVE        |
 | 1       | 0x02      | Floating-point MVE |
 
@@ -1418,9 +1410,8 @@ architecture. If <span class="title-ref">\_\_ARM\_FEATURE\_COPROC</span>
 is undefined or zero, that means there is no support for coprocessor
 intrinsics on the target architecture. The following bits are used:
 
-|         |           |                                                                                                              |
-| ------- | --------- | ------------------------------------------------------------------------------------------------------------ |
 | **Bit** | **Value** | **Intrinsics Available**                                                                                     |
+| ------- | --------- | ------------------------------------------------------------------------------------------------------------ |
 | 0       | 0x1       | \_\_arm\_cdp \_\_arm\_ldc, \_\_arm\_ldcl, \_\_arm\_stc, \_\_arm\_stcl, \_\_arm\_mcr and \_\_arm\_mrc         |
 | 1       | 0x2       | \_\_arm\_cdp2, \_\_arm\_ldc2, \_\_arm\_stc2, \_\_arm\_ldc2l, \_\_arm\_stc2l, \_\_arm\_mcr2 and \_\_arm\_mrc2 |
 | 2       | 0x4       | \_\_arm\_mcrr and \_\_arm\_mrrc                                                                              |
@@ -1472,9 +1463,8 @@ as a bitmap to indicate the use of the Pointer Authentication extension
 to protect code against code reuse attacks by default. The bits are
 defined as follows:
 
-|         |                                     |
-| ------- | ----------------------------------- |
 | **Bit** | **Meaning**                         |
+| ------- | ----------------------------------- |
 | 0       | Protection using the A key          |
 | 1       | Protection using the B key          |
 | 2       | Protection including leaf functions |
@@ -1501,9 +1491,8 @@ the Arm Custom Datapath Extension (CDE) is supported.
 <span class="title-ref">\_\_ARM\_FEATURE\_CDE\_COPROC</span> is a bitmap
 indicating the CDE coprocessors available. The following bits are used:
 
-|         |           |                                   |
-| ------- | --------- | --------------------------------- |
 | **Bit** | **Value** | **CDE Coprocessor available**     |
+| ------- | --------- | --------------------------------- |
 | 0       | 0x01      | <span class="title-ref">p0</span> |
 | 1       | 0x02      | <span class="title-ref">p1</span> |
 | 2       | 0x04      | <span class="title-ref">p2</span> |
@@ -1544,10 +1533,8 @@ be found in [\[BA\]](#BA).
 | 26                       | ``Tag_ABI_enum_size``          | ``__ARM_SIZEOF_MINIMAL_ENUM``         |
 | 34                       | ``Tag_CPU_unaligned_access``   | ``__ARM_FEATURE_UNALIGNED``           |
 | 36                       | ``Tag_FP_HP_extension``        | ``__ARM_FP16_FORMAT_IEEE``            |
-|                          |                                |                                       |
 |                          |                                | ``__ARM_FP16_FORMAT_ALTERNATIVE``     |
 | 38                       | ``Tag_ABI_FP_16bit_for``       | ``__ARM_FP16_FORMAT_IEEE``            |
-|                          |                                |                                       |
 |                          |                                | ``__ARM_FP16_FORMAT_ALTERNATIVE``     |
 
 ## Summary of predefined macros
@@ -1923,9 +1910,8 @@ not available in the intrinsics.) The argument should be an integral
 constant expression within the required range see
 [sec-Constant-arguments-to-intrinsics](#sec-Constant-arguments-to-intrinsics).
 
-|              |              |                 |                                     |
-| ------------ | ------------ | --------------- | ----------------------------------- |
 | **Argument** | **Mnemonic** | **Domain**      | **Ordered Accesses (before-after)** |
+| ------------ | ------------ | --------------- | ----------------------------------- |
 | 15           | SY           | Full system     | Any-Any                             |
 | 14           | ST           | Full system     | Store-Store                         |
 | 13           | LD           | Full system     | Load-Load, Load-Store               |
@@ -2157,22 +2143,19 @@ level to load the data, the data retention policy (temporal or
 streaming), The relevant arguments can only be one of the following
 values.
 
-|                 |           |                                          |
-| --------------- | --------- | ---------------------------------------- |
 | **Access Kind** | **Value** | **Summary**                              |
+| --------------- | --------- | ---------------------------------------- |
 | PLD             | 0         | Fetch the addressed location for reading |
 | PST             | 1         | Fetch the addressed location for writing |
 
-|             |       |                                          |
-| ----------- | ----- | ---------------------------------------- |
 | Cache Level | Value | Summary                                  |
+| ----------- | ----- | ---------------------------------------- |
 | L1          | 0     | Fetch the addressed location to L1 cache |
 | L2          | 1     | Fetch the addressed location to L2 cache |
 | L3          | 2     | Fetch the addressed location to L3 cache |
 
-|                      |           |                                                                            |
-| -------------------- | --------- | -------------------------------------------------------------------------- |
 | **Retention Policy** | **Value** | **Summary**                                                                |
+| -------------------- | --------- | -------------------------------------------------------------------------- |
 | KEEP                 | 0         | Temporal fetch of the addressed location (i.e. allocate in cache normally) |
 | STRM                 | 1         | Streaming fetch of the addressed location (i.e. memory used only once)     |
 
@@ -3682,9 +3665,8 @@ unsigned integers.
 Intrinsics are provided to create coprocessor data-processing
 instructions as follows:
 
-|                                                       |                                        |
-| ----------------------------------------------------- | -------------------------------------- |
 | **Intrinsics**                                        | **Equivalent Instruction**             |
+| ----------------------------------------------------- | -------------------------------------- |
 | void \_\_arm\_cdp(coproc, opc1, CRd, CRn, CRm, opc2)  | CDP coproc, opc1, CRd, CRn, CRm, opc2  |
 | void \_\_arm\_cdp2(coproc, opc1, CRd, CRn, CRm, opc2) | CDP2 coproc, opc1, CRd, CRn, CRm, opc2 |
 
@@ -3693,9 +3675,8 @@ instructions as follows:
 Intrinsics are provided to create coprocessor memory transfer
 instructions as follows:
 
-|                                                  |                            |
-| ------------------------------------------------ | -------------------------- |
 | **Intrinsics**                                   | **Equivalent Instruction** |
+| ------------------------------------------------ | -------------------------- |
 | void \_\_arm\_ldc(coproc, CRd, const void\* p)   | LDC coproc, CRd, \[...\]   |
 | void \_\_arm\_ldcl(coproc, CRd, const void\* p)  | LDCL coproc, CRd, \[...\]  |
 | void \_\_arm\_ldc2(coproc, CRd, const void\* p)  | LDC2 coproc, CRd, \[...\]  |
@@ -3710,9 +3691,8 @@ instructions as follows:
 Intrinsics are provided to map to coprocessor to core register transfer
 instructions as follows:
 
-|                                                                   |                                       |
-| ----------------------------------------------------------------- | ------------------------------------- |
 | **Intrinsics**                                                    | **Equivalent Instruction**            |
+| ----------------------------------------------------------------- | ------------------------------------- |
 | void \_\_arm\_mcr(coproc, opc1, uint32\_t value, CRn, CRm, opc2)  | MCR coproc, opc1, Rt, CRn, CRm, opc2  |
 | void \_\_arm\_mcr2(coproc, opc1, uint32\_t value, CRn, CRm, opc2) | MCR2 coproc, opc1, Rt, CRn, CRm, opc2 |
 | uint32\_t \_\_arm\_mrc(coproc, opc1, CRn, CRm, opc2)              | MRC coproc, opc1, Rt, CRn, CRm, opc2  |
@@ -3781,9 +3761,8 @@ architecture includes its predecessor instruction set.
 7MP are the Armv7 architectures that implement the Multiprocessing
 Extensions.
 
-|                 |           |               |                                                                                             |
-| --------------- | --------- | ------------- | ------------------------------------------------------------------------------------------- |
 | **Instruction** | **Flags** | **Arch.**     | **Intrinsic or C code**                                                                     |
+| --------------- | --------- | ------------- | ------------------------------------------------------------------------------------------- |
 | BKPT            |           | 5             | none                                                                                        |
 | BFC             |           | 6T2, 7-M      | C                                                                                           |
 | BFI             |           | 6T2, 7-M      | C                                                                                           |
@@ -4977,9 +4956,8 @@ depth of the transaction.
 
 ## Instructions
 
-|                                                    |                      |               |                   |
-| -------------------------------------------------- | -------------------- | ------------- | ----------------- |
 | **Intrinsics**                                     | **Argument**         | **Result**    | **Instruction**   |
+| -------------------------------------------------- | -------------------- | ------------- | ----------------- |
 | uint64\_t \_\_tstart (void)                        | \-                   | Xt -\> result | tstart \<Xt\>     |
 | void \_\_tcommit (void)                            | \-                   | \-            | tcommit           |
 | void \_\_tcancel (/\*constant\*/ uint64\_t reason) | reason -\> \#\<imm\> | \-            | tcancel \#\<imm\> |
@@ -4988,101 +4966,95 @@ depth of the transaction.
 These intrinsics are available when
 <span class="title-ref">arm\_acle.h</span> is included.
 
-<div id="citations">
+- <span id="AAPCS" class="citation-label">AAPCS</span>
+  Arm, [Application Binary Interface for the Arm
+  Architecture](https://developer.arm.com/products/architecture/system-architectures/software-standards/abi)
 
-  - <span id="AAPCS" class="citation-label">AAPCS</span>
-    Arm, [Application Binary Interface for the Arm
-    Architecture](https://developer.arm.com/products/architecture/system-architectures/software-standards/abi)
+- <span id="AAPCS64" class="citation-label">AAPCS64</span>
+  Arm, [Application Binary Interface for the Arm
+  Architecture](https://developer.arm.com/products/architecture/system-architectures/software-standards/abi)
 
-  - <span id="AAPCS64" class="citation-label">AAPCS64</span>
-    Arm, [Application Binary Interface for the Arm
-    Architecture](https://developer.arm.com/products/architecture/system-architectures/software-standards/abi)
+- <span id="ARMARM" class="citation-label">ARMARM</span>
+  Arm, Arm Architecture Reference Manual (7-A / 7-R), Arm DDI 0406C
 
-  - <span id="ARMARM" class="citation-label">ARMARM</span>
-    Arm, Arm Architecture Reference Manual (7-A / 7-R), Arm DDI 0406C
+- <span id="ARMARMv8" class="citation-label">ARMARMv8</span>
+  Arm, Armv8-A Reference Manual (Issue A.b), Arm DDI0487A.B
 
-  - <span id="ARMARMv8" class="citation-label">ARMARMv8</span>
-    Arm, Armv8-A Reference Manual (Issue A.b), Arm DDI0487A.B
+- <span id="ARMARMv81" class="citation-label">ARMARMv81</span>
+  Arm, Armv8.1 Extension, [The ARMv8-A architecture and its ongoing
+  development](http://community.arm.com/groups/processors/blog/2014/12/02/the-armv8-a-architecture-and-its-ongoing-development)
 
-  - <span id="ARMARMv81" class="citation-label">ARMARMv81</span>
-    Arm, Armv8.1 Extension, [The ARMv8-A architecture and its ongoing
-    development](http://community.arm.com/groups/processors/blog/2014/12/02/the-armv8-a-architecture-and-its-ongoing-development)
+- <span id="ARMARMv82" class="citation-label">ARMARMv82</span>
+  Arm, Armv8.2 Extension, [Armv8-A architecture
+  evolution](https://community.arm.com/groups/processors/blog/2016/01/05/armv8-a-architecture-evolution)
 
-  - <span id="ARMARMv82" class="citation-label">ARMARMv82</span>
-    Arm, Armv8.2 Extension, [Armv8-A architecture
-    evolution](https://community.arm.com/groups/processors/blog/2016/01/05/armv8-a-architecture-evolution)
+- <span id="ARMARMv83" class="citation-label">ARMARMv83</span>
+  Arm, Armv8.3 Extension, [Armv8-A architecture: 2016
+  additions](https://community.arm.com/processors/b/blog/posts/armv8-a-architecture-2016-additions)
 
-  - <span id="ARMARMv83" class="citation-label">ARMARMv83</span>
-    Arm, Armv8.3 Extension, [Armv8-A architecture: 2016
-    additions](https://community.arm.com/processors/b/blog/posts/armv8-a-architecture-2016-additions)
+- <span id="ARMARMv84" class="citation-label">ARMARMv84</span>
+  Arm, Armv8.4 Extension, [Introducing 2017’s extensions to the Arm
+  Architecture](https://community.arm.com/processors/b/blog/posts/introducing-2017s-extensions-to-the-arm-architecture)
 
-  - <span id="ARMARMv84" class="citation-label">ARMARMv84</span>
-    Arm, Armv8.4 Extension, [Introducing 2017’s extensions to the Arm
-    Architecture](https://community.arm.com/processors/b/blog/posts/introducing-2017s-extensions-to-the-arm-architecture)
+- <span id="ARMARMv85" class="citation-label">ARMARMv85</span>
+  Arm, Armv8.5 Extension, [Arm A-Profile Architecture
+  Developments 2018:
+  Armv8.5-A](https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-2018-developments-armv85a)
 
-  - <span id="ARMARMv85" class="citation-label">ARMARMv85</span>
-    Arm, Armv8.5 Extension, [Arm A-Profile Architecture
-    Developments 2018:
-    Armv8.5-A](https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-2018-developments-armv85a)
+- <span id="ARMv7M" class="citation-label">ARMv7M</span>
+  Arm, Arm Architecture Reference Manual (7-M), Arm DDI 0403C
 
-  - <span id="ARMv7M" class="citation-label">ARMv7M</span>
-    Arm, Arm Architecture Reference Manual (7-M), Arm DDI 0403C
+- <span id="BA" class="citation-label">BA</span>
+  Arm, EABI Addenda and Errata Build Attributes, Arm IHI 0045C
 
-  - <span id="BA" class="citation-label">BA</span>
-    Arm, EABI Addenda and Errata Build Attributes, Arm IHI 0045C
+- <span id="Bfloat16" class="citation-label">Bfloat16</span>
+  Arm, [BFloat16 processing for Neural Networks on
+  Armv8-A](https://community.arm.com/developer/ip-products/processors/b/ml-ip-blog/posts/bfloat16-processing-for-neural-networks-on-armv8_2d00_a)
 
-  - <span id="Bfloat16" class="citation-label">Bfloat16</span>
-    Arm, [BFloat16 processing for Neural Networks on
-    Armv8-A](https://community.arm.com/developer/ip-products/processors/b/ml-ip-blog/posts/bfloat16-processing-for-neural-networks-on-armv8_2d00_a)
+- <span id="C11" class="citation-label">C11</span>
+  ISO, Standard C (based on draft N1570), ISO/IEC 9899:2011
 
-  - <span id="C11" class="citation-label">C11</span>
-    ISO, Standard C (based on draft N1570), ISO/IEC 9899:2011
+- <span id="C99" class="citation-label">C99</span>
+  ISO, Standard C (C99), ISO 9899:1999
 
-  - <span id="C99" class="citation-label">C99</span>
-    ISO, Standard C (C99), ISO 9899:1999
+- <span id="CFP15" class="citation-label">CFP15</span>
+  ISO/IEC, Floating point extensions for C, ISO/IEC TS 18661-3
 
-  - <span id="CFP15" class="citation-label">CFP15</span>
-    ISO/IEC, Floating point extensions for C, ISO/IEC TS 18661-3
+- <span id="CPP11" class="citation-label">CPP11</span>
+  ISO, Standard C++ (based on draft N3337), ISO/IEC 14882:2011
 
-  - <span id="CPP11" class="citation-label">CPP11</span>
-    ISO, Standard C++ (based on draft N3337), ISO/IEC 14882:2011
+- <span id="G.191" class="citation-label">G.191</span>
+  ITU-T, Software Tool Library 2005 User's Manual,
+  T-REC-G.191-200508-I
 
-  - <span id="G.191" class="citation-label">G.191</span>
-    ITU-T, Software Tool Library 2005 User's Manual,
-    T-REC-G.191-200508-I
+- <span id="GCC" class="citation-label">GCC</span>
+  GNU/FSF, [GNU C Compiler Collection](http://gcc.gnu.org/onlinedocs)
 
-  - <span id="GCC" class="citation-label">GCC</span>
-    GNU/FSF, [GNU C Compiler Collection](http://gcc.gnu.org/onlinedocs)
+- <span id="IA-64" class="citation-label">IA-64</span>
+  Intel, Intel Itanium Processor-Specific ABI, 245370-003
 
-  - <span id="IA-64" class="citation-label">IA-64</span>
-    Intel, Intel Itanium Processor-Specific ABI, 245370-003
+- <span id="IEEE-FP" class="citation-label">IEEE-FP</span>
+  IEEE, IEEE Floating Point, IEEE 754-2008
 
-  - <span id="IEEE-FP" class="citation-label">IEEE-FP</span>
-    IEEE, IEEE Floating Point, IEEE 754-2008
+- <span id="MVE" class="citation-label">MVE</span>
+  Arm, [MVE
+  Intrinsics](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium/mve-intrinsics)
 
-  - <span id="MVE" class="citation-label">MVE</span>
-    Arm, [MVE
-    Intrinsics](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium/mve-intrinsics)
+- <span id="MVE-spec" class="citation-label">MVE-spec</span>
+  Arm, Arm v8-M Architecture Reference Manual, Arm DDI0553B.F
 
-  - <span id="MVE-spec" class="citation-label">MVE-spec</span>
-    Arm, Arm v8-M Architecture Reference Manual, Arm DDI0553B.F
+- <span id="Neon" class="citation-label">Neon</span>
+  Arm, [Neon
+  Intrinsics](https://developer.arm.com/technologies/neon/intrinsics)
 
-  - <span id="Neon" class="citation-label">Neon</span>
-    Arm, [Neon
-    Intrinsics](https://developer.arm.com/technologies/neon/intrinsics)
+- <span id="POSIX" class="citation-label">POSIX</span>
+  IEEE / TOG, The Open Group Base Specifications, IEEE 1003.1
 
-  - <span id="POSIX" class="citation-label">POSIX</span>
-    IEEE / TOG, The Open Group Base Specifications, IEEE 1003.1
+- <span id="SVE-ACLE" class="citation-label">SVE-ACLE</span>
+  Arm, [Arm C Language Extensions for
+  SVE](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
 
-  - <span id="SVE-ACLE" class="citation-label">SVE-ACLE</span>
-    Arm, [Arm C Language Extensions for
-    SVE](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
+- <span id="Warren" class="citation-label">Warren</span> 8.  Warren, Hacker's Delight, pub. Addison-Wesley 2003
 
-  - <span id="Warren" class="citation-label">Warren</span>
-
-    8.  Warren, Hacker's Delight, pub. Addison-Wesley 2003
-
-  - <span id="cxxabi" class="citation-label">cxxabi</span>
-    [Itanium C++ ABI](https://itanium-cxx-abi.github.io/cxx-abi/)
-
-</div>
+- <span id="cxxabi" class="citation-label">cxxabi</span>
+  [Itanium C++ ABI](https://itanium-cxx-abi.github.io/cxx-abi/)

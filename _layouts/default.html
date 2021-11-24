@@ -10,7 +10,7 @@
     {% if page.header_counter %} <link rel="stylesheet" href="{{site.baseurl}}/assets/css/header_counter.css"> {% endif %}
   </head>
   <body>
-      {% if page.title %} <h1 id="title"> {{ page.title }} </h1> {% endif %}
+      {% if page.show_title %} <h1 id="title"> {{ page.title }} </h1> {% endif %}
       {% include navbar.html %}
       {% if page.toc %} <h1> Table of Contents </h1> {% endif %}
     <div id="#content">

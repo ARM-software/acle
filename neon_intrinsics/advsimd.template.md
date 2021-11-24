@@ -8,6 +8,7 @@ copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All righ
 # Jekyll specific variables
 header_counter: true
 toc: true
+show_title: true
 ---
 
 <!---
@@ -108,9 +109,8 @@ reserved.
 
 ## Document history
 
-|       |                 |                      |
-| ----- | --------------- | -------------------- |
 | Issue | Date            | Change               |
+| ----- | --------------- | -------------------- |
 | A     | 09 May 2014     | First release        |
 | B     | 24 March 2016   | Updated for ARMv8.1  |
 | C     | 30 March 2019   | Version ACLE Q1 2019 |

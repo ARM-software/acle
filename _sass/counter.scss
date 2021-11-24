@@ -59,15 +59,15 @@ div > h6:before {
   counter-increment: h6counter;
 }
 
-ul {
+ul#markdown-toc, #markdown-toc ul {
   list-style: none;
 }
 
-ul li:before {
+ul#markdown-toc li:before, #markdown-toc ul li:before {
   counter-increment: toccounter;
   content: counters(toccounter, ".") ". ";
 }
 
-ul:first-of-type {
+ul#markdown-toc:first-of-type, #markdown-toc ul:first-of-type {
   counter-reset: toccounter;
 }
