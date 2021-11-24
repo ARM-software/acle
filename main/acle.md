@@ -353,7 +353,7 @@ extension. These intrinsics are intended to be compatible with existing
 implementations. Before using the Neon intrinsics or data types, the
 <span class="title-ref">\<arm\_neon.h\></span> header must be included.
 The Neon intrinsics are defined in
-[sec-NEON-intrinsics](#advanced-simd-neon-intrinsics). Note that the Neon
+[sec-NEON-intrinsics](#advanced-sim,,,d-neon-intrinsics). Note that the Neon
 intrinsics and data types are in the user namespace.
 
 ACLE standardizes intrinsics to access the Arm M-profile Vector
