@@ -4,13 +4,13 @@
 <nav id="header">
   <span id="left-side">
       <a href="{{site.baseurl}}/"
-        {% if "/" != page.url %} class="navbar_tab"
-        {% else %} class="navbar_tab_active"
+        {% if site.baseurl + "/" != page.url %} class="navbar_tab"
+        {% else %} class="navbar_active_tab"
         {% endif %}>
         Home</a>
     {% for nav in site.data.navigation %}
       <a href="{{site.baseurl}}{{nav.url}}"
-        {% if page.url contains nav.url %} class="navbar_tab_active"
+        {% if page.url contains nav.url %} class="navbar_active_tab"
         {% else %} class="navbar_tab"
         {% endif %}>
         {{ nav.text }}</a>

@@ -71,12 +71,12 @@ tr:nth-child(even) {
   color: white;
 }
 
-.navbar_tab, .navbar_tab_active {
+.navbar_tab, .navbar_active_tab {
   display: table-cell;
   padding: 20px;
 }
 
-.navbar_tab:active, .navbar_tab:hover, .navbar_tab_active {
+.navbar_tab:active, .navbar_tab:hover, .navbar_active_tab {
   background-color: white;
   color: #0091BD;
 }
