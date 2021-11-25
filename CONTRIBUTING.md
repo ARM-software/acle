@@ -1,5 +1,6 @@
 ---
 layout: default
+title: Contribution Guidelines
 ---
 
 # Thank you for considering contributing!

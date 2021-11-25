@@ -108,9 +108,8 @@ reserved.
 
 ## Document history
 
-|       |                 |                      |
-| ----- | --------------- | -------------------- |
 | Issue | Date            | Change               |
+| ----- | --------------- | -------------------- |
 | A     | 09 May 2014     | First release        |
 | B     | 24 March 2016   | Updated for ARMv8.1  |
 | C     | 30 March 2019   | Version ACLE Q1 2019 |
