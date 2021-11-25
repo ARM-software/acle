@@ -5,7 +5,8 @@
   <span id="left-side">
     {% for nav in site.data.navigation %}
       <a href="{{site.baseurl}}{{nav.url}}"
-        {% if page.url == nav.url %} class="navbar_active_tab"
+        {% if page.url == "/" and nav.url == "/"%} class="navbar_active_tab"
+        {% elsif nav.url != "/" and page.url contains nav.url %} class="navbar_active_tab"
         {% else %} class="navbar_tab"
         {% endif %}>
         {{ nav.text }}</a>
