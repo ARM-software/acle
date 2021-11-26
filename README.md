@@ -2,7 +2,7 @@
 <!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
 <!-- See LICENSE.md file for details -->
 <div align="center">
-   <img src="Arm_logo_blue_RGB.svg" />
+   <img id="index_logo" src="Arm_logo_blue_RGB.svg" />
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
@@ -12,8 +12,13 @@
 
 # Arm C Language Extensions
 
-This repository contains the source material from which the
-specifications for the Arm C Language Extensions (ACLE) are derived.
+The specifications in this document are presented via this website in
+an experimental format. Please refer to the [Official
+Release](https://github.com/ARM-software/acle/releases/latest) for
+production quality documentation.
+
+This repository contains the source material form which the
+specifications for the Arm C Language Extensions (ACLE) is derived.
 For the published documents please see the [Arm developer ACLE
 page](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
 
@@ -41,10 +46,10 @@ be referenced in this README file when added.
 
 Document sources                                                           | Latest official release
 ---                                                                        | ---
-[Arm C Language Extensions](main/acle.rst)                                 | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
-[Morello Supplement to the Arm C Language Extensions](morello/morello.rst) | [01alpha](https://github.com/ARM-software/acle/releases/latest)
-[Arm MVE Intrinsics](mve_intrinsics/mve.rst)                               | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
-[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.rst)               | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+[Arm C Language Extensions](main/acle.md)                                  | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+[Morello Supplement to the Arm C Language Extensions](morello/morello.md)  | [01alpha](https://github.com/ARM-software/acle/releases/latest)
+[Arm MVE Intrinsics](mve_intrinsics/mve.md)                                | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
+[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.md)                | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
 
 # License
 

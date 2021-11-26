@@ -1,0 +1,23 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+
+<nav id="header">
+  <span id="left-side">
+    <a href="{{site.baseurl}}/" class="navbar_tab">Home</a>
+    <a href="{{site.baseurl}}/main/" class="navbar_tab">ACLE</a>
+    <a href="{{site.baseurl}}/mve_intrinsics/" class="navbar_tab">MVE</a>
+    <a href="{{site.baseurl}}/morello/" class="navbar_tab">Morello</a>
+    <a href="{{site.baseurl}}/neon_intrinsics/" class="navbar_tab">Neon</a>
+  </span>
+  <img id="logo" src="{{site.baseurl}}/assets/images/Arm_logo_white_RGB.svg" alt="Logo">
+  <span id="right-side">
+    {% if page.version %} Version: {{ page.version }} &nbsp;:::&nbsp; {% endif %}
+    {% if page.date-of-issue %} Release Date: {{ page.date-of-issue }} &nbsp;:::&nbsp; {% endif %}
+    <a href="https://github.com/ARM-software/acle/issues">
+      <button class="navbar_button"> Report a Bug </button>
+    </a>
+    <a href="{{site.baseurl}}/CONTRIBUTING.html">
+      <button class="navbar_button"> Contribute with a Proposal </button>
+    </a>
+  </span>
+</nav>

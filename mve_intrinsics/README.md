@@ -9,9 +9,10 @@
 
 ## About this document
 
-The [Arm MVE Intrinsics Reference](mve.rst) provides information about
-the M-Profile Vector Extension (MVE) for the Arm Cortex-M processor
-series.
+The [Arm MVE Intrinsics Reference](mve.md) specifies the [TODO]
+
+The specifications in this document are in experimental format.
+[Official Release](https://github.com/ARM-software/acle/releases/latest).
 
 ## About the license
 
@@ -36,6 +37,6 @@ claims.
 
 ## Defects report
 
-Please report defects in the [Arm MVE Intrinsics Reference](mve.rst) to
+Please report defects in the [Arm MVE Intrinsics Reference](mve.md) to
 the [issue tracker page on
 GitHub](https://github.com/ARM-software/acle/issues).
