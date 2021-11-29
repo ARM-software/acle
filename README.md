@@ -2,7 +2,7 @@
 <!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
 <!-- See LICENSE.md file for details -->
 <div align="center">
-   <img src="Arm_logo_blue_RGB.svg" />
+   <img id="index_logo" src="Arm_logo_blue_RGB.svg" />
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
@@ -41,10 +41,10 @@ be referenced in this README file when added.
 
 Document sources                                                           | Latest official release
 ---                                                                        | ---
-[Arm C Language Extensions](main/acle.rst)                                 | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
-[Morello Supplement to the Arm C Language Extensions](morello/morello.rst) | [01alpha](https://github.com/ARM-software/acle/releases/latest)
-[Arm MVE Intrinsics](mve_intrinsics/mve.rst)                               | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
-[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.rst)               | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+[Arm C Language Extensions](main/acle.md)                                  | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+[Morello Supplement to the Arm C Language Extensions](morello/morello.md)  | [01alpha](https://github.com/ARM-software/acle/releases/latest)
+[Arm MVE Intrinsics](mve_intrinsics/mve.md)                                | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
+[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.md)                | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
 
 # License
 
