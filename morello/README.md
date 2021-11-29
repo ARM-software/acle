@@ -9,9 +9,6 @@
 
 ## About this document
 
-The specifications in this document are in experimental format.
-[Official Release](https://github.com/ARM-software/acle/releases/latest).
-
 The [Morello Supplement to the Arm C Language Extensions](morello.md)
 specifies the Arm C Language Extensions to enable C/C++ programmers to
 exploit the Morello architecture with minimal restrictions on source

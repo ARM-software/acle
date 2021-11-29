@@ -20,13 +20,6 @@ They are automatically removed by the scripts that generate the pdfs.
 {:toc}
 # Preface                                                                  
 
-## Warning
-
-The specifications documented on this website are in experimental
-format. Please refer to the [Official
-Release](https://github.com/ARM-software/acle/releases/latest) for
-production quality documentation.
-
 ## Abstract
 
 This document is complementary to the main Arm C Language Extensions

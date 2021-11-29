@@ -12,11 +12,6 @@
 
 # Arm C Language Extensions
 
-The specifications in this document are presented via this website in
-an experimental format. Please refer to the [Official
-Release](https://github.com/ARM-software/acle/releases/latest) for
-production quality documentation.
-
 This repository contains the source material form which the
 specifications for the Arm C Language Extensions (ACLE) is derived.
 For the published documents please see the [Arm developer ACLE

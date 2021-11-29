@@ -26,13 +26,6 @@ This document is complementary to the main Arm C Language Extensions
 (ACLE) specification, which can be found on the [ACLE project on
 GitHub](https://github.com/ARM-software/acle).
 
-## Warning
-
-The specifications documented on this website are in experimental
-format. Please refer to the [Official
-Release](https://github.com/ARM-software/acle/releases/latest) for
-production quality documentation.
-
 ## Latest release and defects report
 
 For the latest release of this document, see the [ACLE project on

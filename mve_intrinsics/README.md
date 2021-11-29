@@ -9,10 +9,9 @@
 
 ## About this document
 
-The [Arm MVE Intrinsics Reference](mve.md) specifies the [TODO]
-
-The specifications in this document are in experimental format.
-[Official Release](https://github.com/ARM-software/acle/releases/latest).
+The [Arm MVE Intrinsics Reference](mve.md) provides information about
+the M-Profile Vector Extension (MVE) for the Arm Cortex-M processor
+series.
 
 ## About the license
 
