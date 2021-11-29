@@ -3,7 +3,7 @@
 
 <nav id="header">
   <span id="left-side">
-    <!-- This loop is used to render the content of navigation.yml into navigation tabs -->
+    <!-- This loop is used to render the content of _data/navigation.yml into navigation tabs -->
     {% for nav in site.data.navigation %}
       <a href="{{site.baseurl}}{{nav.url}}"
         {% if page.url == nav.url %} class="navbar_active_tab"
