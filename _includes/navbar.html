@@ -6,11 +6,11 @@
     <!-- This loop is used to render the content of _data/navigation.yml into navigation tabs -->
     {% for nav in site.data.navigation %}
       <a href="{{site.baseurl}}{{nav.url}}"
-        {% if page.url == nav.url %} class="navbar_active_tab"
+        {% if page.url == nav.url %} class="navbar_active_tab" >
         <!-- We need to treat the home tab as a special case of nav.url == "/" because "/" is in all URLs. -->
-        {% elsif  page.url contains nav.url and nav.url != "/" %} class="navbar_active_tab"
-        {% else %} class="navbar_tab"
-        {% endif %}>
+        {% elsif  page.url contains nav.url and nav.url != "/" %} class="navbar_active_tab" >
+        {% else %} class="navbar_tab" >
+        {% endif %}
         {{ nav.text }}</a>
     {% endfor %}
   </span>
