@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -ex
 
 # Extracting all broken hyperref detected by PDFTex
 for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" "./neon_intrinsics/advsimd.md"; do
