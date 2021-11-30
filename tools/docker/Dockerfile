@@ -15,6 +15,7 @@ RUN apt-get update \
     texlive-fonts-recommended \
     texlive-fonts-extra \
     texlive-latex-extra \
+    lmodern \
     pandoc \
     inkscape \
     python3 \
