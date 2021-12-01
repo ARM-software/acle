@@ -4,7 +4,7 @@ version: Development version based on 2021Q2
 date-of-issue: TBD
 # LaTeX specific variables
 landscape: true
-copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.
+copyright-text: Copyright 2020-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -131,5 +131,4 @@ It is automatically removed by the scripts that generate the pdfs.
 
 # List of Intrinsics
 
-------------------------------------------------------------------------
 {intrinsic_table}
