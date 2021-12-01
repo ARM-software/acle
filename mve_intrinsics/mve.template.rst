@@ -1,107 +1,90 @@
-..
-   SPDX-FileCopyrightText: Copyright 2019-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+---
+title: Arm MVE Intrinsics
+version: Development version based on 2021Q2
+date-of-issue: TBD
+# LaTeX specific variables
+landscape: true
+copyright-text: Copyright © 2020-2021, Arm Limited and its affiliates. All rights reserved.
+# Jekyll specific variables
+header_counter: true
+toc: true
+---
 
-   CC-BY-SA-4.0 AND Apache-Patent-License
-   See LICENSE.md file for details
+<!--
+SPDX-FileCopyrightText: Copyright 2019-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+CC-BY-SA-4.0 AND Apache-Patent-License
+See LICENSE.md file for details
+-->
 
-.. |release| replace:: Development version based on 2021Q2
-.. |date-of-issue| replace:: TBD
+<!---
+**** Do not remove! ****
+The two lines following this comment are necessary
+to generate the Table of Contents via Jekyll.
+They are automatically removed by the scripts that generate the pdfs.
+-->
+* TOC
+{{:toc}}
+# Preface                                                                  
 
-==================
-Arm MVE Intrinsics
-==================
-
-.. class:: logo
-
-.. image:: Arm_logo_blue_RGB.svg
-   :scale: 30%
-
-.. class:: version
-
-|release|
-
-.. class:: issued
-
-Date of Issue: |date-of-issue|
-
-.. section-numbering::
-
-.. raw:: pdf
-
-   PageBreak oneColumn
-
-.. contents:: Table of Contents
-   :depth: 4
-
-Preface
-#######
-
-Abstract
-========
+## Abstract
 
 This document is complementary to the main Arm C Language Extensions
-(ACLE) specification, which can be found on the `ACLE project on
-GitHub <https://github.com/ARM-software/acle>`_.
+(ACLE) specification, which can be found on the [ACLE project on
+GitHub](https://github.com/ARM-software/acle).
 
-Latest release and defects report
-=================================
+## Latest release and defects report
 
-For the latest release of this document, see the `ACLE project on
-GitHub <https://github.com/ARM-software/acle>`_.
+For the latest release of this document, see the [ACLE project on
+GitHub](https://github.com/ARM-software/acle).
 
-Please report defects in this specification to the `issue tracker page
-on GitHub <https://github.com/ARM-software/acle/issues>`_.
+Please report defects in this specification to the [issue tracker page
+on GitHub](https://github.com/ARM-software/acle/issues).
 
-License
-=======
+## License
 
-This work is licensed under the Creative Commons
-Attribution-ShareAlike 4.0 International License. To view a copy of
-this license, visit http://creativecommons.org/licenses/by-sa/4.0/ or
-send a letter to Creative Commons, PO Box 1866, Mountain View, CA
-94042, USA.
+This work is licensed under the Creative Commons Attribution-ShareAlike
+4.0 International License. To view a copy of this license, visit
+<http://creativecommons.org/licenses/by-sa/4.0/> or send a letter to
+Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 Grant of Patent License. Subject to the terms and conditions of this
-license (both the Public License and this Patent License), each
-Licensor hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this
-section) patent license to make, have made, use, offer to sell, sell,
-import, and otherwise transfer the Licensed Material, where such
-license applies only to those patent claims licensable by such
-Licensor that are necessarily infringed by their contribution(s) alone
-or by combination of their contribution(s) with the Licensed Material
-to which such contribution(s) was submitted. If You institute patent
-litigation against any entity (including a cross-claim or counterclaim
-in a lawsuit) alleging that the Licensed Material or a contribution
+license (both the Public License and this Patent License), each Licensor
+hereby grants to You a perpetual, worldwide, non-exclusive, no-charge,
+royalty-free, irrevocable (except as stated in this section) patent
+license to make, have made, use, offer to sell, sell, import, and
+otherwise transfer the Licensed Material, where such license applies
+only to those patent claims licensable by such Licensor that are
+necessarily infringed by their contribution(s) alone or by combination
+of their contribution(s) with the Licensed Material to which such
+contribution(s) was submitted. If You institute patent litigation
+against any entity (including a cross-claim or counterclaim in a
+lawsuit) alleging that the Licensed Material or a contribution
 incorporated within the Licensed Material constitutes direct or
-contributory patent infringement, then any licenses granted to You
-under this license for that Licensed Material shall terminate as of
-the date such litigation is filed.
+contributory patent infringement, then any licenses granted to You under
+this license for that Licensed Material shall terminate as of the date
+such litigation is filed.
 
-About the license
-=================
+### About the license
 
-As identified more fully in the License_ section, this project
-is licensed under CC-BY-SA-4.0 along with an additional patent
-license.  The language in the additional patent license is largely
+As identified more fully in the [License](#license) section, this
+project is licensed under CC-BY-SA-4.0 along with an additional patent
+license. The language in the additional patent license is largely
 identical to that in Apache-2.0 (specifically, Section 3 of Apache-2.0
-as reflected at https://www.apache.org/licenses/LICENSE-2.0) with two
+as reflected at <https://www.apache.org/licenses/LICENSE-2.0>) with two
 exceptions.
 
 First, several changes were made related to the defined terms so as to
 reflect the fact that such defined terms need to align with the
 terminology in CC-BY-SA-4.0 rather than Apache-2.0 (e.g., changing
-“Work” to “Licensed Material”).
+"Work" to "Licensed Material").
 
-Second, the defensive termination clause was changed such that the
-scope of defensive termination applies to “any licenses granted to
-You” (rather than “any patent licenses granted to You”).  This change
-is intended to help maintain a healthy ecosystem by providing
-additional protection to the community against patent litigation
-claims.
+Second, the defensive termination clause was changed such that the scope
+of defensive termination applies to "any licenses granted to You"
+(rather than "any patent licenses granted to You"). This change is
+intended to help maintain a healthy ecosystem by providing additional
+protection to the community against patent litigation claims.
 
-Contributions
-=============
+## Contributions
 
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
@@ -110,49 +93,43 @@ under the same terms as those in the LICENSE file.
 We do not require copyright assignment. The original contributor will
 retain the copyright.
 
-Trademark notice
-================
+## Trademark notice
 
-The text of and illustrations in this document are licensed by Arm
-under a Creative Commons Attribution–Share Alike 4.0 International
-license ("CC-BY-SA-4.0”), with an additional clause on patents.
-The Arm trademarks featured here are registered trademarks or
-trademarks of Arm Limited (or its subsidiaries) in the US and/or
-elsewhere. All rights reserved. Please visit
-https://www.arm.com/company/policies/trademarks for more information
-about Arm’s trademarks.
+The text of and illustrations in this document are licensed by Arm under
+a Creative Commons Attribution--Share Alike 4.0 International license
+(\"CC-BY-SA-4.0"), with an additional clause on patents. The Arm
+trademarks featured here are registered trademarks or trademarks of Arm
+Limited (or its subsidiaries) in the US and/or elsewhere. All rights
+reserved. Please visit <https://www.arm.com/company/policies/trademarks>
+for more information about Arm's trademarks.
 
-.. _ssec-copyright:
-
-Copyright
-=========
+## Copyright
 
 Copyright 2019-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 
-Document history
-================
+## Document history
 
-+-----------+-----------------+---------------------+
-|Issue      |Date             |Change               |
-+-----------+-----------------+---------------------+
-|Q219-00    |30 June 2019     |Version ACLE Q2 2019 |
-+-----------+-----------------+---------------------+
-|Q319-00    |30 September 2019|Version ACLE Q3 2019 |
-+-----------+-----------------+---------------------+
-|Q419-00    |31 December 2019 |Version ACLE Q4 2019 |
-+-----------+-----------------+---------------------+
-|Q220-00    |30 May 2020      |Version ACLE Q2 2020 |
-+-----------+-----------------+---------------------+
-|2021Q2     | 02 July 2021    |Open source release. |
-+-----------+-----------------+---------------------+
+| Issue     | Date              | Change               |
+| :---      | :---              | :---                 |
+| Q219-00   | 30 June 2019      | Version ACLE Q2 2019 |
+| Q319-00   | 30 September 2019 | Version ACLE Q3 2019 |
+| Q419-00   | 31 December 2019  | Version ACLE Q4 2019 |
+| Q220-00   | 30 May 2020       | Version ACLE Q2 2020 |
+| 2021Q2    | 02 July 2021      | Open source release  |
 
-Changes for next release
-~~~~~~~~~~~~~~~~~~~~~~~~
+### Changes for next release
 
-* Update copyright statement in ssec-copyright_.
+* Update copyright statement in section [Copyright](#copyright).
 
-List of Intrinsics
-##################
+<!---
+**** Do not remove! ****
+The line following this comment is necessary to generate custom geometry settings
+for the intrinsics tables.
+It is automatically removed by the scripts that generate the pdfs.
+-->
+<!--latex_geometry_conf-->
 
+# List of Intrinsics
+
+------------------------------------------------------------------------
 {intrinsic_table}
-
