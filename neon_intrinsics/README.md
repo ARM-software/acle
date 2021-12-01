@@ -2,7 +2,7 @@
 <!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
 <!-- See LICENSE.md file for details -->
 <div align="center">
-   <img src="Arm_logo_blue_RGB.svg" />
+   <img src="{{site.baseurl}}/assets/images/Arm_logo_blue_RGB.svg" />
 </div>
 
 # Arm Neon Intrinsics Reference

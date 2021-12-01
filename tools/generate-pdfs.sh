@@ -40,7 +40,7 @@ function generate_pdfs_from_md() {
 mkdir -p pdfs
 
 # Convert svg image to pdf for use in pdf generation via pandoc.
-inkscape -z mve_intrinsics/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
+inkscape -z assets/images/Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
 
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
 generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf
