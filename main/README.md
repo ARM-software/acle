@@ -2,7 +2,7 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 <!-- See LICENSE.md file for details -->
 <div align="center">
-   <img src="{{site.baseurl}}/assets/images/Arm_logo_blue_RGB.svg" />
+   <img src="Arm_logo_blue_RGB.svg" />
 </div>
 
 # Arm C Language Extensions
