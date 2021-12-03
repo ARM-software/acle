@@ -2,6 +2,19 @@
 <!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 
 <nav id="header">
+  <span id="right-side">
+    {% if page.version %}<span class="navbar_doc_info"> Version: {{ page.version }} &nbsp;:::&nbsp;</span> {% endif %}
+    {% if page.date-of-issue %}<span class="navbar_doc_info"> Release Date: {{ page.date-of-issue }} &nbsp;:::&nbsp;</span> {% endif %}
+    <a href="https://github.com/ARM-software/acle/issues">
+      <button class="navbar_button"> Report a Bug </button>
+    </a>
+    <a href="{{site.baseurl}}/CONTRIBUTING.html">
+      <button class="navbar_button"> Contribute with a Proposal </button>
+    </a>
+    <img id="logo" src="Arm_logo_white_RGB.svg" alt="Logo">
+  </span>
+    <label for="show-menu" class="show-menu">Menu</label>
+    <input type="checkbox" id="show-menu" role="button">
   <span id="left-side">
     <!-- This loop is used to render the content of _data/navigation.yml into navigation tabs -->
     {% for nav in site.data.navigation %}
@@ -13,16 +26,5 @@
         {% endif %}
         {{ nav.text }}</a>
     {% endfor %}
-  </span>
-  <img id="logo" src="{{site.baseurl}}/assets/images/Arm_logo_white_RGB.svg" alt="Logo">
-  <span id="right-side">
-    {% if page.version %} Version: {{ page.version }} &nbsp;:::&nbsp; {% endif %}
-    {% if page.date-of-issue %} Release Date: {{ page.date-of-issue }} &nbsp;:::&nbsp; {% endif %}
-    <a href="https://github.com/ARM-software/acle/issues">
-      <button class="navbar_button"> Report a Bug </button>
-    </a>
-    <a href="{{site.baseurl}}/CONTRIBUTING.html">
-      <button class="navbar_button"> Contribute with a Proposal </button>
-    </a>
-  </span>
+  </span>  
 </nav>
