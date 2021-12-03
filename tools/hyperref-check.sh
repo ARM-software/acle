@@ -11,6 +11,7 @@ for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" ".
   # - Using wc to count all the lines and thus all the warnings/detected broken links
   mkdir -p pdfs
   pandoc $file --verbose -o pdfs/tmp.pdf 2>&1 | tee output
+  rm pdfs/tmp.pdf
   number_of_broken_refs=`cat output | grep 'pdfTeX warning (dest): name' | wc -l`
 
   if [[ $number_of_broken_refs -gt 0 ]]; then
