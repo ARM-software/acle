@@ -21,7 +21,7 @@ mkdir -p tmp
 function check_changes() {
 # Check if the new file created from the db is different from the one
 # stored in the specs folder. This is needed to make sure that changes
-# to the intrinsic_db are reflected in the rst of the specs in the
+# to the intrinsic_db are reflected in the md of the specs in the
 # same submission.
     if ! diff  $1 $2 ; then
 	echo "**** WARNING! Please check your changes in the specs."
@@ -29,7 +29,7 @@ function check_changes() {
     fi
 }
 
-# Function that invokes the script to generate the rst out of the db
+# Function that invokes the script to generate the md out of the db
 # of the specs.
 function generate_rst_specs() {
     ./tools/gen-intrinsics-specs.py --intrinsic-defs $1 \
