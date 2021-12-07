@@ -9,7 +9,7 @@ body {
   margin: 100px 60px;
   counter-reset: h1counter;
   color: #333E48;
-  font: 16px sans-serif;
+  font: 14px sans-serif;
 }
 
 a, a:hover, a:active, a:visited {
@@ -52,7 +52,7 @@ tr:nth-child(even) {
   margin: 0;
   background-color: #0091BD;
   color: white;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 //left and right side of the navbar - this is how the button, logo and page links
@@ -87,7 +87,7 @@ tr:nth-child(even) {
   border-radius: 6px;
   color: white;
   background-color: #0091BD;
-  font-size: 16px;
+  font-size: 14px;
   padding: 10px;
   margin: 10px 3px;
 }
