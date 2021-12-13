@@ -485,9 +485,9 @@ unspecified. For example:
 However, each argument must be evaluated at most once. So this
 definition is acceptable:
 
-  ```
+```
   #define __rev(x) __builtin_bswap32(x)
-  ```
+```
 
 but this is not:
 
@@ -869,9 +869,9 @@ feature is not present. (Aside: in Standard C/C++, references to
 undefined macros expand to 0 in preprocessor expressions, so a
 comparison such as:
 
-  ```
+```
   #if __ARM_ARCH >= 7
-  ```
+```
 
 will have the expected effect of evaluating to false if the macro is not
 defined.)
@@ -972,9 +972,9 @@ architectural profile of the target. `'S'` indicates the common
 subset of the A and R profiles. The common subset of the A, R and M
 profiles is indicated by
 
-  ```
+```
   __ARM_ARCH == 7 && !defined (__ARM_ARCH_PROFILE)
-  ```
+```
 
 This macro corresponds to the `Tag_CPU_arch_profile` object build
 attribute. It may be useful to writers of system code. It is expected in
@@ -1104,9 +1104,9 @@ implementations depending on the likely speed of integer division.
 Some older R-profile targets have hardware divide available in the T32
 instruction set only. This can be tested for using the following test:
 
-    ```
+```
     #if __ARM_FEATURE_IDIV || (__ARM_ARCH_PROFILE == 'R')
-    ```
+```
 
 ### Transactional Memory Extension
 
@@ -1661,15 +1661,15 @@ On targets with hardware FP the AAPCS provides for procedure calls to
 use either integer or floating-point argument and result registers. ACLE
 allows this to be selectable per function.
 
-    ```
+```
     __attribute__((pcs("aapcs")))
-    ```
+```
 
 applied to a function, selects software (integer) FP calling convention.
 
-    ```
+```
     __attribute__((pcs("aapcs-vfp")))
-    ```
+```
 
 applied to a function, selects hardware FP calling convention.
 
@@ -1684,15 +1684,15 @@ part of the type, i.e. as a language linkage in the sense of [C++ \#1].
 
 The following target selection attributes are supported:
 
-    ```
+```
     __attribute__((target("arm")))
-    ```
+```
 
 when applied to a function, forces A32 state code generation.
 
-    ```
+```
     __attribute__((target("thumb")))
-    ```
+```
 
 when applied to a function, forces T32 state code generation.
 
@@ -1964,9 +1964,9 @@ constant expression within the required range see
 
 The following memory barrier intrinsics are available:
 
-    ```
+```
     void __dmb(/*constant*/ unsigned int);
-    ```
+```
 
 Generates a DMB (data memory barrier) instruction or equivalent CP15
 instruction. DMB ensures the observed ordering of memory accesses.
@@ -1979,9 +1979,9 @@ available to another core.
 The `__dmb()` intrinsic also acts as a compiler memory barrier of the
 appropriate type.
 
-  ```
+```
   void __dsb(/*constant*/ unsigned int);
-  ```
+```
 
 Generates a DSB (data synchronization barrier) instruction or equivalent
 CP15 instruction. DSB ensures the completion of memory accesses. A DSB
@@ -1992,9 +1992,9 @@ before the DSB are guaranteed to have completed.
 The `__dsb()` intrinsic also acts as a compiler memory barrier of the
 appropriate type.
 
-  ```
+```
   void __isb(/*constant*/ unsigned int);
-  ```
+```
 
 Generates an ISB (instruction synchronization barrier) instruction or
 equivalent CP15 instruction. This instruction flushes the processor
@@ -2066,52 +2066,52 @@ barrier in compilers) on targets where the relevant instructions do not
 exist. On targets where the relevant instructions exist but are
 implemented as no-ops, these intrinsics generate the instructions.
 
-  ```
+```
   void __wfi(void);
-  ```
+```
 
 Generates a WFI (wait for interrupt) hint instruction, or nothing. The
 WFI instruction allows (but does not require) the processor to enter a
 low-power state until one of a number of asynchronous events occurs.
 
-  ```
+```
   void __wfe(void);
-  ```
+```
 
 Generates a WFE (wait for event) hint instruction, or nothing. The WFE
 instruction allows (but does not require) the processor to enter a
 low-power state until some event occurs such as a SEV being issued by
 another processor.
 
-  ```
+```
   void __sev(void);
-  ```
+```
 
 Generates a SEV (send a global event) hint instruction. This causes an
 event to be signaled to all processors in a multiprocessor system. It is
 a NOP on a uniprocessor system.
 
-  ```
+```
   void __sevl(void);
-  ```
+```
 
 Generates a send a local event hint instruction. This causes an event
 to be signaled to only the processor executing this instruction. In a
 multiprocessor system, it is not required to affect the other
 processors.
 
-  ```
+```
   void __yield(void);
-  ```
+```
 
 Generates a YIELD hint instruction. This enables multithreading software
 to indicate to the hardware that it is performing a task, for example a
 spin-lock, that could be swapped out to improve overall system
 performance.
 
-  ```
+```
   void __dbg(/*constant*/ unsigned int);
-  ```
+```
 
 Generates a DBG instruction. This provides a hint to debugging and
 related systems. The argument must be a constant integer from 0 to 15
@@ -2125,9 +2125,9 @@ when compiling for AArch32.
 sequence equivalent to the deprecated (and possibly unavailable) SWP
 instruction.
 
-  ```
+```
   uint32_t __swp(uint32_t, volatile void *);
-  ```
+```
 
 Unconditionally stores a new value at the given address, and returns the
 old value.
@@ -2187,9 +2187,9 @@ as a no-op (i.e. the instruction has no effect).
 
 ### Data prefetch
 
-  ```
+```
   void __pld(void const volatile *addr);
-  ```
+```
 
 Generates a data prefetch instruction, if available. The argument should
 be any expression that may designate a data address. The data is
@@ -2226,9 +2226,9 @@ values.
 
 ### Instruction prefetch
 
-  ```
+```
   void __pli(T addr);
-  ```
+```
 
 Generates a code prefetch instruction, if available. If a specific code
 prefetch instruction is not available, this intrinsic may generate a
@@ -2252,9 +2252,9 @@ are ignored on unsupported targets.
 
 ## NOP
 
-  ```
+```
   void __nop(void);
-  ```
+```
 
 Generates an unspecified no-op instruction. Note that not all
 architectures provide a distinguished NOP instruction. On those that do,
@@ -2442,9 +2442,9 @@ Reverses the byte order within each halfword of a word. For example,
 all targets and should be expanded to an efficient straight-line code
 sequence on targets without byte reversal instructions.
 
-  ```
+```
   int16_t __revsh(int16_t);
-  ```
+```
 
 Reverses the byte order in a 16-bit value and returns the signed 16-bit result.
 For example, `0x0080` becomes `0x8000`. This intrinsic is available on
@@ -2496,44 +2496,44 @@ encouraged to exploit these instructions from C code. These intrinsics
 are available when `__ARM_FEATURE_DSP` is defined, and are not
 available on non-5E targets. These multiplies cannot overflow.
 
-  ```
+```
   int32_t __smulbb(int32_t, int32_t);
-  ```
+```
 
 Multiplies two 16-bit signed integers, i.e. the low halfwords of the
 operands.
 
-  ```
+```
   int32_t __smulbt(int32_t, int32_t);
-  ```
+```
 
 Multiplies the low halfword of the first operand and the high halfword
 of the second operand.
 
-  ```
+```
   int32_t __smultb(int32_t, int32_t);
-  ```
+```
 
 Multiplies the high halfword of the first operand and the low halfword
 of the second operand.
 
-  ```
+```
   int32_t __smultt(int32_t, int32_t);
-  ```
+```
 
 Multiplies the high halfwords of the operands.
 
-  ```
+```
   int32_t __smulwb(int32_t, int32_t);
-  ```
+```
 
 Multiplies the 32-bit signed first operand with the low halfword (as a
 16-bit signed integer) of the second operand. Return the top 32 bits of
 the 48-bit product.
 
-  ```
+```
   int32_t __smulwt(int32_t, int32_t);
-  ```
+```
 
 Multiplies the 32-bit signed first operand with the high halfword (as a
 16-bit signed integer) of the second operand. Return the top 32 bits of
@@ -2548,17 +2548,17 @@ They saturate a 32-bit value at a given bit position. The saturation
 width must be an integral constant expression |--| see
 [sec-Constant-arguments-to-intrinsics](#constant-arguments-to-intrinsics).
 
-  ```
+```
   int32_t __ssat(int32_t, /*constant*/ unsigned int);
-  ```
+```
 
 Saturates a signed integer to the given bit width in the range 1 to 32.
 For example, the result of saturation to 8-bit width will be in the
 range -128 to 127. The Q flag is set if the operation saturates.
 
-  ```
+```
   uint32_t __usat(int32_t, /*constant*/ unsigned int);
-  ```
+```
 
 Saturates a signed integer to an unsigned (non-negative) integer of a
 bit width in the range 0 to 31. For example, the result of saturation to
@@ -2572,23 +2572,23 @@ These intrinsics are available when `__ARM_FEATURE_DSP` is defined.
 The saturating intrinsics operate on 32-bit signed integer data. There
 are no special saturated or fixed point types.
 
-  ```
+```
   int32_t __qadd(int32_t, int32_t);
-  ```
+```
 
 Adds two 32-bit signed integers, with saturation. Sets the Q flag if the
 addition saturates.
 
-  ```
+```
   int32_t __qsub(int32_t, int32_t);
-  ```
+```
 
 Subtracts two 32-bit signed integers, with saturation. Sets the Q flag
 if the subtraction saturates.
 
-  ```
+```
   int32_t __qdbl(int32_t);
-  ```
+```
 
 Doubles a signed 32-bit number, with saturation. `__qdbl(x)` is equal to
 `__qadd(x,x)` except that the argument x is evaluated only once. Sets
@@ -2598,9 +2598,9 @@ the Q flag if the addition saturates.
 
 These intrinsics are available when `__ARM_FEATURE_DSP` is defined.
 
-  ```
+```
   int32_t __smlabb(int32_t, int32_t, int32_t);
-  ```
+```
 
 Multiplies two 16-bit signed integers, the low halfwords of the first
 two operands, and adds to the third operand. Sets the Q flag if the
@@ -2608,39 +2608,39 @@ addition overflows. (Note that the addition is the usual 32-bit modulo
 addition which wraps on overflow, not a saturating addition. The
 multiplication cannot overflow.)
 
-  ```
+```
   int32_t __smlabt(int32_t, int32_t, int32_t);
-  ```
+```
 
 Multiplies the low halfword of the first operand and the high halfword
 of the second operand, and adds to the third operand, as for `__smlabb`.
 
-  ```
+```
   int32_t __smlatb(int32_t, int32_t, int32_t);
-  ```
+```
 
 Multiplies the high halfword of the first operand and the low halfword
 of the second operand, and adds to the third operand, as for `__smlabb`.
 
-  ```
+```
   int32_t __smlatt(int32_t, int32_t, int32_t);
-  ```
+```
 
 Multiplies the high halfwords of the first two operands and adds to the
 third operand, as for `__smlabb`.
 
-  ```
+```
   int32_t __smlawb(int32_t, int32_t, int32_t);
-  ```
+```
 
 Multiplies the 32-bit signed first operand with the low halfword (as a
 16-bit signed integer) of the second operand. Adds the top 32 bits of
 the 48-bit product to the third operand. Sets the Q flag if the addition
 overflows. (See note for `__smlabb`).
 
-  ```
+```
   int32_t __smlawt(int32_t, int32_t, int32_t);
-  ```
+```
 
 Multiplies the 32-bit signed first operand with the high halfword (as a
 16-bit signed integer) of the second operand and adds the top 32 bits of
@@ -2726,16 +2726,16 @@ These intrinsics are available when `__ARM_FEATURE_SIMD32` is defined.
 They saturate two 16-bit values to a given bit width as for the `__ssat`
 and `__usat` intrinsics defined in [ssec-wsatin](#width-specified-saturation-intrinsics).
 
-  ```
+```
   int16x2_t __ssat16(int16x2_t, /*constant*/ unsigned int);
-  ```
+```
 
 Saturates two 16-bit signed values to a width in the range 1 to 16. The
 Q flag is set if either operation saturates.
 
-  ```
+```
   int16x2_t __usat16(int16x2_t, /*constant */ unsigned int);
-  ```
+```
 
 Saturates two 16-bit signed values to a bit width in the range 0 to 15.
 The input values are signed and the output values are non-negative, with
@@ -2746,32 +2746,32 @@ saturates.
 
 These intrinsics are available when `__ARM_FEATURE_SIMD32` is defined.
 
-  ```
+```
   int16x2_t __sxtab16(int16x2_t, int8x4_t);
-  ```
+```
 
 Two values (at bit positions 0..7 and 16..23) are extracted from the
 second operand, sign-extended to 16 bits, and added to the first
 operand.
 
-  ```
+```
   int16x2_t __sxtb16(int8x4_t);
-  ```
+```
 
 Two values (at bit positions 0..7 and 16..23) are extracted from the
 first operand, sign-extended to 16 bits, and returned as the result.
 
-  ```
+```
   uint16x2_t __uxtab16(uint16x2_t, uint8x4_t);
-  ```
+```
 
 Two values (at bit positions 0..7 and 16..23) are extracted from the
 second operand, zero-extended to 16 bits, and added to the first
 operand.
 
-  ```
+```
   uint16x2_t __uxtb16(uint8x4_t);
-  ```
+```
 
 Two values (at bit positions 0..7 and 16..23) are extracted from the
 first operand, zero-extended to 16 bits, and returned as the result.
@@ -2780,9 +2780,9 @@ first operand, zero-extended to 16 bits, and returned as the result.
 
 This intrinsic is available when `__ARM_FEATURE_SIMD32` is defined.
 
-  ```
+```
   uint8x4_t __sel(uint8x4_t, uint8x4_t);
-  ```
+```
 
 Selects each byte of the result from either the first operand or the
 second operand, according to the values of the GE bits. For each result
@@ -2798,76 +2798,76 @@ These intrinsics are available when `__ARM_FEATURE_SIMD32` is defined.
 Each intrinsic performs 8-bit parallel addition or subtraction. In some
 cases the result may be halved or saturated.
 
-  ```
+```
   int8x4_t __qadd8(int8x4_t, int8x4_t);
-  ```
+```
 
 4x8-bit addition, saturated to the range `-2**7` to `2**7-1`.
 
-  ```
+```
   int8x4_t __qsub8(int8x4_t, int8x4_t);
-  ```
+```
 
 4x8-bit subtraction, with saturation.
 
-  ```
+```
   int8x4_t __sadd8(int8x4_t, int8x4_t);
-  ```
+```
 
 4x8-bit signed addition. The GE bits are set according to the results.
 
-  ```
+```
   int8x4_t __shadd8(int8x4_t, int8x4_t);
-  ```
+```
 
 4x8-bit signed addition, halving the results.
 
-  ```
+```
   int8x4_t __shsub8(int8x4_t, int8x4_t);
-  ```
+```
 
 4x8-bit signed subtraction, halving the results.
 
-  ```
+```
   int8x4_t __ssub8(int8x4_t, int8x4_t);
-  ```
+```
 
 4x8-bit signed subtraction. The GE bits are set according to the
 results.
 
-  ```
+```
   uint8x4_t __uadd8(uint8x4_t, uint8x4_t);
-  ```
+```
 
 4x8-bit unsigned addition. The GE bits are set according to the results.
 
-  ```
+```
   uint8x4_t __uhadd8(uint8x4_t, uint8x4_t);
-  ```
+```
 
 4x8-bit unsigned addition, halving the results.
 
-  ```
+```
   uint8x4_t __uhsub8(uint8x4_t, uint8x4_t);
-  ```
+```
 
 4x8-bit unsigned subtraction, halving the results.
 
-  ```
+```
   uint8x4_t __uqadd8(uint8x4_t, uint8x4_t);
-  ```
+```
 
 4x8-bit unsigned addition, saturating to the range `0` to `2**8-1`.
 
-  ```
+```
   uint8x4_t __uqsub8(uint8x4_t, uint8x4_t);
-  ```
+```
 
 4x8-bit unsigned subtraction, saturating to the range `0` to `2**8-1`.
 
-  ```
+```
   uint8x4_t __usub8(uint8x4_t, uint8x4_t);
-  ```
+```
 
 4x8-bit unsigned subtraction. The GE bits are set according to the
 results.
@@ -2878,17 +2878,17 @@ These intrinsics are available when `__ARM_FEATURE_SIMD32` is defined.
 They perform an 8-bit sum-of-absolute differences operation, typically
 used in motion estimation.
 
-  ```
+```
   uint32_t __usad8(uint8x4_t, uint8x4_t);
-  ```
+```
 
 Performs 4x8-bit unsigned subtraction, and adds the absolute values of
 the differences together, returning the result as a single unsigned
 integer.
 
-  ```
+```
   uint32_t __usada8(uint8x4_t, uint8x4_t, uint32_t);
-  ```
+```
 
 Performs 4x8-bit unsigned subtraction, adds the absolute values of the
 differences together, and adds the result to the third operand.
@@ -2899,165 +2899,165 @@ These intrinsics are available when `__ARM_FEATURE_SIMD32` is defined.
 Each intrinsic performs 16-bit parallel addition and/or subtraction. In
 some cases the result may be halved or saturated.
 
-  ```
+```
   int16x2_t __qadd16(int16x2_t, int16x2_t);
-  ```
+```
 
 2x16-bit addition, saturated to the range `-2**15` to `2**15-1`.
 
-  ```
+```
   int16x2_t __qasx(int16x2_t, int16x2_t);
-  ```
+```
 
 Exchanges halfwords of second operand, adds high halfwords and subtracts
 low halfwords, saturating in each case.
 
-  ```
+```
   int16x2_t __qsax(int16x2_t, int16x2_t);
-  ```
+```
 
 Exchanges halfwords of second operand, subtracts high halfwords and adds
 low halfwords, saturating in each case.
 
-  ```
+```
   int16x2_t __qsub16(int16x2_t, int16x2_t);
-  ```
+```
 
 2x16-bit subtraction, with saturation.
 
-  ```
+```
   int16x2_t __sadd16(int16x2_t, int16x2_t);
-  ```
+```
 
 2x16-bit signed addition. The GE bits are set according to the results.
 
-  ```
+```
   int16x2_t __sasx(int16x2_t, int16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, adds high halfwords and
 subtracts low halfwords. The GE bits are set according to the results.
 
-  ```
+```
   int16x2_t __shadd16(int16x2_t, int16x2_t);
-  ```
+```
 
 2x16-bit signed addition, halving the results.
 
-  ```
+```
   int16x2_t __shasx(int16x2_t, int16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, adds high halfwords and
 subtract low halfwords, halving the results.
 
-  ```
+```
   int16x2_t __shsax(int16x2_t, int16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, subtracts high halfwords and
 add low halfwords, halving the results.
 
-  ```
+```
   int16x2_t __shsub16(int16x2_t, int16x2_t);
-  ```
+```
 
 2x16-bit signed subtraction, halving the results.
 
-  ```
+```
   int16x2_t __ssax(int16x2_t, int16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, subtracts high halfwords and
 adds low halfwords. The GE bits are set according to the results.
 
-  ```
+```
   int16x2_t __ssub16(int16x2_t, int16x2_t);
-  ```
+```
 
 2x16-bit signed subtraction. The GE bits are set according to the
 results.
 
-  ```
+```
   uint16x2_t __uadd16(uint16x2_t, uint16x2_t);
-  ```
+```
 
 2x16-bit unsigned addition. The GE bits are set according to the
 results.
 
-  ```
+```
   uint16x2_t __uasx(uint16x2_t, uint16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, adds high halfwords and
 subtracts low halfwords. The GE bits are set according to the results of
 unsigned addition.
 
-  ```
+```
   uint16x2_t __uhadd16(uint16x2_t, uint16x2_t);
-  ```
+```
 
 2x16-bit unsigned addition, halving the results.
 
-  ```
+```
   uint16x2_t __uhasx(uint16x2_t, uint16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, adds high halfwords and
 subtracts low halfwords, halving the results.
 
-  ```
+```
   uint16x2_t __uhsax(uint16x2_t, uint16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, subtracts high halfwords and
 adds low halfwords, halving the results.
 
-  ```
+```
   uint16x2_t __uhsub16(uint16x2_t, uint16x2_t);
-  ```
+```
 
 2x16-bit unsigned subtraction, halving the results.
 
-  ```
+```
   uint16x2_t __uqadd16(uint16x2_t, uint16x2_t);
-  ```
+```
 
 2x16-bit unsigned addition, saturating to the range `0` to `2**16-1`.
 
-  ```
+```
   uint16x2_t __uqasx(uint16x2_t, uint16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, and performs saturating
 unsigned addition on the high halfwords and saturating unsigned
 subtraction on the low halfwords.
 
-  ```
+```
   uint16x2_t __uqsax(uint16x2_t, uint16x2_t);
-  ```
+```
 
 Exchanges halfwords of the second operand, and performs saturating
 unsigned subtraction on the high halfwords and saturating unsigned
 addition on the low halfwords.
 
-  ```
+```
   uint16x2_t __uqsub16(uint16x2_t, uint16x2_t);
-  ```
+```
 
 2x16-bit unsigned subtraction, saturating to the range `0` to `2**16-1`.
 
-  ```
+```
   uint16x2_t __usax(uint16x2_t, uint16x2_t);
-  ```
+```
 
 Exchanges the halfwords of the second operand, subtracts the high
 halfwords and adds the low halfwords. Sets the GE bits according to the
 results of unsigned addition.
 
-  ```
+```
   uint16x2_t __usub16(uint16x2_t, uint16x2_t);
-  ```
+```
 
 2x16-bit unsigned subtraction. The GE bits are set according to the
 results.
@@ -3067,41 +3067,41 @@ results.
 These intrinsics are available when `__ARM_FEATURE_SIMD32` is defined.
 Each intrinsic performs two 16-bit multiplications.
 
-  ```
+```
   int32_t __smlad(int16x2_t, int16x2_t, int32_t);
-  ```
+```
 
 Performs 2x16-bit multiplication and adds both results to the third
 operand. Sets the Q flag if the addition overflows. (Overflow cannot
 occur during the multiplications.)
 
-  ```
+```
   int32_t __smladx(int16x2_t, int16x2_t, int32_t);
-  ```
+```
 
 Exchanges the halfwords of the second operand, performs 2x16-bit
 multiplication, and adds both results to the third operand. Sets the Q
 flag if the addition overflows. (Overflow cannot occur during the
 multiplications.)
 
-  ```
+```
   int64_t __smlald(int16x2_t, int16x2_t, int64_t);
-  ```
+```
 
 Performs 2x16-bit multiplication and adds both results to the 64-bit
 third operand. Overflow in the addition is not detected.
 
-  ```
+```
   int64_t __smlaldx(int16x2_t, int16x2_t, int64_t);
-  ```
+```
 
 Exchanges the halfwords of the second operand, performs 2x16-bit
 multiplication and adds both results to the 64-bit third operand.
 Overflow in the addition is not detected.
 
-  ```
+```
   int32_t __smlsd(int16x2_t, int16x2_t, int32_t);
-  ```
+```
 
 Performs two 16-bit signed multiplications. Takes the difference of the
 products, subtracting the high-halfword product from the low-halfword
@@ -3109,9 +3109,9 @@ product, and adds the difference to the third operand. Sets the Q flag
 if the addition overflows. (Overflow cannot occur during the
 multiplications or the subtraction.)
 
-  ```
+```
   int32_t __smlsdx(int16x2_t, int16x2_t, int32_t);
-  ```
+```
 
 Performs two 16-bit signed multiplications. The product of the high
 halfword of the first operand and the low halfword of the second operand
@@ -3120,9 +3120,9 @@ and the high halfword of the second operand, and the difference is added
 to the third operand. Sets the Q flag if the addition overflows.
 (Overflow cannot occur during the multiplications or the subtraction.)
 
-  ```
+```
   int64_t __smlsld(int16x2_t, int16x2_t, int64_t);
-  ```
+```
 
 Perform two 16-bit signed multiplications. Take the difference of the
 products, subtracting the high-halfword product from the low-halfword
@@ -3130,9 +3130,9 @@ product, and add the difference to the third operand. Overflow in the
 64-bit addition is not detected. (Overflow cannot occur during the
 multiplications or the subtraction.)
 
-  ```
+```
   int64_t __smlsldx(int16x2_t, int16x2_t, int64_t);
-  ```
+```
 
 Perform two 16-bit signed multiplications. The product of the high
 halfword of the first operand and the low halfword of the second operand
@@ -3141,32 +3141,32 @@ and the high halfword of the second operand, and the difference is added
 to the third operand. Overflow in the 64-bit addition is not detected.
 (Overflow cannot occur during the multiplications or the subtraction.)
 
-  ```
+```
   int32_t __smuad(int16x2_t, int16x2_t);
-  ```
+```
 
 Perform 2x16-bit signed multiplications, adding the products together.
 Set the Q flag if the addition overflows.
 
-  ```
+```
   int32_t __smuadx(int16x2_t, int16x2_t);
-  ```
+```
 
 Exchange the halfwords of the second operand (or equivalently, the first
 operand), perform 2x16-bit signed multiplications, and add the products
 together. Set the Q flag if the addition overflows.
 
-  ```
+```
   int32_t __smusd(int16x2_t, int16x2_t);
-  ```
+```
 
 Perform two 16-bit signed multiplications. Take the difference of the
 products, subtracting the high-halfword product from the low-halfword
 product.
 
-  ```
+```
   int32_t __smusdx(int16x2_t, int16x2_t);
-  ```
+```
 
 Perform two 16-bit signed multiplications. The product of the high
 halfword of the first operand and the low halfword of the second operand
@@ -3178,16 +3178,16 @@ and the high halfword of the second operand.
 Taking the elementwise maximum of two SIMD values each of which consists
 of four 8-bit signed numbers:
 
-  ```
+```
   int8x4_t max8x4(int8x4_t x, int8x4_t y) { __ssub8(x, y); return __sel(x, y); }
-  ```
+```
 
 As described in :ref:sec-Parallel-selection, where SIMD values
 consist of two 16-bit unsigned numbers:
 
-  ```
+```
   int16x2_t max16x2(int16x2_t x, int16x2_t y) { __usub16(x, y); return __sel(x, y); }
-  ```
+```
 
 Note that even though the result of the subtraction is not used, the
 compiler must still generate the instruction, because of its side-effect
@@ -3234,16 +3234,16 @@ that C99 standard functions be used. To achieve a floating point convert
 to integer, rounding to |lsquo| nearest with ties to even |rsquo| operation, use these
 rounding functions with a type-cast to integral values. For example:
 
-  ```
+```
   (int) __rintnf (a);
-  ```
+```
 
 maps to a floating point convert to signed integer, rounding to nearest
 with ties to even operation.
 
-  ```
+```
   int32_t __jcvt (double);
-  ```
+```
 
 Converts a double-precision floating-point number to a 32-bit signed
 integer following the Javascript Convert instruction semantics [[ARMARMv83]](#ARMARMv83).
@@ -3278,9 +3278,9 @@ instructions introduced in Armv8.5-A.  These intrinsics are only defined for
 the AArch64 execution state and are available when `__ARM_FEATURE_RNG`
 is defined.
 
-  ```
+```
   int __rndr (uint64_t *);
-  ```
+```
 
 Stores a 64-bit random number into the object pointed to by the argument and
 returns zero.
@@ -3288,9 +3288,9 @@ If the implementation could not generate a random number  within a reasonable
 period of time the object pointed to by the input is set to zero and a non-zero
 value is returned.
 
-  ```
+```
   int __rndrrs (uint64_t *);
-  ```
+```
 
 Reseeds the random number generator.  After that stores a 64-bit random number
 into the object pointed to by the argument and returns zero.
@@ -3310,51 +3310,51 @@ CRC32 intrinsics provide direct access to CRC32 instructions
 CRC32{C}{B, H, W, X} in both Armv8 AArch32 and AArch64 execution states.
 These intrinsics are available when `__ARM_FEATURE_CRC32` is defined.
 
-  ```
+```
   uint32_t __crc32b (uint32_t a, uint8_t b);
-  ```
+```
 
 Performs CRC-32 checksum from bytes.
 
-  ```
+```
   uint32_t __crc32h (uint32_t a, uint16_t b);
-  ```
+```
 
 Performs CRC-32 checksum from half-words.
 
-  ```
+```
   uint32_t __crc32w (uint32_t a, uint32_t b);
-  ```
+```
 
 Performs CRC-32 checksum from words.
 
-  ```
+```
   uint32_t __crc32d (uint32_t a, uint64_t b);
-  ```
+```
 
 Performs CRC-32 checksum from double words.
 
-  ```
+```
   uint32_t __crc32cb (uint32_t a, uint8_t b);
-  ```
+```
 
 Performs CRC-32C checksum from bytes.
 
-  ```
+```
   uint32_t __crc32ch (uint32_t a, uint16_t b);
-  ```
+```
 
 Performs CRC-32C checksum from half-words.
 
-  ```
+```
   uint32_t __crc32cw (uint32_t a, uint32_t b);
-  ```
+```
 
 Performs CRC-32C checksum from words.
 
-  ```
+```
   uint32_t __crc32cd (uint32_t a, uint64_t b);
-  ```
+```
 
 Performs CRC-32C checksum from double words.
 
@@ -3383,33 +3383,33 @@ like this:
 The following intrinsics are defined on this data type. In all cases,
 the address `addr` must be aligned to a multiple of 64 bytes.
 
-  ```
+```
   data512_t __arm_ld64b(const void *addr);
-  ```
+```
 
 Loads 64 bytes of data atomically from the address `addr`. The
 address must be in a memory region that supports 64-byte load/store
 operations.
 
-  ```
+```
   void __arm_st64b(void *addr, data512_t value);
-  ```
+```
 
 Stores the 64 bytes in `value` atomically to the address `addr`. The
 address must be in a memory region that supports 64-byte load/store
 operations.
 
-  ```
+```
   uint64_t __arm_st64bv(void *addr, data512_t value);
-  ```
+```
 
 Attempts to store the 64 bytes in `value` atomically to the address
 `addr`.  It returns a 64-bit value from the response of the device
 written to.
 
-  ```
+```
   uint64_t __arm_st64bv0(void *addr, data512_t value);
-  ```
+```
 
 Performs the same operation as `__arm_st64bv`, except that the data
 stored to memory is modified by replacing the low 32 bits of
@@ -3582,9 +3582,9 @@ from the input argument which must be also be specified as of type T.
 If the input argument T has qualifiers `const` or  `volatile`, the return
 type T will also have the `const` or `volatile` qualifier.
 
-  ```
+```
   T* __arm_mte_create_random_tag(T* src, uint64_t mask);
-  ```
+```
 
 This intrinsic returns a pointer containing a randomly created logical address tag.
 The first argument is a pointer `src` containing  an address.
@@ -3595,9 +3595,9 @@ contains a randomly created logical tag (in the upper bits), that excludes any
 logical tags specified by the `mask`.
 A `mask` of zero excludes no tags.
 
-  ```
+```
   T* __arm_mte_increment_tag(T* src, unsigned offset);
-  ```
+```
 
 This intrinsic returns a pointer which is a copy of the input pointer `src`
 but with the logical address tag part offset by a specified offset value.
@@ -3609,9 +3609,9 @@ returning a pointer with the incremented logical tag.
 If adding the offset increments the logical tag beyond the valid 16 tags,
 the value is wrapped around.
 
-  ```
+```
   uint64_t __arm_mte_exclude_tag(T* src, uint64_t excluded);
-  ```
+```
 
 This intrinsic adds a logical tag to the set of excluded logical tags.
 The first argument is a pointer `src` containing  an address and a logical tag.
@@ -3620,9 +3620,9 @@ logical tags which are in current excluded set.
 The intrinsic adds the logical tag of `src` to the set specified by `excluded`
 and returns the new excluded tag set.
 
-  ```
+```
   void __arm_mte_set_tag(T* tag_address);
-  ```
+```
 
 This intrinsic stores an allocation tag, computed from the logical tag,
 to the tag memory thereby setting the allocation tag for the 16-byte
@@ -3633,9 +3633,9 @@ The type of the pointer is ignored (i.e. allocation tag is set only for a
 single granule even if the pointer points  to a type that is greater than 16 bytes).
 These intrinsics generate an unchecked access to memory.
 
-  ```
+```
   T* __arm_mte_get_tag(T* address);
-  ```
+```
 
 This intrinsic loads the allocation tag from tag memory and returns the
 corresponding logical tag as part of the returned pointer value.
@@ -3647,9 +3647,9 @@ The return value is a pointer whose address part comes from `address`
 and the logical tag value is the value computed from the allocation
 tag that was read from tag memory.
 
-  ```
+```
   ptrdiff_t __arm_mte_ptrdiff(T* a, T* b);
-  ```
+```
 
 The intrinsic calculates the difference between the address parts of the
 two pointers, ignoring the tags.
@@ -3663,63 +3663,63 @@ The tag bits in the input pointers are ignored for this operation.
 Intrinsics are provided to read and write system and coprocessor
 registers, collectively referred to as special register.
 
-  ```
+```
   uint32_t __arm_rsr(const char *special_register);
-  ```
+```
 
 Reads a 32-bit system register.
 
-  ```
+```
   uint64_t __arm_rsr64(const char *special_register);
-  ```
+```
 
 Reads a 64-bit system register.
 
-  ```
+```
   void* __arm_rsrp(const char *special_register);
-  ```
+```
 
 Reads a system register containing an address.
 
-  ```
+```
   float __arm_rsrf(const char *special_register);
-  ```
+```
 
 Reads a 32-bit coprocessor register containing a floating point value.
 
-  ```
+```
   double __arm_rsrf64(const char *special_register);
-  ```
+```
 
 Reads a 64-bit coprocessor register containing a floating point value.
 
-  ```
+```
   void __arm_wsr(const char *special_register, uint32_t value);
-  ```
+```
 
 Writes a 32-bit system register.
 
-  ```
+```
   void __arm_wsr64(const char *special_register, uint64_t value);
-  ```
+```
 
 Writes a 64-bit system register.
 
-  ```
+```
   void __arm_wsrp(const char *special_register, const void *value);
-  ```
+```
 
 Writes a system register containing an address.
 
-  ```
+```
   void __arm_wsrf(const char *special_register, float value);
-  ```
+```
 
 Writes a floating point value to a 32-bit coprocessor register.
 
-  ```
+```
   void __arm_wsrf64(const char *special_register, double value);
-  ```
+```
 
 Writes a floating point value to a 64-bit coprocessor register.
 
@@ -3738,15 +3738,15 @@ When specifying a 32-bit coprocessor register to `__arm_rsr`,
 `__arm_rsrp`, `__arm_rsrf`, `__arm_wsr`, `__arm_wsrp`, or
 `__arm_wsrf`:
 
-  ```
+```
   cp<coprocessor>:<opc1>:c<CRn>:c<CRm>:<opc2>
-  ```
+```
 
 Or (equivalently):
 
-  ```
+```
   p<coprocessor>:<opc1>:c<CRn>:c<CRm>:<opc2>
-  ```
+```
 
 Where:
 
@@ -3759,9 +3759,9 @@ or the Technical Reference Manual (TRM) for the specific processor.
 
 So to read MIDR:
 
-  ```
+```
   unsigned int midr = __arm_rsr("cp15:0:c0:c0:0");
-  ```
+```
 
 ACLE does not specify predefined strings for the system coprocessor
 register names documented in the Arm Architecture Reference Manual (for example “ MIDR ”).
@@ -3790,15 +3790,15 @@ When specifying a 32-bit system register to `__arm_rsr`, `__arm_rsrp`,
 When specifying a 64-bit coprocessor register to `__arm_rsr64`,
 `__arm_rsrf64`, `__arm_wsr64`, or `__arm_wsrf64`
 
-  ```
+```
   cp<coprocessor>:<opc1>:c<CRm>
-  ```
+```
 
 Or (equivalently):
 
-  ```
+```
   p<coprocessor>:<opc1>:c<Rm>
-  ```
+```
 
 Where:
 
@@ -3811,9 +3811,9 @@ Where:
 When specifying a system register to `__arm_rsr`, `__arm_rsr64`,
 `__arm_rsrp`, `__arm_wsr`, `__arm_wsr64` or `__arm_wsrp`:
 
-  ```
+```
   "o0:op1:CRn:CRm:op2"
-  ```
+```
 
 Where:
 
@@ -4191,9 +4191,9 @@ a single array element called val.
 For example an array of two `int16x4_t` types is `int16x4x2_t`, and is
 represented as
 
-  ```
+```
   struct int16x4x2_t { int16x4_t val[2]; };
-  ```
+```
 
 Note that this array of two 64-bit vector types is distinct from the
 128-bit vector type `int16x8_t`.
@@ -4294,9 +4294,9 @@ intrinsics to convert between integer and floating types; for example:
 
 ACLE does not define static construction of vector types. E.g.
 
-  ```
+```
   int32x4_t x = { 1, 2, 3, 4 };
-  ```
+```
 
 Is not portable. Use the `vcreate` or `vdup` intrinsics to construct values
 from scalars.
@@ -4711,9 +4711,9 @@ a structure containing a single array element called `val`.
 For example, an array of two `int16x8_t` types is `int16x4x8_t`, and is
 represented as
 
-  ```
+```
   struct int16x8x2_t { int16x8_t val[2]; };
-  ```
+```
 
 ## Scalar data types
 
@@ -4747,9 +4747,9 @@ intrinsics to convert between integer and floating types; for example:
 
 ACLE does not define static construction of vector types. E.g.
 
-  ```
+```
   int32x4_t x = { 1, 2, 3, 4 };
-  ```
+```
 
 Is not portable. Use the `vcreateq` or `vdupq` intrinsics to construct values
 from scalars.
@@ -4856,9 +4856,9 @@ also to infer this in the case of functions marked as inline.
 
 As a type attribute this would allow things like
 
-  ```
+```
   struct __attribute__((value_in_regs)) Point { int x[2]; };
-  ```
+```
 
 This would indicate that the result registers should be used as if the
 type had been passed as the first argument. The implementation should
@@ -4889,9 +4889,9 @@ call), BKPT (breakpoint) and other related functionality.
 
 One option would be to mark a function prototype with an attribute, for example
 
-  ```
+```
   int __attribute__((svc(0xAB))) system_call(int code, void const *params);
-  ```
+```
 
 When calling the function, arguments and results would be marshalled
 according to the AAPCS, the only difference being that the call would be
@@ -4917,9 +4917,9 @@ standards.
 Supporting memory access with cacheability hints through language
 extensions is being investigated. Eg.
 
-  ```
+```
   int *__attribute__((nontemporal)) p;
-  ```
+```
 
 As a type attribute, will allow indirection of p with non-temporal
 cacheability hint.
@@ -4994,47 +4994,47 @@ are defined to help use or detect these causes.
 
 ## Intrinsics
 
-  ```
+```
   uint64_t __tstart (void);
-  ```
+```
 
 Starts a new transaction. When the transaction starts successfully the return
 value is 0. If the transaction fails, all state modifications are discarded
 and a cause of the failure is encoded in the return value. The macros defined in [ssec-TMEFailures](#failure-definitions)
 can be used to detect the cause of the failure.
 
-  ```
+```
   void __tcommit (void);
-  ```
+```
 
 Commits the current transaction. For a nested transaction, the only effect
 is that the transactional nesting depth is decreased. For an outer transaction,
 the state modifications performed transactionally are committed to the
 architectural state.
 
-  ```
+```
   void __tcancel (/*constant*/ uint64_t);
-  ```
+```
 
 Cancels the current transaction and discards all state modifications that
 were performed transactionally. The intrinsic takes a 16-bit immediate input that encodes
 the cancellation reason. This input could be given as
 
-  ```
+```
   __tcancel (_TMFAILURE_RTRY | (failure_reason & _TMFAILURE_REASON));
-  ```
+```
 
 if retry is true or
 
-  ```
+```
   __tcancel (failure_reason & _TMFAILURE_REASON);
-  ```
+```
 
 if retry is false.
 
-  ```
+```
   uint64_t __ttest (void);
-  ```
+```
 
 Tests if executing inside a transaction. If no transaction is currently
 executing, the return value is 0. Otherwise, this intrinsic returns the depth of the
