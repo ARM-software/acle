@@ -9,7 +9,7 @@
 
 ## About this document
 
-The [Morello Supplement to the Arm C Language Extensions](morello.rst)
+The [Morello Supplement to the Arm C Language Extensions](morello.md)
 specifies the Arm C Language Extensions to enable C/C++ programmers to
 exploit the Morello architecture with minimal restrictions on source
 code portability.
@@ -38,5 +38,5 @@ claims.
 ## Defects report
 
 Please report defects in the [Morello Supplement to the Arm C Language
-Extensions](morello.rst) to the [issue tracker page on
+Extensions](morello.md) to the [issue tracker page on
 GitHub](https://github.com/ARM-software/acle/issues).
