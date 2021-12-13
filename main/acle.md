@@ -191,6 +191,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   intrinsic `vmul_lane_u16` in the second item.
 * Fixed item lists rendering in [sec-MVE-intrinsics](#m-profile-vector-extension-mve-intrinsics).
 * Fixed superfluous and broken backticks in code examples throughout.
+* Added reference to the *Cortex-M Security Extension (CMSE)*
+  specifications in
+  [sec-CMSE-intrinsics](#cortex-m-security-extension-cmse).
 
 ### References
 
@@ -289,6 +292,10 @@ This document refers to the following documents.
 * <span id="cxxabi" class="citation-label">cxxabi</span>
   [Itanium C++ ABI](https://itanium-cxx-abi.github.io/cxx-abi/)
 
+* <span id="CMSE-ACLE" class="citation-label">CMSE-ACLE</span> Arm,
+  [Arm®v8-M Security Extensions: Requirements on Development
+  Tools](https://developer.arm.com/documentation/ecm0359818/latest)
+
 ### Terms and abbreviations
 
 This document uses the following terms and abbreviations.
@@ -350,6 +357,13 @@ low-level library in C rather than assembler.
 
 ACLE support for SVE is defined in the Arm C Language Extensions for SVE
 document [[SVE-ACLE]](#SVE-ACLE) available on the Arm Developer Website.
+
+
+## Cortex-M Security Extension (CMSE)
+
+ACLE support for the Cortex-M Security Extension (CMSE) is defined in
+*Arm®v8-M Security Extensions: Requirements on Development Tools*
+document [CMSE-ACLE](#CMSE-ACLE) available on the Arm Developer Website.
 
 # Introduction
 
