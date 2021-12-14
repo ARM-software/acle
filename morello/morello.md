@@ -158,16 +158,18 @@ All content in this document is at the **Alpha** quality level.
 ## Changes for next release
 
 * Update the copyright statement in section [Copyright](#copyright).
+* Add a reference to the [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide) *CHERI Hybrid C/C++ Programming Guide* in section [Scope](#scope).
 
 ## References
 
 This document refers to, or is referred to by, the following documents.
 
-| Ref                                                                    |  URL or other reference        |  Title                                               |
-| :---                                                                   |  :---                          |  :---                                                |
-| [ACLE-morello](https://github.com/ARM-software/acle/tree/main/morello) |  This document                 |  Morello Supplement to the Arm C Language Extensions |
-| [ACLE](https://developer.arm.com/documentation/101028/latest)          |  Document number: 101028       |  Arm C Language Extensions                           |
-| [CHERI](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf)       |  UCAM-CL-TR-947, SSN 1476-2986 |  CHERI C/C++ Programming Guide                       |
+| Ref                                                                    |  URL or other reference                              |  Title                                               |
+| :---                                                                   |  :---                                                |  :---                                                |
+| [ACLE-morello](https://github.com/ARM-software/acle/tree/main/morello) |  This document                                       |  Morello Supplement to the Arm C Language Extensions |
+| [ACLE](https://developer.arm.com/documentation/101028/latest)          |  Document number: 101028                             |  Arm C Language Extensions                           |
+| [CHERI](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf)       |  UCAM-CL-TR-947, SSN 1476-2986                       |  CHERI C/C++ Programming Guide                       |
+| [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide)    |  https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide |  CHERI Hybrid C/C++ Programming Guide                |
 
 ## Terms & Abbreviations
 
@@ -200,7 +202,9 @@ The Morello Supplement to the Arm C Language Extensions highlights the
 language features added on top of the CHERI programming language to
 further exploit the Morello architecture. We recommend reading the
 [CHERI](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-947.pdf)
-Pure-Capability C/C++ Programming Guide as preliminary material.
+*Pure-Capability C/C++ Programming Guide* and the
+[CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide)
+*CHERI Hybrid C/C++ Programming Guide* as preliminary material.
 
 ## Predefined macros
 
