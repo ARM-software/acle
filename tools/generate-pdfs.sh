@@ -32,9 +32,11 @@ function generate_pdfs_from_md() {
 	# The rest is a regular expression.
 	# The second replacement string is being used to format the "List of Intrinsics"
 	# sections, which contain large longtables.
+	# The third replacement is for directing LaTeX to the correct graphics folder
+	# in the specific case of the cmse.md file.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
 	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
-	pandoc --template=tools/acle_template.tex -o $outputPdfFile
+	pandoc --template=tools/acle_template.tex -o $outputPdfFile --resource-path=$(dirname $inputMdFile)
 }
 
 mkdir -p pdfs
@@ -42,6 +44,7 @@ mkdir -p pdfs
 # Convert svg image to pdf for use in pdf generation via pandoc.
 inkscape -z Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
 
+generate_pdfs_from_md ./cmse/cmse.md ./pdfs/cmse.pdf
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
 generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf
 generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf

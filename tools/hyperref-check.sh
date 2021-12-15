@@ -2,7 +2,8 @@
 set -ex
 
 # Extracting all broken hyperref detected by PDFTex
-for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" "./neon_intrinsics/advsimd.md"; do
+for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" "./neon_intrinsics/advsimd.md" \
+			     "./cmse/cmse.md"; do
   echo "Checking $file..."
 
   # The following string of pipes extracts the unresolved internal links by:
@@ -10,7 +11,7 @@ for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" ".
   # - Using grep to extract all unresolved links from the file, eg "pdfTeX warning (dest): name{ssec-bf16-scalar}"
   # - Using wc to count all the lines and thus all the warnings/detected broken links
   mkdir -p pdfs
-  pandoc $file --verbose -o pdfs/tmp.pdf 2>&1 | tee output
+  pandoc $file --verbose -o pdfs/tmp.pdf  --resource-path=$(dirname $file) 2>&1 | tee output
   rm pdfs/tmp.pdf
   number_of_broken_refs=`cat output | grep 'pdfTeX warning (dest): name' | wc -l`
 

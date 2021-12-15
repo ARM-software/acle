@@ -8,6 +8,7 @@
     <title>{{ page.title }}</title>
     <link rel="stylesheet" href="{{site.baseurl}}/assets/css/default_style.css">
     {% if page.header_counter %} <link rel="stylesheet" href="{{site.baseurl}}/assets/css/header_counter.css"> {% endif %}
+    {% if page.set-quote-highlight %} <link rel="stylesheet" href="{{site.baseurl}}/assets/css/quote_highlight.css"> {% endif %}
   </head>
   <body>
       {% if page.title %} <h1 id="title"> {{ page.title }} </h1> {% endif %}

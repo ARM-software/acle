@@ -19,7 +19,10 @@ RUN apt-get update \
     pandoc \
     inkscape \
     python3 \
-    python3-tabulate \
+    python3-tabulate
+
+RUN apt-get install -y --no-install-recommends \
+    librsvg2-bin \
     && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /entrypoint.sh

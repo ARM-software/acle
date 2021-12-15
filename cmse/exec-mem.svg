@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg920"
+   width="420.66666"
+   height="265.33334"
+   viewBox="0 0 420.66666 265.33334"
+   sodipodi:docname="exec-mem.svg"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs924">
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path76163" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="marker78260"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(1.1) rotate(180) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path78258" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) rotate(180) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path76187" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="marker76430"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(1.1) rotate(180) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path76428" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(1.1) rotate(180) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path76181" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path76181-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path76181-53" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path76181-3" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="namedview922"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="147.43176"
+     inkscape:cy="188.26718"
+     inkscape:window-width="2560"
+     inkscape:window-height="1314"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Image 1"
+     style="display:inline">
+    <rect
+       style="display:inline;fill:#3b7bc9;fill-opacity:1;stroke:#3b7bc9;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect83319-0"
+       width="53.341736"
+       height="110.17242"
+       x="257.13242"
+       y="44.635056" />
+    <rect
+       style="display:inline;fill:#3b7bc9;fill-opacity:1;stroke:#3b7bc9;stroke-width:1.1471;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect83319-0-0"
+       width="226.98126"
+       height="34.364899"
+       x="170.33191"
+       y="167.01886" />
+    <rect
+       style="display:inline;fill:#3b7bc9;fill-opacity:1;stroke:#3b7bc9;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect83319"
+       width="53.341736"
+       height="110.44199"
+       x="19.666527"
+       y="45.195591" />
+    <text
+       xml:space="preserve"
+       style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1"
+       x="-100.17747"
+       y="285.98141"
+       id="text26323"
+       transform="rotate(-90)"><tspan
+         sodipodi:role="line"
+         id="tspan26321"
+         x="-100.17747"
+         y="285.98141">Secure code</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;white-space:pre;inline-size:67.8428;display:inline"
+       x="214.33569"
+       y="-104.29752"
+       id="text27227"
+       transform="translate(138.2382,202.76257)"><tspan
+         x="214.33569"
+         y="-104.29752"
+         id="tspan93434">Internal<tspan
+   y="-104.29752"
+   id="tspan93436"> </tspan></tspan><tspan
+         x="214.33569"
+         y="-87.6309"
+         id="tspan93438">functions</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline;stroke:none;fill:#ffffff;fill-opacity:1"
+       x="282.17599"
+       y="187.26723"
+       id="text30093"><tspan
+         sodipodi:role="line"
+         id="tspan30091"
+         x="282.17599"
+         y="187.26723">Secure data</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="70.217224"
+       y="35.191227"
+       id="text38695"><tspan
+         sodipodi:role="line"
+         id="tspan38693"
+         x="70.217224"
+         y="35.191227"
+         style="font-size:18.6667px;text-align:center;text-anchor:middle">NSC Region</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="240.50775"
+       y="34.495911"
+       id="text42449"><tspan
+         sodipodi:role="line"
+         id="tspan42447"
+         x="240.50775"
+         y="34.495911"
+         style="font-size:18.6667px;text-align:center;text-anchor:middle">Secure Region(s)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="208.30656"
+       y="229.27254"
+       id="text33169"><tspan
+         sodipodi:role="line"
+         id="tspan33167"
+         x="208.30656"
+         y="229.27254">Stack</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="283.08344"
+       y="228.78931"
+       id="text33965"><tspan
+         sodipodi:role="line"
+         id="tspan33963"
+         x="283.08344"
+         y="228.78931">Heap</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="358.48273"
+       y="228.83647"
+       id="text35259"><tspan
+         sodipodi:role="line"
+         id="tspan35257"
+         x="358.48273"
+         y="228.83647">Global data</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:1, 1;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect75562"
+       width="128.91637"
+       height="153.94777"
+       x="12.721982"
+       y="12.721983" />
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:1, 1;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect75562-5"
+       width="248.84927"
+       height="242.59142"
+       x="157.17867"
+       y="13.248093" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="100.10044"
+       y="62.509251"
+       id="text5955-7"><tspan
+         sodipodi:role="line"
+         id="tspan5953-1"
+         x="100.10044"
+         y="62.509251"
+         style="font-size:10.6667px;text-align:center;text-anchor:middle">veneer</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="213.92412"
+       y="63.003899"
+       id="text12473"><tspan
+         sodipodi:role="line"
+         id="tspan12471"
+         x="213.92412"
+         y="63.003899">Entry function</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect74582"
+       width="52.844074"
+       height="27.812672"
+       x="73.008263"
+       y="45.195591" />
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect74582-0"
+       width="85.949715"
+       height="27.54311"
+       x="171.18271"
+       y="44.635056" />
+    <path
+       style="fill:#3066a6;fill-opacity:1;stroke:#3066a6;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+       d="m 127.15702,59.101927 42.02569,0.292991"
+       id="path76021"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="100.10044"
+       y="90.052353"
+       id="text5955-7-4"><tspan
+         sodipodi:role="line"
+         id="tspan5953-1-3"
+         x="100.10044"
+         y="90.052353"
+         style="font-size:10.6667px;text-align:center;text-anchor:middle">veneer</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="213.92412"
+       y="90.547005"
+       id="text12473-0"><tspan
+         sodipodi:role="line"
+         id="tspan12471-4"
+         x="213.92412"
+         y="90.547005">Entry function</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect74582-8"
+       width="52.844074"
+       height="27.812672"
+       x="73.008263"
+       y="72.738693" />
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect74582-0-7"
+       width="85.949715"
+       height="27.54311"
+       x="171.18271"
+       y="72.178162" />
+    <path
+       style="fill:#3066a6;fill-opacity:1;stroke:#3066a6;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-6)"
+       d="m 127.15702,86.645033 42.02569,0.292991"
+       id="path76021-5"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="100.10044"
+       y="117.59546"
+       id="text5955-7-3"><tspan
+         sodipodi:role="line"
+         id="tspan5953-1-9"
+         x="100.10044"
+         y="117.59546"
+         style="font-size:10.6667px;text-align:center;text-anchor:middle">veneer</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="213.92412"
+       y="118.09011"
+       id="text12473-7"><tspan
+         sodipodi:role="line"
+         id="tspan12471-7"
+         x="213.92412"
+         y="118.09011">Entry function</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect74582-9"
+       width="52.844074"
+       height="27.812672"
+       x="73.008263"
+       y="100.2818" />
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect74582-0-5"
+       width="85.949715"
+       height="27.54311"
+       x="171.18271"
+       y="99.721268" />
+    <path
+       style="fill:#3066a6;fill-opacity:1;stroke:#3066a6;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-9)"
+       d="m 127.15702,114.18814 42.02569,0.29299"
+       id="path76021-3"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="100.10044"
+       y="145.13857"
+       id="text5955-7-8"><tspan
+         sodipodi:role="line"
+         id="tspan5953-1-96"
+         x="100.10044"
+         y="145.13857"
+         style="font-size:10.6667px;text-align:center;text-anchor:middle">veneer</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;display:inline"
+       x="213.92412"
+       y="145.63321"
+       id="text12473-04"><tspan
+         sodipodi:role="line"
+         id="tspan12471-2"
+         x="213.92412"
+         y="145.63321">Entry function</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect74582-3"
+       width="52.844074"
+       height="27.812672"
+       x="73.008263"
+       y="127.82491" />
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:1;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect74582-0-3"
+       width="85.949715"
+       height="27.54311"
+       x="171.18271"
+       y="127.26437" />
+    <path
+       style="fill:#3066a6;fill-opacity:1;stroke:#3066a6;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-3)"
+       d="m 127.15702,141.73124 42.02569,0.293"
+       id="path76021-7"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;white-space:pre;inline-size:105.082;display:inline;fill:#ffffff;fill-opacity:1;stroke:none"
+       x="-44.719551"
+       y="223.19669"
+       id="text24911"
+       transform="rotate(-90,-63.326037,118.84929)"><tspan
+         x="-44.719551"
+         y="223.19669"
+         id="tspan93440">Vector of secure<tspan
+   y="223.19669"
+   id="tspan93442"> </tspan></tspan><tspan
+         x="-44.719551"
+         y="239.86332"
+         id="tspan93444">gateway veneers</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000002;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect91649"
+       width="75.660416"
+       height="45.961937"
+       x="170.33191"
+       y="201.38376" />
+    <rect
+       style="display:inline;fill:none;fill-opacity:1;stroke:#000002;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect91649-1"
+       width="75.660416"
+       height="45.961937"
+       x="321.65274"
+       y="201.38376" />
+    <rect
+       style="display:inline;fill:none;fill-opacity:1;stroke:#000002;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect91649-9"
+       width="75.660416"
+       height="45.961937"
+       x="245.99232"
+       y="201.38376" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000002;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect92587"
+       width="86.62059"
+       height="110.30865"
+       x="310.47415"
+       y="44.635056" />
+  </g>
+</svg>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1788"
+   width="322.66666"
+   height="248.66667"
+   viewBox="0 0 322.66666 248.66667"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1792" />
+  <g
+     id="g1794">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato"
+       x="32.408783"
+       y="34.133331"
+       id="text3470"><tspan
+         id="tspan3468"
+         x="32.408783"
+         y="34.133331">Non-secure states</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato"
+       x="203.05655"
+       y="34.133331"
+       id="text3470-3"><tspan
+         id="tspan3468-2"
+         x="203.05655"
+         y="34.133331">Secure states</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.6667px;line-height:1.25;font-family:'Courier New';-inkscape-font-specification:'Courier New'"
+       x="69.866661"
+       y="-74.666664"
+       id="text8226"><tspan
+         id="tspan8224"
+         x="69.866661"
+         y="-74.666664" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:13.3333px;line-height:1.25;font-family:'Courier New';-inkscape-font-specification:'Courier New'"
+       x="-230.39999"
+       y="-122.13333"
+       id="text26372"><tspan
+         id="tspan26370"
+         x="-230.39999"
+         y="-122.13333" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;white-space:pre;inline-size:98.32"
+       x="81.878227"
+       y="-15.010012"
+       id="text3470-8"
+       transform="translate(4.0967193,107.63107)"><tspan
+         x="81.878227"
+         y="-15.010012"
+         id="tspan55170">Non-secure<tspan
+   y="-15.010012"
+   id="tspan55172"> </tspan></tspan><tspan
+         x="81.878227"
+         y="1.656612"
+         id="tspan55174">thread mode</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;white-space:pre;inline-size:80.1867"
+       x="81.878227"
+       y="-15.010012"
+       id="text3470-8-0"
+       transform="translate(160.09769,107.68441)"><tspan
+         x="81.878227"
+         y="-15.010012"
+         id="tspan55176">Secure<tspan
+   y="-15.010012"
+   id="tspan55178"> </tspan></tspan><tspan
+         x="81.878227"
+         y="1.656612"
+         id="tspan55180">thread mode</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;white-space:pre;inline-size:84.4534"
+       x="81.878227"
+       y="-15.010012"
+       id="text3470-8-0-7"
+       transform="translate(159.77005,204.67268)"><tspan
+         x="81.878227"
+         y="-15.010012"
+         id="tspan55182">Secure<tspan
+   y="-15.010012"
+   id="tspan55184"> </tspan></tspan><tspan
+         x="81.878227"
+         y="1.656612"
+         id="tspan55186">handler mode</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;text-align:center;text-anchor:middle;white-space:pre;inline-size:98.32"
+       x="81.878227"
+       y="-15.010012"
+       id="text3470-8-9"
+       transform="translate(3.770056,204.61935)"><tspan
+         x="81.878227"
+         y="-15.010012"
+         id="tspan55188">Non-secure<tspan
+   y="-15.010012"
+   id="tspan55190"> </tspan></tspan><tspan
+         x="81.878227"
+         y="1.656612"
+         id="tspan55192">handler mode</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:8,1;stroke-dashoffset:0"
+       d="M 162.66666,3.1999999 161.59999,250.66666"
+       id="path54572" />
+    <rect
+       style="fill:none;stroke-width:1.00157;stroke-miterlimit:4;stroke-dasharray:8.0126, 1.00157;stroke-dashoffset:0"
+       id="rect54596"
+       width="114.66666"
+       height="76.800003"
+       x="28.53334"
+       y="57.831051" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.92424;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect54700"
+       width="114.21066"
+       height="74.210655"
+       x="28.761337"
+       y="156.114" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.92424;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect54700-1"
+       width="114.21066"
+       height="74.210655"
+       x="184.76132"
+       y="156.114" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.92424;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect54700-3"
+       width="114.21066"
+       height="74.210655"
+       x="184.76132"
+       y="59.125725" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.92424;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect54700-5"
+       width="114.21066"
+       height="74.210655"
+       x="28.761337"
+       y="59.125725" />
+  </g>
+</svg>

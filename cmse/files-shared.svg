@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg96985"
+   width="458.55643"
+   height="347.88977"
+   viewBox="0 0 458.55643 347.88977"
+   sodipodi:docname="files-shared.svg"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview852"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.8557917"
+     inkscape:cx="212.84716"
+     inkscape:cy="164.61977"
+     inkscape:window-width="1440"
+     inkscape:window-height="786"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer3"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:snap-bbox="true"
+     inkscape:snap-global="false" />
+  <defs
+     id="defs96989" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="to keep"
+     transform="translate(101.51879,29.175006)"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <rect
+       style="display:inline;fill:#d8d8d8;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect17695-1-8"
+       width="122.33054"
+       height="40.535564"
+       x="-81.299126"
+       y="159.74968" />
+    <g
+       id="layer2"
+       transform="translate(-100.4563,-27.315186)">
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato"
+         x="27.765432"
+         y="25.324514"
+         id="text105270"><tspan
+           id="tspan105268"
+           x="27.765432"
+           y="25.324514">Security agnostic library developers</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato"
+         x="124.79189"
+         y="61.022926"
+         id="text107056"><tspan
+           id="tspan107054"
+           x="124.79189"
+           y="61.022926">Library headers</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato"
+         x="256.2963"
+         y="59.192242"
+         id="text108740"><tspan
+           id="tspan108738"
+           x="256.2963"
+           y="59.192242">Archive library</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato"
+         x="26.850088"
+         y="160.1852"
+         id="text112344"><tspan
+           id="tspan112342"
+           x="26.850088"
+           y="160.1852">Secure core developers</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;white-space:pre;inline-size:102.642"
+         x="317.0141"
+         y="158.96474"
+         id="text114904"><tspan
+           x="317.0141"
+           y="158.96474"
+           id="tspan1179">Non-secure core </tspan><tspan
+           x="317.0141"
+           y="175.63137"
+           id="tspan1181">developers</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;white-space:pre;inline-size:98.0753"
+         x="28.375662"
+         y="204.12169"
+         id="text120224"><tspan
+           x="28.375662"
+           y="204.12169"
+           id="tspan1183">Secure </tspan><tspan
+           x="28.375662"
+           y="220.78832"
+           id="tspan1185">executable file</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;white-space:pre;inline-size:102.805"
+         x="28.070547"
+         y="253.24515"
+         id="text124692"><tspan
+           x="28.070547"
+           y="253.24515"
+           id="tspan1187">Secure gateway </tspan><tspan
+           x="28.070547"
+           y="269.91178"
+           id="tspan1189">import library</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;white-space:pre;inline-size:88.3556"
+         x="29.596121"
+         y="301.75839"
+         id="text128134"><tspan
+           x="29.596121"
+           y="301.75839"
+           id="tspan1191">Entry function </tspan><tspan
+           x="29.596121"
+           y="318.42502"
+           id="tspan1193">headers</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:13.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;white-space:pre;inline-size:101.608"
+         x="318.53967"
+         y="278.56967"
+         id="text133944"><tspan
+           x="318.53967"
+           y="278.56967"
+           id="tspan1195">Non-secure </tspan><tspan
+           x="318.53967"
+           y="295.2363"
+           id="tspan1197">executable file</tspan></text>
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect11037"
+         width="456.66666"
+         height="346"
+         x="-0.11761068"
+         y="-0.91493845" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3, 1;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 16.432346,137.11123 H 442.05578"
+         id="path13898" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3, 1;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 240.82565,137.11123 1.4477,194.71549"
+         id="path13900" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 114.01253,89.129731 2.67616,11.373689 h 123.77255 l 1.69308,11.3737 1.65213,-11.3737 124.44159,0.66905 2.00712,-10.704657"
+         id="path31877"
+         sodipodi:nodetypes="ccccccc" />
+      <path
+         style="display:inline;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 153.52835,327.27433 11.37369,-2.67616 v -39.17254 l 11.3737,-1.69308 -11.3737,-1.65213 0.66905,-40.91929 -10.70466,-2.00712"
+         id="path31877-4"
+         sodipodi:nodetypes="ccccccc" />
+    </g>
+    <rect
+       style="display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect17695-1-9"
+       width="122.33054"
+       height="40.535564"
+       x="-81.299126"
+       y="260.36475" />
+    <path
+       style="display:inline;fill:#346cb0;fill-opacity:1;stroke:none;stroke-width:1.06217px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 174.40171,84.494448 v 43.255982 h -9.99999 l 20.00001,22.5641 19.99998,-22.5641 h -9.99999 V 84.494448 Z"
+       id="path86590"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="display:inline;fill:#346cb0;fill-opacity:1;stroke:none;stroke-width:1.06217px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 94.778276,84.856382 v 43.255978 h -9.99999 l 20.000014,22.5641 19.99998,-22.5641 h -9.99999 V 84.856382 Z"
+       id="path86590-0"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="display:inline;fill:#346cb0;fill-opacity:1;stroke:none;stroke-width:1.06217px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 99.374509,267.12625 h 77.276901 v 9.99999 l 22.5641,-20.00001 -22.5641,-19.99998 v 9.99999 H 99.374509 Z"
+       id="path86590-3"
+       sodipodi:nodetypes="cccccccc" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect17695"
+       width="123.77824"
+       height="42.707108"
+       x="14.297105"
+       y="14.255957" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect17695-1"
+       width="122.33054"
+       height="40.535564"
+       x="147.84732"
+       y="15.341733" />
+    <rect
+       style="display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect17695-1-6"
+       width="122.33054"
+       height="40.535564"
+       x="-81.299126"
+       y="210.05721" />
+  </g>
+</svg>

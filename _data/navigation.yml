@@ -8,3 +8,5 @@
   url: /mve_intrinsics/
 - text: Neon
   url: /neon_intrinsics/
+- text: CMSE
+  url: /cmse/
