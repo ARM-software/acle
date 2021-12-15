@@ -194,6 +194,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added reference to the *Cortex-M Security Extension (CMSE)*
   specifications in
   [sec-CMSE-intrinsics](#cortex-m-security-extension-cmse).
+* Added specification for [sec-NEON-SVE-Bridge](#neon-sve-bridge) 
+  and [sec-NEON-SVE-Bridge-macros](#neon-sve-bridge-macros).
 
 ### References
 
@@ -1647,6 +1649,11 @@ be found in [[BA]](#BA).
 | `__ARM_SIZEOF_MINIMAL_ENUM` [[ssec-Imptype]](#implementation-defined-type-properties)                                    | Size of minimal enumeration type: 1 or 4                                                           | 1           |
 | `__ARM_SIZEOF_WCHAR_T` [[ssec-Imptype]](#implementation-defined-type-properties)                                         | Size of `wchar_t`: 2 or 4                                                                          | 2           |
 | `__ARM_WMMX` [[ssec-WMMX]](#wireless-mmx)                                                         | Wireless MMX extension (32-bit-only)                                                               | 1           |
+
+## NEON-SVE Bridge macros
+
+`__ARM_NEON_SVE_BRIDGE` is defined to 1 if [NEON-SVE-Bridge](#neon-sve-bridge)
+intrinsics are available.
 
 # Attributes and pragmas
 
@@ -5064,3 +5071,91 @@ transaction.
 | uint64_t __ttest (void)                       | -                | Xt -> result   | ttest <Xt>        |
 
 These intrinsics are available when `arm_acle.h` is included.
+
+# Architectural Extension Bridges
+
+## NEON-SVE Bridge
+
+The NEON_SVE Bridge adds intrinsics that allow conversions between NEON and
+SVE vectors.
+
+These intrinsics are defined in the header file `arm_neon_sve_bridge.h`.
+
+`__ARM_NEON_SVE_BRIDGE` is defined as 1 when `arm_neon_sve_bridge.h` is
+available.
+
+Including this header_file will include `arm_neon.h` and `arm_sve.h`.
+
+### `svset_neonq`
+
+These intrinsics set the first 128 bits of SVE vector `vec` to `subvec`.
+
+That is, bit *i* of the result is equal to:
+* bit *i* of `subvec` if *i* < 128
+* bit *i* of `vec` otherwise
+
+On big-endian targets, this leaves lanes in a different
+order from the “native” SVE order.  For example, if `subvec` is
+`int32x4_t`, then on big-endian targets, the first memory element
+is in lane 3 of `subvec` and is therefore in lane 3 of the returned
+SVE vector.  Using `svld1` to load elements would instead put the
+first memory element in lane 0 of the returned SVE vector.
+
+When `svundef` is passed as the `vec` parameter, compilers are able
+to reuse the SVE register overlapping the NEON input without generating
+additional instructions.
+
+| **Instances**                                                            |
+|--------------------------------------------------------------------------|
+| `svint8_t svset_neonq[_s8](svint8_t vec, int8x16_t subvec)`              |
+| `svint16_t svset_neonq[_s16](svint16_t vec, int16x8_t subvec)`           |
+| `svint32_t svset_neonq[_s32](svint32_t vec, int32x4_t subvec)`           |
+| `svint64_t svset_neonq[_s64](svint64_t vec, int64x2_t subvec)`           |
+| `svuint8_t svset_neonq[_u8](svuint8_t vec, uint8x16_t subvec)`           |
+| `svuint16_t svset_neonq[_u16](svuint16_t vec, uint16x8_t subvec)`        |
+| `svuint32_t svset_neonq[_u32](svuint32_t vec, uint32x4_t subvec)`        |
+| `svuint64_t svset_neonq[_u64](svuint64_t vec, uint64x2_t subvec)`        |
+| `svfloat16_t svset_neonq[_f16](svfloat16_t vec, float16x8_t subvec)`     |
+| `svfloat32_t svset_neonq[_f32](svfloat32_t vec, float32x4_t subvec)`     |
+| `svfloat64_t svset_neonq[_f64](svfloat64_t vec, float64x2_t subvec)`     |
+| `svbfloat16_t svset_neonq[_bf16](svbfloat16_t vec, bfloat16x8_t subvec)` |
+
+### `svget_neonq`
+
+These intrinsics get the first 128 bit subvector of SVE vector `vec` as a
+NEON vector.
+
+| **Instances**                                       |
+|-----------------------------------------------------|
+| `int8x16_t svget_neonq[_s8](svint8_t vec)`          |
+| `int16x8_t svget_neonq[_s16](svint16_t vec)`        |
+| `int32x4_t svget_neonq[_s32](svint32_t vec)`        |
+| `int64x2_t svget_neonq[_s64](svint64_t vec)`        |
+| `uint8x16_t svget_neonq[_u8](svuint8_t vec)`        |
+| `uint16x8_t svget_neonq[_u16](svuint16_t vec)`      |
+| `uint32x4_t svget_neonq[_u32](svuint32_t vec)`      |
+| `uint64x2_t svget_neonq[_u64](svuint64_t vec)`      |
+| `float16x8_t svget_neonq[_f16](svfloat16_t vec)`    |
+| `float32x4_t svget_neonq[_f32](svfloat32_t vec)`    |
+| `float64x2_t svget_neonq[_f64](svfloat64_t vec)`    |
+| `bfloat16x8_t svget_neonq[_bf16](svbfloat16_t vec)` |
+
+### `svdup_neonq`
+
+These intrinsics return an SVE vector with all SVE subvectors containing the
+duplicated NEON vector `vec`.
+
+| **Instances**                                       |
+|-----------------------------------------------------|
+| `svint8_t svdup_neonq[_s8](int8x16_t vec)`          |
+| `svint16_t svdup_neonq[_s16](int16x8_t vec)`        |
+| `svint32_t svdup_neonq[_s32](int32x4_t vec)`        |
+| `svint64_t svdup_neonq[_s64](int64x2_t vec)`        |
+| `svuint8_t svdup_neonq[_u8](uint8x16_t vec)`        |
+| `svuint16_t svdup_neonq[_u16](uint16x8_t vec)`      |
+| `svuint32_t svdup_neonq[_u32](uint32x4_t vec)`      |
+| `svuint64_t svdup_neonq[_u64](uint64x2_t vec)`      |
+| `svfloat16_t svdup_neonq[_f16](float16x8_t vec)`    |
+| `svfloat32_t svdup_neonq[_f32](float32x4_t vec)`    |
+| `svfloat64_t svdup_neonq[_f64](float64x2_t vec)`    |
+| `svbfloat16_t svdup_neonq[_bf16](bfloat16x8_t vec)` |
