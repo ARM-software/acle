@@ -27,6 +27,9 @@
 \usepackage[$if(landscape)$landscape,$endif$top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm]{geometry}
 \usepackage{lastpage}
 
+% Add extra space to table rows
+\renewcommand{\arraystretch}{2}
+
 \makeatletter
   \patchcmd{\f@nch@foot}{\rlap}{\color{darkgray}\rlap}{}{}
   \patchcmd{\footrule}{\hrule}{\color{darkgray}\hrule}{}{}
@@ -90,6 +93,13 @@ $endif$
 \definecolor{armgray}{rgb}{0.5,0.5,0.5}
 \definecolor{armlightgray}{rgb}{0.83,0.83,0.83}
 \definecolor{armblue}{HTML}{0091BD}
+
+% This is used to turn block quotes into highlighted text.
+$if(set-quote-highlight)$
+  \usepackage{tcolorbox}
+  \newtcolorbox{myquote}{colback=armblue!25!white, colframe=armblue!25!white}
+  \renewenvironment{quote}{\begin{myquote}}{\end{myquote}}
+$endif$
 
 \makeatletter
 \renewcommand\maketitle{
