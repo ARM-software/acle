@@ -233,9 +233,7 @@ system results in a _SecureFault_.
 The security states are orthogonal to the exception level, as shown in 
 [Figure 1](#figure1).
 
-![](figures/diag-rep.png)
-
-<span id="figure1" class="citation-label">**Figure 1: Diagrammatic representation of secure states**</span>
+![<span id="figure1" class="citation-label">**Diagrammatic representation of secure states**</span>](figures/diag-rep.png)
 
 Memory regions can be defined by the system through the _IDAU_ or can be
 controlled in software through the memory mapped _SAU_ registers.
@@ -250,9 +248,7 @@ accessed in secure state as well, including the banked parts.
 The system boots in secure state and can change security states using branches
 as summarized in [Figure 2](#figure2).
 
-![](figures/state-trans.png)
-
-<span id="figure2" class="citation-label">**Figure 2: Security state transitions**</span>
+![<span id="figure2" class="citation-label">**Security state transitions**</span>](figures/state-trans.png)
 
 Transitions from secure to non-secure state can be initiated by software through
 the use of the `BXNS` and `BLXNS` instructions that have the 
@@ -455,9 +451,7 @@ FPCXTS.
 The interaction between developers of secure code, non-secure code, and
 (optional) security agnostic library code is shown in [Figure 3](#figure3).
 
-![](figures/files-shared.png)
-
-<span id="figure3" class="citation-label">**Figure 3: Files shared between parties**</span>
+![<span id="figure3" class="citation-label">**Files shared between parties**</span>](figures/files-shared.png)
 
 The secure gateway import library, shortened to _import library_, contains the
 addresses of the secure gateways of the secure code. This import library
@@ -526,9 +520,7 @@ non-secure code.
 
 [Figure 4](#figure4) shows the memory layout of a secure executable.
 
-![](figures/exec-mem.png)
-
-<span id="figure4" class="citation-label">**Figure 4: Secure executable memory layout**</span>
+![<span id="figure4" class="citation-label">**Secure executable memory layout**</span>](figures/exec-mem.png)
 
 ### Example C level development flow of secure code
 
@@ -1006,9 +998,7 @@ arguments that read at most once, but accessibility checks are still required.
 
 The stack usage of an entry function is shown in [Figure 5](#figure5).
 
-![](figures/stack-frame-entry.png)
-
-<span id="figure5" class="citation-label">**Figure 5: Entry function's caller stack frame**</span>
+![<span id="figure5" class="citation-label">**Entry function's caller stack frame**</span>](figures/stack-frame-entry.png)
 
 ### Return from an entry function
 
@@ -1178,9 +1168,7 @@ case, access checks are still required.
 
 The stack usage during a non-secure function call is shown in [Figure 6](#figure6).
 
-![](figures/stack-frame-non-secure.png)
-
-<span id="figure6" class="citation-label">**Figure 6: Caller's stack frame of a non-secure function call**</span>
+![<span id="figure6" class="citation-label">**Caller's stack frame of a non-secure function call**</span>](figures/stack-frame-non-secure.png)
 
 ## Non-secure function pointer
 

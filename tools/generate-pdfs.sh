@@ -36,7 +36,7 @@ function generate_pdfs_from_md() {
 	# in the specific case of the cmse.md file.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
 	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
-	sed -u 's/!\[\](figures/!\[\](cmse\/figures/' | \
+	sed -u 's/\](figures/\](cmse\/figures/' | \
 	pandoc --template=tools/acle_template.tex -o $outputPdfFile
 }
 
