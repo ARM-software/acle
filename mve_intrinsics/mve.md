@@ -120,6 +120,10 @@ Copyright 2019-2021 Arm Limited and/or its affiliates <open-source-office@arm.co
 ### Changes for next release
 
 * Update copyright statement in section [Copyright](#copyright).
+* Converted document from rst to md.
+* Added metadata header with Jekyll and LaTeX formatting.
+* Added ToC declaration at the start of the document.
+* Added developer site links to intrinsics tables.
 
 <!---
 **** Do not remove! ****

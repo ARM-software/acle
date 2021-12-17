@@ -131,6 +131,10 @@ for more information about Arm’s trademarks.
 
 * Fix typo in signature of ``vaddq_s16``.
 * Update copyright statement in section [Copyright](#copyright).
+* Converted document from rst to md.
+* Added metadata header with Jekyll and LaTeX formatting.
+* Added ToC declaration at the start of the document.
+* Added developer site links to intrinsics tables.
 
 <!---
 **** Do not remove! ****
