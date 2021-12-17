@@ -6,10 +6,15 @@ https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
 */
 
 body {
-  margin: 100px 60px;
+  margin: 100px 360px;
   counter-reset: h1counter;
   color: #333E48;
   font: 14px sans-serif;
+}
+
+p {  
+  width: 16cm;
+  text-align: justify;
 }
 
 a, a:hover, a:active, a:visited {
