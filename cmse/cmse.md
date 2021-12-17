@@ -348,7 +348,7 @@ There are two causes:
 
 There can be unexpected consequences when secure code accesses non-secure memory:
 
-```
+``` c
 int array[N]
 void foo(int *p) {
     if (*p >= 0 && *p < N) {
@@ -367,7 +367,7 @@ to non-secure memory would render this array bounds check useless.
 
 The above example shows a case that can be handled by the developer as follows:
 
-```
+``` c
 int array[N]
 void foo(volatile int *p) {
     int i = *p;    
@@ -531,14 +531,14 @@ features that are described later in this document.
 The interface visible to non-secure code is defined in the header file 
 `myinterface.h` as follows:
 
-```
+``` c
 int entry1(int x);
 int entry2(int x);
 ```
 
 The implementation of this interface is given by the following C code:
 
-```
+``` c
 #include <arm_cmse.h>
 #include “myinterface.h”
 int func1(int x) { return x; }
@@ -554,7 +554,7 @@ very platform dependent so is not included in this example.
 When a compiler translates the above C code, it could produce the following
 assembly:
 
-```
+``` c
 func1:
  BX lr
 entry1:
@@ -582,7 +582,7 @@ When the relocatable file corresponding to this assembly code is linked into an
 executable file, the linker creates the following veneers in a section
 containing only entry veneers:
 
-```
+``` c
 entry1:
  SG
  B.W __acle_se_entry1
@@ -658,7 +658,7 @@ influenced by endianness.
 
 > **19** If `__ARM_BIG_ENDIAN` is unset and bit 0 of macro `__ARM_FEATURE_CMSE` is set,
 > the following type must be declared:
-> ```
+> ``` c
 >  typedef union {
 >   struct cmse_address_info {
 >    unsigned mpu_region:8;
@@ -734,7 +734,7 @@ instructions are executed to check the address range.
 Regions are aligned at 32-byte boundaries. If the address range fits in one
 32-byte address line, a single `TT` instruction suffices. This is the case when
 the following constraint holds:
-```
+``` c
 (p mod 32) + size <= 32
 ```
 
@@ -827,7 +827,7 @@ The following pseudocode describes the general code sequence for a generated
 non-secure memory write access at address `nsaddr` and of size `SIZE`. An
 implementation is not required to use this particular code sequence.
 
-```
+``` c
 addr = cmse_check_address_range(nsaddr, SIZE, CMSE_MPU_READWRITE | CMSE_NONSECURE)
 if addr == 0 then
  cmse_abort()
@@ -869,7 +869,7 @@ double asterisk(**). The size of this type is still 4 bytes.
 
 > **37** If `__ARM_BIG_ENDIAN` is unset and bit 1 of macro `__ARM_FEATURE_CMSE`
 > is set, the following type must be declared:
-> ```
+> ``` c
 >  typedef union {
 >   struct cmse_address_info {
 >    unsigned mpu_region:8;
@@ -1182,7 +1182,7 @@ call ([9.5](#non-secure-function-call)). An example of where an nfsptr is needed
 is to share a single variable for secure function pointers and non-secure function
 pointers:
 
-```
+``` c
 #include <arm_cmse.h>
 typedef void __attribute__((cmse_nonsecure_call)) nsfunc(void);
 void default_callback(void) { … }
@@ -1275,7 +1275,7 @@ CMSE is provided below. Note that this example assumes the macros
 `CMSE_MPU_NONSECURE` and `CMSE_AU_NONSECURE` are available even when not
 targeting the secure state.
 
-```
+``` c
 static inline void *
 cmse_check_address_range(void *p, size_t s, int flags)
 {
@@ -1347,7 +1347,7 @@ The following example macro definitions assume the following C language extensio
 * A function pointer can be cast to and from `intptr_t`.
 * A type can be constructed from an expression using the `typeof` keyword. 
 
-```
+``` c
 #define cmse_check_pointed_object(p, f) \
                                ((tyepof(p)) cmse_check_address_range((p), sizeof(p), f))
 #define cmse_nsfptr_create(p)  ((typeof(p)) ((intptr_t) (p) & ~1))
@@ -1360,7 +1360,7 @@ The following example macro definitions assume the following C language extensio
 
 Consider the following example:
 
-```
+``` c
 #include <arm_cmse.h>
 int __attribute__((cmse_nonsecure_call)) (*foo)(int);
 int bar(int a) {
@@ -1370,7 +1370,7 @@ int bar(int a) {
 
 The following T32 instruction sequence is an implementation of this function:
 
-```
+``` c
 bar:
     ldr     r1, =foo
     @ protect the FP context if used by secure state
@@ -1402,7 +1402,7 @@ bar:
 
 Consider the following example:
 
-```
+``` c
 #include <arm_cmse.h>
 float __attribute__((cmse_nonsecure_call)) (*foo)(float);
 float bar(float a) {
@@ -1413,7 +1413,7 @@ float bar(float a) {
 The following T32 instruction sequence is an implementation of this function
 using the hard-float ABI:
 
-```
+``` c
 bar:
     ldr     r0, =foo
     @ save callee-saved integer registers
@@ -1459,7 +1459,7 @@ registers.
 
 Consider the following example:
 
-```
+``` c
 #include <arm_cmse.h>
 struct s { int a, int b, int c, int d };
 struct s __attribute__((cmse_nonsecure_call)) (*foo)(int, struct s);
@@ -1470,7 +1470,7 @@ struct s bar(void) {
 
 The following T32 instruction sequence is an implementation of this function:
 
-```
+``` c
 bar:
     @ get the non-secure stack pointer
     mrs     r1, SP_NS
@@ -1543,7 +1543,7 @@ bar:
 
 Consider the following example:
 
-```
+``` c
 #include <arm_cmse.h>
 int __attribute__((cmse_nonsecure_entry)) foo(int a) {
     return a + 1;
@@ -1554,7 +1554,7 @@ In this example the compiler has complete knowledge of the registers used. No
 floating point registers are used and there is no non-secure stack usage. This
 case results in a very compact instruction sequence:
 
-```
+``` c
 .global foo
 .global __acle_se_foo
 foo:
@@ -1571,7 +1571,7 @@ to be cleared. The same reasoning holds for the status flags.
 
 Consider the following example:
 
-```
+``` c
 #include <arm_cmse.h>
 extern int bar(int);
 int __attribute__((cmse_nonsecure_entry)) foo(int a, int b, int c, int d, int e, int f) {
@@ -1586,7 +1586,7 @@ information.
 The following T32 instruction sequence is an implementation of this function
 using the soft-float ABI:
 
-```
+``` c
 .global foo
 .global __acle_se_foo
 foo:
@@ -1666,7 +1666,7 @@ unnecessary floating point context.
 
 Consider the following example:
 
-```
+``` c
 #include <arm_cmse.h>
 struct s { int a, int b};
 struct s __attribute__((cmse_nonsecure_entry)) foo(void) {
@@ -1677,7 +1677,7 @@ struct s __attribute__((cmse_nonsecure_entry)) foo(void) {
 The function `foo` uses the stack to return the structure. The following T32
 instruction sequence is an implementation of this function:
 
-```
+``` c
 .global foo
 .global __acle_se_foo
 foo:
