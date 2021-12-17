@@ -159,6 +159,9 @@ All content in this document is at the **Alpha** quality level.
 
 * Update the copyright statement in section [Copyright](#copyright).
 * Add a reference to the [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide) *CHERI Hybrid C/C++ Programming Guide* in section [Scope](#scope).
+* Converted document from rst to md.
+* Added metadata header with Jekyll and LaTeX formatting.
+* Added ToC declaration at the start of the document.
 
 ## References
 

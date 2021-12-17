@@ -200,6 +200,24 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   (MOPS) at [ssec-MOPS](#memcpy-family-of-memory-operations-standarization-instructions---mops)
 * Added intrinsic for the memcpy family of memory operations (MOPS) at
   [ssec-MOPS-intrinsics](#memcpy-family-of-operations-intrinsics---mops)
+* Converted document from rst to md.
+* Added metadata header with Jekyll and LaTeX formatting.
+* Added ToC declaration at the start of the document.
+* Changed section header reference links.
+* Changed the following section header texts:
+ * [ssec-fp16-arith](#availability-of-16-bit-floating-point-data-processing-operations)
+   has changed from "16-bit floating-point data processing operations" to
+   "Availability of 16-bit floating-point data processing operations".
+ * [ssec-32SIMD](#simd-intrinsics-for-32-bit-operations) has changed from
+   "32-bit SIMD Operations" to "SIMD intrinsics for 32-bit Operations".
+ * [ssec-NEON-intrinsics-concepts](#neon-intrinsics-concepts) has changed from
+   "Concepts" to "Neon Intrinsics Concepts".
+ * [ssec-fp16-scalar](#availability-of-16-bit-floating-point-arithmetic-scalar-intrinsics)
+   has changed from "16-bit floating-point arithmetic scalar intrinsics" to
+   "Availability of 16-bit floating-point arithmetic scalar intrinsics".
+ * [ssec-bf16-scalar](#availability-of-16-bit-brain-floating-point-arithmetic-scalar-intrinsics)
+   has changed from "16-bit brain floating-point arithmetic scalar intrinsics"
+   to "Availability of 16-bit brain floating-point arithmetic scalar intrinsics".
 
 ### References
 
