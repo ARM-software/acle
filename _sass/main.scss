@@ -79,7 +79,8 @@ tr:nth-child(even) {
 .navbar_tab:active, .navbar_tab:hover, .navbar_active_tab {
   background-color: white;
   color: #0091BD;
-  border: 1px white solid;
+  border-top: 1px white solid;
+  border-bottom: 1px white solid;
 }
 
 .navbar_button {
