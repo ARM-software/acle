@@ -83,7 +83,7 @@ tr:nth-child(even) {
 
 .navbar_button {
   display: table-cell;
-  border: 1px white solid;
+  border: 2px white solid;
   border-radius: 6px;
   color: white;
   background-color: #0091BD;
@@ -93,7 +93,7 @@ tr:nth-child(even) {
 }
 
 .navbar_button:hover, .navbar_button:active {
-  border: 1px #0091BD solid;
+  border: 2px #0091BD solid;
   border-radius: 6px;
   color: #0091BD;
   background-color: white;
