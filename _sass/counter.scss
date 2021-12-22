@@ -1,0 +1,73 @@
+/*
+SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-License-Identifier: Apache-2.0
+The colors used for formatting have been added in accordance with corporate guidelines:
+https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
+
+This code automatically generates section header numbering. Guide available here:
+https://2ality.com/2012/01/numbering-headingshtml.html
+*/
+
+div > h1:before {
+  content: counter(h1counter) ".\0000a0\0000a0";
+  counter-increment: h1counter;
+}
+
+div > h1 {
+  counter-reset: h2counter;
+}
+
+div > h2:before {
+  content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0";
+  counter-increment: h2counter;
+}
+
+div > h2 {
+  counter-reset: h3counter;
+}
+
+div > h3:before {
+  content:  counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+  counter-increment: h3counter;
+}
+
+div > h3 {
+  counter-reset: h4counter;
+}
+
+div > h4:before {
+  content:  counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0";
+  counter-increment: h4counter;
+}
+
+div > h4 {
+  counter-reset: h5counter;
+}
+
+div > h5:before {
+  content:  counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ".\0000a0\0000a0";
+  counter-increment: h5counter;
+}
+
+
+div > h5 {
+  counter-reset: h6counter;
+}
+
+div > h6:before {
+  content:  counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h5counter) ".\0000a0\0000a0";
+  counter-increment: h6counter;
+}
+
+ul#markdown-toc, #markdown-toc ul {
+  list-style: none;
+}
+
+ul#markdown-toc li:before, #markdown-toc ul li:before {
+  counter-increment: toccounter;
+  content: counters(toccounter, ".") ". ";
+}
+
+ul#markdown-toc:first-of-type, #markdown-toc ul:first-of-type {
+  counter-reset: toccounter;
+}

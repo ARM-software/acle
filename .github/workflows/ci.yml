@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+#
+# SPDX-License-Identifier: Apache-2.0
 name: CI
 
 on: [push, pull_request]
@@ -8,18 +11,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: setup python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: install packages
-      run: pip install -r tools/requirements.txt
-    - name: check .rst document syntax
-      run: tools/check-rst-syntax.sh
-    - name: generate and check intrinsic specs (rst)
-      run: tools/generate-intrinsics-specs.sh
-    - name: build PDFs
-      run: tools/generate-pdfs.sh
+    - name: check the correctness of the sources and generate the PDFs
+      run: ./build_with_docker.sh
     - uses: actions/upload-artifact@v2
       with:
         name: pdfs
@@ -30,3 +23,5 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+          config-file: '.github/ci/markdown-link-check.json'

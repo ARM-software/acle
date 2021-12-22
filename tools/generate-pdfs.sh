@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-# Copyright (c) 2021, Arm Limited
+# SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,31 +16,33 @@ set -ex
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+function generate_pdfs_from_md() {
+	inputMdFile=$1
+	if ! [ -f "$inputMdFile" ]; then
+		echo "**** WARNING! $inputMdFile does not exist. Please enter valid file path."
+		echo "**** WARNING! Please make sure to run tools/generate-intrinsics-specs.sh before building the PDFs."
+		exit 1
+	fi
+
+	outputPdfFile=$2
+	geometryForIntrinsics='\\newgeometry{landscape,top=3.7cm,bottom=2.7cm,left=1cm,right=1cm,headsep=1.5cm,footskip=.5cm}'
+
+	# This line replaces the ToC declaration in the md files with a blank space.
+	# ":a;N;$!ba;" is at the start so sed could recognise newline.
+	# The rest is a regular expression.
+	# The second replacement string is being used to format the "List of Intrinsics"
+	# sections, which contain large longtables.
+	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
+	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
+	pandoc --template=tools/acle_template.tex -o $outputPdfFile
+}
+
 mkdir -p pdfs
 
-rst2pdf morello/morello.rst         \
-	-s tools/rst2pdf-acle.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/morello.pdf
+# Convert svg image to pdf for use in pdf generation via pandoc.
+inkscape -z Arm_logo_blue_RGB.svg  -e tools/Arm-logo-blue-RGB.pdf
 
-# the option`--inline-footnotes` is used to print the footnotes off
-# the references "in place" in the `References` section.
-rst2pdf main/acle.rst         \
-	--inline-footnotes \
-	-s tools/rst2pdf-acle.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/acle.pdf
-
-rst2pdf neon_intrinsics/advsimd.rst         \
-	-s tools/rst2pdf-acle-intrinsics.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/advsimd.pdf
-
-rst2pdf mve_intrinsics/mve.rst         \
-	-s tools/rst2pdf-acle-intrinsics.style \
-        --repeat-table-rows         \
-        --default-dpi=110           \
-        -o pdfs/mve.pdf
+generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
+generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf
+generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf
+generate_pdfs_from_md ./tmp/advsimd.for-pdf.md ./pdfs/advsimd.pdf
