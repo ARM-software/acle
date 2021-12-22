@@ -30,7 +30,8 @@
       "profile": "https://github.com/ValeriaDaneva",
       "contributions": [
         "code",
-        "infra"
+        "infra",
+        "review"
       ]
     },
     {
@@ -78,7 +79,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/6695726?v=4",
       "profile": "https://github.com/sam-ellis",
       "contributions": [
-        "review"
+        "review",
+        "code"
       ]
     },
     {
@@ -106,6 +108,70 @@
       "profile": "https://github.com/avieira-arm",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "tejas-belagod-arm",
+      "name": "tejas-belagod-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/92718852?v=4",
+      "profile": "https://github.com/tejas-belagod-arm",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "JamieCunliffe",
+      "name": "Jamie Cunliffe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29557119?v=4",
+      "profile": "https://github.com/JamieCunliffe",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "georges-arm",
+      "name": "George Steed",
+      "avatar_url": "https://avatars.githubusercontent.com/u/93212071?v=4",
+      "profile": "https://github.com/georges-arm",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "peterwaller-arm",
+      "name": "Peter Waller",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52030119?v=4",
+      "profile": "https://github.com/peterwaller-arm",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "MDevereau",
+      "name": "Matthew Devereau",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81567778?v=4",
+      "profile": "https://github.com/MDevereau",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rsandifo-arm",
+      "name": "rsandifo-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28043039?v=4",
+      "profile": "https://github.com/rsandifo-arm",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "rearnsha",
+      "name": "rearnsha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57798236?v=4",
+      "profile": "https://github.com/rearnsha",
+      "contributions": [
+        "review"
       ]
     }
   ],

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-# Copyright (c) 2021, Arm Limited
+# SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@ mkdir -p tmp
 function check_changes() {
 # Check if the new file created from the db is different from the one
 # stored in the specs folder. This is needed to make sure that changes
-# to the intrinsic_db are reflected in the rst of the specs in the
+# to the intrinsic_db are reflected in the md of the specs in the
 # same submission.
     if ! diff  $1 $2 ; then
 	echo "**** WARNING! Please check your changes in the specs."
@@ -29,25 +29,41 @@ function check_changes() {
     fi
 }
 
-# Function that invokes the script to generate the rst out of the db
+# Function that invokes the script to generate the md out of the db
 # of the specs.
-function generate_rst_specs() {
+function generate_specs() {
     ./tools/gen-intrinsics-specs.py --intrinsic-defs $1 \
-				    --classification $2 \
-				    --template $3 --outfile $4
+			    --classification $2 \
+			    --template $3 --outfile $4 \
+			    --workflow $5
 }
 
 # Generate specs
-generate_rst_specs ./tools/intrinsic_db/advsimd.csv \
+generate_specs ./tools/intrinsic_db/advsimd.csv \
 		   ./tools/intrinsic_db/advsimd_classification.csv \
-		   ./neon_intrinsics/advsimd.template.rst \
-		   ./tmp/advsimd.new.rst
+		   ./neon_intrinsics/advsimd.template.md \
+		   ./tmp/advsimd.new.md \
+		   markdown
 
-generate_rst_specs ./tools/intrinsic_db/mve.csv \
+generate_specs ./tools/intrinsic_db/mve.csv \
 		   ./tools/intrinsic_db/mve_classification.csv \
-		   ./mve_intrinsics/mve.template.rst \
-		   ./tmp/mve.new.rst
+		   ./mve_intrinsics/mve.template.md \
+		   ./tmp/mve.new.md \
+		   markdown
 
 # Check changes
-check_changes ./tmp/advsimd.new.rst ./neon_intrinsics/advsimd.rst
-check_changes ./tmp/mve.new.rst ./mve_intrinsics/mve.rst
+check_changes ./tmp/advsimd.new.md ./neon_intrinsics/advsimd.md
+check_changes ./tmp/mve.new.md ./mve_intrinsics/mve.md
+
+# Generate tmp file for pdfs
+generate_specs ./tools/intrinsic_db/mve.csv \
+       ./tools/intrinsic_db/mve_classification.csv \
+       ./mve_intrinsics/mve.template.md \
+       ./tmp/mve.for-pdf.md \
+       pdf
+
+generate_specs ./tools/intrinsic_db/advsimd.csv \
+       ./tools/intrinsic_db/advsimd_classification.csv \
+       ./neon_intrinsics/advsimd.template.md \
+       ./tmp/advsimd.for-pdf.md \
+       pdf
