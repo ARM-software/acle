@@ -197,9 +197,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added specification for [sec-NEON-SVE-Bridge](#neon-sve-bridge) 
   and [sec-NEON-SVE-Bridge-macros](#neon-sve-bridge-macros).
 * Added feature detection macro for the memcpy family of memory operations
-  (MOPS) at [ssec-MOPS](#memcpy-family-of-memory-operations-%28MOPS%29-standarisation-instructions)
+  (MOPS) at [ssec-MOPS](#memcpy-family-of-memory-operations-\(MOPS\)-standarisation-instructions)
 * Added intrinsic for the memcpy family of memory operations (MOPS) at
-  [ssec-MOPS-intrinsics](#memcpy-operations-intrinsics).
+  [ssec-MOPS-intrinsics](#memcpy-family-of-operations-\(MOPS\)-intrinsics)
 
 ### References
 
@@ -1569,7 +1569,7 @@ standardization of the memcpy, memset, and memmove family of memory operations
 are supported.
 This macro may only ever be defined in the AArch64 execution state.
 Intrinsics for using these instructions are specified in
-[ssec-MOPS-intrinsics](#memcpy-operations-intrinsics)
+[ssec-MOPS-intrinsics](#memcpy-family-of-operations-\(MOPS\)-intrinsics)
 
 ## Mapping of object build attributes to predefines
 
@@ -5214,3 +5214,4 @@ duplicated NEON vector `vec`.
 | `svfloat32_t svdup_neonq[_f32](float32x4_t vec)`    |
 | `svfloat64_t svdup_neonq[_f64](float64x2_t vec)`    |
 | `svbfloat16_t svdup_neonq[_bf16](bfloat16x8_t vec)` |
+
