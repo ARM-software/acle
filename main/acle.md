@@ -196,6 +196,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   [sec-CMSE-intrinsics](#cortex-m-security-extension-cmse).
 * Added specification for [sec-NEON-SVE-Bridge](#neon-sve-bridge) 
   and [sec-NEON-SVE-Bridge-macros](#neon-sve-bridge-macros).
+* Added feature detection macro for the memcpy family of memory operations
+  (MOPS) at [ssec-MOPS](#memcpy-family-of-memory-operations-%28MOPS%29-standarisation-instructions)
+* Added intrinsic for the memcpy family of memory operations (MOPS) at
+  [ssec-MOPS-intrinsics](#memcpy-operations-intrinsics).
 
 ### References
 
@@ -1557,6 +1561,16 @@ This macro may only ever be defined in the AArch64 execution state.
 Intrinsics for using these instructions are specified in
 [ssec-LS64](#loadstore-64-byte-intrinsics).
 
+## memcpy family of memory operations (MOPS) standarisation instructions
+
+`__ARM_FEATURE_MOPS` is defined to 1 if the `CPYF*`, `CPY*`, `SET*` and `SETG*`
+instructions introduced in the Armv8.8-A and Armv9.3-A architecture updates for
+standardization of the memcpy, memset, and memmove family of memory operations
+are supported.
+This macro may only ever be defined in the AArch64 execution state.
+Intrinsics for using these instructions are specified in
+[ssec-MOPS-intrinsics](#memcpy-operations-intrinsics)
+
 ## Mapping of object build attributes to predefines
 
 This section is provided for guidance. Details of build attributes can
@@ -1649,6 +1663,7 @@ be found in [[BA]](#BA).
 | `__ARM_SIZEOF_MINIMAL_ENUM` [[ssec-Imptype]](#implementation-defined-type-properties)                                    | Size of minimal enumeration type: 1 or 4                                                           | 1           |
 | `__ARM_SIZEOF_WCHAR_T` [[ssec-Imptype]](#implementation-defined-type-properties)                                         | Size of `wchar_t`: 2 or 4                                                                          | 2           |
 | `__ARM_WMMX` [[ssec-WMMX]](#wireless-mmx)                                                         | Wireless MMX extension (32-bit-only)                                                               | 1           |
+| `__ARM_FEATURE_MOPS` [[ssec-MOPS]](#memcpy-family-of-memory-operations-%28MOPS%29-standarisation-instructions) | memcpy, memset, and memmove family of operations standardization instructions | 1           |
 
 ## NEON-SVE Bridge macros
 
@@ -5071,6 +5086,46 @@ transaction.
 | uint64_t __ttest (void)                       | -                | Xt -> result   | ttest <Xt>        |
 
 These intrinsics are available when `arm_acle.h` is included.
+
+# memcpy family of operations (MOPS) intrinsics
+
+## Introduction
+
+This section describes the intrinsic for the new instructions introduced in the
+Armv8.8-A and Armv9.3-A architecture updates for the memcpy, memmove and memset
+family of memory operations (MOPS).
+
+These intructions are designed to enable the standardization of the software
+implementation of those operations. Therefore, most of the use cases for
+the new instructions are covered by the compiler's code generation or by library
+implementations.
+
+An exception to that is the set of instructions covering the memset operation
+with memory tagging. An intrinsic is available to provide access to this
+operation. See [ssec-MTE](#memory-tagging) for more information on memory
+tagging.
+
+The `<arm_acle.h>` header should be included before using this intrinsic.
+
+This intrinsic is available when `__ARM_FEATURE_MOPS` is defined.
+
+```
+  void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
+```
+
+This intrinsic performs a memset operation with tag setting on a memory block.
+
+The parameters of `__arm_mops_memset_tag` are:
+
+* `tagged_address`: destination address to be set, containing the allocation
+  tag in its bits `[59:56]`. The address should be aligned with the tag granule
+  size. (See the [SETG\* instructions specification](<https://developer.arm.com/documentation/ddi0596/2021-09/Base-Instructions/SETGP--SETGM--SETGE--Memory-Set-with-tag-setting-?lang=en#sa_xd)
+  for more details)
+* `value`: fill value.
+* `size`: number of bytes to fill. This should be a multiple of the tag
+  granule size.
+
+Similarly to C's memset, this intrinsic returns the `tagged_address` pointer.
 
 # Architectural Extension Bridges
 
