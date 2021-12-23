@@ -197,9 +197,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added specification for [sec-NEON-SVE-Bridge](#neon-sve-bridge) 
   and [sec-NEON-SVE-Bridge-macros](#neon-sve-bridge-macros).
 * Added feature detection macro for the memcpy family of memory operations
-  (MOPS) at [ssec-MOPS](#memcpy-family-of-memory-operations-\(MOPS\)-standarisation-instructions)
+  (MOPS) at [ssec-MOPS](#memcpy-family-of-memory-operations-standarization-instructions---mops)
 * Added intrinsic for the memcpy family of memory operations (MOPS) at
-  [ssec-MOPS-intrinsics](#memcpy-family-of-operations-\(MOPS\)-intrinsics)
+  [ssec-MOPS-intrinsics](#memcpy-family-of-operations-intrinsics---mops)
 
 ### References
 
@@ -1561,7 +1561,7 @@ This macro may only ever be defined in the AArch64 execution state.
 Intrinsics for using these instructions are specified in
 [ssec-LS64](#loadstore-64-byte-intrinsics).
 
-## memcpy family of memory operations (MOPS) standarisation instructions
+## memcpy family of memory operations standarization instructions - MOPS
 
 `__ARM_FEATURE_MOPS` is defined to 1 if the `CPYF*`, `CPY*`, `SET*` and `SETG*`
 instructions introduced in the Armv8.8-A and Armv9.3-A architecture updates for
@@ -1569,7 +1569,7 @@ standardization of the memcpy, memset, and memmove family of memory operations
 are supported.
 This macro may only ever be defined in the AArch64 execution state.
 Intrinsics for using these instructions are specified in
-[ssec-MOPS-intrinsics](#memcpy-family-of-operations-\(MOPS\)-intrinsics)
+[ssec-MOPS-intrinsics](#memcpy-family-of-operations-intrinsics---mops)
 
 ## Mapping of object build attributes to predefines
 
@@ -1663,7 +1663,7 @@ be found in [[BA]](#BA).
 | `__ARM_SIZEOF_MINIMAL_ENUM` [[ssec-Imptype]](#implementation-defined-type-properties)                                    | Size of minimal enumeration type: 1 or 4                                                           | 1           |
 | `__ARM_SIZEOF_WCHAR_T` [[ssec-Imptype]](#implementation-defined-type-properties)                                         | Size of `wchar_t`: 2 or 4                                                                          | 2           |
 | `__ARM_WMMX` [[ssec-WMMX]](#wireless-mmx)                                                         | Wireless MMX extension (32-bit-only)                                                               | 1           |
-| `__ARM_FEATURE_MOPS` [[ssec-MOPS]](#memcpy-family-of-memory-operations-%28MOPS%29-standarisation-instructions) | memcpy, memset, and memmove family of operations standardization instructions | 1           |
+| `__ARM_FEATURE_MOPS` [[ssec-MOPS]](#memcpy-family-of-memory-operations-standarization-instructions---mops) | memcpy, memset, and memmove family of operations standardization instructions | 1           |
 
 ## NEON-SVE Bridge macros
 
@@ -5087,7 +5087,7 @@ transaction.
 
 These intrinsics are available when `arm_acle.h` is included.
 
-# memcpy family of operations (MOPS) intrinsics
+# memcpy family of operations intrinsics - MOPS
 
 ## Introduction
 
