@@ -204,10 +204,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added metadata header with Jekyll and LaTeX formatting.
 * Added ToC declaration at the start of the document.
 * Changed section header reference links.
-* Changed the following section header texts:
- * [ssec-bf16-scalar](#availability-of-16-bit-brain-floating-point-arithmetic-scalar-intrinsics)
-   has changed from "16-bit brain floating-point arithmetic scalar intrinsics"
-   to "Availability of 16-bit brain floating-point arithmetic scalar intrinsics".
 
 ### References
 
@@ -4285,7 +4281,7 @@ an implementation is required to ensure that including
 To only enable support for the scalar 16-bit floating-point intrinsics,
 the header `<arm_fp16.h>` may be included directly.
 
-### Availability of 16-bit brain floating-point arithmetic scalar intrinsics
+### <span id="16-bit-brain-floating-point-arithmetic-scalar-intrinsics">16-bit brain floating-point arithmetic scalar intrinsics</span>
 
 The architecture extensions introduced by Armv8.6-A [[Bfloat16]](#Bfloat16) provide a set
 of data processing instructions which operate on brain 16-bit floating-point
@@ -4498,7 +4494,7 @@ This is indicated by `__ARM_FEATURE_BF16_VECTOR_ARITHMETIC`
 ```
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-bf16-scalar](#availability-of-16-bit-brain-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
+instructions, see [ssec-bf16-scalar](#16-bit-brain-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
 intrinsics is indicated by `__ARM_FEATURE_BF16_SCALAR_ARITHMETIC`.
 
 ``` c
