@@ -201,9 +201,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added intrinsic for the memcpy family of memory operations (MOPS) at
   [ssec-MOPS-intrinsics](#memcpy-family-of-operations-intrinsics---mops)
 * Converted document sources from reStructuredText (`.rst`) to
-  Markdown (`.md`). The [`pandoc`](https://pandoc.org/) is now used to
-  render the PDF of the specs. The PDF is rendered using the standard
-  layout used in Arm specifications.
+  Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
+  used to render the PDF of the specs. The PDF is rendered using the
+  standard layout used in Arm specifications.
 
 ### References
 

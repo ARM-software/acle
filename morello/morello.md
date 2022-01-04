@@ -160,9 +160,9 @@ All content in this document is at the **Alpha** quality level.
 * Update the copyright statement in section [Copyright](#copyright).
 * Add a reference to the [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide) *CHERI Hybrid C/C++ Programming Guide* in section [Scope](#scope).
 * Converted document sources from reStructuredText (`.rst`) to
-  Markdown (`.md`). The [`pandoc`](https://pandoc.org/) is now used to
-  render the PDF of the specs. The PDF is rendered using the standard
-  layout used in Arm specifications.
+  Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
+  used to render the PDF of the specs. The PDF is rendered using the
+  standard layout used in Arm specifications.
 
 ## References
 
