@@ -207,9 +207,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed the following section header texts:
  * [ssec-NEON-intrinsics-concepts](#neon-intrinsics-concepts) has changed from
    "Concepts" to "Neon Intrinsics Concepts".
- * [ssec-fp16-scalar](#availability-of-16-bit-floating-point-arithmetic-scalar-intrinsics)
-   has changed from "16-bit floating-point arithmetic scalar intrinsics" to
-   "Availability of 16-bit floating-point arithmetic scalar intrinsics".
  * [ssec-bf16-scalar](#availability-of-16-bit-brain-floating-point-arithmetic-scalar-intrinsics)
    has changed from "16-bit brain floating-point arithmetic scalar intrinsics"
    to "Availability of 16-bit brain floating-point arithmetic scalar intrinsics".
@@ -4267,7 +4264,7 @@ mangling purposes.
 
 `float64_t` is defined as an alias for `double`.
 
-### Availability of 16-bit floating-point arithmetic scalar intrinsics
+### <span id="16-bit-floating-point-arithmetic-scalar-intrinsics">16-bit floating-point arithmetic scalar intrinsics</span>
 
 The architecture extensions introduced by Armv8.2-A [[ARMARMv82]](#ARMARMv82) provide a set
 of data processing instructions which operate on 16-bit floating-point
@@ -4473,7 +4470,7 @@ This is indicated by `__ARM_FEATURE_FP16_VECTOR_ARITHMETIC`
 ```
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-fp16-scalar](#availability-of-16-bit-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
+instructions, see [ssec-fp16-scalar](#16-bit-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
 intrinsics is indicated by `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
 
 ``` c
