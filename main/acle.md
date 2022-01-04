@@ -205,9 +205,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added ToC declaration at the start of the document.
 * Changed section header reference links.
 * Changed the following section header texts:
- * [ssec-fp16-arith](#availability-of-16-bit-floating-point-data-processing-operations)
-   has changed from "16-bit floating-point data processing operations" to
-   "Availability of 16-bit floating-point data processing operations".
  * [ssec-32SIMD](#simd-intrinsics-for-32-bit-operations) has changed from
    "32-bit SIMD Operations" to "SIMD intrinsics for 32-bit Operations".
  * [ssec-NEON-intrinsics-concepts](#neon-intrinsics-concepts) has changed from
@@ -1374,7 +1371,7 @@ argument and result.
 `__ARM_FEATURE_QRDMX` is defined to 1 if SQRDMLAH and SQRDMLSH
 instructions and their associated intrinsics are available.
 
-### Availability of 16-bit floating-point data processing operations
+### <span id="16-bit-floating-point-data-processing-operations">16-bit floating-point data processing operations</span>
 
 `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1` if the
 16-bit floating-point arithmetic instructions are supported in hardware and
@@ -4467,7 +4464,7 @@ format. ACLE specifies intrinsics which map to the vector forms of these
 instructions where they are available in hardware.
 
 This is indicated by `__ARM_FEATURE_FP16_VECTOR_ARITHMETIC`
-(see [ssec-fp16-arith](#availability-of-16-bit-floating-point-data-processing-operations)). :
+(see [ssec-fp16-arith](#16-bit-floating-point-data-processing-operations)). :
 
 ``` c
   #if __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
