@@ -205,8 +205,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added ToC declaration at the start of the document.
 * Changed section header reference links.
 * Changed the following section header texts:
- * [ssec-NEON-intrinsics-concepts](#neon-intrinsics-concepts) has changed from
-   "Concepts" to "Neon Intrinsics Concepts".
  * [ssec-bf16-scalar](#availability-of-16-bit-brain-floating-point-arithmetic-scalar-intrinsics)
    has changed from "16-bit brain floating-point arithmetic scalar intrinsics"
    to "Availability of 16-bit brain floating-point arithmetic scalar intrinsics".
@@ -4156,7 +4154,7 @@ The intrinsics in this section provide C and C++ programmers with a
 simple programming model allowing easy access to code-generation of the
 Advanced SIMD instructions for both AArch64 and AArch32 execution states.
 
-### Neon Intrinsics Concepts
+### <span id="neon-intrinsics-concepts">Concepts</span>
 
 The Advanced SIMD instructions are designed to improve the performance of
 multimedia and signal processing algorithms by operating on 64-bit or 128-bit
