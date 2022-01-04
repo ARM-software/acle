@@ -1361,7 +1361,11 @@ argument and result.
 `__ARM_FEATURE_QRDMX` is defined to 1 if SQRDMLAH and SQRDMLSH
 instructions and their associated intrinsics are available.
 
-### <span id="16-bit-floating-point-data-processing-operations">16-bit floating-point data processing operations</span>
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="16-bit-floating-point-data-processing-operations"></span>
+
+### 16-bit floating-point data processing operations
 
 `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1` if the
 16-bit floating-point arithmetic instructions are supported in hardware and
@@ -2705,7 +2709,11 @@ operations [[G.191]](#G.191):
 This example assumes the implementation preserves the Q flag on return
 from an inline function.
 
-## <span id="32-bit-simd-operations">32-bit SIMD Operations</span>
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="32-bit-simd-operations"></span>
+
+## 32-bit SIMD Operations
 
 ### Availability
 
@@ -4150,7 +4158,11 @@ The intrinsics in this section provide C and C++ programmers with a
 simple programming model allowing easy access to code-generation of the
 Advanced SIMD instructions for both AArch64 and AArch32 execution states.
 
-### <span id="neon-intrinsics-concepts">Concepts</span>
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="neon-intrinsics-concepts"></span>
+
+### Concepts
 
 The Advanced SIMD instructions are designed to improve the performance of
 multimedia and signal processing algorithms by operating on 64-bit or 128-bit
@@ -4258,7 +4270,11 @@ mangling purposes.
 
 `float64_t` is defined as an alias for `double`.
 
-### <span id="16-bit-floating-point-arithmetic-scalar-intrinsics">16-bit floating-point arithmetic scalar intrinsics</span>
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="16-bit-floating-point-arithmetic-scalar-intrinsics"></span>
+
+### 16-bit floating-point arithmetic scalar intrinsics
 
 The architecture extensions introduced by Armv8.2-A [[ARMARMv82]](#ARMARMv82) provide a set
 of data processing instructions which operate on 16-bit floating-point
@@ -4281,7 +4297,11 @@ an implementation is required to ensure that including
 To only enable support for the scalar 16-bit floating-point intrinsics,
 the header `<arm_fp16.h>` may be included directly.
 
-### <span id="16-bit-brain-floating-point-arithmetic-scalar-intrinsics">16-bit brain floating-point arithmetic scalar intrinsics</span>
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="16-bit-brain-floating-point-arithmetic-scalar-intrinsics"></span>
+
+### 16-bit brain floating-point arithmetic scalar intrinsics
 
 The architecture extensions introduced by Armv8.6-A [[Bfloat16]](#Bfloat16) provide a set
 of data processing instructions which operate on brain 16-bit floating-point
