@@ -1,5 +1,4 @@
-Design Document for `__ARM_FEATURE_MOPS`
-========================================
+# Design Document for `__ARM_FEATURE_MOPS`
 
 Following the announcement of the [2021 Architecture Extensions](https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-developments-2021),
 we are extending the ACLE to add support for the new instructions that
@@ -43,7 +42,7 @@ unprivileged variations.
 
 ### Temporal/non-temporal variations
 
-Currently, in section [15.1.7 ("Memory access with non-temporal hints")](../acle.rst#memory-access-with-non-temporal-hints),
+Currently, in section [Memory access with non-temporal hints](../acle.md#memory-access-with-non-temporal-hints),
 the ACLE mentions that language extensions to support cacheability hints are
 currently being investigated. Introducing new intrinsics for non-temporal memory
 operations overlaps with the support covered by this investigation. We will

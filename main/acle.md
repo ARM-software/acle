@@ -5214,4 +5214,3 @@ duplicated NEON vector `vec`.
 | `svfloat32_t svdup_neonq[_f32](float32x4_t vec)`    |
 | `svfloat64_t svdup_neonq[_f64](float64x2_t vec)`    |
 | `svbfloat16_t svdup_neonq[_bf16](bfloat16x8_t vec)` |
-
