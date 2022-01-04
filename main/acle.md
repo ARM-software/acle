@@ -205,8 +205,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added ToC declaration at the start of the document.
 * Changed section header reference links.
 * Changed the following section header texts:
- * [ssec-32SIMD](#simd-intrinsics-for-32-bit-operations) has changed from
-   "32-bit SIMD Operations" to "SIMD intrinsics for 32-bit Operations".
  * [ssec-NEON-intrinsics-concepts](#neon-intrinsics-concepts) has changed from
    "Concepts" to "Neon Intrinsics Concepts".
  * [ssec-fp16-scalar](#availability-of-16-bit-floating-point-arithmetic-scalar-intrinsics)
@@ -1119,9 +1117,10 @@ This macro is defined for AArch32 only.
 ### 32-bit SIMD instructions
 
 `__ARM_FEATURE_SIMD32` is defined to 1 if the 32-bit SIMD instructions
-are supported and the intrinsics defined in [ssec-32SIMD](#simd-intrinsics-for-32-bit-operations) are
-available. This also implies support for the GE global flags which
-indicate byte-by-byte comparison results.
+are supported and the intrinsics defined in
+[ssec-32SIMD](#32-bit-simd-operations) are available. This also
+implies support for the GE global flags which indicate byte-by-byte
+comparison results.
 
 `__ARM_FEATURE_SIMD32` is deprecated in ACLE 2.0 for A-profile. Users
 are encouraged to use Neon Intrinsics as an equivalent for the 32-bit
@@ -1650,7 +1649,7 @@ be found in [[BA]](#BA).
 | `__ARM_FEATURE_SHA2` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA2]](#sha2-extension)                    | SHA2 Crypto extension (Arm v8-A)                                                                   | 1           |
 | `__ARM_FEATURE_SHA512` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA512]](#sha512-extension)              | SHA2 Crypto ext. (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                       | 1           |
 | `__ARM_FEATURE_SHA3` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA3]](#sha3-extension)                    | SHA3 Crypto extension (Arm v8.4-A)                                                                 | 1           |
-| `__ARM_FEATURE_SIMD32` [[ssec-Satins]](#saturation-instructions), [[ssec-32SIMD]](#simd-intrinsics-for-32-bit-operations)            | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
+| `__ARM_FEATURE_SIMD32` [[ssec-Satins]](#saturation-instructions), [[ssec-32SIMD]](#32-bit-simd-operations)            | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
 | `__ARM_FEATURE_SM3` [[ssec-CrypE]](#crypto-extension), [[ssec-SM3]](#sm3-extension)                       | SM3 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | `__ARM_FEATURE_SM4` [[ssec-CrypE]](#crypto-extension), [[ssec-SM4]](#sm4-extension)                       | SM4 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | `__ARM_FEATURE_FP16_FML` [[ssec-FP16FML]](#fp16-fml-extension)                                       | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
@@ -2399,7 +2398,7 @@ set the Q flag.)
 
 The GE (Greater than or Equal to) flags are four bits in the APSR. They
 are used with the 32-bit SIMD intrinsics described in
-[ssec-32SIMD](#simd-intrinsics-for-32-bit-operations).
+[ssec-32SIMD](#32-bit-simd-operations).
 
 There are four GE flags, one for each 8-bit lane of a 32-bit SIMD
 operation. Certain non-saturating 32-bit SIMD intrinsics set the GE bits
@@ -2715,7 +2714,7 @@ operations [[G.191]](#G.191):
 This example assumes the implementation preserves the Q flag on return
 from an inline function.
 
-## SIMD intrinsics for 32-bit Operations
+## <span id="32-bit-simd-operations">32-bit SIMD Operations</span>
 
 ### Availability
 
