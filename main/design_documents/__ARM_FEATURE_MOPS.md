@@ -55,7 +55,7 @@ for MTE users - for writing a custom allocator, for example. As it's also not
 covered by the regular code generation and library flows, we are introducing
 the following intrinsic to cover this scenario:
 
-```
+``` c
   void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
 ```
 
