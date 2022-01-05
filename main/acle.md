@@ -3,14 +3,14 @@ title: Arm C Language Extensions
 version: Development version based on 2021Q3
 date-of-issue: TBD
 # LaTeX specific variables
-copyright-text: Copyright 2011-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+copyright-text: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
 header_counter: true
 toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2011-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -112,7 +112,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-Copyright 2011-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 
 ## About this document
 
@@ -200,6 +200,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   (MOPS) at [ssec-MOPS](#memcpy-family-of-memory-operations-standarization-instructions---mops)
 * Added intrinsic for the memcpy family of memory operations (MOPS) at
   [ssec-MOPS-intrinsics](#memcpy-family-of-operations-intrinsics---mops)
+* Converted document sources from reStructuredText (`.rst`) to
+  Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
+  used to render the PDF of the specs. The PDF is rendered using the
+  standard layout used in Arm specifications.
 
 ### References
 
@@ -1104,9 +1108,10 @@ This macro is defined for AArch32 only.
 ### 32-bit SIMD instructions
 
 `__ARM_FEATURE_SIMD32` is defined to 1 if the 32-bit SIMD instructions
-are supported and the intrinsics defined in [ssec-32SIMD](#simd-intrinsics-for-32-bit-operations) are
-available. This also implies support for the GE global flags which
-indicate byte-by-byte comparison results.
+are supported and the intrinsics defined in
+[ssec-32SIMD](#32-bit-simd-operations) are available. This also
+implies support for the GE global flags which indicate byte-by-byte
+comparison results.
 
 `__ARM_FEATURE_SIMD32` is deprecated in ACLE 2.0 for A-profile. Users
 are encouraged to use Neon Intrinsics as an equivalent for the 32-bit
@@ -1356,7 +1361,11 @@ argument and result.
 `__ARM_FEATURE_QRDMX` is defined to 1 if SQRDMLAH and SQRDMLSH
 instructions and their associated intrinsics are available.
 
-### Availability of 16-bit floating-point data processing operations
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="16-bit-floating-point-data-processing-operations"></span>
+
+### 16-bit floating-point data processing operations
 
 `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1` if the
 16-bit floating-point arithmetic instructions are supported in hardware and
@@ -1635,7 +1644,7 @@ be found in [[BA]](#BA).
 | `__ARM_FEATURE_SHA2` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA2]](#sha2-extension)                    | SHA2 Crypto extension (Arm v8-A)                                                                   | 1           |
 | `__ARM_FEATURE_SHA512` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA512]](#sha512-extension)              | SHA2 Crypto ext. (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                       | 1           |
 | `__ARM_FEATURE_SHA3` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA3]](#sha3-extension)                    | SHA3 Crypto extension (Arm v8.4-A)                                                                 | 1           |
-| `__ARM_FEATURE_SIMD32` [[ssec-Satins]](#saturation-instructions), [[ssec-32SIMD]](#simd-intrinsics-for-32-bit-operations)            | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
+| `__ARM_FEATURE_SIMD32` [[ssec-Satins]](#saturation-instructions), [[ssec-32SIMD]](#32-bit-simd-operations)            | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
 | `__ARM_FEATURE_SM3` [[ssec-CrypE]](#crypto-extension), [[ssec-SM3]](#sm3-extension)                       | SM3 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | `__ARM_FEATURE_SM4` [[ssec-CrypE]](#crypto-extension), [[ssec-SM4]](#sm4-extension)                       | SM4 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | `__ARM_FEATURE_FP16_FML` [[ssec-FP16FML]](#fp16-fml-extension)                                       | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
@@ -2384,7 +2393,7 @@ set the Q flag.)
 
 The GE (Greater than or Equal to) flags are four bits in the APSR. They
 are used with the 32-bit SIMD intrinsics described in
-[ssec-32SIMD](#simd-intrinsics-for-32-bit-operations).
+[ssec-32SIMD](#32-bit-simd-operations).
 
 There are four GE flags, one for each 8-bit lane of a 32-bit SIMD
 operation. Certain non-saturating 32-bit SIMD intrinsics set the GE bits
@@ -2700,7 +2709,11 @@ operations [[G.191]](#G.191):
 This example assumes the implementation preserves the Q flag on return
 from an inline function.
 
-## SIMD intrinsics for 32-bit Operations
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="32-bit-simd-operations"></span>
+
+## 32-bit SIMD Operations
 
 ### Availability
 
@@ -4145,7 +4158,11 @@ The intrinsics in this section provide C and C++ programmers with a
 simple programming model allowing easy access to code-generation of the
 Advanced SIMD instructions for both AArch64 and AArch32 execution states.
 
-### Neon Intrinsics Concepts
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="neon-intrinsics-concepts"></span>
+
+### Concepts
 
 The Advanced SIMD instructions are designed to improve the performance of
 multimedia and signal processing algorithms by operating on 64-bit or 128-bit
@@ -4253,7 +4270,11 @@ mangling purposes.
 
 `float64_t` is defined as an alias for `double`.
 
-### Availability of 16-bit floating-point arithmetic scalar intrinsics
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="16-bit-floating-point-arithmetic-scalar-intrinsics"></span>
+
+### 16-bit floating-point arithmetic scalar intrinsics
 
 The architecture extensions introduced by Armv8.2-A [[ARMARMv82]](#ARMARMv82) provide a set
 of data processing instructions which operate on 16-bit floating-point
@@ -4276,7 +4297,11 @@ an implementation is required to ensure that including
 To only enable support for the scalar 16-bit floating-point intrinsics,
 the header `<arm_fp16.h>` may be included directly.
 
-### Availability of 16-bit brain floating-point arithmetic scalar intrinsics
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="16-bit-brain-floating-point-arithmetic-scalar-intrinsics"></span>
+
+### 16-bit brain floating-point arithmetic scalar intrinsics
 
 The architecture extensions introduced by Armv8.6-A [[Bfloat16]](#Bfloat16) provide a set
 of data processing instructions which operate on brain 16-bit floating-point
@@ -4449,7 +4474,7 @@ format. ACLE specifies intrinsics which map to the vector forms of these
 instructions where they are available in hardware.
 
 This is indicated by `__ARM_FEATURE_FP16_VECTOR_ARITHMETIC`
-(see [ssec-fp16-arith](#availability-of-16-bit-floating-point-data-processing-operations)). :
+(see [ssec-fp16-arith](#16-bit-floating-point-data-processing-operations)). :
 
 ``` c
   #if __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
@@ -4459,7 +4484,7 @@ This is indicated by `__ARM_FEATURE_FP16_VECTOR_ARITHMETIC`
 ```
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-fp16-scalar](#availability-of-16-bit-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
+instructions, see [ssec-fp16-scalar](#16-bit-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
 intrinsics is indicated by `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
 
 ``` c
@@ -4489,7 +4514,7 @@ This is indicated by `__ARM_FEATURE_BF16_VECTOR_ARITHMETIC`
 ```
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-bf16-scalar](#availability-of-16-bit-brain-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
+instructions, see [ssec-bf16-scalar](#16-bit-brain-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
 intrinsics is indicated by `__ARM_FEATURE_BF16_SCALAR_ARITHMETIC`.
 
 ``` c

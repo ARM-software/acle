@@ -11,7 +11,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2014-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2014-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
@@ -106,7 +106,7 @@ for more information about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2014-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+* Copyright 2014-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 * Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 
 ## Document history
@@ -131,6 +131,10 @@ for more information about Arm’s trademarks.
 
 * Fix typo in signature of ``vaddq_s16``.
 * Update copyright statement in section [Copyright](#copyright).
+* Converted document sources from reStructuredText (`.rst`) to
+  Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
+  used to render the PDF of the specs. The PDF is rendered using the
+  standard layout used in Arm specifications.
 
 <!---
 **** Do not remove! ****

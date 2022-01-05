@@ -4,14 +4,14 @@ version: Development version based on 2021Q2
 date-of-issue: TBD
 # LaTeX specific variables
 landscape: true
-copyright-text: Copyright 2020-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+copyright-text: Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
 header_counter: true
 toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2019-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -105,7 +105,7 @@ for more information about Arm's trademarks.
 
 ## Copyright
 
-Copyright 2019-2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 
 ## Document history
 
@@ -120,6 +120,10 @@ Copyright 2019-2021 Arm Limited and/or its affiliates <open-source-office@arm.co
 ### Changes for next release
 
 * Update copyright statement in section [Copyright](#copyright).
+* Converted document sources from reStructuredText (`.rst`) to
+  Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
+  used to render the PDF of the specs. The PDF is rendered using the
+  standard layout used in Arm specifications.
 
 <!---
 **** Do not remove! ****

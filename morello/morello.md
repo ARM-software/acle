@@ -3,14 +3,14 @@ title: Morello Supplement to the Arm C Language Extensions
 version: Development version based on 01alpha
 date-of-issue: TBD
 # LaTeX specific variables
-copyright-text: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+copyright-text: Copyright 2020-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
 header_counter: true
 toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2020-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -110,7 +110,7 @@ for more information about Arm's trademarks.
 
 ## Copyright
 
-Copyright (c) 2020-2021, Arm Limited and its affiliates. All rights
+Copyright (c) 2020-2022, Arm Limited and its affiliates. All rights
 reserved.
 
 # About This Document
@@ -159,6 +159,10 @@ All content in this document is at the **Alpha** quality level.
 
 * Update the copyright statement in section [Copyright](#copyright).
 * Add a reference to the [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide) *CHERI Hybrid C/C++ Programming Guide* in section [Scope](#scope).
+* Converted document sources from reStructuredText (`.rst`) to
+  Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
+  used to render the PDF of the specs. The PDF is rendered using the
+  standard layout used in Arm specifications.
 
 ## References
 
