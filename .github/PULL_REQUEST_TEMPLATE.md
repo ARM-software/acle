@@ -1,10 +1,11 @@
 ---
-# SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
-# SPDX-License-Identifier: Apache-2.0
 name: Pull request
 about: Technical issues, document format problems, bugs in scripts or feature proposal.
 
 ---
+
+<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
 
 **Thank you for submitting a pull request!**
 
