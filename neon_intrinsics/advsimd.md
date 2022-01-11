@@ -1,7 +1,7 @@
 ---
 title: Arm Neon Intrinsics Reference
-version: Development version based on 2021Q3
-date-of-issue: TBD
+version: 2021Q4
+date-of-issue: 11 January 2022
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
@@ -111,23 +111,25 @@ for more information about Arm’s trademarks.
 
 ## Document history
 
-| Issue | Date            | Change               |
-| ----- | --------------- | -------------------- |
-| A     | 09 May 2014     | First release        |
-| B     | 24 March 2016   | Updated for ARMv8.1  |
-| C     | 30 March 2019   | Version ACLE Q1 2019 |
-| D     | 30 June 2019    | Version ACLE Q2 2019 |
-| E     | 30 Sept 2019    | Version ACLE Q3 2019 |
-| F     | 30 May 2020     | Version ACLE Q2 2020 |
-| G     | 30 October 2020 | Version ACLE Q3 2020 |
-| H     | 02 July 2021    | 2021Q2               |
+| Issue | Date              | Change               |
+| ----- | ----------------- | -------------------- |
+| A     | 09 May 2014       | First release        |
+| B     | 24 March 2016     | Updated for ARMv8.1  |
+| C     | 30 March 2019     | Version ACLE Q1 2019 |
+| D     | 30 June 2019      | Version ACLE Q2 2019 |
+| E     | 30 Sept 2019      | Version ACLE Q3 2019 |
+| F     | 30 May 2020       | Version ACLE Q2 2020 |
+| G     | 30 October 2020   | Version ACLE Q3 2020 |
+| H     | 02 July 2021      | 2021Q2               |
+| I     | 30 September 2021 | 2021Q3               |
+| J     | 11 January 2022   | 2021Q4               |
 
 ### Changes between 2021Q2 and 2021Q3
 
 * Fixed the guard macro for the base intrinsics.
 * Correct ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
 
-### Changes for next release
+### Changes between 2021Q3 and 2021Q4.
 
 * Fix typo in signature of ``vaddq_s16``.
 * Update copyright statement in section [Copyright](#copyright).
@@ -135,6 +137,8 @@ for more information about Arm’s trademarks.
   Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
   used to render the PDF of the specs. The PDF is rendered using the
   standard layout used in Arm specifications.
+* Add missing item for release 2021Q3 in the table with the list of
+  versions in section [Document history](#document-history).
 
 <!---
 **** Do not remove! ****

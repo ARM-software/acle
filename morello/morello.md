@@ -1,7 +1,7 @@
 ---
 title: Morello Supplement to the Arm C Language Extensions
-version: Development version based on 01alpha
-date-of-issue: TBD
+version: 02alpha
+date-of-issue: 11 January 2022
 # LaTeX specific variables
 copyright-text: Copyright 2020-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
@@ -150,12 +150,13 @@ All content in this document is at the **Alpha** quality level.
 
 ### Change History
 
-| Issue      | Date                  | Change                           |
-| :---       | :---                  | :---                             |
-| 00alpha    | 30th September 2020   | Alpha release                    |
-| 01alpha    | 02 July 2021          | Open source release. NFCI.       |
+| Issue      | Date                  | Change                                          |
+| :---       | :---                  | :---                                            |
+| 00alpha    | 30th September 2020   | Alpha release                                   |
+| 01alpha    | 02 July 2021          | Open source release. NFCI.                      |
+| 02alpha    | 11 January 2022       | See [Changes for 02alpha](#changes-for-02alpha) |
 
-## Changes for next release
+### Changes for 02alpha
 
 * Update the copyright statement in section [Copyright](#copyright).
 * Add a reference to the [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide) *CHERI Hybrid C/C++ Programming Guide* in section [Scope](#scope).

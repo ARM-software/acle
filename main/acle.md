@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: Development version based on 2021Q3
-date-of-issue: TBD
+version: 2021Q4
+date-of-issue: 11 January 2021
 # LaTeX specific variables
 copyright-text: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
@@ -136,6 +136,7 @@ Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.co
 | ACLE Q3 2020 | 31/10/20          | Arm    | Version ACLE Q3 2020.                                                                                                |
 | 2021Q2       | 02 July 2021      | Arm    | Version ACLE Q2 2021. Open source version. NFCI.                                                                     |
 | 2021Q3       | 30 September 2021 | Arm    | Minor re-wording. NFCI.                                                                                              |
+| 2021Q4       | 11 January 2022   | Arm    | See [Changes between ACLE Q3 2021 and ACLE Q4 2021](#changes-between-acle-q3-2021-and-acle-q4-2021)                  |
 
 #### Changes between ACLE Q2 2020 and ACLE Q3 2020
 
@@ -182,7 +183,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixed the description of `vmul_lane_u16` at 
   [ssec-NEON-intrinsics-concepts](#neon-intrinsics-concepts).
 
-#### Changes for next release
+#### Changes between ACLE Q3 2021 and ACLE Q4 2021
 
 * Update copyright statement in section [Copyright](#copyright).
 * Introduce `__ARM_FEATURE_PAUTH` and `__ARM_FEATURE_BTI` in
