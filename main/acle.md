@@ -375,15 +375,15 @@ low-level library in C rather than assembler.
 
 ## Scalable Vector Extensions (SVE)
 
-ACLE support for SVE is defined in the Arm C Language Extensions for SVE
-document [[SVE-ACLE]](#SVE-ACLE) available on the Arm Developer Website.
+ACLE support for SVE is defined in the *Arm C Language Extensions for
+SVE* document [SVE-ACLE](#SVE-ACLE).
 
 
 ## Cortex-M Security Extension (CMSE)
 
 ACLE support for the Cortex-M Security Extension (CMSE) is defined in
 *Arm®v8-M Security Extensions: Requirements on Development Tools*
-document [CMSE-ACLE](#CMSE-ACLE) available on the Arm Developer Website.
+document [CMSE-ACLE](#CMSE-ACLE).
 
 # Introduction
 
