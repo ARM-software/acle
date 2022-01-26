@@ -1582,13 +1582,16 @@ Intrinsics for using these instructions are specified in
 
 ## memcpy family of memory operations standarization instructions - MOPS
 
-`__ARM_FEATURE_MOPS` is defined to 1 if the `CPYF*`, `CPY*`, `SET*` and `SETG*`
-instructions introduced in the Armv8.8-A and Armv9.3-A architecture updates for
-standardization of the memcpy, memset, and memmove family of memory operations
-are supported.
-This macro may only ever be defined in the AArch64 execution state.
-Intrinsics for using these instructions are specified in
-[ssec-MOPS-intrinsics](#memcpy-family-of-operations-intrinsics---mops)
+If the `CPYF*`, `CPY*`, `SET*` and `SETG*` instructions are supported,
+`__ARM_FEATURE_MOPS` is defined to 1. These instructions were
+introduced in the Armv8.8-A and Armv9.3-A architecture updates for
+standardization of memorycpy, memset, and memmove family of memory
+operations (MOPS).
+
+The `__ARM_FEATURE_MOPS` macro can only be implemented in the AArch64
+execution state. Intrinsics for the use of these instructions are
+specified in [memcpy family of operations intrinsics -
+MOPS](#memcpy-family-of-operations-intrinsics---mops)
 
 ## Mapping of object build attributes to predefines
 
