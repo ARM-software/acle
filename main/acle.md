@@ -179,32 +179,41 @@ Armv8.3-A [[ARMARMv83]](#ARMARMv83). Support is added for the Complex addition a
 Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrinsics.
 
 #### Changes between ACLE Q2 2021 and ACLE Q3 2021
-* Fixed FP16 format description at [ssec-fp16-type](#half-precision-floating-point).
-* Fixed the description of `vmul_lane_u16` at 
-  [ssec-NEON-intrinsics-concepts](#neon-intrinsics-concepts).
+* Fixed FP16 format description at [Half-precision
+  floating-point](#half-precision-floating-point).
+* Fixed the description of `vmul_lane_u16` at
+  [Concepts](#neon-intrinsics-concepts).
 
 #### Changes between ACLE Q3 2021 and ACLE Q4 2021
 
-* Update copyright statement in section [Copyright](#copyright).
-* Introduce `__ARM_FEATURE_PAUTH` and `__ARM_FEATURE_BTI` in
-  sections [ssec-PAC](#pointer-authentication) and [ssec-BTI](#branch-target-identification) respectively.
+* Updated copyright statement in section [Copyright](#copyright).
+* Introduced `__ARM_FEATURE_PAUTH` and `__ARM_FEATURE_BTI` in sections
+  [Pointer Authentication](#pointer-authentication) and [Branch Target
+  Identification](#branch-target-identification) respectively.
 * Fix the changelog of 2021Q3, as is was missing the mentioning of the
   intrinsic `vmul_lane_u16` in the second item.
-* Fixed item lists rendering in [sec-MVE-intrinsics](#m-profile-vector-extension-mve-intrinsics).
+* Fixed item lists rendering in [M-profile Vector
+  Extension](#m-profile-vector-extension-mve-intrinsics).
 * Fixed superfluous and broken backticks in code examples throughout.
 * Added reference to the *Cortex-M Security Extension (CMSE)*
-  specifications in
-  [sec-CMSE-intrinsics](#cortex-m-security-extension-cmse).
-* Added specification for [sec-NEON-SVE-Bridge](#neon-sve-bridge) 
-  and [sec-NEON-SVE-Bridge-macros](#neon-sve-bridge-macros).
-* Added feature detection macro for the memcpy family of memory operations
-  (MOPS) at [ssec-MOPS](#memcpy-family-of-memory-operations-standarization-instructions---mops)
+  specifications in [Cortex-M Security Extension
+  (CMSE)](#cortex-m-security-extension-cmse).
+* Added specification for [NEON-SVE Bridge](#neon-sve-bridge) and
+  [NEON-SVE Bridge macros](#neon-sve-bridge-macros).
+* Added feature detection macro for the memcpy family of memory
+  operations (MOPS) at [memcpy family of memory operations
+  standarization instructions -
+  MOPS](#memcpy-family-of-memory-operations-standarization-instructions---mops)
 * Added intrinsic for the memcpy family of memory operations (MOPS) at
-  [ssec-MOPS-intrinsics](#memcpy-family-of-operations-intrinsics---mops)
+  [memcpy family of operations intrinsics -
+  MOPS](#memcpy-family-of-operations-intrinsics---mops)
 * Converted document sources from reStructuredText (`.rst`) to
   Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
   used to render the PDF of the specs. The PDF is rendered using the
   standard layout used in Arm specifications.
+* Updated the section links in [Changes between ACLE Q2 2021 and ACLE
+  Q3 2021](#changes-between-acle-q2-2021-and-acle-q3-2021) by using
+  the actual section title.
 
 ### References
 
