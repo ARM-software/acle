@@ -127,17 +127,17 @@ for more information about Arm’s trademarks.
 ### Changes between 2021Q2 and 2021Q3
 
 * Fixed the guard macro for the base intrinsics.
-* Correct ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
+* Corrected ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
 
 ### Changes between 2021Q3 and 2021Q4.
 
-* Fix typo in signature of ``vaddq_s16``.
-* Update copyright statement in section [Copyright](#copyright).
+* Fixed typo in signature of ``vaddq_s16``.
+* Updated copyright statement in section [Copyright](#copyright).
 * Converted document sources from reStructuredText (`.rst`) to
   Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
   used to render the PDF of the specs. The PDF is rendered using the
   standard layout used in Arm specifications.
-* Add missing item for release 2021Q3 in the table with the list of
+* Added missing item for release 2021Q3 in the table with the list of
   versions in section [Document history](#document-history).
 
 <!---

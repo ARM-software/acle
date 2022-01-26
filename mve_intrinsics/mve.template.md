@@ -120,7 +120,7 @@ Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.co
 
 ### Changes for 2021Q4
 
-* Update copyright statement in section [Copyright](#copyright).
+* Updated copyright statement in section [Copyright](#copyright).
 * Converted document sources from reStructuredText (`.rst`) to
   Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
   used to render the PDF of the specs. The PDF is rendered using the

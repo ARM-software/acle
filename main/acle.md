@@ -190,8 +190,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Introduced `__ARM_FEATURE_PAUTH` and `__ARM_FEATURE_BTI` in sections
   [Pointer Authentication](#pointer-authentication) and [Branch Target
   Identification](#branch-target-identification) respectively.
-* Fix the changelog of 2021Q3, as is was missing the mentioning of the
-  intrinsic `vmul_lane_u16` in the second item.
+* Fixed the changelog of 2021Q3, as is was missing the mentioning of
+  the intrinsic `vmul_lane_u16` in the second item.
 * Fixed item lists rendering in [M-profile Vector
   Extension](#m-profile-vector-extension-mve-intrinsics).
 * Fixed superfluous and broken backticks in code examples throughout.
