@@ -49,20 +49,16 @@ To check the outcome of your changes, run the script
 [docker](https://www.docker.com/)). The scripts generate the PDFs of
 the specifications and stores them in the folder `pdfs`.
 
-The script runs in the CI configuration of the project. PDFs are
-generated automatically in response to a pull request. You can
-download the PDFs in the `Actions` tab of any pull request.
-
 # Continuous integration
 
-The full sequence executed by the continuous integrations bot is as
-follows:
+The continuous integration bot executes the script:
 
 ```
-./tools/generate-intrinsics-specs.sh
-./tools/check-rst-syntax.sh
-./tools/generate-pdfs.sh
+ ./build_with_docker.sh
 ```
+
+PDFs are generated automatically in response to a pull request. You
+can download the PDFs in the `Actions` tab of any pull request.
 
 An additional step uses
 [``markdown-link-check```](https://github.com/tcort/markdown-link-check)
