@@ -1,16 +1,19 @@
+<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
+<!-- See LICENSE.md file for details -->
 <div align="center">
-   <img src="Arm_logo_blue_RGB.svg" />
+   <img id="index_logo" src="Arm_logo_blue_RGB.svg" />
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
 # Arm C Language Extensions
 
-This repository contains the source material form which the
-specifications for the Arm C Language Extensions (ACLE) is derived.
+This repository contains the source material from which the
+specifications for the Arm C Language Extensions (ACLE) are derived.
 For the published documents please see the [Arm developer ACLE
 page](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
 
@@ -31,17 +34,17 @@ an email to arm.acle@arm.com.
 
 ## Transitioning the ACLE specifications
 
-This is a work in progress. The document added to the repository will
+This is a work in progress. Any document added to the repository will
 be referenced in this README file when added.
 
 ## List of documents
 
 Document sources                                                           | Latest official release
 ---                                                                        | ---
-[Arm C Language Extensions](main/acle.rst)                                 | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
-[Morello Supplement to the Arm C Language Extensions](morello/morello.rst) | [01alpha](https://github.com/ARM-software/acle/releases/latest)
-[Arm MVE Intrinsics](mve_intrinsics/mve.rst)                               | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
-[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.rst)               | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+[Arm C Language Extensions](main/acle.md)                                  | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+[Morello Supplement to the Arm C Language Extensions](morello/morello.md)  | [01alpha](https://github.com/ARM-software/acle/releases/latest)
+[Arm MVE Intrinsics](mve_intrinsics/mve.md)                                | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
+[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.md)                | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
 
 # License
 
@@ -96,6 +99,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/peterwaller-arm"><img src="https://avatars.githubusercontent.com/u/52030119?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Peter Waller</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Apeterwaller-arm" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/MDevereau"><img src="https://avatars.githubusercontent.com/u/81567778?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matthew Devereau</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=MDevereau" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/rsandifo-arm"><img src="https://avatars.githubusercontent.com/u/28043039?v=4?s=100" width="100px;" alt=""/><br /><sub><b>rsandifo-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Arsandifo-arm" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/rearnsha"><img src="https://avatars.githubusercontent.com/u/57798236?v=4?s=100" width="100px;" alt=""/><br /><sub><b>rearnsha</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Arearnsha" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 

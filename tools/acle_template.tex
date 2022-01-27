@@ -1,0 +1,182 @@
+% Copyright (c) 2014--2021, John MacFarlane
+% Based on default.latex template released with Pandoc (www.pandoc.org).
+% License: BSD 3-clause
+% See `data/templates` in `COPYRIGHT` at https://github.com/jgm/pandoc
+
+\documentclass[a4,10pt]{report}
+\usepackage{xcolor}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{longtable,booktabs}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+\usepackage{titleref}
+\usepackage{tikz}
+\makeatletter
+  \newcommand*{\currentname}{\TR@currentTitle}
+\makeatother
+\usepackage{charter}
+\usepackage[defaultsans,scale=0.95]{lato}
+\usepackage{inconsolata}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{graphicx}
+\usepackage[$if(landscape)$landscape,$endif$top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm]{geometry}
+\usepackage{lastpage}
+
+\makeatletter
+  \patchcmd{\f@nch@foot}{\rlap}{\color{darkgray}\rlap}{}{}
+  \patchcmd{\footrule}{\hrule}{\color{darkgray}\hrule}{}{}
+\makeatother
+
+\sectionfont{\color{armblue}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small $title$ \\~}
+\fancyhead[R]{\small Version: $version$ \\ \currentname}
+\fancyfoot[C]{\small \emph{$copyright-text$}}
+\fancyfoot[R]{\small ~\\ Page \textbf{\thepage}\ of  \textbf{\pageref*{LastPage}}}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0pt}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[L]{\small $title$ \\~}
+  \fancyhead[R]{\small Version: $version$ \\ \currentname}
+  \fancyfoot[C]{\small \emph{$copyright-text$}}
+  \fancyfoot[R]{\small ~\\ Page \textbf{\thepage}\ of  \textbf{\pageref*{LastPage}}}
+  \renewcommand{\footrulewidth}{0pt}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+$if(highlighting-macros)$
+  $highlighting-macros$
+$endif$
+
+% Remove "Chapter (Number)" before each new chapter and adjust title spacing.
+\usepackage{titlesec}
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
+\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+
+% Set the indent level of the paragraphs.
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+
+% Set max depth of section numbering and ToC listing - 6 is used due to
+% headings going up to h6 in HTML.
+\setcounter{tocdepth}{6}
+\setcounter{secnumdepth}{6}
+
+\date{$date-of-issue$}
+
+\hypersetup{
+            colorlinks=true,
+            linkcolor=armblue,
+            filecolor=armblue,
+            citecolor=armblue,
+            urlcolor=armblue,
+            breaklinks=true}
+
+\usepackage{dblfloatfix}
+\usepackage{subcaption}
+
+% These colours are used for rendering the grid image below
+\definecolor{armgray}{rgb}{0.5,0.5,0.5}
+\definecolor{armlightgray}{rgb}{0.83,0.83,0.83}
+\definecolor{armblue}{HTML}{0091BD}
+
+\makeatletter
+\renewcommand\maketitle{
+    \newgeometry{left=0.0cm,right=0.0cm,top=1.0cm,bottom=0.0cm}
+    \begin{flushleft}
+        \hspace{1.0cm} \includegraphics[height=0.6cm]{"./tools/Arm-logo-blue-RGB.pdf"}
+        \begin{minipage}[t][1.2cm][t]{\linewidth}
+            \phantom{empty}
+        \end{minipage}
+        \newline
+        \begin{minipage}[t]{4.0cm}
+            \phantom{empty}
+        \end{minipage}
+        \begin{minipage}[t]{14.0cm}
+            {\huge \bfseries  $title$}\\[2ex]
+            {\large Release Date: $date-of-issue$}\\[2ex]
+            {\large \bfseries Version: $version$}\\[3ex]
+        \end{minipage}
+        \newline
+        \begin{minipage}[t][0.47cm][t]{\linewidth}
+            \phantom{empty}
+        \end{minipage}
+        \newline
+        \begin{minipage}[t]{4.0cm}
+            \phantom{empty}
+        \end{minipage}
+        \begin{minipage}[t]{16.0cm}
+            \begin{minipage}[t]{9.0cm}
+                \textbf{$copyright-text$}\\[$if(landscape)$7ex$else$1ex$endif$]
+            \end{minipage}
+        \end{minipage}
+    \end{flushleft}
+
+    % This is the rendering of the grid image used on the title page
+    \begin{figure}[hbt!]
+
+        \makebox[\paperwidth]{
+          $if(landscape)$\begin{subfigure}[b!]{13.8cm}$endif$
+            \begin{tikzpicture}[scale=\paperwidth/$if(landscape)$16.0cm$else$8.0cm$endif$,samples=200]
+                $if(landscape)$
+                $else$
+                \draw[line width=0.0pt,color=white,fill=armblue] (5.005,0) rectangle (5.995,7);
+                $endif$
+                \draw[line width=0.0pt,color=white,fill=armblue] (0,4.995) rectangle (8,4.005);
+                \foreach \y in {0,...,7} {
+                    \draw[armlightgray, thin] (0,\y) -- (8,\y);
+                }
+                \foreach \x in {1,...,7} {
+                    \draw[armlightgray, thin] (\x,0) -- (\x,7);
+                    \foreach \y in {1,...,7} {
+                        \draw[armgray, thick] (\x,\y - 0.05) -- (\x,\y + 0.05);
+                        \draw[armgray, thick] (\x - 0.05,\y) -- (\x + 0.05,\y);
+                        \draw[white, thick] (\x - 0.01,\y + 0.01) rectangle (\x + 0.01,\y - 0.01);
+                    }
+                }
+            \end{tikzpicture}
+          $if(landscape)$\end{subfigure}$endif$
+          $if(landscape)$\begin{subfigure}[b!]{13.8cm}
+            \begin{tikzpicture}[scale=\paperwidth/16.0cm,samples=200]
+                \draw[line width=0.0pt,color=white,fill=armblue] (5.005,0) rectangle (5.995,7);
+                \draw[line width=0.0pt,color=white,fill=armblue] (0,4.995) rectangle (8,4.005);
+                \foreach \y in {0,...,7} {
+                    \draw[armlightgray, thin] (0,\y) -- (8,\y);
+                }
+                \foreach \x in {0,...,7} {
+                    \draw[armlightgray, thin] (\x,0) -- (\x,7);
+                    \foreach \y in {1,...,7} {
+                        \draw[armgray, thick] (\x,\y - 0.05) -- (\x,\y + 0.05);
+                        \draw[armgray, thick] (\x - 0.05,\y) -- (\x + 0.05,\y);
+                        \draw[white, thick] (\x - 0.01,\y + 0.01) rectangle (\x + 0.01,\y - 0.01);
+                    }
+                }
+            \end{tikzpicture}
+          \end{subfigure}$endif$
+        }
+    \end{figure}
+    \clearpage
+    \restoregeometry
+}
+\makeatother
+
+\color{darkgray}
+\begin{document}
+
+  \maketitle
+  \tableofcontents
+  \newpage
+  $body$
+
+\end{document}

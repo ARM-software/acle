@@ -1,3 +1,10 @@
+---
+layout: default
+title: Contribution Guidelines
+---
+<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # Thank you for considering contributing!
 
 Contributions are always welcome. We accept [bug fixes](#bugs),
@@ -38,25 +45,20 @@ great impact.
 ## Editorial improvements
 
 To check the outcome of your changes, run the script
-`tools/generate-pdfs.sh`. Note that changes that impact the intrinsic
-database in `tools/intrinsic_db` should be reflected in the associated
-specification file. To do this, re-run the script
-`tools/generate-instrinsics-spec.sh`.
-
-The scripts run in the CI configuration of the project. PDFs are
-generated automatically in response to a pull request. You can
-download the PDFs in the `Actions` tab of any pull request.
+`build_with_docker.sh` (requires
+[docker](https://www.docker.com/)). The scripts generate the PDFs of
+the specifications and stores them in the folder `pdfs`.
 
 # Continuous integration
 
-The full sequence executed by the continuous integrations bot is as
-follows:
+The continuous integration bot executes the script:
 
 ```
-./tools/generate-intrinsics-specs.sh
-./tools/check-rst-syntax.sh
-./tools/generate-pdfs.sh
+ ./build_with_docker.sh
 ```
+
+PDFs are generated automatically in response to a pull request. You
+can download the PDFs in the `Actions` tab of any pull request.
 
 An additional step uses
 [``markdown-link-check```](https://github.com/tcort/markdown-link-check)
@@ -82,7 +84,7 @@ PR](https://github.com/ARM-software/acle/pull/19).
 
 Contributions to this project are licensed under an inbound=outbound
 model such that any such contributions are licensed by the contributor
-under the same terms as those in the [LICENSE](LICENSE) file.
+under the same terms as those in the [LICENSE](LICENSE.md) file.
 
 We _do not_ require copyright assignment. The original contributor
 will retain the copyright.
