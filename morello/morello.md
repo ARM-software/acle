@@ -1,7 +1,7 @@
 ---
 title: Morello Supplement to the Arm C Language Extensions
-version: Development version based on 01alpha
-date-of-issue: TBD
+version: 02alpha
+date-of-issue: 11 January 2022
 # LaTeX specific variables
 copyright-text: Copyright 2020-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
@@ -150,15 +150,18 @@ All content in this document is at the **Alpha** quality level.
 
 ### Change History
 
-| Issue      | Date                  | Change                           |
-| :---       | :---                  | :---                             |
-| 00alpha    | 30th September 2020   | Alpha release                    |
-| 01alpha    | 02 July 2021          | Open source release. NFCI.       |
+| Issue      | Date                  | Change                                          |
+| :---       | :---                  | :---                                            |
+| 00alpha    | 30th September 2020   | Alpha release                                   |
+| 01alpha    | 02 July 2021          | Open source release. NFCI.                      |
+| 02alpha    | 11 January 2022       | See [Changes for 02alpha](#changes-for-02alpha) |
 
-## Changes for next release
+### Changes for 02alpha
 
-* Update the copyright statement in section [Copyright](#copyright).
-* Add a reference to the [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide) *CHERI Hybrid C/C++ Programming Guide* in section [Scope](#scope).
+* Updated the copyright statement in section [Copyright](#copyright).
+* Added a reference to the
+  [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide)
+  *CHERI Hybrid C/C++ Programming Guide* in section [Scope](#scope).
 * Converted document sources from reStructuredText (`.rst`) to
   Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
   used to render the PDF of the specs. The PDF is rendered using the
@@ -200,7 +203,7 @@ This document refers to, or is referred to by, the following documents.
    When a capability is sealed it cannot be modified or dereferenced,
    but it can be used to implement opaque pointer types.
 
-## Scope
+# Scope
 
 The Morello Supplement to the Arm C Language Extensions highlights the
 language features added on top of the CHERI programming language to
@@ -210,16 +213,16 @@ further exploit the Morello architecture. We recommend reading the
 [CHERI-HYBRID](https://github.com/CTSRD-CHERI/cheri-hybrid-c-guide)
 *CHERI Hybrid C/C++ Programming Guide* as preliminary material.
 
-## Predefined macros
+# Predefined macros
 
 ACLE introduces several predefined macros that define how the C/C++
 implementation uses the Morello architecture.
 
-### `__ARM_FEATURE_C64`
+## `__ARM_FEATURE_C64`
 
 This macro indicates that the code is being compiled for the C64 ISA.
 
-### Capability Permissions
+## Capability Permissions
 
 The following macros indicate capability permissions:
 
@@ -236,17 +239,17 @@ Those can be used to form a bitmask that is acceptable for
 corresponds to the permission bit as it appears in the architecture
 documentation.
 
-### Deviation from CHERI
+## Deviation from CHERI
 
 The macro `__CHERI_CAP_PERMISSION_PERMIT_CCALL__` is not available on
 the Morello architecture.
 
-## Builtin functions
+# Builtin functions
 
 ACLE standardizes builtin functions to access the Morello architecture.
 These are the following:
 
-### Check subset and conditionally unseal or return null
+## Check subset and conditionally unseal or return null
 
 ``` c
 void* __capability
@@ -259,7 +262,7 @@ sealed and the latter being unsealed, if `a` can be derived from `b`,
 then it unseals `a` and returns it, otherwise it returns a null
 capability.
 
-### Check subset and conditionally unseal
+## Check subset and conditionally unseal
 
 ``` c
 void* __capability
@@ -271,7 +274,7 @@ Assuming two valid capabilities `a` and `b`, with the former being
 sealed and the latter being unsealed, if `a` can be derived from `b`,
 then it unseals `a` and returns it, otherwise it just returns `a`.
 
-### Convert pointer to capability offset (zeroing form)
+## Convert pointer to capability offset (zeroing form)
 
 ``` c
 void* __capability

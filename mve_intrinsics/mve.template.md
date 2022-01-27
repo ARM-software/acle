@@ -1,7 +1,7 @@
 ---
 title: Arm MVE Intrinsics
-version: Development version based on 2021Q2
-date-of-issue: TBD
+version: 2021Q4
+date-of-issue: 11 January 2022
 # LaTeX specific variables
 landscape: true
 copyright-text: Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
@@ -109,17 +109,18 @@ Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.co
 
 ## Document history
 
-| Issue     | Date              | Change               |
-| :---      | :---              | :---                 |
-| Q219-00   | 30 June 2019      | Version ACLE Q2 2019 |
-| Q319-00   | 30 September 2019 | Version ACLE Q3 2019 |
-| Q419-00   | 31 December 2019  | Version ACLE Q4 2019 |
-| Q220-00   | 30 May 2020       | Version ACLE Q2 2020 |
-| 2021Q2    | 02 July 2021      | Open source release  |
+| Issue     | Date              | Change                                        |
+| :---      | :---              | :---                                          |
+| Q219-00   | 30 June 2019      | Version ACLE Q2 2019                          |
+| Q319-00   | 30 September 2019 | Version ACLE Q3 2019                          |
+| Q419-00   | 31 December 2019  | Version ACLE Q4 2019                          |
+| Q220-00   | 30 May 2020       | Version ACLE Q2 2020                          |
+| 2021Q2    | 02 July 2021      | Open source release                           |
+| 2021Q4    | 11 January 2022   | See [Changes for 2021Q4](#changes-for-2021q4) |
 
-### Changes for next release
+### Changes for 2021Q4
 
-* Update copyright statement in section [Copyright](#copyright).
+* Updated copyright statement in section [Copyright](#copyright).
 * Converted document sources from reStructuredText (`.rst`) to
   Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
   used to render the PDF of the specs. The PDF is rendered using the
