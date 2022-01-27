@@ -215,7 +215,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   Q3 2021](#changes-between-acle-q2-2021-and-acle-q3-2021) by using
   the actual section title.
 
-#### Changes between ACLE Q3 2021 and ACLE Q4 2021
+#### Changes for next release
 
 * Updated the description of the `__arm_mops_memset_tag` intrinsic in [memcpy
   family of operations intrinsics - MOPS](#memcpy-family-of-operations-intrinsics---mops)
