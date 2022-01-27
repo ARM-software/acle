@@ -68,3 +68,9 @@ The parameters of `__arm_mops_memset_tag` are:
 * `value`: fill value.
 * `size`: number of bytes to fill. This should be a multiple of the tag
   granule size.
+
+As described by the [A64 ISA](https://developer.arm.com/documentation/ddi0596/2021-12/Base-Instructions/SETGPT--SETGMT--SETGET--Memory-Set-with-tag-setting--unprivileged-?lang=en)
+the instructions for performing the memset with tag operation require both the
+MOPS and MTE extensions to be available. Therefore, the intrinsic should be
+available when both the `__ARM_FEATURE_MOPS` and `__ARM_FEATURE_MEMORY_TAGGING`
+feature macros are defined.
