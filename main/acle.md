@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2021Q4
-date-of-issue: 11 January 2021
+version: Development version based on 2021Q4
+date-of-issue: TBD
 # LaTeX specific variables
 copyright-text: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
@@ -214,6 +214,13 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Updated the section links in [Changes between ACLE Q2 2021 and ACLE
   Q3 2021](#changes-between-acle-q2-2021-and-acle-q3-2021) by using
   the actual section title.
+
+#### Changes for next release
+
+* Updated the description of the `__arm_mops_memset_tag` intrinsic in [memcpy
+  family of operations intrinsics - MOPS](#memcpy-family-of-operations-intrinsics---mops)
+  to require both the `__ARM_FEATURE_MOPS` and `__ARM_FEATURE_MEMORY_TAGGING`
+  feature macros.
 
 ### References
 
@@ -5145,7 +5152,8 @@ tagging.
 
 The `<arm_acle.h>` header should be included before using this intrinsic.
 
-This intrinsic is available when `__ARM_FEATURE_MOPS` is defined.
+This intrinsic is available when both `__ARM_FEATURE_MOPS` and
+`__ARM_FEATURE_MEMORY_TAGGING` are defined.
 
 ``` c
   void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
