@@ -14,8 +14,15 @@
 
 This repository contains the source material from which the
 specifications for the Arm C Language Extensions (ACLE) are derived.
-For the published documents please see the [Arm developer ACLE
-page](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
+
+The latest release of the specifications can be browsed online at
+[arm-software.github.io/acle/](https://arm-software.github.io/acle/).
+
+The PDF version of the documents can be retrieved from the [latest
+release](https://github.com/ARM-software/acle/releases/latest) page.
+
+For the development version, please check the branch `next-release` at
+[github.com/ARM-software/acle/](https://github.com/ARM-software/acle/).
 
 ## Contributing
 
@@ -37,14 +44,19 @@ an email to arm.acle@arm.com.
 This is a work in progress. Any document added to the repository will
 be referenced in this README file when added.
 
+For the documents that are still missing in this project please see
+the [Arm developer ACLE
+page](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
+
+
 ## List of documents
 
-Document sources                                                           | Latest official release
----                                                                        | ---
-[Arm C Language Extensions](main/acle.md)                                  | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
-[Morello Supplement to the Arm C Language Extensions](morello/morello.md)  | [01alpha](https://github.com/ARM-software/acle/releases/latest)
-[Arm MVE Intrinsics](mve_intrinsics/mve.md)                                | [2021Q2](https://github.com/ARM-software/acle/releases/latest)
-[Arm Neon Intrinsics Reference](neon_intrinsics/advsimd.md)                | [2021Q3](https://github.com/ARM-software/acle/releases/latest)
+HTML version                                                                                        | PDF version
+---                                                                                                 | ---
+[Arm C Language Extensions](https://arm-software.github.io/acle/main/)                              | [download](https://github.com/ARM-software/acle/releases/latest)
+[Morello Supplement to the Arm C Language Extensions](https://arm-software.github.io/acle/morello/) | [download](https://github.com/ARM-software/acle/releases/latest)
+[Arm MVE Intrinsics](https://arm-software.github.io/acle/mve_intrinsics/)                           | [download](https://github.com/ARM-software/acle/releases/latest)
+[Arm Neon Intrinsics Reference](https://arm-software.github.io/acle/neon_intrinsics/)               | [download](https://github.com/ARM-software/acle/releases/latest)
 
 # License
 
