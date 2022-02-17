@@ -221,6 +221,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   family of operations intrinsics - MOPS](#memcpy-family-of-operations-intrinsics---mops)
   to require both the `__ARM_FEATURE_MOPS` and `__ARM_FEATURE_MEMORY_TAGGING`
   feature macros.
+* Fixed minor formatting errors throughout.
 
 ### References
 
@@ -489,7 +490,7 @@ Several predefined macros are defined. Generally these define features
 of the Arm architecture being targeted, or how the C/C++ implementation
 uses the architecture. These macros are detailed in
 [sec-Feature-test-macros](#feature-test-macros). All ACLE predefined macros start with the
-prefix `__ARM.`
+prefix `__ARM`.
 
 ## Intrinsics
 
@@ -709,7 +710,7 @@ values using standard C operators.
 ```
 
 Armv8 introduces floating point instructions to convert 64-bit to 16-bit
-i.e. from double to `__fp16.` They are not available in earlier
+i.e. from double to `__fp16`. They are not available in earlier
 architectures, therefore have to rely on emulation libraries or a
 sequence of instructions to achieve the conversion.
 
@@ -811,7 +812,7 @@ single-precision floating point format and the value be converted to `__bf16`
 when required using ACLE intrinsics.
 
 Armv8.2-A introduces floating point instructions to convert 32-bit to brain
-16-bit i.e. from float to `__bf16.` They are not available in earlier
+16-bit i.e. from float to `__bf16`. They are not available in earlier
 architectures, therefore have to rely on emulation libraries or a
 sequence of instructions to achieve the conversion.
 
@@ -917,7 +918,7 @@ comparison such as:
 will have the expected effect of evaluating to false if the macro is not
 defined.)
 
-All ACLE macros begin with the prefix `__ARM_.` All ACLE macros expand
+All ACLE macros begin with the prefix `__ARM_`. All ACLE macros expand
 to integral constant expressions suitable for use in an #if directive,
 unless otherwise specified. Syntactically, they must be
 primary-expressions generally this means an implementation should
@@ -1234,9 +1235,9 @@ brain floating-point types.
 architecture supports fused floating-point multiply-accumulate, i.e.
 without intermediate rounding. Note that C implementations are
 encouraged [[C99]](#C99) (7.12) to ensure that <math.h> defines `FP_FAST_FMAF` or
-`FP_FAST_FMA,` which can be tested by portable C code. A C
+`FP_FAST_FMA`, which can be tested by portable C code. A C
 implementation on Arm might define these macros by testing
-`__ARM_FEATURE_FMA` and `__ARM_FP.`
+`__ARM_FEATURE_FMA` and `__ARM_FP`.
 
 ### Advanced SIMD architecture extension (Neon)
 
@@ -1245,7 +1246,7 @@ architecture supported. The only current value is 1.
 
 In principle, for AArch32, the Neon architecture can exist in an
 integer-only version. To test for the presence of Neon floating-point
-vector instructions, test `__ARM_NEON_FP.` When Neon does occur in an
+vector instructions, test `__ARM_NEON_FP`. When Neon does occur in an
 integer-only version, the VFP scalar instruction set is also not
 present. See [[ARMARM]](#ARMARM) (table A2-4) for architecturally permitted
 combinations.
@@ -1256,7 +1257,7 @@ combinations.
 
 `__ARM_NEON_FP` is defined as a bitmap to indicate floating-point
 support in the Neon architecture. The meaning of the values is the same
-as for `__ARM_FP.` This macro is undefined when the Neon extension is
+as for `__ARM_FP`. This macro is undefined when the Neon extension is
 not present or does not support floating-point.
 
 Current AArch32 Neon implementations do not support double-precision
@@ -2310,7 +2311,7 @@ cache level.
 Generates a code prefetch instruction. This intrinsic allows the
 specification of the cache level to load the code, the retention policy
 (temporal or streaming). The relevant arguments can have the same values
-as in `__pldx.`
+as in `__pldx`.
 
 `__pldx` and `__plix` arguments cache level and retention policy
 are ignored on unsupported targets.
@@ -2483,7 +2484,7 @@ available on all targets. On targets without the CLZ instruction it
 should be implemented as an instruction sequence or a call to such a
 sequence. Fast hardware implementation (using a CLS instruction or a short code
 sequence involving the CLZ instruction) is indicated by
-`__ARM_FEATURE_CLZ.`
+`__ARM_FEATURE_CLZ`.
 
 ``` c
   uint32_t __rev(uint32_t);
@@ -2767,7 +2768,7 @@ When defining the intrinsics, implementations can define SIMD operands
 using a 32-bit integral type (such as `unsigned int`).
 
 The header `<arm_acle.h>` defines typedefs `int16x2_t`, `uint16x2_t`,
-`int8x4_t`, and `uint8x4_t.` These should be defined as 32-bit integral
+`int8x4_t`, and `uint8x4_t`. These should be defined as 32-bit integral
 types of the appropriate sign. There are no intrinsics provided to pack
 or unpack values of these types. This can be done with shifting and
 masking operations.
@@ -4017,14 +4018,14 @@ each architecture includes its predecessor instruction set.
 | BKPT            |           | 5             | none                                          |
 | BFC             |           | 6T2, 7-M      | C                                             |
 | BFI             |           | 6T2, 7-M      | C                                             |
-| CLZ             |           | 5             | `__clz,` `__builtin_clz`                      |
+| CLZ             |           | 5             | `__clz`, `__builtin_clz`                      |
 | DBG             |           | 7, 7-M        | `__dbg`                                       |
 | DMB             |           | 8,7, 6-M      | `__dmb`                                       |
 | DSB             |           | 8, 7, 6-M     | `__dsb`                                       |
-| FRINT32Z        |           | 8-64          | `__rint32zf,` `__rint32z`                     |
-| FRINT64Z        |           | 8-64          | `__rint64zf,` `__rint64z`                     |
-| FRINT32X        |           | 8-64          | `__rint32xf,` `__rint32x`                     |
-| FRINT64X        |           | 8-64          | `__rint64xf,` `__rint64x`                     |
+| FRINT32Z        |           | 8-64          | `__rint32zf`, `__rint32z`                     |
+| FRINT64Z        |           | 8-64          | `__rint64zf`, `__rint64z`                     |
+| FRINT32X        |           | 8-64          | `__rint32xf`, `__rint32x`                     |
+| FRINT64X        |           | 8-64          | `__rint64xf`, `__rint64x`                     |
 | ISB             |           | 8, 7, 6-M     | `__isb`                                       |
 | LDREX           |           | 6, 7-M        | `__sync_xxx`                                  |
 | LDRT            |           | all           | none                                          |
@@ -4250,7 +4251,7 @@ to say they can only be used by intrinsics.
 AArch64 supports Advanced SIMD scalar operations that work on standard
 scalar data types viz. `int8_t`, `uint8_t`, `int16_t`, `uint16_t`,
 `int32_t`, `uint32_t`, `int64_t`, `uint64_t`, `float32_t`,
-`float64_t.`
+`float64_t`.
 
 ### Vector array data types
 
