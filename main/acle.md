@@ -878,7 +878,7 @@ For details of how to test FPU features in source code, see
 [Floating-point, Advanced SIMD (Neon) and MVE
 hardware](#floating-point-advanced-simd-neon-and-mve-hardware).
 In particular, for testing which precisions are supported in hardware,
-see `_ssec-HWFP`.
+see [Hardware floating point](#hardware-floating-point).
 
 | **Name**         | **Features**                                       | **Example processor**               |
 | ---------------- | -------------------------------------------------- | ----------------------------------- |
