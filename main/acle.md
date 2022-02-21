@@ -1132,6 +1132,10 @@ feature also implies support for the Q flag.
 ACLE 2.0 for A-profile. They are fully supported for M and R-profiles.
 This macro is defined for AArch32 only.
 
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --><span id="32-bit-simd-instructions"></span>
+
 ### 32-bit SIMD instructions
 
 `__ARM_FEATURE_SIMD32` is defined to 1 if the 32-bit SIMD instructions
@@ -1682,7 +1686,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SHA2`](#sha2-extension)                                                                                                                 | SHA2 Crypto extension (Arm v8-A)                                                                   | 1           |
 | [`__ARM_FEATURE_SHA512`](#sha512-extension)                                                                                                             | SHA2 Crypto ext. (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                       | 1           |
 | [`__ARM_FEATURE_SHA3`](#sha3-extension)                                                                                                                 | SHA3 Crypto extension (Arm v8.4-A)                                                                 | 1           |
-| [`__ARM_FEATURE_SIMD32`](#saturation-instructions), [[ssec-32SIMD]](#32-bit-simd-operations)                                                            | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
+| [`__ARM_FEATURE_SIMD32`](#32-bit-simd-instructions)                                                                                                     | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
 | [`__ARM_FEATURE_SM3`](#sm3-extension)                                                                                                                   | SM3 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | [`__ARM_FEATURE_SM4`](#sm4-extension)                                                                                                                   | SM4 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | [`__ARM_FEATURE_FP16_FML`](#fp16-fml-extension)                                                                                                         | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
