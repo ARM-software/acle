@@ -224,6 +224,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixed minor formatting errors throughout.
 * Replaced link text such as “sec-…” and “ssec-…” with section titles.
 * Used embedded links for the [list of predefined macros](#summary-of-predefined-macros).
+* Added more cross-references to the descriptions of feature macros.
 
 ### References
 
@@ -1047,7 +1048,8 @@ be defined.
 ### LDREX/STREX
 
 This feature was deprecated in ACLE 2.0. It is strongly recommended that
-C11/C++11 atomics be used instead.
+C11/C++11 atomics be used instead.  (See also [Synchronization, barrier,
+and hint intrinsics](#synchronization-barrier-and-hint-intrinsics).)
 
 `__ARM_FEATURE_LDREX` is defined if the load/store-exclusive
 instructions (LDREX/STREX) are supported. Its value is a set of bits
@@ -1258,6 +1260,11 @@ encouraged [[C99]](#C99) (7.12) to ensure that <math.h> defines `FP_FAST_FMAF` o
 implementation on Arm might define these macros by testing
 `__ARM_FEATURE_FMA` and `__ARM_FP`.
 
+This macro implies support for floating-point instructions but it
+does not in itself imply support for vector instructions.  See [Neon
+floating-point](#neon-floating-point) for the conditions under
+which vector fused multiply-accumulate operations are available.
+
 ### Advanced SIMD architecture extension (Neon)
 
 `__ARM_NEON` is defined to a value indicating the Advanced SIMD (Neon)
@@ -1426,8 +1433,9 @@ this implies:
 
 ### Javascript floating-point conversion
 
-`__ARM_FEATURE_JCVT` is defined to 1 if the FJCVTZS (AArch64) or
-VJCVT (AArch32) instruction and the associated intrinsic is available.
+`__ARM_FEATURE_JCVT` is defined to 1 if the FJCVTZS (AArch64)
+or VJCVT (AArch32) instruction and the [associated
+intrinsic](#floating-point-data-processing-intrinsics) are available.
 
 ## Floating-point model
 
@@ -1672,10 +1680,10 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_FRINT`](#armv8.5-a-floating-point-rounding-extension), [[ssec-FrintIns]](#availability-of-armv8.5-a-floating-point-rounding-intrinsics) | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_DSP`](#dsp-instructions)                                                                                                                | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
 | [`__ARM_FEATURE_AES`](#aes-extension)                                                                                                                   | AES Crypto extension (Arm v8-A)                                                                    | 1           |
-| [`__ARM_FEATURE_FMA`](#fused-multiply-accumulate-fma), [[ssec-Fpdpi]](#floating-point-data-processing-intrinsics)                                       | Floating-point fused multiply-accumulate                                                           | 1           |
+| [`__ARM_FEATURE_FMA`](#fused-multiply-accumulate-fma)                                                                                                   | Floating-point fused multiply-accumulate                                                           | 1           |
 | [`__ARM_FEATURE_IDIV`](#hardware-integer-divide)                                                                                                        | Hardware Integer Divide                                                                            | 1           |
-| [`__ARM_FEATURE_JCVT`](#javascript-floating-point-conversion), [[ssec-Fpdpi]](#floating-point-data-processing-intrinsics)                               | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
-| [`__ARM_FEATURE_LDREX`](#ldrexstrex), [[ssec-Sbahi]](#synchronization-barrier-and-hint-intrinsics) *(Deprecated)*                                       | Load/store exclusive instructions                                                                  | 0x0F        |
+| [`__ARM_FEATURE_JCVT`](#javascript-floating-point-conversion)                                                                                           | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
+| [`__ARM_FEATURE_LDREX`](#ldrexstrex) *(Deprecated)*                                                                                                     | Load/store exclusive instructions                                                                  | 0x0F        |
 | [`__ARM_FEATURE_MATMUL_INT8`](#matrix-multiply-intrinsics), [[ssec-MatMulIns]](#availability-of-armv8.6-a-integer-matrix-multiply-intrinsics)           | Integer Matrix Multiply extension (Armv8.6-A, optional Armv8.2-A, Armv8.3-A, Armv8.4-A, Armv8.5-A) | 1           |
 | [`__ARM_FEATURE_MEMORY_TAGGING`](#memory-tagging)                                                                                                       | Memory Tagging (Armv8.5-A)                                                                         | 1           |
 | [`__ARM_FEATURE_ATOMICS`](#large-system-extensions)                                                                                                     | Large System Extensions                                                                            | 1           |
