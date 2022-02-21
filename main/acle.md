@@ -223,7 +223,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   feature macros.
 * Fixed minor formatting errors throughout.
 * Replaced link text such as “sec-…” and “ssec-…” with section titles.
-* Used embedded links for the [list of predefined macros](#summary-of-predefined-macros).
+* Used embedded links for the [list of predefined macros](#summary-of-predefined-macros)
+  and fixed some misdirected links.
 * Added more cross-references to the descriptions of feature macros.
 
 ### References
@@ -1710,8 +1711,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_MVE`](#m-profile-vector-extension)                                                                                                      | M-profile Vector Extension                                                                         | 1           |
 | [`__ARM_FEATURE_CDE`](#custom-datapath-extension)                                                                                                       | Custom Datapath Extension                                                                          | 0x01        |
 | [`__ARM_FEATURE_CDE_COPROC`](#custom-datapath-extension)                                                                                                | Custom Datapath Extension                                                                          | 0xf         |
-| [`__ARM_NEON`](#neon-floating-point)                                                                                                                    | Advanced SIMD (Neon) extension                                                                     | 1           |
-| [`__ARM_NEON_FP`](#wireless-mmx)                                                                                                                        | Advanced SIMD (Neon) floating-point                                                                | 0x04        |
+| [`__ARM_NEON`](#advanced-simd-architecture-extension-neon)                                                                                              | Advanced SIMD (Neon) extension                                                                     | 1           |
+| [`__ARM_NEON_FP`](#neon-floating-point)                                                                                                                 | Advanced SIMD (Neon) floating-point                                                                | 0x04        |
 | [`__ARM_FEATURE_COPROC`](#coprocessor-intrinsics)                                                                                                       | Coprocessor Intrinsics                                                                             | 1           |
 | [`__ARM_PCS`](#procedure-call-standard)                                                                                                                 | Arm procedure call standard (32-bit-only)                                                          | 0x01        |
 | [`__ARM_PCS_AAPCS64`](#procedure-call-standard)                                                                                                         | Arm PCS for AArch64.                                                                               | 1           |
