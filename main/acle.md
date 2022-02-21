@@ -456,13 +456,13 @@ ACLE extends C by providing some types not present in Standard C and
 defining how they are dealt with by the AAPCS.
 
 * Vector types for use with the Advanced SIMD intrinsics (see
- [ssec-vectypes](#vector-data-types)).
+ [Vector data types](#vector-data-types)).
 
 * The `__fp16` type for 16-bit floating-point values (see 
- [ssec-fp16-type](#half-precision-floating-point)).
+ [Half-precision floating-point](#half-precision-floating-point)).
 
 * The `__bf16` type for 16-bit brain floating-point values (see 
- [ssec-bf16-type](#half-precision-brain-floating-point)).
+ [Half-precision brain floating-point](#half-precision-brain-floating-point)).
 
 ### Implementation-defined type properties
 
@@ -841,7 +841,8 @@ processors implementing the Arm architecture.)
 
 The recommended CPU architecture names are as specified under
 `Tag_CPU_arch` in [[BA]](#BA). For details of how to use predefined macros to
-test architecture in source code, see [ssec-ATisa](#a32t32-instruction-set-architecture).
+test architecture in source code, see [A32/T32 instruction set
+architecture](#a32t32-instruction-set-architecture).
 
 The following table lists the architectures and the A32 and
 T32 instruction set versions.
@@ -874,8 +875,10 @@ present in the Armv7-A architecture).
 ### FPU architecture
 
 For details of how to test FPU features in source code, see
-[ssec-HWFPSIMD](#floating-point-advanced-simd-neon-and-mve-hardware). In particular, for testing which
-precisions are supported in hardware, see `_ssec-HWFP`.
+[Floating-point, Advanced SIMD (Neon) and MVE
+hardware](#floating-point-advanced-simd-neon-and-mve-hardware).
+In particular, for testing which precisions are supported in hardware,
+see `_ssec-HWFP`.
 
 | **Name**         | **Features**                                       | **Example processor**               |
 | ---------------- | -------------------------------------------------- | ----------------------------------- |
@@ -1087,13 +1090,15 @@ implement atomic operations in user code.
 
 `__ARM_FEATURE_CLZ` is defined to 1 if the CLZ (count leading zeroes)
 instruction is supported in hardware. Note that ACLE provides the 
-`__clz()` family of intrinsics (see [ssec-Mdpi](#miscellaneous-data-processing-intrinsics)) even 
+`__clz()` family of intrinsics (see [Miscellaneous data-processing
+intrinsics](#miscellaneous-data-processing-intrinsics)) even
 when `__ARM_FEATURE_CLZ` is not defined.
 
 ### Q (saturation) flag
 
 `__ARM_FEATURE_QBIT` is defined to 1 if the Q (saturation) global flag
-exists and the intrinsics defined in [ssec-Qflag2](#the-q-saturation-flag) are available. This 
+exists and the intrinsics defined in [The Q (saturation)
+flag](#the-q-saturation-flag) are available. This
 flag is used with the DSP saturating-arithmetic instructions (such
 as QADD) and the width-specified saturating instructions (SSAT and USAT).
 Note that either of these classes of instructions may exist without the
@@ -1107,9 +1112,9 @@ for AArch32 only.
 ### DSP instructions
 
 `__ARM_FEATURE_DSP` is defined to 1 if the DSP (v5E) instructions are
-supported and the intrinsics defined in [ssec-Satin](#saturating-intrinsics) are available. 
-These instructions include QADD, SMULBB and others. This feature also implies 
-support for the Q flag.
+supported and the intrinsics defined in [Saturating
+intrinsics](#saturating-intrinsics) are available. These instructions include
+QADD, SMULBB and others. This feature also implies support for the Q flag.
 
 `__ARM_FEATURE_DSP` and its associated intrinsics are deprecated in
 ACLE 2.0 for A-profile. They are fully supported for M and R-profiles.
@@ -1118,8 +1123,9 @@ This macro is defined for AArch32 only.
 ### Saturation instructions
 
 `__ARM_FEATURE_SAT` is defined to 1 if the SSAT and USAT instructions
-are supported and the intrinsics defined in [ssec-Wsatin](#width-specified-saturation-intrinsics) are
-available. This feature also implies support for the Q flag.
+are supported and the intrinsics defined in [Width-specified saturation
+intrinsics](#width-specified-saturation-intrinsics) are available. This
+feature also implies support for the Q flag.
 
 `__ARM_FEATURE_SAT` and its associated intrinsics are deprecated in
 ACLE 2.0 for A-profile. They are fully supported for M and R-profiles.
@@ -1129,7 +1135,7 @@ This macro is defined for AArch32 only.
 
 `__ARM_FEATURE_SIMD32` is defined to 1 if the 32-bit SIMD instructions
 are supported and the intrinsics defined in
-[ssec-32SIMD](#32-bit-simd-operations) are available. This also
+[32-bit SIMD Operations](#32-bit-simd-operations) are available. This also
 implies support for the GE global flags which indicate byte-by-byte
 comparison results.
 
@@ -1197,7 +1203,10 @@ diagnose or fault use of floating-point arithmetic at a precision not
 supported in hardware.
 
 Support for 16-bit floating-point language or 16-bit brain floating-point
-language extensions (see [ssec-FP16fmt](#half-precision-16-bit-floating-point-format) and [ssec-BF16fmt](#brain-half-precision-16-bit-floating-point-format)) is only 
+language extensions (see [Half-precision (16-bit) floating-point
+format](#half-precision-16-bit-floating-point-format) and [Brain
+half-precision (16-bit) floating-point
+format](#brain-half-precision-16-bit-floating-point-format)) is only 
 required if supported in hardware.
 
 ### Half-precision (16-bit) floating-point format
@@ -1210,8 +1219,9 @@ alternative [[ARMARM]](#ARMARM) 16-bit floating-point format is used. This forma
 removes support for infinities and NaNs in order to provide an
 additional binade.
 
-At most one of these macros will be defined. See [ssec-fp16-type](#half-precision-floating-point)
-for details of half-precision floating-point types.
+At most one of these macros will be defined. See [Half-precision
+floating-point](#half-precision-floating-point) for details of
+half-precision floating-point types.
 
 ### Brain half-precision (16-bit) floating-point format
 
@@ -1229,8 +1239,9 @@ this implies:
 * `__ARM_FP & 0x02 == 1`
 * `__ARM_NEON_FP & 0x02 == 1`
 
-See [ssec-bf16-type](#half-precision-brain-floating-point) for details of half-precision
-brain floating-point types.
+See [Half-precision brain
+floating-point](#half-precision-brain-floating-point) for details
+of half-precision brain floating-point types.
 
 ### Fused multiply-accumulate (FMA)
 
@@ -1348,14 +1359,15 @@ available. Available when `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
 ### CRC32 extension
 
 `__ARM_FEATURE_CRC32` is defined to 1 if the CRC32 instructions are
-supported and the intrinsics defined in [ssec-crc32](#crc32-intrinsics) are available. 
-These instructions include CRC32B, CRC32H and others. This is only available
-when `__ARM_ARCH >= 8`.
+supported and the intrinsics defined in [CRC32 intrinsics](#crc32-intrinsics)
+are available. These instructions include CRC32B, CRC32H and others.
+This is only available when `__ARM_ARCH >= 8`.
 
 ### Random Number Generation Extension
 
 `__ARM_FEATURE_RNG` is defined to 1 if the Random Number Generation
-instructions are supported and the intrinsics defined in [ssec-rand](#random-number-generation-intrinsics) 
+instructions are supported and the intrinsics defined in
+[Random number generation intrinsics](#random-number-generation-intrinsics) 
 are available.
 
 ### Directed rounding
@@ -1499,7 +1511,8 @@ on the target architecture. The following bits are used:
 `__ARM_FEATURE_FRINT`  is defined to 1 if the Armv8.5-A rounding number
 instructions are supported and the scalar and vector intrinsics are available.
 This macro may only ever be defined in the AArch64 execution state.
-The scalar intrinsics are specified in [ssec-Fpdpi](#floating-point-data-processing-intrinsics) and are not expected
+The scalar intrinsics are specified in [Floating-point data-processing
+intrinsics](#floating-point-data-processing-intrinsics) and are not expected
 to be for general use.  They are defined for uses that require the specialist
 rounding behavior of the relevant instructions.
 The vector intrinsics are specified in the Arm Neon Intrinsics Reference
@@ -1589,7 +1602,7 @@ available.  The following bits are used:
 access to device memory are supported.
 This macro may only ever be defined in the AArch64 execution state.
 Intrinsics for using these instructions are specified in
-[ssec-LS64](#loadstore-64-byte-intrinsics).
+[Load/store 64 Byte intrinsics](#loadstore-64-byte-intrinsics).
 
 ## memcpy family of memory operations standarization instructions - MOPS
 
@@ -2347,8 +2360,10 @@ behave *as if* the instruction had been generated.
 
 In general, these intrinsics are aimed at DSP algorithm optimization on
 M-profile and R-profile. Use on A-profile is deprecated. However, the
-miscellaneous intrinsics and CRC32 intrinsics described in [ssec-Mdpi](#miscellaneous-data-processing-intrinsics)
-and [ssec-crc32](#crc32-intrinsics) respectively are suitable for all profiles.
+miscellaneous intrinsics and CRC32 intrinsics described in [Miscellaneous
+data-processing intrinsics](#miscellaneous-data-processing-intrinsics)
+and [CRC32 intrinsics](#crc32-intrinsics) respectively are suitable
+for all profiles.
 
 ## Programmer's model of global state
 
@@ -2417,7 +2432,7 @@ set the Q flag.)
 
 The GE (Greater than or Equal to) flags are four bits in the APSR. They
 are used with the 32-bit SIMD intrinsics described in
-[ssec-32SIMD](#32-bit-simd-operations).
+[32-bit SIMD Operations](#32-bit-simd-operations).
 
 There are four GE flags, one for each 8-bit lane of a 32-bit SIMD
 operation. Certain non-saturating 32-bit SIMD intrinsics set the GE bits
@@ -2448,7 +2463,7 @@ provides no support for this mode.
 The following intrinsics perform general data-processing operations.
 They have no effect on global state.
 
-\[Note: documentation of the `__nop` intrinsic has moved to [ssec-nop](#nop)]
+\[Note: documentation of the `__nop` intrinsic has moved to [NOP](#nop)]
 
 For completeness and to aid portability between LP64 and LLP64
 models, ACLE also defines intrinsics with `l` suffix.
@@ -2779,7 +2794,8 @@ masking operations.
 ### Use of the Q flag by 32-bit SIMD intrinsics
 
 Some 32-bit SIMD instructions may set the Q flag described in
-[ssec-Qflag2](#the-q-saturation-flag). The behavior of the intrinsics matches that of the instructions.
+[The Q (saturation) flag](#the-q-saturation-flag). The behavior of the
+intrinsics matches that of the instructions.
 
 Generally, instructions that perform lane-by-lane saturating operations
 do not set the Q flag. For example, `__qadd16` does not set the Q flag,
@@ -2797,7 +2813,8 @@ operation (i.e. does not clip its result to the limits of the type).
 
 These intrinsics are available when `__ARM_FEATURE_SIMD32` is defined.
 They saturate two 16-bit values to a given bit width as for the `__ssat`
-and `__usat` intrinsics defined in [ssec-wsatin](#width-specified-saturation-intrinsics).
+and `__usat` intrinsics defined in [Width-specified saturation
+intrinsics](#width-specified-saturation-intrinsics).
 
 ``` c
   int16x2_t __ssat16(int16x2_t, /*constant*/ unsigned int);
@@ -3271,7 +3288,7 @@ on the GE bits which are tested by the `__sel()` intrinsic.
 The intrinsics in this section provide direct access to selected
 floating-point instructions. They are defined only if the appropriate
 precision is available in hardware, as indicated by `__ARM_FP` (see
-[ssec-HWFP](#hardware-floating-point)).
+[Hardware floating point](#hardware-floating-point)).
 
 ``` c
   double __sqrt(double x);
@@ -3512,7 +3529,7 @@ These intrinsics use the `coproc` and `imm` compile-time constants to
 generate the corresponding CDE instructions.
 The `coproc` argument indicates the CDE coprocessor to use.  The range of
 available coprocessors is indicated by the bitmap `__ARM_FEATURE_CDE_COPROC`,
-described in [ssec-CDE](#custom-datapath-extension).
+described in [Custom Datapath Extension](#custom-datapath-extension).
 The `imm` argument must fit within the immediate range of the corresponding CDE
 instruction.  Values for these arguments outside these ranges must be rejected.
 
@@ -4016,148 +4033,148 @@ each architecture includes its predecessor instruction set.
 
 7MP are the Armv7 architectures that implement the Multiprocessing Extensions.
 
-| **Instruction** | **Flags** | **Arch.**     | **Intrinsic or C code**                       |
-| --------------- | --------- | ------------- | --------------------------------------------- |
-| BKPT            |           | 5             | none                                          |
-| BFC             |           | 6T2, 7-M      | C                                             |
-| BFI             |           | 6T2, 7-M      | C                                             |
-| CLZ             |           | 5             | `__clz`, `__builtin_clz`                      |
-| DBG             |           | 7, 7-M        | `__dbg`                                       |
-| DMB             |           | 8,7, 6-M      | `__dmb`                                       |
-| DSB             |           | 8, 7, 6-M     | `__dsb`                                       |
-| FRINT32Z        |           | 8-64          | `__rint32zf`, `__rint32z`                     |
-| FRINT64Z        |           | 8-64          | `__rint64zf`, `__rint64z`                     |
-| FRINT32X        |           | 8-64          | `__rint32xf`, `__rint32x`                     |
-| FRINT64X        |           | 8-64          | `__rint64xf`, `__rint64x`                     |
-| ISB             |           | 8, 7, 6-M     | `__isb`                                       |
-| LDREX           |           | 6, 7-M        | `__sync_xxx`                                  |
-| LDRT            |           | all           | none                                          |
-| MCR/MRC         |           | all           | see [ssec-sysreg](#system-register-access)    |
-| MSR/MRS         |           | 6-M           | see [ssec-sysreg](#system-register-access)    |
-| PKHBT           |           | 6             | C                                             |
-| PKHTB           |           | 6             | C                                             |
-| PLD             |           | 8-32,5TE, 7-M | `__pld`                                       |
-| PLDW            |           | 7-MP          | `__pldx`                                      |
-| PLI             |           | 8-32,7        | `__pli`                                       |
-| QADD            | Q         | 5E, 7E-M      | `__qadd`                                      |
-| QADD16          |           | 6, 7E-M       | `__qadd16`                                    |
-| QADD8           |           | 6, 7E-M       | `__qadd8`                                     |
-| QASX            |           | 6, 7E-M       | `__qasx`                                      |
-| QDADD           | Q         | 5E, 7E-M      | `__qadd(__qdbl)`                              |
-| QDSUB           | Q         | 5E, 7E-M      | `__qsub(__qdbl)`                              |
-| QSAX            |           | 6, 7E-M       | `__qsax`                                      |
-| QSUB            | Q         | 5E, 7E-M      | `__qsub`                                      |
-| QSUB16          |           | 6, 7E-M       | `__qsub16`                                    |
-| QSUB8           |           | 6, 7E-M       | `__qsub8`                                     |
-| RBIT            |           | 8,6T2, 7-M    | `__rbit`, `__builtin_rbit`                    |
-| REV             |           | 8,6, 6-M      | `__rev`, `__builtin_bswap32`                  |
-| REV16           |           | 8,6, 6-M      | `__rev16`                                     |
-| REVSH           |           | 6, 6-M        | `__revsh`                                     |
-| ROR             |           | all           | `__ror`                                       |
-| SADD16          | GE        | 6, 7E-M       | `__sadd16`                                    |
-| SADD8           | GE        | 6, 7E-M       | `__sadd8`                                     |
-| SASX            | GE        | 6, 7E-M       | `__sasx`                                      |
-| SBFX            |           | 8,6T2, 7-M    | C                                             |
-| SDIV            |           | 7-M+          | C                                             |
-| SEL             | (GE)      | 6, 7E-M       | `__sel`                                       |
-| SETEND          |           | 6             | n/a                                           |
-| SEV             |           | 8,6K,6-M,7-M  | `__sev`                                       |
-| SHADD16         |           | 6, 7E-M       | `__shadd16`                                   |
-| SHADD8          |           | 6, 7E-M       | `__shadd8`                                    |
-| SHASX           |           | 6, 7E-M       | `__shasx`                                     |
-| SHSAX           |           | 6, 7E-M       | `__shsax`                                     |
-| SHSUB16         |           | 6, 7E-M       | `__shsub16`                                   |
-| SHSUB8          |           | 6, 7E-M       | `__shsub8`                                    |
-| SMC             |           | 8,6Z, T2      | none                                          |
-| SMI             |           | 6Z, T2        | none                                          |
-| SMLABB          | Q         | 5E, 7E-M      | `__smlabb`                                    |
-| SMLABT          | Q         | 5E, 7E-M      | `__smlabt`                                    |
-| SMLAD           | Q         | 6, 7E-M       | `__smlad`                                     |
-| SMLADX          | Q         | 6, 7E-M       | `__smladx`                                    |
-| SMLAL           |           | all, 7-M      | C                                             |
-| SMLALBB         |           | 5E, 7E-M      | `__smulbb` and C                              |
-| SMLALBT         |           | 5E, 7E-M      | `__smulbt` and C                              |
-| SMLALTB         |           | 5E, 7E-M      | `__smultb` and C                              |
-| SMLALTT         |           | 5E, 7E-M      | `__smultt` and C                              |
-| SMLALD          |           | 6, 7E-M       | `__smlald`                                    |
-| SMLALDX         |           | 6, 7E-M       | `__smlaldx`                                   |
-| SMLATB          | Q         | 5E, 7E-M      | `__smlatb`                                    |
-| SMLATT          | Q         | 5E, 7E-M      | `__smlatt`                                    |
-| SMLAWB          | Q         | 5E, 7E-M      | `__smlawb`                                    |
-| SMLAWT          | Q         | 5E, 7E-M      | `__smlawt`                                    |
-| SMLSD           | Q         | 6, 7E-M       | `__smlsd`                                     |
-| SMLSDX          | Q         | 6, 7E-M       | `__smlsdx`                                    |
-| SMLSLD          |           | 6, 7E-M       | `__smlsld`                                    |
-| SMLSLDX         |           | 6, 7E-M       | `__smlsldx`                                   |
-| SMMLA           |           | 6, 7E-M       | C                                             |
-| SMMLAR          |           | 6, 7E-M       | C                                             |
-| SMMLS           |           | 6, 7E-M       | C                                             |
-| SMMLSR          |           | 6, 7E-M       | C                                             |
-| SMMUL           |           | 6, 7E-M       | C                                             |
-| SMMULR          |           | 6, 7E-M       | C                                             |
-| SMUAD           | Q         | 6, 7E-M       | `__smuad`                                     |
-| SMUADX          | Q         | 6, 7E-M       | `__smuadx`                                    |
-| SMULBB          |           | 5E, 7E-M      | `__smulbb;` C                                 |
-| SMULBT          |           | 5E, 7E-M      | `__smulbt` ; C                                |
-| SMULTB          |           | 5E, 7E-M      | `__smultb;` C                                 |
-| SMULTT          |           | 5E, 7E-M      | `__smultt;` C                                 |
-| SMULL           |           | all, 7-M      | C                                             |
-| SMULWB          |           | 5E, 7E-M      | `__smulwb;` C                                 |
-| SMULWT          |           | 5E, 7E-M      | `__smulwt;` C                                 |
-| SMUSD           |           | 6, 7E-M       | `__smusd`                                     |
-| SMUSDX          |           | 6, 7E-M       | `__smusd`                                     |
-| SSAT            | Q         | 6, 7-M        | `__ssat`                                      |
-| SSAT16          | Q         | 6, 7E-M       | `__ssat16`                                    |
-| SSAX            | GE        | 6, 7E-M       | `__ssax`                                      |
-| SSUB16          | GE        | 6, 7E-M       | `__ssub16`                                    |
-| SSUB8           | GE        | 6, 7E-M       | `__ssub8`                                     |
-| STREX           |           | 6, 7-M        | `__sync_xxx`                                  |
-| STRT            |           | all           | none                                          |
-| SVC             |           | all           | none                                          |
-| SWP             |           | A32 only      | `__swp` [deprecated; see [ssec-swap](#swap)]  |
-| SXTAB           |           | 6, 7E-M       | `(int8_t)x` + a                               |
-| SXTAB16         |           | 6, 7E-M       | `__sxtab16`                                   |
-| SXTAH           |           | 6, 7E-M       | `(int16_t)x` + a                              |
-| SXTB            |           | 8,6, 6-M      | `(int8_t)x`                                   |
-| SXTB16          |           | 6, 7E-M       | `__sxtb16`                                    |
-| SXTH            |           | 8,6, 6-M      | `(int16_t)x`                                  |
-| UADD16          | GE        | 6, 7E-M       | `__uadd16`                                    |
-| UADD8           | GE        | 6, 7E-M       | `__uadd8`                                     |
-| UASX            | GE        | 6, 7E-M       | `__uasx`                                      |
-| UBFX            |           | 8,6T2, 7-M    | C                                             |
-| UDIV            |           | 7-M+          | C                                             |
-| UHADD16         |           | 6, 7E-M       | `__uhadd16`                                   |
-| UHADD8          |           | 6, 7E-M       | `__uhadd8`                                    |
-| UHASX           |           | 6, 7E-M       | `__uhasx`                                     |
-| UHSAX           |           | 6, 7E-M       | `__uhsax`                                     |
-| UHSUB16         |           | 6, 7E-M       | `__uhsub16`                                   |
-| UHSUB8          |           | 6, 7E-M       | `__uhsub8`                                    |
-| UMAAL           |           | 6, 7E-M       | C                                             |
-| UMLAL           |           | all, 7-M      | `acc += (uint64_t)x * y`                      |
-| UMULL           |           | all, 7-M      | C                                             |
-| UQADD16         |           | 6, 7E-M       | `__uqadd16`                                   |
-| UQADD8          |           | 6, 7E-M       | `__uqadd8`                                    |
-| UQASX           |           | 6, 7E-M       | `__uqasx`                                     |
-| UQSAX           |           | 6, 7E-M       | `__uqsax`                                     |
-| UQSUB16         |           | 6, 7E-M       | `__uqsub16`                                   |
-| UQSUB8          |           | 6, 7E-M       | `__uqsub8`                                    |
-| USAD8           |           | 6, 7E-M       | `__usad8`                                     |
-| USADA8          |           | 6, 7E-M       | `__usad8 + acc`                               |
-| USAT            | Q         | 6, 7-M        | `__usat`                                      |
-| USAT16          | Q         | 6, 7E-M       | `__usat16`                                    |
-| USAX            |           | 6, 7E-M       | `__usax`                                      |
-| USUB16          |           | 6, 7E-M       | `__usub16`                                    |
-| USUB8           |           | 6, 7E-M       | `__usub8`                                     |
-| UXTAB           |           | 6, 7E-M       | `(uint8_t)x + i`                              |
-| UXTAB16         |           | 6, 7E-M       | `__uxtab16`                                   |
-| UXTAH           |           | 6, 7E-M       | `(uint16_t)x + i`                             |
-| UXTB16          |           | 6, 7E-M       | `__uxtb16`                                    |
-| UXTH            |           | 8,6, 6-M      | `(uint16_t)x`                                 |
-| VFMA            |           | VFPv4         | `fma`, `__fma`                                |
-| VSQRT           |           | VFP           | `sqrt`, `__sqrt`                              |
-| WFE             |           | 8,6K, 6-M     | `__wfe`                                       |
-| WFI             |           | 8,6K, 6-M     | `__wfi`                                       |
-| YIELD           |           | 8,6K, 6-M     | `__yield`                                     |
+| **Instruction** | **Flags** | **Arch.**     | **Intrinsic or C code**                               |
+| --------------- | --------- | ------------- | ----------------------------------------------------- |
+| BKPT            |           | 5             | none                                                  |
+| BFC             |           | 6T2, 7-M      | C                                                     |
+| BFI             |           | 6T2, 7-M      | C                                                     |
+| CLZ             |           | 5             | `__clz`, `__builtin_clz`                              |
+| DBG             |           | 7, 7-M        | `__dbg`                                               |
+| DMB             |           | 8,7, 6-M      | `__dmb`                                               |
+| DSB             |           | 8, 7, 6-M     | `__dsb`                                               |
+| FRINT32Z        |           | 8-64          | `__rint32zf`, `__rint32z`                             |
+| FRINT64Z        |           | 8-64          | `__rint64zf`, `__rint64z`                             |
+| FRINT32X        |           | 8-64          | `__rint32xf`, `__rint32x`                             |
+| FRINT64X        |           | 8-64          | `__rint64xf`, `__rint64x`                             |
+| ISB             |           | 8, 7, 6-M     | `__isb`                                               |
+| LDREX           |           | 6, 7-M        | `__sync_xxx`                                          |
+| LDRT            |           | all           | none                                                  |
+| MCR/MRC         |           | all           | see [System register access](#system-register-access) |
+| MSR/MRS         |           | 6-M           | see [System register access](#system-register-access) |
+| PKHBT           |           | 6             | C                                                     |
+| PKHTB           |           | 6             | C                                                     |
+| PLD             |           | 8-32,5TE, 7-M | `__pld`                                               |
+| PLDW            |           | 7-MP          | `__pldx`                                              |
+| PLI             |           | 8-32,7        | `__pli`                                               |
+| QADD            | Q         | 5E, 7E-M      | `__qadd`                                              |
+| QADD16          |           | 6, 7E-M       | `__qadd16`                                            |
+| QADD8           |           | 6, 7E-M       | `__qadd8`                                             |
+| QASX            |           | 6, 7E-M       | `__qasx`                                              |
+| QDADD           | Q         | 5E, 7E-M      | `__qadd(__qdbl)`                                      |
+| QDSUB           | Q         | 5E, 7E-M      | `__qsub(__qdbl)`                                      |
+| QSAX            |           | 6, 7E-M       | `__qsax`                                              |
+| QSUB            | Q         | 5E, 7E-M      | `__qsub`                                              |
+| QSUB16          |           | 6, 7E-M       | `__qsub16`                                            |
+| QSUB8           |           | 6, 7E-M       | `__qsub8`                                             |
+| RBIT            |           | 8,6T2, 7-M    | `__rbit`, `__builtin_rbit`                            |
+| REV             |           | 8,6, 6-M      | `__rev`, `__builtin_bswap32`                          |
+| REV16           |           | 8,6, 6-M      | `__rev16`                                             |
+| REVSH           |           | 6, 6-M        | `__revsh`                                             |
+| ROR             |           | all           | `__ror`                                               |
+| SADD16          | GE        | 6, 7E-M       | `__sadd16`                                            |
+| SADD8           | GE        | 6, 7E-M       | `__sadd8`                                             |
+| SASX            | GE        | 6, 7E-M       | `__sasx`                                              |
+| SBFX            |           | 8,6T2, 7-M    | C                                                     |
+| SDIV            |           | 7-M+          | C                                                     |
+| SEL             | (GE)      | 6, 7E-M       | `__sel`                                               |
+| SETEND          |           | 6             | n/a                                                   |
+| SEV             |           | 8,6K,6-M,7-M  | `__sev`                                               |
+| SHADD16         |           | 6, 7E-M       | `__shadd16`                                           |
+| SHADD8          |           | 6, 7E-M       | `__shadd8`                                            |
+| SHASX           |           | 6, 7E-M       | `__shasx`                                             |
+| SHSAX           |           | 6, 7E-M       | `__shsax`                                             |
+| SHSUB16         |           | 6, 7E-M       | `__shsub16`                                           |
+| SHSUB8          |           | 6, 7E-M       | `__shsub8`                                            |
+| SMC             |           | 8,6Z, T2      | none                                                  |
+| SMI             |           | 6Z, T2        | none                                                  |
+| SMLABB          | Q         | 5E, 7E-M      | `__smlabb`                                            |
+| SMLABT          | Q         | 5E, 7E-M      | `__smlabt`                                            |
+| SMLAD           | Q         | 6, 7E-M       | `__smlad`                                             |
+| SMLADX          | Q         | 6, 7E-M       | `__smladx`                                            |
+| SMLAL           |           | all, 7-M      | C                                                     |
+| SMLALBB         |           | 5E, 7E-M      | `__smulbb` and C                                      |
+| SMLALBT         |           | 5E, 7E-M      | `__smulbt` and C                                      |
+| SMLALTB         |           | 5E, 7E-M      | `__smultb` and C                                      |
+| SMLALTT         |           | 5E, 7E-M      | `__smultt` and C                                      |
+| SMLALD          |           | 6, 7E-M       | `__smlald`                                            |
+| SMLALDX         |           | 6, 7E-M       | `__smlaldx`                                           |
+| SMLATB          | Q         | 5E, 7E-M      | `__smlatb`                                            |
+| SMLATT          | Q         | 5E, 7E-M      | `__smlatt`                                            |
+| SMLAWB          | Q         | 5E, 7E-M      | `__smlawb`                                            |
+| SMLAWT          | Q         | 5E, 7E-M      | `__smlawt`                                            |
+| SMLSD           | Q         | 6, 7E-M       | `__smlsd`                                             |
+| SMLSDX          | Q         | 6, 7E-M       | `__smlsdx`                                            |
+| SMLSLD          |           | 6, 7E-M       | `__smlsld`                                            |
+| SMLSLDX         |           | 6, 7E-M       | `__smlsldx`                                           |
+| SMMLA           |           | 6, 7E-M       | C                                                     |
+| SMMLAR          |           | 6, 7E-M       | C                                                     |
+| SMMLS           |           | 6, 7E-M       | C                                                     |
+| SMMLSR          |           | 6, 7E-M       | C                                                     |
+| SMMUL           |           | 6, 7E-M       | C                                                     |
+| SMMULR          |           | 6, 7E-M       | C                                                     |
+| SMUAD           | Q         | 6, 7E-M       | `__smuad`                                             |
+| SMUADX          | Q         | 6, 7E-M       | `__smuadx`                                            |
+| SMULBB          |           | 5E, 7E-M      | `__smulbb;` C                                         |
+| SMULBT          |           | 5E, 7E-M      | `__smulbt` ; C                                        |
+| SMULTB          |           | 5E, 7E-M      | `__smultb;` C                                         |
+| SMULTT          |           | 5E, 7E-M      | `__smultt;` C                                         |
+| SMULL           |           | all, 7-M      | C                                                     |
+| SMULWB          |           | 5E, 7E-M      | `__smulwb;` C                                         |
+| SMULWT          |           | 5E, 7E-M      | `__smulwt;` C                                         |
+| SMUSD           |           | 6, 7E-M       | `__smusd`                                             |
+| SMUSDX          |           | 6, 7E-M       | `__smusd`                                             |
+| SSAT            | Q         | 6, 7-M        | `__ssat`                                              |
+| SSAT16          | Q         | 6, 7E-M       | `__ssat16`                                            |
+| SSAX            | GE        | 6, 7E-M       | `__ssax`                                              |
+| SSUB16          | GE        | 6, 7E-M       | `__ssub16`                                            |
+| SSUB8           | GE        | 6, 7E-M       | `__ssub8`                                             |
+| STREX           |           | 6, 7-M        | `__sync_xxx`                                          |
+| STRT            |           | all           | none                                                  |
+| SVC             |           | all           | none                                                  |
+| SWP             |           | A32 only      | `__swp` [deprecated; see [Swap](#swap)]               |
+| SXTAB           |           | 6, 7E-M       | `(int8_t)x` + a                                       |
+| SXTAB16         |           | 6, 7E-M       | `__sxtab16`                                           |
+| SXTAH           |           | 6, 7E-M       | `(int16_t)x` + a                                      |
+| SXTB            |           | 8,6, 6-M      | `(int8_t)x`                                           |
+| SXTB16          |           | 6, 7E-M       | `__sxtb16`                                            |
+| SXTH            |           | 8,6, 6-M      | `(int16_t)x`                                          |
+| UADD16          | GE        | 6, 7E-M       | `__uadd16`                                            |
+| UADD8           | GE        | 6, 7E-M       | `__uadd8`                                             |
+| UASX            | GE        | 6, 7E-M       | `__uasx`                                              |
+| UBFX            |           | 8,6T2, 7-M    | C                                                     |
+| UDIV            |           | 7-M+          | C                                                     |
+| UHADD16         |           | 6, 7E-M       | `__uhadd16`                                           |
+| UHADD8          |           | 6, 7E-M       | `__uhadd8`                                            |
+| UHASX           |           | 6, 7E-M       | `__uhasx`                                             |
+| UHSAX           |           | 6, 7E-M       | `__uhsax`                                             |
+| UHSUB16         |           | 6, 7E-M       | `__uhsub16`                                           |
+| UHSUB8          |           | 6, 7E-M       | `__uhsub8`                                            |
+| UMAAL           |           | 6, 7E-M       | C                                                     |
+| UMLAL           |           | all, 7-M      | `acc += (uint64_t)x * y`                              |
+| UMULL           |           | all, 7-M      | C                                                     |
+| UQADD16         |           | 6, 7E-M       | `__uqadd16`                                           |
+| UQADD8          |           | 6, 7E-M       | `__uqadd8`                                            |
+| UQASX           |           | 6, 7E-M       | `__uqasx`                                             |
+| UQSAX           |           | 6, 7E-M       | `__uqsax`                                             |
+| UQSUB16         |           | 6, 7E-M       | `__uqsub16`                                           |
+| UQSUB8          |           | 6, 7E-M       | `__uqsub8`                                            |
+| USAD8           |           | 6, 7E-M       | `__usad8`                                             |
+| USADA8          |           | 6, 7E-M       | `__usad8 + acc`                                       |
+| USAT            | Q         | 6, 7-M        | `__usat`                                              |
+| USAT16          | Q         | 6, 7E-M       | `__usat16`                                            |
+| USAX            |           | 6, 7E-M       | `__usax`                                              |
+| USUB16          |           | 6, 7E-M       | `__usub16`                                            |
+| USUB8           |           | 6, 7E-M       | `__usub8`                                             |
+| UXTAB           |           | 6, 7E-M       | `(uint8_t)x + i`                                      |
+| UXTAB16         |           | 6, 7E-M       | `__uxtab16`                                           |
+| UXTAH           |           | 6, 7E-M       | `(uint16_t)x + i`                                     |
+| UXTB16          |           | 6, 7E-M       | `__uxtb16`                                            |
+| UXTH            |           | 8,6, 6-M      | `(uint16_t)x`                                         |
+| VFMA            |           | VFPv4         | `fma`, `__fma`                                        |
+| VSQRT           |           | VFP           | `sqrt`, `__sqrt`                                      |
+| WFE             |           | 8,6K, 6-M     | `__wfe`                                               |
+| WFI             |           | 8,6K, 6-M     | `__wfi`                                               |
+| YIELD           |           | 8,6K, 6-M     | `__yield`                                             |
 
 # Advanced SIMD (Neon) intrinsics
 
@@ -4425,8 +4442,10 @@ It is recommended that Advanced SIMD Intrinsics be used consistently:
 ### Availability of Advanced SIMD intrinsics
 
 Advanced SIMD support is available if the `__ARM_NEON` macro is
-predefined (see [ssec-NEON](#advanced-simd-architecture-extension-neon)). In order to access the Advanced SIMD
-intrinsics, it is necessary to include the `<arm_neon.h>` header.
+predefined (see [Advanced SIMD architecture extension
+(Neon)](#advanced-simd-architecture-extension-neon)). In order
+to access the Advanced SIMD intrinsics, it is necessary to include
+the `<arm_neon.h>` header.
 
 ``` c
   #if __ARM_NEON
@@ -4437,7 +4456,8 @@ intrinsics, it is necessary to include the `<arm_neon.h>` header.
 
 Some intrinsics are only available when compiling for the AArch64
 execution state. This can be determined using the `__ARM_64BIT_STATE`
-predefined macro (see [ssec-ATisa](#a32t32-instruction-set-architecture)).
+predefined macro (see [A32/T32 instruction set
+architecture](#a32t32-instruction-set-architecture)).
 
 ### Availability of 16-bit floating-point vector interchange types
 
@@ -4448,7 +4468,7 @@ interchange types are available, conversion intrinsics between
 vector of `__fp16` and vector of `float` types are provided.
 
 This is indicated by the setting of bit 1 in `__ARM_NEON_FP`
-(see [ssec-NEONfp](#neon-floating-point)).
+(see [Neon floating-point](#neon-floating-point)).
 
 ``` c
   #if __ARM_NEON_FP & 0x1
@@ -4464,7 +4484,8 @@ also available as a vector operation in the Advanced SIMD extension. When
 a vector fused multiply-accumulate is available, intrinsics are defined to
 access it.
 
-This is indicated by `__ARM_FEATURE_FMA` (see [ssec-FMA](#fused-multiply-accumulate-fma)).
+This is indicated by `__ARM_FEATURE_FMA` (see [Fused multiply-accumulate
+(FMA)](#fused-multiply-accumulate-fma)).
 
 ``` c
   #if __ARM_FEATURE_FMA
@@ -4480,7 +4501,8 @@ The Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture introduces two new instruct
 SQRDMLAH and SQRDMLSH. ACLE specifies vector and vector-by-lane intrinsics to
 access these instructions where they are available in hardware.
 
-This is indicated by `__ARM_FEATURE_QRDMX` (see [ssec-RDM](#rounding-doubling-multiplies)). :
+This is indicated by `__ARM_FEATURE_QRDMX` (see [Rounding doubling
+multiplies](#rounding-doubling-multiplies)). :
 
 ``` c
   #if __ARM_FEATURE_QRDMX
@@ -4498,7 +4520,8 @@ format. ACLE specifies intrinsics which map to the vector forms of these
 instructions where they are available in hardware.
 
 This is indicated by `__ARM_FEATURE_FP16_VECTOR_ARITHMETIC`
-(see [ssec-fp16-arith](#16-bit-floating-point-data-processing-operations)). :
+(see [16-bit floating-point data processing
+operations](#16-bit-floating-point-data-processing-operations)). :
 
 ``` c
   #if __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
@@ -4508,8 +4531,10 @@ This is indicated by `__ARM_FEATURE_FP16_VECTOR_ARITHMETIC`
 ```
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-fp16-scalar](#16-bit-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
-intrinsics is indicated by `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
+instructions, see [16-bit floating-point arithmetic scalar
+intrinsics](#16-bit-floating-point-arithmetic-scalar-intrinsics).
+Availability of the scalar intrinsics is indicated by
+`__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
 
 ``` c
   #if __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
@@ -4526,7 +4551,8 @@ Architecture Reference Manual. ACLE specifies intrinsics which map to the vector
 forms of these instructions where they are available in hardware.
 
 This is indicated by `__ARM_FEATURE_BF16_VECTOR_ARITHMETIC`
-(see [ssec-BF16fmt](#brain-half-precision-16-bit-floating-point-format)).
+(see [Brain half-precision (16-bit) floating-point
+format](#brain-half-precision-16-bit-floating-point-format)).
 
 ``` c
   #if __ARM_FEATURE_BF16_VECTOR_ARITHMETIC
@@ -4538,8 +4564,10 @@ This is indicated by `__ARM_FEATURE_BF16_VECTOR_ARITHMETIC`
 ```
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-bf16-scalar](#16-bit-brain-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
-intrinsics is indicated by `__ARM_FEATURE_BF16_SCALAR_ARITHMETIC`.
+instructions, see [16-bit brain floating-point arithmetic scalar
+intrinsics](#16-bit-brain-floating-point-arithmetic-scalar-intrinsics).
+Availability of the scalar intrinsics is indicated by
+`__ARM_FEATURE_BF16_SCALAR_ARITHMETIC`.
 
 ``` c
   #if __ARM_FEATURE_BF16_SCALAR_ARITHMETIC
@@ -4569,7 +4597,8 @@ The architecture extensions introduced by Armv8.2-A provide a set of dot product
 instructions which operate on 8-bit sub-element quantities. These instructions
 are available in both AArch64 and AArch32 execution states using
 Advanced SIMD instructions. These intrinsics are available
-when `__ARM_FEATURE_DOTPROD` is defined (see [ssec-Dot](#dot-product-extension)). :
+when `__ARM_FEATURE_DOTPROD` is defined (see [Dot Product
+extension](#dot-product-extension)). :
 
 ``` c
   #if __ARM_FEATURE_DOTPROD
@@ -4599,7 +4628,7 @@ integer matrix multiplication and mixed sign dot product instructions.
 These instructions are optional from Armv8.2-A to Armv8.5-A.
 
 These intrinsics are available when `__ARM_FEATURE_MATMUL_INT8` is defined
-(see [ssec-MatMul](#matrix-multiply-intrinsics)).
+(see [Matrix Multiply Intrinsics](#matrix-multiply-intrinsics)).
 
 ## Specification of Advanced SIMD intrinsics
 
@@ -4875,7 +4904,8 @@ It is recommended that MVE Intrinsics be used consistently:
 ## Availability of M-profile Vector Extension intrinsics
 
 M-profile Vector Extension support is available if the `__ARM_FEATURE_MVE`
-macro has a value other than 0 (see [ssec-MVE](#m-profile-vector-extension)). The availability of the
+macro has a value other than 0 (see [M-profile Vector
+Extension](#m-profile-vector-extension)). The availability of the
 MVE Floating Point data types and intrinsics are predicated on the value of
 this macro having bit two set.  In order to access the MVE intrinsics, it is
 necessary to include the `<arm_mve.h>` header.
@@ -5085,8 +5115,9 @@ are defined to help use or detect these causes.
 
 Starts a new transaction. When the transaction starts successfully the return
 value is 0. If the transaction fails, all state modifications are discarded
-and a cause of the failure is encoded in the return value. The macros defined in [ssec-TMEFailures](#failure-definitions)
-can be used to detect the cause of the failure.
+and a cause of the failure is encoded in the return value. The macros
+defined in [Failure definitions](#failure-definitions) can be used
+to detect the cause of the failure.
 
 ``` c
   void __tcommit (void);
@@ -5151,8 +5182,8 @@ implementations.
 
 An exception to that is the set of instructions covering the memset operation
 with memory tagging. An intrinsic is available to provide access to this
-operation. See [ssec-MTE](#memory-tagging) for more information on memory
-tagging.
+operation. See [Memory tagging](#memory-tagging) for more information on
+memory tagging.
 
 The `<arm_acle.h>` header should be included before using this intrinsic.
 
