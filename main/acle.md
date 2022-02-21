@@ -222,6 +222,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   to require both the `__ARM_FEATURE_MOPS` and `__ARM_FEATURE_MEMORY_TAGGING`
   feature macros.
 * Fixed minor formatting errors throughout.
+* Replaced link text such as “sec-…” and “ssec-…” with section titles.
 
 ### References
 
@@ -489,8 +490,8 @@ the `Tag_ABI_PCS_wchar_t` build attribute.
 Several predefined macros are defined. Generally these define features
 of the Arm architecture being targeted, or how the C/C++ implementation
 uses the architecture. These macros are detailed in
-[sec-Feature-test-macros](#feature-test-macros). All ACLE predefined macros start with the
-prefix `__ARM`.
+[Feature test macros](#feature-test-macros). All ACLE predefined macros
+start with the prefix `__ARM`.
 
 ## Intrinsics
 
@@ -498,14 +499,15 @@ ACLE standardizes intrinsics to access the Arm ® Neon ™ architecture
 extension. These intrinsics are intended to be compatible with existing
 implementations. Before using the Neon intrinsics or data types, the
 `<arm_neon.h>` header must be included. The Neon intrinsics are defined
-in [sec-NEON-intrinsics](#advanced-simd-neon-intrinsics). Note that the Neon intrinsics and data
-types are in the user namespace.
+in [Advanced SIMD (Neon) intrinsics](#advanced-simd-neon-intrinsics).
+Note that the Neon intrinsics and data types are in the user namespace.
 
 ACLE standardizes intrinsics to access the Arm M-profile Vector Extension (MVE).
 These intrinsics are intended to be compatible with existing implementations.
 Before using the MVE intrinsics or data types, the `<arm_mve.h>` header must
-be included. The MVE intrinsics are defined in [sec-MVE-intrinsics](#m-profile-vector-extension-mve-intrinsics). Note
-that the MVE data types are in the user namespace, the MVE intrinsics can
+be included. The MVE intrinsics are defined in [M-profile Vector Extension
+(MVE) intrinsics](#m-profile-vector-extension-mve-intrinsics). Note that
+the MVE data types are in the user namespace, the MVE intrinsics can
 optionally be left out of the user namespace.
 
 ACLE also standardizes other intrinsics to access Arm instructions which
@@ -659,7 +661,7 @@ and:
 
 GCC-style attributes are provided to annotate types, objects and
 functions with extra information, such as alignment. These attributes
-are defined in [sec-Attributes-and-pragmas](#attributes-and-pragmas).
+are defined in [Attributes and pragmas](#attributes-and-pragmas).
 
 ## Implementation strategies
 
@@ -1155,7 +1157,8 @@ instruction set only. This can be tested for using the following test:
 
 `__ARM_FEATURE_TME` is defined to `1` if the Transactional Memory
 Extension instructions are supported in hardware and intrinsics defined
-in [sec-TME-intrinsics](#transactional-memory-extension-tme-intrinsics) are available.
+in [Transactional Memory Extension (TME)
+intrinsics](#transactional-memory-extension-tme-intrinsics) are available.
 
 ## Floating-point, Advanced SIMD (Neon) and MVE hardware
 
@@ -1962,7 +1965,7 @@ follow [[GCC]](#GCC). These attributes are not specific to Arm or the Arm ABI.
 `visibility`, `weak`
 
 Some specific requirements on the weak attribute are detailed in
-[sec-Weak-linkage](#weak-linkage).
+[Weak linkage](#weak-linkage).
 
 # Synchronization, barrier, and hint intrinsics
 
@@ -2011,7 +2014,7 @@ scope and access type of the barrier, as shown in the following table.
 (The assembler mnemonics for these numbers, as shown in the table, are
 not available in the intrinsics.) The argument should be an integral
 constant expression within the required range see
-[sec-Constant-arguments-to-intrinsics](#constant-arguments-to-intrinsics).
+[Constant arguments to intrinsics](#constant-arguments-to-intrinsics).
 
 | **Argument** | **Mnemonic** | **Domain**      | **Ordered Accesses (before-after)** |
 | ------------ | ------------ | --------------- | ----------------------------------- |
@@ -2423,7 +2426,7 @@ the GE bits are set one for each byte. For 2x16-bit operations the GE
 bits are paired together, one for the high halfword and the other pair
 for the low halfword. The only supported way to read or use the GE bits
 (in this specification) is by using the `__sel` intrinsic, see
-[sec-Parallel-selection](#parallel-selection).
+[Parallel selection](#parallel-selection).
 
 ### Floating-point environment
 
@@ -2612,7 +2615,7 @@ the 48-bit product.
 These intrinsics are available when `__ARM_FEATURE_SAT` is defined.
 They saturate a 32-bit value at a given bit position. The saturation
 width must be an integral constant expression |--| see
-[sec-Constant-arguments-to-intrinsics](#constant-arguments-to-intrinsics).
+[Constant arguments to intrinsics](#constant-arguments-to-intrinsics).
 
 ``` c
   int32_t __ssat(int32_t, /*constant*/ unsigned int);
@@ -2742,7 +2745,7 @@ Armv6 introduced instructions to perform 32-bit SIMD operations (i.e.
 two 16-bit operations or four 8-bit operations) on the Arm
 general-purpose registers. These instructions are not related to the
 much more versatile Advanced SIMD (Neon) extension, whose support is
-described in [sec-NEON-intrinsics](#advanced-simd-neon-intrinsics).
+described in [Advanced SIMD (Neon) intrinsics](#advanced-simd-neon-intrinsics).
 
 The 32-bit SIMD intrinsics are available on targets featuring Armv6 and
 upwards, including the A and R profiles. In the M profile they are
