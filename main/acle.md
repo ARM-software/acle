@@ -593,43 +593,6 @@ header:
   #endif /* __ARM_ACLE */
 ```
 
-### `<arm_neon.h>`
-
-`<arm_neon.h>` is provided to define the [Advanced SIMD (Neon)
-intrinsics](#advanced-simd-neon-intrinsics) and associated
-[data types](#vector-data-types). As these intrinsics and data types are
-in the user namespace, an implementation would not normally define them
-until the header is included. The `__ARM_NEON` macro should be tested
-before including the header:
-
-``` c
-  #ifdef __ARM_NEON
-  #include <arm_neon.h>
-  #endif /* __ARM_NEON */
-```
-
-### `<arm_mve.h>`
-
-`<arm_mve.h>` is provided to define the [M-profile Vector Extension
-(MVE) intrinsics](#m-profile-vector-extension-mve-intrinsics) and associated
-data types. The data types occupy the user namespace. By default the
-intrinsics occupy both the user namespace and the `__arm_` namespace;
-defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will hide the definition of
-the user namespace variants.
-
-The `__ARM_FEATURE_MVE` macro should be tested before including the
-header:
-
-``` c
-  #if (__ARM_FEATURE_MVE & 3) == 3
-  #include <arm_mve.h>
-  /* MVE integer and floating point intrinsics are now available to use.  */
-  #elif __ARM_FEATURE_MVE & 1
-  #include <arm_mve.h>
-  /* MVE integer intrinsics are now available to use.  */
-  #endif
-```
-
 ### `<arm_fp16.h>`
 
 `<arm_fp16.h>` is provided to define the scalar 16-bit floating point
@@ -643,9 +606,6 @@ should be tested before including the header:
   #include <arm_fp16.h>
   #endif /* __ARM_FEATURE_FP16_SCALAR_ARITHMETIC */
 ```
-
-Including `<arm_neon.h>` will also cause `<arm_fp16.h>` to be included
-if appropriate.
 
 ### `<arm_bf16.h>`
 
@@ -668,8 +628,48 @@ instructions available are conversion instrinstics between `bfloat16_t` and
 * `vcvth_bf16_f32` (convert float32_t to bfloat16_t)
 * `vcvtah_f32_bf16` (convert bfloat16_t to float32_t)
 
-Including `<arm_neon.h>` will also cause `<arm_bf16.h>` to be included
-if appropriate.
+### `<arm_neon.h>`
+
+`<arm_neon.h>` is provided to define the [Advanced SIMD (Neon)
+intrinsics](#advanced-simd-neon-intrinsics) and associated
+[data types](#vector-data-types). As these intrinsics and data types are
+in the user namespace, an implementation would not normally define them
+until the header is included. The `__ARM_NEON` macro should be tested
+before including the header:
+
+``` c
+  #ifdef __ARM_NEON
+  #include <arm_neon.h>
+  #endif /* __ARM_NEON */
+```
+
+Including `<arm_neon.h>` will also cause the following header files
+to be included, if the header files are available:
+
+* [`<arm_fp16.h>`](#arm_fp16.h)
+* [`<arm_bf16.h>`](#arm_bf16.h)
+
+### `<arm_mve.h>`
+
+`<arm_mve.h>` is provided to define the [M-profile Vector Extension
+(MVE) intrinsics](#m-profile-vector-extension-mve-intrinsics) and associated
+data types. The data types occupy the user namespace. By default the
+intrinsics occupy both the user namespace and the `__arm_` namespace;
+defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will hide the definition of
+the user namespace variants.
+
+The `__ARM_FEATURE_MVE` macro should be tested before including the
+header:
+
+``` c
+  #if (__ARM_FEATURE_MVE & 3) == 3
+  #include <arm_mve.h>
+  /* MVE integer and floating point intrinsics are now available to use.  */
+  #elif __ARM_FEATURE_MVE & 1
+  #include <arm_mve.h>
+  /* MVE integer intrinsics are now available to use.  */
+  #endif
+```
 
 ## Attributes
 
