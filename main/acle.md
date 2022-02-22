@@ -226,6 +226,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Used embedded links for the [list of predefined macros](#summary-of-predefined-macros)
   and fixed some misdirected links.  Resorted the list into alphabetical order.
 * Added more cross-references to the descriptions of feature macros.
+* Reorganized the [Header files](#header-files) section.
 
 ### References
 
@@ -554,81 +555,16 @@ does not meet the requirements.
 
 ## Header files
 
-`<arm_acle.h>` is provided to make the non-Neon intrinsics available.
-These intrinsics are in the C implementation namespace and begin with
-double underscores. It is unspecified whether they are available without
-the header being included. The `__ARM_ACLE` macro should be tested
-before including the header:
+ACLE standardizes various header files that provide access to
+[intrinsics](#intrinsics) and their associated data types.
+It also standardizes [feature test macros](#feature-test-macros)
+that indicate which header files are available.
 
-``` c
-  #ifdef __ARM_ACLE
-  #include <arm_acle.h>
-  #endif /* __ARM_ACLE */
-```
-
-`<arm_neon.h>` is provided to define the Neon intrinsics. As these
-intrinsics are in the user namespace, an implementation would not
-normally define them until the header is included. The `__ARM_NEON`
-macro should be tested before including the header:
-
-``` c
-  #ifdef __ARM_NEON
-  #include <arm_neon.h>
-  #endif /* __ARM_NEON */
-```
-
-`<arm_mve.h>` is provided to define the M-Profile Vector Extension (MVE)
-intrinsics.  By default these intrinsics occupy both the user namespace and
-the `__arm_` namespace, defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will
-hide the definition of the user namespace variants. The `__ARM_FEATURE_MVE`
-macro should be tested before including the header:
-
-``` c
-  #if (__ARM_FEATURE_MVE & 3) == 3
-  #include <arm_mve.h>
-  /* MVE integer and floating point intrinsics are now available to use.  */
-  #elif __ARM_FEATURE_MVE & 1
-  #include <arm_mve.h>
-  /* MVE integer intrinsics are now available to use.  */
-  #endif
-```
-
-`<arm_fp16.h>` is provided to define the scalar 16-bit floating point
-arithmetic intrinsics. As these intrinsics are in the user namespace,
-an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` feature macro
-should be tested before including the header:
-
-``` c
-  #ifdef __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
-  #include <arm_fp16.h>
-  #endif /* __ARM_FEATURE_FP16_SCALAR_ARITHMETIC */
-```
-
-Including `<arm_neon.h>` will also cause `<arm_fp16.h>` to be included
-if appropriate.
-
-`<arm_bf16.h>` is provided to define the 16-bit brain floating point
-arithmetic intrinsics. As these intrinsics are in the user namespace,
-an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_BF16` feature macro
-should be tested before including the header:
-
-``` c
-  #ifdef __ARM_FEATURE_BF16
-  #include <arm_bf16.h>
-  #endif /* __ARM_FEATURE_BF16 */
-```
-
-When `__ARM_BF16_FORMAT_ALTERNATIVE` is defined to `1` the only scalar
-instructions available are conversion instrinstics between `bfloat16_t` and
-`float32_t`.  These instructions are:
-
-* `vcvth_bf16_f32` (convert float32_t to bfloat16_t)
-* `vcvtah_f32_bf16` (convert bfloat16_t to float32_t)
-
-Including `<arm_neon.h>` will also cause `<arm_bf16.h>` to be included
-if appropriate.
+Some architecture features have a dedicated header file;
+for example, [`<arm_neon.h>`](#arm_neon.h) provides access to the
+[Advanced SIMD (Neon) intrinsics](#advanced-simd-neon-intrinsics).
+[`arm_acle.h`](#arm_acle.h) provides a catch-all for intrinsics that
+do not belong to a more specific header file.
 
 These headers behave as standard library headers; repeated inclusion has
 no effect beyond the first include.
@@ -659,6 +595,92 @@ and:
   #include <stdint.h>
   // ... UINT64_C is now defined
 ```
+
+### `<arm_acle.h>`
+
+`<arm_acle.h>` is provided to make the non-Neon intrinsics available.
+These intrinsics are in the C implementation namespace and begin with
+double underscores. It is unspecified whether they are available without
+the header being included. The `__ARM_ACLE` macro should be tested
+before including the header:
+
+``` c
+  #ifdef __ARM_ACLE
+  #include <arm_acle.h>
+  #endif /* __ARM_ACLE */
+```
+
+### `<arm_neon.h>`
+
+`<arm_neon.h>` is provided to define the Neon intrinsics. As these
+intrinsics are in the user namespace, an implementation would not
+normally define them until the header is included. The `__ARM_NEON`
+macro should be tested before including the header:
+
+``` c
+  #ifdef __ARM_NEON
+  #include <arm_neon.h>
+  #endif /* __ARM_NEON */
+```
+
+### `<arm_mve.h>`
+
+`<arm_mve.h>` is provided to define the M-Profile Vector Extension (MVE)
+intrinsics.  By default these intrinsics occupy both the user namespace and
+the `__arm_` namespace, defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will
+hide the definition of the user namespace variants. The `__ARM_FEATURE_MVE`
+macro should be tested before including the header:
+
+``` c
+  #if (__ARM_FEATURE_MVE & 3) == 3
+  #include <arm_mve.h>
+  /* MVE integer and floating point intrinsics are now available to use.  */
+  #elif __ARM_FEATURE_MVE & 1
+  #include <arm_mve.h>
+  /* MVE integer intrinsics are now available to use.  */
+  #endif
+```
+
+### `<arm_fp16.h>`
+
+`<arm_fp16.h>` is provided to define the scalar 16-bit floating point
+arithmetic intrinsics. As these intrinsics are in the user namespace,
+an implementation would not normally define them until the header is
+included. The `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` feature macro
+should be tested before including the header:
+
+``` c
+  #ifdef __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
+  #include <arm_fp16.h>
+  #endif /* __ARM_FEATURE_FP16_SCALAR_ARITHMETIC */
+```
+
+Including `<arm_neon.h>` will also cause `<arm_fp16.h>` to be included
+if appropriate.
+
+### `<arm_bf16.h>`
+
+`<arm_bf16.h>` is provided to define the 16-bit brain floating point
+arithmetic intrinsics. As these intrinsics are in the user namespace,
+an implementation would not normally define them until the header is
+included. The `__ARM_FEATURE_BF16` feature macro
+should be tested before including the header:
+
+``` c
+  #ifdef __ARM_FEATURE_BF16
+  #include <arm_bf16.h>
+  #endif /* __ARM_FEATURE_BF16 */
+```
+
+When `__ARM_BF16_FORMAT_ALTERNATIVE` is defined to `1` the only scalar
+instructions available are conversion instrinstics between `bfloat16_t` and
+`float32_t`.  These instructions are:
+
+* `vcvth_bf16_f32` (convert float32_t to bfloat16_t)
+* `vcvtah_f32_bf16` (convert bfloat16_t to float32_t)
+
+Including `<arm_neon.h>` will also cause `<arm_bf16.h>` to be included
+if appropriate.
 
 ## Attributes
 
