@@ -228,6 +228,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added more cross-references to the descriptions of feature macros.
 * Reorganized the [Intrinsics](#intrinsics) and
   [Header files](#header-files) sections.
+* In [Data types](#data-types), clarified that `__fp16` and `__bf16` are
+  predefined types whereas vector types like `int32x4_t` are not.
 
 ### References
 
@@ -458,10 +460,18 @@ permitted by Standard C.
   (LP64 model) or 32 bits (LLP64 model).
 
 ACLE extends C by providing some types not present in Standard C and
-defining how they are dealt with by the AAPCS.
+defining how they are dealt with by the AAPCS. These types fall into
+two groups:
 
-* Vector types for use with the Advanced SIMD intrinsics (see
- [Vector data types](#vector-data-types)).
+* types that are defined by [header files](#header-files)
+
+* types that are predefined by the implementation, so that
+  no header file needs to be included to make use of them
+
+The former group includes things like [vector data types](#vector-data-types),
+which are defined by the header file [`<arm_neon.h>`](#arm_neon.h).
+
+The predefined types are:
 
 * The `__fp16` type for 16-bit floating-point values (see 
  [Half-precision floating-point](#half-precision-floating-point)).
