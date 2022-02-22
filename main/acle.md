@@ -226,7 +226,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Used embedded links for the [list of predefined macros](#summary-of-predefined-macros)
   and fixed some misdirected links.  Resorted the list into alphabetical order.
 * Added more cross-references to the descriptions of feature macros.
-* Reorganized the [Header files](#header-files) section.
+* Reorganized the [Intrinsics](#intrinsics) and
+  [Header files](#header-files) sections.
 
 ### References
 
@@ -499,28 +500,9 @@ start with the prefix `__ARM`.
 
 ## Intrinsics
 
-ACLE standardizes intrinsics to access the Arm ® Neon ™ architecture
-extension. These intrinsics are intended to be compatible with existing
-implementations. Before using the Neon intrinsics or data types, the
-`<arm_neon.h>` header must be included. The Neon intrinsics are defined
-in [Advanced SIMD (Neon) intrinsics](#advanced-simd-neon-intrinsics).
-Note that the Neon intrinsics and data types are in the user namespace.
-
-ACLE standardizes intrinsics to access the Arm M-profile Vector Extension (MVE).
-These intrinsics are intended to be compatible with existing implementations.
-Before using the MVE intrinsics or data types, the `<arm_mve.h>` header must
-be included. The MVE intrinsics are defined in [M-profile Vector Extension
-(MVE) intrinsics](#m-profile-vector-extension-mve-intrinsics). Note that
-the MVE data types are in the user namespace, the MVE intrinsics can
-optionally be left out of the user namespace.
-
-ACLE also standardizes other intrinsics to access Arm instructions which
-do not map directly to C operators generally either for optimal
-implementation of algorithms, or for accessing specialist system-level
-features. Intrinsics are defined further in various following sections.
-
-Before using the non-Neon intrinsics, the `<arm_acle.h>` header should be
-included.
+ACLE standardizes intrinsics to access various features of the
+Arm ® architecture. It also standardizes a set of [header
+files](#header-files) that provide access to these intrinsics.
 
 Whether intrinsics are macros, functions or built-in operators is
 unspecified. For example:
@@ -598,11 +580,12 @@ and:
 
 ### `<arm_acle.h>`
 
-`<arm_acle.h>` is provided to make the non-Neon intrinsics available.
-These intrinsics are in the C implementation namespace and begin with
-double underscores. It is unspecified whether they are available without
-the header being included. The `__ARM_ACLE` macro should be tested
-before including the header:
+`<arm_acle.h>` provides access to intrinsics that do not belong
+to the more specific header files below. These intrinsics are in the
+C implementation namespace and begin with double underscores. It is
+unspecified whether they are available without the header being
+included. The `__ARM_ACLE` macro should be tested before including the
+header:
 
 ``` c
   #ifdef __ARM_ACLE
@@ -612,10 +595,12 @@ before including the header:
 
 ### `<arm_neon.h>`
 
-`<arm_neon.h>` is provided to define the Neon intrinsics. As these
-intrinsics are in the user namespace, an implementation would not
-normally define them until the header is included. The `__ARM_NEON`
-macro should be tested before including the header:
+`<arm_neon.h>` is provided to define the [Advanced SIMD (Neon)
+intrinsics](#advanced-simd-neon-intrinsics) and associated
+[data types](#vector-data-types). As these intrinsics and data types are
+in the user namespace, an implementation would not normally define them
+until the header is included. The `__ARM_NEON` macro should be tested
+before including the header:
 
 ``` c
   #ifdef __ARM_NEON
@@ -625,11 +610,15 @@ macro should be tested before including the header:
 
 ### `<arm_mve.h>`
 
-`<arm_mve.h>` is provided to define the M-Profile Vector Extension (MVE)
-intrinsics.  By default these intrinsics occupy both the user namespace and
-the `__arm_` namespace, defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will
-hide the definition of the user namespace variants. The `__ARM_FEATURE_MVE`
-macro should be tested before including the header:
+`<arm_mve.h>` is provided to define the [M-profile Vector Extension
+(MVE) intrinsics](#m-profile-vector-extension-mve-intrinsics) and associated
+data types. The data types occupy the user namespace. By default the
+intrinsics occupy both the user namespace and the `__arm_` namespace;
+defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will hide the definition of
+the user namespace variants.
+
+The `__ARM_FEATURE_MVE` macro should be tested before including the
+header:
 
 ``` c
   #if (__ARM_FEATURE_MVE & 3) == 3
