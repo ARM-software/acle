@@ -223,9 +223,13 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   feature macros.
 * Fixed minor formatting errors throughout.
 * Replaced link text such as “sec-…” and “ssec-…” with section titles.
-* Used embedded links for the [list of predefined macros](#summary-of-predefined-macros)
-  and fixed some misdirected links.  Resorted the list into alphabetical order.
-* Added more cross-references to the descriptions of feature macros.
+* Reorganized the presentation of [Feature test macros](#feature-test-macros).
+  Also:
+  * Generalized some AArch32-specific text to AArch64.
+  * Added more cross-references to the descriptions of the macros.
+  * Used embedded links for the [list of predefined macros](#summary-of-predefined-macros)
+    and fixed some misdirected links.  Resorted the list into alphabetical
+    order.
 * Reorganized the [Intrinsics](#intrinsics) and
   [Header files](#header-files) sections.
 * In [Data types](#data-types), clarified that `__fp16` and `__bf16` are
@@ -865,8 +869,8 @@ processors implementing the Arm architecture.)
 
 The recommended CPU architecture names are as specified under
 `Tag_CPU_arch` in [[BA]](#BA). For details of how to use predefined macros to
-test architecture in source code, see [A32/T32 instruction set
-architecture](#a32t32-instruction-set-architecture).
+test architecture in source code, see [Instruction set architecture and
+features](#instruction-set-architecture-and-features).
 
 The following table lists the architectures and the A32 and
 T32 instruction set versions.
@@ -968,7 +972,7 @@ little-endian format. (Aside: the "mixed-endian" format for
 double-precision numbers, used on some very old Arm FPU implementations,
 is not supported by ACLE or the Arm ABI.)
 
-## A32 and T32 instruction set architecture and features
+## Instruction set architecture and features
 
 References to the target architecture refer to the target as
 configured in the tools, for example by appropriate command-line
@@ -976,8 +980,8 @@ options. This may be a subset or intersection of actual targets, in
 order to produce a binary that runs on more than one real architecture.
 For example, use of specific features may be disabled.
 
-In some cases, hardware features may be accessible from only one or
-other of A32 or T32 state. For example, in the v5TE and v6
+In the 32-bit architecture, some hardware features may be accessible from
+only one or other of A32 or T32 state. For example, in the v5TE and v6
 architectures, DSP instructions and (where available) VFP
 instructions, are only accessible in A32 state, while in the v7-R
 architecture, hardware divide is only accessible from T32 state. Where
@@ -996,7 +1000,7 @@ An implementation that allows a user to indicate which functions go into
 which state (either as a hard requirement or a preference) is not
 required to change the settings of architectural feature test macros.
 
-### A32/T32 instruction set architecture
+### Arm architecture level
 
 `__ARM_ARCH` is defined as an integer value indicating the current Arm
 instruction set architecture (for example 7 for the Arm v7-A architecture
@@ -1017,6 +1021,8 @@ be defined in an ACLE implementation.
 
 Note that the `__ARM_ARCH` macro is defined even for cores which only
 support the T32 instruction set.
+
+### Instruction set architecture (A32/T32/A64)
 
 `__ARM_ARCH_ISA_ARM` is defined to 1 if the core supports the Arm
 instruction set. It is not defined for M-profile cores.
@@ -1680,15 +1686,15 @@ be found in [[BA]](#BA).
 
 | **Macro name**                                                                                                                                          | **Meaning**                                                                                        | **Example** |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|-------------|
-| [`__ARM_32BIT_STATE`](#a32t32-instruction-set-architecture)                                                                                             | Code is for AArch32 state                                                                          | 1           |
-| [`__ARM_64BIT_STATE`](#a32t32-instruction-set-architecture)                                                                                             | Code is for AArch64 state                                                                          | 1           |
+| [`__ARM_32BIT_STATE`](#instruction-set-architecture-a32t32a64)                                                                                          | Code is for AArch32 state                                                                          | 1           |
+| [`__ARM_64BIT_STATE`](#instruction-set-architecture-a32t32a64)                                                                                          | Code is for AArch64 state                                                                          | 1           |
 | [`__ARM_ACLE`](#testing-for-arm-c-language-extensions)                                                                                                  | Indicates ACLE implemented                                                                         | 101         |
 | [`__ARM_ALIGN_MAX_PWR`](#alignment-of-static-objects)                                                                                                   | Log of maximum alignment of static object                                                          | 20          |
 | [`__ARM_ALIGN_MAX_STACK_PWR`](#alignment-of-stack-objects)                                                                                              | Log of maximum alignment of stack object                                                           | 3           |
-| [`__ARM_ARCH`](#a32t32-instruction-set-architecture)                                                                                                    | Arm architecture level                                                                             | 7           |
-| [`__ARM_ARCH_ISA_A64`](#a32t32-instruction-set-architecture)                                                                                            | AArch64 ISA present                                                                                | 1           |
-| [`__ARM_ARCH_ISA_ARM`](#a32t32-instruction-set-architecture)                                                                                            | Arm instruction set present                                                                        | 1           |
-| [`__ARM_ARCH_ISA_THUMB`](#a32t32-instruction-set-architecture)                                                                                          | T32 instruction set present                                                                        | 2           |
+| [`__ARM_ARCH`](#arm-architecture-level)                                                                                                                 | Arm architecture level                                                                             | 7           |
+| [`__ARM_ARCH_ISA_A64`](#instruction-set-architecture-a32t32a64)                                                                                         | AArch64 ISA present                                                                                | 1           |
+| [`__ARM_ARCH_ISA_ARM`](#instruction-set-architecture-a32t32a64)                                                                                         | Arm instruction set present                                                                        | 1           |
+| [`__ARM_ARCH_ISA_THUMB`](#instruction-set-architecture-a32t32a64)                                                                                       | T32 instruction set present                                                                        | 2           |
 | [`__ARM_ARCH_PROFILE`](#architectural-profile-a-r-m-or-pre-cortex)                                                                                      | Architecture profile                                                                               | `'A'`       |
 | [`__ARM_BF16_FORMAT_ALTERNATIVE`](#brain-half-precision-16-bit-floating-point-format)                                                                   | 16-bit brain floating-point, alternative format                                                    | 1           |
 | [`__ARM_BIG_ENDIAN`](#endianness)                                                                                                                       | Memory is big-endian                                                                               | 1           |
@@ -4491,8 +4497,8 @@ the `<arm_neon.h>` header.
 
 Some intrinsics are only available when compiling for the AArch64
 execution state. This can be determined using the `__ARM_64BIT_STATE`
-predefined macro (see [A32/T32 instruction set
-architecture](#a32t32-instruction-set-architecture)).
+predefined macro (see [Instruction set
+architecture (A32/T32/A64)](#instruction-set-architecture-a32t32a64)).
 
 ### Availability of 16-bit floating-point vector interchange types
 
