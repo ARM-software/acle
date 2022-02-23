@@ -232,6 +232,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
     order.
 * Reorganized the [Intrinsics](#intrinsics) and
   [Header files](#header-files) sections.
+* Added a description of [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
+  to the [Header files](#header-files) section.
 * In [Data types](#data-types), clarified that `__fp16` and `__bf16` are
   predefined types whereas vector types like `int32x4_t` are not.
 * Moved the [Future directions](#future-directions) chapter to the end.
@@ -663,6 +665,22 @@ to be included, if the header files are available:
 
 * [`<arm_fp16.h>`](#arm_fp16.h)
 * [`<arm_bf16.h>`](#arm_bf16.h)
+
+### `<arm_neon_sve_bridge.h>`
+
+`<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
+Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
+for details.  The `__ARM_NEON_SVE_BRIDGE` macro should be tested
+before including the header:
+
+``` c
+  #ifdef __ARM_NEON_SVE_BRIDGE
+  #include <arm_neon_sve_bridge.h>
+  #endif /* __ARM_NEON_SVE_BRIDGE */
+```
+
+Including `<arm_neon_sve_bridge.h>` will also include
+[`<arm_neon.h>`](#arm_neon.h) and `<arm_sve.h>`.
 
 ### `<arm_mve.h>`
 
@@ -1324,6 +1342,12 @@ for AArch32. Double-precision is always set for AArch64.
 If `__ARM_FEATURE_FMA` and `__ARM_NEON_FP` are both defined,
 fused-multiply instructions are available in Neon also.
 
+#### NEON-SVE Bridge macros
+
+`__ARM_NEON_SVE_BRIDGE` is defined to 1 if [NEON-SVE Bridge](#neon-sve-bridge)
+intrinsics are available. This implies that `__ARM_NEON` and `__ARM_NEON_FP`
+are both nonzero.
+
 #### M-profile Vector Extension
 
 `__ARM_FEATURE_MVE` is defined as a bitmap to indicate M-profile Vector
@@ -1743,6 +1767,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FP_FENV_ROUNDING`](#floating-point-model)                                                                                                       | Rounding is configurable at runtime                                                                | 1           |
 | [`__ARM_NEON`](#advanced-simd-architecture-extension-neon)                                                                                              | Advanced SIMD (Neon) extension                                                                     | 1           |
 | [`__ARM_NEON_FP`](#neon-floating-point)                                                                                                                 | Advanced SIMD (Neon) floating-point                                                                | 0x04        |
+| [`__ARM_NEON_SVE_BRIDGE`](#neon-sve-bridge-macros)                                                                                                      | Moving data between Neon and SVE data types                                                        | 1           |
 | [`__ARM_PCS`](#procedure-call-standard)                                                                                                                 | Arm procedure call standard (32-bit-only)                                                          | 0x01        |
 | [`__ARM_PCS_AAPCS64`](#procedure-call-standard)                                                                                                         | Arm PCS for AArch64.                                                                               | 1           |
 | [`__ARM_PCS_VFP`](#procedure-call-standard)                                                                                                             | Arm PCS hardware FP variant in use (32-bit-only)                                                   | 1           |
@@ -1751,11 +1776,6 @@ be found in [[BA]](#BA).
 | [`__ARM_SIZEOF_MINIMAL_ENUM`](#implementation-defined-type-properties)                                                                                  | Size of minimal enumeration type: 1 or 4                                                           | 1           |
 | [`__ARM_SIZEOF_WCHAR_T`](#implementation-defined-type-properties)                                                                                       | Size of `wchar_t`: 2 or 4                                                                          | 2           |
 | [`__ARM_WMMX`](#wireless-mmx)                                                                                                                           | Wireless MMX extension (32-bit-only)                                                               | 1           |
-
-## NEON-SVE Bridge macros
-
-`__ARM_NEON_SVE_BRIDGE` is defined to 1 if [NEON-SVE-Bridge](#neon-sve-bridge)
-intrinsics are available.
 
 # Attributes and pragmas
 
@@ -5146,12 +5166,8 @@ Similarly to C's memset, this intrinsic returns the `tagged_address` pointer.
 The NEON_SVE Bridge adds intrinsics that allow conversions between NEON and
 SVE vectors.
 
-These intrinsics are defined in the header file `arm_neon_sve_bridge.h`.
-
-`__ARM_NEON_SVE_BRIDGE` is defined as 1 when `arm_neon_sve_bridge.h` is
-available.
-
-Including this header_file will include `arm_neon.h` and `arm_sve.h`.
+The [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h) header should be
+included before using these intrinsics.
 
 ### `svset_neonq`
 
