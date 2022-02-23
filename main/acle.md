@@ -1274,6 +1274,11 @@ At most one of these macros will be defined. See [Half-precision
 floating-point](#half-precision-floating-point) for details of
 half-precision floating-point types.
 
+### Half-precision argument and result
+
+`__ARM_FP16_ARGS` is defined to 1 if `__fp16` can be used as an
+argument and result.
+
 ### Brain half-precision (16-bit) floating-point format
 
 `__ARM_BF16_FORMAT_ALTERNATIVE` is defined to 1 if the Arm
@@ -1447,11 +1452,6 @@ and conversion intrinsics are available. This is only available when
 compliant floating point maximum and minimum vector instructions are
 supported and intrinsics targeting these instructions are available. This
 is only available when `__ARM_ARCH >= 8`.
-
-### Half-precision argument and result
-
-`__ARM_FP16_ARGS` is defined to 1 if `__fp16` can be used as an
-argument and result.
 
 ### Rounding doubling multiplies
 
