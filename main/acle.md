@@ -1377,7 +1377,8 @@ this implies:
 
 `__ARM_FEATURE_FP16_FML` is defined to 1 if the FP16 multiplication variant
 instructions from Armv8.2-A are supported and intrinsics targeting them are
-available. Available when `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
+available. This implies that `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is
+defined to a nonzero value.
 
 #### Brain 16-bit floating-point support
 
