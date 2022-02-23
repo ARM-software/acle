@@ -1012,10 +1012,8 @@ include minor versions. The formula to calculate the value of
 `__ARM_ARCH` from Armv8.1-A [[ARMARMv81]](#ARMARMv81) onwards is given by the following
 formula:
 
-``` c
-  For an Arm architecture ArmvX.Y, __ARM_ARCH = X * 100 + Y. E.g.
-  for Armv8.1 __ARM_ARCH = 801.
-```
+> For an Arm architecture ArmvX.Y, `__ARM_ARCH` = X * 100 + Y.
+> For example, for Armv8.1 `__ARM_ARCH` = 801.
 
 Since ACLE only supports the Arm architecture, this macro would always
 be defined in an ACLE implementation.
