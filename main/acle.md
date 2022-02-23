@@ -1400,7 +1400,9 @@ See [Half-precision brain
 floating-point](#half-precision-brain-floating-point) for details
 of half-precision brain floating-point types.
 
-### Crypto extension
+### Cryptographic extensions
+
+#### “Crypto” extension
 
 NOTE: The `__ARM_FEATURE_CRYPTO` macro is deprecated in favor of the finer
 grained feature macros described below.
@@ -1410,38 +1412,38 @@ supported and intrinsics targeting them are available. These
 instructions include AES{E, D}, SHA1{C, P, M} and others. This also implies
 `__ARM_FEATURE_AES` and `__ARM_FEATURE_SHA2`.
 
-### AES extension
+#### AES extension
 
 `__ARM_FEATURE_AES` is defined to 1 if the AES Crypto instructions from
 Armv8-A are supported and intrinsics targeting them are available. These
 instructions include AES{E, D}, AESMC, AESIMC and others.
 
-### SHA2 extension
+#### SHA2 extension
 
 `__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2 Crypto instructions
 from Armv8-A are supported and intrinsics targeting them are available. These
 instructions include SHA1{C, P, M} and others.
 
-### SHA512 extension
+#### SHA512 extension
 
 `__ARM_FEATURE_SHA512` is defined to 1 if the SHA2 Crypto instructions
 from Armv8.2-A are supported and intrinsics targeting them are available. These
 instructions include SHA1{C, P, M} and others.
 
-### SHA3 extension
+#### SHA3 extension
 
 `__ARM_FEATURE_SHA3` is defined to 1 if the SHA1 & SHA2 Crypto instructions
 from Armv8-A and the SHA2 and SHA3 instructions from Armv8.2-A and newer
 are supported and intrinsics targeting them are available.
 These instructions include AES{E, D}, SHA1{C, P, M}, RAX, and others.
 
-### SM3 extension
+#### SM3 extension
 
 `__ARM_FEATURE_SM3` is defined to 1 if the SM3 Crypto instructions from
 Armv8.2-A are supported and intrinsics targeting them are available. These
 instructions include SM3{TT1A, TT1B}, and others.
 
-### SM4 extension
+#### SM4 extension
 
 `__ARM_FEATURE_SM4` is defined to 1 if the SM4 Crypto instructions from
 Armv8.2-A are supported and intrinsics targeting them are available. These
