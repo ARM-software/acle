@@ -1278,26 +1278,6 @@ half-precision floating-point types.
 `__ARM_FP16_ARGS` is defined to 1 if `__fp16` can be used as an
 argument and result.
 
-### Brain half-precision (16-bit) floating-point format
-
-`__ARM_BF16_FORMAT_ALTERNATIVE` is defined to 1 if the Arm
-alternative [[ARMARM]](#ARMARM) 16-bit brain floating-point format is used. This format
-closely resembles the IEEE 754 single-precision format.  As such a brain
-half-precision floating point value can be converted to an IEEE 754
-single-floating point format by appending 16 zero bits at the end.
-
-`__ARM_FEATURE_BF16_VECTOR_ARITHMETIC` is defined to `1` if the brain 16-bit
-floating-point arithmetic instructions are supported in hardware and the
-associated vector intrinsics defined by ACLE are available. Note that
-this implies:
-
-* `__ARM_FP & 0x02 == 1`
-* `__ARM_NEON_FP & 0x02 == 1`
-
-See [Half-precision brain
-floating-point](#half-precision-brain-floating-point) for details
-of half-precision brain floating-point types.
-
 ### Fused multiply-accumulate (FMA)
 
 `__ARM_FEATURE_FMA` is defined to 1 if the hardware floating-point
@@ -1371,6 +1351,55 @@ the `Tag_WMMX_arch` build attribute.
 This specification does not further define source-language features to
 support Wireless MMX.
 
+### 16-bit floating-point extensions
+
+#### 16-bit floating-point data processing operations
+
+`__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1` if the
+16-bit floating-point arithmetic instructions are supported in hardware and
+the associated scalar intrinsics defined by ACLE are available. Note that
+this implies:
+
+* `__ARM_FP16_FORMAT_IEEE == 1`
+* `__ARM_FP16_FORMAT_ALTERNATIVE == 0`
+* `__ARM_FP & 0x02 == 1`
+
+`__ARM_FEATURE_FP16_VECTOR_ARITHMETIC` is defined to `1` if the 16-bit
+floating-point arithmetic instructions are supported in hardware and the
+associated vector intrinsics defined by ACLE are available. Note that
+this implies:
+
+* `__ARM_FP16_FORMAT_IEEE == 1`
+* `__ARM_FP16_FORMAT_ALTERNATIVE == 0`
+* `__ARM_FP & 0x02 == 1`
+* `__ARM_NEON_FP & 0x02 == 1`
+
+#### FP16 FML extension
+
+`__ARM_FEATURE_FP16_FML` is defined to 1 if the FP16 multiplication variant
+instructions from Armv8.2-A are supported and intrinsics targeting them are
+available. Available when `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
+
+#### Brain half-precision (16-bit) floating-point format
+
+`__ARM_BF16_FORMAT_ALTERNATIVE` is defined to 1 if the Arm
+alternative [[ARMARM]](#ARMARM) 16-bit brain floating-point format is used. This format
+closely resembles the IEEE 754 single-precision format.  As such a brain
+half-precision floating point value can be converted to an IEEE 754
+single-floating point format by appending 16 zero bits at the end.
+
+`__ARM_FEATURE_BF16_VECTOR_ARITHMETIC` is defined to `1` if the brain 16-bit
+floating-point arithmetic instructions are supported in hardware and the
+associated vector intrinsics defined by ACLE are available. Note that
+this implies:
+
+* `__ARM_FP & 0x02 == 1`
+* `__ARM_NEON_FP & 0x02 == 1`
+
+See [Half-precision brain
+floating-point](#half-precision-brain-floating-point) for details
+of half-precision brain floating-point types.
+
 ### Crypto extension
 
 NOTE: The `__ARM_FEATURE_CRYPTO` macro is deprecated in favor of the finer
@@ -1418,12 +1447,6 @@ instructions include SM3{TT1A, TT1B}, and others.
 Armv8.2-A are supported and intrinsics targeting them are available. These
 instructions include SM4{E, EKEY} and others.
 
-### FP16 FML extension
-
-`__ARM_FEATURE_FP16_FML` is defined to 1 if the FP16 multiplication variant
-instructions from Armv8.2-A are supported and intrinsics targeting them are
-available. Available when `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
-
 ### CRC32 extension
 
 `__ARM_FEATURE_CRC32` is defined to 1 if the CRC32 instructions are
@@ -1460,27 +1483,6 @@ instructions and their associated intrinsics are available.
 <!-- Do not remove the following `span`, it is needed to create an
 anchor that can be referred via an internal hyperlink to the section
 following it. --> <span id="16-bit-floating-point-data-processing-operations"></span>
-
-### 16-bit floating-point data processing operations
-
-`__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1` if the
-16-bit floating-point arithmetic instructions are supported in hardware and
-the associated scalar intrinsics defined by ACLE are available. Note that
-this implies:
-
-* `__ARM_FP16_FORMAT_IEEE == 1`
-* `__ARM_FP16_FORMAT_ALTERNATIVE == 0`
-* `__ARM_FP & 0x02 == 1`
-
-`__ARM_FEATURE_FP16_VECTOR_ARITHMETIC` is defined to `1` if the 16-bit
-floating-point arithmetic instructions are supported in hardware and the
-associated vector intrinsics defined by ACLE are available. Note that
-this implies:
-
-* `__ARM_FP16_FORMAT_IEEE == 1`
-* `__ARM_FP16_FORMAT_ALTERNATIVE == 0`
-* `__ARM_FP & 0x02 == 1`
-* `__ARM_NEON_FP & 0x02 == 1`
 
 ### Javascript floating-point conversion
 
