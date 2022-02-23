@@ -1256,9 +1256,8 @@ supported in hardware.
 Support for 16-bit floating-point language or 16-bit brain floating-point
 language extensions (see [Half-precision (16-bit) floating-point
 format](#half-precision-16-bit-floating-point-format) and [Brain
-half-precision (16-bit) floating-point
-format](#brain-half-precision-16-bit-floating-point-format)) is only 
-required if supported in hardware.
+16-bit floating-point support](#brain-16-bit-floating-point-support))
+is only required if supported in hardware.
 
 ### Half-precision (16-bit) floating-point format
 
@@ -1381,7 +1380,7 @@ this implies:
 instructions from Armv8.2-A are supported and intrinsics targeting them are
 available. Available when `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
 
-#### Brain half-precision (16-bit) floating-point format
+#### Brain 16-bit floating-point support
 
 `__ARM_BF16_FORMAT_ALTERNATIVE` is defined to 1 if the Arm
 alternative [[ARMARM]](#ARMARM) 16-bit brain floating-point format is used. This format
@@ -1722,11 +1721,11 @@ be found in [[BA]](#BA).
 | [`__ARM_ARCH_ISA_ARM`](#instruction-set-architecture-a32t32a64)                                                                                         | Arm instruction set present                                                                        | 1           |
 | [`__ARM_ARCH_ISA_THUMB`](#instruction-set-architecture-a32t32a64)                                                                                       | T32 instruction set present                                                                        | 2           |
 | [`__ARM_ARCH_PROFILE`](#architectural-profile-a-r-m-or-pre-cortex)                                                                                      | Architecture profile                                                                               | `'A'`       |
-| [`__ARM_BF16_FORMAT_ALTERNATIVE`](#brain-half-precision-16-bit-floating-point-format)                                                                   | 16-bit brain floating-point, alternative format                                                    | 1           |
+| [`__ARM_BF16_FORMAT_ALTERNATIVE`](#brain-16-bit-floating-point-support)                                                                                 | 16-bit brain floating-point, alternative format                                                    | 1           |
 | [`__ARM_BIG_ENDIAN`](#endianness)                                                                                                                       | Memory is big-endian                                                                               | 1           |
 | [`__ARM_FEATURE_AES`](#aes-extension)                                                                                                                   | AES Crypto extension (Arm v8-A)                                                                    | 1           |
 | [`__ARM_FEATURE_ATOMICS`](#large-system-extensions)                                                                                                     | Large System Extensions                                                                            | 1           |
-| [`__ARM_FEATURE_BF16`](#brain-half-precision-16-bit-floating-point-format)                                                                              | 16-bit brain floating-point, vector instruction                                                    | 1           |
+| [`__ARM_FEATURE_BF16`](#brain-16-bit-floating-point-support)                                                                                            | 16-bit brain floating-point, vector instruction                                                    | 1           |
 | [`__ARM_FEATURE_BTI_DEFAULT`](#branch-target-identification)                                                                                            | Branch Target Identification                                                                       | 1           |
 | [`__ARM_FEATURE_CDE`](#custom-datapath-extension)                                                                                                       | Custom Datapath Extension                                                                          | 0x01        |
 | [`__ARM_FEATURE_CDE_COPROC`](#custom-datapath-extension)                                                                                                | Custom Datapath Extension                                                                          | 0xf         |
@@ -4614,8 +4613,8 @@ Architecture Reference Manual. ACLE specifies intrinsics which map to the vector
 forms of these instructions where they are available in hardware.
 
 This is indicated by `__ARM_FEATURE_BF16_VECTOR_ARITHMETIC`
-(see [Brain half-precision (16-bit) floating-point
-format](#brain-half-precision-16-bit-floating-point-format)).
+(see [Brain 16-bit floating-point
+support](#brain-16-bit-floating-point-support)).
 
 ``` c
   #if __ARM_FEATURE_BF16_VECTOR_ARITHMETIC
