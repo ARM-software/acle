@@ -230,6 +230,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   [Header files](#header-files) sections.
 * In [Data types](#data-types), clarified that `__fp16` and `__bf16` are
   predefined types whereas vector types like `int32x4_t` are not.
+* Moved the [Future directions](#future-directions) chapter to the end.
 
 ### References
 
@@ -4979,116 +4980,6 @@ The MVE load and store instructions provide for alignment assertions, which may
 speed up access to aligned data (and will fault access to unaligned data).  The
 MVE intrinsics do not directly provide a means for asserting alignment.
 
-# Future directions
-
-## Extensions under consideration
-
-### Procedure calls and the Q / GE bits
-
-The Arm procedure call standard [[AAPCS]](#AAPCS) says that the Q and GE bits are
-undefined across public interfaces, but in practice it is desirable to
-return saturation status from functions. There are at least two common
-use cases:
-
-To define small (inline) functions defined in terms of
-expressions involving intrinsics, which provide abstractions or emulate
-other intrinsic families; it is desirable for such functions to have the
-same well-defined effects on the Q/GE bits as the corresponding
-intrinsics.
-
-### DSP library functions
-
-Options being considered are to define an extension to the pcs
-attribute to indicate that Q is meaningful on the return, and possibly
-also to infer this in the case of functions marked as inline.
-
-### Returning a value in registers
-
-As a type attribute this would allow things like
-
-``` c
-  struct __attribute__((value_in_regs)) Point { int x[2]; };
-```
-
-This would indicate that the result registers should be used as if the
-type had been passed as the first argument. The implementation should
-not complain if the attribute is applied inappropriately (i.e. where
-insufficient registers are available) it might be a template instance.
-
-### Custom calling conventions
-
-Some interfaces may use calling conventions that depart from the AAPCS.
-Examples include:
-
-Using additional argument registers, for example passing an argument
-in R5, R7, R12.
-
-Using additional result registers, for example R0 and R1 for a
-combined divide-and-remainder routine (note that some implementations
-may be able to support this by means of a value in registers structure
-return).
-
-Returning results in the condition flags.
-
-Preserving and possibly setting the Q (saturation) bit.
-
-### Traps: system calls, breakpoints, ...
-
-This release of ACLE does not define how to invoke a SVC (supervisor
-call), BKPT (breakpoint) and other related functionality.
-
-One option would be to mark a function prototype with an attribute, for example
-
-``` c
-  int __attribute__((svc(0xAB))) system_call(int code, void const *params);
-```
-
-When calling the function, arguments and results would be marshalled
-according to the AAPCS, the only difference being that the call would be
-invoked as a trap instruction rather than a branch-and-link.
-
-One issue is that some calls may have non-standard calling conventions.
-(For example, Arm Linux system calls expect the code number to be passed
-in R7.)
-
-Another issue is that the code may vary between A32 and T32 state.
-This issue could be addressed by allowing two numeric parameters in the
-attribute.
-
-### Mixed-endian data
-
-Extensions for accessing data in different endianness have been
-considered. However, this is not an issue specific to the Arm
-architecture, and it seems better to wait for a lead from language
-standards.
-
-### Memory access with non-temporal hints
-
-Supporting memory access with cacheability hints through language
-extensions is being investigated. Eg.
-
-``` c
-  int *__attribute__((nontemporal)) p;
-```
-
-As a type attribute, will allow indirection of p with non-temporal
-cacheability hint.
-
-## Features not considered for support
-
-### VFP vector mode
-
-The short vector mode of the original VFP architecture is now
-deprecated, and unsupported in recent implementations of the Arm
-floating-point instructions set. There is no plan to support it through
-C extensions.
-
-### Bit-banded memory access
-
-The bit-banded memory feature of certain Cortex-M cores is now regarded
-as being outside the architecture, and there is no plan to standardize
-its support.
-
 # Transactional Memory Extension (TME) intrinsics
 
 ## Introduction
@@ -5330,3 +5221,117 @@ duplicated NEON vector `vec`.
 | `svfloat32_t svdup_neonq[_f32](float32x4_t vec)`    |
 | `svfloat64_t svdup_neonq[_f64](float64x2_t vec)`    |
 | `svbfloat16_t svdup_neonq[_bf16](bfloat16x8_t vec)` |
+
+# Future directions
+
+## Extensions under consideration
+
+### Procedure calls and the Q / GE bits
+
+The Arm procedure call standard [[AAPCS]](#AAPCS) says that the Q and GE bits are
+undefined across public interfaces, but in practice it is desirable to
+return saturation status from functions. There are at least two common
+use cases:
+
+To define small (inline) functions defined in terms of
+expressions involving intrinsics, which provide abstractions or emulate
+other intrinsic families; it is desirable for such functions to have the
+same well-defined effects on the Q/GE bits as the corresponding
+intrinsics.
+
+### DSP library functions
+
+Options being considered are to define an extension to the pcs
+attribute to indicate that Q is meaningful on the return, and possibly
+also to infer this in the case of functions marked as inline.
+
+### Returning a value in registers
+
+As a type attribute this would allow things like
+
+``` c
+  struct __attribute__((value_in_regs)) Point { int x[2]; };
+```
+
+This would indicate that the result registers should be used as if the
+type had been passed as the first argument. The implementation should
+not complain if the attribute is applied inappropriately (i.e. where
+insufficient registers are available) it might be a template instance.
+
+### Custom calling conventions
+
+Some interfaces may use calling conventions that depart from the AAPCS.
+Examples include:
+
+Using additional argument registers, for example passing an argument
+in R5, R7, R12.
+
+Using additional result registers, for example R0 and R1 for a
+combined divide-and-remainder routine (note that some implementations
+may be able to support this by means of a value in registers structure
+return).
+
+Returning results in the condition flags.
+
+Preserving and possibly setting the Q (saturation) bit.
+
+### Traps: system calls, breakpoints, ...
+
+This release of ACLE does not define how to invoke a SVC (supervisor
+call), BKPT (breakpoint) and other related functionality.
+
+One option would be to mark a function prototype with an attribute, for example
+
+``` c
+  int __attribute__((svc(0xAB))) system_call(int code, void const *params);
+```
+
+When calling the function, arguments and results would be marshalled
+according to the AAPCS, the only difference being that the call would be
+invoked as a trap instruction rather than a branch-and-link.
+
+One issue is that some calls may have non-standard calling conventions.
+(For example, Arm Linux system calls expect the code number to be passed
+in R7.)
+
+Another issue is that the code may vary between A32 and T32 state.
+This issue could be addressed by allowing two numeric parameters in the
+attribute.
+
+### Mixed-endian data
+
+Extensions for accessing data in different endianness have been
+considered. However, this is not an issue specific to the Arm
+architecture, and it seems better to wait for a lead from language
+standards.
+
+### Memory access with non-temporal hints
+
+Supporting memory access with cacheability hints through language
+extensions is being investigated. Eg.
+
+``` c
+  int *__attribute__((nontemporal)) p;
+```
+
+As a type attribute, will allow indirection of p with non-temporal
+cacheability hint.
+
+## Features not considered for support
+
+### VFP vector mode
+
+The short vector mode of the original VFP architecture is now
+deprecated, and unsupported in recent implementations of the Arm
+floating-point instructions set. There is no plan to support it through
+C extensions.
+
+### Bit-banded memory access
+
+The bit-banded memory feature of certain Cortex-M cores is now regarded
+as being outside the architecture, and there is no plan to standardize
+its support.
+
+<!-- Please add new extension chapters somwhere before the “Architectural
+     Extension Bridges” chapter.  In particular, the “Future directions”
+     chapter should be last.  -->
