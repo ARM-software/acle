@@ -1126,13 +1126,6 @@ available, Arm strongly recommends programmers to use LDREX/STREX rather
 than SWP. Note that platforms may choose to make SWP unavailable in user
 mode and emulate it through a trap to a platform routine, or fault it.
 
-### Large System Extensions
-
-`__ARM_FEATURE_ATOMICS` is defined if the Large System Extensions introduced in
-the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported on this target.
-Note: It is strongly recommended that standardized C11/C++11 atomics are used to
-implement atomic operations in user code.
-
 ### CLZ
 
 `__ARM_FEATURE_CLZ` is defined to 1 if the CLZ (count leading zeroes)
@@ -1255,6 +1248,13 @@ mechanisms such as function attributes.
 
 `__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
 is available on the target. It is undefined otherwise.
+
+### Large System Extensions
+
+`__ARM_FEATURE_ATOMICS` is defined if the Large System Extensions introduced in
+the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported on this target.
+Note: It is strongly recommended that standardized C11/C++11 atomics are used to
+implement atomic operations in user code.
 
 ### Transactional Memory Extension
 
