@@ -1209,12 +1209,80 @@ instruction set only. This can be tested for using the following test:
     #if __ARM_FEATURE_IDIV || (__ARM_ARCH_PROFILE == 'R')
 ```
 
+### CRC32 extension
+
+`__ARM_FEATURE_CRC32` is defined to 1 if the CRC32 instructions are
+supported and the intrinsics defined in [CRC32 intrinsics](#crc32-intrinsics)
+are available. These instructions include CRC32B, CRC32H and others.
+This is only available when `__ARM_ARCH >= 8`.
+
+### Random Number Generation Extension
+
+`__ARM_FEATURE_RNG` is defined to 1 if the Random Number Generation
+instructions are supported and the intrinsics defined in
+[Random number generation intrinsics](#random-number-generation-intrinsics)
+are available.
+
+### Branch Target Identification
+
+`__ARM_FEATURE_BTI_DEFAULT` is defined to 1 if the Branch Target
+Identification extension is used to protect branch destinations by default.
+The protection applied to any particular function may be overriden by
+mechanisms such as function attributes.
+
+`__ARM_FEATURE_BTI` is defined to 1 if Branch Target Identification
+extension is available on the target. It is undefined otherwise.
+
+### Pointer Authentication
+
+`__ARM_FEATURE_PAC_DEFAULT` is defined as a bitmap to indicate the use of the
+Pointer Authentication extension to protect code against code reuse attacks
+by default.
+The bits are defined as follows:
+
+| **Bit** | **Meaning**                         |
+| ------- | ----------------------------------- |
+| 0       | Protection using the A key          |
+| 1       | Protection using the B key          |
+| 2       | Protection including leaf functions |
+
+For example, a value of `0x5` indicates that the Pointer Authentication
+extension is used to protect function entry points, including leaf functions,
+using the A key for signing.
+The protection applied to any particular function may be overriden by
+mechanisms such as function attributes.
+
+`__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
+is available on the target. It is undefined otherwise.
+
 ### Transactional Memory Extension
 
 `__ARM_FEATURE_TME` is defined to `1` if the Transactional Memory
 Extension instructions are supported in hardware and intrinsics defined
 in [Transactional Memory Extension (TME)
 intrinsics](#transactional-memory-extension-tme-intrinsics) are available.
+
+### Armv8.7-A Load/Store 64 Byte extension
+
+`__ARM_FEATURE_LS64` is defined to 1 if the Armv8.7-A `LD64B`,
+`ST64B`, `ST64BV` and `ST64BV0` instructions for atomic 64-byte
+access to device memory are supported.
+This macro may only ever be defined in the AArch64 execution state.
+Intrinsics for using these instructions are specified in
+[Load/store 64 Byte intrinsics](#loadstore-64-byte-intrinsics).
+
+### memcpy family of memory operations standarization instructions - MOPS
+
+If the `CPYF*`, `CPY*`, `SET*` and `SETG*` instructions are supported,
+`__ARM_FEATURE_MOPS` is defined to 1. These instructions were
+introduced in the Armv8.8-A and Armv9.3-A architecture updates for
+standardization of memorycpy, memset, and memmove family of memory
+operations (MOPS).
+
+The `__ARM_FEATURE_MOPS` macro can only be implemented in the AArch64
+execution state. Intrinsics for the use of these instructions are
+specified in [memcpy family of operations intrinsics -
+MOPS](#memcpy-family-of-operations-intrinsics---mops)
 
 ## Floating-point and vector hardware
 
@@ -1449,20 +1517,6 @@ instructions include SM3{TT1A, TT1B}, and others.
 Armv8.2-A are supported and intrinsics targeting them are available. These
 instructions include SM4{E, EKEY} and others.
 
-### CRC32 extension
-
-`__ARM_FEATURE_CRC32` is defined to 1 if the CRC32 instructions are
-supported and the intrinsics defined in [CRC32 intrinsics](#crc32-intrinsics)
-are available. These instructions include CRC32B, CRC32H and others.
-This is only available when `__ARM_ARCH >= 8`.
-
-### Random Number Generation Extension
-
-`__ARM_FEATURE_RNG` is defined to 1 if the Random Number Generation
-instructions are supported and the intrinsics defined in
-[Random number generation intrinsics](#random-number-generation-intrinsics) 
-are available.
-
 ### Directed rounding
 
 `__ARM_FEATURE_DIRECTED_ROUNDING` is defined to 1 if the directed
@@ -1605,38 +1659,6 @@ These instructions require that the input vectors are organized such that the
 real and imaginary parts of the complex number are stored in alternating sequences:
 real, imag, real, imag, ... etc.
 
-## Branch Target Identification
-
-`__ARM_FEATURE_BTI_DEFAULT` is defined to 1 if the Branch Target
-Identification extension is used to protect branch destinations by default.
-The protection applied to any particular function may be overriden by
-mechanisms such as function attributes.
-
-`__ARM_FEATURE_BTI` is defined to 1 if Branch Target Identification
-extension is available on the target. It is undefined otherwise.
-
-## Pointer Authentication
-
-`__ARM_FEATURE_PAC_DEFAULT` is defined as a bitmap to indicate the use of the
-Pointer Authentication extension to protect code against code reuse attacks
-by default.
-The bits are defined as follows:
-
-| **Bit** | **Meaning**                         |
-| ------- | ----------------------------------- |
-| 0       | Protection using the A key          |
-| 1       | Protection using the B key          |
-| 2       | Protection including leaf functions |
-
-For example, a value of `0x5` indicates that the Pointer Authentication
-extension is used to protect function entry points, including leaf functions,
-using the A key for signing.
-The protection applied to any particular function may be overriden by
-mechanisms such as function attributes.
-
-`__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
-is available on the target. It is undefined otherwise.
-
 ## Matrix Multiply Intrinsics
 
 `__ARM_FEATURE_MATMUL_INT8` is defined if the integer matrix multiply
@@ -1662,28 +1684,6 @@ available.  The following bits are used:
 | 5       | 0x20      | `p5`                              |
 | 6       | 0x40      | `p6`                              |
 | 7       | 0x80      | `p7`                              |
-
-## Armv8.7-A Load/Store 64 Byte extension
-
-`__ARM_FEATURE_LS64` is defined to 1 if the Armv8.7-A `LD64B`,
-`ST64B`, `ST64BV` and `ST64BV0` instructions for atomic 64-byte
-access to device memory are supported.
-This macro may only ever be defined in the AArch64 execution state.
-Intrinsics for using these instructions are specified in
-[Load/store 64 Byte intrinsics](#loadstore-64-byte-intrinsics).
-
-## memcpy family of memory operations standarization instructions - MOPS
-
-If the `CPYF*`, `CPY*`, `SET*` and `SETG*` instructions are supported,
-`__ARM_FEATURE_MOPS` is defined to 1. These instructions were
-introduced in the Armv8.8-A and Armv9.3-A architecture updates for
-standardization of memorycpy, memset, and memmove family of memory
-operations (MOPS).
-
-The `__ARM_FEATURE_MOPS` macro can only be implemented in the AArch64
-execution state. Intrinsics for the use of these instructions are
-specified in [memcpy family of operations intrinsics -
-MOPS](#memcpy-family-of-operations-intrinsics---mops)
 
 ## Mapping of object build attributes to predefines
 
