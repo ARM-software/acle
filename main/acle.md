@@ -1345,21 +1345,6 @@ half-precision floating-point types.
 `__ARM_FP16_ARGS` is defined to 1 if `__fp16` can be used as an
 argument and result.
 
-### Fused multiply-accumulate (FMA)
-
-`__ARM_FEATURE_FMA` is defined to 1 if the hardware floating-point
-architecture supports fused floating-point multiply-accumulate, i.e.
-without intermediate rounding. Note that C implementations are
-encouraged [[C99]](#C99) (7.12) to ensure that <math.h> defines `FP_FAST_FMAF` or
-`FP_FAST_FMA`, which can be tested by portable C code. A C
-implementation on Arm might define these macros by testing
-`__ARM_FEATURE_FMA` and `__ARM_FP`.
-
-This macro implies support for floating-point instructions but it
-does not in itself imply support for vector instructions.  See [Neon
-floating-point](#neon-floating-point) for the conditions under
-which vector fused multiply-accumulate operations are available.
-
 ### Vector extensions
 
 #### Advanced SIMD architecture extension (Neon)
@@ -1517,21 +1502,56 @@ instructions include SM3{TT1A, TT1B}, and others.
 Armv8.2-A are supported and intrinsics targeting them are available. These
 instructions include SM4{E, EKEY} and others.
 
-### Directed rounding
+### Other floating-point and vector extensions
+
+#### Fused multiply-accumulate (FMA)
+
+`__ARM_FEATURE_FMA` is defined to 1 if the hardware floating-point
+architecture supports fused floating-point multiply-accumulate, i.e.
+without intermediate rounding. Note that C implementations are
+encouraged [[C99]](#C99) (7.12) to ensure that <math.h> defines `FP_FAST_FMAF` or
+`FP_FAST_FMA`, which can be tested by portable C code. A C
+implementation on Arm might define these macros by testing
+`__ARM_FEATURE_FMA` and `__ARM_FP`.
+
+This macro implies support for floating-point instructions but it
+does not in itself imply support for vector instructions.  See [Neon
+floating-point](#neon-floating-point) for the conditions under
+which vector fused multiply-accumulate operations are available.
+
+#### Directed rounding
 
 `__ARM_FEATURE_DIRECTED_ROUNDING` is defined to 1 if the directed
 rounding and conversion vector instructions are supported and rounding
 and conversion intrinsics are available. This is only available when
 `__ARM_ARCH >= 8`.
 
-### Numeric maximum and minimum
+#### Armv8.5-A Floating-point rounding extension
+
+`__ARM_FEATURE_FRINT`  is defined to 1 if the Armv8.5-A rounding number
+instructions are supported and the scalar and vector intrinsics are available.
+This macro may only ever be defined in the AArch64 execution state.
+The scalar intrinsics are specified in [Floating-point data-processing
+intrinsics](#floating-point-data-processing-intrinsics) and are not expected
+to be for general use.  They are defined for uses that require the specialist
+rounding behavior of the relevant instructions.
+The vector intrinsics are specified in the Arm Neon Intrinsics Reference
+Architecture Specification [[Neon]](#Neon).
+
+#### Javascript floating-point conversion
+
+`__ARM_FEATURE_JCVT` is defined to 1 if the FJCVTZS (AArch64)
+or VJCVT (AArch32) instruction and the [associated
+intrinsic](#floating-point-data-processing-intrinsics) are available.
+
+#### Numeric maximum and minimum
 
 `__ARM_FEATURE_NUMERIC_MAXMIN` is defined to 1 if the IEEE 754-2008
 compliant floating point maximum and minimum vector instructions are
 supported and intrinsics targeting these instructions are available. This
 is only available when `__ARM_ARCH >= 8`.
 
-### Rounding doubling multiplies
+#### Rounding doubling multiplies
 
 `__ARM_FEATURE_QRDMX` is defined to 1 if SQRDMLAH and SQRDMLSH
 instructions and their associated intrinsics are available.
@@ -1540,11 +1560,31 @@ instructions and their associated intrinsics are available.
 anchor that can be referred via an internal hyperlink to the section
 following it. --> <span id="16-bit-floating-point-data-processing-operations"></span>
 
-### Javascript floating-point conversion
+#### Dot Product extension
 
-`__ARM_FEATURE_JCVT` is defined to 1 if the FJCVTZS (AArch64)
-or VJCVT (AArch32) instruction and the [associated
-intrinsic](#floating-point-data-processing-intrinsics) are available.
+`__ARM_FEATURE_DOTPROD`  is defined if the dot product data manipulation
+instructions are supported and the vector intrinsics are available. Note that
+this implies:
+
+  * `__ARM_NEON == 1`
+
+#### Complex number intrinsics
+
+`__ARM_FEATURE_COMPLEX` is defined if the complex addition and complex
+multiply-accumulate vector instructions are supported. Note that this implies:
+
+  * `__ARM_NEON == 1`
+
+These instructions require that the input vectors are organized such that the
+real and imaginary parts of the complex number are stored in alternating sequences:
+real, imag, real, imag, ... etc.
+
+#### Matrix Multiply Intrinsics
+
+`__ARM_FEATURE_MATMUL_INT8` is defined if the integer matrix multiply
+instructions are supported. Note that this implies:
+
+* `__ARM_NEON == 1`
 
 ## Floating-point model
 
@@ -1627,44 +1667,6 @@ on the target architecture. The following bits are used:
 | 1       | 0x2       | __arm_cdp2, __arm_ldc2, __arm_stc2, __arm_ldc2l, __arm_stc2l, __arm_mcr2 and __arm_mrc2 |
 | 2       | 0x4       | __arm_mcrr and __arm_mrrc                                                               |
 | 3       | 0x8       | __arm_mcrr2 and __arm_mrrc2                                                             |
-
-## Armv8.5-A Floating-point rounding extension
-
-`__ARM_FEATURE_FRINT`  is defined to 1 if the Armv8.5-A rounding number
-instructions are supported and the scalar and vector intrinsics are available.
-This macro may only ever be defined in the AArch64 execution state.
-The scalar intrinsics are specified in [Floating-point data-processing
-intrinsics](#floating-point-data-processing-intrinsics) and are not expected
-to be for general use.  They are defined for uses that require the specialist
-rounding behavior of the relevant instructions.
-The vector intrinsics are specified in the Arm Neon Intrinsics Reference
-Architecture Specification [[Neon]](#Neon).
-
-## Dot Product extension
-
-`__ARM_FEATURE_DOTPROD`  is defined if the dot product data manipulation
-instructions are supported and the vector intrinsics are available. Note that
-this implies:
-
-  * `__ARM_NEON == 1`
-
-## Complex number intrinsics
-
-`__ARM_FEATURE_COMPLEX` is defined if the complex addition and complex
-multiply-accumulate vector instructions are supported. Note that this implies:
-
-  * `__ARM_NEON == 1`
-
-These instructions require that the input vectors are organized such that the
-real and imaginary parts of the complex number are stored in alternating sequences:
-real, imag, real, imag, ... etc.
-
-## Matrix Multiply Intrinsics
-
-`__ARM_FEATURE_MATMUL_INT8` is defined if the integer matrix multiply
-instructions are supported. Note that this implies:
-
-* `__ARM_NEON == 1`
 
 ## Custom Datapath Extension
 
