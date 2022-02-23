@@ -904,8 +904,7 @@ present in the Armv7-A architecture).
 ### FPU architecture
 
 For details of how to test FPU features in source code, see
-[Floating-point, Advanced SIMD (Neon) and MVE
-hardware](#floating-point-advanced-simd-neon-and-mve-hardware).
+[Floating-point and vector hardware](#floating-point-and-vector-hardware).
 In particular, for testing which precisions are supported in hardware,
 see [Hardware floating point](#hardware-floating-point).
 
@@ -1200,7 +1199,7 @@ Extension instructions are supported in hardware and intrinsics defined
 in [Transactional Memory Extension (TME)
 intrinsics](#transactional-memory-extension-tme-intrinsics) are available.
 
-## Floating-point, Advanced SIMD (Neon) and MVE hardware
+## Floating-point and vector hardware
 
 ### Hardware floating point
 
@@ -1292,7 +1291,9 @@ does not in itself imply support for vector instructions.  See [Neon
 floating-point](#neon-floating-point) for the conditions under
 which vector fused multiply-accumulate operations are available.
 
-### Advanced SIMD architecture extension (Neon)
+### Vector extensions
+
+#### Advanced SIMD architecture extension (Neon)
 
 `__ARM_NEON` is defined to a value indicating the Advanced SIMD (Neon)
 architecture supported. The only current value is 1.
@@ -1306,7 +1307,7 @@ combinations.
 
 `__ARM_NEON` is always set to 1 for AArch64.
 
-### Neon floating-point
+#### Neon floating-point
 
 `__ARM_NEON_FP` is defined as a bitmap to indicate floating-point
 support in the Neon architecture. The meaning of the values is the same
@@ -1323,7 +1324,7 @@ for AArch32. Double-precision is always set for AArch64.
 If `__ARM_FEATURE_FMA` and `__ARM_NEON_FP` are both defined,
 fused-multiply instructions are available in Neon also.
 
-### M-profile Vector Extension
+#### M-profile Vector Extension
 
 `__ARM_FEATURE_MVE` is defined as a bitmap to indicate M-profile Vector
 Extension (MVE) support.
@@ -1333,7 +1334,7 @@ Extension (MVE) support.
 | 0       | 0x01      | Integer MVE        |
 | 1       | 0x02      | Floating-point MVE |
 
-### Wireless MMX
+#### Wireless MMX
 
 If Wireless MMX operations are available on the target, `__ARM_WMMX` is
 defined to a value that indicates the level of support, corresponding to
