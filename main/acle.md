@@ -35,7 +35,7 @@ source code portability.
 ## Keywords
 
 ACLE, ABI, C, C++, compiler, armcc, gcc, intrinsic, macro, attribute,
-Neon, SIMD, atomic
+Neon, SIMD, SVE, SVE2, atomic
 
 ## Latest release and defects report
 
@@ -299,6 +299,12 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 #### Changes for next release
 
+* Added [support for SVE and SVE2](#arm_sve.h). This incorporates the final
+  00bet6 version of the separate beta document [Arm C Language Extensions for
+  SVE](https://developer.arm.com/architectures/system-architectures/software-standards/acle),
+  except that the optional feature `__ARM_FEATURE_SVE_NONMEMBER_OPERATORS`
+  has been removed. The SVE and SVE2 support is now at “release” rather than
+  beta quality and the separate beta document is no longer maintained.
 * Added section [Scalable Vector Extension procedure call standard attribute](#scalable-vector-extension-procedure-call-standard-attribute)
 
 ### References
@@ -367,6 +373,9 @@ This document refers to the following documents.
 * <span id="CPP11" class="citation-label">CPP11</span> ISO, Standard
   C++ (based on draft N3337), ISO/IEC 14882:2011
 
+* <span id="CPP14" class="citation-label">CPP14</span> ISO, Standard C++
+  (based on draft N3797), ISO/IEC 14882:2014
+
 * <span id="G.191" class="citation-label">G.191</span> ITU-T, Software
   Tool Library 2005 User's Manual, T-REC-G.191-200508-I
 
@@ -391,12 +400,7 @@ This document refers to the following documents.
 * <span id="POSIX" class="citation-label">POSIX</span> IEEE / TOG, The
   Open Group Base Specifications, IEEE 1003.1
 
-* <span id="SVE-ACLE" class="citation-label">SVE-ACLE</span> Arm, [Arm
-  C Language Extensions for
-  SVE](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
-
-* <span id="Warren" class="citation-label">Warren</span> 8.  Warren,
-  Hacker's Delight, pub. Addison-Wesley 2003
+* <span id="Warren" class="citation-label">Warren</span> 8.  Warren, Hacker's Delight, pub. Addison-Wesley 2003
 
 * <span id="cxxabi" class="citation-label">cxxabi</span> [Itanium C++
   ABI](https://itanium-cxx-abi.github.io/cxx-abi/)
@@ -413,15 +417,35 @@ This document uses the following terms and abbreviations.
 | ABI              | Arm Application Binary Interface.                                                            |
 | ACLE             | Arm C Language Extensions, as defined in this document.                                      |
 | Advanced SIMD    | A 64-bit/128-bit SIMD instruction set defined as part of the Arm architecture.               |
+| FFR              | The SVE first-fault register.                                                                |
+| FFRT             | The SVE “first-fault register token”. This is a conceptual construct that forms part of the ACLE model of first-faulting and non-faulting loads; see [First-faulting and non-faulting loads](#first-faulting-and-non-faulting-loads) for details. |
 | ILP32            | A 32-bit address mode where long is a 32-bit type.                                           |
 | LLP64            | A 64-bit address mode where long is a 32-bit type.                                           |
 | LP64             | A 64-bit address mode where long is a 64-bit type.                                           |
 | Neon             | An implementation of the Arm Advanced SIMD extensions.                                       |
 | SIMD             | Any instruction set that operates simultaneously on multiple elements of a vector data type. |
+| sizeless type    | A C and C++ type that can be used to create objects, but that has no measurable size; see [Sizeless types](#sizeless-types) for details. |
+| SVE              | The Armv8-A Scalable Vector Extension. Also used more generally to include SVE2 and other SVE extensions. |
+| SVE2             | An Armv9-A extension of SVE.                                                                 |
 | Thumb            | The Thumb instruction set extension to Arm.                                                  |
+| VG               | The number of 64-bit elements (“vector granules”) in an SVE vector.                          |
 | VFP              | The original Arm non-SIMD floating-point instruction set.                                    |
 | build attributes | Object build attributes indicating configuration, as defined in [[BA]](#BA).                 |
 | word             | A 32-bit quantity, in memory or a register.                                                  |
+
+## Conventions
+
+Most SVE ACLE intrinsics have two names: a longer unique name and a
+shorter overloaded alias. The convention adopted in this document is to
+enclose characters in square brackets if they are only present in the
+longer name. For example:
+
+``` c
+  svclz[_u16]_m
+```
+
+refers to an intrinsic whose full name is `svclz_u16_m` and whose
+overloaded alias is `svclz_m`.
 
 ## Scope
 
@@ -459,12 +483,6 @@ The intended users of this specification are:
 ACLE is not a hardware abstraction layer (HAL), and does not specify a
 library component but it may make it easier to write a HAL or other
 low-level library in C rather than assembler.
-
-## Scalable Vector Extensions (SVE)
-
-ACLE support for SVE is defined in the *Arm C Language Extensions for
-SVE* document [SVE-ACLE](#SVE-ACLE).
-
 
 ## Cortex-M Security Extension (CMSE)
 
@@ -632,12 +650,12 @@ do not belong to a more specific header file.
 These headers behave as standard library headers; repeated inclusion has
 no effect beyond the first include.
 
-It is unspecified whether the ACLE headers include the standard headers
-`<assert.h>`, `<stdint.h>` or `<inttypes.h>`. However, the ACLE headers
-will not define the standard type names (for example `uint32_t`) except by
-inclusion of the standard headers. Programmers are recommended to include
-the standard headers explicitly if the associated types and macros are
-needed.
+Except where noted otherwise, it is unspecified whether the ACLE headers
+include the standard headers `<assert.h>`, `<stdint.h>` or
+`<inttypes.h>`. However, the ACLE headers will not define the standard
+type names (for example `uint32_t`) except by inclusion of the standard
+headers. Arm recommends that you include the standard headers explicitly
+if the associated types and macros are needed.
 
 In C++, the following source code fragments are expected to work
 correctly:
@@ -730,6 +748,27 @@ to be included, if the header files are available:
 * [`<arm_fp16.h>`](#arm_fp16.h)
 * [`<arm_bf16.h>`](#arm_bf16.h)
 
+### `<arm_sve.h>`
+
+`<arm_sve.h>` defines data types and intrinsics for SVE and its
+extensions; see [SVE language extensions and
+intrinsics](#sve-language-extensions-and-intrinsics) for details.
+You should test the `__ARM_FEATURE_SVE` macro before including the
+header:
+
+``` c
+  #ifdef __ARM_FEATURE_SVE
+  #include <arm_sve.h>
+  #endif /* __ARM_FEATURE_SVE */
+```
+
+Including `<arm_sve.h>` also includes the following header files:
+
+* `<stdint.h>`
+* `<stdbool.h>` (for C only)
+* [`<arm_fp16.h>`](#arm_fp16.h)
+* [`<arm_bf16.h>`](#arm_bf16.h) (if available)
+
 ### `<arm_neon_sve_bridge.h>`
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
@@ -744,7 +783,7 @@ before including the header:
 ```
 
 Including `<arm_neon_sve_bridge.h>` will also include
-[`<arm_neon.h>`](#arm_neon.h) and `<arm_sve.h>`.
+[`<arm_neon.h>`](#arm_neon.h) and [`<arm_sve.h>`](#arm_sve.h).
 
 ### `<arm_mve.h>`
 
@@ -1443,11 +1482,57 @@ for AArch32. Double-precision is always set for AArch64.
 If `__ARM_FEATURE_FMA` and `__ARM_NEON_FP` are both defined,
 fused-multiply instructions are available in Neon also.
 
+#### Scalable Vector Extension (SVE)
+
+`__ARM_FEATURE_SVE` is defined to 1 if there is hardware support
+for the FEAT_SVE instructions and if the associated [ACLE
+features](#sve-language-extensions-and-intrinsics) are available.
+This implies that `__ARM_NEON` and `__ARM_NEON_FP` are both nonzero.
+
+The following macros indicate the presence of various optional
+SVE language extensions:
+
+**`__ARM_FEATURE_SVE_BITS==N`**
+
+> When N is nonzero, this indicates that the implementation is generating
+> code for an N-bit SVE target and that the implementation supports the
+> `arm_sve_vector_bits(N)` attribute. N may also be zero, but this carries
+> the same meaning as not defining the macro. See
+> [The __ARM_FEATURE_SVE_BITS macro](#the-__arm_feature_sve_bits-macro)
+> for details.
+
+**`__ARM_FEATURE_SVE_VECTOR_OPERATORS==1`**
+
+> This indicates that applying the `arm_sve_vector_bits` attribute
+> to an SVE vector type creates a type that supports the GNU vector
+> extensions. The state of this macro is only meaningful when
+> `__ARM_FEATURE_SVE_BITS` is nonzero. See [`arm_sve_vector_bits` behavior
+> specific to vectors](#arm_sve_vector_bits-behavior-specific-to-vectors)
+> for details.
+
+**`__ARM_FEATURE_SVE_PREDICATE_OPERATORS==1`**
+
+> This indicates that applying the `arm_sve_vector_bits` attribute to
+> `svbool_t` creates a type that supports basic built-in vector operations.
+> The state of this macro is only meaningful when `__ARM_FEATURE_SVE_BITS`
+> is nonzero. See [`arm_sve_vector_bits` behavior specific to
+> predicates](#arm_sve_vector_bits-behavior-specific-to-predicates)
+> for details.
+
+#### SVE2
+
+`__ARM_FEATURE_SVE2` is defined to 1 if there is hardware support for
+the Armv9-A SVE2 extension (FEAT_SVE2) and if the associated ACLE intrinsics
+are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
+
 #### NEON-SVE Bridge macros
 
 `__ARM_NEON_SVE_BRIDGE` is defined to 1 if [NEON-SVE Bridge](#neon-sve-bridge)
-intrinsics are available. This implies that `__ARM_NEON` and `__ARM_NEON_FP`
-are both nonzero.
+intrinsics are available. This implies that the following macros are nonzero:
+
+* `__ARM_NEON`
+* `__ARM_NEON_FP`
+* `__ARM_FEATURE_SVE`
 
 #### M-profile Vector Extension
 
@@ -1506,13 +1591,18 @@ closely resembles the IEEE 754 single-precision format.  As such a brain
 half-precision floating point value can be converted to an IEEE 754
 single-floating point format by appending 16 zero bits at the end.
 
-`__ARM_FEATURE_BF16_VECTOR_ARITHMETIC` is defined to `1` if the brain 16-bit
-floating-point arithmetic instructions are supported in hardware and the
-associated vector intrinsics defined by ACLE are available. Note that
-this implies:
+`__ARM_FEATURE_BF16_VECTOR_ARITHMETIC` is defined to `1` if there is
+hardware support for the Advanced SIMD brain 16-bit floating-point
+arithmetic instructions and if the associated ACLE vector intrinsics
+are available. This implies:
 
 * `__ARM_FP & 0x02 == 1`
 * `__ARM_NEON_FP & 0x02 == 1`
+
+Similarly, `__ARM_FEATURE_SVE_BF16` is defined to `1` if there is hardware
+support for the SVE BF16 extensions and if the associated ACLE intrinsics
+are available. This implies that `__ARM_FEATURE_BF16_VECTOR_ARITHMETIC`
+and `__ARM_FEATURE_SVE` are both nonzero.
 
 See [Half-precision brain
 floating-point](#half-precision-brain-floating-point) for details
@@ -1532,11 +1622,16 @@ instructions include AES{E, D}, SHA1{C, P, M} and others. This also implies
 
 #### AES extension
 
-`__ARM_FEATURE_AES` is defined to 1 if the AES Crypto instructions
-from Armv8-A are supported and intrinsics targeting them are
-available. These instructions are identified by `FEAT_AES` and
-`FEAT_PMULL` in [[ARMARMv8]](#ARMARMv8), and they include AES{E, D},
-AESMC, AESIMC and others.
+`__ARM_FEATURE_AES` is defined to 1 if there is hardware support for the
+Advanced SIMD AES Crypto instructions from Armv8-A and if the associated
+ACLE intrinsics are available. These instructions are identified by
+`FEAT_AES` and `FEAT_PMULL` in [[ARMARMv8]](#ARMARMv8), and they include
+AES{E, D}, AESMC, AESIMC and others.
+
+In addition, `__ARM_FEATURE_SVE2_AES` is defined to `1` if there is hardware
+support for the SVE2 AES (FEAT_SVE_AES) instructions and if the associated
+ACLE intrinsics are available. This implies that `__ARM_FEATURE_AES`
+and `__ARM_FEATURE_SVE2` are both nonzero.
 
 #### SHA2 extension
 
@@ -1557,22 +1652,40 @@ SHA256H2, ..., SHA512H, SHA512H2, SHA512SU0... and others. Note:
 
 #### SHA3 extension
 
-`__ARM_FEATURE_SHA3` is defined to 1 if the SHA1 & SHA2 Crypto instructions
-from Armv8-A and the SHA2 and SHA3 instructions from Armv8.2-A and newer
-are supported and intrinsics targeting them are available.
-These instructions include AES{E, D}, SHA1{C, P, M}, RAX, and others.
+`__ARM_FEATURE_SHA3` is defined to 1 if there is hardware support for
+the Advanced SIMD SHA1 & SHA2 Crypto instructions from Armv8-A and the
+SHA2 and SHA3 instructions from Armv8.2-A and newer and if the associated
+ACLE intrinsics are available. These instructions include AES{E, D}, SHA1{C,
+P, M}, RAX, and others.
+
+In addition, `__ARM_FEATURE_SVE2_SHA3` is defined to `1` if there is hardware
+support for the SVE2 SHA3 (FEAT_SVE_SHA3) instructions and if the associated
+ACLE intrinsics are available. This implies that `__ARM_FEATURE_SHA3` and
+`__ARM_FEATURE_SVE2` are both nonzero.
 
 #### SM3 extension
 
-`__ARM_FEATURE_SM3` is defined to 1 if the SM3 Crypto instructions from
-Armv8.2-A are supported and intrinsics targeting them are available. These
-instructions include SM3{TT1A, TT1B}, and others.
+`__ARM_FEATURE_SM3` is defined to 1 if there is hardware support for
+Advanced SIMD SM3 Crypto instructions from Armv8.2-A and if the associated
+ACLE intrinsics are available. These instructions include SM3{TT1A,
+TT1B}, and others.
+
+In addition, `__ARM_FEATURE_SVE2_SM3` is defined to `1` if there is hardware
+support for the SVE2 SM3 (FEAT_SVE_SM3) instructions and if the associated
+ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM3` and
+`__ARM_FEATURE_SVE2` are both nonzero.
 
 #### SM4 extension
 
-`__ARM_FEATURE_SM4` is defined to 1 if the SM4 Crypto instructions from
-Armv8.2-A are supported and intrinsics targeting them are available. These
-instructions include SM4{E, EKEY} and others.
+`__ARM_FEATURE_SM4` is defined to 1 if there is hardware support for the
+Advanced SIMD SM4 Crypto instructions from Armv8.2-A and if the associated
+ACLE intrinsics are available. These instructions include SM4{E, EKEY}
+and others.
+
+In addition, `__ARM_FEATURE_SVE2_SM4` is defined to `1` if there is hardware
+support for the SVE2 SM4 (FEAT_SVE_SM4) instructions and if the associated
+ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
+`__ARM_FEATURE_SVE2` are both nonzero.
 
 ### Other floating-point and vector extensions
 
@@ -1653,10 +1766,38 @@ real, imag, real, imag, ... etc.
 
 #### Matrix Multiply Intrinsics
 
-`__ARM_FEATURE_MATMUL_INT8` is defined if the integer matrix multiply
-instructions are supported. Note that this implies:
+##### Multiplication of 8-bit integer matrices
 
-* `__ARM_NEON == 1`
+`__ARM_FEATURE_MATMUL_INT8` is defined to `1` if there is hardware support
+for the Advanced SIMD integer matrix multiply instructions are if the
+associated ACLE intrinsics are available. This implies that `__ARM_NEON` is
+nonzero.
+
+In addition, `__ARM_FEATURE_SVE_MATMUL_INT8` is defined to `1` if there
+is hardware support for the SVE forms of these instructions and if the
+associated ACLE intrinsics are available. This implies that
+`__ARM_FEATURE_MATMUL_INT8` and `__ARM_FEATURE_SVE` are both nonzero.
+
+##### Multiplication of 32-bit floating-point matrices
+
+`__ARM_FEATURE_SVE_MATMUL_FP32` is defined to `1` if there is hardware support
+for the SVE 32-bit floating-point matrix multiply (FEAT_F32MM) instructions
+and if the associated ACLE intrinsics are available. This implies that
+`__ARM_FEATURE_SVE` is nonzero.
+
+##### Multiplication of 64-bit floating-point matrices
+
+`__ARM_FEATURE_SVE_MATMUL_FP64` is defined to `1` if there is hardware support
+for the SVE 64-bit floating-point matrix multiply (FEAT_F64MM) instructions
+and if the associated ACLE intrinsics are available. This implies that
+`__ARM_FEATURE_SVE` is nonzero.
+
+#### Bit permute extension
+
+`__ARM_FEATURE_SVE2_BITPERM` is defined to 1 if there is hardware support for
+the SVE2 bit permute (FEAT_SVE_BitPerm) instructions and if the associated
+ACLE intrinsics are available. This implies that `__ARM_FEATURE_SVE2` is
+nonzero.
 
 ## Floating-point model
 
@@ -1835,6 +1976,20 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SIMD32`](#32-bit-simd-instructions)                                                                                                     | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
 | [`__ARM_FEATURE_SM3`](#sm3-extension)                                                                                                                   | SM3 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | [`__ARM_FEATURE_SM4`](#sm4-extension)                                                                                                                   | SM4 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
+| [`__ARM_FEATURE_SVE`](#scalable-vector-extension-sve)                                                                                                   | Scalable Vector Extension (FEAT_SVE)                                                               | 1           |
+| [`__ARM_FEATURE_SVE_BF16`](#brain-16-bit-floating-point-support)                                                                                        | SVE support for the 16-bit brain floating-point extension (FEAT_BF16)                              | 1           |
+| [`__ARM_FEATURE_SVE_BITS`](#scalable-vector-extension-sve)                                                                                              | The number of bits in an SVE vector, when known in advance                                         | 256         |
+| [`__ARM_FEATURE_SVE_MATMUL_FP32`](#multiplication-of-32-bit-floating-point-matrices)                                                                    | 32-bit floating-point matrix multiply extension (FEAT_F32MM)                                       | 1           |
+| [`__ARM_FEATURE_SVE_MATMUL_FP64`](#multiplication-of-64-bit-floating-point-matrices)                                                                    | 64-bit floating-point matrix multiply extension (FEAT_F64MM)                                       | 1           |
+| [`__ARM_FEATURE_SVE_MATMUL_INT8`](#multiplication-of-8-bit-integer-matrices)                                                                            | SVE support for the integer matrix multiply extension (FEAT_I8MM)                                  | 1           |
+| [`__ARM_FEATURE_SVE_PREDICATE_OPERATORS`](#scalable-vector-extension-sve)                                                                               | C and C++ operators support fixed-length SVE predicate types                                       | 1           |
+| [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | C and C++ operators support fixed-length SVE vector types                                          | 1           |
+| [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
+| [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES crytographic extension (FEAT_SVE_AES)                                     | 1           |
+| [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension (FEAT_SVE2_BitPerm)                                                     | 1           |
+| [`__ARM_FEATURE_SVE2_SHA3`](#sha3-extension)                                                                                                            | SVE2 support for the SHA3 crytographic extension (FEAT_SVE_SHA3)                                   | 1           |
+| [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 crytographic extension (FEAT_SVE_SM3)                                     | 1           |
+| [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 crytographic extension (FEAT_SVE_SM4)                                     | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
 | [`__ARM_FP16_ARGS`](#half-precision-argument-and-result)                                                                                                | `__fp16` argument and result                                                                       | 0x0C        |
@@ -4963,7 +5118,7 @@ optimizations which preserve the instruction semantics.
 ## Undefined behavior
 
 Care should be taken by compiler implementers not to introduce the concept of
-undefined behavior to the semantics of an intrinsic.  For example, the
+undefined behavior to the semantics of an intrinsic. For example, the
 `vabsd_s64` intrinsic has well defined behaviour for all input values,
 while the C99 `llabs` has undefined behaviour if the result would not
 be representable in a `long long` type. It would thus be incorrect to
@@ -4975,6 +5130,2374 @@ The AArch32 Neon load and store instructions provide for alignment
 assertions, which may speed up access to aligned data (and will fault
 access to unaligned data). The Advanced SIMD intrinsics do not directly
 provide a means for asserting alignment.
+
+# SVE language extensions and intrinsics
+
+## SVE introduction
+
+The Scalable Vector Extension (SVE) was introduced as an optional extension
+to the Arm8.2-A architecture. Its associated feature flag is FEAT_SVE.
+SVE has since been extended further by features such as Armv8.6-A's
+matrix multiplication extensions and Armv9-A's SVE2.
+
+For brevity, this document generally uses “SVE” to refer to the original
+FEAT_SVE version of SVE and all subsequent extensions to it. For example,
+references to “SVE” include “SVE2” except whether otherwise noted.
+
+ACLE defines a set of C and C++ types and accessors for SVE vectors
+and predicates. It also defines intrinsics for almost all SVE
+instructions. [Mapping of SVE instructions to
+intrinsics](#mapping-of-sve-instructions-to-intrinsics) lists each SVE
+instruction and links to the corresponding ACLE intrinsic (if one exists).
+
+However, the intrinsic interface is more general than the underlying
+architecture, so not every intrinsic maps directly to an architectural
+instruction. The intention is to provide a regular interface and leave
+the ACLE implementation to pick the best mapping to SVE instructions.
+
+## SVE types
+
+### Overview of SVE types
+
+SVE is a “vector-length agnostic” architecture. Instead of mandating a
+particular vector length, it allows implementations to choose any
+multiple of 128 bits up to the architectural maximum of 2048 bits. It
+also allows higher exception levels to constrain the vector lengths of
+lower exception levels. The effective vector length is therefore not a
+compile-time constant and can in principle change during execution.
+
+Although the architectural increment is 128 bits, it is often more
+natural to think in terms of 64-bit quantities. The term “VG” (“vector
+granules”) refers to the current number of 64-bit elements in an SVE
+vector, so that the number of usable bits in a vector is VG×64.
+Predicates have one bit for each vector byte, so the number of
+usable bits in a predicate is VG×8.
+
+Therefore, code that makes direct use of SVE instructions requires access
+to vector types that have VG×64 bits and predicate types that have VG×8
+bits, but without the value of VG being fixed. Ideally it should be
+possible to pass and return these types by value, like it is for other
+(fixed-length) vector extensions. However, standard C and C++ do not
+provide variable-length types that are both self-contained (rather than
+dependent on separate storage) and suitable for passing and returning by
+value. (For example, C's variable-length arrays are self-contained but
+are not valid return types. C++'s `std::string` can store variable-length
+data and is suitable for passing and returning by value, but it relies
+on separately-allocated storage.) This means that there is no existing
+mechanism that maps directly to the concept of an SVE vector or predicate.
+
+Any approach to defining the types would fall into one of three
+categories:
+
+1.  Limit the types in such a way that there is no concept of size.
+
+2.  Define the size of the types to be variable.
+
+3.  Define the size of the types to be constant, with the constant being
+    large enough for all possible VG or with the types pointing to
+    separate memory (as for classes like `std::string`).
+
+ACLE takes the first approach and classifies SVE vectors and
+predicates as belonging to a new category of type called “sizeless types”.
+The next section describes these types in more detail.
+
+### Sizeless types
+
+For the reasons explained in the previous section, ACLE defines a
+new category of type called “sizeless types”. They are less restrictive
+than the standard “incomplete types” but more restrictive than ”complete
+types”. SVE vectors and predicates have sizeless type.
+
+#### Informal definition of sizeless types
+
+Informally, sizeless types can be used in the following situations:
+
+*   as the type of an object with automatic storage duration;
+
+*   as a function parameter or return type;
+
+*   as a type name in a `_Generic` association;
+
+*   as the type in a `(type) {value}` compound literal;
+
+*   as the type in a C++ `type()` expression;
+
+*   as the target of a pointer or reference type; and
+
+*   as a template type argument.
+
+Sizeless types may not be used in the following situations:
+
+*   as the type of a variable with static or thread-local storage
+    duration (regardless of whether the variable is being defined or just
+    declared);
+
+*   as the type of an array element;
+
+*   as the operand to a `new` expression; and
+
+*   as the type of object being deleted by a `delete` expression.
+
+In all other respects, sizeless types have the same restrictions as the
+standard-defined “incomplete types”. This specifically includes (but is
+not limited to) the following:
+
+*   The argument to `sizeof` and `_Alignof` cannot be a sizeless
+    type, or an object of sizeless type.
+
+*   It is not possible to perform arithmetic on pointers to sizeless
+    types. (This affects the `+`, `-`, `++` and `--` operators.)
+
+*   Members of unions, structures and classes cannot have sizeless type.
+
+*   `_Atomic` variables cannot have sizeless type.
+
+*   It is not possible to throw or catch objects of sizeless type.
+
+*   Lambda expressions cannot capture sizeless types by value, although
+    they can capture them by reference. (This is a corollary of not
+    allowing member variables to have sizeless type.)
+
+*   Standard library containers like `std::vector` cannot have a
+    sizeless `value_type`.
+
+#### Formal definition of sizeless types
+
+[Sizeless types in C](#sizeless-types-in-c) gives a more formal
+definition of sizeless types for C, in the form of an edit to the
+standard. [Sizeless types in C++](#sizeless-types-in-cxx) gives the
+corresponding changes for C++. Implementations should correctly compile
+any code that follows these rules, but they do not need to report a
+diagnostic for invalid uses of sizeless types. Whether they report a
+diagnostic or not is a quality of implementation issue.
+(Note: future versions of ACLE might have stricter diagnostic
+requirements.)
+
+##### Sizeless types in C
+
+This section specifies the behavior of sizeless types as an edit to the
+N1570 version of the C standard.
+
+**6.2.5 Types**
+
+> In 6.2.5/1, replace:
+>
+> > At various points within a translation unit an object type may
+> > be *incomplete* ...
+>
+> onwards with:
+>
+> > Object types are further partitioned into *sized* and *sizeless*;
+> > all basic and derived types defined in this standard are sized,
+> > but an implementation may provide additional sizeless types.
+>
+> and add two additional clauses:
+>
+> > *   At various points within a translation unit an object type
+> >     may be *indefinite* (lacking sufficient information to
+> >     construct an object of that type) or *definite* (having
+> >     sufficient information). An object type is said to be
+> >     *complete* if it is both sized and definite; all other object
+> >     types are said to be *incomplete*. Complete types have
+> >     sufficient information to determine the size of an object of
+> >     that type while incomplete types do not.
+> >
+> > *   Arrays, structures, unions and enumerated types are always
+> >     sized, so for them the term *incomplete* is equivalent to (and
+> >     used interchangeably with) the term *indefinite*.
+>
+> Change 6.2.5/19 to:
+>
+> > The `void` type comprises an empty set of values; it is a
+> > sized indefinite object type that cannot be completed (made
+> > definite).
+>
+> Replace *incomplete* with *indefinite* and *complete* with *definite* in
+> 6.2.5/37, which describes how a type's state can change throughout a
+> translation unit.
+
+**6.3.2.1 Lvalues, arrays, and function designators**
+
+> Replace *incomplete* with *indefinite* in 6.3.2.1/1, so that sizeless
+> definite types are modifiable lvalues.
+>
+> Make the same replacement in 6.3.2.1/2, to prevent undefined
+> behavior when lvalues have sizeless definite type.
+
+**6.5.1.1 Generic selection**
+
+> Replace *complete object type* with *definite object type* in 6.5.1.1/2,
+> so that the type name in a generic association can be a sizeless
+> definite type.
+
+**6.5.2.2 Function calls**
+
+> Replace *complete object type* with *definite object type* in 6.5.2.2/1,
+> so that functions can return sizeless definite types.
+>
+> Make the same change in 6.5.2.2/4, so that arguments can also have
+> sizeless definite type.
+
+**6.5.2.5 Compound literals**
+
+> Replace *complete object type* with *definite object type* in 6.5.2.5/1,
+> so that compound literals can have sizeless definite type.
+
+**6.7 Declarations**
+
+> Insert the following new clause after 6.7/4:
+>
+> > *   If an identifier for an object does not have automatic storage
+> >     duration, its type must be sized rather than sizeless.
+>
+> Replace *complete* with *definite* in 6.7/7, which describes when the
+> type of an object becomes definite.
+
+**6.7.6.3 Function declarators (including prototypes)**
+
+> Replace *incomplete type* with *indefinite type* in 6.7.6.3/4, so that
+> parameters can also have sizeless definite type.
+>
+> Make the same change in 6.7.6.3/12, which allows even indefinite
+> types to be function parameters if no function definition is
+> present.
+
+**6.7.9 Initialization**
+
+> Replace *complete object type* with *definite object type* in 6.7.9/3,
+> to allow initialization of identifiers with sizeless definite type.
+
+**6.9.1 Function definitions**
+
+> Replace *complete object type* with *definite object type* in 6.9.1/3,
+> so that functions can return sizeless definite types.
+>
+> Make the same change in 6.9.1/7, so that adjusted parameter types
+> can be sizeless definite types.
+
+**J.2 Undefined behavior**
+
+> Update the entries that refer to the clauses above.
+
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --><span id="sizeless-types-in-cxx"></span>
+
+##### Sizeless types in C++
+
+This section specifies the behavior of sizeless types as an edit to the
+N3797 version of the C++ standard.
+
+**3.1 Declarations and definitions [basic.def]**
+
+> Replace *incomplete type* with *indefinite type* in 3.1/5, so that
+> objects can have sizeless definite type in some situations. Add a
+> new clause immediately afterwards:
+>
+> > *   A program is ill-formed if any declaration of an object gives
+> >     it both a sizeless type and either static or thread-local
+> >     storage duration.
+
+**3.9 Types [basic.types]**
+
+> Replace 3.9/5 with these clauses:
+>
+> > *   A class that has been declared but not defined, an
+> >     enumeration type in certain contexts, or an array of unknown
+> >     size or of indefinite element type, is an *indefinite object type*.
+> >     Indefinite object types and the void types are *indefinite types*.
+> >     Objects shall not be defined to have an indefinite type.
+> >
+> > *   Object and void types are further partitioned into *sized*
+> >     and *sizeless*; all basic and derived types defined in this
+> >     standard are sized, but an implementation may provide
+> >     additional sizeless types.
+> >
+> > *   An object or void type is said to be *complete* if it is both
+> >     sized and definite; all other object and void types are said
+> >     to be *incomplete*. The term *completely-defined object type*
+> >     is synonymous with *complete object type*.
+> >
+> > *   Arrays, class types and enumeration types are always sized,
+> >     so for them the term *incomplete* is equivalent to (and used
+> >     interchangeably with) the term *indefinite*.
+>
+> Replace *incomplete types* with *indefinite types* in 3.9/7, which is
+> simply a cross-reference note.
+
+**3.9.1 Fundamental Types [basic.fundamental]**
+
+> Replace the second sentence of 3.9.1/9 with:
+>
+> > The `void` type is a sized indefinite type that cannot be
+> > completed (made definite).
+
+**3.9.2. Compound Types [basic.compound]**
+
+> Add “(including indefinite types)” after “Pointers to incomplete
+> types” in 3.9.2/3, to emphasize that pointers to incomplete types
+> are more restricted than pointers to complete types, even if the
+> types are definite.
+
+**3.10 Lvalues and rvalues [basic.lval]**
+
+> Replace *complete types* with *definite types* and *incomplete types*
+> with *indefinite types* in 3.10/4, so that prvalues can be sizeless
+> definite types.
+>
+> Replace *incomplete* with *indefinite* and *complete* with *definite*
+> in 3.10/7, which describes the modifiability of a pointer and the
+> object to which it points.
+
+**4.1 Lvalue-to-rvalue conversion [conv.lval]**
+
+> Replace *incomplete type* with *indefinite type* in 4.1/1, so that
+> glvalues of sizeless definite type can be converted to prvalues.
+
+**5.2.2 Function call [expr.call]**
+
+> Replace *completely-defined object type* with *definite object type*
+> and *incomplete class type* with *indefinite class type*,
+> so that parameters can have sizeless definite type.
+>
+> Replace *incomplete* with *indefinite* and *complete* with *definite*
+> in 5.2.2/11, so that functions can return sizeless definite types.
+
+**5.2.3 Explicit type conversion (function notation) [expr.type.conv]**
+
+> Replace *complete object type* with *definite object type* in 5.2.3/2,
+> so that the `T()` notation extends to sizeless definite types.
+
+**5.3.1 Unary operators [expr.unary.op]**
+
+> Replace *incomplete type* with *indefinite type* in 5.3.1/1. This simply
+> updates a cross-reference to the 4.1 change above.
+
+**5.3.5 Delete [expr.delete]**
+
+> Insert the following after the first sentence of 5.3.5/2 (which
+> describes the implicit conversion of an object type to a pointer type):
+>
+> > The type of the operand must now be a pointer to a sized type,
+> > otherwise the program is ill-formed.
+
+**8.3.4 Arrays [dcl.array]**
+
+> In 8.3.4/1, add *a sizeless type* to the list of types that the
+> element type `T` cannot have.
+
+**9.4.2 Static data members [class.static.data]**
+
+> Replace *an incomplete type* with *a sized indefinite type* in 9.4.2/2,
+> so that static data members cannot be declared with sizeless type.
+>
+> Add a new final clause:
+>
+> > * A static data member shall not have sizeless type.
+
+**14.3.1 Template type parameters [temp.arg.type]**
+
+> Add “(including an indefinite type)” after “an incomplete type” in
+> the note describing template type arguments, to emphasize that the
+> arguments can be sizeless.
+
+**20.10.4.3 Type properties [meta.unary.prop]**
+
+> Replace *complete* with *definite* in 20.10.4.3/3, so that the
+> situations in which an implementation may implicitly instantiate
+> template arguments remain the same as before.
+
+**20.10.6 Relationships between types [meta.rel]**
+
+> Replace *complete* with *definite* in 20.10.6/2, so that these
+> metaprogramming facilities extend to sized definite types.
+
+**20.10.7.5 Pointer modifications [meta.trans.ptr]**
+
+> Likewise replace *complete* with *definite* in the initial table, so
+> that these metaprogramming facilities also extend to sized definite types.
+
+#### Interaction between sizeless types and other extensions
+
+It is not feasible to reconcile the definition of sizeless types with
+each individual current and future extension to C and C++. Therefore,
+the default position is that extensions to C and C++ should treat sizeless
+types as incomplete types unless otherwise specified.
+
+### Scalar types defined by `<arm_sve.h>`
+
+[`<arm_sve.h>`](#arm_sve.h) includes `<stdint.h>` and so provides
+standard types such as `uint32_t`. When included from C code, the header
+also includes `<stdbool.h>` and so provides the `bool` type.
+
+In addition, the header file defines the following scalar data types:
+
+| **Scalar type** | **Definition**         |
+| --------------- | ---------------------- |
+| `float16_t`     | equivalent to `__fp16` |
+| `float32_t`     | equivalent to `float`  |
+| `float64_t`     | equivalent to `double` |
+
+If the feature macro `__ARM_FEATURE_BF16_SCALAR_ARITHMETIC` is
+defined, [`<arm_sve.h>`](#arm_sve.h) also includes
+[`<arm_bf16.h>`](#arm_bf16.h), which defines the scalar 16-bit brain
+floating-point type `__bf16`. Then, under the control of the same feature
+macro, `<arm_sve.h>` defines an alias of `__bf16` called `bfloat16_t`.
+
+### SVE vector types
+
+[`<arm_sve.h>`](#arm_sve.h) defines the following sizeless types for
+single vectors:
+
+| **Signed integer**   | **Unsigned integer** | **Floating-point**   |                      |
+| -------------------- | -------------------- | -------------------- | -------------------- |
+| `svint8_t`           | `svuint8_t`          |                      |                      |
+| `svint16_t`          | `svuint16_t`         | `svfloat16_t`        | `svbfloat16_t`       |
+| `svint32_t`          | `svuint32_t`         | `svfloat32_t`        |                      |
+| `svint64_t`          | `svuint64_t`         | `svfloat64_t`        |                      |
+
+Each type `svBASE_t` is an opaque length-agnostic vector of `BASE_t`
+elements. The types in each row have the same number of elements and
+have twice as many elements as the types in the row below them.
+
+`svbfloat16_t` is only available if the header file also provides a
+definition of `bfloat16_t` (see [Scalar types defined by
+`<arm_sve.h>`](#scalar-types-defined-by-arm_sve.h)). The other
+types are available unconditionally.
+
+ACLE provides two sets of intrinsics for converting between vector types:
+
+*   The [`svreinterpret`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svreinterpret)
+    intrinsics simply reinterpret a vector of one type as a vector of another
+    type, without changing any of the bits.
+
+*   The [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt)
+    intrinsics instead perform numerical conversion from one type to another,
+    such as converting integers to floating-point values.
+
+To avoid any ambiguity between the two operations, ACLE does not allow
+C-style casting from one vector type to another.
+
+[`<arm_sve.h>`](#arm_sve.h) also defines tuples of two, three, and four
+vectors, as follows:
+
+| **Signed integer**   | **Unsigned integer** | **Floating-point**    |                      |
+| -------------------- | -------------------- | --------------------- | -------------------- |
+| `svint8x2_t`         | `svuint8x2_t`        |                       |                      |
+| `svint16x2_t`        | `svuint16x2_t`       | `svfloat16x2_t`       | `svbfloat16x2_t`     |
+| `svint32x2_t`        | `svuint32x2_t`       | `svfloat32x2_t`       |                      |
+| `svint64x2_t`        | `svuint64x2_t`       | `svfloat64x2_t`       |                      |
+|                      |                      |                       |                      |
+| `svint8x3_t`         | `svuint8x3_t`        |                       |                      |
+| `svint16x3_t`        | `svuint16x3_t`       | `svfloat16x3_t`       | `svbfloat16x3_t`     |
+| `svint32x3_t`        | `svuint32x3_t`       | `svfloat32x3_t`       |                      |
+| `svint64x3_t`        | `svuint64x3_t`       | `svfloat64x3_t`       |                      |
+|                      |                      |                       |                      |
+| `svint8x4_t`         | `svuint8x4_t`        |                       |                      |
+| `svint16x4_t`        | `svuint16x4_t`       | `svfloat16x4_t`       | `svbfloat16x4_t`     |
+| `svint32x4_t`        | `svuint32x4_t`       | `svfloat32x4_t`       |                      |
+| `svint64x4_t`        | `svuint64x4_t`       | `svfloat64x4_t`       |                      |
+
+Each `svBASExN_t` is an opaque sizeless type that conceptually
+contains a sequence of N `svBASE_t`s, indexed starting at 0. It is
+available whenever the corresponding single-vector type is.
+
+ACLE provides the following intrinsics for creating and accessing
+these tuple types:
+
+<!-- Trailing whitespace is deliberate here -->
+[`svcreate2(svBASE_t x0, svBASE_t x1)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcreate2)  
+[`svcreate3(svBASE_t x0, svBASE_t x1, svBASE_t x2)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcreate3)  
+[`svcreate4(svBASE_t x0, svBASE_t x1, svBASE_t x2, svBASE_t x3)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcreate4)
+
+> `svcreateN` returns a `svBASExN_t` in which the vector at index M has the
+> value given by `xM`.
+
+<!-- Trailing whitespace is deliberate here -->
+[`svset2(svBASEx2_t tuple, uint64_t imm_index, svBASE_t x)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svset2)  
+[`svset3(svBASEx3_t tuple, uint64_t imm_index, svBASE_t x)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svset3)  
+[`svset4(svBASEx4_t tuple, uint64_t imm_index, svBASE_t x)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svset4)
+
+> `svsetN` returns a copy of `tuple` in which the vector at index
+> `imm_index` has the value given by `x`. `imm_index` must be an
+> integer constant expression in the range [0, N-1].
+
+<!-- Trailing whitespace is deliberate here -->
+[`svget2(svBASEx2_t tuple, uint64_t imm_index)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svget2)  
+[`svget3(svBASEx3_t tuple, uint64_t imm_index)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svget3)  
+[`svget4(svBASEx4_t tuple, uint64_t imm_index)`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svget4)
+
+> `svgetN` returns the value of vector `imm_index` in `tuple`. `imm_index`
+> must be an integer constant expression in the range [0, N-1].
+
+It is also possible to create completely-undefined vectors and tuples of
+vectors using [`svundef`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svundef_),
+[`svundef2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svundef2),
+[`svundef3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svundef3) and
+[`svundef4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svundef4).
+
+### SVE predicate types
+
+[`<arm_sve.h>`](#arm_sve.h) defines a single sizeless predicate type
+`svbool_t`, which has enough bits to control an operation on a vector
+of bytes.
+
+The main use of predicates is to select elements in a vector. When the
+elements in the vector have *N* bytes, only the low bit in each sequence
+of *N* predicate bits is significant. For example, with bits of a predicate
+numbered from the least significant bit upwards, the elements selected by
+each bit are as follows:
+
+|                            | **bit 0** | **bit 1** | **bit 2** | **bit 3** | **bit 4** | **bit 5** | **bit 6** | **bit 7** | **bit 8** |
+| -------------------------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+| **svuint8_t** element      | 0         | 1         | 2         | 3         | 4         | 5         | 6         | 7         | 8         |
+| **svuint16_t** element     | 0         | -         | 1         | -         | 2         | -         | 3         | -         | 4         |
+| **svuint32_t** element     | 0         | -         | -         | -         | 1         | -         | -         | -         | 2         |
+| **svuint64_t** element     | 0         | -         | -         | -         | -         | -         | -         | -         | 1         |
+
+### Fixed-length SVE types
+
+#### Introduction to fixed-length SVE types
+
+As described in [Overview of SVE types](#overview-of-sve-types),
+SVE is a “length-agnostic” architecture that supports a range of
+different vector register sizes. Some SVE ACLE code might be written
+to work with all of these register sizes; such code is fully
+“length-agnostic”. Other SVE ACLE code might instead require the
+register size to belong to a restricted set. Possible restrictions
+include imposing a minimum register size, a maximum register size, a
+power-of-two register size, or a single exact register size. This is a
+choice for the programmer to make. For example, the program snippet:
+
+``` c
+  svfloat32_t data = svld1(svptrue_pat_b32(SV_VL16), ptr);
+```
+
+loads no data when the vector registers are smaller than 512 bits, so in
+practice the code is likely to require a register size of 512 bits or more.
+
+Similarly, for any given piece of source code (whether it uses ACLE
+or not), a code generator might produce SVE object code that only correctly
+implements the source code for certain runtime register sizes. The code
+is likely to abort or malfunction if the registers have a different
+size. For example, if the code generator assumes that the vector register
+size is exactly 256 bits, it might use:
+
+``` asm
+  ADD X1, X2, #32
+```
+
+instead of:
+
+``` asm
+  ADDVL X1, X2, #1
+```
+
+Let SourceVL be the set of vector register sizes supported by a piece of
+SVE ACLE source code and ObjectVL be the set of vector register sizes
+for which the object code correctly implements the source code. In both
+cases, the set might be the set of all possible register sizes (referred
+to as “unrestricted” below).
+
+In general, object code created from SVE ACLE source code only works
+correctly when the runtime register size belongs to the intersection of
+SourceVL and ObjectVL. The behavior in other cases is undefined.
+
+The compiler might impose a fixed ObjectVL set for all code or provide a
+level of user control. It might also allow ObjectVL to vary within the
+program, either within the same translation unit or between different
+translation units. Whether and how this happens is currently outside the
+scope of ACLE.
+
+The combination of a singleton SourceVL and an unrestricted
+ObjectVL makes sense: ACLE source code written for a single register
+size can still be compiled correctly without knowing what that size is,
+just like an assembler can assemble SVE code without knowing what
+register sizes the assembly code supports. Similarly, the combination of
+a singleton ObjectVL and an unrestricted SourceVL makes sense: ACLE
+source code written for all register sizes can still be compiled for
+only a single register size, perhaps to try to improve the performance
+of surrounding code. Other combinations are also possible.
+
+This section describes ACLE features related to singleton ObjectVLs.
+They are intended to help cases in which SourceVL is the same singleton.
+
+All the features are optional: a conforming ACLE implementation does not
+need to provide them.
+
+Note: the types defined in [SVE vector types](#sve-vector-types) and
+[SVE predicate types](#sve-predicate-types) are always sizeless types and
+are subject to the same restrictions for all SourceVL and for all ObjectVL.
+
+#### The `__ARM_FEATURE_SVE_BITS` macro
+
+As an optional extension, an ACLE implementation may set the
+preprocessor macro:
+
+``` c
+  __ARM_FEATURE_SVE_BITS
+```
+
+to a nonzero value N provided that:
+
+*   ObjectVL (see [Introduction to fixed-length SVE
+    types](#introduction-to-fixed-length-sve-types)
+    is a singleton vector register size of N bits; and
+
+*   it is possible to apply the `arm_sve_vector_bits(N)` attribute to
+    SVE vector types and SVE predicate types, as described in
+    [The `arm_sve_vector_bits` attribute](#the-arm_sve_vector_bits-attribute).
+
+If the implementation allows ObjectVL to be changed within a translation
+unit, it must ensure that the value of the macro remains accurate after
+each change. `__ARM_FEATURE_SVE_BITS` would then have different values
+at different points in a translation unit.
+
+Defining the macro to zero has the same meaning as not defining it all.
+
+#### The `arm_sve_vector_bits` attribute
+
+##### Syntax and requirements
+
+An ACLE implementation can choose to provide the following GNU-style type
+attribute:
+
+``` c
+  __attribute__((arm_sve_vector_bits(...arguments...)))
+```
+
+ACLE only defines the effect of the attribute if all of the
+following are true:
+
+1.  the attribute is attached to a single SVE vector type (such as
+    `svint32_t`) or to the SVE predicate type `svbool_t`;
+
+2.  the arguments consist of a single nonzero integer constant expression
+    (referred to as N below); and
+
+3.  `N==__ARM_FEATURE_SVE_BITS`.
+
+In other cases the implementation must do one of the following:
+
+*   Ignore the attribute; a warning would then be appropriate, but is not
+    required.
+
+*   Reject the program with a diagnostic.
+
+*   Extend requirement (3) above to support other values of N besides
+    `__ARM_FEATURE_SVE_BITS`.
+
+*   Process the attribute in accordance with a later revision of ACLE.
+
+##### General `arm_sve_vector_bits` behavior
+
+Let VLST be a valid type:
+
+``` c
+  VLAT __attribute__((arm_sve_vector_bits(N)))
+```
+
+for some SVE vector type or SVE predicate type VLAT. VLST is then a
+fixed-length version of VLAT that is specialized for an N-bit SVE
+target. It is a normal sized (rather than sizeless) type, so unlike
+VLAT, it can be used as the type of a global variable, class member,
+`constexpr`, and so on. For example:
+
+``` c
+  #if __ARM_FEATURE_SVE_BITS==512
+  typedef svint32_t vec __attribute__((arm_sve_vector_bits(512)));
+  typedef svbool_t pred __attribute__((arm_sve_vector_bits(512)));
+  #endif
+```
+
+creates a type called `vec` that acts a fixed-length version of
+`svint32_t` and a type called `pred` that acts as a fixed-length
+version of `svbool_t`. Both types are normal sized types; `vec`
+contains exactly 512 bits (64 bytes) and `pred` contains exactly 64
+bits (8 bytes):
+
+``` c
+  #if __ARM_FEATURE_SVE_BITS==512
+  typedef svint32_t vec __attribute__((arm_sve_vector_bits(512)));
+  typedef svbool_t pred __attribute__((arm_sve_vector_bits(512)));
+
+  svint32_t g1;  // Invalid, svint32_t is sizeless
+  vec g2;        // OK
+  svbool_t g3;   // Invalid, svbool_t is sizeless
+  pred g4;       // OK
+
+  struct wrap1 { svint32_t x; };  // Invalid, svint32_t is sizeless
+  struct wrap2 { vec x; };        // OK
+  struct wrap3 { svbool_t x; };   // Invalid, svbool_t is sizeless
+  struct wrap4 { pred x; };       // OK
+
+  size_t size1 = sizeof(svint32_t);  // Invalid, svint32_t is sizeless
+  size_t size2 = sizeof(vec);        // OK, equals 64
+  size_t size3 = sizeof(svbool_t);   // Invalid, svbool_t is sizeless
+  size_t size4 = sizeof(pred);       // OK, equals 8
+  #endif
+```
+
+The following rules apply to both vector and predicate VLST types:
+
+*   Whenever `__ARM_FEATURE_SVE_BITS==N`, VLST implicitly converts to
+    VLAT and VLAT implicitly converts to VLST. In C++, these conversions
+    have a rank just below derived-to-base conversion.
+
+    This behavior makes it possible to use VLST with ACLE intrinsics that
+    operate on VLAT. For example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==512
+      typedef svbool_t pred __attribute__((arm_sve_vector_bits(512)));
+      pred f(pred x, pred y) { return svbrka_z(x, y); }
+      #endif
+    ```
+
+*   A conditional expression of the form `C ? E1 : E2` is ill-formed if:
+
+    *   E1 has type VLAT or cv-qualified VLAT and E2 has type VLST or
+        cv-qualified VLST; or
+
+    *   E1 has type VLST or cv-qualified VLST and E2 has type VLAT or
+        cv-qualified VLAT.
+
+    However, the implementation does not need to diagnose these cases.
+
+    This rule avoids any ambiguity about whether the result of the
+    conditional expression is sized or sizeless. For example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==512
+      typedef svint32_t vec __attribute__((arm_sve_vector_bits(512)));
+      auto f(bool cond, vec x, svint32_t y) { return cond ? x : y; }
+      #endif
+    ```
+
+    is ill-formed because it is not clear whether the type of the result
+    should come from `x` or `y`.
+
+*   VLST maps to the same AAPCS64 ABI type as VLAT. For example:
+
+    ``` c
+      svint32_t __attribute__((arm_sve_vector_bits(128)))
+    ```
+
+    maps to the same AAPCS64 type as `svint32_t`, rather than to the
+    same AAPCS64 type as the `arm_neon.h` type `int32x4_t`.
+
+*   An object type “requires size N” if:
+
+    *   it is an SVE vector type or SVE predicate type that has the
+        attribute `arm_sve_vector_bits(N)`;
+
+    *   it is an array type whose element type requires size N; or
+
+    *   it is a class or struct and:
+
+        *   at least one non-static member has a type that requires size N; or
+
+        *   a base type requires size N
+
+    Note: this definition specifically excludes reference and pointer types.
+
+*   A function type “requires size N” if the return type requires size N
+    or if at least one parameter type requires size N.
+
+*   A program is ill-formed if:
+
+    *   any function type requires two different sizes N1 and N2.
+
+    *   `__ARM_FEATURE_SVE_BITS!=N` when defining a function whose type
+        requires size N.
+
+    *   `__ARM_FEATURE_SVE_BITS!=N` when calling a function whose type
+        requires size N. (Note that this explicitly excludes parameters
+        passed through “`...`”.)
+
+    *   an object whose type requires some size N is passed to an
+        unprototyped function.
+
+    However, the implementation does not need to diagnose these cases.
+
+    These rules only have an effect if an implementation allows the
+    register size to vary within a translation unit. The aim is to forbid
+    function definitions and function calls that have no mapping to the
+    AAPCS64 calling conventions. For example, if an implementation
+    supports some form of pragma that changes `__ARM_FEATURE_SVE_BITS`
+    within a translation unit:
+
+    ``` c
+      ...pragma that changes __ARM_FEATURE_SVE_BITS to 256...
+
+      typedef svfloat32_t vec256 __attribute__((arm_sve_vector_bits(256)));
+
+      ...pragma that changes __ARM_FEATURE_SVE_BITS to 512...
+
+      typedef svbool_t bool512 __attribute__((arm_sve_vector_bits(512)));
+      struct mix1 { bool512 a; vec256 b; };  // OK
+      struct mix2 { bool512 a; vec256 *b; }; // OK
+      union mix3 { bool512 a; vec256 b; };   // OK
+      typedef bool512 (*callback)(vec256);   // Invalid, requires sizes 256, 512
+      bool512 f1(vec256);                    // Invalid, requires sizes 256, 512
+      vec256 f2();                           // OK, just a declaration
+      vec256 f3() { ... }                    // Invalid, requires size 256
+      void f4(struct mix1 m) { ... }         // Invalid, requires sizes 256, 512
+      void f5(struct mix2 m) { ... }         // OK, just requires size 512
+      void f6(union mix3 m) { ... }          // OK, no size requirements
+      bool512 f7() { ... }                   // OK, just requires size 512
+      void f8(bool512 *x, vec256 *y) { ... } // OK, no size requirements
+    ```
+
+See [`arm_sve_vector_bits` behavior specific to
+vectors](#arm_sve_vector_bits-behavior-specific-to-vectors)
+for additional rules that apply specifically to vectors and
+[`arm_sve_vector_bits` behavior specific to
+predicates](#arm_sve_vector_bits-behavior-specific-to-predicates)
+for additional rules that apply specifically to predicates.
+
+##### `arm_sve_vector_bits` behavior specific to vectors
+
+If VLAT is an SVE vector type `svBASE_t` and VLST is a valid type:
+
+``` c
+  VLAT __attribute__((arm_sve_vector_bits(N)))
+```
+
+then VLST is a sized type that has the following properties:
+
+``` c
+  sizeof(VLST) == N/8
+  alignof(VLST) == 16
+```
+
+If in addition the implementation defines the preprocessor macro
+
+``` c
+  __ARM_FEATURE_SVE_VECTOR_OPERATORS
+```
+
+and if VLAT is not `svbfloat16_t`, then:
+
+*   The GNU `__attribute__((vector_size))` extension is available.
+
+*   VLST supports the same forms of elementwise initialization as:
+
+    ``` c
+      BASE_t __attribute__((vector_size(N/8)))
+    ```
+
+    (referred to as GNUT below). For example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==256 && __ARM_FEATURE_SVE_VECTOR_OPERATORS
+      svint64_t vec __attribute__((arm_sve_vector_bits(256))) = { 0, 1, 2, 3 };
+      #endif
+    ```
+
+*   VLST supports the same built-in C and C++ operators as GNUT. Any
+    result that has type GNUT for GNUT operators has type VLST for VLST
+    operators. For example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==512 && __ARM_FEATURE_SVE_VECTOR_OPERATORS
+      typedef svint32_t vec __attribute__((arm_sve_vector_bits(512)));
+      auto f(vec x, vec y) { return x + y; }    // Returns a vec.
+      #endif
+    ```
+
+*   Whenever `__ARM_FEATURE_SVE_BITS==N`, GNUT implicitly converts to
+    VLAT and VLAT implicitly converts to GNUT. In C++, these conversions
+    have a rank just below derived-to-base conversion.
+
+    This behavior makes it possible to use GNUT with ACLE intrinsics that
+    operate on VLAT. For example:
+
+    ``` c
+      typedef int8_t vec __attribute__((vector_size(32)));
+      #if __ARM_FEATURE_SVE_BITS==256 && __ARM_FEATURE_SVE_VECTOR_OPERATORS
+      vec f(vec x) { return svasrd_x(svptrue_b8(), x, 1); }
+      #endif
+    ```
+
+*   Irrespective of `__ARM_FEATURE_SVE_BITS`, GNUT implicitly converts
+    to VLST and VLST implicitly converts to GNUT. In C++, these
+    conversions again have a rank just below derived-to-base conversion.
+
+    This behavior makes it possible to use VLST with existing interfaces
+    that operate on GNUT. For example:
+
+    ``` c
+      typedef int8_t vec1 __attribute__((vector_size(32)));
+      void f(vec1);
+      #if __ARM_FEATURE_SVE_BITS==256 && __ARM_FEATURE_SVE_VECTOR_OPERATORS
+      typedef svint8_t vec2 __attribute__((arm_sve_vector_bits(256)));
+      void g(vec2 x) { f(x); }    // OK
+      #endif
+    ```
+
+    Also, if an implementation supports some form of pragma that changes
+    `__ARM_FEATURE_SVE_BITS` within a translation unit:
+
+    ``` c
+      #ifdef __ARM_FEATURE_SVE_VECTOR_OPERATORS
+      ...pragma that changes __ARM_FEATURE_SVE_BITS to 256...
+
+      int8_t x __attribute__((vector_size(32)));
+      svint8_t y __attribute__((arm_sve_vector_bits(256)));
+
+      ...pragma that changes __ARM_FEATURE_SVE_BITS to 512...
+
+      void f() { x = y; }    // OK
+      #endif
+    ```
+
+*   A conditional expression of the form `C ? E1 : E2` is ill-formed if:
+
+    *   E1 has type VLAT or cv-qualified VLAT and E2 has type GNUT or
+        cv-qualified GNUT; or
+
+    *   E1 has type GNUT or cv-qualified GNUT and E2 has type VLAT or
+        cv-qualified VLAT.
+
+    However, the implementation does not need to diagnose these cases.
+
+    This rule avoids any ambiguity about whether the result of the
+    conditional expression is sized or sizeless. For example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==512 && __ARM_FEATURE_SVE_VECTOR_OPERATORS
+      typedef int32_t vec __attribute__((vector_size(64)));
+      auto f(bool cond, vec x, svint32_t y) { return cond ? x : y; }
+      #endif
+    ```
+
+    is ill-formed because it is not clear whether the type of the result
+    should come from `x` or `y`. The choice would affect the ABI of
+    the function.
+
+*   A binary expression of the form `E1 op E2` or a conditional expression
+    of the form `C ? E1 : E2` is ill-formed if:
+
+    *   E1 has type VLST or cv-qualified VLST and E2 has type GNUT or
+        cv-qualified GNUT; or
+
+    *   E1 has type GNUT or cv-qualified GNUT and E2 has type VLST or
+        cv-qualified VLST.
+
+    However, the implementation does not need to diagnose these cases.
+
+    This rule avoids any ambiguity about whether the result of the
+    expression is a GNU or SVE type. For example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==512 && __ARM_FEATURE_SVE_VECTOR_OPERATORS
+      typedef int32_t vec1 __attribute__((vector_size(64)));
+      typedef svint32_t vec2 __attribute__((arm_sve_vector_bits(512)));
+      auto f(vec1 x, vec2 y) { return x + y; }
+      #endif
+    ```
+
+    is ill-formed because it is not clear whether the type of the result
+    should come from `x` or `y`. The choice would affect the ABI of
+    the function.
+
+##### `arm_sve_vector_bits` behavior specific to predicates
+
+Let VLST be a valid type:
+
+``` c
+  svbool_t __attribute__((arm_sve_vector_bits(N)))
+```
+
+VLST is then a sized type that has the following properties:
+
+``` c
+  sizeof(VLST) == N/64
+  alignof(VLST) == 2
+```
+
+If in addition the implementation defines the preprocessor macro
+
+``` c
+  __ARM_FEATURE_SVE_PREDICATE_OPERATORS
+```
+
+then:
+
+*   The GNU `__attribute__((vector_size))` extension is available.
+
+*   VLST supports the same forms of elementwise initialization as the
+    vector type:
+
+    ``` c
+      uint8_t __attribute__((vector_size(N/8)))
+    ```
+
+    except that the elements have type `bool` instead of `uint8_t`.
+
+*   VLST supports the following operators, all of which take arguments of
+    type VLST and return either a VLST or a reference to a VLST:
+
+    *   unary `~`
+
+    *   binary `&`, `|` and `^`
+
+    *   assignments `&=`, `|=` and `^=`
+
+    *   comparisons `<`, `<=`, `==`, `!=`, `>=` and `>`
+
+    All operators behave analogously to GNU vectors. For example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==256 && __ARM_FEATURE_SVE_PREDICATE_OPERATORS
+      typedef svbool_t pred __attribute__((arm_sve_vector_bits(256)));
+      auto f(pred x, pred y) { return x & y; }    // Returns a pred
+      #endif
+    ```
+
+*   VLST supports the array subscript operator `[]` in a way that
+    behaves analogously to GNU vectors, except that it is not possible to
+    take the address of the result. For example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==256 && __ARM_FEATURE_SVE_PREDICATE_OPERATORS
+      typedef svbool_t pred __attribute__((arm_sve_vector_bits(256)));
+      pred x;
+      bool f() { x[1] = true; return x[0]; }
+      #endif
+    ```
+
+*   Within a byte, subscripts count from the least significant bit. For
+    example:
+
+    ``` c
+      #if __ARM_FEATURE_SVE_BITS==256 && __ARM_FEATURE_SVE_PREDICATE_OPERATORS
+      svbool_t p __attribute__((arm_sve_vector_bits(256))) = { 0, 1 };
+      #endif
+    ```
+
+    sets the first byte of `p` to 2 for both big- and little-endian targets.
+
+An implementation can choose to provide other operators too, but it does not
+need to do so.
+
+Note that, at the time of writing, the GNU `vector_size` extension is
+not defined for `bool` elements, nor for packed vectors of single bits.
+The definition above is intended to be a conservative subset of what such
+an extension might provide.
+
+##### C++ mangling of fixed-length SVE types
+
+Let VLST be a valid C++ type:
+
+``` c
+  VLAT __attribute__((arm_sve_vector_bits(N)))
+```
+
+for some SVE vector type or SVE predicate type VLAT. VLST is mangled in
+the same way as a template:
+
+``` c
+  template<typename, unsigned> struct __SVE_VLS;
+```
+
+with the arguments:
+
+``` c
+  __SVE_VLS<VLAT, N>
+```
+
+For example:
+
+``` c
+  #if __ARM_FEATURE_SVE_BITS==512
+  // Mangled as 9__SVE_VLSIu11__SVInt32_tLj512EE
+  typedef svint32_t vec __attribute__((arm_sve_vector_bits(512)));
+  // Mangled as 9__SVE_VLSIu10__SVBool_tLj512EE
+  typedef svbool_t pred __attribute__((arm_sve_vector_bits(512)));
+  #endif
+```
+
+## SVE enum declarations
+
+The following enum enumerates all the possible patterns returned by a PTRUE:
+
+``` c
+  enum svpattern
+  {
+    SV_POW2 = 0,
+    SV_VL1 = 1,
+    SV_VL2 = 2,
+    SV_VL3 = 3,
+    SV_VL4 = 4,
+    SV_VL5 = 5,
+    SV_VL6 = 6,
+    SV_VL7 = 7,
+    SV_VL8 = 8,
+    SV_VL16 = 9,
+    SV_VL32 = 10,
+    SV_VL64 = 11,
+    SV_VL128 = 12,
+    SV_VL256 = 13,
+    SV_MUL4 = 29,
+    SV_MUL3 = 30,
+    SV_ALL = 31
+  };
+```
+
+The following enum lists the possible prefetch types:
+
+``` c
+  enum svprfop
+  {
+    SV_PLDL1KEEP = 0,
+    SV_PLDL1STRM = 1,
+    SV_PLDL2KEEP = 2,
+    SV_PLDL2STRM = 3,
+    SV_PLDL3KEEP = 4,
+    SV_PLDL3STRM = 5,
+    SV_PSTL1KEEP = 8,
+    SV_PSTL1STRM = 9,
+    SV_PSTL2KEEP = 10,
+    SV_PSTL2STRM = 11,
+    SV_PSTL3KEEP = 12,
+    SV_PSTL3STRM = 13
+  };
+```
+
+Both enums are defined by [`<arm_sve.h>`](#arm_sve.h).
+
+## SVE intrinsics
+
+### SVE naming convention
+
+The SVE ACLE intrinsics have the form:
+
+``` c
+  svbase[_disambiguator][_type0][_type1]...[_predication]
+```
+
+where the individual parts are as follows:
+
+**base**
+
+> For most intrinsics this is the lower-case name of an SVE
+> instruction, but with some adjustments:
+>
+> *   The most common change is to drop `F`, `S` and `U` if they
+>     stand for “floating-point”, “signed” and “unsigned” respectively,
+>     in cases where this would duplicate information in the type
+>     suffixes below.
+>
+> *   Simple non-extending loads and non-truncating stores drop the
+>     size suffix (`B`, `H`, `W` or `D`), which would always duplicate
+>     information in the suffixes.
+>
+> *   Conversely, extending loads always specify an explicit extension
+>     type, since this information is not available in the suffixes.
+>     A sign-extending load has the same base as the architectural
+>     instruction (e.g. `ld1sb`) while a zero-extending load replaces
+>     the `s` with a `u` (e.g. `ld1ub` for a zero-extending `LD1B`).
+>     Thus [`svld1ub_u32`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1ub_u32)
+>     zero-extends 8-bit data to a vector of
+>     `uint32_t`s while [`svld1sb_u32`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sb_u32)
+>     sign-extends 8-bit data to a vector of `uint32_t`s.
+
+**disambiguator**
+
+> This field distinguishes between different forms of an intrinsic.
+> There are several common uses:
+>
+> *   Load, store, prefetch, and ADR intrinsics use this field to
+>     distinguish between different addressing modes. See
+>     [SVE addressing modes](#sve-addressing-modes) for a detailed
+>     description of these modes.
+>
+> *   Arithmetic operations use the disambiguator `_n` when the final
+>     operand is a scalar rather than a vector. See [SVE operations involving
+>     vectors and scalars](#sve-operations-involving-vectors-and-scalars)
+>     for more information about these operations.
+>
+> *   Some predicate-based operations use the disambiguator `_pat` to
+>     show that they operate on an explicit constant predicate pattern
+>     like `MUL3` instead of either an all-true predicate or an `svbool_t`.
+
+<!-- Trailing whitespace is deliberate here -->
+**type0**  
+**type1**  
+...
+
+> These fields list the types of vectors and predicates, starting with
+> the return type and continuing with the argument types. They do not
+> include the types of vector bases and displacements, which form part
+> of the addressing mode disambiguator instead. They also do not
+> include argument types that are uniquely determined by the previous
+> argument types and return type.
+>
+> For vectors the field is a type category followed by an element size
+> in bits:
+>
+> | **Type category**            | **8-bit** | **16-bit** | **32-bit** | **64-bit** |
+> | ---------------------------- | --------- | ---------- | ---------- | ---------- |
+> | signed integers              | `s8`      | `s16`      | `s32`      | `s64`      |
+> | unsigned integers            | `u8`      | `u16`      | `u32`      | `u64`      |
+> | floating-point numbers       |           | `f16`      | `f32`      | `f64`      |
+> | brain floating-point numbers |           | `bf16`     |            |            |
+>
+> For predicates the suffix is `b` followed by the size of the
+> associated data elements in bits, or simply `b` if the operation
+> does not assume a particular element size. For example, the intrinsic
+> for
+>
+> ``` asm
+>   PTRUE Pd.B
+> ```
+>
+> is [`svptrue_b8`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svptrue_b8)
+> while the intrinsic for
+>
+> ``` asm
+>   PTRUE Pd.H
+> ```
+>
+> is [`svptrue_b16`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svptrue_b16)
+> The intrinsic for:
+>
+> ``` asm
+>   PFALSE Pd.B
+> ```
+>
+> is [`svpfalse_b`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpfalse_b)
+> rather than `svpfalse_b8` since the result is suitable for all element sizes.
+
+**predication**
+
+> This suffix describes the inactive elements in the result of a
+> predicated operation. It can be one of the following:
+>
+> **`z`**
+>
+> > Zero predication: set all inactive elements of the result to zero.
+>
+> **`m`**
+>
+> > Merge predication: copy all inactive elements from the first
+> > vector argument.
+> >
+> > Unary operations have a separate vector argument that comes
+> > before the general predicate; for example:
+> >
+> > ``` asm
+> >   CLZ Zd.H, Pg/M, Zs.H
+> > ```
+> >
+> > corresponds to:
+> >
+> > ``` c
+> >   Zd = svclz_u16_m(Zd, Pg, Zs);
+> > ```
+> >
+> > The argument does not need to be syntactically related to the result;
+> > calls such as:
+> >
+> > ``` c
+> >   Zd = svclz_u16_m(svadd_u16_z(...), Pg, Zs);
+> > ```
+> >
+> > are also valid.
+> >
+> > Binary and ternary operations reuse the first argument to the
+> > operation as the merge input; for example:
+> >
+> > ``` asm
+> >   ADD Zd.S, Pg/M, Zd.S, Zs2.S
+> > ```
+> >
+> > corresponds to:
+> >
+> > ``` c
+> >   Zd = svadd_u32_m(Pg, Zd, Zs2);
+> > ```
+> >
+> > where the `Zd` argument supplies both the values of inactive
+> > elements and the first operand to the addition. Again, the merge
+> > input does not need to be syntactically related to the result.
+>
+> **`x`**
+>
+> > “Don't-care” predication: set the inactive elements to
+> > **unknown** values.
+> >
+> > Warning: these values could be arbitrary register contents left
+> > around from a previous operation, so accidentally using the inactive
+> > elements could lead to data leakage.
+> >
+> > This form of predication removes the need to choose between
+> > zeroing and merging in cases where the inactive elements are
+> > unimportant. The code generator can then pick whichever form of
+> > instruction seems to give the best code. This includes using
+> > unpredicated instructions, where available and suitable.
+>
+> Predicated loads, predicated comparisons and predicated string match
+> operations are always zeroing operations, so for brevity, the
+> corresponding intrinsics have no predication suffix.
+
+### Overloaded aliases of SVE intrinsics
+
+The intrinsic names that are described in [SVE naming
+convention](#sve-naming-convention) often carry information that is
+obvious from the types of the arguments. For example, `svclz_u16_z`
+always takes a `svuint16_t` and no other form of `svclz_type_z` does.
+ACLE therefore defines shorter, overloaded, aliases that are compatible
+with both C++ overloading and C `_Generic` associations. At a
+minimum, this means that all overloaded forms of an intrinsic have the
+same number of arguments and that it is possible to select the correct
+overload by considering each argument from left to right.
+
+(Although the overloading scheme is compatible with `_Generic`, a C
+implementation can use other implementation-specific ways of achieving
+the same effect.)
+
+The usual integer promotions mean that overloading based on scalar
+integer types can be non-obvious. For example, in the C++ code:
+
+``` c
+  int f(unsigned char) { return 1; }
+  int f(int) { return 2; }
+  int g1(unsigned char c) { return f(c); }
+  int g2(unsigned char c) { return f(c + 1); }
+```
+
+`g1` returns 1 but `g2` returns 2. A cast would be required to make
+`g2` use the `unsigned char` version of `f` instead of the `int` version.
+For this reason, ACLE does not use overloading of scalar arguments
+alone to determine the type of a vector result. Intrinsics like `svdup`
+and `svindex` (whose only arguments are scalar) always require a suffix
+indicating the return type.
+
+Overloaded aliases are always a full intrinsic name with parts of the
+suffix removed. The rest of this document refers to both the full
+intrinsic name and its overloaded alias by enclosing the elided suffix
+characters in square brackets. For example:
+
+``` c
+  svclz[_u16]_m
+```
+
+says that the full name is `svclz_u16_m` and that its overloaded alias
+is `svclz_m`.
+
+### SVE addressing modes
+
+Load, store, prefetch, and ADR intrinsics have different forms for
+different addressing modes. The exact set of addressing modes depends on
+the particular operation, but they always have a base component and may
+also have a displacement component.
+
+The base may be either a single C pointer or a vector of address values.
+In the latter case, the address values may be 32 or 64 bits in size.
+Addressing modes with vector bases use the disambiguator `[_xNNbase]`,
+where `xNN` is the type of the address vector elements.
+
+The displacement, if present, may be a 64-bit scalar or a vector of
+32-bit or 64-bit elements. There are five forms in total, with the
+following disambiguators:
+
+**`_offset`**
+
+> The displacement is a 64-bit scalar byte count.
+
+**`_index`**
+
+> The displacement is a 64-bit scalar element count. For example, if an
+> intrinsic loads 16-bit elements from memory, an `_index` displacement
+> of 1 is equivalent to an `_offset` displacement of 2.
+
+**`_vnum`**
+
+> The displacement is a 64-bit scalar that counts a single vector's
+> worth of elements. For example, if an intrinsic loads one or more full
+> vectors from memory, a `_vnum` displacement of 1 is equivalent to
+> an `_offset` displacement of VG×8 (the number of bytes in an SVE
+> vector). If an intrinsic loads 16-bit elements and extends them to
+> 32 bits, a `_vnum` displacement of 1 is equivalent to an `_offset`
+> displacement of VG×4 (half the number of bytes in an SVE vector).
+>
+> This form corresponds to the `MUL VL` addressing mode. However,
+> the displacement argument can be any scalar value; it does not need
+> to be a constant in a particular range.
+
+**`_[xNN]offset`**
+
+> The displacement is a vector of type `xNN` and each element specifies
+> a separate byte count. In other words:
+>
+> *   `_[s32]offset` specifies a vector of signed 32-bit byte counts
+>     and is equivalent to the `SXTW` addressing mode.
+>
+> *   `_[u32]offset` specifies a vector of unsigned 32-bit byte counts
+>      and is equivalent to the `UXTW` addressing mode.
+>
+> *   `_[s64]offset` and `_[u64]offset` both specify vectors of 64-bit byte
+>     counts; the sign is unimportant in this case.
+
+**`_[xNN]index`**
+
+> Similar to `_[xNN]offset`, but each element specifies an element
+> count rather than a byte count, in the same way as for `_index`.
+
+These displacements do not need to be constant and they do not need to
+be within a specific range.
+
+For example, the simplest load addressing mode is:
+
+``` c
+  svint16_t svld1[_s16](svbool_t pg, const int16_t *base)
+```
+
+which loads N elements from `base[0]` to `base[N-1]` inclusive.
+
+It is possible to apply a displacement measured in whole vectors using:
+
+``` c
+  svint16_t svld1_vnum[_s16](svbool_t pg, const int16_t *base, int64_t vnum)
+```
+
+which loads N elements from `base[N*vnum]` to `base[N*vnum+N-1]` inclusive.
+
+The following intrinsic instead takes a vector of offsets, measured in bytes:
+
+``` c
+  svuint32_t svld1_gather_[s32]offset[_u32](svbool_t pg, const uint32_t *base,
+                                            svint32_t offsets)
+```
+
+In this case the address of element i is:
+
+``` c
+  (int32_t *)((uintptr_t)base + offsets[i])
+```
+
+For:
+
+``` c
+  svuint32_t svld1_gather_[s32]index[_u32](svbool_t pg, const uint32_t *base,
+                                           svint32_t indices)
+```
+
+the address of element i is simply `&base[indices[i]]`.
+
+The following intrinsic is an example of one that combines a vector base
+with a scalar index:
+
+``` c
+  svint32_t svld1_gather[_u32base]_index_s32(svbool_t pg, svuint32_t bases,
+                                             int64_t index)
+```
+
+The address of element i is:
+
+``` c
+  ((int32_t *)(uintptr_t)bases[i]) + index
+```
+
+### SVE operations involving vectors and scalars
+
+Some of the SVE instructions have immediate forms; for example:
+
+``` c
+  ADD Zd.S, Zd.S, #1
+```
+
+adds 1 to every element of `Zd.S`. ACLE extends this approach to
+all arithmetic operations and to all scalar inputs (not just immediates).
+The implementation can then use immediate forms where possible or duplicate
+the scalar into a vector otherwise.
+
+For example:
+
+``` c
+  svint32_t x;
+  ...
+  x = svadd[_n_s32]_x(pg, x, 1);
+```
+
+adds 1 to every active element of `x` while:
+
+``` c
+  svfloat64_t x;
+  double *ptr;
+  ...
+  x = svadd[_n_f64]_x(pg, x, *ptr);
+```
+
+adds `*ptr` to every active element of `x`. The first example is
+likely to use the immediate form of ADD while the latter is likely to
+use LD1RD.
+
+In a vector operation, the disambiguator `_n` indicates that the final
+operand is a scalar rather than a vector.
+
+### Immediate arguments to SVE intrinsics
+
+Some intrinsics take enumeration values as arguments. These enumerations
+must always be integer constant expressions that specify a valid
+enumeration value.
+
+A few intrinsics take general integer immediates as arguments. In the
+[intrinsics documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiessimdisa=[sve,sve2]),
+these arguments always start with the prefix `imm`. Immediate arguments
+must be integer constant expressions within a certain range (which is
+the same as the range of the underlying SVE instruction).
+
+### Faults and exceptions in SVE intrinsics
+
+Loads and stores can trigger faults in the same way as normal pointer
+dereferences. Exactly what happens then depends on the host environment
+and is out of scope for this document. However, these faults should be
+symptoms of a program going wrong rather than something that the
+programmer deliberately planted. The implementation can therefore remove
+or reorder potentially faulting operations as long as:
+
+*   doing so would not cause a previously non-faulting program to fault;
+    and
+
+*   faults do not move between C++ exception blocks, in cases where
+    faults are reported as exceptions.
+
+Also, many floating-point operations can raise IEEE exceptions. A
+similar set of rules apply there: the implementation can remove or
+reorder operations that might raise an IEEE exception if:
+
+*   doing so would not cause a program to raise IEEE exceptions in cases
+    where it would not previously;
+
+*   IEEE exceptions do not move between C++ exception blocks, in cases
+    where IEEE exceptions are reported as C++ exceptions; and
+
+*   IEEE exceptions do not move across functions that manipulate the IEEE
+    exception state.
+
+For example, the compiler can remove a floating-point addition whose
+result is not used. It can also reorder independent floating-point
+operations, even if that would change the order that exceptions occur.
+It cannot however move floating-point addition across a direct or
+indirect call to `feclearexcept` unless it can prove that the addition
+would not raise an exception.
+
+Many code generators have a mode that ignores IEEE exceptions. The
+floating-point restrictions above would not apply when such a mode is in
+effect.
+
+### First-faulting and non-faulting loads
+
+SVE provides load instructions in which only the first active element
+can fault, and others in which no elements can fault. A special register
+called the first-fault register (FFR) records which elements were loaded
+successfully. The FFR describes all loads that have executed since the
+last write to the register.
+
+If a first-faulting or non-faulting load does not load an active element
+due to a potential fault, it clears the FFR from that element onwards.
+Those elements of the returned vector then have an unknown value.
+Elements also have an unknown value if the associated FFR element was
+*already* clear before the instruction started.
+
+For example, in:
+
+``` asm
+  SETFFR
+  LDFF1D Z0.D, P0/Z, [X0]
+  LDFF1D Z1.D, P1/Z, [X1]
+  LDFF1D Z2.D, P2/Z, [X2]
+  RDFFR P3.B
+```
+
+the load of `Z0.D` might suppress the load of `[X0, #16]` due to a
+potential fault. It would then clear bit 16 onwards of the FFR and leave
+elements 2 onwards of `Z0.D` in an unknown state. The same elements of
+`Z1.D` and `Z2.D` would then also be unknown, regardless of whether
+the loads based on `X1` or `X2` might fault. At the end of the
+sequence, `P3.B` indicates which elements of `Z0.D`, `Z1.D` and
+`Z2.D` are valid.
+
+In this sequence, the leading inactive elements of `Z0.D` are
+guaranteed to be zero and the first active element is guaranteed to be
+valid (assuming that the first element did not trigger a fault). The
+same guarantees apply to `Z1.D` only if the first active element of
+`P1` is guaranteed to be earlier than the second active element of
+`P0`. In this sense, the contents of `Z0.D`, `Z1.D` and `Z2.D`
+do depend on the order of the instructions, since the guarantees would
+be different if the loads had a different order. However, the point of
+the loads is to try to access more than the first active element, so
+these relationships are not useful in practice.
+
+ACLE therefore divides first-faulting and non-faulting loads (but
+not normal loads) into “FFR groups”. Each group begins and ends with an
+intrinsic that explicitly reads from or writes to the FFR. More precisely,
+ACLE introduces a global “first-fault register token” (FFRT) that identifies
+the current FFR group. This FFRT is a purely conceptual construct and contains
+three pieces of information:
+
+| **Identifier** | **Contents**                                                   |
+| -------------- | -------------------------------------------------------------- |
+| *nwrite*       | the number of explicit writes to the FFR                       |
+| *lastwrite*    | the last value written to the FFR                              |
+| *nread*        | the number of explicit reads from the FFR since the last write |
+
+There are only two possible ways of modifying this FFRT:
+
+1.  Increment *nwrite* by one, set *lastwrite* to a given value, and set
+    *nread* to zero.
+
+2.  Increment *nread* by one.
+
+Intrinsics that explicitly write to the FFR do the first operation.
+Intrinsics that explicitly read from the FFR do the second operation.
+First-faulting and non-faulting loads read from the FFRT and depend on
+its value, but they do not write to it.
+
+One consequence of this arrangement is that an intrinsic that writes to
+the FFR is only dead if there are no further references to the FFRT in
+the program. However, the normal “as if” rules apply, so the implementation
+can produce an empty code sequence for the write if doing so would not
+affect the behavior of the program. Similarly, if a first-faulting or
+non-faulting load follows an intrinsic that explicitly reads from the FFR,
+without an intervening write, the load keeps the read intrinsic alive
+even if the result of that read is unused. Again, the normal “as if”
+rules mean that the implementation can produce an empty code sequence
+for the read if doing so would not affect the behavior of the program.
+
+These FFRT dependencies are the only FFR-based ones that the implementation
+needs to consider when optimizing first-faulting and non-faulting loads;
+in all other respects the implementation can treat the loads like normal
+loads. This includes removing loads whose results are not used,
+suppressing loads of individual elements if their values do not matter,
+or reordering loads within a group (subject to the usual rules for
+normal loads). In practice the value of the FFR before a load does still
+affect which elements of the load result are defined, and in practice
+the loads do still write to the FFR, but the input program does not
+control these effects directly.
+
+Assuming `float64_t` data, the C version of the code above would be:
+
+``` c
+  svfloat64_t z0, z1, z2;
+  svbool_t p0, p1, p2, p3;
+  double *x0, *x1, *x2;
+  ...
+  svsetffr();
+  z0 = svldff1[_f64](p0, x0);
+  z1 = svldff1[_f64](p1, x1);
+  z2 = svldff1[_f64](p2, x2);
+  p3 = svrdffr();
+```
+
+### List of SVE intrinsics
+
+The full list of SVE intrinsics can be found on
+[developer.arm.com](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiessimdisa=[sve,sve2])
+This list includes SVE2 and other SVE extensions (such as the 32-bit
+matrix multiply extensions).
+
+The tick boxes on the left can be used to narrow the displayed
+intrinsics to particular data types and element sizes. Below that is an
+instruction group hierarchy that groups the intrinsics based on the
+operation that they perform.
+
+### Mapping of SVE instructions to intrinsics
+
+#### List of instructions
+
+This section contains a list of all FEAT_SVE instructions. For each one it
+gives a reference to the associated ACLE intrinsic or explains why no
+such intrinsic exists.
+
+| **Instruction**                      | **Intrinsic** |
+| ------------------------------------ | ------------- |
+| ABS                                  | [`svabs`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabs) |
+| ADD (immediate)                      | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svadd[) |
+| ADD (vectors, predicated)            | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svadd[) |
+| ADD (vectors, unpredicated)          | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svadd[) |
+| ADDPL                                | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| ADDVL                                | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| ADR                                  | [`svadrb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadrb), [`svadrh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadrh), [`svadrw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadrw), [`svadrd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadrd) |
+| AND (immediate)                      | [`svand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svand[) |
+| AND (predicates)                     | [`svand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svand) |
+| AND (vectors, predicated)            | [`svand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svand[) |
+| AND (vectors, unpredicated)          | [`svand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svand[) |
+| ANDS                                 | [`svand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svand) |
+| ANDV                                 | [`svandv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svandv) |
+| ASR (immediate, predicated)          | [`svasr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasr[) |
+| ASR (immediate, unpredicated)        | [`svasr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasr[) |
+| ASR (vectors)                        | [`svasr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasr[) |
+| ASR (wide elements, predicated)      | [`svasr_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasr_wide) |
+| ASR (wide elements, unpredicated)    | [`svasr_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasr_wide) |
+| ASRD                                 | [`svasrd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasrd) |
+| ASRR                                 | [`svasr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasr) (optimization of `_x` forms) |
+| BIC (immediate)                      | [`svbic`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svbic[) |
+| BIC (predicates)                     | [`svbic`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svbic) |
+| BIC (vectors, predicated)            | [`svbic`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svbic[) |
+| BIC (vectors, unpredicated)          | [`svbic`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svbic[) |
+| BICS                                 | [`svbic`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svbic) |
+| BRKA                                 | [`svbrka`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrka) |
+| BRKAS                                | [`svbrka`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrka) |
+| BRKB                                 | [`svbrkb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkb) |
+| BRKBS                                | [`svbrkb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkb) |
+| BRKN                                 | [`svbrkn`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkn) |
+| BRKNS                                | [`svbrkn`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkn) |
+| BRKPA                                | [`svbrkpa`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkpa) |
+| BRKPAS                               | [`svbrkpa`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkpa) |
+| BRKPB                                | [`svbrkpb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkpb) |
+| BRKPBS                               | [`svbrkpb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkpb) |
+| CLASTA (SIMD & FP scalar)            | [`svclasta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclasta) |
+| CLASTA (scalar)                      | [`svclasta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclasta) |
+| CLASTA (vectors)                     | [`svclasta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclasta) |
+| CLASTB (SIMD & FP scalar)            | [`svclastb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclastb) |
+| CLASTB (scalar)                      | [`svclastb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclastb) |
+| CLASTB (vectors)                     | [`svclastb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclastb) |
+| CLS                                  | [`svcls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcls) |
+| CLZ                                  | [`svclz`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclz) |
+| CMPEQ (immediate)                    | [`svcmpeq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svcmpeq[) |
+| CMPEQ (vectors)                      | [`svcmpeq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svcmpeq[) |
+| CMPEQ (wide elements)                | [`svcmpeq_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcmpeq_wide) |
+| CMPGE (immediate)                    | [`svcmpge`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmpge[) |
+| CMPGE (vectors)                      | [`svcmpge`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmpge[) |
+| CMPGE (wide elements)                | [`svcmpge_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmpge_wide) |
+| CMPGT (immediate)                    | [`svcmpgt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmpgt[) |
+| CMPGT (vectors)                      | [`svcmpgt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmpgt[) |
+| CMPGT (wide elements)                | [`svcmpgt_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmpgt_wide) |
+| CMPHI (immediate)                    | [`svcmpgt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmpgt[) |
+| CMPHI (vectors)                      | [`svcmpgt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmpgt[) |
+| CMPHI (wide elements)                | [`svcmpgt_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmpgt_wide) |
+| CMPHS (immediate)                    | [`svcmpge`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmpge[) |
+| CMPHS (vectors)                      | [`svcmpge`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmpge[) |
+| CMPHS (wide elements)                | [`svcmpge_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmpge_wide) |
+| CMPLE (immediate)                    | [`svcmple`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmple[) |
+| CMPLE (vectors)                      | [`svcmple`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmple[) |
+| CMPLE (wide elements)                | [`svcmple_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmple_wide) |
+| CMPLO (immediate)                    | [`svcmplt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmplt[) |
+| CMPLO (vectors)                      | [`svcmplt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmplt[) |
+| CMPLO (wide elements)                | [`svcmplt_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmplt_wide) |
+| CMPLS (immediate)                    | [`svcmple`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmple[) |
+| CMPLS (vectors)                      | [`svcmple`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmple[) |
+| CMPLS (wide elements)                | [`svcmple_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcmple_wide) |
+| CMPLT (immediate)                    | [`svcmplt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmplt[) |
+| CMPLT (vectors)                      | [`svcmplt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmplt[) |
+| CMPLT (wide elements)                | [`svcmplt_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svcmplt_wide) |
+| CMPNE (immediate)                    | [`svcmpne`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svcmpne[) |
+| CMPNE (vectors)                      | [`svcmpne`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svcmpne[) |
+| CMPNE (wide elements)                | [`svcmpne_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svcmpne_wide) |
+| CNOT                                 | [`svcnot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcnot) |
+| CNT                                  | [`svcnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcnt[) |
+| CNTB                                 | [`svcntb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntb) |
+| CNTD                                 | [`svcntd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntd) |
+| CNTH                                 | [`svcnth`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcnth) |
+| CNTP                                 | [`svcntp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntp) |
+| CNTW                                 | [`svcntw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntw) |
+| COMPACT                              | [`svcompact`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcompact) |
+| CPY (SIMD & FP scalar)               | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) (predicated forms) |
+| CPY (immediate)                      | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) (predicated forms) |
+| CPY (scalar)                         | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) (predicated forms) |
+| CTERMEQ                              | See [CTERMEQ and CTERMNE](#ctermeq-and-ctermne) |
+| CTERMNE                              | See [CTERMEQ and CTERMNE](#ctermeq-and-ctermne) |
+| DECB                                 | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DECD (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DECD (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DECH (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DECH (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DECP (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DECP (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DECW (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DECW (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| DUP (immediate)                      | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdupq[_n]) |
+| DUP (indexed)                        | [`svdup_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup_lane), [`svdupq_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdupq_lane) |
+| DUP (scalar)                         | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdupq[_n]) |
+| DUPM                                 | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdupq[_n]) |
+| EON                                  | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=sveor[) |
+| EOR (immediate)                      | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=sveor[) |
+| EOR (predicates)                     | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=sveor) |
+| EOR (vectors, predicated)            | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=sveor[) |
+| EOR (vectors, unpredicated)          | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=sveor[) |
+| EORS                                 | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=sveor) |
+| EORV                                 | [`sveorv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=sveorv) |
+| EXT                                  | [`svext`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svext[) |
+| FABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svabd) |
+| FABS                                 | [`svabs`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svabs) |
+| FACGE                                | [`svacge`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svacge) |
+| FACGT                                | [`svacgt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svacgt) |
+| FACLE                                | [`svacle`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svacle) |
+| FACLT                                | [`svaclt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svaclt) |
+| FADD (immediate)                     | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svadd[) |
+| FADD (vectors, predicated)           | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svadd[) |
+| FADD (vectors, unpredicated)         | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svadd[) |
+| FADDA                                | [`svadda`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svadda) |
+| FADDV                                | [`svaddv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svaddv) |
+| FCADD                                | [`svcadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcadd) |
+| FCMEQ (vectors)                      | [`svcmpeq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpeq) |
+| FCMEQ (zero)                         | [`svcmpeq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpeq) |
+| FCMGE (vectors)                      | [`svcmpge`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpge) |
+| FCMGE (zero)                         | [`svcmpge`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpge) |
+| FCMGT (vectors)                      | [`svcmpgt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpgt) |
+| FCMGT (zero)                         | [`svcmpgt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpgt) |
+| FCMLA (indexed)                      | [`svcmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmla) |
+| FCMLA (vectors)                      | [`svcmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmla) |
+| FCMLE (vectors)                      | [`svcmple`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmple) |
+| FCMLE (zero)                         | [`svcmple`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmple) |
+| FCMLT (vectors)                      | [`svcmplt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmplt) |
+| FCMLT (zero)                         | [`svcmplt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmplt) |
+| FCMNE (vectors)                      | [`svcmpne`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpne) |
+| FCMNE (zero)                         | [`svcmpne`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpne) |
+| FCMUO                                | [`svcmpuo`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpuo) |
+| FCPY                                 | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup) (predicated forms) |
+| FCVT                                 | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt) |
+| FCVTZS                               | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt) |
+| FCVTZU                               | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt) |
+| FDIV                                 | [`svdiv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdiv[) |
+| FDIVR                                | [`svdivr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdivr) |
+| FDUP                                 | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
+| FEXPA                                | [`svexpa`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svexpa) |
+| FMAD                                 | [`svmad`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmad) |
+| FMAX (immediate)                     | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmax[) |
+| FMAX (vectors)                       | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmax[) |
+| FMAXNM (immediate)                   | [`svmaxnm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxnm[) |
+| FMAXNM (vectors)                     | [`svmaxnm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxnm[) |
+| FMAXNMV                              | [`svmaxnmv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxnmv) |
+| FMAXV                                | [`svmaxv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxv) |
+| FMIN (immediate)                     | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmin[) |
+| FMIN (vectors)                       | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmin[) |
+| FMINNM (immediate)                   | [`svminnm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminnm[) |
+| FMINNM (vectors)                     | [`svminnm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminnm[) |
+| FMINNMV                              | [`svminnmv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminnmv) |
+| FMINV                                | [`svminv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminv) |
+| FMLA (indexed)                       | [`svmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmla[) |
+| FMLA (vectors)                       | [`svmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmla[) |
+| FMLS (indexed)                       | [`svmls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmls[) |
+| FMLS (vectors)                       | [`svmls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmls[) |
+| FMOV (immediate, predicated)         | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
+| FMOV (immediate, unpredicated)       | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
+| FMOV (zero, predicated)              | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
+| FMOV (zero, unpredicated)            | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
+| FMSB                                 | [`svmsb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmsb) |
+| FMUL (immediate)                     | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmul[) |
+| FMUL (indexed)                       | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmul[) |
+| FMUL (vectors, predicated)           | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmul[) |
+| FMUL (vectors, unpredicated)         | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmul[) |
+| FMULX                                | [`svmulx`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmulx) |
+| FNEG                                 | [`svneg`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svneg) |
+| FNMAD                                | [`svnmad`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svnmad) |
+| FNMLA                                | [`svnmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svnmla) |
+| FNMLS                                | [`svnmls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svnmls) |
+| FNMSB                                | [`svnmsb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svnmsb) |
+| FRECPE                               | [`svrecpe`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrecpe) |
+| FRECPS                               | [`svrecps`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrecps) |
+| FRECPX                               | [`svrecpx`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrecpx) |
+| FRINTA                               | [`svrinta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrinta) |
+| FRINTI                               | [`svrinti`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrinti) |
+| FRINTM                               | [`svrintm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrintm) |
+| FRINTN                               | [`svrintn`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrintn) |
+| FRINTP                               | [`svrintp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrintp) |
+| FRINTX                               | [`svrintx`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrintx) |
+| FRINTZ                               | [`svrintz`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrintz) |
+| FRSQRTE                              | [`svrsqrte`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrsqrte) |
+| FRSQRTS                              | [`svrsqrts`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svrsqrts) |
+| FSCALE                               | [`svscale`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svscale) |
+| FSQRT                                | [`svsqrt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svsqrt) |
+| FSUB (immediate)                     | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svsub[) |
+| FSUB (vectors, predicated)           | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svsub[) |
+| FSUB (vectors, unpredicated)         | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svsub[) |
+| FSUBR (immediate)                    | [`svsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svsubr) |
+| FSUBR (vectors)                      | [`svsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svsubr) |
+| FTMAD                                | [`svtmad`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svtmad) |
+| FTSMUL                               | [`svtsmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svtsmul) |
+| FTSSEL                               | [`svtssel`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svtssel) |
+| INCB                                 | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INCD (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INCD (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INCH (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INCH (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INCP (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INCP (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INCW (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INCW (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
+| INDEX (immediate, scalar)            | [`svindex`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svindex) |
+| INDEX (immediates)                   | [`svindex`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svindex) |
+| INDEX (scalar, immediate)            | [`svindex`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svindex) |
+| INDEX (scalars)                      | [`svindex`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svindex) |
+| INSR (SIMD & FP scalar)              | [`svinsr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svinsr) |
+| INSR (scalar)                        | [`svinsr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svinsr) |
+| LASTA (SIMD & FP scalar)             | [`svlasta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlasta) |
+| LASTA (scalar)                       | [`svlasta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlasta) |
+| LASTB (SIMD & FP scalar)             | [`svlastb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlastb) |
+| LASTB (scalar)                       | [`svlastb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlastb) |
+| LD1B (scalar plus immediate)         | [`svld1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1_vnum), [`svld1ub_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1ub_vnum) |
+| LD1B (scalar plus scalar)            | [`svld1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1[), [`svld1ub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#&q=svld1ub) |
+| LD1B (scalar plus vector)            | [`svld1ub_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1ub_gather_[) |
+| LD1B (vector plus immediate)         | [`svld1ub_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1ub_gather[) |
+| LD1D (scalar plus immediate)         | [`svld1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1_vnum) |
+| LD1D (scalar plus scalar)            | [`svld1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1[) |
+| LD1D (scalar plus vector)            | [`svld1_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1_gather_[) |
+| LD1D (vector plus immediate)         | [`svld1_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1_gather[) |
+| LD1H (scalar plus immediate)         | [`svld1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld1_vnum), [`svld1uh_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1uh_vnum) |
+| LD1H (scalar plus scalar)            | [`svld1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld1[), [`svld1uh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#&q=svld1uh) |
+| LD1H (scalar plus vector)            | [`svld1uh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1uh_gather_[) |
+| LD1H (vector plus immediate)         | [`svld1uh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1uh_gather[) |
+| LD1RB                                | See [SVE LD1R instructions](#sve-ld1r-instructions) |
+| LD1RD                                | See [SVE LD1R instructions](#sve-ld1r-instructions) |
+| LD1RH                                | See [SVE LD1R instructions](#sve-ld1r-instructions) |
+| LD1RQB (scalar plus immediate)       | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svdupq) |
+| LD1RQB (scalar plus scalar)          | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svdupq) |
+| LD1RQD (scalar plus immediate)       | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svdupq) |
+| LD1RQD (scalar plus scalar)          | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svdupq) |
+| LD1RQH (scalar plus immediate)       | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svdupq) |
+| LD1RQH (scalar plus scalar)          | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svdupq) |
+| LD1RQW (scalar plus immediate)       | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svdupq) |
+| LD1RQW (scalar plus scalar)          | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svdupq) |
+| LD1RSB                               | See [SVE LD1R instructions](#sve-ld1r-instructions) |
+| LD1RSH                               | See [SVE LD1R instructions](#sve-ld1r-instructions) |
+| LD1RSW                               | See [SVE LD1R instructions](#sve-ld1r-instructions) |
+| LD1RW                                | See [SVE LD1R instructions](#sve-ld1r-instructions) |
+| LD1SB (scalar plus immediate)        | [`svld1sb_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sb_vnum) |
+| LD1SB (scalar plus scalar)           | [`svld1sb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sb) |
+| LD1SB (scalar plus vector)           | [`svld1sb_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sb_gather_[) |
+| LD1SB (vector plus immediate)        | [`svld1sb_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sb_gather[) |
+| LD1SH (scalar plus immediate)        | [`svld1sh_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sh_vnum) |
+| LD1SH (scalar plus scalar)           | [`svld1sh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sh) |
+| LD1SH (scalar plus vector)           | [`svld1sh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sh_gather_[) |
+| LD1SH (vector plus immediate)        | [`svld1sh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sh_gather[) |
+| LD1SW (scalar plus immediate)        | [`svld1sw_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sw_vnum) |
+| LD1SW (scalar plus scalar)           | [`svld1sw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sw) |
+| LD1SW (scalar plus vector)           | [`svld1sw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sw_gather_[) |
+| LD1SW (vector plus immediate)        | [`svld1sw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sw_gather[) |
+| LD1W (scalar plus immediate)         | [`svld1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld1_vnum), [`svld1uw_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1uw_vnum) |
+| LD1W (scalar plus scalar)            | [`svld1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld1[), [`svld1uw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#&q=svld1uw) |
+| LD1W (scalar plus vector)            | [`svld1_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld1_gather_[), [`svld1uw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1uw_gather_[) |
+| LD1W (vector plus immediate)         | [`svld1_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld1_gather[), [`svld1uw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1uw_gather[) |
+| LD2B (scalar plus immediate)         | [`svld2_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld2_vnum) |
+| LD2B (scalar plus scalar)            | [`svld2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld2[) |
+| LD2D (scalar plus immediate)         | [`svld2_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld2_vnum) |
+| LD2D (scalar plus scalar)            | [`svld2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld2[) |
+| LD2H (scalar plus immediate)         | [`svld2_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld2_vnum) |
+| LD2H (scalar plus scalar)            | [`svld2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld2[) |
+| LD2W (scalar plus immediate)         | [`svld2_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld2_vnum) |
+| LD2W (scalar plus scalar)            | [`svld2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld2[) |
+| LD3B (scalar plus immediate)         | [`svld3_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld3_vnum) |
+| LD3B (scalar plus scalar)            | [`svld3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld3[) |
+| LD3D (scalar plus immediate)         | [`svld3_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld3_vnum) |
+| LD3D (scalar plus scalar)            | [`svld3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld3[) |
+| LD3H (scalar plus immediate)         | [`svld3_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld3_vnum) |
+| LD3H (scalar plus scalar)            | [`svld3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld3[) |
+| LD3W (scalar plus immediate)         | [`svld3_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld3_vnum) |
+| LD3W (scalar plus scalar)            | [`svld3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld3[) |
+| LD4B (scalar plus immediate)         | [`svld4_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld4_vnum) |
+| LD4B (scalar plus scalar)            | [`svld4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld4[) |
+| LD4D (scalar plus immediate)         | [`svld4_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld4_vnum) |
+| LD4D (scalar plus scalar)            | [`svld4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld4[) |
+| LD4H (scalar plus immediate)         | [`svld4_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld4_vnum) |
+| LD4H (scalar plus scalar)            | [`svld4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld4[) |
+| LD4W (scalar plus immediate)         | [`svld4_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld4_vnum) |
+| LD4W (scalar plus scalar)            | [`svld4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld4[) |
+| LDFF1B (scalar plus scalar)          | [`svldff1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svldff1[), [`svldff1ub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1ub) |
+| LDFF1B (scalar plus vector)          | [`svldff1ub_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1ub_gather_[) |
+| LDFF1B (vector plus immediate)       | [`svldff1ub_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1ub_gather[) |
+| LDFF1D (scalar plus scalar)          | [`svldff1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svldff1[) |
+| LDFF1D (scalar plus vector)          | [`svldff1_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svldff1_gather_[) |
+| LDFF1D (vector plus immediate)       | [`svldff1_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svldff1_gather[) |
+| LDFF1H (scalar plus scalar)          | [`svldff1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svldff1[), [`svldff1uh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1uh) |
+| LDFF1H (scalar plus vector)          | [`svldff1uh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1uh_gather_[) |
+| LDFF1H (vector plus immediate)       | [`svldff1uh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1uh_gather[) |
+| LDFF1SB (scalar plus scalar)         | [`svldff1sb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sb) |
+| LDFF1SB (scalar plus vector)         | [`svldff1sb_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sb_gather_[) |
+| LDFF1SB (vector plus immediate)      | [`svldff1sb_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sb_gather[) |
+| LDFF1SH (scalar plus scalar)         | [`svldff1sh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sh) |
+| LDFF1SH (scalar plus vector)         | [`svldff1sh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sh_gather_[) |
+| LDFF1SH (vector plus immediate)      | [`svldff1sh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sh_gather[) |
+| LDFF1SW (scalar plus scalar)         | [`svldff1sw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sw) |
+| LDFF1SW (scalar plus vector)         | [`svldff1sw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sw_gather_[) |
+| LDFF1SW (vector plus immediate)      | [`svldff1sw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1sw_gather[) |
+| LDFF1W (scalar plus scalar)          | [`svldff1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldff1[), [`svldff1uw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1uw) |
+| LDFF1W (scalar plus vector)          | [`svldff1_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldff1_gather_[), [`svldff1uw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1uw_gather_[) |
+| LDFF1W (vector plus immediate)       | [`svldff1_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldff1_gather[), [`svldff1uw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldff1uw_gather[) |
+| LDNF1B                               | [`svldnf1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svldnf1[), [`svldnf1ub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnf1ub) |
+| LDNF1D                               | [`svldnf1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svldnf1[) |
+| LDNF1H                               | [`svldnf1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svldnf1[), [`svldnf1uh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnf1uh) |
+| LDNF1SB                              | [`svldnf1sb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnf1sb) |
+| LDNF1SH                              | [`svldnf1sh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnf1sh) |
+| LDNF1SW                              | [`svldnf1sw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnf1sw) |
+| LDNF1W                               | [`svldnf1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldnf1[), [`svldnf1uw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnf1uw) |
+| LDNT1B (scalar plus immediate)       | [`svldnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svldnt1_vnum) |
+| LDNT1B (scalar plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svldnt1[) |
+| LDNT1D (scalar plus immediate)       | [`svldnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svldnt1_vnum) |
+| LDNT1D (scalar plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svldnt1[) |
+| LDNT1H (scalar plus immediate)       | [`svldnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svldnt1_vnum) |
+| LDNT1H (scalar plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svldnt1[) |
+| LDNT1W (scalar plus immediate)       | [`svldnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldnt1_vnum) |
+| LDNT1W (scalar plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldnt1[) |
+| LDR (predicate)                      | See [SVE LDR and STR](#sve-ldr-and-str) |
+| LDR (vector)                         | See [SVE LDR and STR](#sve-ldr-and-str) |
+| LSL (immediate, predicated)          | [`svlsl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsl[) |
+| LSL (immediate, unpredicated)        | [`svlsl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsl[) |
+| LSL (vectors)                        | [`svlsl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsl[) |
+| LSL (wide elements, predicated)      | [`svlsl_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsl_wide) |
+| LSL (wide elements, unpredicated)    | [`svlsl_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsl_wide) |
+| LSLR                                 | [`svlsl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsl[) (optimization of `_x` forms) |
+| LSR (immediate, predicated)          | [`svlsr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsr[) |
+| LSR (immediate, unpredicated)        | [`svlsr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsr[) |
+| LSR (vectors)                        | [`svlsr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsr[) |
+| LSR (wide elements, predicated)      | [`svlsr_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsr_wide) |
+| LSR (wide elements, unpredicated)    | [`svlsr_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsr_wide) |
+| LSRR                                 | [`svlsr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsr[) (optimization of `_x` forms) |
+| MAD                                  | [`svmad`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmad) |
+| MLA                                  | [`svmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmla[) |
+| MLS                                  | [`svmls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmls[) |
+| MOV (SIMD & FP scalar, predicated)   | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
+| MOV (SIMD & FP scalar, unpredicated) | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
+| MOV (bitmask immediate)              | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
+| MOV (immediate, predicated)          | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
+| MOV (immediate, unpredicated)        | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
+| MOV (predicate, predicated, merging) | [`svsel`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svsel) |
+| MOV (predicate, predicated, zeroing) | [`svmov`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svmov) |
+| MOV (predicate, unpredicated)        | See [SVE MOV](#sve-mov) |
+| MOV (scalar, predicated)             | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
+| MOV (scalar, unpredicated)           | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
+| MOV (vector, predicated)             | [`svsel`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svsel) |
+| MOV (vector, unpredicated)           | See [SVE MOV](#sve-mov) |
+| MOVPRFX (predicated)                 | See [MOVPRFX](#movprfx) |
+| MOVPRFX (unpredicated)               | See [MOVPRFX](#movprfx) |
+| MOVS (predicated)                    | [`svmov`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svmov) |
+| MOVS (unpredicated)                  | See [SVE MOV](#sve-mov) |
+| MSB                                  | [`svmsb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmsb) |
+| MUL (immediate)                      | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svmul) |
+| MUL (vectors)                        | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svmul) |
+| NAND                                 | [`svnand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnand) |
+| NANDS                                | [`svnand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnand) |
+| NEG                                  | [`svneg`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svneg) |
+| NOR                                  | [`svnor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnor) |
+| NORS                                 | [`svnor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnor) |
+| NOT (predicate)                      | [`svnot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svnot) |
+| NOT (vector)                         | [`svnot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svnot) |
+| NOTS                                 | [`svnot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svnot) |
+| ORN (immediate)                      | [`svorr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svorr[) |
+| ORN (predicates)                     | [`svorn`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svorn) |
+| ORNS                                 | [`svorn`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svorn) |
+| ORR (immediate)                      | [`svorr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svorr[) |
+| ORR (predicates)                     | [`svorr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svorr) |
+| ORR (vectors, predicated)            | [`svorr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svorr[) |
+| ORR (vectors, unpredicated)          | [`svorr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svorr[) |
+| ORRS                                 | [`svorr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svorr) |
+| ORV                                  | [`svorv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svorv) |
+| PFALSE                               | [`svpfalse`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpfalse) |
+| PFIRST                               | [`svpfirst`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpfirst) |
+| PNEXT                                | [`svpnext`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpnext) |
+| PRFB (scalar plus immediate)         | [`svprfb_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfb_vnum) |
+| PRFB (scalar plus scalar)            | [`svprfb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfb) |
+| PRFB (scalar plus vector)            | [`svprfb_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfb_gather_[) |
+| PRFB (vector plus immediate)         | [`svprfb_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfb_gather[) |
+| PRFD (scalar plus immediate)         | [`svprfd_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfd_vnum) |
+| PRFD (scalar plus scalar)            | [`svprfd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfd) |
+| PRFD (scalar plus vector)            | [`svprfd_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfd_gather_[) |
+| PRFD (vector plus immediate)         | [`svprfd_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfd_gather[) |
+| PRFH (scalar plus immediate)         | [`svprfh_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfh_vnum) |
+| PRFH (scalar plus scalar)            | [`svprfh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfh) |
+| PRFH (scalar plus vector)            | [`svprfh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfh_gather_[) |
+| PRFH (vector plus immediate)         | [`svprfh_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfh_gather[) |
+| PRFW (scalar plus immediate)         | [`svprfw_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfw_vnum) |
+| PRFW (scalar plus scalar)            | [`svprfw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfw) |
+| PRFW (scalar plus vector)            | [`svprfw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfw_gather_[) |
+| PRFW (vector plus immediate)         | [`svprfw_gather`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfw_gather[) |
+| PTEST                                | [`svptest`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svptest) |
+| PTRUE                                | [`svptrue`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svptrue) |
+| PTRUES                               | [`svptrue`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svptrue) |
+| PUNPKHI                              | [`svunpkhi`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svunpkhi) |
+| PUNPKLO                              | [`svunpklo`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svunpklo) |
+| RBIT                                 | [`svrbit`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrbit) |
+| RDFFR (predicated)                   | [`svrdffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrdffr) |
+| RDFFR (unpredicated)                 | [`svrdffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrdffr) |
+| RDFFRS                               | [`svrdffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrdffr) |
+| RDVL                                 | See [RDVL](#rdvl) |
+| REV (predicate)                      | [`svrev`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svrev) |
+| REV (vector)                         | [`svrev`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svrev) |
+| REVB                                 | [`svrevb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrevb) |
+| REVH                                 | [`svrevh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrevh) |
+| REVW                                 | [`svrevw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrevw) |
+| SABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabd) |
+| SADDV                                | [`svaddv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svaddv) |
+| SCVTF                                | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt) |
+| SDIV                                 | [`svdiv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svdiv[) |
+| SDIVR                                | [`svdivr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svdivr) |
+| SDOT (indexed)                       | [`svdot_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svdot_lane) |
+| SDOT (vectors)                       | [`svdot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svdot[) |
+| SEL (predicates)                     | [`svsel`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svsel) |
+| SEL (vectors)                        | [`svsel`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svsel) |
+| SETFFR                               | [`svsetffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsetffr) |
+| SMAX (immediate)                     | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmax[) |
+| SMAX (vectors)                       | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmax[) |
+| SMAXV                                | [`svmaxv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmaxv) |
+| SMIN (immediate)                     | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmin[) |
+| SMIN (vectors)                       | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmin[) |
+| SMINV                                | [`svminv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svminv) |
+| SMULH                                | [`svmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmulh) |
+| SPLICE                               | [`svsplice`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsplice) |
+| SQADD (immediate)                    | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqadd) |
+| SQADD (vectors)                      | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqadd) |
+| SQDECB                               | [`svqdecb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecb) |
+| SQDECD (scalar)                      | [`svqdecd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecd) |
+| SQDECD (vector)                      | [`svqdecd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecd) |
+| SQDECH (scalar)                      | [`svqdech`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdech) |
+| SQDECH (vector)                      | [`svqdech`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdech) |
+| SQDECP (scalar)                      | [`svqdecp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecp) |
+| SQDECP (vector)                      | [`svqdecp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecp) |
+| SQDECW (scalar)                      | [`svqdecw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecw) |
+| SQDECW (vector)                      | [`svqdecw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecw) |
+| SQINCB                               | [`svqincb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincb) |
+| SQINCD (scalar)                      | [`svqincd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincd) |
+| SQINCD (vector)                      | [`svqincd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincd) |
+| SQINCH (scalar)                      | [`svqinch`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqinch) |
+| SQINCH (vector)                      | [`svqinch`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqinch) |
+| SQINCP (scalar)                      | [`svqincp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincp) |
+| SQINCP (vector)                      | [`svqincp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincp) |
+| SQINCW (scalar)                      | [`svqincw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincw) |
+| SQINCW (vector)                      | [`svqincw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincw) |
+| SQSUB (immediate)                    | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqsub[) |
+| SQSUB (vectors)                      | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqsub[) |
+| ST1B (scalar plus immediate)         | [`svst1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_vnum), [`svst1b_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1b_vnum) |
+| ST1B (scalar plus scalar)            | [`svst1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1[), [`svst1b`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1b) |
+| ST1B (scalar plus vector)            | [`svst1b_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1b_scatter_[) |
+| ST1B (vector plus immediate)         | [`svst1b_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1b_scatter[) |
+| ST1D (scalar plus immediate)         | [`svst1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_vnum) |
+| ST1D (scalar plus scalar)            | [`svst1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1[) |
+| ST1D (scalar plus vector)            | [`svst1_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_scatter_[) |
+| ST1D (vector plus immediate)         | [`svst1_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_scatter[) |
+| ST1H (scalar plus immediate)         | [`svst1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_vnum), [`svst1h_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1h_vnum) |
+| ST1H (scalar plus scalar)            | [`svst1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1[), [`svst1h`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1h) |
+| ST1H (scalar plus vector)            | [`svst1h_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1h_scatter_[) |
+| ST1H (vector plus immediate)         | [`svst1h_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1h_scatter[) |
+| ST1W (scalar plus immediate)         | [`svst1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_vnum), [`svst1w_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1w_vnum) |
+| ST1W (scalar plus scalar)            | [`svst1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1[), [`svst1w`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1w) |
+| ST1W (scalar plus vector)            | [`svst1_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_scatter_[), [`svst1w_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1w_scatter_[) |
+| ST1W (vector plus immediate)         | [`svst1_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_scatter[), [`svst1w_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1w_scatter[) |
+| ST2B (scalar plus immediate)         | [`svst2_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst2_vnum) |
+| ST2B (scalar plus scalar)            | [`svst2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst2[) |
+| ST2D (scalar plus immediate)         | [`svst2_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst2_vnum) |
+| ST2D (scalar plus scalar)            | [`svst2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst2[) |
+| ST2H (scalar plus immediate)         | [`svst2_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst2_vnum) |
+| ST2H (scalar plus scalar)            | [`svst2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst2[) |
+| ST2W (scalar plus immediate)         | [`svst2_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst2_vnum) |
+| ST2W (scalar plus scalar)            | [`svst2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst2[) |
+| ST3B (scalar plus immediate)         | [`svst3_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst3_vnum) |
+| ST3B (scalar plus scalar)            | [`svst3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst3[) |
+| ST3D (scalar plus immediate)         | [`svst3_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst3_vnum) |
+| ST3D (scalar plus scalar)            | [`svst3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst3[) |
+| ST3H (scalar plus immediate)         | [`svst3_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst3_vnum) |
+| ST3H (scalar plus scalar)            | [`svst3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst3[) |
+| ST3W (scalar plus immediate)         | [`svst3_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst3_vnum) |
+| ST3W (scalar plus scalar)            | [`svst3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst3[) |
+| ST4B (scalar plus immediate)         | [`svst4_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4_vnum) |
+| ST4B (scalar plus scalar)            | [`svst4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4[) |
+| ST4D (scalar plus immediate)         | [`svst4_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4_vnum) |
+| ST4D (scalar plus scalar)            | [`svst4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4[) |
+| ST4H (scalar plus immediate)         | [`svst4_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4_vnum) |
+| ST4H (scalar plus scalar)            | [`svst4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4[) |
+| ST4W (scalar plus immediate)         | [`svst4_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4_vnum) |
+| ST4W (scalar plus scalar)            | [`svst4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4[) |
+| STNT1B (scalar plus immediate)       | [`svstnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_vnum) |
+| STNT1B (scalar plus scalar)          | [`svstnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1[) |
+| STNT1D (scalar plus immediate)       | [`svstnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_vnum) |
+| STNT1D (scalar plus scalar)          | [`svstnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1[) |
+| STNT1H (scalar plus immediate)       | [`svstnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_vnum) |
+| STNT1H (scalar plus scalar)          | [`svstnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1[) |
+| STNT1W (scalar plus immediate)       | [`svstnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_vnum) |
+| STNT1W (scalar plus scalar)          | [`svstnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1[) |
+| STR (predicate)                      | See [SVE LDR and STR](#sve-ldr-and-str) |
+| STR (vector)                         | See [SVE LDR and STR](#sve-ldr-and-str) |
+| SUB (immediate)                      | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsub[) |
+| SUB (vectors, predicated)            | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsub[) |
+| SUB (vectors, unpredicated)          | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsub[) |
+| SUBR (immediate)                     | [`svsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsubr) |
+| SUBR (vectors)                       | [`svsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsubr) |
+| SUNPKHI                              | [`svunpkhi`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svunpkhi) |
+| SUNPKLO                              | [`svunpklo`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svunpklo) |
+| SXTB                                 | [`svextb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svextb) |
+| SXTH                                 | [`svexth`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svexth) |
+| SXTW                                 | [`svextw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svextw) |
+| TBL                                  | [`svtbl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svtbl[), [`svdup_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup_lane) |
+| TRN1 (predicates)                    | [`svtrn1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svtrn1) |
+| TRN1 (vectors)                       | [`svtrn1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svtrn1) |
+| TRN2 (predicates)                    | [`svtrn2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svtrn2) |
+| TRN2 (vectors)                       | [`svtrn2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svtrn2) |
+| UABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svabd) |
+| UADDV                                | [`svaddv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svaddv) |
+| UCVTF                                | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcvt) |
+| UDIV                                 | [`svdiv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svdiv[) |
+| UDIVR                                | [`svdivr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svdivr) |
+| UDOT (indexed)                       | [`svdot_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svdot_lane) |
+| UDOT (vectors)                       | [`svdot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svdot[) |
+| UMAX (immediate)                     | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmax[) |
+| UMAX (vectors)                       | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmax[) |
+| UMAXV                                | [`svmaxv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmaxv) |
+| UMIN (immediate)                     | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmin[) |
+| UMIN (vectors)                       | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmin[) |
+| UMINV                                | [`svminv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svminv) |
+| UMULH                                | [`svmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmulh) |
+| UQADD (immediate)                    | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqadd[) |
+| UQADD (vectors)                      | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqadd[) |
+| UQDECB                               | [`svqdecb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecb) |
+| UQDECD (scalar)                      | [`svqdecd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecd) |
+| UQDECD (vector)                      | [`svqdecd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecd) |
+| UQDECH (scalar)                      | [`svqdech`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdech) |
+| UQDECH (vector)                      | [`svqdech`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdech) |
+| UQDECP (scalar)                      | [`svqdecp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecp) |
+| UQDECP (vector)                      | [`svqdecp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecp) |
+| UQDECW (scalar)                      | [`svqdecw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecw) |
+| UQDECW (vector)                      | [`svqdecw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecw) |
+| UQINCB                               | [`svqincb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincb) |
+| UQINCD (scalar)                      | [`svqincd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincd) |
+| UQINCD (vector)                      | [`svqincd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincd) |
+| UQINCH (scalar)                      | [`svqinch`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqinch) |
+| UQINCH (vector)                      | [`svqinch`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqinch) |
+| UQINCP (scalar)                      | [`svqincp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincp) |
+| UQINCP (vector)                      | [`svqincp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincp) |
+| UQINCW (scalar)                      | [`svqincw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincw) |
+| UQINCW (vector)                      | [`svqincw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincw) |
+| UQSUB (immediate)                    | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqsub[) |
+| UQSUB (vectors)                      | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqsub[) |
+| UUNPKHI                              | [`svunpkhi`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svunpkhi) |
+| UUNPKLO                              | [`svunpklo`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svunpklo) |
+| UXTB                                 | [`svextb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svextb) |
+| UXTH                                 | [`svexth`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svexth) |
+| UXTW                                 | [`svextw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svextw) |
+| UZP1 (predicates)                    | [`svuzp1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svuzp1) |
+| UZP1 (vectors)                       | [`svuzp1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svuzp1) |
+| UZP2 (predicates)                    | [`svuzp2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svuzp2) |
+| UZP2 (vectors)                       | [`svuzp2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svuzp2) |
+| WHILELE                              | [`svwhilele`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svwhilele) |
+| WHILELO                              | [`svwhilelt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svwhilelt) |
+| WHILELS                              | [`svwhilele`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svwhilele) |
+| WHILELT                              | [`svwhilelt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svwhilelt) |
+| WRFFR                                | [`svwrffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svwrffr) |
+| ZIP1 (predicates)                    | [`svzip1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svzip1) |
+| ZIP1 (vectors)                       | [`svzip1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svzip1) |
+| ZIP2 (predicates)                    | [`svzip2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svzip2) |
+| ZIP2 (vectors)                       | [`svzip2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svzip2) |
+
+#### ADDPL, ADDVL, INC and DEC
+
+The architecture provides instructions for adding or subtracting an
+element count, where the count might come from a pattern (such as
+[`svcntb_pat`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntb_pat))
+or from a predicate
+([`svcntp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntp)).
+For example, INCH adds the number of halfwords in a pattern to a scalar
+register or to every element of a vector register.
+
+At the C and C++ level it is usually simpler to write the addition out
+normally. Also, having intrinsics that map directly to architectural
+instructions like INCH could cause confusion for pointers, since the
+instructions would operate on the raw integer value of the pointer. For
+example, applying INCH to a pointer to halfwords would effectively
+convert the pointer to an integer, add the number of halfwords, and then
+convert the result back to a pointer. The pointer would then only
+advance by half a vector.
+
+For these reasons there are no dedicated ACLE intrinsics for:
+
+*   ADDPL and ADDVL
+
+*   DECB, DECH, DECW, DECD, and DECP
+
+*   INCB, INCH, INCW, INCD, and INCP
+
+Instead the implementation should use these instructions to optimize things
+like:
+
+``` c
+  svbool_t p1;
+  ...
+  x += svcntp_b16(p1, p1);
+```
+
+The same concerns do not apply to saturating scalar arithmetic, since
+using saturating arithmetic only makes sense for displacements rather
+than pointers. There is also no standard way of doing a saturating
+addition or subtraction of arbitrary integers. ACLE does therefore
+provide intrinsics for:
+
+*   SQDECB, SQDECH, SQDECW, SQDECD, and SQDECP
+
+*   SQINCB, SQINCH, SQINCW, SQINCD, and SQINCP
+
+*   UQDECB, UQDECH, UQDECW, UQDECD, and UQDECP
+
+*   UQINCB, UQINCH, UQINCW, UQINCD, and UQINCP
+
+#### CTERMEQ and CTERMNE
+
+CTERMEQ and CTERMNE provide a way of optimizing conditions such as:
+
+``` c
+  svbool_t p1, p2;
+  uint64_t x, y;
+  ...
+  if (svptest_last(p1, p2) && x == y)
+    ...stmts...
+```
+
+Here the implementation could use PTEST to test whether the last active
+element of `p2` is active and follow it by CTERMNE to test whether
+`x` is not equal to `y`. The code should then execute `stmts` if the
+LT condition holds (that is, if the last element is active and the
+“termination condition” `x != y` does not hold).
+
+There are no ACLE intrinsics that perform a combined predicate and scalar
+test since the separate tests should be more readable.
+
+#### MOVPRFX
+
+There are no separate ACLE intrinsics for MOVPRFX, but its use
+is implicit in many of the zeroing intrinsics. For example,
+[`svadd[_s32]_z`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadd[_s32]_z)
+uses a MOVPRFX before the ADD instruction.
+
+The code generator can also use MOVPRFX to optimize calls
+to many `_x` and `_m` intrinsics. For example,
+[`svdiv[_s32]_x`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdiv[_s32]_x)
+can use DIV to tie the result to the first operand, DIVR to tie the
+result to the second operand, or a combination of MOVPRFX and DIV
+to store the result to a separate register.
+
+#### RDVL
+
+There is no separate ACLE intrinsic for RDVL, but the same functionality
+is available though the [`svcntb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntb),
+[`svcnth`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcnth),
+[`svcntw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntw), and
+[`svcntd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcntd)
+intrinsics.
+
+#### SVE LD1R instructions
+
+There are no separate ACLE intrinsics for LD1RB, LD1RH, LD1RW, LD1RD,
+LD1RSB, LD1RSH, and LD1RSW. However, the code generator can use these
+instructions to optimize calls to
+[`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n])
+in which the scalar argument comes from memory.
+
+#### SVE LDR and STR
+
+There are no separate ACLE intrinsics for SVE LDR and STR instructions,
+but the code generator can use these instructions to save and restore
+SVE registers, or to optimize calls to intrinsics like
+[`svld1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1[)
+and
+[`svst1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1[).
+
+#### SVE MOV
+
+There are no ACLE intrinsics for the unpredicated SVE MOV instructions.
+This is because the ACLE intrinsic calls do not imply a particular
+register allocation and so the code generator must decide for itself
+when move instructions are required.
 
 # M-profile Vector Extension (MVE) intrinsics
 
