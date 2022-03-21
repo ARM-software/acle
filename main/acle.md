@@ -1891,67 +1891,71 @@ This attribute does not apply to AArch64.
 
 ## Function Multi Versioning
 
-The specification for Function Multi Versioning is in `BETA` state and may
-change or be extended in the future.
+The specification for Function Multi Versioning is in [**Beta** state](#current-status-and-anticipated-changes)
+and may change or be extended in the future.
 
 Function Multi Versioning provides a convenient way to select the most
 appropriate version of a function at runtime. All versions of the function may
 be in the final binary. The compiler generates all supported versions and the
 runtime makes the selection at load time.
 
-The following attributes trigger the multi variant code generation:
-`target_version`, `target_clones`. These attributes can't be mixed. The
-"default" variant means the version of the function that would be generated
+The following attributes trigger the multi version code generation:
+`__attribute__((target_version("name")))` and `__attribute__((target_clones("name",...)))`.
+
+1. These attributes can't be mixed with each other.
+2. The `"default"` version means the version of the function that would be generated
 without these attributes.
+3. `"name"` is the dependent features from the tables below.
+4. The dependent features could be joined by the `+` sign.
+5. None of these attributes will enable the corresponding ACLE feature(s) associated
+to the `"name"` expressed in the attribute.
+6. These attributes have no effect on the calling convention, all versions must
+use the same calling convention.
+7. If only the `"default"` version exist it should be linked directly.
+8. FMV may be disabled in compile time. In this case the `"default"`
+version shall be used.
 
-This feature may be turned off in compile time. In this case the "default"
-variant shall be used.
+The attribute `__attribute__((target_version("name")))` expresses the following:
 
-`__ARM_FEATURE_FUNCTION_MULTI_VERSIONING` is defined to 1 if available.
+1. when applied to a function it becomes one of the versions. Function with the same
+name may exist with multiple versions in the same translation unit.
+2. One `"default"` version of the function is required to be provided.
+   a. Implicitly, without this attribute,
+   b. or explicitly providing the `"default"` in the attribute.
+4. All instances of the versions shall share the same function signature.
 
-``` c
-    __attribute__((target_version("name")))
-```
+The attribute `__attribute__((target_clones("name",...)))` expresses the following:
 
-when applied to a function it will become one of the versions. Function with the
-same name may exist with multiple versions in the same translation unit. One
-"default" version of the  function is required to be provided. Implicitly, when
-without attribute, or explicitly providing the "default" in the attribute. If
-only the "default" variant exist it should be linked directly.
+1. when applied to a function the compiler emits multiple versions based on the
+arguments.
+   a. One of them is implicitly the `"default"`.
+   b. If the `"default"` matches with an other explicitly provided version the
+compiler can emit only one function instead of the two.
+2. If a name is not recognized the compiler should ignore it.
 
-``` c
-    __attribute__((target_clones("name",...)))
-```
-
-when applied to a function the compiler emits multiple versions based on the
-arguments. One of them is implicitly the "default". If a name is not recognized
-the compiler should ignore it. If the default matches with an other explicitly
-provided version the compiler can emit only one function instead of the two.
-
-Dependent features names could be joined by the `+` sign.
-
-None of these attributes will enable the corresponding ACLE features.
-
-These attributes have no effect on the calling convention, all versions must
-use the same calling convertion.
+`__ARM_FEATURE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the versioning
+mechanism described in this section is available in the compiler and it is enabled.
 
 ### Name mangling
 
-The default version is not mangled top of the normal mangling.
+The `"default"` version is not mangled top of the languge specific name mangling.
 
-Version to be mangled. `<vendor-specific suffix>` should hold the version
-information [[cxxabi]](#cxxabi) as:
+Function version to be mangled for C/C++. `<vendor-specific suffix>` should hold the version
+information [[cxxabi]](#cxxabi) as `_(M<name>)*` `name` is from tables below.
 
+If multiple features are requested then those shall be appended in priority order.
+
+For example:
 ``` c
-    _(M<name>)*
+__attribute__((target_clones("crc32", "aes+sha1")))
+int foo(){..}
 ```
-name is from table below.
+will produce these mangled names for C languae: `foo`, `foo._Mcrc32`, `foo._Msha1Maes`.
 
-If multiple features are requested then those shall be applied in priority order.
 
 ### Mapping
 
-The following table lists the architecturesfeature mapping for AArch32
+The following table lists the architectures feature mapping for AArch32
 
    | **Priority** | **Architecture name**            | **Name**        | **Dependent feature registers** |
    | ------------ | -------------------------------- | --------------- | ------------------------------- |
@@ -1962,7 +1966,7 @@ The following table lists the architecturesfeature mapping for AArch32
    | 120          | AES instructions                 | aes             | ```ID_ISAR5.AES >= 0b0001```    |
    | 130          | VMULL (polynomial) instructions  | vmull           | ```ID_ISAR5.AES == 0b0002```    |
 
-The following table lists the architecturesfeature mapping for AArch64
+The following table lists the architectures feature mapping for AArch64
 
    | **Priority**  | **Architecture name**    | **Name**      | **Dependent feature registers**           |
    | ------------- | ------------------------ | ------------- | ----------------------------------------- |
@@ -2023,7 +2027,7 @@ Rules of version selection are in order:
 
 1. Select the most specific version else
 2. select the version with the highest priority else
-3. "default" shall be selected if no other versions are suitable.
+3. `"default"` shall be selected if no other versions are suitable.
 
 ## Weak linkage
 
