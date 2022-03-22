@@ -1,9 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: Development version based on 2021Q4
-date-of-issue: TBD
+version: 2021Q4
+date-of-issue: 11 January 2022
 # LaTeX specific variables
 copyright-text: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true

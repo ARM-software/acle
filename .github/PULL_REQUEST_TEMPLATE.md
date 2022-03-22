@@ -60,5 +60,7 @@ Checklist: (mark with ``X`` those which apply)
       correctness of the result in the PDF output (please refer to the
       instructions on [how to build the PDFs
       locally](../CONTRIBUTING.md#continuous-integration)).
+* [ ] The variable `draftversion` is set to `true` in the YAML header
+      of the sources of the specifications I have modified.
 * [ ] Please *DO NOT* add my GitHub profile to the list of contributors
       in the [README](../README.md#contributors-) page of the project.
