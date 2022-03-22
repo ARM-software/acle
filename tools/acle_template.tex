@@ -1,4 +1,5 @@
 % Copyright (c) 2014--2021, John MacFarlane
+% SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 % Based on default.latex template released with Pandoc (www.pandoc.org).
 % License: BSD 3-clause
 % See `data/templates` in `COPYRIGHT` at https://github.com/jgm/pandoc
@@ -33,11 +34,17 @@
 \makeatother
 
 \sectionfont{\color{armblue}}
+$if(draftversion)$
+\newcommand{\versiontext}{\textcolor{red}{Development version based on $version$}}
+$else$
+\newcommand{\versiontext}{$version$}
+$endif$
+\newcommand{\dateofissue}{$if(draftversion)$TBD$else$$date-of-issue$$endif$}
 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small $title$ \\~}
-\fancyhead[R]{\small Version: $version$ \\ \currentname}
+\fancyhead[R]{\small Version: \versiontext \\ \currentname}
 \fancyfoot[C]{\small \emph{$copyright-text$}}
 \fancyfoot[R]{\small ~\\ Page \textbf{\thepage}\ of  \textbf{\pageref*{LastPage}}}
 \renewcommand{\footrulewidth}{0pt}
@@ -46,7 +53,7 @@
 \fancypagestyle{plain}{%
   \fancyhf{}
   \fancyhead[L]{\small $title$ \\~}
-  \fancyhead[R]{\small Version: $version$ \\ \currentname}
+  \fancyhead[R]{\small Version: \versiontext \\ \currentname}
   \fancyfoot[C]{\small \emph{$copyright-text$}}
   \fancyfoot[R]{\small ~\\ Page \textbf{\thepage}\ of  \textbf{\pageref*{LastPage}}}
   \renewcommand{\footrulewidth}{0pt}
@@ -73,7 +80,7 @@ $endif$
 \setcounter{tocdepth}{6}
 \setcounter{secnumdepth}{6}
 
-\date{$date-of-issue$}
+\date{\dateofissue}
 
 \hypersetup{
             colorlinks=true,
@@ -105,8 +112,8 @@ $endif$
         \end{minipage}
         \begin{minipage}[t]{14.0cm}
             {\huge \bfseries  $title$}\\[2ex]
-            {\large Release Date: $date-of-issue$}\\[2ex]
-            {\large \bfseries Version: $version$}\\[3ex]
+            {\large Release Date: \dateofissue}\\[2ex]
+            {\large \bfseries Version: \versiontext}\\[3ex]
         \end{minipage}
         \newline
         \begin{minipage}[t][0.47cm][t]{\linewidth}
