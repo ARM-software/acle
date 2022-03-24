@@ -67,6 +67,10 @@ Example (AArch32):
   #endif
   }
 
+A more practical example of these macros is in the stack-unwinding
+runtime for exceptions. In that case the runtime unwinding is improved
+by using ``AUTG`` rather than ``AUT`` because it frees up an
+additional register.
 
 Example (AArch64):
 --------
@@ -86,7 +90,3 @@ Example (AArch64):
     // No authentication required.
     asm ("ret");
   #endif
-
-A real-world use-case of these macros is in the stack-unwinding runtime for
-exceptions where the runtime unwinding is potentially better with ``AUTG``
-rather than using ``AUT`` which forces register pressure.
