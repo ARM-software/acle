@@ -1954,7 +1954,7 @@ the [[cxxabi]](#cxxabi), and it is defined as follows:
 ```
 
 If multiple features are requested then those shall be appended in priority
-order.
+order and prefixed with `M`.
 
 For example:
 ``` c
