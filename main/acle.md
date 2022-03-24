@@ -1891,8 +1891,9 @@ This attribute does not apply to AArch64.
 
 ## Function Multi Versioning
 
-The specification for Function Multi Versioning is in [**Beta** state](#current-status-and-anticipated-changes)
-and may change or be extended in the future.
+The specification for Function Multi Versioning is in
+[**Beta**state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
 
 Function Multi Versioning provides a convenient way to select the most
 appropriate version of a function at runtime. All versions of the function may
@@ -1900,45 +1901,48 @@ be in the final binary. The compiler generates all supported versions and the
 runtime makes the selection at load time.
 
 The following attributes trigger the multi version code generation:
-`__attribute__((target_version("name")))` and `__attribute__((target_clones("name",...)))`.
+`__attribute__((target_version("name")))` and
+`__attribute__((target_clones("name",...)))`.
 
 1. These attributes can't be mixed with each other.
-2. The `"default"` version means the version of the function that would be generated
-without these attributes.
+2. The `"default"` version means the version of the function that would be
+generated without these attributes.
 3. `"name"` is the dependent features from the tables below.
 4. The dependent features could be joined by the `+` sign.
-5. None of these attributes will enable the corresponding ACLE feature(s) associated
-to the `"name"` expressed in the attribute.
+5. None of these attributes will enable the corresponding ACLE feature(s)
+associated to the `"name"` expressed in the attribute.
 6. These attributes have no effect on the calling convention.
 7. All versions must use the same calling convention.
 7. If only the `"default"` version exist it should be linked directly.
-8. FMV may be disabled in compile time by a compiler flag. In this case the `"default"`
-version shall be used.
+8. FMV may be disabled in compile time by a compiler flag. In this case the
+`"default"` version shall be used.
 
 The attribute `__attribute__((target_version("name")))` expresses the following:
 
-10. when applied to a function it becomes one of the versions. Function with the same
-name may exist with multiple versions in the same translation unit.
-11. One `"default"` version of the function is required to be provided.
-   a. Implicitly, without this attribute,
-   b. or explicitly providing the `"default"` in the attribute.
+10. when applied to a function it becomes one of the versions. Function with the
+same name may exist with multiple versions in the same translation unit.
+11. One `"default"` version of the function is required to be provided. a.
+   Implicitly, without this attribute, b. or explicitly providing the
+   `"default"` in the attribute.
 12. All instances of the versions shall share the same function signature.
 
-The attribute `__attribute__((target_clones("name",...)))` expresses the following:
+The attribute `__attribute__((target_clones("name",...)))` expresses the
+following:
 
 13. when applied to a function the compiler emits multiple versions based on the
-arguments.
-   a. One of them is implicitly the `"default"`.
-   b. If the `"default"` matches with an other explicitly provided version the
-compiler can emit only one function instead of the two.
+arguments. a. One of them is implicitly the `"default"`. b. If the `"default"`
+   matches with an other explicitly provided version the compiler can emit only
+   one function instead of the two.
 14. If a name is not recognized the compiler should ignore it.
 
 `__ARM_FEATURE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the versioning
-mechanism described in this section is supported by the compiler and it is enabled.
+mechanism described in this section is supported by the compiler and it is
+enabled.
 
 ### Name mangling
 
-The `"default"` version is not mangled top of the languge specific name mangling.
+The `"default"` version is not mangled top of the languge specific name
+mangling.
 
 The mangling function is compatible with the mangling for version information of
 the [[cxxabi]](#cxxabi), and it is defined as follows:
@@ -1949,14 +1953,16 @@ the [[cxxabi]](#cxxabi), and it is defined as follows:
 <vendor specific suffix> := `_` followed by token obtained from the tables below and prefixed with `M`
 ```
 
-If multiple features are requested then those shall be appended in priority order.
+If multiple features are requested then those shall be appended in priority
+order.
 
 For example:
 ``` c
 __attribute__((target_clones("crc32", "aes+sha1")))
 int foo(){..}
 ```
-will produce these mangled names for C languae: `foo`, `foo._Mcrc32`, `foo._Msha1Maes`.
+will produce these mangled names for C languae: `foo`, `foo._Mcrc32`,
+`foo._Msha1Maes`.
 
 
 ### Mapping
