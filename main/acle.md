@@ -1921,18 +1921,19 @@ The attribute `__attribute__((target_version("name")))` expresses the following:
 
 10. when applied to a function it becomes one of the versions. Function with the
 same name may exist with multiple versions in the same translation unit.
-11. One `"default"` version of the function is required to be provided. a.
-   Implicitly, without this attribute, b. or explicitly providing the
-   `"default"` in the attribute.
+11. One `"default"` version of the function is required to be provided.
+  a. Implicitly, without this attribute,
+  b. or explicitly providing the `"default"` in the attribute.
 12. All instances of the versions shall share the same function signature.
 
 The attribute `__attribute__((target_clones("name",...)))` expresses the
 following:
 
 13. when applied to a function the compiler emits multiple versions based on the
-arguments. a. One of them is implicitly the `"default"`. b. If the `"default"`
-   matches with an other explicitly provided version the compiler can emit only
-   one function instead of the two.
+arguments.
+  a. One of them is implicitly the `"default"`.
+  b. If the `"default"` matches with an other explicitly provided version the
+  compiler can emit only one function instead of the two.
 14. If a name is not recognized the compiler should ignore it.
 
 `__ARM_FEATURE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the versioning
@@ -1961,7 +1962,7 @@ For example:
 __attribute__((target_clones("crc32", "aes+sha1")))
 int foo(){..}
 ```
-will produce these mangled names for C languae: `foo`, `foo._Mcrc32`,
+will produce these mangled names for C language: `foo`, `foo._Mcrc32`,
 `foo._Msha1Maes`.
 
 
