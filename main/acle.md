@@ -1909,39 +1909,45 @@ without these attributes.
 4. The dependent features could be joined by the `+` sign.
 5. None of these attributes will enable the corresponding ACLE feature(s) associated
 to the `"name"` expressed in the attribute.
-6. These attributes have no effect on the calling convention, all versions must
-use the same calling convention.
+6. These attributes have no effect on the calling convention.
+7. All versions must use the same calling convention.
 7. If only the `"default"` version exist it should be linked directly.
-8. FMV may be disabled in compile time. In this case the `"default"`
+8. FMV may be disabled in compile time by a compiler flag. In this case the `"default"`
 version shall be used.
 
 The attribute `__attribute__((target_version("name")))` expresses the following:
 
-1. when applied to a function it becomes one of the versions. Function with the same
+10. when applied to a function it becomes one of the versions. Function with the same
 name may exist with multiple versions in the same translation unit.
-2. One `"default"` version of the function is required to be provided.
+11. One `"default"` version of the function is required to be provided.
    a. Implicitly, without this attribute,
    b. or explicitly providing the `"default"` in the attribute.
-4. All instances of the versions shall share the same function signature.
+12. All instances of the versions shall share the same function signature.
 
 The attribute `__attribute__((target_clones("name",...)))` expresses the following:
 
-1. when applied to a function the compiler emits multiple versions based on the
+13. when applied to a function the compiler emits multiple versions based on the
 arguments.
    a. One of them is implicitly the `"default"`.
    b. If the `"default"` matches with an other explicitly provided version the
 compiler can emit only one function instead of the two.
-2. If a name is not recognized the compiler should ignore it.
+14. If a name is not recognized the compiler should ignore it.
 
 `__ARM_FEATURE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the versioning
-mechanism described in this section is available in the compiler and it is enabled.
+mechanism described in this section is supported by the compiler and it is enabled.
 
 ### Name mangling
 
 The `"default"` version is not mangled top of the languge specific name mangling.
 
-Function version to be mangled for C/C++. `<vendor-specific suffix>` should hold the version
-information [[cxxabi]](#cxxabi) as `_(M<name>)*` `name` is from tables below.
+The mangling function is compatible with the mangling for version information of
+the [[cxxabi]](#cxxabi), and it is defined as follows:
+
+```
+<variant name> := <c/c++mangling> `.` <vendor specific suffix>
+<c/c++ mangling> := function name mangling for c/c++
+<vendor specific suffix> := `_` followed by token obtained from the tables below and prefixed with `M`
+```
 
 If multiple features are requested then those shall be appended in priority order.
 
@@ -1959,7 +1965,7 @@ The following table lists the architectures feature mapping for AArch32
 
    | **Priority** | **Architecture name**            | **Name**        | **Dependent feature registers** |
    | ------------ | -------------------------------- | --------------- | ------------------------------- |
-   | 0            | N/A                              | default         | ```N/A```                       |
+   | 0            | N/A                              | default         | N/A                             |
    | 90           | CRC32 instructions               | crc32           | ```ID_ISAR5.CRC32 == 0b0001```  |
    | 100          | SHA1 instructions                | sha1            | ```ID_ISAR5.SHA1 == 0b0001```   |
    | 110          | SHA2 instructions                | sha256          | ```ID_ISAR5.SHA2 == 0b0001```   |
@@ -2018,17 +2024,21 @@ The following table lists the architectures feature mapping for AArch64
 
 ### Selection
 
-The following rules shall be followed by all implementations. Implementation of
+The following rules shall be followed by all implementations:
+
+1. Implementation of
 the selection algorithm is platform dependent, where with platform means
-CPU/Vendor/OS as in the target triplet. The selection is permanent for the
-lifetime of the process. Only those versions could be considered where all
+CPU/Vendor/OS as in the target triplet.
+2. The selection is permanent for the
+lifetime of the process.
+3. Only those versions could be considered where all
 dependent features are available.
 
 Rules of version selection are in order:
 
-1. Select the most specific version else
-2. select the version with the highest priority else
-3. `"default"` shall be selected if no other versions are suitable.
+4. Select the most specific version else
+5. select the version with the highest priority else
+6. `"default"` shall be selected if no other versions are suitable.
 
 ## Weak linkage
 
