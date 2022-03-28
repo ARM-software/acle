@@ -52,7 +52,8 @@
       "contributions": [
         "code",
         "content",
-        "infra"
+        "infra",
+        "review"
       ]
     },
     {
@@ -162,7 +163,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/28043039?v=4",
       "profile": "https://github.com/rsandifo-arm",
       "contributions": [
-        "review"
+        "review",
+        "code"
       ]
     },
     {
@@ -181,6 +183,15 @@
       "profile": "https://davidben.net",
       "contributions": [
         "bug"
+      ]
+    },
+    {
+      "login": "DanielKristofKiss",
+      "name": "Dani",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4526629?v=4",
+      "profile": "https://github.com/DanielKristofKiss",
+      "contributions": [
+        "code"
       ]
     }
   ],

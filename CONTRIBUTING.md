@@ -2,7 +2,7 @@
 layout: default
 title: Contribution Guidelines
 ---
-<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 # Thank you for considering contributing!
@@ -88,3 +88,12 @@ under the same terms as those in the [LICENSE](LICENSE.md) file.
 
 We _do not_ require copyright assignment. The original contributor
 will retain the copyright.
+
+# All contributors
+
+This project follows the [allcontributors
+guidelines](https://allcontributors.org/docs/en/overview). We assume
+that contributors are happy to be added to the [list of contributors
+in the main README file](README.md#contributors-). Please let us know
+explicitly if that is not the case in the PR or in the issue you have
+raised.
