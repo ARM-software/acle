@@ -272,6 +272,11 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a description of support levels in [Current Status and
   Anticipated Changes](#current-status-and-anticipated-changes).
 * Support added for [Function Multi Versioning](#function-multi-versioning).
+* The sections [AES extension](#aes-extension), [SHA2
+  extension](#sha2-extension) and [SHA512
+  extension](#sha512-extension) have been reworded for clarity, by
+  specifying the `FEAT_*` tag they refer to from the Arm Architectural
+  Reference Manual.
 
 ### References
 
@@ -1503,21 +1508,28 @@ instructions include AES{E, D}, SHA1{C, P, M} and others. This also implies
 
 #### AES extension
 
-`__ARM_FEATURE_AES` is defined to 1 if the AES Crypto instructions from
-Armv8-A are supported and intrinsics targeting them are available. These
-instructions include AES{E, D}, AESMC, AESIMC and others.
+`__ARM_FEATURE_AES` is defined to 1 if the AES Crypto instructions
+from Armv8-A are supported and intrinsics targeting them are
+available. These instructions are identified by `FEAT_AES` and
+`FEAT_PMULL` in [[ARMARMv8]](#ARMARMv8), and they include AES{E, D},
+AESMC, AESIMC and others.
 
 #### SHA2 extension
 
-`__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2 Crypto instructions
-from Armv8-A are supported and intrinsics targeting them are available. These
-instructions include SHA1{C, P, M} and others.
+`__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2 Crypto
+instructions from Armv8-A are supported and intrinsics targeting them
+are available. These instructions are identified by `FEAT_SHA1` and
+`FEAT_SHA256` in [[ARMARMv8]](#ARMARMv8), and they include SHA1{C, P,
+M}, SHA256H, SHA256H2... and others.
 
 #### SHA512 extension
 
 `__ARM_FEATURE_SHA512` is defined to 1 if the SHA2 Crypto instructions
-from Armv8.2-A are supported and intrinsics targeting them are available. These
-instructions include SHA1{C, P, M} and others.
+from Armv8.2-A are supported and intrinsics targeting them are
+available. These instructions are identified by `FEAT_SHA512` in
+[[ARMARMv82]](#ARMARMv82), and they include SHA1{C, P, M}, SHA256H,
+SHA256H2, ..., SHA512H, SHA512H2, SHA512SU0... and others. Notice that
+`FEAT_SHA512` requires both `FEAT_SHA1` and `FEAT_SHA256`.
 
 #### SHA3 extension
 
