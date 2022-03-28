@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2021Q4
-date-of-issue: 11 January 2021
+version: Development version based on 2021Q4
+date-of-issue: TBD
 # LaTeX specific variables
 copyright-text: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
@@ -118,6 +118,38 @@ Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.co
 
 ### Change control
 
+#### Current Status and Anticipated Changes
+
+The following support level definitions are used by the ACLE
+specifications:
+
+**Release**
+
+   Arm considers this specification to have enough implementations,
+   which have received sufficient testing, to verify that it is
+   correct. The details of these criteria are dependent on the scale
+   and complexity of the change over previous versions: small, simple
+   changes might only require one implementation, but more complex
+   changes require multiple independent implementations, which have
+   been rigorously tested for cross-compatibility. Arm anticipates that
+   future changes to this specification will be limited to
+   typographical corrections, clarifications and compatible extensions.
+
+**Beta**
+
+   Arm considers this specification to be complete, but existing
+   implementations do not meet the requirements for confidence in its
+   release quality. Arm may need to make incompatible changes if issues
+   emerge from its implementation.
+
+**Alpha**
+
+   The content of this specification is a draft, and Arm considers the
+   likelihood of future incompatible changes to be significant.
+
+All content in this document is at the **Release** quality level,
+unless a different support level is specified in the text.
+
 #### Change history
 
 | **Issue**    | **Date**          | **By** | **Change**                                                                                                           |
@@ -214,6 +246,32 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Updated the section links in [Changes between ACLE Q2 2021 and ACLE
   Q3 2021](#changes-between-acle-q2-2021-and-acle-q3-2021) by using
   the actual section title.
+
+#### Changes for next release
+
+* Updated the description of the `__arm_mops_memset_tag` intrinsic in [memcpy
+  family of operations intrinsics - MOPS](#memcpy-family-of-operations-intrinsics---mops)
+  to require both the `__ARM_FEATURE_MOPS` and `__ARM_FEATURE_MEMORY_TAGGING`
+  feature macros.
+* Fixed minor formatting errors throughout.
+* Replaced link text such as “sec-…” and “ssec-…” with section titles.
+* Reorganized the presentation of [Feature test macros](#feature-test-macros).
+  Also:
+  * Generalized some AArch32-specific text to AArch64.
+  * Added more cross-references to the descriptions of the macros.
+  * Used embedded links for the [list of predefined macros](#summary-of-predefined-macros)
+    and fixed some misdirected links.  Resorted the list into alphabetical
+    order.
+* Reorganized the [Intrinsics](#intrinsics) and
+  [Header files](#header-files) sections.
+* Added a description of [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
+  to the [Header files](#header-files) section.
+* In [Data types](#data-types), clarified that `__fp16` and `__bf16` are
+  predefined types whereas vector types like `int32x4_t` are not.
+* Moved the [Future directions](#future-directions) chapter to the end.
+* Added a description of support levels in [Current Status and
+  Anticipated Changes](#current-status-and-anticipated-changes).
+* Support added for [Function Multi Versioning](#function-multi-versioning).
 
 ### References
 
@@ -444,16 +502,24 @@ permitted by Standard C.
   (LP64 model) or 32 bits (LLP64 model).
 
 ACLE extends C by providing some types not present in Standard C and
-defining how they are dealt with by the AAPCS.
+defining how they are dealt with by the AAPCS. These types fall into
+two groups:
 
-* Vector types for use with the Advanced SIMD intrinsics (see
- [ssec-vectypes](#vector-data-types)).
+* types that are defined by [header files](#header-files)
+
+* types that are predefined by the implementation, so that
+  no header file needs to be included to make use of them
+
+The former group includes things like [vector data types](#vector-data-types),
+which are defined by the header file [`<arm_neon.h>`](#arm_neon.h).
+
+The predefined types are:
 
 * The `__fp16` type for 16-bit floating-point values (see 
- [ssec-fp16-type](#half-precision-floating-point)).
+ [Half-precision floating-point](#half-precision-floating-point)).
 
 * The `__bf16` type for 16-bit brain floating-point values (see 
- [ssec-bf16-type](#half-precision-brain-floating-point)).
+ [Half-precision brain floating-point](#half-precision-brain-floating-point)).
 
 ### Implementation-defined type properties
 
@@ -481,32 +547,14 @@ the `Tag_ABI_PCS_wchar_t` build attribute.
 Several predefined macros are defined. Generally these define features
 of the Arm architecture being targeted, or how the C/C++ implementation
 uses the architecture. These macros are detailed in
-[sec-Feature-test-macros](#feature-test-macros). All ACLE predefined macros start with the
-prefix `__ARM.`
+[Feature test macros](#feature-test-macros). All ACLE predefined macros
+start with the prefix `__ARM`.
 
 ## Intrinsics
 
-ACLE standardizes intrinsics to access the Arm ® Neon ™ architecture
-extension. These intrinsics are intended to be compatible with existing
-implementations. Before using the Neon intrinsics or data types, the
-`<arm_neon.h>` header must be included. The Neon intrinsics are defined
-in [sec-NEON-intrinsics](#advanced-simd-neon-intrinsics). Note that the Neon intrinsics and data
-types are in the user namespace.
-
-ACLE standardizes intrinsics to access the Arm M-profile Vector Extension (MVE).
-These intrinsics are intended to be compatible with existing implementations.
-Before using the MVE intrinsics or data types, the `<arm_mve.h>` header must
-be included. The MVE intrinsics are defined in [sec-MVE-intrinsics](#m-profile-vector-extension-mve-intrinsics). Note
-that the MVE data types are in the user namespace, the MVE intrinsics can
-optionally be left out of the user namespace.
-
-ACLE also standardizes other intrinsics to access Arm instructions which
-do not map directly to C operators generally either for optimal
-implementation of algorithms, or for accessing specialist system-level
-features. Intrinsics are defined further in various following sections.
-
-Before using the non-Neon intrinsics, the `<arm_acle.h>` header should be
-included.
+ACLE standardizes intrinsics to access various features of the
+Arm ® architecture. It also standardizes a set of [header
+files](#header-files) that provide access to these intrinsics.
 
 Whether intrinsics are macros, functions or built-in operators is
 unspecified. For example:
@@ -541,81 +589,16 @@ does not meet the requirements.
 
 ## Header files
 
-`<arm_acle.h>` is provided to make the non-Neon intrinsics available.
-These intrinsics are in the C implementation namespace and begin with
-double underscores. It is unspecified whether they are available without
-the header being included. The `__ARM_ACLE` macro should be tested
-before including the header:
+ACLE standardizes various header files that provide access to
+[intrinsics](#intrinsics) and their associated data types.
+It also standardizes [feature test macros](#feature-test-macros)
+that indicate which header files are available.
 
-``` c
-  #ifdef __ARM_ACLE
-  #include <arm_acle.h>
-  #endif /* __ARM_ACLE */
-```
-
-`<arm_neon.h>` is provided to define the Neon intrinsics. As these
-intrinsics are in the user namespace, an implementation would not
-normally define them until the header is included. The `__ARM_NEON`
-macro should be tested before including the header:
-
-``` c
-  #ifdef __ARM_NEON
-  #include <arm_neon.h>
-  #endif /* __ARM_NEON */
-```
-
-`<arm_mve.h>` is provided to define the M-Profile Vector Extension (MVE)
-intrinsics.  By default these intrinsics occupy both the user namespace and
-the `__arm_` namespace, defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will
-hide the definition of the user namespace variants. The `__ARM_FEATURE_MVE`
-macro should be tested before including the header:
-
-``` c
-  #if (__ARM_FEATURE_MVE & 3) == 3
-  #include <arm_mve.h>
-  /* MVE integer and floating point intrinsics are now available to use.  */
-  #elif __ARM_FEATURE_MVE & 1
-  #include <arm_mve.h>
-  /* MVE integer intrinsics are now available to use.  */
-  #endif
-```
-
-`<arm_fp16.h>` is provided to define the scalar 16-bit floating point
-arithmetic intrinsics. As these intrinsics are in the user namespace,
-an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` feature macro
-should be tested before including the header:
-
-``` c
-  #ifdef __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
-  #include <arm_fp16.h>
-  #endif /* __ARM_FEATURE_FP16_SCALAR_ARITHMETIC */
-```
-
-Including `<arm_neon.h>` will also cause `<arm_fp16.h>` to be included
-if appropriate.
-
-`<arm_bf16.h>` is provided to define the 16-bit brain floating point
-arithmetic intrinsics. As these intrinsics are in the user namespace,
-an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_BF16` feature macro
-should be tested before including the header:
-
-``` c
-  #ifdef __ARM_FEATURE_BF16
-  #include <arm_bf16.h>
-  #endif /* __ARM_FEATURE_BF16 */
-```
-
-When `__ARM_BF16_FORMAT_ALTERNATIVE` is defined to `1` the only scalar
-instructions available are conversion instrinstics between `bfloat16_t` and
-`float32_t`.  These instructions are:
-
-* `vcvth_bf16_f32` (convert float32_t to bfloat16_t)
-* `vcvtah_f32_bf16` (convert bfloat16_t to float32_t)
-
-Including `<arm_neon.h>` will also cause `<arm_bf16.h>` to be included
-if appropriate.
+Some architecture features have a dedicated header file;
+for example, [`<arm_neon.h>`](#arm_neon.h) provides access to the
+[Advanced SIMD (Neon) intrinsics](#advanced-simd-neon-intrinsics).
+[`arm_acle.h`](#arm_acle.h) provides a catch-all for intrinsics that
+do not belong to a more specific header file.
 
 These headers behave as standard library headers; repeated inclusion has
 no effect beyond the first include.
@@ -647,11 +630,120 @@ and:
   // ... UINT64_C is now defined
 ```
 
+### `<arm_acle.h>`
+
+`<arm_acle.h>` provides access to intrinsics that do not belong
+to the more specific header files below. These intrinsics are in the
+C implementation namespace and begin with double underscores. It is
+unspecified whether they are available without the header being
+included. The `__ARM_ACLE` macro should be tested before including the
+header:
+
+``` c
+  #ifdef __ARM_ACLE
+  #include <arm_acle.h>
+  #endif /* __ARM_ACLE */
+```
+
+### `<arm_fp16.h>`
+
+`<arm_fp16.h>` is provided to define the scalar 16-bit floating point
+arithmetic intrinsics. As these intrinsics are in the user namespace,
+an implementation would not normally define them until the header is
+included. The `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` feature macro
+should be tested before including the header:
+
+``` c
+  #ifdef __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
+  #include <arm_fp16.h>
+  #endif /* __ARM_FEATURE_FP16_SCALAR_ARITHMETIC */
+```
+
+### `<arm_bf16.h>`
+
+`<arm_bf16.h>` is provided to define the 16-bit brain floating point
+arithmetic intrinsics. As these intrinsics are in the user namespace,
+an implementation would not normally define them until the header is
+included. The `__ARM_FEATURE_BF16` feature macro
+should be tested before including the header:
+
+``` c
+  #ifdef __ARM_FEATURE_BF16
+  #include <arm_bf16.h>
+  #endif /* __ARM_FEATURE_BF16 */
+```
+
+When `__ARM_BF16_FORMAT_ALTERNATIVE` is defined to `1` the only scalar
+instructions available are conversion instrinstics between `bfloat16_t` and
+`float32_t`.  These instructions are:
+
+* `vcvth_bf16_f32` (convert float32_t to bfloat16_t)
+* `vcvtah_f32_bf16` (convert bfloat16_t to float32_t)
+
+### `<arm_neon.h>`
+
+`<arm_neon.h>` is provided to define the [Advanced SIMD (Neon)
+intrinsics](#advanced-simd-neon-intrinsics) and associated
+[data types](#vector-data-types). As these intrinsics and data types are
+in the user namespace, an implementation would not normally define them
+until the header is included. The `__ARM_NEON` macro should be tested
+before including the header:
+
+``` c
+  #ifdef __ARM_NEON
+  #include <arm_neon.h>
+  #endif /* __ARM_NEON */
+```
+
+Including `<arm_neon.h>` will also cause the following header files
+to be included, if the header files are available:
+
+* [`<arm_fp16.h>`](#arm_fp16.h)
+* [`<arm_bf16.h>`](#arm_bf16.h)
+
+### `<arm_neon_sve_bridge.h>`
+
+`<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
+Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
+for details.  The `__ARM_NEON_SVE_BRIDGE` macro should be tested
+before including the header:
+
+``` c
+  #ifdef __ARM_NEON_SVE_BRIDGE
+  #include <arm_neon_sve_bridge.h>
+  #endif /* __ARM_NEON_SVE_BRIDGE */
+```
+
+Including `<arm_neon_sve_bridge.h>` will also include
+[`<arm_neon.h>`](#arm_neon.h) and `<arm_sve.h>`.
+
+### `<arm_mve.h>`
+
+`<arm_mve.h>` is provided to define the [M-profile Vector Extension
+(MVE) intrinsics](#m-profile-vector-extension-mve-intrinsics) and associated
+data types. The data types occupy the user namespace. By default the
+intrinsics occupy both the user namespace and the `__arm_` namespace;
+defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will hide the definition of
+the user namespace variants.
+
+The `__ARM_FEATURE_MVE` macro should be tested before including the
+header:
+
+``` c
+  #if (__ARM_FEATURE_MVE & 3) == 3
+  #include <arm_mve.h>
+  /* MVE integer and floating point intrinsics are now available to use.  */
+  #elif __ARM_FEATURE_MVE & 1
+  #include <arm_mve.h>
+  /* MVE integer intrinsics are now available to use.  */
+  #endif
+```
+
 ## Attributes
 
 GCC-style attributes are provided to annotate types, objects and
 functions with extra information, such as alignment. These attributes
-are defined in [sec-Attributes-and-pragmas](#attributes-and-pragmas).
+are defined in [Attributes and pragmas](#attributes-and-pragmas).
 
 ## Implementation strategies
 
@@ -702,7 +794,7 @@ values using standard C operators.
 ```
 
 Armv8 introduces floating point instructions to convert 64-bit to 16-bit
-i.e. from double to `__fp16.` They are not available in earlier
+i.e. from double to `__fp16`. They are not available in earlier
 architectures, therefore have to rely on emulation libraries or a
 sequence of instructions to achieve the conversion.
 
@@ -804,7 +896,7 @@ single-precision floating point format and the value be converted to `__bf16`
 when required using ACLE intrinsics.
 
 Armv8.2-A introduces floating point instructions to convert 32-bit to brain
-16-bit i.e. from float to `__bf16.` They are not available in earlier
+16-bit i.e. from float to `__bf16`. They are not available in earlier
 architectures, therefore have to rely on emulation libraries or a
 sequence of instructions to achieve the conversion.
 
@@ -831,7 +923,8 @@ processors implementing the Arm architecture.)
 
 The recommended CPU architecture names are as specified under
 `Tag_CPU_arch` in [[BA]](#BA). For details of how to use predefined macros to
-test architecture in source code, see [ssec-ATisa](#a32t32-instruction-set-architecture).
+test architecture in source code, see [Instruction set architecture and
+features](#instruction-set-architecture-and-features).
 
 The following table lists the architectures and the A32 and
 T32 instruction set versions.
@@ -864,8 +957,9 @@ present in the Armv7-A architecture).
 ### FPU architecture
 
 For details of how to test FPU features in source code, see
-[ssec-HWFPSIMD](#floating-point-advanced-simd-neon-and-mve-hardware). In particular, for testing which
-precisions are supported in hardware, see `_ssec-HWFP`.
+[Floating-point and vector hardware](#floating-point-and-vector-hardware).
+In particular, for testing which precisions are supported in hardware,
+see [Hardware floating point](#hardware-floating-point).
 
 | **Name**         | **Features**                                       | **Example processor**               |
 | ---------------- | -------------------------------------------------- | ----------------------------------- |
@@ -910,7 +1004,7 @@ comparison such as:
 will have the expected effect of evaluating to false if the macro is not
 defined.)
 
-All ACLE macros begin with the prefix `__ARM_.` All ACLE macros expand
+All ACLE macros begin with the prefix `__ARM_`. All ACLE macros expand
 to integral constant expressions suitable for use in an #if directive,
 unless otherwise specified. Syntactically, they must be
 primary-expressions generally this means an implementation should
@@ -931,7 +1025,7 @@ little-endian format. (Aside: the "mixed-endian" format for
 double-precision numbers, used on some very old Arm FPU implementations,
 is not supported by ACLE or the Arm ABI.)
 
-## A32 and T32 instruction set architecture and features
+## Instruction set architecture and features
 
 References to the target architecture refer to the target as
 configured in the tools, for example by appropriate command-line
@@ -939,8 +1033,8 @@ options. This may be a subset or intersection of actual targets, in
 order to produce a binary that runs on more than one real architecture.
 For example, use of specific features may be disabled.
 
-In some cases, hardware features may be accessible from only one or
-other of A32 or T32 state. For example, in the v5TE and v6
+In the 32-bit architecture, some hardware features may be accessible from
+only one or other of A32 or T32 state. For example, in the v5TE and v6
 architectures, DSP instructions and (where available) VFP
 instructions, are only accessible in A32 state, while in the v7-R
 architecture, hardware divide is only accessible from T32 state. Where
@@ -959,7 +1053,7 @@ An implementation that allows a user to indicate which functions go into
 which state (either as a hard requirement or a preference) is not
 required to change the settings of architectural feature test macros.
 
-### A32/T32 instruction set architecture
+### Arm architecture level
 
 `__ARM_ARCH` is defined as an integer value indicating the current Arm
 instruction set architecture (for example 7 for the Arm v7-A architecture
@@ -970,16 +1064,16 @@ include minor versions. The formula to calculate the value of
 `__ARM_ARCH` from Armv8.1-A [[ARMARMv81]](#ARMARMv81) onwards is given by the following
 formula:
 
-``` c
-  For an Arm architecture ArmvX.Y, __ARM_ARCH = X * 100 + Y. E.g.
-  for Armv8.1 __ARM_ARCH = 801.
-```
+> For an Arm architecture ArmvX.Y, `__ARM_ARCH` = X * 100 + Y.
+> For example, for Armv8.1 `__ARM_ARCH` = 801.
 
 Since ACLE only supports the Arm architecture, this macro would always
 be defined in an ACLE implementation.
 
 Note that the `__ARM_ARCH` macro is defined even for cores which only
 support the T32 instruction set.
+
+### Instruction set architecture (A32/T32/A64)
 
 `__ARM_ARCH_ISA_ARM` is defined to 1 if the core supports the Arm
 instruction set. It is not defined for M-profile cores.
@@ -1033,7 +1127,8 @@ be defined.
 ### LDREX/STREX
 
 This feature was deprecated in ACLE 2.0. It is strongly recommended that
-C11/C++11 atomics be used instead.
+C11/C++11 atomics be used instead.  (See also [Synchronization, barrier,
+and hint intrinsics](#synchronization-barrier-and-hint-intrinsics).)
 
 `__ARM_FEATURE_LDREX` is defined if the load/store-exclusive
 instructions (LDREX/STREX) are supported. Its value is a set of bits
@@ -1066,24 +1161,19 @@ available, Arm strongly recommends programmers to use LDREX/STREX rather
 than SWP. Note that platforms may choose to make SWP unavailable in user
 mode and emulate it through a trap to a platform routine, or fault it.
 
-### Large System Extensions
-
-`__ARM_FEATURE_ATOMICS` is defined if the Large System Extensions introduced in
-the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported on this target.
-Note: It is strongly recommended that standardized C11/C++11 atomics are used to
-implement atomic operations in user code.
-
 ### CLZ
 
 `__ARM_FEATURE_CLZ` is defined to 1 if the CLZ (count leading zeroes)
 instruction is supported in hardware. Note that ACLE provides the 
-`__clz()` family of intrinsics (see [ssec-Mdpi](#miscellaneous-data-processing-intrinsics)) even 
+`__clz()` family of intrinsics (see [Miscellaneous data-processing
+intrinsics](#miscellaneous-data-processing-intrinsics)) even
 when `__ARM_FEATURE_CLZ` is not defined.
 
 ### Q (saturation) flag
 
 `__ARM_FEATURE_QBIT` is defined to 1 if the Q (saturation) global flag
-exists and the intrinsics defined in [ssec-Qflag2](#the-q-saturation-flag) are available. This 
+exists and the intrinsics defined in [The Q (saturation)
+flag](#the-q-saturation-flag) are available. This
 flag is used with the DSP saturating-arithmetic instructions (such
 as QADD) and the width-specified saturating instructions (SSAT and USAT).
 Note that either of these classes of instructions may exist without the
@@ -1097,9 +1187,9 @@ for AArch32 only.
 ### DSP instructions
 
 `__ARM_FEATURE_DSP` is defined to 1 if the DSP (v5E) instructions are
-supported and the intrinsics defined in [ssec-Satin](#saturating-intrinsics) are available. 
-These instructions include QADD, SMULBB and others. This feature also implies 
-support for the Q flag.
+supported and the intrinsics defined in [Saturating
+intrinsics](#saturating-intrinsics) are available. These instructions include
+QADD, SMULBB and others. This feature also implies support for the Q flag.
 
 `__ARM_FEATURE_DSP` and its associated intrinsics are deprecated in
 ACLE 2.0 for A-profile. They are fully supported for M and R-profiles.
@@ -1108,18 +1198,23 @@ This macro is defined for AArch32 only.
 ### Saturation instructions
 
 `__ARM_FEATURE_SAT` is defined to 1 if the SSAT and USAT instructions
-are supported and the intrinsics defined in [ssec-Wsatin](#width-specified-saturation-intrinsics) are
-available. This feature also implies support for the Q flag.
+are supported and the intrinsics defined in [Width-specified saturation
+intrinsics](#width-specified-saturation-intrinsics) are available. This
+feature also implies support for the Q flag.
 
 `__ARM_FEATURE_SAT` and its associated intrinsics are deprecated in
 ACLE 2.0 for A-profile. They are fully supported for M and R-profiles.
 This macro is defined for AArch32 only.
 
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --><span id="32-bit-simd-instructions"></span>
+
 ### 32-bit SIMD instructions
 
 `__ARM_FEATURE_SIMD32` is defined to 1 if the 32-bit SIMD instructions
 are supported and the intrinsics defined in
-[ssec-32SIMD](#32-bit-simd-operations) are available. This also
+[32-bit SIMD Operations](#32-bit-simd-operations) are available. This also
 implies support for the GE global flags which indicate byte-by-byte
 comparison results.
 
@@ -1143,13 +1238,89 @@ instruction set only. This can be tested for using the following test:
     #if __ARM_FEATURE_IDIV || (__ARM_ARCH_PROFILE == 'R')
 ```
 
+### CRC32 extension
+
+`__ARM_FEATURE_CRC32` is defined to 1 if the CRC32 instructions are
+supported and the intrinsics defined in [CRC32 intrinsics](#crc32-intrinsics)
+are available. These instructions include CRC32B, CRC32H and others.
+This is only available when `__ARM_ARCH >= 8`.
+
+### Random Number Generation Extension
+
+`__ARM_FEATURE_RNG` is defined to 1 if the Random Number Generation
+instructions are supported and the intrinsics defined in
+[Random number generation intrinsics](#random-number-generation-intrinsics)
+are available.
+
+### Branch Target Identification
+
+`__ARM_FEATURE_BTI_DEFAULT` is defined to 1 if the Branch Target
+Identification extension is used to protect branch destinations by default.
+The protection applied to any particular function may be overriden by
+mechanisms such as function attributes.
+
+`__ARM_FEATURE_BTI` is defined to 1 if Branch Target Identification
+extension is available on the target. It is undefined otherwise.
+
+### Pointer Authentication
+
+`__ARM_FEATURE_PAC_DEFAULT` is defined as a bitmap to indicate the use of the
+Pointer Authentication extension to protect code against code reuse attacks
+by default.
+The bits are defined as follows:
+
+| **Bit** | **Meaning**                         |
+| ------- | ----------------------------------- |
+| 0       | Protection using the A key          |
+| 1       | Protection using the B key          |
+| 2       | Protection including leaf functions |
+
+For example, a value of `0x5` indicates that the Pointer Authentication
+extension is used to protect function entry points, including leaf functions,
+using the A key for signing.
+The protection applied to any particular function may be overriden by
+mechanisms such as function attributes.
+
+`__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
+is available on the target. It is undefined otherwise.
+
+### Large System Extensions
+
+`__ARM_FEATURE_ATOMICS` is defined if the Large System Extensions introduced in
+the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported on this target.
+Note: It is strongly recommended that standardized C11/C++11 atomics are used to
+implement atomic operations in user code.
+
 ### Transactional Memory Extension
 
 `__ARM_FEATURE_TME` is defined to `1` if the Transactional Memory
 Extension instructions are supported in hardware and intrinsics defined
-in [sec-TME-intrinsics](#transactional-memory-extension-tme-intrinsics) are available.
+in [Transactional Memory Extension (TME)
+intrinsics](#transactional-memory-extension-tme-intrinsics) are available.
 
-## Floating-point, Advanced SIMD (Neon) and MVE hardware
+### Armv8.7-A Load/Store 64 Byte extension
+
+`__ARM_FEATURE_LS64` is defined to 1 if the Armv8.7-A `LD64B`,
+`ST64B`, `ST64BV` and `ST64BV0` instructions for atomic 64-byte
+access to device memory are supported.
+This macro may only ever be defined in the AArch64 execution state.
+Intrinsics for using these instructions are specified in
+[Load/store 64 Byte intrinsics](#loadstore-64-byte-intrinsics).
+
+### memcpy family of memory operations standarization instructions - MOPS
+
+If the `CPYF*`, `CPY*`, `SET*` and `SETG*` instructions are supported,
+`__ARM_FEATURE_MOPS` is defined to 1. These instructions were
+introduced in the Armv8.8-A and Armv9.3-A architecture updates for
+standardization of memorycpy, memset, and memmove family of memory
+operations (MOPS).
+
+The `__ARM_FEATURE_MOPS` macro can only be implemented in the AArch64
+execution state. Intrinsics for the use of these instructions are
+specified in [memcpy family of operations intrinsics -
+MOPS](#memcpy-family-of-operations-intrinsics---mops)
+
+## Floating-point and vector hardware
 
 ### Hardware floating point
 
@@ -1186,8 +1357,10 @@ diagnose or fault use of floating-point arithmetic at a precision not
 supported in hardware.
 
 Support for 16-bit floating-point language or 16-bit brain floating-point
-language extensions (see [ssec-FP16fmt](#half-precision-16-bit-floating-point-format) and [ssec-BF16fmt](#brain-half-precision-16-bit-floating-point-format)) is only 
-required if supported in hardware.
+language extensions (see [Half-precision (16-bit) floating-point
+format](#half-precision-16-bit-floating-point-format) and [Brain
+16-bit floating-point support](#brain-16-bit-floating-point-support))
+is only required if supported in hardware.
 
 ### Half-precision (16-bit) floating-point format
 
@@ -1199,57 +1372,36 @@ alternative [[ARMARM]](#ARMARM) 16-bit floating-point format is used. This forma
 removes support for infinities and NaNs in order to provide an
 additional binade.
 
-At most one of these macros will be defined. See [ssec-fp16-type](#half-precision-floating-point)
-for details of half-precision floating-point types.
+At most one of these macros will be defined. See [Half-precision
+floating-point](#half-precision-floating-point) for details of
+half-precision floating-point types.
 
-### Brain half-precision (16-bit) floating-point format
+### Half-precision argument and result
 
-`__ARM_BF16_FORMAT_ALTERNATIVE` is defined to 1 if the Arm
-alternative [[ARMARM]](#ARMARM) 16-bit brain floating-point format is used. This format
-closely resembles the IEEE 754 single-precision format.  As such a brain
-half-precision floating point value can be converted to an IEEE 754
-single-floating point format by appending 16 zero bits at the end.
+`__ARM_FP16_ARGS` is defined to 1 if `__fp16` can be used as an
+argument and result.
 
-`__ARM_FEATURE_BF16_VECTOR_ARITHMETIC` is defined to `1` if the brain 16-bit
-floating-point arithmetic instructions are supported in hardware and the
-associated vector intrinsics defined by ACLE are available. Note that
-this implies:
+### Vector extensions
 
-* `__ARM_FP & 0x02 == 1`
-* `__ARM_NEON_FP & 0x02 == 1`
-
-See [ssec-bf16-type](#half-precision-brain-floating-point) for details of half-precision
-brain floating-point types.
-
-### Fused multiply-accumulate (FMA)
-
-`__ARM_FEATURE_FMA` is defined to 1 if the hardware floating-point
-architecture supports fused floating-point multiply-accumulate, i.e.
-without intermediate rounding. Note that C implementations are
-encouraged [[C99]](#C99) (7.12) to ensure that <math.h> defines `FP_FAST_FMAF` or
-`FP_FAST_FMA,` which can be tested by portable C code. A C
-implementation on Arm might define these macros by testing
-`__ARM_FEATURE_FMA` and `__ARM_FP.`
-
-### Advanced SIMD architecture extension (Neon)
+#### Advanced SIMD architecture extension (Neon)
 
 `__ARM_NEON` is defined to a value indicating the Advanced SIMD (Neon)
 architecture supported. The only current value is 1.
 
 In principle, for AArch32, the Neon architecture can exist in an
 integer-only version. To test for the presence of Neon floating-point
-vector instructions, test `__ARM_NEON_FP.` When Neon does occur in an
+vector instructions, test `__ARM_NEON_FP`. When Neon does occur in an
 integer-only version, the VFP scalar instruction set is also not
 present. See [[ARMARM]](#ARMARM) (table A2-4) for architecturally permitted
 combinations.
 
 `__ARM_NEON` is always set to 1 for AArch64.
 
-### Neon floating-point
+#### Neon floating-point
 
 `__ARM_NEON_FP` is defined as a bitmap to indicate floating-point
 support in the Neon architecture. The meaning of the values is the same
-as for `__ARM_FP.` This macro is undefined when the Neon extension is
+as for `__ARM_FP`. This macro is undefined when the Neon extension is
 not present or does not support floating-point.
 
 Current AArch32 Neon implementations do not support double-precision
@@ -1262,7 +1414,13 @@ for AArch32. Double-precision is always set for AArch64.
 If `__ARM_FEATURE_FMA` and `__ARM_NEON_FP` are both defined,
 fused-multiply instructions are available in Neon also.
 
-### M-profile Vector Extension
+#### NEON-SVE Bridge macros
+
+`__ARM_NEON_SVE_BRIDGE` is defined to 1 if [NEON-SVE Bridge](#neon-sve-bridge)
+intrinsics are available. This implies that `__ARM_NEON` and `__ARM_NEON_FP`
+are both nonzero.
+
+#### M-profile Vector Extension
 
 `__ARM_FEATURE_MVE` is defined as a bitmap to indicate M-profile Vector
 Extension (MVE) support.
@@ -1272,7 +1430,7 @@ Extension (MVE) support.
 | 0       | 0x01      | Integer MVE        |
 | 1       | 0x02      | Floating-point MVE |
 
-### Wireless MMX
+#### Wireless MMX
 
 If Wireless MMX operations are available on the target, `__ARM_WMMX` is
 defined to a value that indicates the level of support, corresponding to
@@ -1281,101 +1439,9 @@ the `Tag_WMMX_arch` build attribute.
 This specification does not further define source-language features to
 support Wireless MMX.
 
-### Crypto extension
+### 16-bit floating-point extensions
 
-NOTE: The `__ARM_FEATURE_CRYPTO` macro is deprecated in favor of the finer
-grained feature macros described below.
-
-`__ARM_FEATURE_CRYPTO` is defined to 1 if the Armv8-A Crypto instructions are
-supported and intrinsics targeting them are available. These
-instructions include AES{E, D}, SHA1{C, P, M} and others. This also implies
-`__ARM_FEATURE_AES` and `__ARM_FEATURE_SHA2`.
-
-### AES extension
-
-`__ARM_FEATURE_AES` is defined to 1 if the AES Crypto instructions from
-Armv8-A are supported and intrinsics targeting them are available. These
-instructions include AES{E, D}, AESMC, AESIMC and others.
-
-### SHA2 extension
-
-`__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2 Crypto instructions
-from Armv8-A are supported and intrinsics targeting them are available. These
-instructions include SHA1{C, P, M} and others.
-
-### SHA512 extension
-
-`__ARM_FEATURE_SHA512` is defined to 1 if the SHA2 Crypto instructions
-from Armv8.2-A are supported and intrinsics targeting them are available. These
-instructions include SHA1{C, P, M} and others.
-
-### SHA3 extension
-
-`__ARM_FEATURE_SHA3` is defined to 1 if the SHA1 & SHA2 Crypto instructions
-from Armv8-A and the SHA2 and SHA3 instructions from Armv8.2-A and newer
-are supported and intrinsics targeting them are available.
-These instructions include AES{E, D}, SHA1{C, P, M}, RAX, and others.
-
-### SM3 extension
-
-`__ARM_FEATURE_SM3` is defined to 1 if the SM3 Crypto instructions from
-Armv8.2-A are supported and intrinsics targeting them are available. These
-instructions include SM3{TT1A, TT1B}, and others.
-
-### SM4 extension
-
-`__ARM_FEATURE_SM4` is defined to 1 if the SM4 Crypto instructions from
-Armv8.2-A are supported and intrinsics targeting them are available. These
-instructions include SM4{E, EKEY} and others.
-
-### FP16 FML extension
-
-`__ARM_FEATURE_FP16_FML` is defined to 1 if the FP16 multiplication variant
-instructions from Armv8.2-A are supported and intrinsics targeting them are
-available. Available when `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
-
-### CRC32 extension
-
-`__ARM_FEATURE_CRC32` is defined to 1 if the CRC32 instructions are
-supported and the intrinsics defined in [ssec-crc32](#crc32-intrinsics) are available. 
-These instructions include CRC32B, CRC32H and others. This is only available
-when `__ARM_ARCH >= 8`.
-
-### Random Number Generation Extension
-
-`__ARM_FEATURE_RNG` is defined to 1 if the Random Number Generation
-instructions are supported and the intrinsics defined in [ssec-rand](#random-number-generation-intrinsics) 
-are available.
-
-### Directed rounding
-
-`__ARM_FEATURE_DIRECTED_ROUNDING` is defined to 1 if the directed
-rounding and conversion vector instructions are supported and rounding
-and conversion intrinsics are available. This is only available when
-`__ARM_ARCH >= 8`.
-
-### Numeric maximum and minimum
-
-`__ARM_FEATURE_NUMERIC_MAXMIN` is defined to 1 if the IEEE 754-2008
-compliant floating point maximum and minimum vector instructions are
-supported and intrinsics targeting these instructions are available. This
-is only available when `__ARM_ARCH >= 8`.
-
-### Half-precision argument and result
-
-`__ARM_FP16_ARGS` is defined to 1 if `__fp16` can be used as an
-argument and result.
-
-### Rounding doubling multiplies
-
-`__ARM_FEATURE_QRDMX` is defined to 1 if SQRDMLAH and SQRDMLSH
-instructions and their associated intrinsics are available.
-
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="16-bit-floating-point-data-processing-operations"></span>
-
-### 16-bit floating-point data processing operations
+#### 16-bit floating-point data processing operations
 
 `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1` if the
 16-bit floating-point arithmetic instructions are supported in hardware and
@@ -1396,10 +1462,165 @@ this implies:
 * `__ARM_FP & 0x02 == 1`
 * `__ARM_NEON_FP & 0x02 == 1`
 
-### Javascript floating-point conversion
+#### FP16 FML extension
 
-`__ARM_FEATURE_JCVT` is defined to 1 if the FJCVTZS (AArch64) or
-VJCVT (AArch32) instruction and the associated intrinsic is available.
+`__ARM_FEATURE_FP16_FML` is defined to 1 if the FP16 multiplication variant
+instructions from Armv8.2-A are supported and intrinsics targeting them are
+available. This implies that `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is
+defined to a nonzero value.
+
+#### Brain 16-bit floating-point support
+
+`__ARM_BF16_FORMAT_ALTERNATIVE` is defined to 1 if the Arm
+alternative [[ARMARM]](#ARMARM) 16-bit brain floating-point format is used. This format
+closely resembles the IEEE 754 single-precision format.  As such a brain
+half-precision floating point value can be converted to an IEEE 754
+single-floating point format by appending 16 zero bits at the end.
+
+`__ARM_FEATURE_BF16_VECTOR_ARITHMETIC` is defined to `1` if the brain 16-bit
+floating-point arithmetic instructions are supported in hardware and the
+associated vector intrinsics defined by ACLE are available. Note that
+this implies:
+
+* `__ARM_FP & 0x02 == 1`
+* `__ARM_NEON_FP & 0x02 == 1`
+
+See [Half-precision brain
+floating-point](#half-precision-brain-floating-point) for details
+of half-precision brain floating-point types.
+
+### Cryptographic extensions
+
+#### “Crypto” extension
+
+NOTE: The `__ARM_FEATURE_CRYPTO` macro is deprecated in favor of the finer
+grained feature macros described below.
+
+`__ARM_FEATURE_CRYPTO` is defined to 1 if the Armv8-A Crypto instructions are
+supported and intrinsics targeting them are available. These
+instructions include AES{E, D}, SHA1{C, P, M} and others. This also implies
+`__ARM_FEATURE_AES` and `__ARM_FEATURE_SHA2`.
+
+#### AES extension
+
+`__ARM_FEATURE_AES` is defined to 1 if the AES Crypto instructions from
+Armv8-A are supported and intrinsics targeting them are available. These
+instructions include AES{E, D}, AESMC, AESIMC and others.
+
+#### SHA2 extension
+
+`__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2 Crypto instructions
+from Armv8-A are supported and intrinsics targeting them are available. These
+instructions include SHA1{C, P, M} and others.
+
+#### SHA512 extension
+
+`__ARM_FEATURE_SHA512` is defined to 1 if the SHA2 Crypto instructions
+from Armv8.2-A are supported and intrinsics targeting them are available. These
+instructions include SHA1{C, P, M} and others.
+
+#### SHA3 extension
+
+`__ARM_FEATURE_SHA3` is defined to 1 if the SHA1 & SHA2 Crypto instructions
+from Armv8-A and the SHA2 and SHA3 instructions from Armv8.2-A and newer
+are supported and intrinsics targeting them are available.
+These instructions include AES{E, D}, SHA1{C, P, M}, RAX, and others.
+
+#### SM3 extension
+
+`__ARM_FEATURE_SM3` is defined to 1 if the SM3 Crypto instructions from
+Armv8.2-A are supported and intrinsics targeting them are available. These
+instructions include SM3{TT1A, TT1B}, and others.
+
+#### SM4 extension
+
+`__ARM_FEATURE_SM4` is defined to 1 if the SM4 Crypto instructions from
+Armv8.2-A are supported and intrinsics targeting them are available. These
+instructions include SM4{E, EKEY} and others.
+
+### Other floating-point and vector extensions
+
+#### Fused multiply-accumulate (FMA)
+
+`__ARM_FEATURE_FMA` is defined to 1 if the hardware floating-point
+architecture supports fused floating-point multiply-accumulate, i.e.
+without intermediate rounding. Note that C implementations are
+encouraged [[C99]](#C99) (7.12) to ensure that <math.h> defines `FP_FAST_FMAF` or
+`FP_FAST_FMA`, which can be tested by portable C code. A C
+implementation on Arm might define these macros by testing
+`__ARM_FEATURE_FMA` and `__ARM_FP`.
+
+This macro implies support for floating-point instructions but it
+does not in itself imply support for vector instructions.  See [Neon
+floating-point](#neon-floating-point) for the conditions under
+which vector fused multiply-accumulate operations are available.
+
+#### Directed rounding
+
+`__ARM_FEATURE_DIRECTED_ROUNDING` is defined to 1 if the directed
+rounding and conversion vector instructions are supported and rounding
+and conversion intrinsics are available. This is only available when
+`__ARM_ARCH >= 8`.
+
+#### Armv8.5-A Floating-point rounding extension
+
+`__ARM_FEATURE_FRINT`  is defined to 1 if the Armv8.5-A rounding number
+instructions are supported and the scalar and vector intrinsics are available.
+This macro may only ever be defined in the AArch64 execution state.
+The scalar intrinsics are specified in [Floating-point data-processing
+intrinsics](#floating-point-data-processing-intrinsics) and are not expected
+to be for general use.  They are defined for uses that require the specialist
+rounding behavior of the relevant instructions.
+The vector intrinsics are specified in the Arm Neon Intrinsics Reference
+Architecture Specification [[Neon]](#Neon).
+
+#### Javascript floating-point conversion
+
+`__ARM_FEATURE_JCVT` is defined to 1 if the FJCVTZS (AArch64)
+or VJCVT (AArch32) instruction and the [associated
+intrinsic](#floating-point-data-processing-intrinsics) are available.
+
+#### Numeric maximum and minimum
+
+`__ARM_FEATURE_NUMERIC_MAXMIN` is defined to 1 if the IEEE 754-2008
+compliant floating point maximum and minimum vector instructions are
+supported and intrinsics targeting these instructions are available. This
+is only available when `__ARM_ARCH >= 8`.
+
+#### Rounding doubling multiplies
+
+`__ARM_FEATURE_QRDMX` is defined to 1 if SQRDMLAH and SQRDMLSH
+instructions and their associated intrinsics are available.
+
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --> <span id="16-bit-floating-point-data-processing-operations"></span>
+
+#### Dot Product extension
+
+`__ARM_FEATURE_DOTPROD`  is defined if the dot product data manipulation
+instructions are supported and the vector intrinsics are available. Note that
+this implies:
+
+  * `__ARM_NEON == 1`
+
+#### Complex number intrinsics
+
+`__ARM_FEATURE_COMPLEX` is defined if the complex addition and complex
+multiply-accumulate vector instructions are supported. Note that this implies:
+
+  * `__ARM_NEON == 1`
+
+These instructions require that the input vectors are organized such that the
+real and imaginary parts of the complex number are stored in alternating sequences:
+real, imag, real, imag, ... etc.
+
+#### Matrix Multiply Intrinsics
+
+`__ARM_FEATURE_MATMUL_INT8` is defined if the integer matrix multiply
+instructions are supported. Note that this implies:
+
+* `__ARM_NEON == 1`
 
 ## Floating-point model
 
@@ -1483,75 +1704,6 @@ on the target architecture. The following bits are used:
 | 2       | 0x4       | __arm_mcrr and __arm_mrrc                                                               |
 | 3       | 0x8       | __arm_mcrr2 and __arm_mrrc2                                                             |
 
-## Armv8.5-A Floating-point rounding extension
-
-`__ARM_FEATURE_FRINT`  is defined to 1 if the Armv8.5-A rounding number
-instructions are supported and the scalar and vector intrinsics are available.
-This macro may only ever be defined in the AArch64 execution state.
-The scalar intrinsics are specified in [ssec-Fpdpi](#floating-point-data-processing-intrinsics) and are not expected
-to be for general use.  They are defined for uses that require the specialist
-rounding behavior of the relevant instructions.
-The vector intrinsics are specified in the Arm Neon Intrinsics Reference
-Architecture Specification [[Neon]](#Neon).
-
-## Dot Product extension
-
-`__ARM_FEATURE_DOTPROD`  is defined if the dot product data manipulation
-instructions are supported and the vector intrinsics are available. Note that
-this implies:
-
-  * `__ARM_NEON == 1`
-
-## Complex number intrinsics
-
-`__ARM_FEATURE_COMPLEX` is defined if the complex addition and complex
-multiply-accumulate vector instructions are supported. Note that this implies:
-
-  * `__ARM_NEON == 1`
-
-These instructions require that the input vectors are organized such that the
-real and imaginary parts of the complex number are stored in alternating sequences:
-real, imag, real, imag, ... etc.
-
-## Branch Target Identification
-
-`__ARM_FEATURE_BTI_DEFAULT` is defined to 1 if the Branch Target
-Identification extension is used to protect branch destinations by default.
-The protection applied to any particular function may be overriden by
-mechanisms such as function attributes.
-
-`__ARM_FEATURE_BTI` is defined to 1 if Branch Target Identification
-extension is available on the target. It is undefined otherwise.
-
-## Pointer Authentication
-
-`__ARM_FEATURE_PAC_DEFAULT` is defined as a bitmap to indicate the use of the
-Pointer Authentication extension to protect code against code reuse attacks
-by default.
-The bits are defined as follows:
-
-| **Bit** | **Meaning**                         |
-| ------- | ----------------------------------- |
-| 0       | Protection using the A key          |
-| 1       | Protection using the B key          |
-| 2       | Protection including leaf functions |
-
-For example, a value of `0x5` indicates that the Pointer Authentication
-extension is used to protect function entry points, including leaf functions,
-using the A key for signing.
-The protection applied to any particular function may be overriden by
-mechanisms such as function attributes.
-
-`__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
-is available on the target. It is undefined otherwise.
-
-## Matrix Multiply Intrinsics
-
-`__ARM_FEATURE_MATMUL_INT8` is defined if the integer matrix multiply
-instructions are supported. Note that this implies:
-
-* `__ARM_NEON == 1`
-
 ## Custom Datapath Extension
 
 `__ARM_FEATURE_CDE` is defined to 1 if the Arm Custom Datapath Extension
@@ -1570,28 +1722,6 @@ available.  The following bits are used:
 | 5       | 0x20      | `p5`                              |
 | 6       | 0x40      | `p6`                              |
 | 7       | 0x80      | `p7`                              |
-
-## Armv8.7-A Load/Store 64 Byte extension
-
-`__ARM_FEATURE_LS64` is defined to 1 if the Armv8.7-A `LD64B`,
-`ST64B`, `ST64BV` and `ST64BV0` instructions for atomic 64-byte
-access to device memory are supported.
-This macro may only ever be defined in the AArch64 execution state.
-Intrinsics for using these instructions are specified in
-[ssec-LS64](#loadstore-64-byte-intrinsics).
-
-## memcpy family of memory operations standarization instructions - MOPS
-
-If the `CPYF*`, `CPY*`, `SET*` and `SETG*` instructions are supported,
-`__ARM_FEATURE_MOPS` is defined to 1. These instructions were
-introduced in the Armv8.8-A and Armv9.3-A architecture updates for
-standardization of memorycpy, memset, and memmove family of memory
-operations (MOPS).
-
-The `__ARM_FEATURE_MOPS` macro can only be implemented in the AArch64
-execution state. Intrinsics for the use of these instructions are
-specified in [memcpy family of operations intrinsics -
-MOPS](#memcpy-family-of-operations-intrinsics---mops)
 
 ## Mapping of object build attributes to predefines
 
@@ -1619,78 +1749,74 @@ be found in [[BA]](#BA).
 
 ## Summary of predefined macros
 
-| **Macro name**                                                                                                                                                       | **Meaning**                                                                                        | **Example** |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|-------------|
-| `__ARM_32BIT_STATE` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                                                                             | Code is for AArch32 state                                                                          | 1           |
-| `__ARM_64BIT_STATE` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                                                                             | Code is for AArch64 state                                                                          | 1           |
-| `__ARM_ACLE` [[ssec-TfACLE]](#testing-for-arm-c-language-extensions)                                                                                                 | Indicates ACLE implemented                                                                         | 101         |
-| `__ARM_ALIGN_MAX_PWR` [[ssec-Aoso]](#alignment-of-static-objects)                                                                                                    | Log of maximum alignment of static object                                                          | 20          |
-| `__ARM_ALIGN_MAX_STACK_PWR` [[ssec-Aoso2]](#alignment-of-stack-objects)                                                                                              | Log of maximum alignment of stack object                                                           | 3           |
-| `__ARM_ARCH` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                                                                                    | Arm architecture level                                                                             | 7           |
-| `__ARM_ARCH_ISA_A64` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                                                                            | AArch64 ISA present                                                                                | 1           |
-| `__ARM_ARCH_ISA_ARM` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                                                                            | Arm instruction set present                                                                        | 1           |
-| `__ARM_ARCH_ISA_THUMB` [[ssec-ATisa]](#a32t32-instruction-set-architecture)                                                                                          | T32 instruction set present                                                                        | 2           |
-| `__ARM_ARCH_PROFILE` [[ssec-Archp]](#architectural-profile-a-r-m-or-pre-cortex)                                                                                      | Architecture profile                                                                               | `'A'`       |
-| `__ARM_BIG_ENDIAN` [[ssec-Endi]](#endianness)                                                                                                                        | Memory is big-endian                                                                               | 1           |
-| `__ARM_FEATURE_COMPLEX` [[ssec-COMPLX]](#complex-number-intrinsics)                                                                                                  | Armv8.3-A extension                                                                                | 1           |
-| `__ARM_FEATURE_BTI_DEFAULT` [[ssec-BTI]](#branch-target-identification)                                                                                              | Branch Target Identification                                                                       | 1           |
-| `__ARM_FEATURE_PAC_DEFAULT` [[ssec-PAC]](#pointer-authentication)                                                                                                    | Pointer authentication                                                                             | 0x5         |
-| `__ARM_FEATURE_CLZ` [[ssec-CLZ]](#clz), [[ssec-Mdpi]](#miscellaneous-data-processing-intrinsics)                                                                     | CLZ instruction                                                                                    | 1           |
-| `__ARM_FEATURE_CRC32` [[ssec-CRC32E]](#crc32-extension)                                                                                                              | CRC32 extension                                                                                    | 1           |
-| `__ARM_FEATURE_CRYPTO` [[ssec-CrypE]](#crypto-extension)                                                                                                             | Crypto extension                                                                                   | 1           |
-| `__ARM_FEATURE_DIRECTED_ROUNDING` [[ssec-v8rnd]](#directed-rounding)                                                                                                 | Directed Rounding                                                                                  | 1           |
-| `__ARM_FEATURE_DOTPROD` [[ssec-Dot]](#dot-product-extension), [[ssec-DotIns]](#availability-of-dot-product-intrinsics)                                               | Dot product extension (ARM v8.2-A)                                                                 | 1           |
-| `__ARM_FEATURE_FRINT` [[ssec-Frint]](#armv8.5-a-floating-point-rounding-extension), [[ssec-FrintIns]](#availability-of-armv8.5-a-floating-point-rounding-intrinsics) | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
-| `__ARM_FEATURE_DSP` [[ssec-DSPins]](#dsp-instructions), [[ssec-Satin]](#saturating-intrinsics)                                                                       | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
-| `__ARM_FEATURE_AES` [[ssec-CrypE]](#crypto-extension), [[ssec-AES]](#aes-extension)                                                                                  | AES Crypto extension (Arm v8-A)                                                                    | 1           |
-| `__ARM_FEATURE_FMA` [[ssec-FMA]](#fused-multiply-accumulate-fma), [[ssec-Fpdpi]](#floating-point-data-processing-intrinsics)                                         | Floating-point fused multiply-accumulate                                                           | 1           |
-| `__ARM_FEATURE_IDIV` [[ssec-HID]](#hardware-integer-divide)                                                                                                          | Hardware Integer Divide                                                                            | 1           |
-| `__ARM_FEATURE_JCVT` [[ssec-JCVT]](#javascript-floating-point-conversion), [[ssec-Fpdpi]](#floating-point-data-processing-intrinsics)                                | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
-| `__ARM_FEATURE_LDREX` *(Deprecated)* [[ssec-LDREX]](#ldrexstrex), [[ssec-Sbahi]](#synchronization-barrier-and-hint-intrinsics)                                       | Load/store exclusive instructions                                                                  | 0x0F        |
-| `__ARM_FEATURE_MATMUL_INT8` [[ssec-MatMul]](#matrix-multiply-intrinsics), [[ssec-MatMulIns]](#availability-of-armv8.6-a-integer-matrix-multiply-intrinsics)          | Integer Matrix Multiply extension (Armv8.6-A, optional Armv8.2-A, Armv8.3-A, Armv8.4-A, Armv8.5-A) | 1           |
-| `__ARM_FEATURE_MEMORY_TAGGING` [[ssec-MTE]](#memory-tagging)                                                                                                         | Memory Tagging (Armv8.5-A)                                                                         | 1           |
-| `__ARM_FEATURE_ATOMICS` [[ssec-ATOMICS]](#large-system-extensions)                                                                                                   | Large System Extensions                                                                            | 1           |
-| `__ARM_FEATURE_NUMERIC_MAXMIN` [[ssec-v8max]](#numeric-maximum-and-minimum)                                                                                          | Numeric Maximum and Minimum                                                                        | 1           |
-| `__ARM_FEATURE_QBIT` [[ssec-Qflag]](#q-saturation-flag), [[ssec-Qflag2]](#the-q-saturation-flag)                                                                     | Q (saturation) flag (32-bit-only)                                                                  | 1           |
-| `__ARM_FEATURE_QRDMX` [[ssec-RDM]](#rounding-doubling-multiplies)                                                                                                    | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
-| `__ARM_FEATURE_SAT` [[ssec-Satins]](#saturation-instructions), [[ssec-Wsatin]](#width-specified-saturation-intrinsics)                                               | Width-specified saturation instructions (32-bit-only)                                              | 1           |
-| `__ARM_FEATURE_SHA2` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA2]](#sha2-extension)                                                                               | SHA2 Crypto extension (Arm v8-A)                                                                   | 1           |
-| `__ARM_FEATURE_SHA512` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA512]](#sha512-extension)                                                                         | SHA2 Crypto ext. (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                       | 1           |
-| `__ARM_FEATURE_SHA3` [[ssec-CrypE]](#crypto-extension), [[ssec-SHA3]](#sha3-extension)                                                                               | SHA3 Crypto extension (Arm v8.4-A)                                                                 | 1           |
-| `__ARM_FEATURE_SIMD32` [[ssec-Satins]](#saturation-instructions), [[ssec-32SIMD]](#32-bit-simd-operations)                                                           | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
-| `__ARM_FEATURE_SM3` [[ssec-CrypE]](#crypto-extension), [[ssec-SM3]](#sm3-extension)                                                                                  | SM3 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
-| `__ARM_FEATURE_SM4` [[ssec-CrypE]](#crypto-extension), [[ssec-SM4]](#sm4-extension)                                                                                  | SM4 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
-| `__ARM_FEATURE_FP16_FML` [[ssec-FP16FML]](#fp16-fml-extension)                                                                                                       | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
-| `__ARM_FEATURE_UNALIGNED` [[ssec-Uasih]](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
-| `__ARM_FP` [[ssec-HWFP]](#hardware-floating-point)                                                                                                                   | Hardware floating-point                                                                            | 1           |
-| `__ARM_FP16_ARGS` [[ssec-FP16arg]](#half-precision-argument-and-result)                                                                                              | `__fp16` argument and result                                                                       | 0x0C        |
-| `__ARM_FP16_FORMAT_ALTERNATIVE` [[ssec-FP16fmt]](#half-precision-16-bit-floating-point-format)                                                                       | 16-bit floating-point, alternative format                                                          | 1           |
-| `__ARM_FP16_FORMAT_IEEE` [[ssec-FP16fmt]](#half-precision-16-bit-floating-point-format)                                                                              | 16-bit floating-point, IEEE format                                                                 | 1           |
-| `__ARM_FP_FAST` [[ssec-FPm]](#floating-point-model)                                                                                                                  | Accuracy-losing optimizations                                                                      | 1           |
-| `__ARM_FP_FENV_ROUNDING` [[ssec-FPm]](#floating-point-model)                                                                                                         | Rounding is configurable at runtime                                                                | 1           |
-| `__ARM_BF16_FORMAT_ALTERNATIVE` [[ssec-BF16fmt]](#brain-half-precision-16-bit-floating-point-format)                                                                 | 16-bit brain floating-point, alternative format                                                    | 1           |
-| `__ARM_FEATURE_BF16` [[ssec-BF16fmt]](#brain-half-precision-16-bit-floating-point-format)                                                                            | 16-bit brain floating-point, vector instruction                                                    | 1           |
-| `__ARM_FEATURE_MVE` [[ssec-MVE]](#m-profile-vector-extension)                                                                                                        | M-profile Vector Extension                                                                         | 1           |
-| `__ARM_FEATURE_CDE` [[ssec-CDE]](#custom-datapath-extension)                                                                                                         | Custom Datapath Extension                                                                          | 0x01        |
-| `__ARM_FEATURE_CDE_COPROC` [[ssec-CDE]](#custom-datapath-extension)                                                                                                  | Custom Datapath Extension                                                                          | 0xf         |
-| `__ARM_NEON` [[ssec-NEONfp]](#neon-floating-point)                                                                                                                   | Advanced SIMD (Neon) extension                                                                     | 1           |
-| `__ARM_NEON_FP` [[ssec-WMMX]](#wireless-mmx)                                                                                                                         | Advanced SIMD (Neon) floating-point                                                                | 0x04        |
-| `__ARM_FEATURE_COPROC` [[ssec-CoProc]](#coprocessor-intrinsics)                                                                                                      | Coprocessor Intrinsics                                                                             | 1           |
-| `__ARM_PCS` [[ssec-Pcs]](#procedure-call-standard)                                                                                                                   | Arm procedure call standard (32-bit-only)                                                          | 0x01        |
-| `__ARM_PCS_AAPCS64` [[ssec-Pcs]](#procedure-call-standard)                                                                                                           | Arm PCS for AArch64.                                                                               | 1           |
-| `__ARM_PCS_VFP` [[ssec-Pcs]](#procedure-call-standard)                                                                                                               | Arm PCS hardware FP variant in use (32-bit-only)                                                   | 1           |
-| `__ARM_FEATURE_RNG` [[ssec-rng]](#random-number-generation-extension)                                                                                                | Random Number Generation Extension (Armv8.5-A)                                                     | 1           |
-| `__ARM_ROPI` [[ssec-Pic]](#position-independent-code)                                                                                                                | Read-only PIC in use                                                                               | 1           |
-| `__ARM_RWPI` [[ssec-Pic]](#position-independent-code)                                                                                                                | Read-write PIC in use                                                                              | 1           |
-| `__ARM_SIZEOF_MINIMAL_ENUM` [[ssec-Imptype]](#implementation-defined-type-properties)                                                                                | Size of minimal enumeration type: 1 or 4                                                           | 1           |
-| `__ARM_SIZEOF_WCHAR_T` [[ssec-Imptype]](#implementation-defined-type-properties)                                                                                     | Size of `wchar_t`: 2 or 4                                                                          | 2           |
-| `__ARM_WMMX` [[ssec-WMMX]](#wireless-mmx)                                                                                                                            | Wireless MMX extension (32-bit-only)                                                               | 1           |
-| `__ARM_FEATURE_MOPS` [[ssec-MOPS]](#memcpy-family-of-memory-operations-standarization-instructions---mops)                                                           | memcpy, memset, and memmove family of operations standardization instructions                      | 1           |
-
-## NEON-SVE Bridge macros
-
-`__ARM_NEON_SVE_BRIDGE` is defined to 1 if [NEON-SVE-Bridge](#neon-sve-bridge)
-intrinsics are available.
+| **Macro name**                                                                                                                                          | **Meaning**                                                                                        | **Example** |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|-------------|
+| [`__ARM_32BIT_STATE`](#instruction-set-architecture-a32t32a64)                                                                                          | Code is for AArch32 state                                                                          | 1           |
+| [`__ARM_64BIT_STATE`](#instruction-set-architecture-a32t32a64)                                                                                          | Code is for AArch64 state                                                                          | 1           |
+| [`__ARM_ACLE`](#testing-for-arm-c-language-extensions)                                                                                                  | Indicates ACLE implemented                                                                         | 101         |
+| [`__ARM_ALIGN_MAX_PWR`](#alignment-of-static-objects)                                                                                                   | Log of maximum alignment of static object                                                          | 20          |
+| [`__ARM_ALIGN_MAX_STACK_PWR`](#alignment-of-stack-objects)                                                                                              | Log of maximum alignment of stack object                                                           | 3           |
+| [`__ARM_ARCH`](#arm-architecture-level)                                                                                                                 | Arm architecture level                                                                             | 7           |
+| [`__ARM_ARCH_ISA_A64`](#instruction-set-architecture-a32t32a64)                                                                                         | AArch64 ISA present                                                                                | 1           |
+| [`__ARM_ARCH_ISA_ARM`](#instruction-set-architecture-a32t32a64)                                                                                         | Arm instruction set present                                                                        | 1           |
+| [`__ARM_ARCH_ISA_THUMB`](#instruction-set-architecture-a32t32a64)                                                                                       | T32 instruction set present                                                                        | 2           |
+| [`__ARM_ARCH_PROFILE`](#architectural-profile-a-r-m-or-pre-cortex)                                                                                      | Architecture profile                                                                               | `'A'`       |
+| [`__ARM_BF16_FORMAT_ALTERNATIVE`](#brain-16-bit-floating-point-support)                                                                                 | 16-bit brain floating-point, alternative format                                                    | 1           |
+| [`__ARM_BIG_ENDIAN`](#endianness)                                                                                                                       | Memory is big-endian                                                                               | 1           |
+| [`__ARM_FEATURE_AES`](#aes-extension)                                                                                                                   | AES Crypto extension (Arm v8-A)                                                                    | 1           |
+| [`__ARM_FEATURE_ATOMICS`](#large-system-extensions)                                                                                                     | Large System Extensions                                                                            | 1           |
+| [`__ARM_FEATURE_BF16`](#brain-16-bit-floating-point-support)                                                                                            | 16-bit brain floating-point, vector instruction                                                    | 1           |
+| [`__ARM_FEATURE_BTI_DEFAULT`](#branch-target-identification)                                                                                            | Branch Target Identification                                                                       | 1           |
+| [`__ARM_FEATURE_CDE`](#custom-datapath-extension)                                                                                                       | Custom Datapath Extension                                                                          | 0x01        |
+| [`__ARM_FEATURE_CDE_COPROC`](#custom-datapath-extension)                                                                                                | Custom Datapath Extension                                                                          | 0xf         |
+| [`__ARM_FEATURE_CLZ`](#clz)                                                                                                                             | CLZ instruction                                                                                    | 1           |
+| [`__ARM_FEATURE_COMPLEX`](#complex-number-intrinsics)                                                                                                   | Armv8.3-A extension                                                                                | 1           |
+| [`__ARM_FEATURE_COPROC`](#coprocessor-intrinsics)                                                                                                       | Coprocessor Intrinsics                                                                             | 1           |
+| [`__ARM_FEATURE_CRC32`](#crc32-extension)                                                                                                               | CRC32 extension                                                                                    | 1           |
+| [`__ARM_FEATURE_CRYPTO`](#crypto-extension)                                                                                                             | Crypto extension                                                                                   | 1           |
+| [`__ARM_FEATURE_DIRECTED_ROUNDING`](#directed-rounding)                                                                                                 | Directed Rounding                                                                                  | 1           |
+| [`__ARM_FEATURE_DOTPROD`](#availability-of-dot-product-intrinsics)                                                                                      | Dot product extension (ARM v8.2-A)                                                                 | 1           |
+| [`__ARM_FEATURE_DSP`](#dsp-instructions)                                                                                                                | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
+| [`__ARM_FEATURE_FMA`](#fused-multiply-accumulate-fma)                                                                                                   | Floating-point fused multiply-accumulate                                                           | 1           |
+| [`__ARM_FEATURE_FP16_FML`](#fp16-fml-extension)                                                                                                         | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
+| [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
+| [`__ARM_FEATURE_IDIV`](#hardware-integer-divide)                                                                                                        | Hardware Integer Divide                                                                            | 1           |
+| [`__ARM_FEATURE_JCVT`](#javascript-floating-point-conversion)                                                                                           | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
+| [`__ARM_FEATURE_LDREX`](#ldrexstrex) *(Deprecated)*                                                                                                     | Load/store exclusive instructions                                                                  | 0x0F        |
+| [`__ARM_FEATURE_MATMUL_INT8`](#availability-of-armv8.6-a-integer-matrix-multiply-intrinsics)                                                            | Integer Matrix Multiply extension (Armv8.6-A, optional Armv8.2-A, Armv8.3-A, Armv8.4-A, Armv8.5-A) | 1           |
+| [`__ARM_FEATURE_MEMORY_TAGGING`](#memory-tagging)                                                                                                       | Memory Tagging (Armv8.5-A)                                                                         | 1           |
+| [`__ARM_FEATURE_MOPS`](#memcpy-family-of-memory-operations-standarization-instructions---mops)                                                          | memcpy, memset, and memmove family of operations standardization instructions                      | 1           |
+| [`__ARM_FEATURE_MVE`](#m-profile-vector-extension)                                                                                                      | M-profile Vector Extension                                                                         | 1           |
+| [`__ARM_FEATURE_NUMERIC_MAXMIN`](#numeric-maximum-and-minimum)                                                                                          | Numeric Maximum and Minimum                                                                        | 1           |
+| [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication                                                                             | 0x5         |
+| [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
+| [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
+| [`__ARM_FEATURE_RNG`](#random-number-generation-extension)                                                                                              | Random Number Generation Extension (Armv8.5-A)                                                     | 1           |
+| [`__ARM_FEATURE_SAT`](#saturation-instructions)                                                                                                         | Width-specified saturation instructions (32-bit-only)                                              | 1           |
+| [`__ARM_FEATURE_SHA2`](#sha2-extension)                                                                                                                 | SHA2 Crypto extension (Arm v8-A)                                                                   | 1           |
+| [`__ARM_FEATURE_SHA3`](#sha3-extension)                                                                                                                 | SHA3 Crypto extension (Arm v8.4-A)                                                                 | 1           |
+| [`__ARM_FEATURE_SHA512`](#sha512-extension)                                                                                                             | SHA2 Crypto ext. (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                       | 1           |
+| [`__ARM_FEATURE_SIMD32`](#32-bit-simd-instructions)                                                                                                     | 32-bit SIMD instructions (Armv6) (32-bit-only)                                                     | 1           |
+| [`__ARM_FEATURE_SM3`](#sm3-extension)                                                                                                                   | SM3 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
+| [`__ARM_FEATURE_SM4`](#sm4-extension)                                                                                                                   | SM4 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
+| [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
+| [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
+| [`__ARM_FP16_ARGS`](#half-precision-argument-and-result)                                                                                                | `__fp16` argument and result                                                                       | 0x0C        |
+| [`__ARM_FP16_FORMAT_ALTERNATIVE`](#half-precision-16-bit-floating-point-format)                                                                         | 16-bit floating-point, alternative format                                                          | 1           |
+| [`__ARM_FP16_FORMAT_IEEE`](#half-precision-16-bit-floating-point-format)                                                                                | 16-bit floating-point, IEEE format                                                                 | 1           |
+| [`__ARM_FP_FAST`](#floating-point-model)                                                                                                                | Accuracy-losing optimizations                                                                      | 1           |
+| [`__ARM_FP_FENV_ROUNDING`](#floating-point-model)                                                                                                       | Rounding is configurable at runtime                                                                | 1           |
+| [`__ARM_NEON`](#advanced-simd-architecture-extension-neon)                                                                                              | Advanced SIMD (Neon) extension                                                                     | 1           |
+| [`__ARM_NEON_FP`](#neon-floating-point)                                                                                                                 | Advanced SIMD (Neon) floating-point                                                                | 0x04        |
+| [`__ARM_NEON_SVE_BRIDGE`](#neon-sve-bridge-macros)                                                                                                      | Moving data between Neon and SVE data types                                                        | 1           |
+| [`__ARM_PCS`](#procedure-call-standard)                                                                                                                 | Arm procedure call standard (32-bit-only)                                                          | 0x01        |
+| [`__ARM_PCS_AAPCS64`](#procedure-call-standard)                                                                                                         | Arm PCS for AArch64.                                                                               | 1           |
+| [`__ARM_PCS_VFP`](#procedure-call-standard)                                                                                                             | Arm PCS hardware FP variant in use (32-bit-only)                                                   | 1           |
+| [`__ARM_ROPI`](#position-independent-code)                                                                                                              | Read-only PIC in use                                                                               | 1           |
+| [`__ARM_RWPI`](#position-independent-code)                                                                                                              | Read-write PIC in use                                                                              | 1           |
+| [`__ARM_SIZEOF_MINIMAL_ENUM`](#implementation-defined-type-properties)                                                                                  | Size of minimal enumeration type: 1 or 4                                                           | 1           |
+| [`__ARM_SIZEOF_WCHAR_T`](#implementation-defined-type-properties)                                                                                       | Size of `wchar_t`: 2 or 4                                                                          | 2           |
+| [`__ARM_WMMX`](#wireless-mmx)                                                                                                                           | Wireless MMX extension (32-bit-only)                                                               | 1           |
 
 # Attributes and pragmas
 
@@ -1762,6 +1888,164 @@ available in A32 state must be generated as calls to library functions
 or compiler-generated functions.
 
 This attribute does not apply to AArch64.
+
+## Function Multi Versioning
+
+The specification for Function Multi Versioning is in
+[**Beta**state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
+
+Function Multi Versioning provides a convenient way to select the most
+appropriate version of a function at runtime. All versions of the function may
+be in the final binary. The compiler generates all supported versions and the
+runtime makes the selection at load time.
+
+The following attributes trigger the multi version code generation:
+`__attribute__((target_version("name")))` and
+`__attribute__((target_clones("name",...)))`.
+
+1. These attributes can't be mixed with each other.
+2. The `"default"` version means the version of the function that would be
+generated without these attributes.
+3. `"name"` is the dependent features from the tables below.
+4. The dependent features could be joined by the `+` sign.
+5. None of these attributes will enable the corresponding ACLE feature(s)
+associated to the `"name"` expressed in the attribute.
+6. These attributes have no effect on the calling convention.
+7. All versions must use the same calling convention.
+7. If only the `"default"` version exist it should be linked directly.
+8. FMV may be disabled in compile time by a compiler flag. In this case the
+`"default"` version shall be used.
+
+The attribute `__attribute__((target_version("name")))` expresses the following:
+
+10. when applied to a function it becomes one of the versions. Function with the
+same name may exist with multiple versions in the same translation unit.
+11. One `"default"` version of the function is required to be provided.
+  a. Implicitly, without this attribute,
+  b. or explicitly providing the `"default"` in the attribute.
+12. All instances of the versions shall share the same function signature.
+
+The attribute `__attribute__((target_clones("name",...)))` expresses the
+following:
+
+13. when applied to a function the compiler emits multiple versions based on the
+arguments.
+  a. One of them is implicitly the `"default"`.
+  b. If the `"default"` matches with an other explicitly provided version the
+  compiler can emit only one function instead of the two.
+14. If a name is not recognized the compiler should ignore it.
+
+`__ARM_FEATURE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the versioning
+mechanism described in this section is supported by the compiler and it is
+enabled.
+
+### Name mangling
+
+The `"default"` version is not mangled top of the languge specific name
+mangling.
+
+The mangling function is compatible with the mangling for version information of
+the [[cxxabi]](#cxxabi), and it is defined as follows:
+
+```
+<variant name> := <c/c++mangling> `.` <vendor specific suffix>
+<c/c++ mangling> := function name mangling for c/c++
+<vendor specific suffix> := `_` followed by token obtained from the tables below and prefixed with `M`
+```
+
+If multiple features are requested then those shall be appended in priority
+order and prefixed with `M`.
+
+For example:
+``` c
+__attribute__((target_clones("crc32", "aes+sha1")))
+int foo(){..}
+```
+will produce these mangled names for C language: `foo`, `foo._Mcrc32`,
+`foo._Msha1Maes`.
+
+
+### Mapping
+
+The following table lists the architectures feature mapping for AArch32
+
+   | **Priority** | **Architecture name**            | **Name**        | **Dependent feature registers** |
+   | ------------ | -------------------------------- | --------------- | ------------------------------- |
+   | 0            | N/A                              | default         | N/A                             |
+   | 90           | CRC32 instructions               | crc32           | ```ID_ISAR5.CRC32 == 0b0001```  |
+   | 100          | SHA1 instructions                | sha1            | ```ID_ISAR5.SHA1 == 0b0001```   |
+   | 110          | SHA2 instructions                | sha256          | ```ID_ISAR5.SHA2 == 0b0001```   |
+   | 120          | AES instructions                 | aes             | ```ID_ISAR5.AES >= 0b0001```    |
+   | 130          | VMULL (polynomial) instructions  | vmull           | ```ID_ISAR5.AES == 0b0002```    |
+
+The following table lists the architectures feature mapping for AArch64
+
+   | **Priority**  | **Architecture name**    | **Name**      | **Dependent feature registers**           |
+   | ------------- | ------------------------ | ------------- | ----------------------------------------- |
+   | 0             | N/A                      | default       | N/A                                       |
+   | 10            | `FEAT_RNG`               | rng           | ```ID_AA64ISAR0_EL1.RNDR == 0b0001```     |
+   | 20            | `FEAT_FlagM`             | flagm         | ```ID_AA64ISAR0_EL1.TS == 0b0001 OR ``` <br> ```ID_AA64ISAR0_EL1.TS == 0b0010``` |
+   | 30            | `FEAT_FlagM2`            | flagm2        | ```ID_AA64ISAR0_EL1.TS == 0b0010```       |
+   | 40            | `FEAT_FHM`               | fhm           | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
+   | 50            | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP == 0b0001```       |
+   | 60            | `FEAT_SM3` && `FEAT_SM4` | sm            | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
+   | 70            | `FEAT_RDM`               | rdm           | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
+   | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic == 0b0001```      |
+   | 90            | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
+   | 100           | Advanced SIMD            | advsimd       | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
+   | 110           | crc32                    | crc32         | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
+   | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
+   | 130           | `FEAT_SHA256`            | sha256        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
+   | 140           | `FEAT_SHA512`            | sha512        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0010```     |
+   | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
+   | 160           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES == 0b0010```      |
+   | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
+   | 180           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT == 0b0001```       |
+   | 190           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
+   | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0002```     |
+   | 210           | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT == 0b0001```    |
+   | 220           | `FEAT_FCMA`              | fcma          | ```ID_AA64ISAR1_EL1.FCMA == 0b0001```     |
+   | 230           | `FEAT_LRCPC`             | lrcpc         | ```ID_AA64ISAR1_EL1.LRCPC != 0b0000```    |
+   | 240           | `FEAT_LRCPC2`            | lrcpc2        | ```ID_AA64ISAR1_EL1.LRCPC == 0b0010```    |
+   | 250           | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS == 0b0001```  |
+   | 260           | SVE                      | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
+   | 270           | `FEAT_BF16`              | sve_bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
+   | 280           | `FEAT_EBF16`             | sve_ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
+   | 290           | `FEAT_I8MM`              | sve_i8mm      | ```ID_AA64ZFR0_EL1.I8MM == 0b00001```     |
+   | 300           | `FEAT_F32MM`             | sve_f32mm     | ```ID_AA64ZFR0_EL1.F32MM == 0b00001```    |
+   | 310           | `FEAT_F64MM`             | sve_f64mm     | ```ID_AA64ZFR0_EL1.F64MM == 0b00001```    |
+   | 320           | `FEAT_SVE2`              | sve2          | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0001``` |
+   | 330           | `FEAT_SVE_AES`           | sve_aes       | ```ID_AA64ZFR0_EL1.AES == 0b0001 OR ``` <br> ```ID_AA64ZFR0_EL1.AES == 0b0010``` |
+   | 340           | `FEAT_SVE_PMULL128`      | sve_pmull128  | ```ID_AA64ZFR0_EL1.AES == 0b0010```       |
+   | 350           | `FEAT_SVE_BitPerm`       | sve_bitperm   | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
+   | 360           | `FEAT_SVE_SHA3`          | sve_sha3      | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
+   | 370           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
+   | 380           | `FEAT_MTE`               | mte           | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
+   | 390           | `FEAT_MTE2`              | mte2          | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
+   | 400           | `FEAT_MTE3`              | mte3          | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
+   | 410           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB == 0b0001```       |
+   | 420           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS == 0b0001```      |
+   | 430           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS == 0b0010```      |
+   | 440           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.bt == 0b0010```        |
+
+### Selection
+
+The following rules shall be followed by all implementations:
+
+1. Implementation of
+the selection algorithm is platform dependent, where with platform means
+CPU/Vendor/OS as in the target triplet.
+2. The selection is permanent for the
+lifetime of the process.
+3. Only those versions could be considered where all
+dependent features are available.
+
+Rules of version selection are in order:
+
+4. Select the most specific version else
+5. select the version with the highest priority else
+6. `"default"` shall be selected if no other versions are suitable.
 
 ## Weak linkage
 
@@ -1954,7 +2238,7 @@ follow [[GCC]](#GCC). These attributes are not specific to Arm or the Arm ABI.
 `visibility`, `weak`
 
 Some specific requirements on the weak attribute are detailed in
-[sec-Weak-linkage](#weak-linkage).
+[Weak linkage](#weak-linkage).
 
 # Synchronization, barrier, and hint intrinsics
 
@@ -2003,7 +2287,7 @@ scope and access type of the barrier, as shown in the following table.
 (The assembler mnemonics for these numbers, as shown in the table, are
 not available in the intrinsics.) The argument should be an integral
 constant expression within the required range see
-[sec-Constant-arguments-to-intrinsics](#constant-arguments-to-intrinsics).
+[Constant arguments to intrinsics](#constant-arguments-to-intrinsics).
 
 | **Argument** | **Mnemonic** | **Domain**      | **Ordered Accesses (before-after)** |
 | ------------ | ------------ | --------------- | ----------------------------------- |
@@ -2303,7 +2587,7 @@ cache level.
 Generates a code prefetch instruction. This intrinsic allows the
 specification of the cache level to load the code, the retention policy
 (temporal or streaming). The relevant arguments can have the same values
-as in `__pldx.`
+as in `__pldx`.
 
 `__pldx` and `__plix` arguments cache level and retention policy
 are ignored on unsupported targets.
@@ -2336,8 +2620,10 @@ behave *as if* the instruction had been generated.
 
 In general, these intrinsics are aimed at DSP algorithm optimization on
 M-profile and R-profile. Use on A-profile is deprecated. However, the
-miscellaneous intrinsics and CRC32 intrinsics described in [ssec-Mdpi](#miscellaneous-data-processing-intrinsics)
-and [ssec-crc32](#crc32-intrinsics) respectively are suitable for all profiles.
+miscellaneous intrinsics and CRC32 intrinsics described in [Miscellaneous
+data-processing intrinsics](#miscellaneous-data-processing-intrinsics)
+and [CRC32 intrinsics](#crc32-intrinsics) respectively are suitable
+for all profiles.
 
 ## Programmer's model of global state
 
@@ -2406,7 +2692,7 @@ set the Q flag.)
 
 The GE (Greater than or Equal to) flags are four bits in the APSR. They
 are used with the 32-bit SIMD intrinsics described in
-[ssec-32SIMD](#32-bit-simd-operations).
+[32-bit SIMD Operations](#32-bit-simd-operations).
 
 There are four GE flags, one for each 8-bit lane of a 32-bit SIMD
 operation. Certain non-saturating 32-bit SIMD intrinsics set the GE bits
@@ -2415,7 +2701,7 @@ the GE bits are set one for each byte. For 2x16-bit operations the GE
 bits are paired together, one for the high halfword and the other pair
 for the low halfword. The only supported way to read or use the GE bits
 (in this specification) is by using the `__sel` intrinsic, see
-[sec-Parallel-selection](#parallel-selection).
+[Parallel selection](#parallel-selection).
 
 ### Floating-point environment
 
@@ -2437,7 +2723,7 @@ provides no support for this mode.
 The following intrinsics perform general data-processing operations.
 They have no effect on global state.
 
-\[Note: documentation of the `__nop` intrinsic has moved to [ssec-nop](#nop)]
+\[Note: documentation of the `__nop` intrinsic has moved to [NOP](#nop)]
 
 For completeness and to aid portability between LP64 and LLP64
 models, ACLE also defines intrinsics with `l` suffix.
@@ -2476,7 +2762,7 @@ available on all targets. On targets without the CLZ instruction it
 should be implemented as an instruction sequence or a call to such a
 sequence. Fast hardware implementation (using a CLS instruction or a short code
 sequence involving the CLZ instruction) is indicated by
-`__ARM_FEATURE_CLZ.`
+`__ARM_FEATURE_CLZ`.
 
 ``` c
   uint32_t __rev(uint32_t);
@@ -2604,7 +2890,7 @@ the 48-bit product.
 These intrinsics are available when `__ARM_FEATURE_SAT` is defined.
 They saturate a 32-bit value at a given bit position. The saturation
 width must be an integral constant expression |--| see
-[sec-Constant-arguments-to-intrinsics](#constant-arguments-to-intrinsics).
+[Constant arguments to intrinsics](#constant-arguments-to-intrinsics).
 
 ``` c
   int32_t __ssat(int32_t, /*constant*/ unsigned int);
@@ -2734,7 +3020,7 @@ Armv6 introduced instructions to perform 32-bit SIMD operations (i.e.
 two 16-bit operations or four 8-bit operations) on the Arm
 general-purpose registers. These instructions are not related to the
 much more versatile Advanced SIMD (Neon) extension, whose support is
-described in [sec-NEON-intrinsics](#advanced-simd-neon-intrinsics).
+described in [Advanced SIMD (Neon) intrinsics](#advanced-simd-neon-intrinsics).
 
 The 32-bit SIMD intrinsics are available on targets featuring Armv6 and
 upwards, including the A and R profiles. In the M profile they are
@@ -2760,7 +3046,7 @@ When defining the intrinsics, implementations can define SIMD operands
 using a 32-bit integral type (such as `unsigned int`).
 
 The header `<arm_acle.h>` defines typedefs `int16x2_t`, `uint16x2_t`,
-`int8x4_t`, and `uint8x4_t.` These should be defined as 32-bit integral
+`int8x4_t`, and `uint8x4_t`. These should be defined as 32-bit integral
 types of the appropriate sign. There are no intrinsics provided to pack
 or unpack values of these types. This can be done with shifting and
 masking operations.
@@ -2768,7 +3054,8 @@ masking operations.
 ### Use of the Q flag by 32-bit SIMD intrinsics
 
 Some 32-bit SIMD instructions may set the Q flag described in
-[ssec-Qflag2](#the-q-saturation-flag). The behavior of the intrinsics matches that of the instructions.
+[The Q (saturation) flag](#the-q-saturation-flag). The behavior of the
+intrinsics matches that of the instructions.
 
 Generally, instructions that perform lane-by-lane saturating operations
 do not set the Q flag. For example, `__qadd16` does not set the Q flag,
@@ -2786,7 +3073,8 @@ operation (i.e. does not clip its result to the limits of the type).
 
 These intrinsics are available when `__ARM_FEATURE_SIMD32` is defined.
 They saturate two 16-bit values to a given bit width as for the `__ssat`
-and `__usat` intrinsics defined in [ssec-wsatin](#width-specified-saturation-intrinsics).
+and `__usat` intrinsics defined in [Width-specified saturation
+intrinsics](#width-specified-saturation-intrinsics).
 
 ``` c
   int16x2_t __ssat16(int16x2_t, /*constant*/ unsigned int);
@@ -3260,7 +3548,7 @@ on the GE bits which are tested by the `__sel()` intrinsic.
 The intrinsics in this section provide direct access to selected
 floating-point instructions. They are defined only if the appropriate
 precision is available in hardware, as indicated by `__ARM_FP` (see
-[ssec-HWFP](#hardware-floating-point)).
+[Hardware floating point](#hardware-floating-point)).
 
 ``` c
   double __sqrt(double x);
@@ -3501,7 +3789,7 @@ These intrinsics use the `coproc` and `imm` compile-time constants to
 generate the corresponding CDE instructions.
 The `coproc` argument indicates the CDE coprocessor to use.  The range of
 available coprocessors is indicated by the bitmap `__ARM_FEATURE_CDE_COPROC`,
-described in [ssec-CDE](#custom-datapath-extension).
+described in [Custom Datapath Extension](#custom-datapath-extension).
 The `imm` argument must fit within the immediate range of the corresponding CDE
 instruction.  Values for these arguments outside these ranges must be rejected.
 
@@ -4005,148 +4293,148 @@ each architecture includes its predecessor instruction set.
 
 7MP are the Armv7 architectures that implement the Multiprocessing Extensions.
 
-| **Instruction** | **Flags** | **Arch.**     | **Intrinsic or C code**                       |
-| --------------- | --------- | ------------- | --------------------------------------------- |
-| BKPT            |           | 5             | none                                          |
-| BFC             |           | 6T2, 7-M      | C                                             |
-| BFI             |           | 6T2, 7-M      | C                                             |
-| CLZ             |           | 5             | `__clz,` `__builtin_clz`                      |
-| DBG             |           | 7, 7-M        | `__dbg`                                       |
-| DMB             |           | 8,7, 6-M      | `__dmb`                                       |
-| DSB             |           | 8, 7, 6-M     | `__dsb`                                       |
-| FRINT32Z        |           | 8-64          | `__rint32zf,` `__rint32z`                     |
-| FRINT64Z        |           | 8-64          | `__rint64zf,` `__rint64z`                     |
-| FRINT32X        |           | 8-64          | `__rint32xf,` `__rint32x`                     |
-| FRINT64X        |           | 8-64          | `__rint64xf,` `__rint64x`                     |
-| ISB             |           | 8, 7, 6-M     | `__isb`                                       |
-| LDREX           |           | 6, 7-M        | `__sync_xxx`                                  |
-| LDRT            |           | all           | none                                          |
-| MCR/MRC         |           | all           | see [ssec-sysreg](#system-register-access)    |
-| MSR/MRS         |           | 6-M           | see [ssec-sysreg](#system-register-access)    |
-| PKHBT           |           | 6             | C                                             |
-| PKHTB           |           | 6             | C                                             |
-| PLD             |           | 8-32,5TE, 7-M | `__pld`                                       |
-| PLDW            |           | 7-MP          | `__pldx`                                      |
-| PLI             |           | 8-32,7        | `__pli`                                       |
-| QADD            | Q         | 5E, 7E-M      | `__qadd`                                      |
-| QADD16          |           | 6, 7E-M       | `__qadd16`                                    |
-| QADD8           |           | 6, 7E-M       | `__qadd8`                                     |
-| QASX            |           | 6, 7E-M       | `__qasx`                                      |
-| QDADD           | Q         | 5E, 7E-M      | `__qadd(__qdbl)`                              |
-| QDSUB           | Q         | 5E, 7E-M      | `__qsub(__qdbl)`                              |
-| QSAX            |           | 6, 7E-M       | `__qsax`                                      |
-| QSUB            | Q         | 5E, 7E-M      | `__qsub`                                      |
-| QSUB16          |           | 6, 7E-M       | `__qsub16`                                    |
-| QSUB8           |           | 6, 7E-M       | `__qsub8`                                     |
-| RBIT            |           | 8,6T2, 7-M    | `__rbit`, `__builtin_rbit`                    |
-| REV             |           | 8,6, 6-M      | `__rev`, `__builtin_bswap32`                  |
-| REV16           |           | 8,6, 6-M      | `__rev16`                                     |
-| REVSH           |           | 6, 6-M        | `__revsh`                                     |
-| ROR             |           | all           | `__ror`                                       |
-| SADD16          | GE        | 6, 7E-M       | `__sadd16`                                    |
-| SADD8           | GE        | 6, 7E-M       | `__sadd8`                                     |
-| SASX            | GE        | 6, 7E-M       | `__sasx`                                      |
-| SBFX            |           | 8,6T2, 7-M    | C                                             |
-| SDIV            |           | 7-M+          | C                                             |
-| SEL             | (GE)      | 6, 7E-M       | `__sel`                                       |
-| SETEND          |           | 6             | n/a                                           |
-| SEV             |           | 8,6K,6-M,7-M  | `__sev`                                       |
-| SHADD16         |           | 6, 7E-M       | `__shadd16`                                   |
-| SHADD8          |           | 6, 7E-M       | `__shadd8`                                    |
-| SHASX           |           | 6, 7E-M       | `__shasx`                                     |
-| SHSAX           |           | 6, 7E-M       | `__shsax`                                     |
-| SHSUB16         |           | 6, 7E-M       | `__shsub16`                                   |
-| SHSUB8          |           | 6, 7E-M       | `__shsub8`                                    |
-| SMC             |           | 8,6Z, T2      | none                                          |
-| SMI             |           | 6Z, T2        | none                                          |
-| SMLABB          | Q         | 5E, 7E-M      | `__smlabb`                                    |
-| SMLABT          | Q         | 5E, 7E-M      | `__smlabt`                                    |
-| SMLAD           | Q         | 6, 7E-M       | `__smlad`                                     |
-| SMLADX          | Q         | 6, 7E-M       | `__smladx`                                    |
-| SMLAL           |           | all, 7-M      | C                                             |
-| SMLALBB         |           | 5E, 7E-M      | `__smulbb` and C                              |
-| SMLALBT         |           | 5E, 7E-M      | `__smulbt` and C                              |
-| SMLALTB         |           | 5E, 7E-M      | `__smultb` and C                              |
-| SMLALTT         |           | 5E, 7E-M      | `__smultt` and C                              |
-| SMLALD          |           | 6, 7E-M       | `__smlald`                                    |
-| SMLALDX         |           | 6, 7E-M       | `__smlaldx`                                   |
-| SMLATB          | Q         | 5E, 7E-M      | `__smlatb`                                    |
-| SMLATT          | Q         | 5E, 7E-M      | `__smlatt`                                    |
-| SMLAWB          | Q         | 5E, 7E-M      | `__smlawb`                                    |
-| SMLAWT          | Q         | 5E, 7E-M      | `__smlawt`                                    |
-| SMLSD           | Q         | 6, 7E-M       | `__smlsd`                                     |
-| SMLSDX          | Q         | 6, 7E-M       | `__smlsdx`                                    |
-| SMLSLD          |           | 6, 7E-M       | `__smlsld`                                    |
-| SMLSLDX         |           | 6, 7E-M       | `__smlsldx`                                   |
-| SMMLA           |           | 6, 7E-M       | C                                             |
-| SMMLAR          |           | 6, 7E-M       | C                                             |
-| SMMLS           |           | 6, 7E-M       | C                                             |
-| SMMLSR          |           | 6, 7E-M       | C                                             |
-| SMMUL           |           | 6, 7E-M       | C                                             |
-| SMMULR          |           | 6, 7E-M       | C                                             |
-| SMUAD           | Q         | 6, 7E-M       | `__smuad`                                     |
-| SMUADX          | Q         | 6, 7E-M       | `__smuadx`                                    |
-| SMULBB          |           | 5E, 7E-M      | `__smulbb;` C                                 |
-| SMULBT          |           | 5E, 7E-M      | `__smulbt` ; C                                |
-| SMULTB          |           | 5E, 7E-M      | `__smultb;` C                                 |
-| SMULTT          |           | 5E, 7E-M      | `__smultt;` C                                 |
-| SMULL           |           | all, 7-M      | C                                             |
-| SMULWB          |           | 5E, 7E-M      | `__smulwb;` C                                 |
-| SMULWT          |           | 5E, 7E-M      | `__smulwt;` C                                 |
-| SMUSD           |           | 6, 7E-M       | `__smusd`                                     |
-| SMUSDX          |           | 6, 7E-M       | `__smusd`                                     |
-| SSAT            | Q         | 6, 7-M        | `__ssat`                                      |
-| SSAT16          | Q         | 6, 7E-M       | `__ssat16`                                    |
-| SSAX            | GE        | 6, 7E-M       | `__ssax`                                      |
-| SSUB16          | GE        | 6, 7E-M       | `__ssub16`                                    |
-| SSUB8           | GE        | 6, 7E-M       | `__ssub8`                                     |
-| STREX           |           | 6, 7-M        | `__sync_xxx`                                  |
-| STRT            |           | all           | none                                          |
-| SVC             |           | all           | none                                          |
-| SWP             |           | A32 only      | `__swp` [deprecated; see [ssec-swap](#swap)]  |
-| SXTAB           |           | 6, 7E-M       | `(int8_t)x` + a                               |
-| SXTAB16         |           | 6, 7E-M       | `__sxtab16`                                   |
-| SXTAH           |           | 6, 7E-M       | `(int16_t)x` + a                              |
-| SXTB            |           | 8,6, 6-M      | `(int8_t)x`                                   |
-| SXTB16          |           | 6, 7E-M       | `__sxtb16`                                    |
-| SXTH            |           | 8,6, 6-M      | `(int16_t)x`                                  |
-| UADD16          | GE        | 6, 7E-M       | `__uadd16`                                    |
-| UADD8           | GE        | 6, 7E-M       | `__uadd8`                                     |
-| UASX            | GE        | 6, 7E-M       | `__uasx`                                      |
-| UBFX            |           | 8,6T2, 7-M    | C                                             |
-| UDIV            |           | 7-M+          | C                                             |
-| UHADD16         |           | 6, 7E-M       | `__uhadd16`                                   |
-| UHADD8          |           | 6, 7E-M       | `__uhadd8`                                    |
-| UHASX           |           | 6, 7E-M       | `__uhasx`                                     |
-| UHSAX           |           | 6, 7E-M       | `__uhsax`                                     |
-| UHSUB16         |           | 6, 7E-M       | `__uhsub16`                                   |
-| UHSUB8          |           | 6, 7E-M       | `__uhsub8`                                    |
-| UMAAL           |           | 6, 7E-M       | C                                             |
-| UMLAL           |           | all, 7-M      | `acc += (uint64_t)x * y`                      |
-| UMULL           |           | all, 7-M      | C                                             |
-| UQADD16         |           | 6, 7E-M       | `__uqadd16`                                   |
-| UQADD8          |           | 6, 7E-M       | `__uqadd8`                                    |
-| UQASX           |           | 6, 7E-M       | `__uqasx`                                     |
-| UQSAX           |           | 6, 7E-M       | `__uqsax`                                     |
-| UQSUB16         |           | 6, 7E-M       | `__uqsub16`                                   |
-| UQSUB8          |           | 6, 7E-M       | `__uqsub8`                                    |
-| USAD8           |           | 6, 7E-M       | `__usad8`                                     |
-| USADA8          |           | 6, 7E-M       | `__usad8 + acc`                               |
-| USAT            | Q         | 6, 7-M        | `__usat`                                      |
-| USAT16          | Q         | 6, 7E-M       | `__usat16`                                    |
-| USAX            |           | 6, 7E-M       | `__usax`                                      |
-| USUB16          |           | 6, 7E-M       | `__usub16`                                    |
-| USUB8           |           | 6, 7E-M       | `__usub8`                                     |
-| UXTAB           |           | 6, 7E-M       | `(uint8_t)x + i`                              |
-| UXTAB16         |           | 6, 7E-M       | `__uxtab16`                                   |
-| UXTAH           |           | 6, 7E-M       | `(uint16_t)x + i`                             |
-| UXTB16          |           | 6, 7E-M       | `__uxtb16`                                    |
-| UXTH            |           | 8,6, 6-M      | `(uint16_t)x`                                 |
-| VFMA            |           | VFPv4         | `fma`, `__fma`                                |
-| VSQRT           |           | VFP           | `sqrt`, `__sqrt`                              |
-| WFE             |           | 8,6K, 6-M     | `__wfe`                                       |
-| WFI             |           | 8,6K, 6-M     | `__wfi`                                       |
-| YIELD           |           | 8,6K, 6-M     | `__yield`                                     |
+| **Instruction** | **Flags** | **Arch.**     | **Intrinsic or C code**                               |
+| --------------- | --------- | ------------- | ----------------------------------------------------- |
+| BKPT            |           | 5             | none                                                  |
+| BFC             |           | 6T2, 7-M      | C                                                     |
+| BFI             |           | 6T2, 7-M      | C                                                     |
+| CLZ             |           | 5             | `__clz`, `__builtin_clz`                              |
+| DBG             |           | 7, 7-M        | `__dbg`                                               |
+| DMB             |           | 8,7, 6-M      | `__dmb`                                               |
+| DSB             |           | 8, 7, 6-M     | `__dsb`                                               |
+| FRINT32Z        |           | 8-64          | `__rint32zf`, `__rint32z`                             |
+| FRINT64Z        |           | 8-64          | `__rint64zf`, `__rint64z`                             |
+| FRINT32X        |           | 8-64          | `__rint32xf`, `__rint32x`                             |
+| FRINT64X        |           | 8-64          | `__rint64xf`, `__rint64x`                             |
+| ISB             |           | 8, 7, 6-M     | `__isb`                                               |
+| LDREX           |           | 6, 7-M        | `__sync_xxx`                                          |
+| LDRT            |           | all           | none                                                  |
+| MCR/MRC         |           | all           | see [System register access](#system-register-access) |
+| MSR/MRS         |           | 6-M           | see [System register access](#system-register-access) |
+| PKHBT           |           | 6             | C                                                     |
+| PKHTB           |           | 6             | C                                                     |
+| PLD             |           | 8-32,5TE, 7-M | `__pld`                                               |
+| PLDW            |           | 7-MP          | `__pldx`                                              |
+| PLI             |           | 8-32,7        | `__pli`                                               |
+| QADD            | Q         | 5E, 7E-M      | `__qadd`                                              |
+| QADD16          |           | 6, 7E-M       | `__qadd16`                                            |
+| QADD8           |           | 6, 7E-M       | `__qadd8`                                             |
+| QASX            |           | 6, 7E-M       | `__qasx`                                              |
+| QDADD           | Q         | 5E, 7E-M      | `__qadd(__qdbl)`                                      |
+| QDSUB           | Q         | 5E, 7E-M      | `__qsub(__qdbl)`                                      |
+| QSAX            |           | 6, 7E-M       | `__qsax`                                              |
+| QSUB            | Q         | 5E, 7E-M      | `__qsub`                                              |
+| QSUB16          |           | 6, 7E-M       | `__qsub16`                                            |
+| QSUB8           |           | 6, 7E-M       | `__qsub8`                                             |
+| RBIT            |           | 8,6T2, 7-M    | `__rbit`, `__builtin_rbit`                            |
+| REV             |           | 8,6, 6-M      | `__rev`, `__builtin_bswap32`                          |
+| REV16           |           | 8,6, 6-M      | `__rev16`                                             |
+| REVSH           |           | 6, 6-M        | `__revsh`                                             |
+| ROR             |           | all           | `__ror`                                               |
+| SADD16          | GE        | 6, 7E-M       | `__sadd16`                                            |
+| SADD8           | GE        | 6, 7E-M       | `__sadd8`                                             |
+| SASX            | GE        | 6, 7E-M       | `__sasx`                                              |
+| SBFX            |           | 8,6T2, 7-M    | C                                                     |
+| SDIV            |           | 7-M+          | C                                                     |
+| SEL             | (GE)      | 6, 7E-M       | `__sel`                                               |
+| SETEND          |           | 6             | n/a                                                   |
+| SEV             |           | 8,6K,6-M,7-M  | `__sev`                                               |
+| SHADD16         |           | 6, 7E-M       | `__shadd16`                                           |
+| SHADD8          |           | 6, 7E-M       | `__shadd8`                                            |
+| SHASX           |           | 6, 7E-M       | `__shasx`                                             |
+| SHSAX           |           | 6, 7E-M       | `__shsax`                                             |
+| SHSUB16         |           | 6, 7E-M       | `__shsub16`                                           |
+| SHSUB8          |           | 6, 7E-M       | `__shsub8`                                            |
+| SMC             |           | 8,6Z, T2      | none                                                  |
+| SMI             |           | 6Z, T2        | none                                                  |
+| SMLABB          | Q         | 5E, 7E-M      | `__smlabb`                                            |
+| SMLABT          | Q         | 5E, 7E-M      | `__smlabt`                                            |
+| SMLAD           | Q         | 6, 7E-M       | `__smlad`                                             |
+| SMLADX          | Q         | 6, 7E-M       | `__smladx`                                            |
+| SMLAL           |           | all, 7-M      | C                                                     |
+| SMLALBB         |           | 5E, 7E-M      | `__smulbb` and C                                      |
+| SMLALBT         |           | 5E, 7E-M      | `__smulbt` and C                                      |
+| SMLALTB         |           | 5E, 7E-M      | `__smultb` and C                                      |
+| SMLALTT         |           | 5E, 7E-M      | `__smultt` and C                                      |
+| SMLALD          |           | 6, 7E-M       | `__smlald`                                            |
+| SMLALDX         |           | 6, 7E-M       | `__smlaldx`                                           |
+| SMLATB          | Q         | 5E, 7E-M      | `__smlatb`                                            |
+| SMLATT          | Q         | 5E, 7E-M      | `__smlatt`                                            |
+| SMLAWB          | Q         | 5E, 7E-M      | `__smlawb`                                            |
+| SMLAWT          | Q         | 5E, 7E-M      | `__smlawt`                                            |
+| SMLSD           | Q         | 6, 7E-M       | `__smlsd`                                             |
+| SMLSDX          | Q         | 6, 7E-M       | `__smlsdx`                                            |
+| SMLSLD          |           | 6, 7E-M       | `__smlsld`                                            |
+| SMLSLDX         |           | 6, 7E-M       | `__smlsldx`                                           |
+| SMMLA           |           | 6, 7E-M       | C                                                     |
+| SMMLAR          |           | 6, 7E-M       | C                                                     |
+| SMMLS           |           | 6, 7E-M       | C                                                     |
+| SMMLSR          |           | 6, 7E-M       | C                                                     |
+| SMMUL           |           | 6, 7E-M       | C                                                     |
+| SMMULR          |           | 6, 7E-M       | C                                                     |
+| SMUAD           | Q         | 6, 7E-M       | `__smuad`                                             |
+| SMUADX          | Q         | 6, 7E-M       | `__smuadx`                                            |
+| SMULBB          |           | 5E, 7E-M      | `__smulbb;` C                                         |
+| SMULBT          |           | 5E, 7E-M      | `__smulbt` ; C                                        |
+| SMULTB          |           | 5E, 7E-M      | `__smultb;` C                                         |
+| SMULTT          |           | 5E, 7E-M      | `__smultt;` C                                         |
+| SMULL           |           | all, 7-M      | C                                                     |
+| SMULWB          |           | 5E, 7E-M      | `__smulwb;` C                                         |
+| SMULWT          |           | 5E, 7E-M      | `__smulwt;` C                                         |
+| SMUSD           |           | 6, 7E-M       | `__smusd`                                             |
+| SMUSDX          |           | 6, 7E-M       | `__smusd`                                             |
+| SSAT            | Q         | 6, 7-M        | `__ssat`                                              |
+| SSAT16          | Q         | 6, 7E-M       | `__ssat16`                                            |
+| SSAX            | GE        | 6, 7E-M       | `__ssax`                                              |
+| SSUB16          | GE        | 6, 7E-M       | `__ssub16`                                            |
+| SSUB8           | GE        | 6, 7E-M       | `__ssub8`                                             |
+| STREX           |           | 6, 7-M        | `__sync_xxx`                                          |
+| STRT            |           | all           | none                                                  |
+| SVC             |           | all           | none                                                  |
+| SWP             |           | A32 only      | `__swp` [deprecated; see [Swap](#swap)]               |
+| SXTAB           |           | 6, 7E-M       | `(int8_t)x` + a                                       |
+| SXTAB16         |           | 6, 7E-M       | `__sxtab16`                                           |
+| SXTAH           |           | 6, 7E-M       | `(int16_t)x` + a                                      |
+| SXTB            |           | 8,6, 6-M      | `(int8_t)x`                                           |
+| SXTB16          |           | 6, 7E-M       | `__sxtb16`                                            |
+| SXTH            |           | 8,6, 6-M      | `(int16_t)x`                                          |
+| UADD16          | GE        | 6, 7E-M       | `__uadd16`                                            |
+| UADD8           | GE        | 6, 7E-M       | `__uadd8`                                             |
+| UASX            | GE        | 6, 7E-M       | `__uasx`                                              |
+| UBFX            |           | 8,6T2, 7-M    | C                                                     |
+| UDIV            |           | 7-M+          | C                                                     |
+| UHADD16         |           | 6, 7E-M       | `__uhadd16`                                           |
+| UHADD8          |           | 6, 7E-M       | `__uhadd8`                                            |
+| UHASX           |           | 6, 7E-M       | `__uhasx`                                             |
+| UHSAX           |           | 6, 7E-M       | `__uhsax`                                             |
+| UHSUB16         |           | 6, 7E-M       | `__uhsub16`                                           |
+| UHSUB8          |           | 6, 7E-M       | `__uhsub8`                                            |
+| UMAAL           |           | 6, 7E-M       | C                                                     |
+| UMLAL           |           | all, 7-M      | `acc += (uint64_t)x * y`                              |
+| UMULL           |           | all, 7-M      | C                                                     |
+| UQADD16         |           | 6, 7E-M       | `__uqadd16`                                           |
+| UQADD8          |           | 6, 7E-M       | `__uqadd8`                                            |
+| UQASX           |           | 6, 7E-M       | `__uqasx`                                             |
+| UQSAX           |           | 6, 7E-M       | `__uqsax`                                             |
+| UQSUB16         |           | 6, 7E-M       | `__uqsub16`                                           |
+| UQSUB8          |           | 6, 7E-M       | `__uqsub8`                                            |
+| USAD8           |           | 6, 7E-M       | `__usad8`                                             |
+| USADA8          |           | 6, 7E-M       | `__usad8 + acc`                                       |
+| USAT            | Q         | 6, 7-M        | `__usat`                                              |
+| USAT16          | Q         | 6, 7E-M       | `__usat16`                                            |
+| USAX            |           | 6, 7E-M       | `__usax`                                              |
+| USUB16          |           | 6, 7E-M       | `__usub16`                                            |
+| USUB8           |           | 6, 7E-M       | `__usub8`                                             |
+| UXTAB           |           | 6, 7E-M       | `(uint8_t)x + i`                                      |
+| UXTAB16         |           | 6, 7E-M       | `__uxtab16`                                           |
+| UXTAH           |           | 6, 7E-M       | `(uint16_t)x + i`                                     |
+| UXTB16          |           | 6, 7E-M       | `__uxtb16`                                            |
+| UXTH            |           | 8,6, 6-M      | `(uint16_t)x`                                         |
+| VFMA            |           | VFPv4         | `fma`, `__fma`                                        |
+| VSQRT           |           | VFP           | `sqrt`, `__sqrt`                                      |
+| WFE             |           | 8,6K, 6-M     | `__wfe`                                               |
+| WFI             |           | 8,6K, 6-M     | `__wfi`                                               |
+| YIELD           |           | 8,6K, 6-M     | `__yield`                                             |
 
 # Advanced SIMD (Neon) intrinsics
 
@@ -4243,7 +4531,7 @@ to say they can only be used by intrinsics.
 AArch64 supports Advanced SIMD scalar operations that work on standard
 scalar data types viz. `int8_t`, `uint8_t`, `int16_t`, `uint16_t`,
 `int32_t`, `uint32_t`, `int64_t`, `uint64_t`, `float32_t`,
-`float64_t.`
+`float64_t`.
 
 ### Vector array data types
 
@@ -4414,8 +4702,10 @@ It is recommended that Advanced SIMD Intrinsics be used consistently:
 ### Availability of Advanced SIMD intrinsics
 
 Advanced SIMD support is available if the `__ARM_NEON` macro is
-predefined (see [ssec-NEON](#advanced-simd-architecture-extension-neon)). In order to access the Advanced SIMD
-intrinsics, it is necessary to include the `<arm_neon.h>` header.
+predefined (see [Advanced SIMD architecture extension
+(Neon)](#advanced-simd-architecture-extension-neon)). In order
+to access the Advanced SIMD intrinsics, it is necessary to include
+the `<arm_neon.h>` header.
 
 ``` c
   #if __ARM_NEON
@@ -4426,7 +4716,8 @@ intrinsics, it is necessary to include the `<arm_neon.h>` header.
 
 Some intrinsics are only available when compiling for the AArch64
 execution state. This can be determined using the `__ARM_64BIT_STATE`
-predefined macro (see [ssec-ATisa](#a32t32-instruction-set-architecture)).
+predefined macro (see [Instruction set
+architecture (A32/T32/A64)](#instruction-set-architecture-a32t32a64)).
 
 ### Availability of 16-bit floating-point vector interchange types
 
@@ -4437,7 +4728,7 @@ interchange types are available, conversion intrinsics between
 vector of `__fp16` and vector of `float` types are provided.
 
 This is indicated by the setting of bit 1 in `__ARM_NEON_FP`
-(see [ssec-NEONfp](#neon-floating-point)).
+(see [Neon floating-point](#neon-floating-point)).
 
 ``` c
   #if __ARM_NEON_FP & 0x1
@@ -4453,7 +4744,8 @@ also available as a vector operation in the Advanced SIMD extension. When
 a vector fused multiply-accumulate is available, intrinsics are defined to
 access it.
 
-This is indicated by `__ARM_FEATURE_FMA` (see [ssec-FMA](#fused-multiply-accumulate-fma)).
+This is indicated by `__ARM_FEATURE_FMA` (see [Fused multiply-accumulate
+(FMA)](#fused-multiply-accumulate-fma)).
 
 ``` c
   #if __ARM_FEATURE_FMA
@@ -4469,7 +4761,8 @@ The Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture introduces two new instruct
 SQRDMLAH and SQRDMLSH. ACLE specifies vector and vector-by-lane intrinsics to
 access these instructions where they are available in hardware.
 
-This is indicated by `__ARM_FEATURE_QRDMX` (see [ssec-RDM](#rounding-doubling-multiplies)). :
+This is indicated by `__ARM_FEATURE_QRDMX` (see [Rounding doubling
+multiplies](#rounding-doubling-multiplies)). :
 
 ``` c
   #if __ARM_FEATURE_QRDMX
@@ -4487,7 +4780,8 @@ format. ACLE specifies intrinsics which map to the vector forms of these
 instructions where they are available in hardware.
 
 This is indicated by `__ARM_FEATURE_FP16_VECTOR_ARITHMETIC`
-(see [ssec-fp16-arith](#16-bit-floating-point-data-processing-operations)). :
+(see [16-bit floating-point data processing
+operations](#16-bit-floating-point-data-processing-operations)). :
 
 ``` c
   #if __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
@@ -4497,8 +4791,10 @@ This is indicated by `__ARM_FEATURE_FP16_VECTOR_ARITHMETIC`
 ```
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-fp16-scalar](#16-bit-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
-intrinsics is indicated by `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
+instructions, see [16-bit floating-point arithmetic scalar
+intrinsics](#16-bit-floating-point-arithmetic-scalar-intrinsics).
+Availability of the scalar intrinsics is indicated by
+`__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`.
 
 ``` c
   #if __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
@@ -4515,7 +4811,8 @@ Architecture Reference Manual. ACLE specifies intrinsics which map to the vector
 forms of these instructions where they are available in hardware.
 
 This is indicated by `__ARM_FEATURE_BF16_VECTOR_ARITHMETIC`
-(see [ssec-BF16fmt](#brain-half-precision-16-bit-floating-point-format)).
+(see [Brain 16-bit floating-point
+support](#brain-16-bit-floating-point-support)).
 
 ``` c
   #if __ARM_FEATURE_BF16_VECTOR_ARITHMETIC
@@ -4527,8 +4824,10 @@ This is indicated by `__ARM_FEATURE_BF16_VECTOR_ARITHMETIC`
 ```
 
 ACLE also specifies intrinsics which map to the scalar forms of these
-instructions, see [ssec-bf16-scalar](#16-bit-brain-floating-point-arithmetic-scalar-intrinsics). Availability of the scalar
-intrinsics is indicated by `__ARM_FEATURE_BF16_SCALAR_ARITHMETIC`.
+instructions, see [16-bit brain floating-point arithmetic scalar
+intrinsics](#16-bit-brain-floating-point-arithmetic-scalar-intrinsics).
+Availability of the scalar intrinsics is indicated by
+`__ARM_FEATURE_BF16_SCALAR_ARITHMETIC`.
 
 ``` c
   #if __ARM_FEATURE_BF16_SCALAR_ARITHMETIC
@@ -4558,7 +4857,8 @@ The architecture extensions introduced by Armv8.2-A provide a set of dot product
 instructions which operate on 8-bit sub-element quantities. These instructions
 are available in both AArch64 and AArch32 execution states using
 Advanced SIMD instructions. These intrinsics are available
-when `__ARM_FEATURE_DOTPROD` is defined (see [ssec-Dot](#dot-product-extension)). :
+when `__ARM_FEATURE_DOTPROD` is defined (see [Dot Product
+extension](#dot-product-extension)). :
 
 ``` c
   #if __ARM_FEATURE_DOTPROD
@@ -4588,7 +4888,7 @@ integer matrix multiplication and mixed sign dot product instructions.
 These instructions are optional from Armv8.2-A to Armv8.5-A.
 
 These intrinsics are available when `__ARM_FEATURE_MATMUL_INT8` is defined
-(see [ssec-MatMul](#matrix-multiply-intrinsics)).
+(see [Matrix Multiply Intrinsics](#matrix-multiply-intrinsics)).
 
 ## Specification of Advanced SIMD intrinsics
 
@@ -4864,7 +5164,8 @@ It is recommended that MVE Intrinsics be used consistently:
 ## Availability of M-profile Vector Extension intrinsics
 
 M-profile Vector Extension support is available if the `__ARM_FEATURE_MVE`
-macro has a value other than 0 (see [ssec-MVE](#m-profile-vector-extension)). The availability of the
+macro has a value other than 0 (see [M-profile Vector
+Extension](#m-profile-vector-extension)). The availability of the
 MVE Floating Point data types and intrinsics are predicated on the value of
 this macro having bit two set.  In order to access the MVE intrinsics, it is
 necessary to include the `<arm_mve.h>` header.
@@ -4902,6 +5203,244 @@ undefined behavior to the semantics of an intrinsic.
 The MVE load and store instructions provide for alignment assertions, which may
 speed up access to aligned data (and will fault access to unaligned data).  The
 MVE intrinsics do not directly provide a means for asserting alignment.
+
+# Transactional Memory Extension (TME) intrinsics
+
+## Introduction
+
+This section describes the intrinsics for the instructions of the
+Transactional Memory Extension (TME). TME adds support for transactional
+execution where transactions are started and
+committed by a set of new instructions. The TME instructions are present
+in the AArch64 execution state only.
+
+TME is designed to improve performance in cases where larger system scaling
+requires atomic and isolated access to data structures whose composition is
+dynamic in nature and therefore not readily amenable to fine-grained locking
+or lock-free approaches.
+
+TME transactions are *isolated*. This means that transactional stores are
+hidden from other observers, and transactional loads cannot see stores from
+other observers until the transaction commits. Also, if the transaction fails
+then stores to memory and writes to registers by the transaction are discarded
+and the processor returns to the state it had when the transaction started.
+
+TME transactions are *best-effort*. This means that the architecture does not
+guarantee success for any transaction. The architecture requires that all
+transactions specify a failure handler allowing the software to fallback to a
+non-transactional alternative to provide guarantees of forward progress.
+
+TME defines *flattened nesting* of transactions, where nested transactions are
+subsumed by the outer transaction. This means that the effects of a nested
+transaction do not become visible to other observers until the outer
+transaction commits. When a nested transaction fails it causes the
+outer transaction, and all nested transactions within, to fail.
+
+The TME intrinsics are available when `__ARM_FEATURE_TME` is defined.
+
+## Failure definitions
+
+Transactions can fail due to various causes. The following macros
+are defined to help use or detect these causes.
+
+``` c
+  #define _TMFAILURE_REASON 0x00007fffu
+  #define _TMFAILURE_RTRY   0x00008000u
+  #define _TMFAILURE_CNCL   0x00010000u
+  #define _TMFAILURE_MEM    0x00020000u
+  #define _TMFAILURE_IMP    0x00040000u
+  #define _TMFAILURE_ERR    0x00080000u
+  #define _TMFAILURE_SIZE   0x00100000u
+  #define _TMFAILURE_NEST   0x00200000u
+  #define _TMFAILURE_DBG    0x00400000u
+  #define _TMFAILURE_INT    0x00800000u
+  #define _TMFAILURE_TRIVIAL    0x01000000u
+```
+
+## Intrinsics
+
+``` c
+  uint64_t __tstart (void);
+```
+
+Starts a new transaction. When the transaction starts successfully the return
+value is 0. If the transaction fails, all state modifications are discarded
+and a cause of the failure is encoded in the return value. The macros
+defined in [Failure definitions](#failure-definitions) can be used
+to detect the cause of the failure.
+
+``` c
+  void __tcommit (void);
+```
+
+Commits the current transaction. For a nested transaction, the only effect
+is that the transactional nesting depth is decreased. For an outer transaction,
+the state modifications performed transactionally are committed to the
+architectural state.
+
+``` c
+  void __tcancel (/*constant*/ uint64_t);
+```
+
+Cancels the current transaction and discards all state modifications that
+were performed transactionally. The intrinsic takes a 16-bit immediate input that encodes
+the cancellation reason. This input could be given as
+
+``` c
+  __tcancel (_TMFAILURE_RTRY | (failure_reason & _TMFAILURE_REASON));
+```
+
+if retry is true or
+
+``` c
+  __tcancel (failure_reason & _TMFAILURE_REASON);
+```
+
+if retry is false.
+
+``` c
+  uint64_t __ttest (void);
+```
+
+Tests if executing inside a transaction. If no transaction is currently
+executing, the return value is 0. Otherwise, this intrinsic returns the depth of the
+transaction.
+
+## Instructions
+
+| **Intrinsics**                                | **Argument**     | **Result**     | **Instruction**   |
+| --------------------------------------------- | ---------------- | -------------- | ----------------- |
+| uint64_t __tstart (void)                      | -                | Xt -> result   | tstart <Xt>       |
+| void __tcommit (void)                         | -                | -              | tcommit           |
+| void __tcancel (/*constant*/ uint64_t reason) | reason -> #<imm> | -              | tcancel #<imm>    |
+| uint64_t __ttest (void)                       | -                | Xt -> result   | ttest <Xt>        |
+
+These intrinsics are available when `arm_acle.h` is included.
+
+# memcpy family of operations intrinsics - MOPS
+
+## Introduction
+
+This section describes the intrinsic for the new instructions introduced in the
+Armv8.8-A and Armv9.3-A architecture updates for the memcpy, memmove and memset
+family of memory operations (MOPS).
+
+These intructions are designed to enable the standardization of the software
+implementation of those operations. Therefore, most of the use cases for
+the new instructions are covered by the compiler's code generation or by library
+implementations.
+
+An exception to that is the set of instructions covering the memset operation
+with memory tagging. An intrinsic is available to provide access to this
+operation. See [Memory tagging](#memory-tagging) for more information on
+memory tagging.
+
+The `<arm_acle.h>` header should be included before using this intrinsic.
+
+This intrinsic is available when both `__ARM_FEATURE_MOPS` and
+`__ARM_FEATURE_MEMORY_TAGGING` are defined.
+
+``` c
+  void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
+```
+
+This intrinsic performs a memset operation with tag setting on a memory block.
+
+The parameters of `__arm_mops_memset_tag` are:
+
+* `tagged_address`: destination address to be set, containing the allocation
+  tag in its bits `[59:56]`. The address should be aligned with the tag granule
+  size. (See the [SETG\* instructions specification](<https://developer.arm.com/documentation/ddi0596/2021-09/Base-Instructions/SETGP--SETGM--SETGE--Memory-Set-with-tag-setting-?lang=en#sa_xd)
+  for more details)
+* `value`: fill value.
+* `size`: number of bytes to fill. This should be a multiple of the tag
+  granule size.
+
+Similarly to C's memset, this intrinsic returns the `tagged_address` pointer.
+
+# Architectural Extension Bridges
+
+## NEON-SVE Bridge
+
+The NEON_SVE Bridge adds intrinsics that allow conversions between NEON and
+SVE vectors.
+
+The [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h) header should be
+included before using these intrinsics.
+
+### `svset_neonq`
+
+These intrinsics set the first 128 bits of SVE vector `vec` to `subvec`.
+
+That is, bit *i* of the result is equal to:
+* bit *i* of `subvec` if *i* < 128
+* bit *i* of `vec` otherwise
+
+On big-endian targets, this leaves lanes in a different
+order from the “native” SVE order.  For example, if `subvec` is
+`int32x4_t`, then on big-endian targets, the first memory element
+is in lane 3 of `subvec` and is therefore in lane 3 of the returned
+SVE vector.  Using `svld1` to load elements would instead put the
+first memory element in lane 0 of the returned SVE vector.
+
+When `svundef` is passed as the `vec` parameter, compilers are able
+to reuse the SVE register overlapping the NEON input without generating
+additional instructions.
+
+| **Instances**                                                            |
+|--------------------------------------------------------------------------|
+| `svint8_t svset_neonq[_s8](svint8_t vec, int8x16_t subvec)`              |
+| `svint16_t svset_neonq[_s16](svint16_t vec, int16x8_t subvec)`           |
+| `svint32_t svset_neonq[_s32](svint32_t vec, int32x4_t subvec)`           |
+| `svint64_t svset_neonq[_s64](svint64_t vec, int64x2_t subvec)`           |
+| `svuint8_t svset_neonq[_u8](svuint8_t vec, uint8x16_t subvec)`           |
+| `svuint16_t svset_neonq[_u16](svuint16_t vec, uint16x8_t subvec)`        |
+| `svuint32_t svset_neonq[_u32](svuint32_t vec, uint32x4_t subvec)`        |
+| `svuint64_t svset_neonq[_u64](svuint64_t vec, uint64x2_t subvec)`        |
+| `svfloat16_t svset_neonq[_f16](svfloat16_t vec, float16x8_t subvec)`     |
+| `svfloat32_t svset_neonq[_f32](svfloat32_t vec, float32x4_t subvec)`     |
+| `svfloat64_t svset_neonq[_f64](svfloat64_t vec, float64x2_t subvec)`     |
+| `svbfloat16_t svset_neonq[_bf16](svbfloat16_t vec, bfloat16x8_t subvec)` |
+
+### `svget_neonq`
+
+These intrinsics get the first 128 bit subvector of SVE vector `vec` as a
+NEON vector.
+
+| **Instances**                                       |
+|-----------------------------------------------------|
+| `int8x16_t svget_neonq[_s8](svint8_t vec)`          |
+| `int16x8_t svget_neonq[_s16](svint16_t vec)`        |
+| `int32x4_t svget_neonq[_s32](svint32_t vec)`        |
+| `int64x2_t svget_neonq[_s64](svint64_t vec)`        |
+| `uint8x16_t svget_neonq[_u8](svuint8_t vec)`        |
+| `uint16x8_t svget_neonq[_u16](svuint16_t vec)`      |
+| `uint32x4_t svget_neonq[_u32](svuint32_t vec)`      |
+| `uint64x2_t svget_neonq[_u64](svuint64_t vec)`      |
+| `float16x8_t svget_neonq[_f16](svfloat16_t vec)`    |
+| `float32x4_t svget_neonq[_f32](svfloat32_t vec)`    |
+| `float64x2_t svget_neonq[_f64](svfloat64_t vec)`    |
+| `bfloat16x8_t svget_neonq[_bf16](svbfloat16_t vec)` |
+
+### `svdup_neonq`
+
+These intrinsics return an SVE vector with all SVE subvectors containing the
+duplicated NEON vector `vec`.
+
+| **Instances**                                       |
+|-----------------------------------------------------|
+| `svint8_t svdup_neonq[_s8](int8x16_t vec)`          |
+| `svint16_t svdup_neonq[_s16](int16x8_t vec)`        |
+| `svint32_t svdup_neonq[_s32](int32x4_t vec)`        |
+| `svint64_t svdup_neonq[_s64](int64x2_t vec)`        |
+| `svuint8_t svdup_neonq[_u8](uint8x16_t vec)`        |
+| `svuint16_t svdup_neonq[_u16](uint16x8_t vec)`      |
+| `svuint32_t svdup_neonq[_u32](uint32x4_t vec)`      |
+| `svuint64_t svdup_neonq[_u64](uint64x2_t vec)`      |
+| `svfloat16_t svdup_neonq[_f16](float16x8_t vec)`    |
+| `svfloat32_t svdup_neonq[_f32](float32x4_t vec)`    |
+| `svfloat64_t svdup_neonq[_f64](float64x2_t vec)`    |
+| `svbfloat16_t svdup_neonq[_bf16](bfloat16x8_t vec)` |
 
 # Future directions
 
@@ -5013,242 +5552,6 @@ The bit-banded memory feature of certain Cortex-M cores is now regarded
 as being outside the architecture, and there is no plan to standardize
 its support.
 
-# Transactional Memory Extension (TME) intrinsics
-
-## Introduction
-
-This section describes the intrinsics for the instructions of the
-Transactional Memory Extension (TME). TME adds support for transactional
-execution where transactions are started and
-committed by a set of new instructions. The TME instructions are present
-in the AArch64 execution state only.
-
-TME is designed to improve performance in cases where larger system scaling
-requires atomic and isolated access to data structures whose composition is
-dynamic in nature and therefore not readily amenable to fine-grained locking
-or lock-free approaches.
-
-TME transactions are *isolated*. This means that transactional stores are
-hidden from other observers, and transactional loads cannot see stores from
-other observers until the transaction commits. Also, if the transaction fails
-then stores to memory and writes to registers by the transaction are discarded
-and the processor returns to the state it had when the transaction started.
-
-TME transactions are *best-effort*. This means that the architecture does not
-guarantee success for any transaction. The architecture requires that all
-transactions specify a failure handler allowing the software to fallback to a
-non-transactional alternative to provide guarantees of forward progress.
-
-TME defines *flattened nesting* of transactions, where nested transactions are
-subsumed by the outer transaction. This means that the effects of a nested
-transaction do not become visible to other observers until the outer
-transaction commits. When a nested transaction fails it causes the
-outer transaction, and all nested transactions within, to fail.
-
-The TME intrinsics are available when `__ARM_FEATURE_TME` is defined.
-
-## Failure definitions
-
-Transactions can fail due to various causes. The following macros
-are defined to help use or detect these causes.
-
-``` c
-  #define _TMFAILURE_REASON 0x00007fffu
-  #define _TMFAILURE_RTRY   0x00008000u
-  #define _TMFAILURE_CNCL   0x00010000u
-  #define _TMFAILURE_MEM    0x00020000u
-  #define _TMFAILURE_IMP    0x00040000u
-  #define _TMFAILURE_ERR    0x00080000u
-  #define _TMFAILURE_SIZE   0x00100000u
-  #define _TMFAILURE_NEST   0x00200000u
-  #define _TMFAILURE_DBG    0x00400000u
-  #define _TMFAILURE_INT    0x00800000u
-  #define _TMFAILURE_TRIVIAL    0x01000000u
-```
-
-## Intrinsics
-
-``` c
-  uint64_t __tstart (void);
-```
-
-Starts a new transaction. When the transaction starts successfully the return
-value is 0. If the transaction fails, all state modifications are discarded
-and a cause of the failure is encoded in the return value. The macros defined in [ssec-TMEFailures](#failure-definitions)
-can be used to detect the cause of the failure.
-
-``` c
-  void __tcommit (void);
-```
-
-Commits the current transaction. For a nested transaction, the only effect
-is that the transactional nesting depth is decreased. For an outer transaction,
-the state modifications performed transactionally are committed to the
-architectural state.
-
-``` c
-  void __tcancel (/*constant*/ uint64_t);
-```
-
-Cancels the current transaction and discards all state modifications that
-were performed transactionally. The intrinsic takes a 16-bit immediate input that encodes
-the cancellation reason. This input could be given as
-
-``` c
-  __tcancel (_TMFAILURE_RTRY | (failure_reason & _TMFAILURE_REASON));
-```
-
-if retry is true or
-
-``` c
-  __tcancel (failure_reason & _TMFAILURE_REASON);
-```
-
-if retry is false.
-
-``` c
-  uint64_t __ttest (void);
-```
-
-Tests if executing inside a transaction. If no transaction is currently
-executing, the return value is 0. Otherwise, this intrinsic returns the depth of the
-transaction.
-
-## Instructions
-
-| **Intrinsics**                                | **Argument**     | **Result**     | **Instruction**   |
-| --------------------------------------------- | ---------------- | -------------- | ----------------- |
-| uint64_t __tstart (void)                      | -                | Xt -> result   | tstart <Xt>       |
-| void __tcommit (void)                         | -                | -              | tcommit           |
-| void __tcancel (/*constant*/ uint64_t reason) | reason -> #<imm> | -              | tcancel #<imm>    |
-| uint64_t __ttest (void)                       | -                | Xt -> result   | ttest <Xt>        |
-
-These intrinsics are available when `arm_acle.h` is included.
-
-# memcpy family of operations intrinsics - MOPS
-
-## Introduction
-
-This section describes the intrinsic for the new instructions introduced in the
-Armv8.8-A and Armv9.3-A architecture updates for the memcpy, memmove and memset
-family of memory operations (MOPS).
-
-These intructions are designed to enable the standardization of the software
-implementation of those operations. Therefore, most of the use cases for
-the new instructions are covered by the compiler's code generation or by library
-implementations.
-
-An exception to that is the set of instructions covering the memset operation
-with memory tagging. An intrinsic is available to provide access to this
-operation. See [ssec-MTE](#memory-tagging) for more information on memory
-tagging.
-
-The `<arm_acle.h>` header should be included before using this intrinsic.
-
-This intrinsic is available when `__ARM_FEATURE_MOPS` is defined.
-
-``` c
-  void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
-```
-
-This intrinsic performs a memset operation with tag setting on a memory block.
-
-The parameters of `__arm_mops_memset_tag` are:
-
-* `tagged_address`: destination address to be set, containing the allocation
-  tag in its bits `[59:56]`. The address should be aligned with the tag granule
-  size. (See the [SETG\* instructions specification](<https://developer.arm.com/documentation/ddi0596/2021-09/Base-Instructions/SETGP--SETGM--SETGE--Memory-Set-with-tag-setting-?lang=en#sa_xd)
-  for more details)
-* `value`: fill value.
-* `size`: number of bytes to fill. This should be a multiple of the tag
-  granule size.
-
-Similarly to C's memset, this intrinsic returns the `tagged_address` pointer.
-
-# Architectural Extension Bridges
-
-## NEON-SVE Bridge
-
-The NEON_SVE Bridge adds intrinsics that allow conversions between NEON and
-SVE vectors.
-
-These intrinsics are defined in the header file `arm_neon_sve_bridge.h`.
-
-`__ARM_NEON_SVE_BRIDGE` is defined as 1 when `arm_neon_sve_bridge.h` is
-available.
-
-Including this header_file will include `arm_neon.h` and `arm_sve.h`.
-
-### `svset_neonq`
-
-These intrinsics set the first 128 bits of SVE vector `vec` to `subvec`.
-
-That is, bit *i* of the result is equal to:
-* bit *i* of `subvec` if *i* < 128
-* bit *i* of `vec` otherwise
-
-On big-endian targets, this leaves lanes in a different
-order from the “native” SVE order.  For example, if `subvec` is
-`int32x4_t`, then on big-endian targets, the first memory element
-is in lane 3 of `subvec` and is therefore in lane 3 of the returned
-SVE vector.  Using `svld1` to load elements would instead put the
-first memory element in lane 0 of the returned SVE vector.
-
-When `svundef` is passed as the `vec` parameter, compilers are able
-to reuse the SVE register overlapping the NEON input without generating
-additional instructions.
-
-| **Instances**                                                            |
-|--------------------------------------------------------------------------|
-| `svint8_t svset_neonq[_s8](svint8_t vec, int8x16_t subvec)`              |
-| `svint16_t svset_neonq[_s16](svint16_t vec, int16x8_t subvec)`           |
-| `svint32_t svset_neonq[_s32](svint32_t vec, int32x4_t subvec)`           |
-| `svint64_t svset_neonq[_s64](svint64_t vec, int64x2_t subvec)`           |
-| `svuint8_t svset_neonq[_u8](svuint8_t vec, uint8x16_t subvec)`           |
-| `svuint16_t svset_neonq[_u16](svuint16_t vec, uint16x8_t subvec)`        |
-| `svuint32_t svset_neonq[_u32](svuint32_t vec, uint32x4_t subvec)`        |
-| `svuint64_t svset_neonq[_u64](svuint64_t vec, uint64x2_t subvec)`        |
-| `svfloat16_t svset_neonq[_f16](svfloat16_t vec, float16x8_t subvec)`     |
-| `svfloat32_t svset_neonq[_f32](svfloat32_t vec, float32x4_t subvec)`     |
-| `svfloat64_t svset_neonq[_f64](svfloat64_t vec, float64x2_t subvec)`     |
-| `svbfloat16_t svset_neonq[_bf16](svbfloat16_t vec, bfloat16x8_t subvec)` |
-
-### `svget_neonq`
-
-These intrinsics get the first 128 bit subvector of SVE vector `vec` as a
-NEON vector.
-
-| **Instances**                                       |
-|-----------------------------------------------------|
-| `int8x16_t svget_neonq[_s8](svint8_t vec)`          |
-| `int16x8_t svget_neonq[_s16](svint16_t vec)`        |
-| `int32x4_t svget_neonq[_s32](svint32_t vec)`        |
-| `int64x2_t svget_neonq[_s64](svint64_t vec)`        |
-| `uint8x16_t svget_neonq[_u8](svuint8_t vec)`        |
-| `uint16x8_t svget_neonq[_u16](svuint16_t vec)`      |
-| `uint32x4_t svget_neonq[_u32](svuint32_t vec)`      |
-| `uint64x2_t svget_neonq[_u64](svuint64_t vec)`      |
-| `float16x8_t svget_neonq[_f16](svfloat16_t vec)`    |
-| `float32x4_t svget_neonq[_f32](svfloat32_t vec)`    |
-| `float64x2_t svget_neonq[_f64](svfloat64_t vec)`    |
-| `bfloat16x8_t svget_neonq[_bf16](svbfloat16_t vec)` |
-
-### `svdup_neonq`
-
-These intrinsics return an SVE vector with all SVE subvectors containing the
-duplicated NEON vector `vec`.
-
-| **Instances**                                       |
-|-----------------------------------------------------|
-| `svint8_t svdup_neonq[_s8](int8x16_t vec)`          |
-| `svint16_t svdup_neonq[_s16](int16x8_t vec)`        |
-| `svint32_t svdup_neonq[_s32](int32x4_t vec)`        |
-| `svint64_t svdup_neonq[_s64](int64x2_t vec)`        |
-| `svuint8_t svdup_neonq[_u8](uint8x16_t vec)`        |
-| `svuint16_t svdup_neonq[_u16](uint16x8_t vec)`      |
-| `svuint32_t svdup_neonq[_u32](uint32x4_t vec)`      |
-| `svuint64_t svdup_neonq[_u64](uint64x2_t vec)`      |
-| `svfloat16_t svdup_neonq[_f16](float16x8_t vec)`    |
-| `svfloat32_t svdup_neonq[_f32](float32x4_t vec)`    |
-| `svfloat64_t svdup_neonq[_f64](float64x2_t vec)`    |
-| `svbfloat16_t svdup_neonq[_bf16](bfloat16x8_t vec)` |
+<!-- Please add new extension chapters somwhere before the “Architectural
+     Extension Bridges” chapter.  In particular, the “Future directions”
+     chapter should be last.  -->

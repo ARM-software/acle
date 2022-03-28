@@ -24,4 +24,4 @@ jobs:
     - uses: actions/checkout@master
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
-          config-file: '.github/ci/markdown-link-check.json'
+          config-file: '.github/workflows/markdown-link-check.json'
