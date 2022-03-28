@@ -1516,7 +1516,7 @@ AESMC, AESIMC and others.
 
 #### SHA2 extension
 
-`__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2 Crypto
+`__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2-256 Crypto
 instructions from Armv8-A are supported and intrinsics targeting them
 are available. These instructions are identified by `FEAT_SHA1` and
 `FEAT_SHA256` in [[ARMARMv8]](#ARMARMv8), and they include SHA1{C, P,
@@ -1524,7 +1524,7 @@ M}, SHA256H, SHA256H2... and others.
 
 #### SHA512 extension
 
-`__ARM_FEATURE_SHA512` is defined to 1 if the SHA2 Crypto instructions
+`__ARM_FEATURE_SHA512` is defined to 1 if the SHA2-512 Crypto instructions
 from Armv8.2-A are supported and intrinsics targeting them are
 available. These instructions are identified by `FEAT_SHA512` in
 [[ARMARMv82]](#ARMARMv82), and they include SHA1{C, P, M}, SHA256H,
