@@ -1008,7 +1008,7 @@ arguments that read at most once, but accessibility checks are still required.
 
 The stack usage of an entry function is shown in [Figure 5](#figure5).
 
-![<span id="figure5" class="citation-label">**Entry function's caller stack frame**</span>](stack-frame-entry.png)
+![<span id="figure5" class="citation-label">**Entry function's caller stack frame**</span>](stack-frame-entry.svg)
 
 ### Return from an entry function
 
