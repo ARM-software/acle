@@ -24,6 +24,7 @@ They are automatically removed by the scripts that generates the pdfs.
 -->
 * TOC
 {:toc}
+
 # Preface
 
 ## Abstract
@@ -136,6 +137,10 @@ Anticipated changes to this document include:
 #### Changes for next release
 
 * Publication of the specifications in open source format.
+* Internal references to sections and figures use section title and
+  figure caption instead of reference numbers.
+* Section numbering has changed because of the introduction of the
+  [Preface](#preface) chapter.
 * Fixed the definition of macro `cmse_check_pointed_object` in
   [Non-trivial macros](#non-trivial-macros), as specified in rule
   [30](#rule-30).
@@ -863,6 +868,8 @@ intrinsics](#address-range-check-intrinsic), the address range check
 can be done efficiently if the non-secure stack does not cross the
 boundary of any memory region defined by the MPU, SAU, and IDAU.
 
+<span id="rule-36"></span>
+
 > **36** A _C language translation_ system must generate code to handle a generated
 > non-secure memory access in each of the following situations:
 
@@ -1004,7 +1011,7 @@ volatile behavior of non-secure memory ([Volatility of non-secure
 memory](#volatility-of-non-secure-memory)) and the requirements of
 using non-secure memory ([Non-secure memory
 usage](#non-secure-memory-usage)),
-in particular requirement 36.  
+in particular requirement [36](#rule-36).  
 
 In practice, a compiler might generate code that:
 
@@ -1182,7 +1189,8 @@ If a compiler supports stack-based arguments and results, it must be
 aware of the volatile behavior of non-secure memory ([Volatility of
 non-secure memory](#volatility-of-non-secure-memory)) and the
 requirements of using non-secure memory ([Non-secure memory
-usage](#non-secure-memory-usage)), in particular requirement 36.
+usage](#non-secure-memory-usage)), in particular requirement
+[36](#rule-36).
 
 In practice, a toolchain might generate code that:
 
