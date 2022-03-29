@@ -384,7 +384,8 @@ void foo(volatile int *p) {
 }
 ```
 
-Situations that the toolchain must handle are described in [9.1](#non-secure-memory-usage).
+Situations that the toolchain must handle are described in [Non-secure
+memory usage](#non-secure-memory-usage).
 
 ### Inadvertent secure gateway
 
@@ -503,10 +504,11 @@ Vectors of secure gateway veneers are expected to be placed in NSC memory. All
 other code in the secure executable is expected to be placed in secure memory
 regions. This placement is under the control of the developer.
 
-Preventing inadvertent secure gateways as described in 
-[7.3.4](#inadvertent-secure-gateway) is a responsibility shared between a
-developer and their toolchain. A toolchain must make it possible for a developer
-to avoid creating inadvertent secure gateways.
+Preventing inadvertent secure gateways as described in [Inadvertent
+secure gateway](#inadvertent-secure-gateway) is a responsibility
+shared between a developer and their toolchain. A toolchain must make
+it possible for a developer to avoid creating inadvertent secure
+gateways.
 
 > **12** Excluding the first instruction of a secure gateway veneer, a veneer must
 > not contain the bit pattern of the SG instruction on a 2-byte boundary.
@@ -750,7 +752,9 @@ the following constraint holds:
 > **26** The address range check intrinsic fails if the range crosses any MPU region
 > boundary.
 
-The SAU and IDAU support for this intrinsic is defined in [9.3](#address-range-check-intrinsic-for-cmse).
+The SAU and IDAU support for this intrinsic is defined in [Address
+range check intrinsics for
+CMSE](#address-range-check-intrinsic-for-cmse).
 
 The rest of the semantics of the address range check intrinsic depend on its
 `flags` parameter. This parameter can be constructed using a bitwise OR operator.
@@ -846,14 +850,18 @@ if addr == 0 then
 //access to [addr, addr+SIZE-1] is now permitted
 ```
 
-The macros `CMSE_MPU_READWRITE` and `CMSE_NONSECURE` are defined in 
-[9.3](#address-range-check-intrinsic-for-cmse). The `cmse_check_address_range`
-intrinsic is defined in [8.3](#address-range-check-intrinsic) and extended in
-[9.3](#address-range-check-intrinsic-for-cmse).
+The macros `CMSE_MPU_READWRITE` and `CMSE_NONSECURE` are defined in
+[Address range check intrinsics for
+CMSE](#address-range-check-intrinsic-for-cmse). The
+`cmse_check_address_range` intrinsic is defined in [Address range
+check intrinsics](#address-range-check-intrinsic) and extended in
+[Address range check intrinsics for
+CMSE](#address-range-check-intrinsic-for-cmse).
 
-As mentioned in [8.3](#address-range-check-intrinsic), the address range check
-can be done efficiently if the non-secure stack does not cross the boundary of
-any memory region defined by the MPU, SAU, and IDAU.
+As mentioned in [Address range check
+intrinsics](#address-range-check-intrinsic), the address range check
+can be done efficiently if the non-secure stack does not cross the
+boundary of any memory region defined by the MPU, SAU, and IDAU.
 
 > **36** A _C language translation_ system must generate code to handle a generated
 > non-secure memory access in each of the following situations:
@@ -874,10 +882,11 @@ This is explained in more detail in [9.4 Entry functions](#entry-functions), and
 
 ## TT intrinsics for CMSE
 
-In the secure state, the `TT` instruction returns the SAU and IDAU configuration
-and recognizes the `A` flag. This requires the type defined in 
-[8.2](#tt-intrinsics) to be extended. The additional fields are emphasized with 
-double asterisk(**). The size of this type is still 4 bytes.
+In the secure state, the `TT` instruction returns the SAU and IDAU
+configuration and recognizes the `A` flag. This requires the type
+defined in [TT intrinsics](#tt-intrinsics) to be extended. The
+additional fields are emphasized with double asterisk(**). The size of
+this type is still 4 bytes.
 
 > **37** If `__ARM_BIG_ENDIAN` is unset and bit 1 of macro `__ARM_FEATURE_CMSE`
 > is set, the following type must be declared:
