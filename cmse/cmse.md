@@ -255,7 +255,7 @@ accessed in secure state as well, including the banked parts.
 The system boots in secure state and can change security states using branches
 as summarized in [Figure 2](#figure2).
 
-![<span id="figure2" class="citation-label">**Security state transitions**</span>](state-trans.png)
+![<span id="figure2" class="citation-label">**Security state transitions**</span>](state-trans.svg)
 
 Transitions from secure to non-secure state can be initiated by software through
 the use of the `BXNS` and `BLXNS` instructions that have the 
