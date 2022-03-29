@@ -237,8 +237,8 @@ Attempts to access secure regions from non-secure code or a mismatch between
 the (secure or non-secure) code that is executed and the security state of the
 system results in a _SecureFault_.
 
-The security states are orthogonal to the exception level, as shown in 
-[Figure 1](#figure1).
+The security states are orthogonal to the exception level, as shown in figure
+[Diagrammatic representation of secure states](#figure1).
 
 ![<span id="figure1" class="citation-label">**Diagrammatic representation of secure states**</span>](diag-rep.svg)
 
@@ -253,7 +253,7 @@ accessed in secure state as well, including the banked parts.
 ###  Security state changes
 
 The system boots in secure state and can change security states using branches
-as summarized in [Figure 2](#figure2).
+as summarized in figure [Security state transitions](#figure2).
 
 ![<span id="figure2" class="citation-label">**Security state transitions**</span>](state-trans.svg)
 
@@ -422,7 +422,7 @@ This provides an interface that fits naturally with the C language.
 A function in secure code that can be called from the non-secure state through
 its secure gateway is called an _entry function_. A function call from secure
 state to the non-secure state is called a _non-secure function call_. This is
-shown in [Figure 2](#figure2).
+shown in [Figure 4.1](#figure2).
 
 ### Executable files
 
@@ -455,8 +455,9 @@ Mainline introduces instructions that enable the saving and restoring of the FP
 context. These are the VMSR, VMRS, VSTR and VLDR to system registers FPCXTNS and
 FPCXTS.
 
-The interaction between developers of secure code, non-secure code, and
-(optional) security agnostic library code is shown in [Figure 3](#figure3).
+The interaction between developers of secure code, non-secure code,
+and (optional) security agnostic library code is shown in [Files
+shared between parties](#figure3).
 
 ![<span id="figure3" class="citation-label">**Files shared between parties**</span>](files-shared.svg)
 
@@ -525,7 +526,7 @@ secure gateway veneer. It allows the developer to fix the addresses of the
 secure gateway veneers such that secure code can be updated independently of
 non-secure code.
 
-[Figure 4](#figure4) shows the memory layout of a secure executable.
+[Secure executable memory layout](#figure4) shows the memory layout of a secure executable.
 
 ![<span id="figure4" class="citation-label">**Secure executable memory layout**</span>](exec-mem.svg)
 
@@ -785,11 +786,12 @@ before the check.
 |-----------------------------------------------|-------------------------------------------------------------------------|
 | `cmse_check_pointed_object(p, f)`             | Returns the same value as `cmse_check_address_range(p, sizeof(*p), f)`. |
 
-The `cmse_check_pointed_object()` intrinsic can be implemented as a macro. An
-example implementation is listed in [11.2](#non-trivial-macros). This intrinsic
-is a convenience wrapper for the `cmse_check_address_range()` intrinsic that
-matches the most common usage pattern in C. Arm recommends that the return type
-of this intrinsic is identical to the type of parameter `p`.
+The `cmse_check_pointed_object()` intrinsic can be implemented as a
+macro. An example implementation is listed in [Non-trivial
+macros](#non-trivial-macros). This intrinsic is a convenience wrapper
+for the `cmse_check_address_range()` intrinsic that matches the most
+common usage pattern in C. Arm recommends that the return type of this
+intrinsic is identical to the type of parameter `p`.
 
 # CMSE SUPPORT
 
@@ -917,8 +919,8 @@ for the CMSE support. Implementation recommendations can be found there.
 ## Address range check intrinsic for CMSE
 
 The semantics of the intrinsic `cmse_check_address_range()` defined in
-[8.3](#address-range-check-intrinsic) are extended to handle the extra flag and
-fields introduced by CMSE.
+[Address range check intrinsic](#address-range-check-intrinsic) are
+extended to handle the extra flag and fields introduced by CMSE.
 
 > **40** The address range check must fail if the range crosses any SAU or IDAU
 > region boundary.
@@ -987,9 +989,11 @@ If it must use the stack to write arguments or read a result value
     the type of the return value, to avoid using the non-secure stack. An entry
     function that would break the constraint must be diagnosed.
 
-If a toolchain supports stack-based arguments, it must be aware of the volatile
-behavior of non-secure memory ([7.3.3](#volatility-of-non-secure-memory)) and
-the requirements of using non-secure memory ([9.1](#non-secure-memory-usage)),
+If a toolchain supports stack-based arguments, it must be aware of the
+volatile behavior of non-secure memory ([Volatility of non-secure
+memory](#volatility-of-non-secure-memory)) and the requirements of
+using non-secure memory ([Non-secure memory
+usage](#non-secure-memory-usage)),
 in particular requirement 36.  
 
 In practice, a compiler might generate code that:
@@ -999,14 +1003,17 @@ In practice, a compiler might generate code that:
 * Copies the stack-based return value from the secure stack to the non-secure
   stack in the epilogue.
 
-Code that performs this copying must check the accessibility of the non-secure
-memory as described by the pseudocode in [9.1](#non-secure-memory-usage). An
-example entry function epilogue and prologue can be found in [11.4](#example-entry-functions).
+Code that performs this copying must check the accessibility of the
+non-secure memory as described by the pseudocode in [Non-secure memory
+usage](#non-secure-memory-usage). An example entry function epilogue
+and prologue can be found in [Example entry
+function](#example-entry-functions).
 
 A possible optimization would be to access the non-secure stack directly for
 arguments that read at most once, but accessibility checks are still required.
 
-The stack usage of an entry function is shown in [Figure 5](#figure5).
+The stack usage of an entry function is shown in [Entry function's
+caller stack frame](#figure5).
 
 ![<span id="figure5" class="citation-label">**Entry function's caller stack frame**</span>](stack-frame-entry.svg)
 
@@ -1019,8 +1026,9 @@ This instruction switches to non-secure state if the target address has its
 LSB unset. The LSB of the return address in `lr` is automatically cleared by the
 `SG` instruction when it switches the state from non-secure to secure.
 
-To prevent information leakage when an entry function returns, the registers
-that contain secret information must be cleared ([7.3.1](#information-leakage)).
+To prevent information leakage when an entry function returns, the
+registers that contain secret information must be cleared
+([Information leakage](#information-leakage)).
 
 > **48** The code sequence directly preceding the `BXNS` instruction that transitions
 > to non-secure code must:
@@ -1042,7 +1050,8 @@ types of variables never hold secret information. For example, by setting the
 `TS` bit of `FPCCR`, CMSE assumes that floating point registers never hold
 secret information.
 
-An example entry function epilogue can be found in [11.4](#example-entry-functions).
+An example entry function epilogue can be found in [Example entry
+functions](#example-entry-functions).
 
 Because of these requirements, performing tail-calls from an entry function is
 difficult.
@@ -1070,10 +1079,11 @@ might become a requirement in the future.
 
 ## Non-secure function call
 
-A call to a function that switches state from secure to non-secure is called a 
-_non-secure function call_. A non-secure function call can only happen via
-function pointers. This is a consequence of separating secure and non-secure
-code into separate executable files as described in [7.4.2](#executable-files).
+A call to a function that switches state from secure to non-secure is
+called a _non-secure function call_. A non-secure function call can
+only happen via function pointers. This is a consequence of separating
+secure and non-secure code into separate executable files as described
+in [Executable files](#executable-files).
 
 > **50** A non-secure function type must be declared using the function attribute 
 > `__attribute__((cmse_nonsecure_call))`.
@@ -1095,11 +1105,12 @@ branches using the `BLXNS` instruction.
 Note that a non-secure function call to an entry function is possible. This
 behaves like any other non-secure function call.
 
-All registers that contain secret information must be cleared to prevent
-information leakage when performing a non-secure function call as described in
-[7.3.1](#information-leakage). Registers that contain values that are used after
-the non-secure function call must be restored after the call returns. Secure
-code cannot depend on the non-secure state to restore these registers.
+All registers that contain secret information must be cleared to
+prevent information leakage when performing a non-secure function call
+as described in [Information leakage](#information-leakage). Registers
+that contain values that are used after the non-secure function call
+must be restored after the call returns. Secure code cannot depend on
+the non-secure state to restore these registers.
 
 > **53** The code sequence directly preceding the `BLXNS` instruction that
 > transitions to non-secure code must:
@@ -1133,7 +1144,7 @@ The floating point registers can very efficiently be saved and cleared using
 the `VLSTM`, and restored using `VLLDM` instructions.
 
 An example instruction sequence for a non-secure call is listed in
-[11.3](#example-non-secure-function-call).
+[Example non-secure function call](#example-non-secure-function-call).
 
 ### Arguments and return value
 
@@ -1157,10 +1168,11 @@ memory.
 >   type of the return value to avoid needing to use the non-secure stack. A call
 >   that would break the constraint must be diagnosed.
 
-If a compiler supports stack-based arguments and results, it must be aware of
-the volatile behavior of non-secure memory ([7.3.3](#volatility-of-non-secure-memory))
-and the requirements of using non-secure memory ([9.1](#non-secure-memory-usage)),
-in particular requirement 36. 
+If a compiler supports stack-based arguments and results, it must be
+aware of the volatile behavior of non-secure memory ([Volatility of
+non-secure memory](#volatility-of-non-secure-memory)) and the
+requirements of using non-secure memory ([Non-secure memory
+usage](#non-secure-memory-usage)), in particular requirement 36.
 
 In practice, a toolchain might generate code that:
 
@@ -1170,7 +1182,7 @@ In practice, a toolchain might generate code that:
   after the non-secure function call returns.
 
 Code that performs these tasks must check the non-secure memory as described by
-the pseudocode in [9.1](#non-secure-memory-usage).
+the pseudocode in [Non-secure memory usage](#non-secure-memory-usage).
 
 If the return value is read once, a possible optimization would be to read the
 return value directly from the non-secure stack at the point of use. In this
@@ -1183,15 +1195,18 @@ The stack usage during a non-secure function call is shown in figure
 
 ## Non-secure function pointer
 
-A function pointer that has its LSB unset is a non-secure function pointer
-(_nsfptr_). An nsfptr provides a way to test at run-time the security state that
-will be targeted when performing a call through this pointer. An nsfptr is not
-a type and must not be confused with the non-secure function type ([9.5](#non-secure-function-call)).
+A function pointer that has its LSB unset is a non-secure function
+pointer (_nsfptr_). An nsfptr provides a way to test at run-time the
+security state that will be targeted when performing a call through
+this pointer. An nsfptr is not a type and must not be confused with
+the non-secure function type ([Non-secure function
+call](#non-secure-function-call)).
 
-Most use cases do not require an nsfptr and should use a non-secure function
-call ([9.5](#non-secure-function-call)). An example of where an nfsptr is needed
-is to share a single variable for secure function pointers and non-secure function
-pointers:
+Most use cases do not require an nsfptr and should use a non-secure
+function call ([Non-secure function
+call](#non-secure-function-call)). An example of where an nfsptr is
+needed is to share a single variable for secure function pointers and
+non-secure function pointers:
 
 ``` c
 #include <arm_cmse.h>
@@ -1224,11 +1239,13 @@ Such sharing of a variable is not recommended practice.
 | `cmse_nsfptr_create(p)` | Returns the value of `p` with its LSB cleared. The argument `p` can be any function pointer type.         |
 | `cmse_is_nsfptr(p)`     | Returns non-zero if `p` has LSB unset, zero otherwise. The argument `p` can be any function pointer type. |
 
-Note that the exact type signatures of these intrinsics are implementation-defined
-because there is no type defined by [[ISOC]](#ISOC) that can hold all function
-pointers. Arm recommends implementing these intrinsics as macros and recommends
-that the return type of `cmse_nsfptr_create()` is identical to the type of its
-argument. An example implementation is listed in [11.2](#non-trivial-macros).
+Note that the exact type signatures of these intrinsics are
+implementation-defined because there is no type defined by
+[[ISOC]](#ISOC) that can hold all function pointers. Arm recommends
+implementing these intrinsics as macros and recommends that the return
+type of `cmse_nsfptr_create()` is identical to the type of its
+argument. An example implementation is listed in [Non-trivial
+macros](#non-trivial-macros).
 
 # FUTURE EXTENSIONS
 
@@ -1250,11 +1267,13 @@ a secure gateway veneer the function starts with the `SG` instruction.
 > * The function’s special symbol labels the address following the `SG`
 > instruction. 
 
-No veneer is generated as defined in [7.4.3](#secure-gateway-veneers) because
-the special symbol’s value is different to the normal symbol’s value.
+No veneer is generated as defined in [Secure gatewayy
+veneers](#secure-gateway-veneers) because the special symbol’s value
+is different to the normal symbol’s value.
 
-Toolchain support is needed to prevent inadvertent secure gateways from
-occurring ([7.3.4](#inadvertent-secure-gateway)).
+Toolchain support is needed to prevent inadvertent secure gateways
+from occurring ([Inadverted secure
+gataway](#inadvertent-secure-gateway)).
 
 > **60** A toolchain must provide a way for the programmer to guarantee that a
 > non-secure callable function does not contain an inadvertent `SG` instruction
