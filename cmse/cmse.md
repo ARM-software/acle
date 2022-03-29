@@ -404,9 +404,10 @@ inadvertent secure gateway.
 
 > **5** Memory in an NSC region must not contain an inadvertent SG instruction.
 
-The secure gateway veneers introduced in [7.4.3](#secure-gateway-veneers) limit
-the instructions that need to be placed in NSC regions. If the NSC regions
-contain only these veneers, an inadvertent secure gateway cannot occur.
+The secure gateway veneers introduced in [Secure gateway
+veneers](#secure-gateway-veneers) limit the instructions that need to
+be placed in NSC regions. If the NSC regions contain only these
+veneers, an inadvertent secure gateway cannot occur.
 
 ## Development tools
 
@@ -422,7 +423,7 @@ This provides an interface that fits naturally with the C language.
 A function in secure code that can be called from the non-secure state through
 its secure gateway is called an _entry function_. A function call from secure
 state to the non-secure state is called a _non-secure function call_. This is
-shown in [Figure 4.1](#figure2).
+shown in [Security state transitions](#figure2).
 
 ### Executable files
 
