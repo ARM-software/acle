@@ -1,5 +1,5 @@
 ..
-   SPDX-FileCopyrightText: Copyright 2021 Arm Limited <open-source-office@arm.com>
+   SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited <open-source-office@arm.com>
 
    CC-BY-SA-4.0 AND Apache-Patent-License
    See LICENSE.md file for details
@@ -44,7 +44,7 @@ application is built to run on legacy and be backward compatible, ``PAC`` can be
 used. Contrarily, ``PACG`` can be used only when ``PACBTI`` target extension is
 implemented.
 
-Example:
+Example (AArch32):
 --------
 
 ::
@@ -67,6 +67,26 @@ Example:
   #endif
   }
 
-A real-world use-case of these macros is in the stack-unwinding runtime for
-exceptions where the runtime unwinding is potentially better with ``AUTG``
-rather than using ``AUT`` which forces register pressure.
+A more practical example of these macros is in the stack-unwinding
+runtime for exceptions. In that case the runtime unwinding is improved
+by using ``AUTG`` rather than ``AUT`` because it frees up an
+additional register.
+
+Example (AArch64):
+--------
+
+::
+
+  #if __ARM_FEATURE_PAC_DEFAULT
+    // Authenticated return required.
+  # if __ARM_FEATURE_PAUTH
+    // Have PAUTH instructions
+    asm ("retaa");
+  # else
+    // Use authentication from NOP space.
+    asm ("autiasp;ret");
+  # endif
+  #else
+    // No authentication required.
+    asm ("ret");
+  #endif
