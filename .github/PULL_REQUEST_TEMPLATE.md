@@ -60,6 +60,5 @@ Checklist: (mark with ``X`` those which apply)
       correctness of the result in the PDF output (please refer to the
       instructions on [how to build the PDFs
       locally](../CONTRIBUTING.md#continuous-integration)).
-* [ ] The pull request is done against the branch `next-release`.
 * [ ] Please *DO NOT* add my GitHub profile to the list of contributors
       in the [README](../README.md#contributors-) page of the project.
