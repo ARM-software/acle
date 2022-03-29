@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 <!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
 <!-- See LICENSE.md file for details -->
 <div align="center">
@@ -21,8 +21,10 @@ The latest release of the specifications can be browsed online at
 The PDF version of the documents can be retrieved from the [latest
 release](https://github.com/ARM-software/acle/releases/latest) page.
 
-For the development version, please check the branch `next-release` at
-[github.com/ARM-software/acle/](https://github.com/ARM-software/acle/).
+The development version is stored on the branch `main` at
+[github.com/ARM-software/acle/](https://github.com/ARM-software/acle/),
+while the latest released version is tracked by the branch
+`latest-release`.
 
 ## Contributing
 
