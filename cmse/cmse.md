@@ -1,10 +1,10 @@
 ---
-title: Arm®v8-M Security Extensions - Requirements on Development Tools
+title: Arm®v8-M Security Extensions <br /> Requirements on Development Tools
 version: 1.1
 date-of-issue: 01 November 2019
 set-quote-highlight: true
 # LaTeX specific variables
-copyright-text: Copyright 2019,2021 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+copyright-text: Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 draftversion: true
 # Jekyll specific variables
 header_counter: true
@@ -12,7 +12,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2019,2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -36,13 +36,16 @@ Armv8-M.
 
 ## Keywords
 
-ACLE ABI CMSE Armv8-M Armv8.1-M Security Extensions toolchain requirements 
-compiler linkerarm
+ACLE, ABI, CMSE, Armv8-M, Armv8.1-M, Security, Extensions, toolchain,
+requirements, compiler, linkerarm.
 
-## How to find the latest release of this specification or report a defect in it
-Please check <https://developer.arm.com> for a later release if your copy is
-more than one year old.
-Please report defects in this specification to arm dot acle at arm dot com.
+## Latest release and defects report
+
+For the latest release of this document, see the [ACLE project on
+GitHub](https://github.com/ARM-software/acle).
+
+Please report defects in this specification to the [issue tracker page
+on GitHub](https://github.com/ARM-software/acle/issues).
 
 ## License
 
@@ -112,7 +115,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-Copyright 2019-2021 Arm Limited and/or its affiliates open-source-office@arm.com.
+Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 
 # ABOUT THIS DOCUMENT
 
@@ -208,7 +211,9 @@ Some of the requirements defined by this document will be included in future
 
 This document consists of informative text and requirements.
 
-> **0** Requirements are numbered in the left margin and highlighted as shown here.
+<span id="requirement-0" class="requirement-box"></span>
+
+> Requirements are numbered in the left margin and highlighted as shown here.
 
 A permanent unique reference consists of the document number, document version,
 and requirement number.
@@ -239,9 +244,9 @@ states:
   _secure state_ and can access memory in both secure and non-secure
   regions.[ ]
 
-Attempts to access secure regions from non-secure code or a mismatch between
-the (secure or non-secure) code that is executed and the security state of the
-system results in a _SecureFault_.
+Attempts to access secure regions from non-secure code or a mismatch
+between the (secure or non-secure) code that executes and the security
+state of the system, results in a _SecureFault_.
 
 The security states are orthogonal to the exception level, as shown in figure
 [Diagrammatic representation of secure states](#figure1).
@@ -258,8 +263,8 @@ accessed in secure state as well, including the banked parts.
 
 ###  Security state changes
 
-The system boots in secure state and can change security states using branches
-as summarized in figure [Security state transitions](#figure2).
+The system boots in secure state and can change security states using
+branches as shown in figure [Security state transitions](#figure2).
 
 ![<span id="figure2" class="citation-label">**Security state transitions**</span>](state-trans.svg)
 
@@ -319,7 +324,7 @@ these security requirements.
 
 ### Information leakage
 
-Information leakage from the secure state to the non-secure state may occur
+Information leakage from the secure state to the non-secure state might occur
 through parts of the system that are not banked between the security states.
 The unbanked registers that are accessible by software are:
 
@@ -328,9 +333,11 @@ The unbanked registers that are accessible by software are:
 * The `N`, `Z`, `C`, `V`, `Q`, and `GE` bits of the `APSR` register.
 * The `FPSCR` register.
 
-> **1** Secure code must clear secret information
-> from unbanked registers before initiating a transition from secure to
-> non-secure state.
+<span id="requirement-1" class="requirement-box"></span>
+
+> Secure code must clear secret information from unbanked
+> registers before it initiate a transition from secure to non-secure
+> state.
 
 ### Non-secure memory access
 When secure code needs to access non-secure memory using an address calculated
@@ -339,14 +346,18 @@ memory region. Furthermore, the MPU is banked between the security states.
 Therefore secure and non-secure code might have different access rights to
 non-secure memory.
 
-> **2** Secure code that accesses non-secure memory on behalf of the non-secure
+<span id="requirement-2" class="requirement-box"></span>
+
+> Secure code that accesses non-secure memory on behalf of the non-secure
 > state must only do so if the non-secure state has permission to perform the
 > same access itself.
 
 The secure code can use the `TT` instruction to check non-secure memory
 permissions.
 
-> **3** Secure code must not access non-secure memory unless it does so on behalf
+<span id="requirement-3" class="requirement-box"></span>
+
+> Secure code must not access non-secure memory unless it does so on behalf
 > of the non-secure state.
 
 Data belonging to secure code must reside in secure memory.
@@ -373,12 +384,16 @@ void foo(int *p) {
 
 When the pointer p points to non-secure memory, it is possible for its value to
 change after the memory accesses used to perform the array bounds check, but
-before the memory access used to index the array. Such an asynchronous change
+before the memory access used to index the array. This asynchronous change
 to non-secure memory would render this array bounds check useless.
 
-> **4** Secure code must handle non-secure memory as volatile.
+<span id="requirement-4" class="requirement-box"></span>
 
-The above example shows a case that can be handled by the developer as follows:
+> Secure code must handle non-secure memory as volatile.
+
+The introductory example of the section [Volatility of non-secure
+memory](#volatility-of-non-secure-memory) shows a case that you can
+handle as follows:
 
 ``` c
 int array[N]
@@ -409,7 +424,9 @@ An SG instruction can occur inadvertently. This can happen in the following case
 If an inadvertent `SG` instruction occurs in an NSC region, the result is an
 inadvertent secure gateway.
 
-> **5** Memory in an NSC region must not contain an inadvertent SG instruction.
+<span id="requirement-5" class="requirement-box"></span>
+
+> Memory in an NSC region must not contain an inadvertent SG instruction.
 
 The secure gateway veneers introduced in [Secure gateway
 veneers](#secure-gateway-veneers) limit the instructions that need to
@@ -424,7 +441,9 @@ Development tools are expected to provide C and assembly language support for
 interacting between the security states. Code written in C++ must use extern “C”
 linkage for any inter-state interaction. 
 
-> **6** Security state changes must be expressed through function calls and returns.
+<span id="requirement-6" class="requirement-box"></span>
+
+> Security state changes must be expressed through function calls and returns.
 
 This provides an interface that fits naturally with the C language.
 A function in secure code that can be called from the non-secure state through
@@ -440,7 +459,9 @@ non-secure state executes non-secure code from a _non-secure executable file_.
 The secure and non-secure executable files are developed independently of each
 other. 
 
-> **7** A non-secure executable is unaware of security states.
+<span id="requirement-7" class="requirement-box"></span>
+
+> A non-secure executable is unaware of security states.
 
 From the point of view of the non-secure state, a call to a secure gateway is a
 regular function call, as is the return from a non-secure function call. It is
@@ -458,7 +479,7 @@ exception-control bits of the FPSCR may only be modified by specific support
 functions.  After returning from an entry call or when performing a
 nonsecure-call using the hard-float ABI the FPSCR will have been initialized
 with the secure world’s default FPSCR, the FPDSCR_S. For the soft-float ABI
-this is not the case as the vlstm and vldm instructions may be used. Armv8.1-M
+this is not the case as the VLSTM and VLDM instructions may be used. Armv8.1-M
 Mainline introduces instructions that enable the saving and restoring of the FP
 context. These are the VMSR, VMRS, VSTR and VLDR to system registers FPCXTNS and
 FPCXTS.
@@ -475,7 +496,9 @@ consists of or contains a relocatable file that defines symbols for all the
 secure gateways. The non-secure code links against this import library to use
 the functionality provided by the secure code.
 
-> **8** A relocatable file containing only copies of the (absolute) symbols of the
+<span id="requirement-8" class="requirement-box"></span>
+
+> A relocatable file containing only copies of the (absolute) symbols of the
 > secure gateways in the secure executable must be available to link non-secure
 > code against.
 
@@ -485,7 +508,9 @@ calling ROM functions, and is expected to be available in existing toolchains.
 
 ### Secure gateway veneers
 
-> **9** A toolchain must support generating a _secure gateway veneer_ for each entry
+<span id="requirement-9" class="requirement-box"></span>
+
+> A toolchain must support generating a _secure gateway veneer_ for each entry
 > function with external linkage. It consists of an `SG` instruction followed by
 > a `B.W` instruction that targets the entry function it veneers.
 
@@ -495,7 +520,9 @@ gateway veneers at a forever-fixed address, the rest of the secure code can be
 updated independently of non-secure code. This also limits the amount of code
 in NSC regions that potentially can be called by the non-secure state.
 
-> **10** A secure gateway veneer must be labelled by an ELF symbol that has the
+<span id="requirement-10" class="requirement-box"></span>
+
+> A secure gateway veneer must be labelled by an ELF symbol that has the
 > same binding, type, and name as the function it veneers, following the rules
 > for C entities as defined by [[AAELF]](#AAELF).
 
@@ -503,35 +530,43 @@ To prevent duplicate symbol names, an entry function will “lose” its standar
 symbol when its secure gateway veneer is created. For instance, the compiler
 could use weak symbols for entry functions.
 
-> **11** A toolchain must support creating a vector of secure gateway veneers
+<span id="requirement-11" class="requirement-box"></span>
+
+> A toolchain must support creating a vector of secure gateway veneers
 > consisting of one or more veneers placed consecutively in memory.
 
 Vectors of secure gateway veneers are expected to be placed in NSC memory. All
 other code in the secure executable is expected to be placed in secure memory
-regions. This placement is under the control of the developer.
+regions. This placement is under your control.
 
 Preventing inadvertent secure gateways as described in [Inadvertent
 secure gateway](#inadvertent-secure-gateway) is a responsibility
-shared between a developer and their toolchain. A toolchain must make
-it possible for a developer to avoid creating inadvertent secure
+shared between you and the toolchain in use. A toolchain must make
+it possible for you to avoid creating inadvertent secure
 gateways.
 
-> **12** Excluding the first instruction of a secure gateway veneer, a veneer must
+<span id="requirement-12" class="requirement-box"></span>
+
+> Excluding the first instruction of a secure gateway veneer, a veneer must
 > not contain the bit pattern of the SG instruction on a 2-byte boundary.
 
-> **13** A vector of secure gateway veneers must be aligned to a 32-byte boundary,
+<span id="requirement-13" class="requirement-box"></span>
+
+> A vector of secure gateway veneers must be aligned to a 32-byte boundary,
 > and must be zero padded to a 32-byte boundary.
 
-The developer should take care that the code or data before the vector of secure
+You should take care that the code or data before the vector of secure
 gateway veneers does not create an inadvertent secure gateway with the first
 secure gateway veneer in the vector. Arm recommends placing the vector of secure
 gateway veneers at the start of a NSC region.
 
-> **14** The position of secure gateway veneers in a vector must be controllable
-> by the developer.
+<span id="requirement-14" class="requirement-box"></span>
 
-This last requirement gives the developer complete control over the address of a
-secure gateway veneer. It allows the developer to fix the addresses of the
+> You must have granted control of the position of secure
+> gateway veneers in a vector.
+
+This last requirement gives you complete control over the address of a
+secure gateway veneer. It allows you to fix the addresses of the
 secure gateway veneers such that secure code can be updated independently of
 non-secure code.
 
@@ -568,7 +603,7 @@ the function func1() which can only be called by secure code. The example C
 source is not a complete application in itself. The main entry point function is
 very platform dependent so is not included in this example.
 
-When a compiler translates the above C code, it could produce the following
+When a compiler translates the above C code, it might produce the following
 assembly:
 
 ``` c
@@ -589,11 +624,12 @@ __acle_se_entry2:
 .weak entry1, entry2
 ```
 
-An entry function does not start with an `SG` instruction but has two symbols
-labelling its start. This indicates an entry function to the linker.
-Note that the compiler can alternatively use the `__acle_se_entry1` symbol rather
-than the `entry1` symbol in function `entry2`. This would make the function call
-skip the secure gateway veneer.
+An entry function starts with two symbols labelling its start; it does
+not start with an SG instruction. This indicates an entry function to
+the linker.  Note: alternatively, the compiler can use the
+`__acle_se_entry1` symbol rather than the `entry1` symbol in function
+`entry2`. This would make the function call skip the secure gateway
+veneer.
 
 When the relocatable file corresponding to this assembly code is linked into an
 executable file, the linker creates the following veneers in a section
@@ -608,13 +644,13 @@ entry2:
  B.W __acle_se_entry2
 ```
 
-Note that the section with the veneers is aligned on a 32-byte boundary and
+Note: the section with the veneers is aligned on a 32-byte boundary and
 padded to a 32-byte boundary. Placement of the section with the veneers is under
-the control of the developer, but must be in an NSC region.
+your control, but must be in an NSC region.
 
 In addition to the final executable, our example linker also produces the import
 library for non-secure code. Assuming the section with veneers is placed at
-address 0x100, the import library consists of a relocatable file containing
+address 0x100, the import library consists of a relocatable file which contains
 only a symbol table with the following entries:
 
 | Symbol type                         | Name   | Address |
@@ -628,10 +664,13 @@ delivered to a party who develops non-secure code for this device.
 
 ### Reserved names
 
-> **15** This specification reserves the usage of:
+<span id="requirement-15" class="requirement-box"></span>
 
+> This specification reserves the usage of:
+>
 > * Identifiers starting with `cmse_`, case insensitive, when the `arm_cmse.h`
-    header is included.
+>    header is included.
+>
 > * Attribute names starting with `cmse_`.
 
 # TT INSTRUCTION SUPPORT 
@@ -641,7 +680,9 @@ to the `TT` instruction. Support for the `TT` instruction described here is
 generic to the Armv8-M architecture, and is not part of CMSE, but is closely
 related.
 
-> **16** The `<arm_cmse.h>` header must be included before using the `TT`
+<span id="requirement-16" class="requirement-box"></span>
+
+> The `<arm_cmse.h>` header must be included before using the `TT`
 > instruction support.
 
 ## Feature macro
@@ -649,10 +690,14 @@ related.
 The feature macro `__ARM_FEATURE_CMSE` describes the availability of CMSE
 related extensions. The macro defines a set of flags encoded as bits.
 
-> **17** Bit 0 of macro `__ARM_FEATURE_CMSE` is set if the `TT` instruction support
+<span id="requirement-17" class="requirement-box"></span>
+
+> Bit 0 of macro `__ARM_FEATURE_CMSE` is set if the `TT` instruction support
 > is available.
 
-> **18** All undefined bits of macro `__ARM_FEATURE_CMSE` are reserved for future
+<span id="requirement-18" class="requirement-box"></span>
+
+> All undefined bits of macro `__ARM_FEATURE_CMSE` are reserved for future
 > use and must be unset.
 
 The flags defined by `__ARM_FEATURE_CMSE` as described here and in [9](#cmse-support)
@@ -673,7 +718,9 @@ As specified by [[AAPCS]](#AAPCS), the endianness of a system affects the
 bit-offsets of bit-fields, but the result of the `TT` instruction is not
 influenced by endianness.
 
-> **19** If `__ARM_BIG_ENDIAN` is unset and bit 0 of macro `__ARM_FEATURE_CMSE` is set,
+<span id="requirement-19" class="requirement-box"></span>
+
+> If `__ARM_BIG_ENDIAN` is unset and bit 0 of macro `__ARM_FEATURE_CMSE` is set,
 > the following type must be declared:
 > ``` c
 >  typedef union {
@@ -690,14 +737,21 @@ influenced by endianness.
 >  } cmse_address_info_t;
 > ```
 
-> **20** If `__ARM_BIG_ENDIAN` is set, the bit-fields in the type defined by
+<span id="requirement-20" class="requirement-box"></span>
+
+> If `__ARM_BIG_ENDIAN` is set, the bit-fields in the type defined by
 > requirement 19 are reversed such that they have the same bit-offset as on
 > little-endian systems following the rules specified by [[AAPCS]](#AAPCS).
 
 The size of this type is 4 bytes.
 
-> **21** The unnamed bit-fields of `cmse_address_info_t` are reserved.
-> **22** The following intrinsics must be provided if bit 0 of macro
+<span id="requirement-21" class="requirement-box"></span>
+
+> The unnamed bit-fields of `cmse_address_info_t` are reserved.
+
+<span id="requirement-22" class="requirement-box"></span>
+
+> The following intrinsics must be provided if bit 0 of macro
 > `__ARM_FEATURE_CMSE` is set:
 
 | Intrinsic                               | Semantics                                                                                          |
@@ -723,16 +777,22 @@ for programming in C. It is needed to check permissions on objects larger than
 a byte. The address range check intrinsic defined in this section can be used
 to perform permission checks on C objects.
 
-> **23** The address range `check intrinsic` must be available if bit 0 of macro 
+<span id="requirement-23" class="requirement-box"></span>
+
+> The address range `check intrinsic` must be available if bit 0 of macro 
 > `__ARM_FEATURE_CMSE` is set. It has the following type signature:
 > `void *cmse_check_address_range(void *p, size_t size, int flags)`
 
-> **24** The address range check intrinsic checks the address range from `p` to
+<span id="requirement-24" class="requirement-box"></span>
+
+> The address range check intrinsic checks the address range from `p` to
 > `p + size – 1`. 
 
 An implementation must be aware that wraparound of an address range can occur. 
 
-> **25** The address range check fails if `p + size - 1 < p`.
+<span id="requirement-25" class="requirement-box"></span>
+
+> The address range check fails if `p + size - 1 < p`.
 
 Some SAU, IDAU and MPU configurations block the efficient implementation of an
 address range check. This intrinsic operates under the assumption that the
@@ -755,7 +815,9 @@ the following constraint holds:
 (p mod 32) + size <= 32
 ```
 
-> **26** The address range check intrinsic fails if the range crosses any MPU region
+<span id="requirement-26" class="requirement-box"></span>
+
+> The address range check intrinsic fails if the range crosses any MPU region
 > boundary.
 
 The SAU and IDAU support for this intrinsic is defined in [Address
@@ -765,32 +827,40 @@ CMSE](#address-range-check-intrinsic-for-cmse).
 The rest of the semantics of the address range check intrinsic depend on its
 `flags` parameter. This parameter can be constructed using a bitwise OR operator.
 
-> **27** The `flags` parameter of the address range check consists of a set of
+<span id="requirement-27" class="requirement-box"></span>
+
+> The `flags` parameter of the address range check consists of a set of
 > values. Each value must have a macro defined for it, with the name and semantic
 > effects as defined in the following table:
 
 | Macro                | Value | Semantic effects                                                                                                                              |
-| :---                 | :---  | :---                                                                                                                                          |
+| :---                 | :---: | :---                                                                                                                                          |
 |                      | 0     | The `TT` instruction without any flag is used to retrieve the permissions of an address, returned in a `cmse_address_info_t` structure.       |
 | `CMSE_MPU_UNPRIV`    | 4     | Sets the `T` flag on the `TT` instruction used to retrieve the permissions of an address. Retrieves the unprivileged mode access permissions. |
 | `CMSE_MPU_READWRITE` | 1     | Checks if the permissions have the `readwrite_ok` field set.                                                                                  |
 | `CMSE_MPU_READ`      | 8     | Checks if the permissions have the `read_ok` field set.                                                                                       |
 
-> **28** The address range check must fail if the `flags` parameter contains a value
+<span id="requirement-28" class="requirement-box"></span>
+
+> The address range check must fail if the `flags` parameter contains a value
 > that cannot be constructed using a bitwise OR operator on the values defined
 > by requirement 27.
 
-> **29** The address range check intrinsic returns `NULL` on a failed check, and `p`
+<span id="requirement-29" class="requirement-box"></span>
+
+> The address range check intrinsic returns `NULL` on a failed check, and `p`
 > on a successful check.
 
-Arm recommends programmers to use the returned pointer to access the checked
+Arm recommends that you to use the returned pointer to access the checked
 memory range. This generates a data dependency between the checked memory and
 all its subsequent accesses and prevents these accesses from being scheduled
 before the check.
 
 <span id="rule-30"></span>
 
-> **30** The following intrinsic must be defined if bit 0 of macro 
+<span id="requirement-30" class="requirement-box"></span>
+
+> The following intrinsic must be defined if bit 0 of macro 
 > `__ARM_FEATURE_CMSE` is set:
 
 | Intrinsic                                     | Semantics                                                               |
@@ -810,10 +880,14 @@ This chapter defines the language extension that provides support for secure
 executable files written in the C language. Non-secure executable files do not
 require any additional toolchain support.
 
-> **31** The `<arm_cmse.h>` header must be included before using CMSE support,
+<span id="requirement-31" class="requirement-box"></span>
+
+> The `<arm_cmse.h>` header must be included before using CMSE support,
 > except for using the `__ARM_FEATURE_CMSE` macro.
 
-> **32** Bits 0 and 1 of feature macro `__ARM_FEATURE_CMSE` are set if CMSE support
+<span id="requirement-32" class="requirement-box"></span>
+
+> Bits 0 and 1 of feature macro `__ARM_FEATURE_CMSE` are set if CMSE support
 > for secure executable files is available.
 
 Availability of CMSE implies availability of the `TT` instruction.
@@ -827,18 +901,24 @@ Secure code should only use secure memory except when communicating with the
 non-secure state. The _italicized_ terms in this section are terms defined by
 [[ISOC]](#ISOC).
 
-> **33** The storage of any object declared in a _translation unit_ must be a
+<span id="requirement-33" class="requirement-box"></span>
+
+> The storage of any object declared in a _translation unit_ must be a
 > register or secure memory.
 
 The security implications of accessing non-secure memory through a _pointer_ are
-the responsibility of the developer. Any other access to non-secure memory by
+your responsibility. Any other access to non-secure memory by
 secure code is called a “generated non-secure memory access” and is the
 responsibility of the _C language translation_ system.
 
-> **34** A generated non-secure memory read (or write) must check that the
+<span id="requirement-34" class="requirement-box"></span>
+
+> A generated non-secure memory read (or write) must check that the
 > non-secure state can read (or write) this memory before accessing it.
 
-> **35** Any attempted generated non-secure memory read (or write) to memory that
+<span id="requirement-35" class="requirement-box"></span>
+
+> Any attempted generated non-secure memory read (or write) to memory that
 > is not readable (or writable) by the non-secure state must result in a call
 > to the `cmse_abort()` function.
 > The programmer handles the case where a generated non-secure memory access
@@ -871,19 +951,24 @@ boundary of any memory region defined by the MPU, SAU, and IDAU.
 
 <span id="rule-36"></span>
 
-> **36** A _C language translation_ system must generate code to handle a generated
-> non-secure memory access in each of the following situations:
+<span id="requirement-36" class="requirement-box"></span>
 
+> A _C language translation_ system must generate code to handle a generated
+> non-secure memory access in each of the following situations:
+>
 > * An entry function called from non-secure state assigns an _argument_ written
-    to memory by the non-secure state to its corresponding _parameter_ (as defined
-    by §6.5.2.2 paragraph 4 of [[ISOC]](#ISOC));
+>   to memory by the non-secure state to its corresponding _parameter_ (as defined
+>   by §6.5.2.2 paragraph 4 of [[ISOC]](#ISOC));
+>
 > * An entry function returns control to its non-secure caller and writes its
-    return value to memory (as defined by §6.8.6.4 paragraph 3 of [[ISOC]](#ISOC));
+>   return value to memory (as defined by §6.8.6.4 paragraph 3 of [[ISOC]](#ISOC));
+>
 > * A function call that targets the non-secure state assigns an _argument_ to
-    the corresponding _parameter_ (as defined by §6.5.2.2 paragraph 4 of
-    [[ISOC]](#ISOC));
+>    the corresponding _parameter_ (as defined by §6.5.2.2 paragraph 4 of
+>    [[ISOC]](#ISOC));
+>
 > * A return value of a function call that targets the non-secure state is read
-    from memory (as defined by §6.8.6.4 paragraph 3 of [[ISOC]](#ISOC)).
+>   from memory (as defined by §6.8.6.4 paragraph 3 of [[ISOC]](#ISOC)).
 
 This is explained in more detail in [9.4 Entry functions](#entry-functions), and
 [9.5 Non-secure function call](#non-secure-function-call).
@@ -896,7 +981,9 @@ defined in [TT intrinsics](#tt-intrinsics) to be extended. The
 additional fields are emphasized with double asterisk(**). The size of
 this type is still 4 bytes.
 
-> **37** If `__ARM_BIG_ENDIAN` is unset and bit 1 of macro `__ARM_FEATURE_CMSE`
+<span id="requirement-37" class="requirement-box"></span>
+
+> If `__ARM_BIG_ENDIAN` is unset and bit 1 of macro `__ARM_FEATURE_CMSE`
 > is set, the following type must be declared:
 > ``` c
 >  typedef union {
@@ -917,11 +1004,15 @@ this type is still 4 bytes.
 >  } cmse_address_info_t;
 > ```
 
-> **38** If `__ARM_BIG_ENDIAN` is set the bit-fields in the type defined by
+<span id="requirement-38" class="requirement-box"></span>
+
+> If `__ARM_BIG_ENDIAN` is set the bit-fields in the type defined by
 > requirement 37 must be reversed such that they have the same bit-offset as on
 > little-endian systems following the rules specified by [[AAPCS]](#AAPCS).
 
-> **39** The following intrinsics must be provided if bit 1 of macro 
+<span id="requirement-39" class="requirement-box"></span>
+
+> The following intrinsics must be provided if bit 1 of macro 
 > `__ARM_FEATURE_CMSE` is set:
 
 | Intrinsic                                | Semantics                                                                                                  |
@@ -931,7 +1022,7 @@ this type is still 4 bytes.
 | `cmse_address_info_t cmse_TTAT(void *p)` | Generates a `TT` instruction with the `T` and `A` flag.                                                    |
 | `cmse_address_info_t cmse_TTAT_fptr(p)`  | Generates a `TT` instruction with the `T` and `A` flag. The argument `p` can be any function pointer type. |
 
-Note that the `TT` intrinsics defined by requirement 22 must also be provided
+Note: the `TT` intrinsics defined by requirement 22 must also be provided
 for the CMSE support. Implementation recommendations can be found there.
 
 ## Address range check intrinsic for CMSE
@@ -940,10 +1031,14 @@ The semantics of the intrinsic `cmse_check_address_range()` defined in
 [Address range check intrinsic](#address-range-check-intrinsic) are
 extended to handle the extra flag and fields introduced by CMSE.
 
-> **40** The address range check must fail if the range crosses any SAU or IDAU
+<span id="requirement-40" class="requirement-box"></span>
+
+> The address range check must fail if the range crosses any SAU or IDAU
 > region boundary.
 
-> **41** If bit 1 of macro `__ARM_FEATURE_CMSE` is set, the values accepted by
+<span id="requirement-41" class="requirement-box"></span>
+
+> If bit 1 of macro `__ARM_FEATURE_CMSE` is set, the values accepted by
 > the `flags` parameter, as defined by requirement 27, must be extended with
 > the values defined in the following table:
 
@@ -957,12 +1052,16 @@ extended to handle the extra flag and fields introduced by CMSE.
 
 An entry function can be called from non-secure state or secure state.
 
-> **42** A compiler must support declaring an entry function by using the attribute
+<span id="requirement-42" class="requirement-box"></span>
+
+> A compiler must support declaring an entry function by using the attribute
 > `__attribute__((cmse_nonsecure_entry))` on its declaration.
 
 Arm recommends generating a diagnostic for an entry function with static linkage.
 
-> **43** An entry function has two ELF function (`STT_FUNC`) symbols labelling it:
+<span id="requirement-43" class="requirement-box"></span>
+
+> An entry function has two ELF function (`STT_FUNC`) symbols labelling it:
 >
 > * A symbol that follows the standard naming for C entities as defined by 
 >   [[AAELF]](#AAELF) labels the function’s inline secure gateway if it has one,
@@ -976,7 +1075,9 @@ this symbol to detect the need to generate a secure gateway veneer
 (see [Secure gateway veneers](#secure-gateway-veneers)) and a symbol
 in the import library (see [Executable files](#executable-files)).
 
-> **44** A toolchain must generate a secure gateway veneer for an entry function
+<span id="requirement-44" class="requirement-box"></span>
+
+> A toolchain must generate a secure gateway veneer for an entry function
 > that has both its symbols labelling the same address. Otherwise a secure
 > gateway is assumed to be present.
 
@@ -986,7 +1087,9 @@ To summarize, for a function symbol `foo`:
 * The symbol `foo` is copied to the import library if `__acle_se_foo` is present
   and `foo != __acle_se_foo`.
 
-> **45** The address of an entry function must be the address labelled by its
+<span id="requirement-45" class="requirement-box"></span>
+
+> The address of an entry function must be the address labelled by its
 > standard symbol.
 
 This must be the address of its associated `SG` instruction, usually the first
@@ -999,7 +1102,9 @@ A caller from the non-secure state is not aware it is calling an entry function.
 If it must use the stack to write arguments or read a result value 
 [[AAPCS]](#AAPCS), it will use the non-secure stack.
 
-> **46** A compiler compiling an entry function must do either of the following:
+<span id="requirement-46" class="requirement-box"></span>
+
+> A compiler compiling an entry function must do either of the following:
 >
 > * Generate code to read arguments from and write results to the non-secure
     stack.
@@ -1037,18 +1142,22 @@ caller stack frame](#figure5).
 
 ### Return from an entry function
 
-> **47** An entry function must use the BXNS instruction to return to its
+<span id="requirement-47" class="requirement-box"></span>
+
+> An entry function must use the BXNS instruction to return to its
 > non-secure caller.
 
 This instruction switches to non-secure state if the target address has its
 LSB unset. The LSB of the return address in `lr` is automatically cleared by the
 `SG` instruction when it switches the state from non-secure to secure.
 
-To prevent information leakage when an entry function returns, the
-registers that contain secret information must be cleared
+To prevent information leakage when an entry function returns, you must clear the
+registers that contain secret information
 ([Information leakage](#information-leakage)).
 
-> **48** The code sequence directly preceding the `BXNS` instruction that transitions
+<span id="requirement-48" class="requirement-box"></span>
+
+> The code sequence directly preceding the `BXNS` instruction that transitions
 > to non-secure code must:
 >
 > * Clear all caller-saved registers except:
@@ -1060,10 +1169,10 @@ registers that contain secret information must be cleared
 > * Restore all callee-saved registers as mandated by [[AAPCS]](#AAPCS).
 > * Restore bits [27:0] of FPSCR (Armv8.1-M Mainline only).
 
-Clearing of floating-point registers can be done conditionally by checking the 
+You can clear the floating-point registers conditionally by checking the 
 `SFPA` bit of the special-purpose `CONTROL` register.
 
-A toolchain could provide the developer with the means to specify that some
+A toolchain could provide you with the means to specify that some
 types of variables never hold secret information. For example, by setting the
 `TS` bit of `FPCCR`, CMSE assumes that floating point registers never hold
 secret information.
@@ -1079,7 +1188,9 @@ difficult.
 An entry function can be called from secure or non-secure state. Software needs
 to distinguish between these cases.
 
-> **49** The following intrinsic function must be provided if bit 1 of macro 
+<span id="requirement-49" class="requirement-box"></span>
+
+> The following intrinsic function must be provided if bit 1 of macro 
 > `__ARM_FEATURE_CMSE` is set:
 
 | Intrinsic                         | Semantics                                                                              |
@@ -1087,10 +1198,10 @@ to distinguish between these cases.
 | `int cmse_nonsecure_caller(void)` | Returns non-zero if entry function is called from non-secure state and zero otherwise. |
 
 Calling an entry function from the non-secure state results in a return address
-with its LSB unset. This can be used to implement the intrinsic. Note that such
-an implementation requires a stable location for the return address.
+with its LSB unset. This can be used to implement the intrinsic. Note: this type
+of implementation requires a stable location for the return address.
 
-As a consequence of the semantics of `cmse_nonsecure_caller()`, it always return
+As a consequence of the semantics of `cmse_nonsecure_caller()`, it always returns
 zero when used outside an entry function. A toolchain is not required to diagnose
 the usage of `cmse_nonsecure_caller()` outside an entry function, although this
 might become a requirement in the future.
@@ -1103,24 +1214,30 @@ only happen via function pointers. This is a consequence of separating
 secure and non-secure code into separate executable files as described
 in [Executable files](#executable-files).
 
-> **50** A non-secure function type must be declared using the function attribute 
+<span id="requirement-50" class="requirement-box"></span>
+
+> A non-secure function type must be declared using the function attribute 
 > `__attribute__((cmse_nonsecure_call))`.
 
-> **51** A non-secure function type must only be used as a base type of a pointer.
+<span id="requirement-51" class="requirement-box"></span>
+
+> A non-secure function type must only be used as a base type of a pointer.
 
 This disallows function definitions with this attribute and ensures a secure
 executable file only contains secure function definitions.
 
 ### Performing a call
 
-> **52** A function call through a pointer with a non-secure function type as its
+<span id="requirement-52" class="requirement-box"></span>
+
+> A function call through a pointer with a non-secure function type as its
 > base type must switch to the non-secure state.
 
 To create a function call that switches to the non-secure state, an
 implementation must emit code that clears the LSB of the function address and
 branches using the `BLXNS` instruction.
 
-Note that a non-secure function call to an entry function is possible. This
+Note: a non-secure function call to an entry function is possible. This
 behaves like any other non-secure function call.
 
 All registers that contain secret information must be cleared to
@@ -1130,7 +1247,9 @@ that contain values that are used after the non-secure function call
 must be restored after the call returns. Secure code cannot depend on
 the non-secure state to restore these registers.
 
-> **53** The code sequence directly preceding the `BLXNS` instruction that
+<span id="requirement-53" class="requirement-box"></span>
+
+> The code sequence directly preceding the `BLXNS` instruction that
 > transitions to non-secure code must:
 >
 > * Save all callee- and live caller-saved registers by copying them to secure
@@ -1143,14 +1262,16 @@ the non-secure state to restore these registers.
 > procedure according to the [[AAPCS]](#AAPCS).
 > * Save and clear bits [27:0] of FPSCR (Armv8.1-M Mainline only).
 
-A toolchain could provide the developer with the means to specify that some
+A toolchain could provide you with the means to specify that some
 types of variables never hold secret information.
 
-> **54** When the non-secure function call returns, caller- and callee-saved
+<span id="requirement-54" class="requirement-box"></span>
+
+> When the non-secure function call returns, caller- and callee-saved
 > registers saved before the call must be restored. This includes bits [27:0]
 > of FPSCR (Armv8.1-M Mainline only).
 > An implementation need not save and restore a register if its value is not
-> live across the call. Note that callee-saved registers are live across the
+> live across the call. Note: callee-saved registers are live across the
 > call in almost all situations. These requirements specify behaviour that is
 > similar to a regular function call, except that:
 >
@@ -1171,14 +1292,18 @@ usage is required according to [[AAPCS]](#AAPCS), the non-secure state expects
 the arguments on the non-secure stack and writes the return value to non-secure
 memory.
 
-> **55** To avoid using the non-secure stack, a toolchain may constrain the
+<span id="requirement-55" class="requirement-box"></span>
+
+> To avoid using the non-secure stack, a toolchain may constrain the
 > following, for a non-secure function type:
 >
 > * The number of parameters.
 > * The type of each parameter.
 > * The return type.
 
-> **56** A compiler compiling a call to a non-secure function must do either of the
+<span id="requirement-56" class="requirement-box"></span>
+
+> A compiler compiling a call to a non-secure function must do either of the
 > following:
 >
 > * Generate code to write arguments to and read results from the non-secure stack.
@@ -1248,9 +1373,11 @@ The global variable `fp` is a non-secure function type but can hold the address
 of a secure or non-secure function. By using the nsfptr related intrinsics it is
 possible to check at runtime which function call to perform.
 
-Such sharing of a variable is not recommended practice.
+Arm recommends that you do not share this variable.
 
-> **57** The following intrinsics are defined if bit 1 of macro
+<span id="requirement-57" class="requirement-box"></span>
+
+> The following intrinsics are defined if bit 1 of macro
 > `__ARM_FEATURE_CMSE` is set:
 
 | Intrinsic               | Semantics                                                                                                 |
@@ -1258,7 +1385,7 @@ Such sharing of a variable is not recommended practice.
 | `cmse_nsfptr_create(p)` | Returns the value of `p` with its LSB cleared. The argument `p` can be any function pointer type.         |
 | `cmse_is_nsfptr(p)`     | Returns non-zero if `p` has LSB unset, zero otherwise. The argument `p` can be any function pointer type. |
 
-Note that the exact type signatures of these intrinsics are
+Note: the exact type signatures of these intrinsics are
 implementation-defined because there is no type defined by
 [[ISOC]](#ISOC) that can hold all function pointers. Arm recommends
 implementing these intrinsics as macros and recommends that the return
@@ -1277,10 +1404,14 @@ A non-secure callable function is a function that is expected to be placed in an
 NSC region. Its functionality is identical to an entry function, but instead of
 a secure gateway veneer the function starts with the `SG` instruction.
 
-> **58** A non-secure callable function must be declared by using the attribute 
+<span id="requirement-58" class="requirement-box"></span>
+
+> A non-secure callable function must be declared by using the attribute 
 > `__attribute__((cmse_nonsecure_callable))` on a function declaration.
 
-> **59** A non-secure callable function is identical to an entry function except that:
+<span id="requirement-59" class="requirement-box"></span>
+
+> A non-secure callable function is identical to an entry function except that:
 >
 > * The first instruction is an `SG` instruction.
 > * The function’s special symbol labels the address following the `SG`
@@ -1294,7 +1425,9 @@ Toolchain support is needed to prevent inadvertent secure gateways
 from occurring ([Inadverted secure
 gataway](#inadvertent-secure-gateway)).
 
-> **60** A toolchain must provide a way for the programmer to guarantee that a
+<span id="requirement-60" class="requirement-box"></span>
+
+> A toolchain must provide a way for the programmer to guarantee that a
 > non-secure callable function does not contain an inadvertent `SG` instruction
 > in code or data.
 
@@ -1308,7 +1441,9 @@ non-secure state, but cannot be called by the non-secure state. An example use
 would be to provide tail-calls from an entry function to non-secure returning
 functions.
 
-> **61** A non-secure returning function must be declared by using the attribute 
+<span id="requirement-61" class="requirement-box"></span>
+
+> A non-secure returning function must be declared by using the attribute 
 > `__attribute__((cmse_nonsecure_return))` on a function declaration.
 
 A non-secure returning function has a special epilogue, identical to that of an entry function.

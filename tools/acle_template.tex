@@ -103,10 +103,13 @@ $endif$
 
 % This is used to turn block quotes into highlighted text.
 $if(set-quote-highlight)$
+\newcounter{rulecounter}
+\setcounter{rulecounter}{0}
   \usepackage{tcolorbox}
-  \newtcolorbox{myquote}{colback=armblue!25!white, colframe=armblue!25!white}
-  \renewenvironment{quote}{\begin{myquote}}{\end{myquote}}
+  \newtcolorbox{myquote}{colback=white, colframe=armblue, fonttitle=\bfseries, title={Requirement~\therulecounter}}
+  \renewenvironment{quote}{\begin{myquote}}{\end{myquote}\addtocounter{rulecounter}{1}}
 $endif$
+
 
 \makeatletter
 \renewcommand\maketitle{
@@ -121,9 +124,11 @@ $endif$
             \phantom{empty}
         \end{minipage}
         \begin{minipage}[t]{14.0cm}
+          \begin{flushleft}
             {\huge \bfseries  $title$}\\[2ex]
             {\large Release Date: \dateofissue}\\[2ex]
             {\large \bfseries Version: \versiontext}\\[3ex]
+          \end{flushleft}
         \end{minipage}
         \newline
         \begin{minipage}[t][0.47cm][t]{\linewidth}
