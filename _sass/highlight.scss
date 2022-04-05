@@ -1,15 +1,31 @@
 /*
-SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-License-Identifier: Apache-2.0
 The colors used for formatting have been added in accordance with corporate guidelines:
 https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
 
 This code highlights blockquotes in Arm corporate blue.
+It also add counters to the objects marked with style "requirement".
 */
 
+html {
+ counter-reset: requirementCounter -1;
+}
+
 blockquote {
-  background-color: #0091BD;
-  color: white;
-  padding: 10px 20px;
-  margin: 10px 0px;
+ padding:5px;
+ margin:10px 0px;
+ border: 4px;
+ border-style: solid;
+ border-color: #0091BD;
+}
+
+/* requirement-box is the class used for the span anchors of the
+   requirements in cmse/cmse.md */
+.requirement-box:before {
+  font-size: 16px;
+  font-weight: bold;
+  content: "Requirement " counter(requirementCounter) "";
+  counter-increment: requirementCounter 1;
+  color:#0091BD;
 }
