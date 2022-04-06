@@ -146,8 +146,8 @@ Anticipated changes to this document include:
 * Section numbering has changed because of the introduction of the
   [Preface](#preface) chapter.
 * Fixed the definition of macro `cmse_check_pointed_object` in
-  [Non-trivial macros](#non-trivial-macros), as specified in rule
-  [30](#rule-30).
+  [Non-trivial macros](#non-trivial-macros), as specified in
+  requirement [30](#requirement-30).
 * Fixed the example of a non-secure function call in figure [Caller's
   stack frame of a non-secure function call](#figure6) from `struct s
   NS nsfunc(struct s);` to `struct s NS (*nsfunc)(struct
@@ -856,8 +856,6 @@ memory range. This generates a data dependency between the checked memory and
 all its subsequent accesses and prevents these accesses from being scheduled
 before the check.
 
-<span id="rule-30"></span>
-
 <span id="requirement-30" class="requirement-box"></span>
 
 > The following intrinsic must be defined if bit 0 of macro 
@@ -948,8 +946,6 @@ As mentioned in [Address range check
 intrinsics](#address-range-check-intrinsic), the address range check
 can be done efficiently if the non-secure stack does not cross the
 boundary of any memory region defined by the MPU, SAU, and IDAU.
-
-<span id="rule-36"></span>
 
 <span id="requirement-36" class="requirement-box"></span>
 
@@ -1117,7 +1113,7 @@ volatile behavior of non-secure memory ([Volatility of non-secure
 memory](#volatility-of-non-secure-memory)) and the requirements of
 using non-secure memory ([Non-secure memory
 usage](#non-secure-memory-usage)),
-in particular requirement [36](#rule-36).  
+in particular requirement [36](#requirement-36).
 
 In practice, a compiler might generate code that:
 
@@ -1316,7 +1312,7 @@ aware of the volatile behavior of non-secure memory ([Volatility of
 non-secure memory](#volatility-of-non-secure-memory)) and the
 requirements of using non-secure memory ([Non-secure memory
 usage](#non-secure-memory-usage)), in particular requirement
-[36](#rule-36).
+[36](#requirement-36).
 
 In practice, a toolchain might generate code that:
 
