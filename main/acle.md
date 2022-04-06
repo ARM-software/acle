@@ -140,7 +140,7 @@ specifications:
 
    Arm considers this specification to be complete, but existing
    implementations do not meet the requirements for confidence in its
-   release quality. Arm may need to make incompatible changes if issues
+   release quality. Arm might need to make incompatible changes if issues
    emerge from its implementation.
 
 **Alpha**
@@ -279,6 +279,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   specifying the `FEAT_*` tag they refer to from the Arm Architectural
   Reference Manual.
 * Sorted the items in [References](#references).
+* Changed the wording of **Beta** in [Current Status and Anticipated
+  Changes](#current-status-and-anticipated-changes).
 
 ### References
 
