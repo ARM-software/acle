@@ -1534,7 +1534,7 @@ M}, SHA256H, SHA256H2... and others.
 from Armv8.2-A are supported and intrinsics targeting them are
 available. These instructions are identified by `FEAT_SHA512` in
 [[ARMARMv82]](#ARMARMv82), and they include SHA1{C, P, M}, SHA256H,
-SHA256H2, ..., SHA512H, SHA512H2, SHA512SU0... and others. Notice that
+SHA256H2, ..., SHA512H, SHA512H2, SHA512SU0... and others. Note:
 `FEAT_SHA512` requires both `FEAT_SHA1` and `FEAT_SHA256`.
 
 #### SHA3 extension
