@@ -281,6 +281,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Sorted the items in [References](#references).
 * Changed the wording of **Beta** in [Current Status and Anticipated
   Changes](#current-status-and-anticipated-changes).
+* Sorted the table in [Terms and abbreviations](#terms-and-abbreviations).
 
 ### References
 
@@ -386,13 +387,14 @@ This document refers to the following documents.
 
 This document uses the following terms and abbreviations.
 
+<!-- Please keep the rows of the table in alphabetical order by the column "Term" -->
+
 | **Term**         | **Meaning**                                                                                  |
 | ---------------- | -------------------------------------------------------------------------------------------- |
-| AAPCS            | Arm Procedure Call Standard, part of the ABI, defined in [[AAPCS]](#AAPCS).                |
+| AAPCS            | Arm Procedure Call Standard, part of the ABI, defined in [[AAPCS]](#AAPCS).                  |
 | ABI              | Arm Application Binary Interface.                                                            |
 | ACLE             | Arm C Language Extensions, as defined in this document.                                      |
 | Advanced SIMD    | A 64-bit/128-bit SIMD instruction set defined as part of the Arm architecture.               |
-| build attributes | Object build attributes indicating configuration, as defined in [[BA]](#BA).               |
 | ILP32            | A 32-bit address mode where long is a 32-bit type.                                           |
 | LLP64            | A 64-bit address mode where long is a 32-bit type.                                           |
 | LP64             | A 64-bit address mode where long is a 64-bit type.                                           |
@@ -400,6 +402,7 @@ This document uses the following terms and abbreviations.
 | SIMD             | Any instruction set that operates simultaneously on multiple elements of a vector data type. |
 | Thumb            | The Thumb instruction set extension to Arm.                                                  |
 | VFP              | The original Arm non-SIMD floating-point instruction set.                                    |
+| build attributes | Object build attributes indicating configuration, as defined in [[BA]](#BA).                 |
 | word             | A 32-bit quantity, in memory or a register.                                                  |
 
 ## Scope
