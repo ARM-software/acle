@@ -19,9 +19,7 @@ RUN apt-get update \
     pandoc \
     inkscape \
     python3 \
-    python3-tabulate
-
-RUN apt-get install -y --no-install-recommends \
+    python3-tabulate \
     librsvg2-bin \
     && rm -rf /var/lib/apt/lists/*
 
