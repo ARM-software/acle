@@ -282,6 +282,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed the wording of **Beta** in [Current Status and Anticipated
   Changes](#current-status-and-anticipated-changes).
 * Sorted the table in [Terms and abbreviations](#terms-and-abbreviations).
+* Formatted `memcpy`, `memmove` and `memset` with fixed-width font all
+  throughout the document.
 
 ### References
 
@@ -1323,7 +1325,7 @@ Intrinsics for using these instructions are specified in
 If the `CPYF*`, `CPY*`, `SET*` and `SETG*` instructions are supported,
 `__ARM_FEATURE_MOPS` is defined to 1. These instructions were
 introduced in the Armv8.8-A and Armv9.3-A architecture updates for
-standardization of memorycpy, memset, and memmove family of memory
+standardization of `memcpy`, `memset`, and `memmove` family of memory
 operations (MOPS).
 
 The `__ARM_FEATURE_MOPS` macro can only be implemented in the AArch64
@@ -1803,7 +1805,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_LDREX`](#ldrexstrex) *(Deprecated)*                                                                                                     | Load/store exclusive instructions                                                                  | 0x0F        |
 | [`__ARM_FEATURE_MATMUL_INT8`](#availability-of-armv8.6-a-integer-matrix-multiply-intrinsics)                                                            | Integer Matrix Multiply extension (Armv8.6-A, optional Armv8.2-A, Armv8.3-A, Armv8.4-A, Armv8.5-A) | 1           |
 | [`__ARM_FEATURE_MEMORY_TAGGING`](#memory-tagging)                                                                                                       | Memory Tagging (Armv8.5-A)                                                                         | 1           |
-| [`__ARM_FEATURE_MOPS`](#memcpy-family-of-memory-operations-standarization-instructions---mops)                                                          | memcpy, memset, and memmove family of operations standardization instructions                      | 1           |
+| [`__ARM_FEATURE_MOPS`](#memcpy-family-of-memory-operations-standarization-instructions---mops)                                                          | `memcpy`, `memset`, and `memmove` family of operations standardization instructions               | 1           |
 | [`__ARM_FEATURE_MVE`](#m-profile-vector-extension)                                                                                                      | M-profile Vector Extension                                                                         | 1           |
 | [`__ARM_FEATURE_NUMERIC_MAXMIN`](#numeric-maximum-and-minimum)                                                                                          | Numeric Maximum and Minimum                                                                        | 1           |
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication                                                                             | 0x5         |
@@ -5344,7 +5346,7 @@ These intrinsics are available when `arm_acle.h` is included.
 ## Introduction
 
 This section describes the intrinsic for the new instructions introduced in the
-Armv8.8-A and Armv9.3-A architecture updates for the memcpy, memmove and memset
+Armv8.8-A and Armv9.3-A architecture updates for the `memcpy`, `memmove` and `memset`
 family of memory operations (MOPS).
 
 These intructions are designed to enable the standardization of the software
@@ -5352,7 +5354,7 @@ implementation of those operations. Therefore, most of the use cases for
 the new instructions are covered by the compiler's code generation or by library
 implementations.
 
-An exception to that is the set of instructions covering the memset operation
+An exception to that is the set of instructions covering the `memset` operation
 with memory tagging. An intrinsic is available to provide access to this
 operation. See [Memory tagging](#memory-tagging) for more information on
 memory tagging.
@@ -5366,7 +5368,7 @@ This intrinsic is available when both `__ARM_FEATURE_MOPS` and
   void* __arm_mops_memset_tag(void* tagged_address, int value, size_t size)
 ```
 
-This intrinsic performs a memset operation with tag setting on a memory block.
+This intrinsic performs a `memset` operation with tag setting on a memory block.
 
 The parameters of `__arm_mops_memset_tag` are:
 
@@ -5378,7 +5380,7 @@ The parameters of `__arm_mops_memset_tag` are:
 * `size`: number of bytes to fill. This should be a multiple of the tag
   granule size.
 
-Similarly to C's memset, this intrinsic returns the `tagged_address` pointer.
+Similarly to C's `memset`, this intrinsic returns the `tagged_address` pointer.
 
 # Architectural Extension Bridges
 
