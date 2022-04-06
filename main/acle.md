@@ -284,6 +284,15 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Sorted the table in [Terms and abbreviations](#terms-and-abbreviations).
 * Formatted `memcpy`, `memmove` and `memset` with fixed-width font all
   throughout the document.
+* Minor rewording for:
+  * [Introduction](#introduction) section of [memcpy family of
+    operations intrinsics -
+    MOPS](#memcpy-family-of-operations-intrinsics---mops).
+  * [Procedure calls and the Q / GE bits](#procedure-calls-and-the-q-ge-bits).
+  * [Custom calling conventions](#custom-calling-conventions) - use a
+    bulleted list for the examples.
+
+  No functional change intended.
 
 ### References
 
@@ -5359,7 +5368,7 @@ with memory tagging. An intrinsic is available to provide access to this
 operation. See [Memory tagging](#memory-tagging) for more information on
 memory tagging.
 
-The `<arm_acle.h>` header should be included before using this intrinsic.
+Note: the `<arm_acle.h>` header should be included before using this intrinsic.
 
 This intrinsic is available when both `__ARM_FEATURE_MOPS` and
 `__ARM_FEATURE_MEMORY_TAGGING` are defined.
@@ -5370,7 +5379,7 @@ This intrinsic is available when both `__ARM_FEATURE_MOPS` and
 
 This intrinsic performs a `memset` operation with tag setting on a memory block.
 
-The parameters of `__arm_mops_memset_tag` are:
+The parameters of `__arm_mops_memset_tag` are as follows:
 
 * `tagged_address`: destination address to be set, containing the allocation
   tag in its bits `[59:56]`. The address should be aligned with the tag granule
@@ -5472,14 +5481,14 @@ duplicated NEON vector `vec`.
 
 ### Procedure calls and the Q / GE bits
 
-The Arm procedure call standard [[AAPCS]](#AAPCS) says that the Q and GE bits are
+The Arm procedure call standard [[AAPCS]](#AAPCS) states that the Q and GE bits are
 undefined across public interfaces, but in practice it is desirable to
 return saturation status from functions. There are at least two common
 use cases:
 
-To define small (inline) functions defined in terms of
+To define small (inline) functions (defined in terms of
 expressions involving intrinsics, which provide abstractions or emulate
-other intrinsic families; it is desirable for such functions to have the
+other intrinsic families), it is desirable for such functions to have the
 same well-defined effects on the Q/GE bits as the corresponding
 intrinsics.
 
@@ -5507,17 +5516,14 @@ insufficient registers are available) it might be a template instance.
 Some interfaces may use calling conventions that depart from the AAPCS.
 Examples include:
 
-Using additional argument registers, for example passing an argument
-in R5, R7, R12.
-
-Using additional result registers, for example R0 and R1 for a
-combined divide-and-remainder routine (note that some implementations
-may be able to support this by means of a value in registers structure
-return).
-
-Returning results in the condition flags.
-
-Preserving and possibly setting the Q (saturation) bit.
+* Using additional argument registers, for example passing an argument
+  in R5, R7, R12.
+* Using additional result registers, for example R0 and R1 for a
+  combined divide-and-remainder routine (note that some implementations
+  may be able to support this by means of a value in registers structure
+  return).
+* Returning results in the condition flags.
+* Preserving and possibly setting the Q (saturation) bit.
 
 ### Traps: system calls, breakpoints, ...
 
