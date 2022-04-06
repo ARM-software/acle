@@ -278,107 +278,107 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   extension](#sha512-extension) have been reworded for clarity, by
   specifying the `FEAT_*` tag they refer to from the Arm Architectural
   Reference Manual.
+* Sorted the items in [References](#references).
 
 ### References
 
 This document refers to the following documents.
 
-* <span id="AAPCS" class="citation-label">AAPCS</span>
-  Arm, [Application Binary Interface for the Arm
+<!-- Please the list of references in alphabetical order -->
+
+* <span id="AAPCS" class="citation-label">AAPCS</span> Arm,
+  [Application Binary Interface for the Arm
   Architecture](https://developer.arm.com/products/architecture/system-architectures/software-standards/abi)
 
-* <span id="AAPCS64" class="citation-label">AAPCS64</span>
-  Arm, [Application Binary Interface for the Arm
+* <span id="AAPCS64" class="citation-label">AAPCS64</span> Arm,
+  [Application Binary Interface for the Arm
   Architecture](https://developer.arm.com/products/architecture/system-architectures/software-standards/abi)
 
-* <span id="ARMARM" class="citation-label">ARMARM</span>
-  Arm, Arm Architecture Reference Manual (7-A / 7-R), Arm DDI 0406C
+* <span id="ARMARM" class="citation-label">ARMARM</span> Arm, Arm
+  Architecture Reference Manual (7-A / 7-R), Arm DDI 0406C
 
-* <span id="ARMARMv8" class="citation-label">ARMARMv8</span>
-  Arm, Armv8-A Reference Manual (Issue A.b), Arm DDI0487A.B
+* <span id="ARMARMv8" class="citation-label">ARMARMv8</span> Arm,
+  Armv8-A Reference Manual (Issue A.b), Arm DDI0487A.B
 
-* <span id="ARMARMv81" class="citation-label">ARMARMv81</span>
-  Arm, Armv8.1 Extension, [The ARMv8-A architecture and its ongoing
+* <span id="ARMARMv81" class="citation-label">ARMARMv81</span> Arm,
+  Armv8.1 Extension, [The ARMv8-A architecture and its ongoing
   development](http://community.arm.com/groups/processors/blog/2014/12/02/the-armv8-a-architecture-and-its-ongoing-development)
 
-* <span id="ARMARMv82" class="citation-label">ARMARMv82</span>
-  Arm, Armv8.2 Extension, [Armv8-A architecture
+* <span id="ARMARMv82" class="citation-label">ARMARMv82</span> Arm,
+  Armv8.2 Extension, [Armv8-A architecture
   evolution](https://community.arm.com/groups/processors/blog/2016/01/05/armv8-a-architecture-evolution)
 
-* <span id="ARMARMv83" class="citation-label">ARMARMv83</span>
-  Arm, Armv8.3 Extension, [Armv8-A architecture: 2016
+* <span id="ARMARMv83" class="citation-label">ARMARMv83</span> Arm,
+  Armv8.3 Extension, [Armv8-A architecture: 2016
   additions](https://community.arm.com/processors/b/blog/posts/armv8-a-architecture-2016-additions)
 
-* <span id="ARMARMv84" class="citation-label">ARMARMv84</span>
-  Arm, Armv8.4 Extension, [Introducing 2017’s extensions to the Arm
+* <span id="ARMARMv84" class="citation-label">ARMARMv84</span> Arm,
+  Armv8.4 Extension, [Introducing 2017’s extensions to the Arm
   Architecture](https://community.arm.com/processors/b/blog/posts/introducing-2017s-extensions-to-the-arm-architecture)
 
-* <span id="ARMARMv85" class="citation-label">ARMARMv85</span>
-  Arm, Armv8.5 Extension, [Arm A-Profile Architecture
-  Developments 2018:
+* <span id="ARMARMv85" class="citation-label">ARMARMv85</span> Arm,
+  Armv8.5 Extension, [Arm A-Profile Architecture Developments 2018:
   Armv8.5-A](https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-2018-developments-armv85a)
 
-* <span id="ARMv7M" class="citation-label">ARMv7M</span>
-  Arm, Arm Architecture Reference Manual (7-M), Arm DDI 0403C
+* <span id="ARMv7M" class="citation-label">ARMv7M</span> Arm, Arm
+  Architecture Reference Manual (7-M), Arm DDI 0403C
 
-* <span id="BA" class="citation-label">BA</span>
-  Arm, EABI Addenda and Errata Build Attributes, Arm IHI 0045C
+* <span id="BA" class="citation-label">BA</span> Arm, EABI Addenda and
+  Errata Build Attributes, Arm IHI 0045C
 
-* <span id="Bfloat16" class="citation-label">Bfloat16</span>
-  Arm, [BFloat16 processing for Neural Networks on
+* <span id="Bfloat16" class="citation-label">Bfloat16</span> Arm,
+  [BFloat16 processing for Neural Networks on
   Armv8-A](https://community.arm.com/developer/ip-products/processors/b/ml-ip-blog/posts/bfloat16-processing-for-neural-networks-on-armv8_2d00_a)
 
-* <span id="C11" class="citation-label">C11</span>
-  ISO, Standard C (based on draft N1570), ISO/IEC 9899:2011
+* <span id="C11" class="citation-label">C11</span> ISO, Standard C
+  (based on draft N1570), ISO/IEC 9899:2011
 
-* <span id="C99" class="citation-label">C99</span>
-  ISO, Standard C (C99), ISO 9899:1999
+* <span id="C99" class="citation-label">C99</span> ISO, Standard C
+  (C99), ISO 9899:1999
 
-* <span id="CFP15" class="citation-label">CFP15</span>
-  ISO/IEC, Floating point extensions for C, ISO/IEC TS 18661-3
-
-* <span id="CPP11" class="citation-label">CPP11</span>
-  ISO, Standard C++ (based on draft N3337), ISO/IEC 14882:2011
-
-* <span id="G.191" class="citation-label">G.191</span>
-  ITU-T, Software Tool Library 2005 User's Manual,
-  T-REC-G.191-200508-I
-
-* <span id="GCC" class="citation-label">GCC</span>
-  GNU/FSF, [GNU C Compiler Collection](http://gcc.gnu.org/onlinedocs)
-
-* <span id="IA-64" class="citation-label">IA-64</span>
-  Intel, Intel Itanium Processor-Specific ABI, 245370-003
-
-* <span id="IEEE-FP" class="citation-label">IEEE-FP</span>
-  IEEE, IEEE Floating Point, IEEE 754-2008
-
-* <span id="MVE" class="citation-label">MVE</span>
-  Arm, [MVE
-  Intrinsics](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium/mve-intrinsics)
-
-* <span id="MVE-spec" class="citation-label">MVE-spec</span>
-  Arm, Arm v8-M Architecture Reference Manual, Arm DDI0553B.F
-
-* <span id="Neon" class="citation-label">Neon</span>
-  Arm, [Neon
-  Intrinsics](https://developer.arm.com/technologies/neon/intrinsics)
-
-* <span id="POSIX" class="citation-label">POSIX</span>
-  IEEE / TOG, The Open Group Base Specifications, IEEE 1003.1
-
-* <span id="SVE-ACLE" class="citation-label">SVE-ACLE</span>
-  Arm, [Arm C Language Extensions for
-  SVE](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
-
-* <span id="Warren" class="citation-label">Warren</span> 8.  Warren, Hacker's Delight, pub. Addison-Wesley 2003
-
-* <span id="cxxabi" class="citation-label">cxxabi</span>
-  [Itanium C++ ABI](https://itanium-cxx-abi.github.io/cxx-abi/)
+* <span id="CFP15" class="citation-label">CFP15</span> ISO/IEC,
+  Floating point extensions for C, ISO/IEC TS 18661-3
 
 * <span id="CMSE-ACLE" class="citation-label">CMSE-ACLE</span> Arm,
   [Arm®v8-M Security Extensions: Requirements on Development
   Tools](https://developer.arm.com/documentation/ecm0359818/latest)
+
+* <span id="CPP11" class="citation-label">CPP11</span> ISO, Standard
+  C++ (based on draft N3337), ISO/IEC 14882:2011
+
+* <span id="G.191" class="citation-label">G.191</span> ITU-T, Software
+  Tool Library 2005 User's Manual, T-REC-G.191-200508-I
+
+* <span id="GCC" class="citation-label">GCC</span> GNU/FSF, [GNU C
+  Compiler Collection](http://gcc.gnu.org/onlinedocs)
+
+* <span id="IA-64" class="citation-label">IA-64</span> Intel, Intel
+  Itanium Processor-Specific ABI, 245370-003
+
+* <span id="IEEE-FP" class="citation-label">IEEE-FP</span> IEEE, IEEE
+  Floating Point, IEEE 754-2008
+
+* <span id="MVE" class="citation-label">MVE</span> Arm, [MVE
+  Intrinsics](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium/mve-intrinsics)
+
+* <span id="MVE-spec" class="citation-label">MVE-spec</span> Arm, Arm
+  v8-M Architecture Reference Manual, Arm DDI0553B.F
+
+* <span id="Neon" class="citation-label">Neon</span> Arm, [Neon
+  Intrinsics](https://developer.arm.com/technologies/neon/intrinsics)
+
+* <span id="POSIX" class="citation-label">POSIX</span> IEEE / TOG, The
+  Open Group Base Specifications, IEEE 1003.1
+
+* <span id="SVE-ACLE" class="citation-label">SVE-ACLE</span> Arm, [Arm
+  C Language Extensions for
+  SVE](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
+
+* <span id="Warren" class="citation-label">Warren</span> 8.  Warren,
+  Hacker's Delight, pub. Addison-Wesley 2003
+
+* <span id="cxxabi" class="citation-label">cxxabi</span> [Itanium C++
+  ABI](https://itanium-cxx-abi.github.io/cxx-abi/)
 
 ### Terms and abbreviations
 
