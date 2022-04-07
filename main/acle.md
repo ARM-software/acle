@@ -171,31 +171,11 @@ unless a different support level is specified in the text.
 | 2021Q3       | 30 September 2021 | Arm    | Minor re-wording. NFCI.                                                                                              |
 | 2021Q4       | 11 January 2022   | Arm    | See [Changes between ACLE Q3 2021 and ACLE Q4 2021](#changes-between-acle-q3-2021-and-acle-q4-2021)                  |
 
-#### Changes between ACLE Q2 2020 and ACLE Q3 2020
+#### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
-* Add support for features introduced in the Armv8.7-a architecture update.
-* Fix allowed values for __ARM_FEATURE_CDE_COPROC macro.
-
-#### Changes between ACLE Q4 2019 and ACLE Q2 2020
-
-* Updates to CDE intrinsics.
-* Allow some Neon intrinsics previously available in A64 only in A32 as well.
-
-#### Changes between ACLE Q3 2019 and ACLE Q4 2019
-
-* BETA support for the Custom Datapath Extension.
-* MVE intrinsics updates and fixes.
-* Feature macros for Pointer Authentication and Branch Target Identification.
-
-#### Changes between ACLE Q2 2019 and ACLE Q3 2019
-
-* Support added for Armv8.6-A features.
-* Support added for random number instruction intrinsics from Armv8.5-A [[ARMARMv85]](#ARMARMv85).
-
-#### Changes between ACLE Q1 2019 and ACLE Q2 2019
-
-* Support added for TME features.
-* Support added for rounding intrinsics from Armv8.5-A [[ARMARMv85]](#ARMARMv85).
+Most changes in ACLE Q2 2018 are updates to support features introduced in
+Armv8.3-A [[ARMARMv83]](#ARMARMv83). Support is added for the Complex addition and Complex MLA intrinsics.
+Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrinsics.
 
 #### Changes between ACLE Q2 2018 and ACLE Q1 2019
 
@@ -205,11 +185,31 @@ unless a different support level is specified in the text.
 * Added feature detection macro for LSE atomic operations.
 * Added floating-point versions of intrinsics to access coprocessor registers.
 
-#### Changes between ACLE Q2 2017 and ACLE Q2 2018
+#### Changes between ACLE Q1 2019 and ACLE Q2 2019
 
-Most changes in ACLE Q2 2018 are updates to support features introduced in
-Armv8.3-A [[ARMARMv83]](#ARMARMv83). Support is added for the Complex addition and Complex MLA intrinsics.
-Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrinsics.
+* Support added for TME features.
+* Support added for rounding intrinsics from Armv8.5-A [[ARMARMv85]](#ARMARMv85).
+
+#### Changes between ACLE Q2 2019 and ACLE Q3 2019
+
+* Support added for Armv8.6-A features.
+* Support added for random number instruction intrinsics from Armv8.5-A [[ARMARMv85]](#ARMARMv85).
+
+#### Changes between ACLE Q3 2019 and ACLE Q4 2019
+
+* BETA support for the Custom Datapath Extension.
+* MVE intrinsics updates and fixes.
+* Feature macros for Pointer Authentication and Branch Target Identification.
+
+#### Changes between ACLE Q4 2019 and ACLE Q2 2020
+
+* Updates to CDE intrinsics.
+* Allow some Neon intrinsics previously available in A64 only in A32 as well.
+
+#### Changes between ACLE Q2 2020 and ACLE Q3 2020
+
+* Add support for features introduced in the Armv8.7-a architecture update.
+* Fix allowed values for __ARM_FEATURE_CDE_COPROC macro.
 
 #### Changes between ACLE Q2 2021 and ACLE Q3 2021
 * Fixed FP16 format description at [Half-precision
@@ -293,6 +293,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
     bulleted list for the examples.
 
   No functional change intended.
+* Reordered the sections in [Change history](#change-history) in
+  chronological order.
 
 ### References
 
