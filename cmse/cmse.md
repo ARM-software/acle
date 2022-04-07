@@ -1,11 +1,11 @@
 ---
 title: Arm®v8-M Security Extensions <br /> Requirements on Development Tools
-version: 1.1
-date-of-issue: 01 November 2019
+version: 1.2
+date-of-issue: 06 April 2022
 set-quote-highlight: true
 # LaTeX specific variables
 copyright-text: Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -133,12 +133,13 @@ Anticipated changes to this document include:
 
 ### Change history
 
-| Issue | Date       | By   | Change         |
-| :---  | :---       | :--- | :---           |
-| 1.0   | 23/10/2015 | Arm  | First release  |
-| 1.1  | 01/11/2019 | Arm  | Second release |
+| Issue | Date          | By   | Change         |
+| :---  | :---          | :--- | :---           |
+| 1.0   | 23/10/2015    | Arm  | First release  |
+| 1.1   | 01/11/2019    | Arm  | Second release |
+| 1.2   | 06 April 2022 | Arm  | See [Changes for version 1.2](#changes-for-version-1.2)|
 
-#### Changes for next release
+#### Changes for version 1.2
 
 * Publication of the specifications in open source format.
 * Internal references to sections and figures use section title and
