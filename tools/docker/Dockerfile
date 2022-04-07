@@ -20,6 +20,7 @@ RUN apt-get update \
     inkscape \
     python3 \
     python3-tabulate \
+    librsvg2-bin \
     && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /entrypoint.sh

@@ -28,6 +28,9 @@
 \usepackage[$if(landscape)$landscape,$endif$top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm]{geometry}
 \usepackage{lastpage}
 
+% Add extra space to table rows
+\renewcommand{\arraystretch}{2}
+
 \makeatletter
   \patchcmd{\f@nch@foot}{\rlap}{\color{darkgray}\rlap}{}{}
   \patchcmd{\footrule}{\hrule}{\color{darkgray}\hrule}{}{}
@@ -98,6 +101,16 @@ $endif$
 \definecolor{armlightgray}{rgb}{0.83,0.83,0.83}
 \definecolor{armblue}{HTML}{0091BD}
 
+% This is used to turn block quotes into highlighted text.
+$if(set-quote-highlight)$
+\newcounter{rulecounter}
+\setcounter{rulecounter}{0}
+  \usepackage{tcolorbox}
+  \newtcolorbox{myquote}{colback=white, colframe=armblue, fonttitle=\bfseries, title={Requirement~\therulecounter}}
+  \renewenvironment{quote}{\begin{myquote}}{\end{myquote}\addtocounter{rulecounter}{1}}
+$endif$
+
+
 \makeatletter
 \renewcommand\maketitle{
     \newgeometry{left=0.0cm,right=0.0cm,top=1.0cm,bottom=0.0cm}
@@ -111,9 +124,11 @@ $endif$
             \phantom{empty}
         \end{minipage}
         \begin{minipage}[t]{14.0cm}
+          \begin{flushleft}
             {\huge \bfseries  $title$}\\[2ex]
             {\large Release Date: \dateofissue}\\[2ex]
             {\large \bfseries Version: \versiontext}\\[3ex]
+          \end{flushleft}
         \end{minipage}
         \newline
         \begin{minipage}[t][0.47cm][t]{\linewidth}
