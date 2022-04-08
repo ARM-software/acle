@@ -69,7 +69,9 @@ correcly.
 
 The branch `latest-release` is the release branch, which contains the
 code used to build the PDFs of the [latest official
-release](https://github.com/ARM-software/acle/releases/latest).
+release](https://github.com/ARM-software/acle/releases/latest). The
+branch `latest-release` is also used to build the [website of the ACLE
+project](https://arm-software.github.io/acle).
 
 New development (bug-fixes, proposals, extensions, and so on) is
 committed on the `main` branch. Therefore, please submit your
@@ -79,10 +81,6 @@ It is good practice to track changes. In the section `Changes for next
 release`, please list any changes that you have made to the
 document. For an example, see [this
 PR](https://github.com/ARM-software/acle/pull/19).
-
-The branch `latest-release` is pointing at the most recent release of
-the specs, and it is used to build the [website of the ACLE
-project](https://arm-software.github.io/acle).
 
 # Contribution agreement
 
