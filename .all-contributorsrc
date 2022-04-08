@@ -194,6 +194,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "stuij",
+      "name": "Ties Stuij",
+      "avatar_url": "https://avatars.githubusercontent.com/u/192309?v=4",
+      "profile": "https://github.com/stuij",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
