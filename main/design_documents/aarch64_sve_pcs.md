@@ -10,7 +10,7 @@ going into the function, since the use of NEON or floating-point instructions
 may clobber the upper bits of the SVE state.
 
 Calling out to instrumentation functions which do not have SVE in their function
-signature, for example performance monitoring or printf, causes the whole
+signature, for example performance monitoring or `printf`, causes the whole
 register state to be preserved across the call, which requires lots of
 additional instructions.
 
