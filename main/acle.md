@@ -2278,7 +2278,9 @@ is a function that returns results in such registers, it must ensure that the
 entire contents of `z8-z23` and `p4-15` are preserved across the call. This
 calling convention is described in sections 6.1.3 and 6.1.4 of
 [AAPCS64](#AAPCS64) (see [release 2022Q1](https://github.com/ARM-software/abi-aa/releases/tag/2022Q1)).
-The ACLE allows this to be enforced per function:
+
+The ACLE allows this to be enforced per function by adding the following
+function attribute to a function declaration or definition:
 
 ``` c
     __attribute__(("aarch64_sve_pcs"))
