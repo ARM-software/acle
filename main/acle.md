@@ -2271,7 +2271,7 @@ arrays with arbitrarily aligned elements
 
 ## Scalable Vector Extension procedure call standard attribute
 
-On SVE enabled AArch64 targets, the [[AAPCS64]](#AAPCS64) allows for procedure
+On SVE enabled AArch64 targets, the [[AAPCS64]](#AAPCS64) allows procedure
 calls to use the SVE calling convention. If a subroutine takes at least one
 argument in scalable vector registers or scalable predicate registers, or if
 the subroutine is a function that returns results in such registers, the
