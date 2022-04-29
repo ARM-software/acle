@@ -2223,6 +2223,9 @@ The following table lists the architectures feature mapping for AArch64
    | 420           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS == 0b0001```      |
    | 430           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS == 0b0010```      |
    | 440           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.bt == 0b0010```        |
+   | 450           | `FEAT_LS64`              | ls64          | ```ID_AA64ISAR1_EL1.LS64 >= 0b0001```     |
+   | 460           | `FEAT_LS64_V`            | ls64_v        | ```ID_AA64ISAR1_EL1.LS64 >= 0b0010```     |
+   | 470           | `FEAT_LS64_ACCDATA`      | ls64_accdata  | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011```     |
 
 ### Selection
 
