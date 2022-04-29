@@ -4,7 +4,7 @@ version: 2022Q1
 date-of-issue: 06 April 2022
 # LaTeX specific variables
 copyright-text: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: false
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -296,6 +296,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   No functional change intended.
 * Reordered the sections in [Change history](#change-history) in
   chronological order.
+
+#### Changes for next release
+
+* Added section [Scalable Vector Extension procedure call standard attribute](#scalable-vector-extension-procedure-call-standard-attribute)
 
 ### References
 
@@ -2264,6 +2268,23 @@ is implementation-defined.
 
 The generic itanium C++ ABI, which we use in AArch64, already handles
 arrays with arbitrarily aligned elements
+
+## Scalable Vector Extension procedure call standard attribute
+
+On SVE enabled AArch64 targets, the [[AAPCS64]](#AAPCS64) allows procedure
+calls to use the SVE calling convention. If a subroutine takes at least one
+argument in scalable vector registers or scalable predicate registers, or if
+the subroutine is a function that returns results in such registers, the
+subroutine must ensure that the entire contents of `z8-z23` and `p4-15` are
+preserved across the call. This calling convention is described in sections
+6.1.3 and 6.1.4 of [AAPCS64](#AAPCS64) (see [release 2022Q1](https://github.com/ARM-software/abi-aa/releases/tag/2022Q1)).
+
+The ACLE allows this to be enforced per function and adds the following
+function attribute to a function declaration or definition:
+
+``` c
+    __attribute__(("aarch64_sve_pcs"))
+```
 
 ## Other attributes
 
