@@ -2198,7 +2198,7 @@ The following table lists the architectures feature mapping for AArch64
    | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
    | 180           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT == 0b0001```       |
    | 190           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
-   | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0002```     |
+   | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0010```     |
    | 210           | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT == 0b0001```    |
    | 220           | `FEAT_FCMA`              | fcma          | ```ID_AA64ISAR1_EL1.FCMA == 0b0001```     |
    | 230           | `FEAT_LRCPC`             | lrcpc         | ```ID_AA64ISAR1_EL1.LRCPC != 0b0000```    |
