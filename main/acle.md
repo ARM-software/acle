@@ -499,6 +499,33 @@ anchor that can be referred via an internal hyperlink to the paragraph
 > quality-of-implementation perspective, it is better to reject
 > ill-formed programs wherever possible.
 
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the paragraph
+2following it. --><span id="unprototyped-function"></span>
+
+**unprototyped functions**
+
+> In early versions of C, it was possible to call a function without
+> declaring it first. The function was then assumed to return an `int`.
+> For example, this was a valid complete translation unit:
+>
+> ``` c
+>   int x() { return some_func(1, 2.0, "apples"); }
+> ```
+>
+> It was also possible to declare a function's return type without specifying
+> its argument types. For example:
+>
+> ``` c
+>   double another_func();
+>   double f() { return another_func(1.0, 2, "oranges"); }
+> ```
+>
+> Functions like `some_func` and `another_func` are referred to as
+> (K&R-style) “unprototyped” functions. The first C standard categorized
+> them as an obsolescent feature and C18 removed all remaining support
+> for them.
+
 ## Conventions
 
 Most SVE ACLE intrinsics have two names: a longer unique name and a
@@ -6049,7 +6076,7 @@ The following rules apply to both vector and predicate VLST types:
         passed through “`...`”.)
 
     *   an object whose type requires some size N is passed to an
-        unprototyped function.
+        [unprototyped function](#unprototyped-function).
 
     However, the implementation does not need to diagnose these cases.
 
@@ -8597,7 +8624,7 @@ incompatible with function types that do not. For example:
 ```
 
 The function type attributes cannot be used with K&R-style
-“unprototyped” C function types. For example:
+[unprototyped function](#unprototyped-function) types. For example:
 
 ``` c
   #define ATTR __attribute__((arm_streaming))
