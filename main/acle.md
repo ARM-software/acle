@@ -306,6 +306,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   has been removed. The SVE and SVE2 support is now at “release” rather than
   beta quality and the separate beta document is no longer maintained.
 * Added section [Scalable Vector Extension procedure call standard attribute](#scalable-vector-extension-procedure-call-standard-attribute)
+* Fixes for [Function Multi Versioning](#function-multi-versioning):
+  * typo in FEAT_DPB2.
+  * added FEAT_LS64*.
 
 ### References
 
