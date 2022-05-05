@@ -307,8 +307,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   beta quality and the separate beta document is no longer maintained.
 * Added section [Scalable Vector Extension procedure call standard attribute](#scalable-vector-extension-procedure-call-standard-attribute)
 * Fixes for [Function Multi Versioning](#function-multi-versioning):
-  * typo in FEAT_DPB2.
-  * added FEAT_LS64*.
+  * typo in `FEAT_DPB2`.
+  * added `FEAT_LS64*`.
 
 ### References
 
