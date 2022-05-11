@@ -5577,7 +5577,7 @@ ACLE provides two sets of intrinsics for converting between vector types:
     intrinsics simply reinterpret a vector of one type as a vector of another
     type, without changing any of the bits.
 
-*   The [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt)
+*   The [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt_)
     intrinsics instead perform numerical conversion from one type to another,
     such as converting integers to floating-point values.
 
@@ -6803,7 +6803,7 @@ Assuming `float64_t` data, the C version of the code above would be:
 ### List of SVE intrinsics
 
 The full list of SVE intrinsics can be found on
-[developer.arm.com](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiessimdisa=[sve,sve2])
+[developer.arm.com](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiessimdisa=[sve,sve2]).
 This list includes SVE2 and other SVE extensions (such as the 32-bit
 matrix multiply extensions).
 
@@ -6816,19 +6816,29 @@ operation that they perform.
 
 #### List of instructions
 
-This section contains a list of all FEAT_SVE instructions. For each one it
+This section contains a list of all SVE instructions. For each one it
 gives a reference to the associated ACLE intrinsic or explains why no
-such intrinsic exists.
+such intrinsic exists. The list includes SVE2 and other SVE extensions
+(such as the 32-bit matrix multiply extensions).
 
 | **Instruction**                      | **Intrinsic** |
 | ------------------------------------ | ------------- |
 | ABS                                  | [`svabs`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabs) |
+| ADCLB                                | [`svadclb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadclb) |
+| ADCLT                                | [`svadclt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadclt) |
 | ADD (immediate)                      | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svadd[) |
 | ADD (vectors, predicated)            | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svadd[) |
 | ADD (vectors, unpredicated)          | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svadd[) |
+| ADDHNB                               | [`svaddhnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svaddhnb) |
+| ADDHNT                               | [`svaddhnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svaddhnt) |
+| ADDP                                 | [`svaddp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svaddp) |
 | ADDPL                                | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
 | ADDVL                                | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
 | ADR                                  | [`svadrb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadrb), [`svadrh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadrh), [`svadrw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadrw), [`svadrd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svadrd) |
+| AESD                                 | [`svaesd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svaesd) |
+| AESE                                 | [`svaese`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svaese) |
+| AESIMC                               | [`svaesimc`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svaesimc) |
+| AESMC                                | [`svaesmc`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svaesmc) |
 | AND (immediate)                      | [`svand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svand[) |
 | AND (predicates)                     | [`svand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svand) |
 | AND (vectors, predicated)            | [`svand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svand[) |
@@ -6842,6 +6852,16 @@ such intrinsic exists.
 | ASR (wide elements, unpredicated)    | [`svasr_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasr_wide) |
 | ASRD                                 | [`svasrd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasrd) |
 | ASRR                                 | [`svasr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svasr) (optimization of `_x` forms) |
+| BCAX                                 | [`svbcax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbcax) |
+| BDEP                                 | [`svbdep`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbdep) |
+| BEXT                                 | [`svbext`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbext) |
+| BFCVT                                | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt_bf16) |
+| BFCVTNT                              | [`svcvtnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvtnt_bf16) |
+| BFDOT                                | [`svbfdot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbfdot) |
+| BFMLALB                              | [`svbfmlalb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbfmlalb) |
+| BFMLALT                              | [`svbfmlalt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbfmlalt) |
+| BFMMLA                               | [`svbfmmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbfmmla) |
+| BGRP                                 | [`svbgrp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbgrp) |
 | BIC (immediate)                      | [`svbic`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svbic[) |
 | BIC (predicates)                     | [`svbic`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svbic) |
 | BIC (vectors, predicated)            | [`svbic`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svbic[) |
@@ -6857,6 +6877,12 @@ such intrinsic exists.
 | BRKPAS                               | [`svbrkpa`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkpa) |
 | BRKPB                                | [`svbrkpb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkpb) |
 | BRKPBS                               | [`svbrkpb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbrkpb) |
+| BSL                                  | [`svbsl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbsl[) |
+| BSL1N                                | [`svbsl1n`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbsl1n) |
+| BSL2N                                | [`svbsl2n`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svbsl2n) |
+| CADD                                 | [`svcadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcadd) |
+| CDOT (indexed)                       | [`svcdot_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcdot_lane) |
+| CDOT (vectors)                       | [`svcdot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcdot[) |
 | CLASTA (SIMD & FP scalar)            | [`svclasta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclasta) |
 | CLASTA (scalar)                      | [`svclasta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclasta) |
 | CLASTA (vectors)                     | [`svclasta`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclasta) |
@@ -6865,6 +6891,8 @@ such intrinsic exists.
 | CLASTB (vectors)                     | [`svclastb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclastb) |
 | CLS                                  | [`svcls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcls) |
 | CLZ                                  | [`svclz`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svclz) |
+| CMLA (indexed)                       | [`svcmla_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svcmla_lane) |
+| CMLA (vectors)                       | [`svcmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=svcmla[) |
 | CMPEQ (immediate)                    | [`svcmpeq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svcmpeq[) |
 | CMPEQ (vectors)                      | [`svcmpeq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svcmpeq[) |
 | CMPEQ (wide elements)                | [`svcmpeq_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcmpeq_wide) |
@@ -6926,10 +6954,13 @@ such intrinsic exists.
 | EOR (predicates)                     | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=sveor) |
 | EOR (vectors, predicated)            | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=sveor[) |
 | EOR (vectors, unpredicated)          | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int,uint]&q=sveor[) |
+| EOR3                                 | [`sveor3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=sveor3) |
+| EORBT                                | [`sveorbt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=sveorbt) |
 | EORS                                 | [`sveor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=sveor) |
+| EORTB                                | [`sveortb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=sveortb) |
 | EORV                                 | [`sveorv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=sveorv) |
 | EXT                                  | [`svext`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svext[) |
-| FABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svabd) |
+| FABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svabd[) |
 | FABS                                 | [`svabs`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svabs) |
 | FACGE                                | [`svacge`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svacge) |
 | FACGT                                | [`svacgt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svacgt) |
@@ -6939,6 +6970,7 @@ such intrinsic exists.
 | FADD (vectors, predicated)           | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svadd[) |
 | FADD (vectors, unpredicated)         | [`svadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svadd[) |
 | FADDA                                | [`svadda`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svadda) |
+| FADDP                                | [`svaddp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svaddp) |
 | FADDV                                | [`svaddv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svaddv) |
 | FCADD                                | [`svcadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcadd) |
 | FCMEQ (vectors)                      | [`svcmpeq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpeq) |
@@ -6957,30 +6989,48 @@ such intrinsic exists.
 | FCMNE (zero)                         | [`svcmpne`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpne) |
 | FCMUO                                | [`svcmpuo`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svcmpuo) |
 | FCPY                                 | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup) (predicated forms) |
-| FCVT                                 | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt) |
-| FCVTZS                               | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt) |
-| FCVTZU                               | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt) |
+| FCVT                                 | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt_) |
+| FCVTLT                               | [`svcvtlt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvtlt) |
+| FCVTNT                               | [`svcvtnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvtnt_f) |
+| FCVTX                                | [`svcvtx`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvtx_) |
+| FCVTXNT                              | [`svcvtxnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvtxnt) |
+| FCVTZS                               | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt_) |
+| FCVTZU                               | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt_) |
 | FDIV                                 | [`svdiv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdiv[) |
 | FDIVR                                | [`svdivr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdivr) |
 | FDUP                                 | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
 | FEXPA                                | [`svexpa`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svexpa) |
+| FLOGB                                | [`svlogb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlogb) |
 | FMAD                                 | [`svmad`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmad) |
 | FMAX (immediate)                     | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmax[) |
 | FMAX (vectors)                       | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmax[) |
 | FMAXNM (immediate)                   | [`svmaxnm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxnm[) |
 | FMAXNM (vectors)                     | [`svmaxnm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxnm[) |
+| FMAXNMP                              | [`svmaxnmp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxnmp) |
 | FMAXNMV                              | [`svmaxnmv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxnmv) |
+| FMAXP                                | [`svmaxp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxp) |
 | FMAXV                                | [`svmaxv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmaxv) |
 | FMIN (immediate)                     | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmin[) |
 | FMIN (vectors)                       | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmin[) |
 | FMINNM (immediate)                   | [`svminnm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminnm[) |
 | FMINNM (vectors)                     | [`svminnm`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminnm[) |
+| FMINNMP                              | [`svminnmp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminnmp) |
 | FMINNMV                              | [`svminnmv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminnmv) |
+| FMINP                                | [`svminp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminp) |
 | FMINV                                | [`svminv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svminv) |
 | FMLA (indexed)                       | [`svmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmla[) |
 | FMLA (vectors)                       | [`svmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmla[) |
-| FMLS (indexed)                       | [`svmls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmls[) |
+| FMLALB (indexed)                     | [`svmlalb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmlalb_lane) |
+| FMLALB (vectors)                     | [`svmlalb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmlalb[) |
+| FMLALT (indexed)                     | [`svmlalt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmlalt_lane) |
+| FMLALT (vectors)                     | [`svmlalt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmlalt[) |
+| FMLS (indexed)                       | [`svmls_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmls_lane) |
 | FMLS (vectors)                       | [`svmls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmls[) |
+| FMLSLB (indexed)                     | [`svmlslb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmlslb_lane) |
+| FMLSLB (vectors)                     | [`svmlslb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmlslb[) |
+| FMLSLT (indexed)                     | [`svmlslt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmlslt_lane) |
+| FMLSLT (vectors)                     | [`svmlslt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmlslt[) |
+| FMMLA                                | [`svmmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svmmla) |
 | FMOV (immediate, predicated)         | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
 | FMOV (immediate, unpredicated)       | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
 | FMOV (zero, predicated)              | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svdup[_n]) |
@@ -7018,6 +7068,8 @@ such intrinsic exists.
 | FTMAD                                | [`svtmad`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svtmad) |
 | FTSMUL                               | [`svtsmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svtsmul) |
 | FTSSEL                               | [`svtssel`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[float]&q=svtssel) |
+| HISTCNT                              | [`svhistcnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svhistcnt) |
+| HISTSEG                              | [`svhistseg`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svhistseg) |
 | INCB                                 | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
 | INCD (scalar)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
 | INCD (vector)                        | See [ADDPL, ADDVL, INC and DEC](#addpl-addvl-inc-and-dec) |
@@ -7052,6 +7104,14 @@ such intrinsic exists.
 | LD1RB                                | See [SVE LD1R instructions](#sve-ld1r-instructions) |
 | LD1RD                                | See [SVE LD1R instructions](#sve-ld1r-instructions) |
 | LD1RH                                | See [SVE LD1R instructions](#sve-ld1r-instructions) |
+| LD1ROB (scalar plus immediate)       | [`svld1ro`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1ro) |
+| LD1ROB (scalar plus scalar)          | [`svld1ro`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1ro) |
+| LD1ROD (scalar plus immediate)       | [`svld1ro`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1ro) |
+| LD1ROD (scalar plus scalar)          | [`svld1ro`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1ro) |
+| LD1ROH (scalar plus immediate)       | [`svld1ro`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld1ro) |
+| LD1ROH (scalar plus scalar)          | [`svld1ro`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svld1ro) |
+| LD1ROW (scalar plus immediate)       | [`svld1ro`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld1ro) |
+| LD1ROW (scalar plus scalar)          | [`svld1ro`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svld1ro) |
 | LD1RQB (scalar plus immediate)       | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svdupq) |
 | LD1RQB (scalar plus scalar)          | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svdupq) |
 | LD1RQD (scalar plus immediate)       | [`svld1rq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svld1rq), [`svdupq`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svdupq) |
@@ -7134,12 +7194,19 @@ such intrinsic exists.
 | LDNF1W                               | [`svldnf1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldnf1[), [`svldnf1uw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnf1uw) |
 | LDNT1B (scalar plus immediate)       | [`svldnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svldnt1_vnum) |
 | LDNT1B (scalar plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[8]&q=svldnt1[) |
+| LDNT1B (vector plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1_gather), [`svldnt1ub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1ub) |
 | LDNT1D (scalar plus immediate)       | [`svldnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svldnt1_vnum) |
 | LDNT1D (scalar plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[64]&q=svldnt1[) |
+| LDNT1D (vector plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1_gather) |
 | LDNT1H (scalar plus immediate)       | [`svldnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svldnt1_vnum) |
 | LDNT1H (scalar plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[16]&q=svldnt1[) |
+| LDNT1H (vector plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1_gather), [`svldnt1uh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1uh) |
+| LDNT1SB                              | [`svldnt1sb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1sb) |
+| LDNT1SH                              | [`svldnt1sh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1sh) |
+| LDNT1SW                              | [`svldnt1sw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1sw) |
 | LDNT1W (scalar plus immediate)       | [`svldnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldnt1_vnum) |
 | LDNT1W (scalar plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchieselementbitsize=[32]&q=svldnt1[) |
+| LDNT1W (vector plus scalar)          | [`svldnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1_gather), [`svldnt1uw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svldnt1uw) |
 | LDR (predicate)                      | See [SVE LDR and STR](#sve-ldr-and-str) |
 | LDR (vector)                         | See [SVE LDR and STR](#sve-ldr-and-str) |
 | LSL (immediate, predicated)          | [`svlsl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsl[) |
@@ -7155,8 +7222,11 @@ such intrinsic exists.
 | LSR (wide elements, unpredicated)    | [`svlsr_wide`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsr_wide) |
 | LSRR                                 | [`svlsr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svlsr[) (optimization of `_x` forms) |
 | MAD                                  | [`svmad`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmad) |
-| MLA                                  | [`svmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmla[) |
-| MLS                                  | [`svmls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmls[) |
+| MATCH                                | [`svmatch`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svmatch) |
+| MLA (indexed)                        | [`svmla_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmla_lane) |
+| MLA (vectors)                        | [`svmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmla[) |
+| MLS (indexed)                        | [`svmls_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmls_lane) |
+| MLS (vectors)                        | [`svmls`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmls[) |
 | MOV (SIMD & FP scalar, predicated)   | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
 | MOV (SIMD & FP scalar, unpredicated) | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
 | MOV (bitmask immediate)              | [`svdup`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup[_n]) |
@@ -7174,11 +7244,15 @@ such intrinsic exists.
 | MOVS (predicated)                    | [`svmov`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svmov) |
 | MOVS (unpredicated)                  | See [SVE MOV](#sve-mov) |
 | MSB                                  | [`svmsb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmsb) |
-| MUL (immediate)                      | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svmul) |
-| MUL (vectors)                        | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svmul) |
+| MUL (immediate)                      | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmul[) |
+| MUL (indexed)                        | [`svmul_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmul_lane) |
+| MUL (vectors, predicated)            | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmul[) |
+| MUL (vectors, unpredicated)          | [`svmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svmul[) |
 | NAND                                 | [`svnand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnand) |
 | NANDS                                | [`svnand`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnand) |
+| NBSL                                 | [`svnbsl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnbsl) |
 | NEG                                  | [`svneg`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svneg) |
+| NMATCH                               | [`svnmatch`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnmatch) |
 | NOR                                  | [`svnor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnor) |
 | NORS                                 | [`svnor`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svnor) |
 | NOT (predicate)                      | [`svnot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svnot) |
@@ -7195,6 +7269,9 @@ such intrinsic exists.
 | ORV                                  | [`svorv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svorv) |
 | PFALSE                               | [`svpfalse`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpfalse) |
 | PFIRST                               | [`svpfirst`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpfirst) |
+| PMUL                                 | [`svpmul`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpmul[) |
+| PMULLB                               | [`svpmullb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpmullb[), [`svpmullb_pair`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpmullb_pair) |
+| PMULLT                               | [`svpmullt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpmullt[), [`svpmullt_pair`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpmullt_pair) |
 | PNEXT                                | [`svpnext`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svpnext) |
 | PRFB (scalar plus immediate)         | [`svprfb_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfb_vnum) |
 | PRFB (scalar plus scalar)            | [`svprfb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svprfb) |
@@ -7217,6 +7294,9 @@ such intrinsic exists.
 | PTRUES                               | [`svptrue`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svptrue) |
 | PUNPKHI                              | [`svunpkhi`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svunpkhi) |
 | PUNPKLO                              | [`svunpklo`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svunpklo) |
+| RADDHNB                              | [`svraddhnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svraddhnb) |
+| RADDHNT                              | [`svraddhnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svraddhnt) |
+| RAX1                                 | [`svrax1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrax1) |
 | RBIT                                 | [`svrbit`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrbit) |
 | RDFFR (predicated)                   | [`svrdffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrdffr) |
 | RDFFR (unpredicated)                 | [`svrdffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrdffr) |
@@ -7227,9 +7307,26 @@ such intrinsic exists.
 | REVB                                 | [`svrevb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrevb) |
 | REVH                                 | [`svrevh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrevh) |
 | REVW                                 | [`svrevw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrevw) |
-| SABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabd) |
+| RSHRNB                               | [`svrshrnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrshrnb) |
+| RSHRNT                               | [`svrshrnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrshrnt) |
+| RSUBHNB                              | [`svrsubhnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrsubhnb) |
+| RSUBHNT                              | [`svrsubhnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svrsubhnt) |
+| SABA                                 | [`svaba`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svaba[) |
+| SABALB                               | [`svabalb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabalb) |
+| SABALT                               | [`svabalt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabalt) |
+| SABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabd[) |
+| SABDLB                               | [`svabdlb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabdlb) |
+| SABDLT                               | [`svabdlt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svabdlt) |
+| SADALP                               | [`svadalp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svadalp) |
+| SADDLB                               | [`svaddlb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svaddlb[) |
+| SADDLBT                              | [`svaddlbt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svaddlbt) |
+| SADDLT                               | [`svaddlt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svaddlt) |
 | SADDV                                | [`svaddv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svaddv) |
-| SCVTF                                | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt) |
+| SADDWB                               | [`svaddwb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svaddwb) |
+| SADDWT                               | [`svaddwt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svaddwt) |
+| SBCLB                                | [`svsbclb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsbclb) |
+| SBCLT                                | [`svsbclt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsbclt) |
+| SCVTF                                | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt_) |
 | SDIV                                 | [`svdiv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svdiv[) |
 | SDIVR                                | [`svdivr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svdivr) |
 | SDOT (indexed)                       | [`svdot_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svdot_lane) |
@@ -7237,16 +7334,43 @@ such intrinsic exists.
 | SEL (predicates)                     | [`svsel`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svsel) |
 | SEL (vectors)                        | [`svsel`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svsel) |
 | SETFFR                               | [`svsetffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsetffr) |
+| SHADD                                | [`svhadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svhadd) |
+| SHRNB                                | [`svshrnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svshrnb) |
+| SHRNT                                | [`svshrnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svshrnt) |
+| SHSUB                                | [`svhsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svhsub[) |
+| SHSUBR                               | [`svhsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svhsubr) |
+| SLI                                  | [`svsli`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsli) |
+| SM4E                                 | [`svsm4e`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsm4e[) |
+| SM4EKEY                              | [`svsm4ekey`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsm4ekey) |
 | SMAX (immediate)                     | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmax[) |
 | SMAX (vectors)                       | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmax[) |
+| SMAXP                                | [`svmaxp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmaxp) |
 | SMAXV                                | [`svmaxv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmaxv) |
 | SMIN (immediate)                     | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmin[) |
 | SMIN (vectors)                       | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmin[) |
+| SMINP                                | [`svminp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svminp) |
 | SMINV                                | [`svminv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svminv) |
-| SMULH                                | [`svmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmulh) |
+| SMLALB (indexed)                     | [`svmlalb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmlalb_lane) |
+| SMLALB (vectors)                     | [`svmlalb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmlalb[) |
+| SMLALT (indexed)                     | [`svmlalt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmlalt_lane) |
+| SMLALT (vectors)                     | [`svmlalt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmlalt[) |
+| SMLSLB (indexed)                     | [`svmlslb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmlslb_lane) |
+| SMLSLB (vectors)                     | [`svmlslb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmlslb[) |
+| SMLSLT (indexed)                     | [`svmlslt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmlslt_lane) |
+| SMLSLT (vectors)                     | [`svmlslt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmlslt[) |
+| SMMLA                                | [`svmmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmmla) |
+| SMULH (predicated)                   | [`svmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmulh) |
+| SMULH (unpredicated)                 | [`svmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmulh) |
+| SMULLB (indexed)                     | [`svmullb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmullb_lane) |
+| SMULLB (vectors)                     | [`svmullb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmullb[) |
+| SMULLT (indexed)                     | [`svmullt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmullt_lane) |
+| SMULLT (vectors)                     | [`svmullt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmullt[) |
 | SPLICE                               | [`svsplice`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsplice) |
+| SQABS                                | [`svqabs`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqabs) |
 | SQADD (immediate)                    | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqadd) |
-| SQADD (vectors)                      | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqadd) |
+| SQADD (vectors, predicated)          | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqadd) |
+| SQADD (vectors, unpredicated)        | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqadd) |
+| SQCADD                               | [`svqcadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqcadd) |
 | SQDECB                               | [`svqdecb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecb) |
 | SQDECD (scalar)                      | [`svqdecd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecd) |
 | SQDECD (vector)                      | [`svqdecd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecd) |
@@ -7256,6 +7380,22 @@ such intrinsic exists.
 | SQDECP (vector)                      | [`svqdecp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecp) |
 | SQDECW (scalar)                      | [`svqdecw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecw) |
 | SQDECW (vector)                      | [`svqdecw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdecw) |
+| SQDMLALB (indexed)                   | [`svqdmlalb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlalb_lane) |
+| SQDMLALB (vectors)                   | [`svqdmlalb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlalb[) |
+| SQDMLALBT                            | [`svqdmlalbt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlalbt) |
+| SQDMLALT (indexed)                   | [`svqdmlalt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlalt_lane) |
+| SQDMLALT (vectors)                   | [`svqdmlalt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlalt[) |
+| SQDMLSLB (indexed)                   | [`svqdmlslb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlslb_lane) |
+| SQDMLSLB (vectors)                   | [`svqdmlslb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlslb[) |
+| SQDMLSLBT                            | [`svqdmlslbt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlslbt) |
+| SQDMLSLT (indexed)                   | [`svqdmlslt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlslt_lane) |
+| SQDMLSLT (vectors)                   | [`svqdmlslt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmlslt[) |
+| SQDMULH (indexed)                    | [`svqdmulh_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmulh_lane) |
+| SQDMULH (vectors)                    | [`svqdmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmulh[) |
+| SQDMULLB (indexed)                   | [`svqdmullb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmullb_lane) |
+| SQDMULLB (vectors)                   | [`svqdmullb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmullb[) |
+| SQDMULLT (indexed)                   | [`svqdmullt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmullt_lane) |
+| SQDMULLT (vectors)                   | [`svqdmullt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqdmullt[) |
 | SQINCB                               | [`svqincb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincb) |
 | SQINCD (scalar)                      | [`svqincd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincd) |
 | SQINCD (vector)                      | [`svqincd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincd) |
@@ -7265,8 +7405,52 @@ such intrinsic exists.
 | SQINCP (vector)                      | [`svqincp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincp) |
 | SQINCW (scalar)                      | [`svqincw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincw) |
 | SQINCW (vector)                      | [`svqincw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqincw) |
+| SQNEG                                | [`svqneg`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqneg) |
+| SQRDCMLAH (indexed)                  | [`svqrdcmlah_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrdcmlah_lane) |
+| SQRDCMLAH (vectors)                  | [`svqrdcmlah`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrdcmlah[) |
+| SQRDMLAH (indexed)                   | [`svqrdmlah_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrdmlah_lane) |
+| SQRDMLAH (vectors)                   | [`svqrdmlah`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrdmlah[) |
+| SQRDMLSH (indexed)                   | [`svqrdmlsh_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrdmlsh_lane) |
+| SQRDMLSH (vectors)                   | [`svqrdmlsh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrdmlsh[) |
+| SQRDMULH (indexed)                   | [`svqrdmulh_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrdmulh_lane) |
+| SQRDMULH (vectors)                   | [`svqrdmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrdmulh[) |
+| SQRSHL                               | [`svqrshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrshl[) |
+| SQRSHLR                              | [`svqrshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrshl[) |
+| SQRSHRNB                             | [`svqrshrnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrshrnb) |
+| SQRSHRNT                             | [`svqrshrnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqrshrnt) |
+| SQRSHRUNB                            | [`svqrshrunb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svqrshrunb) |
+| SQRSHRUNT                            | [`svqrshrunt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svqrshrunt) |
+| SQSHL (immediate)                    | [`svqshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqshl[) |
+| SQSHL (vectors)                      | [`svqshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqshl[) |
+| SQSHLR                               | [`svqshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqshl[) |
+| SQSHLU                               | [`svqshlu`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#&q=svqshlu) |
+| SQSHRNB                              | [`svqshrnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqshrnb) |
+| SQSHRNT                              | [`svqshrnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqshrnt) |
+| SQSHRUNB                             | [`svqshrunb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svqshrunb) |
+| SQSHRUNT                             | [`svqshrunt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svqshrunt) |
 | SQSUB (immediate)                    | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqsub[) |
-| SQSUB (vectors)                      | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqsub[) |
+| SQSUB (vectors, predicated)          | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqsub[) |
+| SQSUB (vectors, unpredicated)        | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqsub[) |
+| SQSUBR                               | [`svqsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqsubr) |
+| SQXTNB                               | [`svqxtnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqxtnb) |
+| SQXTNT                               | [`svqxtnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svqxtnt) |
+| SQXTUNB                              | [`svqxtunb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svqxtunb) |
+| SQXTUNT                              | [`svqxtunt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svqxtunt) |
+| SRHADD                               | [`svrhadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svrhadd) |
+| SRI                                  | [`svsri`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsri) |
+| SRSHL                                | [`svrshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svrshl) |
+| SRSHLR                               | [`svrshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svrshl) |
+| SRSHR                                | [`svrshr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svrshr[) |
+| SRSRA                                | [`svrsra`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svrsra) |
+| SSHLLB                               | [`svshllb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svshllb), [`svmovlb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmovlb) |
+| SSHLLT                               | [`svshllt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svshllt), [`svmovlt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svmovlt) |
+| SSRA                                 | [`svsra`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svsra) |
+| SSUBLB                               | [`svsublb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svsublb[) |
+| SSUBLBT                              | [`svsublbt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svsublbt) |
+| SSUBLT                               | [`svsublt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svsublt[) |
+| SSUBLTB                              | [`svsubltb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svsubltb) |
+| SSUBWB                               | [`svsubwb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svsubwb) |
+| SSUBWT                               | [`svsubwt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svsubwt) |
 | ST1B (scalar plus immediate)         | [`svst1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1_vnum), [`svst1b_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1b_vnum) |
 | ST1B (scalar plus scalar)            | [`svst1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1[), [`svst1b`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1b) |
 | ST1B (scalar plus vector)            | [`svst1b_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst1b_scatter_[) |
@@ -7309,45 +7493,84 @@ such intrinsic exists.
 | ST4W (scalar plus scalar)            | [`svst4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svst4[) |
 | STNT1B (scalar plus immediate)       | [`svstnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_vnum) |
 | STNT1B (scalar plus scalar)          | [`svstnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1[) |
+| STNT1B (vector plus scalar)          | [`svstnt1_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_scatter), [`svstnt1b`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1b) |
 | STNT1D (scalar plus immediate)       | [`svstnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_vnum) |
 | STNT1D (scalar plus scalar)          | [`svstnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1[) |
+| STNT1D (vector plus scalar)          | [`svstnt1_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_scatter) |
 | STNT1H (scalar plus immediate)       | [`svstnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_vnum) |
 | STNT1H (scalar plus scalar)          | [`svstnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1[) |
+| STNT1H (vector plus scalar)          | [`svstnt1_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_scatter), [`svstnt1h`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1h) |
 | STNT1W (scalar plus immediate)       | [`svstnt1_vnum`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_vnum) |
 | STNT1W (scalar plus scalar)          | [`svstnt1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1[) |
+| STNT1W (vector plus scalar)          | [`svstnt1_scatter`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1_scatter), [`svstnt1w`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svstnt1w) |
 | STR (predicate)                      | See [SVE LDR and STR](#sve-ldr-and-str) |
 | STR (vector)                         | See [SVE LDR and STR](#sve-ldr-and-str) |
 | SUB (immediate)                      | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsub[) |
 | SUB (vectors, predicated)            | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsub[) |
 | SUB (vectors, unpredicated)          | [`svsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsub[) |
+| SUBHNB                               | [`svsubhnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsubhnb) |
+| SUBHNT                               | [`svsubhnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsubhnt) |
 | SUBR (immediate)                     | [`svsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsubr) |
 | SUBR (vectors)                       | [`svsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svsubr) |
+| SUDOT                                | [`svsudot_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsudot_lane) |
 | SUNPKHI                              | [`svunpkhi`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svunpkhi) |
 | SUNPKLO                              | [`svunpklo`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svunpklo) |
+| SUQADD                               | [`svuqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svuqadd) |
 | SXTB                                 | [`svextb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svextb) |
 | SXTH                                 | [`svexth`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svexth) |
 | SXTW                                 | [`svextw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svextw) |
 | TBL                                  | [`svtbl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svtbl[), [`svdup_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svdup_lane) |
+| TBX                                  | [`svtbx`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svtbx) |
 | TRN1 (predicates)                    | [`svtrn1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svtrn1) |
 | TRN1 (vectors)                       | [`svtrn1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svtrn1) |
 | TRN2 (predicates)                    | [`svtrn2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svtrn2) |
 | TRN2 (vectors)                       | [`svtrn2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svtrn2) |
-| UABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svabd) |
+| UABA                                 | [`svaba`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svaba[) |
+| UABALB                               | [`svabalb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svabalb) |
+| UABALT                               | [`svabalt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svabalt) |
+| UABD                                 | [`svabd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svabd[) |
+| UABDLB                               | [`svabdlb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svabdlb) |
+| UABDLT                               | [`svabdlt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svabdlt) |
+| UADALP                               | [`svadalp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svadalp) |
+| UADDLB                               | [`svaddlb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svaddlb[) |
+| UADDLT                               | [`svaddlt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svaddlt) |
 | UADDV                                | [`svaddv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int]&q=svaddv) |
-| UCVTF                                | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcvt) |
+| UADDWB                               | [`svaddwb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svaddwb) |
+| UADDWT                               | [`svaddwt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svaddwt) |
+| UCVTF                                | [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svcvt_) |
 | UDIV                                 | [`svdiv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svdiv[) |
 | UDIVR                                | [`svdivr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svdivr) |
 | UDOT (indexed)                       | [`svdot_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svdot_lane) |
 | UDOT (vectors)                       | [`svdot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svdot[) |
+| UHADD                                | [`svhadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svhadd) |
+| UHSUB                                | [`svhsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svhsub[) |
+| UHSUBR                               | [`svhsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svhsubr) |
 | UMAX (immediate)                     | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmax[) |
 | UMAX (vectors)                       | [`svmax`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmax[) |
+| UMAXP                                | [`svmaxp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmaxp) |
 | UMAXV                                | [`svmaxv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmaxv) |
 | UMIN (immediate)                     | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmin[) |
 | UMIN (vectors)                       | [`svmin`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmin[) |
+| UMINP                                | [`svminp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svminp) |
 | UMINV                                | [`svminv`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svminv) |
-| UMULH                                | [`svmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmulh) |
+| UMLALB (indexed)                     | [`svmlalb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmlalb_lane) |
+| UMLALB (vectors)                     | [`svmlalb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmlalb[) |
+| UMLALT (indexed)                     | [`svmlalt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmlalt_lane) |
+| UMLALT (vectors)                     | [`svmlalt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmlalt[) |
+| UMLSLB (indexed)                     | [`svmlslb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmlslb_lane) |
+| UMLSLB (vectors)                     | [`svmlslb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmlslb[) |
+| UMLSLT (indexed)                     | [`svmlslt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmlslt_lane) |
+| UMLSLT (vectors)                     | [`svmlslt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmlslt[) |
+| UMMLA                                | [`svmmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmmla) |
+| UMULH (predicated)                   | [`svmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmulh) |
+| UMULH (unpredicated)                 | [`svmulh`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmulh) |
+| UMULLB (indexed)                     | [`svmullb_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmullb_lane) |
+| UMULLB (vectors)                     | [`svmullb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmullb[) |
+| UMULLT (indexed)                     | [`svmullt_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmullt_lane) |
+| UMULLT (vectors)                     | [`svmullt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmullt[) |
 | UQADD (immediate)                    | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqadd[) |
-| UQADD (vectors)                      | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqadd[) |
+| UQADD (vectors, predicated)          | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqadd) |
+| UQADD (vectors, unpredicated)        | [`svqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqadd[) |
 | UQDECB                               | [`svqdecb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecb) |
 | UQDECD (scalar)                      | [`svqdecd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecd) |
 | UQDECD (vector)                      | [`svqdecd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqdecd) |
@@ -7366,8 +7589,39 @@ such intrinsic exists.
 | UQINCP (vector)                      | [`svqincp`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincp) |
 | UQINCW (scalar)                      | [`svqincw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincw) |
 | UQINCW (vector)                      | [`svqincw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqincw) |
+| UQRSHL                               | [`svqrshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqrshl[) |
+| UQRSHLR                              | [`svqrshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqrshl[) |
+| UQRSHRNB                             | [`svqrshrnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqrshrnb) |
+| UQRSHRNT                             | [`svqrshrnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqrshrnt) |
+| UQSHL (immediate)                    | [`svqshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqshl[) |
+| UQSHL (vectors)                      | [`svqshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqshl[) |
+| UQSHLR                               | [`svqshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqshl[) |
+| UQSHRNB                              | [`svqshrnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqshrnb) |
+| UQSHRNT                              | [`svqshrnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqshrnt) |
 | UQSUB (immediate)                    | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqsub[) |
-| UQSUB (vectors)                      | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqsub[) |
+| UQSUB (vectors, predicated)          | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqsub[) |
+| UQSUB (vectors, unpredicated)        | [`svqsub`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqsub[) |
+| UQSUBR                               | [`svqsubr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqsubr) |
+| UQXTNB                               | [`svqxtnb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqxtnb) |
+| UQXTNT                               | [`svqxtnt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svqxtnt) |
+| URECPE                               | [`svrecpe`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svrecpe) |
+| URHADD                               | [`svrhadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svrhadd) |
+| URSHL                                | [`svrshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svrshl) |
+| URSHLR                               | [`svrshl`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svrshl) |
+| URSHR                                | [`svrshr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svrshr[) |
+| URSQRTE                              | [`svrsqrte`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svrsqrte) |
+| URSRA                                | [`svrsra`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svrsra) |
+| USDOT (indexed)                      | [`svusdot_lane`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svusdot_lane) |
+| USDOT (vectors)                      | [`svusdot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svusdot[), [`svsudot`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsudot[) |
+| USHLLB                               | [`svshllb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svshllb), [`svmovlb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmovlb) |
+| USHLLT                               | [`svshllt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svshllt), [`svmovlt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svmovlt) |
+| USMMLA                               | [`svusmmla`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svusmmla) |
+| USQADD                               | [`svsqadd`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svsqadd) |
+| USRA                                 | [`svsra`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svsra) |
+| USUBLB                               | [`svsublb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svsublb[) |
+| USUBLT                               | [`svsublt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svsublt[) |
+| USUBWB                               | [`svsubwb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svsubwb) |
+| USUBWT                               | [`svsubwt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svsubwt) |
 | UUNPKHI                              | [`svunpkhi`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svunpkhi) |
 | UUNPKLO                              | [`svunpklo`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svunpklo) |
 | UXTB                                 | [`svextb`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svextb) |
@@ -7377,11 +7631,18 @@ such intrinsic exists.
 | UZP1 (vectors)                       | [`svuzp1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svuzp1) |
 | UZP2 (predicates)                    | [`svuzp2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svuzp2) |
 | UZP2 (vectors)                       | [`svuzp2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svuzp2) |
+| WHILEGE                              | [`svwhilege`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svwhilege) |
+| WHILEGT                              | [`svwhilegt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svwhilegt) |
+| WHILEHI                              | [`svwhilegt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svwhilegt) |
+| WHILEHS                              | [`svwhilege`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svwhilege) |
 | WHILELE                              | [`svwhilele`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svwhilele) |
 | WHILELO                              | [`svwhilelt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svwhilelt) |
 | WHILELS                              | [`svwhilele`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint]&q=svwhilele) |
 | WHILELT                              | [`svwhilelt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[int]&q=svwhilelt) |
+| WHILERW                              | [`svwhilerw`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svwhilerw) |
+| WHILEWR                              | [`svwhilewr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svwhilewr) |
 | WRFFR                                | [`svwrffr`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svwrffr) |
+| XAR                                  | [`svxar`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svxar) |
 | ZIP1 (predicates)                    | [`svzip1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svzip1) |
 | ZIP1 (vectors)                       | [`svzip1`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[uint,int,float,bfloat]&q=svzip1) |
 | ZIP2 (predicates)                    | [`svzip2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiesreturnbasetype=[bool]&q=svzip2) |
