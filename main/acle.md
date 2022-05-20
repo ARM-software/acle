@@ -7988,12 +7988,15 @@ following it. --><span id="non-streaming-statement"></span>
 <span id="streaming-compatible-statement"></span>
 
 ACLE provides attributes that specify whether the abstract
-machine executes statements in non-streaming mode, whether the
-abstract machine executes statements in streaming mode, or whether
-the abstract machine can execute statements in either mode. These
-statements are called “non-streaming statements”,
-“streaming statements” and “streaming-compatible statements”
-respectively.
+machine executes statements:
+
+*   in non-streaming mode, in which case they are called “non-streaming
+    statements”
+
+*   in streaming mode, in which case they are called “streaming statements”
+
+*   in either mode, in which case they are called “streaming-compatible
+    statements”
 
 At present, the classification can only be controlled at function
 granularity: the statements in a function are all non-streaming, all
@@ -8064,7 +8067,7 @@ macro to a nonzero value.
 
 In addition to [changing streaming mode locally](#changing-streaming-mode-locally),
 ACLE provides attributes for managing streaming mode across function
-boundaries. This can be useful in the situations like the following:
+boundaries. This can be useful in the following example situations:
 
 *   An SME operation is split across several cooperating subroutines
     (as is often the case). The SME operation as a whole is designed
@@ -8075,7 +8078,7 @@ boundaries. This can be useful in the situations like the following:
     Again, callers to such functions would want to avoid the
     overhead of switching modes at function call boundaries.
 
-*   Some functions might be compatible with both streaming and
+*   Some functions are compatible with both streaming and
     non-streaming mode. Marking them as “streaming-compatible”
     allows them to be called in either mode, without changing
     the vector length. For example, this could be useful for
@@ -8247,7 +8250,7 @@ following it. --><span id="non-streaming-object"></span>
     A VL-dependent object created while the abstract machine is in
     non-streaming mode is called a “non-streaming object”.
 
-If any of the following events occurs during the execution of a program
+If any of the following events occurs during the execution of a program,
 then the behavior is undefined:
 
 *   The program accesses a [non-streaming object](#non-streaming-object)
@@ -8325,7 +8328,7 @@ possible.
 
 ### Calling restrictions related to streaming mode
 
-If any of the following events occurs during the execution of a program
+If any of the following events occurs during the execution of a program,
 then the behavior is undefined:
 
 *   a [streaming caller](#streaming-caller) passes a
@@ -8426,10 +8429,13 @@ For example, PSTATE.SM is guaranteed to be 1 at the start of inline asms
 in [streaming statements](#streaming-statement) and 0 at the start of
 inline asms in [non-streaming statements](#non-streaming-statement).
 
-All inline asms must preserve the value of PSTATE.SM: an asm entered
-in streaming mode must finish in streaming mode, and an asm entered
-in non-streaming mode must finish in non-streaming mode. The behavior
-in other cases is undefined.
+All inline asms must preserve the value of PSTATE.SM.  Therefore:
+
+*   An asm entered in streaming mode must finish in streaming mode.
+
+*   An asm entered in non-streaming mode must finish in non-streaming mode.
+
+The behavior in other cases is undefined.
 
 An inline asm can temporarily switch mode internally, such as using an
 SMSTART/SMSTOP pair. However, such mode switches invalidate all Z and P
@@ -8468,7 +8474,7 @@ handles ZA:
     This is indicated by the [`arm_shared_za`](#arm_shared_za) function type
     attribute.
 
-    This case is similar in spirit to passing an uncopyable (move-only) value
+    This case is similar in concept to passing an uncopyable (move-only) value
     by reference to a C++ function:
 
     ``` c++
@@ -8511,7 +8517,7 @@ following it. --><span id="shared-za"></span><span id="private-za"></span>
 
 Reusing a term from [[AAPCS64]](#AAPCS64), the functions in category (2)
 are called “shared-ZA” functions whereas the functions in categories (1) and
-(3) are called “private-ZA” functions. In other words, “private-ZA” is the
+(3) are called “private-ZA” functions. Therefore, “private-ZA” is the
 opposite of “shared-ZA”.
 
 A program is [ill-formed](#ill-formed) if:
@@ -8640,8 +8646,7 @@ The function type attributes cannot be used with K&R-style
 
 #### `arm_streaming`
 
-This attribute applies to **function types** and specifies the following
-things:
+This attribute applies to **function types** and specifies the following:
 
 *   If the function is defined, all statements in that definition are
     [streaming statements](#streaming-statement).
@@ -8664,8 +8669,7 @@ for more information.
 
 #### `arm_streaming_compatible`
 
-This attribute applies to **function types** and specifies the following
-things:
+This attribute applies to **function types** and specifies the following:
 
 *   If the function is defined, all statements in that definition are
     by default [streaming-compatible statements](#streaming-compatible-statement).
@@ -8705,8 +8709,7 @@ for more information.
 
 #### `arm_shared_za`
 
-This attribute applies to **function types** and specifies the following
-things:
+This attribute applies to **function types** and specifies the following:
 
 *   The function has [ZA state](#za-state).
 
@@ -8721,7 +8724,7 @@ things:
 #### `arm_new_za`
 
 This attribute applies to **function definitions**. It specifies the
-following things:
+following:
 
 *   The function has [ZA state](#za-state).
 
@@ -8805,7 +8808,7 @@ a low-level feature, but it is useful for
 and could be useful for things like vector math routines.
 
 Function types with this attribute implicitly convert to function types
-that do not have the attribute. The reverse is not true. For example:
+that do not have the attribute. However, the reverse is not true. For example:
 
 ``` c
   #define ATTR __attribute__((arm_preserves_za))
@@ -8836,7 +8839,8 @@ unspecified whether the intrinsics are functions and, if so, what
 linkage they have.
 
 There are many more intrinsics than support functions, so everything
-described in this section is an intrinsic unless otherwise noted.
+described in this section is an intrinsic unless its individual
+description says otherwise.
 
 If an intrinsic is implemented as a macro rather than a function,
 the macro must behave “as if” it had the prototype and attributes
