@@ -8958,7 +8958,7 @@ The intrinsics in this section have the following properties in common:
 
 ``` c
   // slice_offset fills the role of the usual vnum parameter.
-  __attribute__((arm_streaming, arm_shared_za))
+  __attribute__((arm_streaming_compatible, arm_shared_za))
   void svldr_vnum_za(uint32_t slice_base, uint64_t slice_offset,
                      svbool_t pn, const void *ptr);
 ```
@@ -8997,7 +8997,7 @@ The intrinsics in this section have the following properties in common:
 
 ``` c
   // slice_offset fills the role of the usual vnum parameter.
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
   void svstr_vnum_za(uint32_t slice_base, uint64_t slice_offset,
                      svbool_t pn, void *ptr);
 ```
@@ -9306,10 +9306,10 @@ possible to write these operations using normal C arithmetic. For example:
 #### ZERO
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
+  __attribute__((arm_streaming_compatible, arm_shared_za))
   void svzero_mask_za(uint64_t tile_mask);
 
-  __attribute__((arm_streaming, arm_shared_za))
+  __attribute__((arm_streaming_compatible, arm_shared_za))
   void svzero_za();
 ```
 
