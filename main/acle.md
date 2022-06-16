@@ -3,7 +3,7 @@ title: Arm C Language Extensions
 version: 2022Q1
 date-of-issue: 06 April 2022
 # LaTeX specific variables
-copyright-text: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
 # Jekyll specific variables
 header_counter: true
@@ -12,6 +12,7 @@ toc: true
 
 <!--
 SPDX-FileCopyrightText: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2022 Google LLC.
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -113,7 +114,8 @@ about Arm’s trademarks.
 
 ## Copyright
 
-Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+* Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+* Copyright 2022 Google LLC.
 
 ## About this document
 
@@ -309,6 +311,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixes for [Function Multi Versioning](#function-multi-versioning):
   * typo in `FEAT_DPB2`.
   * added `FEAT_LS64*`.
+* Added feature detection macro `__ARM_FEATURE_RCPC` for RCpc (Release Consistent processor consistent) model at [RCpc](#rcpc).
 
 ### References
 
@@ -1391,6 +1394,25 @@ execution state. Intrinsics for the use of these instructions are
 specified in [memcpy family of operations intrinsics -
 MOPS](#memcpy-family-of-operations-intrinsics---mops)
 
+### RCPC
+
+`__ARM_FEATURE_RCPC` is set if the weaker RCpc (Release Consistent
+processor consistent) model is supported. It is undefined otherwise.
+The value indicates the set of Load-Acquire and Store-Release
+instructions available. The intention is to allow programmers to guard
+the usage of these instructions in inline assembly.
+
+| **Value** | **Feature** | **Instructions**                 | **Availability**          |
+| --------- | ----------- |--------------------------------  | ------------------------- |
+| 1         | FEAT_LRCPC  |  LDAPR* instructions             | Armv8.4, optional Armv8.2 |
+| 2         | FEAT_LRCPC2 |  LDAPUR* and STLUR* instructions | Armv8.3, optional Armv8.2 |
+
+If defined, the value of `__ARM_FEATURE_RCPC` remains consistent with the decimal
+value of `LRCPC` field (bits [23:20]) in the `ID_AA64ISAR1_EL1` register.
+
+The `__ARM_FEATURE_RCPC` macro can only be implemented in the AArch64
+execution state.
+
 ## Floating-point and vector hardware
 
 ### Hardware floating point
@@ -1971,6 +1993,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication                                                                             | 0x5         |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
+| [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
 | [`__ARM_FEATURE_RNG`](#random-number-generation-extension)                                                                                              | Random Number Generation Extension (Armv8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_SAT`](#saturation-instructions)                                                                                                         | Width-specified saturation instructions (32-bit-only)                                              | 1           |
 | [`__ARM_FEATURE_SHA2`](#sha2-extension)                                                                                                                 | SHA2 Crypto extension (Arm v8-A)                                                                   | 1           |
