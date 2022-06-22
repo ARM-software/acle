@@ -8462,7 +8462,7 @@ If a function does have ZA state, the function can either share that ZA
 state with the function's caller or create new ZA state “from scratch”.
 In the latter case, it is the compiler's responsibility to free up ZA
 so that the function can use it; see the description of the lazy saving
-scheme in [[AAPCS64](#AAPCS64) for details about how the compiler
+scheme in [[AAPCS64]](#AAPCS64) for details about how the compiler
 does this.
 
 These possibilities give a one-out-of-three choice for how a function
@@ -8960,7 +8960,7 @@ The intrinsics in this section have the following properties in common:
   // slice_offset fills the role of the usual vnum parameter.
   __attribute__((arm_streaming_compatible, arm_shared_za))
   void svldr_vnum_za(uint32_t slice_base, uint64_t slice_offset,
-                     svbool_t pn, const void *ptr);
+                     const void *ptr);
 ```
 
 #### ST1B, ST1H, ST1W, ST1D, ST1Q
@@ -8998,8 +8998,7 @@ The intrinsics in this section have the following properties in common:
 ``` c
   // slice_offset fills the role of the usual vnum parameter.
   __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
-  void svstr_vnum_za(uint32_t slice_base, uint64_t slice_offset,
-                     svbool_t pn, void *ptr);
+  void svstr_vnum_za(uint32_t slice_base, uint64_t slice_offset, void *ptr);
 ```
 
 #### MOVA
