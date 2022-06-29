@@ -204,6 +204,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "sdesmalen-arm",
+      "name": "sdesmalen-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36851054?v=4",
+      "profile": "https://github.com/sdesmalen-arm",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
