@@ -8852,6 +8852,9 @@ specified in this section.
 
 ``` c
   __attribute__((arm_streaming_compatible))
+  bool __arm_has_sme(void);
+
+  __attribute__((arm_streaming_compatible))
   bool __arm_in_streaming_mode(void);
 
   // Function with external linkage.
@@ -8860,6 +8863,15 @@ specified in this section.
 ```
 
 #### Semantics
+
+**`__arm_has_sme()`**
+
+> This call returns true if the current thread “has access to SME”;
+> see [[AAPCS64]](#AAPCS64) for a more detailed definition of this term.
+>
+> One way of implementing this function is to call `__arm_sme_state`
+> and then return the top bit of X0.  See [[AAPCS64]](#AAPCS64) for
+> more details about `__arm_sme_state`.
 
 <!-- Do not remove the following `span`, they are needed to create an
 anchor that can be referred via an internal hyperlink to the paragraph
