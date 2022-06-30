@@ -213,6 +213,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "bryanpkc",
+      "name": "Bryan Chan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7143326?v=4",
+      "profile": "https://github.com/bryanpkc",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
