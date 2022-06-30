@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-24-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -123,6 +123,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/sdesmalen-arm"><img src="https://avatars.githubusercontent.com/u/36851054?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sdesmalen-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asdesmalen-arm" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/bryanpkc"><img src="https://avatars.githubusercontent.com/u/7143326?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bryan Chan</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Abryanpkc" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://pthariensflame.wordpress.com"><img src="https://avatars.githubusercontent.com/u/1847577?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alexander Ronald Altman</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Apthariensflame" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/sagarkulkarni19"><img src="https://avatars.githubusercontent.com/u/24480535?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sagar Kulkarni</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asagarkulkarni19" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
