@@ -1,10 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: 2022Q1
-date-of-issue: 06 April 2022
+version: 2022Q2
+date-of-issue: 01 Jul 2022
 # LaTeX specific variables
 copyright-text: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -171,6 +171,7 @@ unless a different support level is specified in the text.
 | 2021Q3       | 30 September 2021 | Arm    | Minor re-wording. NFCI.                                                                                              |
 | 2021Q4       | 11 January 2022   | Arm    | See [Changes between ACLE Q3 2021 and ACLE Q4 2021](#changes-between-acle-q3-2021-and-acle-q4-2021)                  |
 | 2022Q1       | 06 April 2022     | Arm    | See [Changes between ACLE Q4 2021 and ACLE Q1 2022](#changes-between-acle-q4-2021-and-acle-q1-2022)                  |
+| 2022Q2       | 01 Jul 2022       | Arm    | See [Changes between ACLE Q1 2021 and ACLE Q2 2022](#changes-between-acle-q1-2022-and-acle-q2-2022)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -297,7 +298,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Reordered the sections in [Change history](#change-history) in
   chronological order.
 
-#### Changes for next release
+#### Changes between ACLE Q1 2022 and ACLE Q2 2022
 
 * Added [support for SVE and SVE2](#arm_sve.h). This incorporates the final
   00bet6 version of the separate beta document [Arm C Language Extensions for
