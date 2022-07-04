@@ -752,6 +752,10 @@ to be included, if the header files are available:
 * [`<arm_fp16.h>`](#arm_fp16.h)
 * [`<arm_bf16.h>`](#arm_bf16.h)
 
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --><span id="arm_sve.h"></span>
+
 ### `<arm_sve.h>`
 
 `<arm_sve.h>` defines data types and intrinsics for SVE and its
