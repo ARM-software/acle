@@ -204,6 +204,42 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "sdesmalen-arm",
+      "name": "sdesmalen-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36851054?v=4",
+      "profile": "https://github.com/sdesmalen-arm",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "bryanpkc",
+      "name": "Bryan Chan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7143326?v=4",
+      "profile": "https://github.com/bryanpkc",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "pthariensflame",
+      "name": "Alexander Ronald Altman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1847577?v=4",
+      "profile": "https://pthariensflame.wordpress.com",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "sagarkulkarni19",
+      "name": "Sagar Kulkarni",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24480535?v=4",
+      "profile": "https://github.com/sagarkulkarni19",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
