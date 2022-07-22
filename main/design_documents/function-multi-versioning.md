@@ -41,7 +41,7 @@ we propose the following feature test macro, to be
 defined to 1 if the support is available:
 
 ``` c
-  __ARM_FEATURE_FUNCTION_MULTI_VERSIONING
+  __HAVE_FUNCTION_MULTI_VERSIONING
 ```
 
 Enabling this feature and using one of the attributes on a given function does

@@ -2326,7 +2326,7 @@ following:
     two.
 * If a name is not recognized the compiler should ignore it.
 
-`__ARM_FEATURE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the
+`__HAVE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the
 versioning mechanism described in this section is supported by the
 compiler and it is enabled.
 
