@@ -2331,7 +2331,11 @@ following:
   * If the `default` matches with an other explicitly provided
     version the compiler can emit only one function instead of the
     two.
-* If a name is not recognized the compiler should ignore it.
+* If a name is not recognized the compiler should ignore it[^fmv-note-ignore].
+
+[^fmv-note-ignore]: The intention is to support the usecase of newer code is
+  compiled with an older compiler. The compiler may provide diagnostic message
+  and could block the compilation for example in case of `-fpendantic`.
 
 `__HAVE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the
 versioning mechanism described in this section is supported by the
