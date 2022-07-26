@@ -2294,6 +2294,8 @@ The following attributes trigger the multi version code generation:
 * The `default` version means the version of the function that would
   be generated without these attributes.
 * `name` is the dependent features from the tables below.
+  * If a feature depends on an other feature as defined by the Architecture
+    Reference Manual then no need to explicitly state in the attribute[^fmv-note-names].
 * The dependent features could be joined by the `+` sign.
 * None of these attributes will enable the corresponding ACLE feature(s)
   associated to the `name` expressed in the attribute.
@@ -2302,6 +2304,9 @@ The following attributes trigger the multi version code generation:
 * If only the `default` version exist it should be linked directly.
 * FMV may be disabled in compile time by a compiler flag. In this
   case the `default` version shall be used.
+
+[^fmv-note-names]: For example the `sve_bf16` feature depends on `sve`
+  but it is enought to say `target_version("sve_bf16")` in the code.
 
 The attribute `__attribute__((target_version("name")))` expresses the
 following:
