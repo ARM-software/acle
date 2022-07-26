@@ -323,6 +323,14 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * `__ARM_FEATURE_SVE_VECTOR_OPERATORS=2`
   * `__ARM_FEATURE_SVE_PREDICATE_OPERATORS=2`
 
+#### Changes between ACLE Q2 2022 and ACLE Q3 2022
+
+* Fixes for [Function Multi Versioning](#function-multi-versioning):
+  * Added missing features of `ID_AA64ISAR1_EL1` and `ID_AA64ISAR2_EL1`.
+  * Renamed the feature macro to `__HAVE_FUNCTION_MULTI_VERSIONING`
+  * Added some clarifications.
+
+
 ### References
 
 This document refers to the following documents.
