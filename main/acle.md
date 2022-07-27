@@ -2400,7 +2400,7 @@ The following table lists the architectures feature mapping for AArch64
    | 70            | `FEAT_RDM`               | rdm           | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
    | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic == 0b0001```      |
    | 90            | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
-   | 100           | Advanced SIMD            | advsimd       | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
+   | 100           | Advanced SIMD            | simd          | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
    | 110           | crc32                    | crc32         | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
    | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
    | 130           | `FEAT_SHA256`            | sha256        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
