@@ -2412,46 +2412,47 @@ The following table lists the architectures feature mapping for AArch64
    | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
    | 130           | `FEAT_SHA256`            | sha256        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
    | 140           | `FEAT_SHA512`            | sha512        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0010```     |
-   | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
-   | 160           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES == 0b0010```      |
-   | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
-   | 180           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT == 0b0001```       |
-   | 190           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
-   | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0010```     |
-   | 210           | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT == 0b0001```    |
-   | 220           | `FEAT_FCMA`              | fcma          | ```ID_AA64ISAR1_EL1.FCMA == 0b0001```     |
-   | 230           | `FEAT_LRCPC`             | lrcpc         | ```ID_AA64ISAR1_EL1.LRCPC != 0b0000```    |
-   | 240           | `FEAT_LRCPC2`            | lrcpc2        | ```ID_AA64ISAR1_EL1.LRCPC == 0b0010```    |
-   | 250           | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS == 0b0001```  |
-   | 260           | `FEAT_DGH`               | dgh           | ```ID_AA64ISAR1_EL1.DGH == 0b0001```      |
-   | 270           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM == 0b0001```     |
-   | 280           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 != 0b0000```     |
-   | 290           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 == 0b0001```     |
-   | 300           | `FEAT_RPRES`             | rpes          | ```ID_AA64ISAR2_EL1.RPRES == 0b0001```    |
-   | 310           | SVE                      | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
-   | 320           | `FEAT_BF16`              | sve_bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
-   | 330           | `FEAT_EBF16`             | sve_ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
-   | 340           | `FEAT_I8MM`              | sve_i8mm      | ```ID_AA64ZFR0_EL1.I8MM == 0b00001```     |
-   | 350           | `FEAT_F32MM`             | sve_f32mm     | ```ID_AA64ZFR0_EL1.F32MM == 0b00001```    |
-   | 360           | `FEAT_F64MM`             | sve_f64mm     | ```ID_AA64ZFR0_EL1.F64MM == 0b00001```    |
-   | 370           | `FEAT_SVE2`              | sve2          | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0001``` |
-   | 380           | `FEAT_SVE_AES`           | sve_aes       | ```ID_AA64ZFR0_EL1.AES == 0b0001 OR ``` <br> ```ID_AA64ZFR0_EL1.AES == 0b0010``` |
-   | 390           | `FEAT_SVE_PMULL128`      | sve_pmull128  | ```ID_AA64ZFR0_EL1.AES == 0b0010```       |
-   | 400           | `FEAT_SVE_BitPerm`       | sve_bitperm   | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
-   | 410           | `FEAT_SVE_SHA3`          | sve_sha3      | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
-   | 420           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
-   | 430           | `FEAT_MTE`               | mte           | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
-   | 440           | `FEAT_MTE2`              | mte2          | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
-   | 450           | `FEAT_MTE3`              | mte3          | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
-   | 460           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB == 0b0001```       |
-   | 470           | `FEAT_SPECRES`           | specres       | ```ID_AA64ISAR1_EL1.SPECRES == 0b0001```  |
-   | 480           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS == 0b0001```      |
-   | 490           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS == 0b0010```      |
-   | 500           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.bt == 0b0010```        |
-   | 510           | `FEAT_LS64`              | ls64          | ```ID_AA64ISAR1_EL1.LS64 >= 0b0001```     |
-   | 520           | `FEAT_LS64_V`            | ls64_v        | ```ID_AA64ISAR1_EL1.LS64 >= 0b0010```     |
-   | 530           | `FEAT_LS64_ACCDATA`      | ls64_accdata  | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011```     |
-   | 540           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT  == 0b0001```    |
+   | 150           | `FEAT_SHA3`              | sha3          | ```ID_AA64ISAR0_EL1.SHA3 != 0b0000```     |
+   | 160           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
+   | 170           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES == 0b0010```      |
+   | 180           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
+   | 190           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT == 0b0001```       |
+   | 200           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
+   | 210           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0010```     |
+   | 220           | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT == 0b0001```    |
+   | 230           | `FEAT_FCMA`              | fcma          | ```ID_AA64ISAR1_EL1.FCMA == 0b0001```     |
+   | 240           | `FEAT_LRCPC`             | lrcpc         | ```ID_AA64ISAR1_EL1.LRCPC != 0b0000```    |
+   | 250           | `FEAT_LRCPC2`            | lrcpc2        | ```ID_AA64ISAR1_EL1.LRCPC == 0b0010```    |
+   | 260           | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS == 0b0001```  |
+   | 270           | `FEAT_DGH`               | dgh           | ```ID_AA64ISAR1_EL1.DGH == 0b0001```      |
+   | 280           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM == 0b0001```     |
+   | 290           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 != 0b0000```     |
+   | 300           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 == 0b0001```     |
+   | 310           | `FEAT_RPRES`             | rpes          | ```ID_AA64ISAR2_EL1.RPRES == 0b0001```    |
+   | 320           | SVE                      | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
+   | 330           | `FEAT_BF16`              | sve_bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
+   | 340           | `FEAT_EBF16`             | sve_ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
+   | 350           | `FEAT_I8MM`              | sve_i8mm      | ```ID_AA64ZFR0_EL1.I8MM == 0b00001```     |
+   | 360           | `FEAT_F32MM`             | sve_f32mm     | ```ID_AA64ZFR0_EL1.F32MM == 0b00001```    |
+   | 370           | `FEAT_F64MM`             | sve_f64mm     | ```ID_AA64ZFR0_EL1.F64MM == 0b00001```    |
+   | 380           | `FEAT_SVE2`              | sve2          | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0001``` |
+   | 390           | `FEAT_SVE_AES`           | sve_aes       | ```ID_AA64ZFR0_EL1.AES == 0b0001 OR ``` <br> ```ID_AA64ZFR0_EL1.AES == 0b0010``` |
+   | 400           | `FEAT_SVE_PMULL128`      | sve_pmull128  | ```ID_AA64ZFR0_EL1.AES == 0b0010```       |
+   | 410           | `FEAT_SVE_BitPerm`       | sve_bitperm   | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
+   | 420           | `FEAT_SVE_SHA3`          | sve_sha3      | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
+   | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
+   | 440           | `FEAT_MTE`               | mte           | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
+   | 450           | `FEAT_MTE2`              | mte2          | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
+   | 460           | `FEAT_MTE3`              | mte3          | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
+   | 470           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB == 0b0001```       |
+   | 480           | `FEAT_SPECRES`           | specres       | ```ID_AA64ISAR1_EL1.SPECRES == 0b0001```  |
+   | 490           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS == 0b0001```      |
+   | 500           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS == 0b0010```      |
+   | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.bt == 0b0010```        |
+   | 520           | `FEAT_LS64`              | ls64          | ```ID_AA64ISAR1_EL1.LS64 >= 0b0001```     |
+   | 530           | `FEAT_LS64_V`            | ls64_v        | ```ID_AA64ISAR1_EL1.LS64 >= 0b0010```     |
+   | 540           | `FEAT_LS64_ACCDATA`      | ls64_accdata  | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011```     |
+   | 550           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT  == 0b0001```    |
 
 ### Selection
 
