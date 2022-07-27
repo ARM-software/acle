@@ -2368,8 +2368,8 @@ the [[cxxabi]](#cxxabi), and it is defined as follows:
 <vendor specific suffix> := `_` followed by token obtained from the tables below and prefixed with `M`
 ```
 
-If multiple features are requested then those shall be appended in priority
-order and prefixed with `M`.
+If multiple features are requested then those shall be appended in increasing
+priority order and prefixed with `M`.
 
 For example:
 ``` c
