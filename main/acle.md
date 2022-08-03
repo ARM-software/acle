@@ -1509,23 +1509,33 @@ SVE language extensions:
 > [The __ARM_FEATURE_SVE_BITS macro](#the-__arm_feature_sve_bits-macro)
 > for details.
 
-**`__ARM_FEATURE_SVE_VECTOR_OPERATORS==1`**
+**`__ARM_FEATURE_SVE_VECTOR_OPERATORS==N`**
 
-> This indicates that applying the `arm_sve_vector_bits` attribute
+> `N >= 1` indicates that applying the `arm_sve_vector_bits` attribute
 > to an SVE vector type creates a type that supports the GNU vector
-> extensions. The state of this macro is only meaningful when
+> extensions. This condition is only meaningful when
 > `__ARM_FEATURE_SVE_BITS` is nonzero. See [`arm_sve_vector_bits` behavior
 > specific to vectors](#arm_sve_vector_bits-behavior-specific-to-vectors)
 > for details.
 
+> `N >= 2` indicates that the operators outlined in the GNU vector
+> extensions additionally work on sizeless SVE vector types like `svint32_t`.
+> The availability of operators on sizeless types is independent of
+> `__ARM_FEATURE_SVE_BITS`.
+
 **`__ARM_FEATURE_SVE_PREDICATE_OPERATORS==1`**
 
-> This indicates that applying the `arm_sve_vector_bits` attribute to
+> `N >= 1` indicates that applying the `arm_sve_vector_bits` attribute to
 > `svbool_t` creates a type that supports basic built-in vector operations.
 > The state of this macro is only meaningful when `__ARM_FEATURE_SVE_BITS`
 > is nonzero. See [`arm_sve_vector_bits` behavior specific to
 > predicates](#arm_sve_vector_bits-behavior-specific-to-predicates)
 > for details.
+
+> `N >= 2` indicates that the built-in vector operations described above
+> additionally work on `svbool_t`.
+> The availability of operators on `svbool_t` is independent of
+> `__ARM_FEATURE_SVE_BITS`.
 
 #### SVE2
 
@@ -1990,8 +2000,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_MATMUL_FP32`](#multiplication-of-32-bit-floating-point-matrices)                                                                    | 32-bit floating-point matrix multiply extension (FEAT_F32MM)                                       | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_FP64`](#multiplication-of-64-bit-floating-point-matrices)                                                                    | 64-bit floating-point matrix multiply extension (FEAT_F64MM)                                       | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_INT8`](#multiplication-of-8-bit-integer-matrices)                                                                            | SVE support for the integer matrix multiply extension (FEAT_I8MM)                                  | 1           |
-| [`__ARM_FEATURE_SVE_PREDICATE_OPERATORS`](#scalable-vector-extension-sve)                                                                               | C and C++ operators support fixed-length SVE predicate types                                       | 1           |
-| [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | C and C++ operators support fixed-length SVE vector types                                          | 1           |
+| [`__ARM_FEATURE_SVE_PREDICATE_OPERATORS`](#scalable-vector-extension-sve)                                                                               | Level of support for C and C++ operators on SVE vector types                                        | 1           |
+| [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES crytographic extension (FEAT_SVE_AES)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension (FEAT_SVE2_BitPerm)                                                     | 1           |
