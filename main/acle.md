@@ -2321,7 +2321,7 @@ The following attributes trigger the multi version code generation:
   case the `default` version shall be used.
 
 [^fmv-note-names]: For example the `sve_bf16` feature depends on `sve`
-  but it is enought to say `target_version("sve_bf16")` in the code.
+  but it is enough to say `target_version("sve_bf16")` in the code.
 
 The attribute `__attribute__((target_version("name")))` expresses the
 following:
@@ -2428,7 +2428,7 @@ The following table lists the architectures feature mapping for AArch64
    | 280           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM == 0b0001```     |
    | 290           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 != 0b0000```     |
    | 300           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 == 0b0001```     |
-   | 310           | `FEAT_RPRES`             | rpes          | ```ID_AA64ISAR2_EL1.RPRES == 0b0001```    |
+   | 310           | `FEAT_RPRES`             | rpres         | ```ID_AA64ISAR2_EL1.RPRES == 0b0001```    |
    | 320           | SVE                      | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
    | 330           | `FEAT_BF16`              | sve_bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
    | 340           | `FEAT_EBF16`             | sve_ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
