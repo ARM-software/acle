@@ -2380,9 +2380,9 @@ The following table lists the architectures feature mapping for AArch32
    | **Priority** | **Architecture name**            | **Name**        | **Dependent feature registers** |
    | ------------ | -------------------------------- | --------------- | ------------------------------- |
    | 0            | N/A                              | default         | N/A                             |
-   | 90           | CRC32 instructions               | crc32           | ```ID_ISAR5.CRC32 == 0b0001```  |
+   | 90           | CRC32 instructions               | crc             | ```ID_ISAR5.CRC32 == 0b0001```  |
    | 100          | SHA1 instructions                | sha1            | ```ID_ISAR5.SHA1 == 0b0001```   |
-   | 110          | SHA2 instructions                | sha256          | ```ID_ISAR5.SHA2 == 0b0001```   |
+   | 110          | SHA2 instructions                | sha2            | ```ID_ISAR5.SHA2 == 0b0001```   |
    | 120          | AES instructions                 | aes             | ```ID_ISAR5.AES >= 0b0001```    |
    | 130          | VMULL (polynomial) instructions  | vmull           | ```ID_ISAR5.AES == 0b0002```    |
 
@@ -2391,20 +2391,20 @@ The following table lists the architectures feature mapping for AArch64
    | **Priority**  | **Architecture name**    | **Name**      | **Dependent feature registers**           |
    | ------------- | ------------------------ | ------------- | ----------------------------------------- |
    | 0             | N/A                      | default       | N/A                                       |
-   | 10            | `FEAT_RNG`               | rng           | ```ID_AA64ISAR0_EL1.RNDR == 0b0001```     |
+   | 10            | `FEAT_RNG`               | rand          | ```ID_AA64ISAR0_EL1.RNDR == 0b0001```     |
    | 20            | `FEAT_FlagM`             | flagm         | ```ID_AA64ISAR0_EL1.TS == 0b0001 OR ``` <br> ```ID_AA64ISAR0_EL1.TS == 0b0010``` |
    | 30            | `FEAT_FlagM2`            | flagm2        | ```ID_AA64ISAR0_EL1.TS == 0b0010```       |
    | 40            | `FEAT_FHM`               | fhm           | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
    | 50            | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP == 0b0001```       |
    | 60            | `FEAT_SM3` && `FEAT_SM4` | sm4           | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
    | 70            | `FEAT_RDM`               | rdm           | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
-   | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic == 0b0001```      |
+   | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic == 0b0001```   |
    | 90            | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
    | 100           | Advanced SIMD            | simd          | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
-   | 110           | crc32                    | crc32         | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
+   | 110           | crc32                    | crc           | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
    | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
-   | 130           | `FEAT_SHA256`            | sha256        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
-   | 140           | `FEAT_SHA512`            | sha512        | ```ID_AA64ISAR0_EL1.SHA2 == 0b0010```     |
+   | 130           | `FEAT_SHA256`            | sha2          | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
+   | 140           | `FEAT_SHA512`            | sha5          | ```ID_AA64ISAR0_EL1.SHA2 == 0b0010```     |
    | 150           | `FEAT_SHA3`              | sha3          | ```ID_AA64ISAR0_EL1.SHA3 != 0b0000```     |
    | 160           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
    | 170           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES == 0b0010```      |
@@ -2423,16 +2423,16 @@ The following table lists the architectures feature mapping for AArch64
    | 300           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 == 0b0010```     |
    | 310           | `FEAT_RPRES`             | rpres         | ```ID_AA64ISAR2_EL1.RPRES == 0b0001```    |
    | 320           | SVE                      | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
-   | 330           | `FEAT_BF16`              | sve_bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
-   | 340           | `FEAT_EBF16`             | sve_ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
-   | 350           | `FEAT_I8MM`              | sve_i8mm      | ```ID_AA64ZFR0_EL1.I8MM == 0b00001```     |
-   | 360           | `FEAT_F32MM`             | sve_f32mm     | ```ID_AA64ZFR0_EL1.F32MM == 0b00001```    |
-   | 370           | `FEAT_F64MM`             | sve_f64mm     | ```ID_AA64ZFR0_EL1.F64MM == 0b00001```    |
+   | 330           | `FEAT_BF16`              | sve-bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
+   | 340           | `FEAT_EBF16`             | sve-ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
+   | 350           | `FEAT_I8MM`              | sve-i8mm      | ```ID_AA64ZFR0_EL1.I8MM == 0b00001```     |
+   | 360           | `FEAT_F32MM`             | sve-f32mm     | ```ID_AA64ZFR0_EL1.F32MM == 0b00001```    |
+   | 370           | `FEAT_F64MM`             | sve-f64mm     | ```ID_AA64ZFR0_EL1.F64MM == 0b00001```    |
    | 380           | `FEAT_SVE2`              | sve2          | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0001``` |
-   | 390           | `FEAT_SVE_AES`           | sve_aes       | ```ID_AA64ZFR0_EL1.AES == 0b0001 OR ``` <br> ```ID_AA64ZFR0_EL1.AES == 0b0010``` |
-   | 400           | `FEAT_SVE_PMULL128`      | sve_pmull128  | ```ID_AA64ZFR0_EL1.AES == 0b0010```       |
-   | 410           | `FEAT_SVE_BitPerm`       | sve_bitperm   | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
-   | 420           | `FEAT_SVE_SHA3`          | sve_sha3      | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
+   | 390           | `FEAT_SVE_AES`           | sve-aes       | ```ID_AA64ZFR0_EL1.AES == 0b0001 OR ``` <br> ```ID_AA64ZFR0_EL1.AES == 0b0010``` |
+   | 400           | `FEAT_SVE_PMULL128`      | sve-pmull128  | ```ID_AA64ZFR0_EL1.AES == 0b0010```       |
+   | 410           | `FEAT_SVE_BitPerm`       | sve-bitperm   | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
+   | 420           | `FEAT_SVE_SHA3`          | sve-sha3      | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
    | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
    | 440           | `FEAT_MTE`               | mte           | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
    | 450           | `FEAT_MTE2`              | mte2          | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
