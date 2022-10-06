@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2022Q2
-date-of-issue: 01 Jul 2022
+version: 2022Q2 + SME2 (Alpha)
+date-of-issue: 06 Oct 2022
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
@@ -1698,6 +1698,10 @@ In addition, `__ARM_FEATURE_LOCALLY_STREAMING` is defined to 1 if
 the [`arm_locally_streaming`](#arm_locally_streaming) attribute
 is available.
 
+`__ARM_FEATURE_SME2` is defined to 1 if the FEAT_SME2 instructions
+are available and if the associated [ACLE
+features](#sme-language-extensions-and-intrinsics) are supported.
+
 #### M-profile Vector Extension
 
 `__ARM_FEATURE_MVE` is defined as a bitmap to indicate M-profile Vector
@@ -2168,6 +2172,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SM3`](#sm3-extension)                                                                                                                   | SM3 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | [`__ARM_FEATURE_SM4`](#sm4-extension)                                                                                                                   | SM4 Crypto extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                   | 1           |
 | [`__ARM_FEATURE_SME`](#scalable-matrix-extension-sme)                                                                                                   | Scalable Matrix Extension (FEAT_SME)                                                               | 1           |
+| [`__ARM_FEATURE_SME2`](#scalable-matrix-extension-sme)                                                                                                  | Scalable Matrix Extension (FEAT_SME2)                                                              | 1           |
 | [`__ARM_FEATURE_SME_F64F64`](#double-precision-floating-point-outer-product-intrinsics)                                                                 | Double precision floating-point outer product intrinsics (FEAT_SME_F64F64)                         | 1           |
 | [`__ARM_FEATURE_SME_I16I64`](#16-bit-to-64-bit-integer-widening-outer-product-intrinsics)                                                               | 16-bit to 64-bit integer widening outer product intrinsics (FEAT_SME_I16I64)                       | 1           |
 | [`__ARM_FEATURE_SME_LOCALLY_STREAMING`](#scalable-matrix-extension-sme)                                                                                 | Support for the `arm_locally_streaming` attribute                                                  | 1           |
@@ -2411,6 +2416,7 @@ The following table lists the architectures feature mapping for AArch64
    | 350           | `FEAT_SVE_BitPerm`       | sve_bitperm   | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
    | 360           | `FEAT_SVE_SHA3`          | sve_sha3      | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
    | 370           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
+   | 380           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SME == 0b0010```       |
    | 380           | `FEAT_MTE`               | mte           | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
    | 390           | `FEAT_MTE2`              | mte2          | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
    | 400           | `FEAT_MTE3`              | mte3          | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
@@ -8605,6 +8611,19 @@ function F. There are then two cases:
 
     The inline asm is [ill-formed](#ill-formed) if it has a `"za"` clobber.
 
+## ZT0 Lookup Table
+
+When ZA storage is enabled, SME2 additionally provides access to a 64-byte large
+lookup table called ZT0 which can be accesses through specialized instructions.
+ZT0 is architecturally linked to ZA such that changing PSTATE.ZA enables or
+disables both ZA and ZT0 simultaneously.
+
+<!-- Do not remove the following `span`, they are needed to create an
+anchor that can be referred via an internal hyperlink to the section
+following it. --><span id="zt-state"></span>
+This means that when a function has ZA state, it similarly has ZT state.
+
+
 ## SME attributes
 
 All of the attributes described in this section can be specified
@@ -8755,6 +8774,12 @@ This attribute applies to **function types** and specifies the following:
     can use ZA to receive data from its callers and to pass data back to
     its callers.
 
+*   The function has [ZT state](#zt-state).
+
+*   The function's ZT state is created on entry to the function and destroyed
+    on return from the function. That is, the function does not use ZT0
+    to receive data from callers or to pass data back to callers.
+
 *   If the function forms part of the object code's ABI, that object code
     function has a “shared-ZA interface”; see [[AAPCS64]](#AAPCS64)
     for more details.
@@ -8768,6 +8793,12 @@ following:
 
 *   The function's ZA state is created on entry to the function and destroyed
     on return from the function. That is, the function does not use ZA
+    to receive data from callers or to pass data back to callers.
+
+*   The function has [ZT state](#zt-state).
+
+*   The function's ZT state is created on entry to the function and destroyed
+    on return from the function. That is, the function does not use ZT0
     to receive data from callers or to pass data back to callers.
 
 This attribute does not change a function's binary interface. If the
@@ -8827,6 +8858,9 @@ depends on whether the function is [shared-ZA](#shared-za) or
     *   the catching of an exception
 
     The platform may place additional requirements as well.
+
+*   ZT state is not considered preserved when a function is marked with
+    [`arm_preserves_za`](#arm_preserves_za).
 
 In both cases, the onus is on the definition of the function to honor
 the guarantee that is being made. The attribute does not direct the
@@ -9381,6 +9415,2341 @@ are named after. All of the functions have external linkage.
   __attribute__((arm_streaming_compatible, arm_preserves_za))
   void *__arm_sc_memchr(void *s, int c, size_t n);
 ```
+
+## SME2 Types
+
+### Predicate-as-counter
+
+SME2 adds a new kind of predicate, named *predicate-as-counter* which is used
+for multi-vector predication. It describes a predicate mask that can span multiple
+predicate registers with `K` `true` values followed by all `false` values, or
+`K` `false` values followed by all `true` values, for a given element type.
+
+When `__ARM_FEATURE_SME2` is defined,  [`<arm_sme.h>`](#arm_sme.h)  defines a
+single sizeless predicate-as-counter type named `svcount_t`.
+
+`svcount_t` and `svbool_t` are both used to represent predicate masks, but
+they cannot be used interchangeably.
+
+The ACLE allows these types to be casted from one to another using the
+`svcount_t svreinterpret_c(svbool_t)` and `svbool_t svreinterpret_b(svcount_t)`
+intrinsics, although the reinterpreted values may not be sensible in the other
+format. To safely extract a sensible mask from a `svcount_t`, the `svpext`
+functions should be used.
+
+### Multi-vector predicates
+
+When `__ARM_FEATURE_SME2` is defined, [`<arm_sme.h>`](#arm_sme.h) defines the tuple types
+`svboolx2_t` and `svboolx4_t`.
+
+These are opaque tuple types that can be accessed using the existing SVE
+intrinsics `svsetN`, `svgetN` and `svcreateN`. `svundef2` and `svundef4`
+are also extended to work with `svboolx2_t` and `svboolx4_t`.  e.g.
+
+``` c
+    svbool_t svget2[_b](svboolx2_t tuple, uint64_t imm_index);
+    svboolx2_t svset2[_b](svboolx2_t tuple, uint64_t imm_index, svbool_t x);
+    svboolx2_t svcreate2[_b](svbool_t x, svbool_t y);
+    svboolx2_t svundef2_b();
+```
+
+## SME2 functions
+
+The functions in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` is defined.
+
+#### Common rules
+
+SME2 adds operations that work on groups of SVE vectors, ZA tile slices or
+ZA array vectors. The intrinsics model this in the following way:
+
+*   Multi-vector operands are groups of SVE data vectors, that use the same
+    tuple types as defined in the [SVE ACLE](#sve-vector-types), e.g.
+    `svint32x2_t` for a multi-vector operand of two 32-bit element vectors, or
+    `svint64x4_t` for a multi-vector operand of four 64-bit element vectors.
+
+*   Intrinsic functions have a `_x2` or `_x4` suffix if the
+    function\'s return value is a vector group of 2 or 4 data vectors
+    and the function operates purely on vectors, not on the matrix array or
+    tile slices.
+
+*   Intrinsic functions have a `_vg2` or `_vg4` suffix if the function
+    operates on groups of 2 or 4 ZA tiles slices.  For example:
+
+``` c
+    // Reads 2 consecutive horizontal tile slices from ZA into multi-vector.
+    __attributes__((arm_streaming, arm_shared_za, arm_preserves_za))
+    svint8x2_t svread_vg2_hor_za8[_s8](uint32_t slice_base,
+                                       uint64_t slice_x2_offset);
+```
+
+*   The architecture distinguishes between tuples with consecutive registers
+    and tuples with strided registers. This level of detail is not exposed to
+    the C/C++ intrinsics or types. It is left up to the compiler to choose the
+    most optimal form.
+
+*   Intrinsic functions have a `_vg1x2`, `_vg1x4` suffix if the function
+    operates on 2 or 4 single-vector groups within a ZA array.
+
+*   Intrinsic functions have a `_vg2x1`, `_vg2x2`, `_vg2x4` suffix if
+    the function operates on 1, 2 or 4 double-vector groups within a ZA array.
+
+*   Intrinsic functions have a `_vg4x1`, `_vg4x2`, `_vg4x4` suffix if the
+    function operates on 1, 2 or 4 quad-vector groups within a ZA array.
+    For example:
+
+``` c
+    // SMLAL intrinsic for 2 quad-vector groups.
+    __attributes__((arm_streaming, arm_shared_za))
+    void svmlal_vg4x2_lane_za32[_s8](uint32_t slice_base, uint64_t slice_x4_offset,
+                                     svint8x2_t zn, svint8_t zm, uint64_t imm_idx);
+```
+
+*   Every argument named `slice_x2_offset` must be an integer constant
+    expression that is a multiple of 2.
+
+    These immediates are required for indexing a double-vector group in the ZA
+    array or to index a vector group of 2 tile-slices.
+
+*   Every argument named `slice_x4_offset` must be an integer constant
+    expression that is a multiple of 4.
+
+    These immediates are required for indexing a quad-vector group in the ZA
+    array or to index a vector group of 4 tile-slices.
+
+*   Intrinsic functions that take a multi-vector operand may have additional
+    suffixes to distinguish them from other forms for the same intrinsic:
+    *   a `_single` suffix if they take one multi-vector operand and one
+        (single) vector operand.
+    *   a `_lane` suffix if they take one multi-vector operand and one
+        indexed vector operand with an immediate to specify the indexed
+        elements.
+
+``` c
+    __attributes__((arm_streaming, arm_shared_za))
+    void svmlal_vg4x2_za32[_s8](uint32_t slice_base, uint64_t slice_x4_offset,
+                                svint8x2_t zn, svint8x2_t zm);
+
+
+    __attributes__((arm_streaming, arm_shared_za))
+    void svmlal_vg4x2[_single]_za32[_s8](uint32_t slice_base,
+                                         uint64_t slice_x4_offset, svint8x2_t zn,
+                                         svint8_t zm);
+
+    __attributes__((arm_streaming, arm_shared_za))
+    void svmlal_vg4x2_lane_za32[_s8](uint32_t slice_base, uint64_t slice_x4_offset,
+                                     svint8x2_t zn, svint8_t zm, uint64_t imm_idx);
+```
+
+### SME2 data-processing instructions.
+
+#### ADD, SUB (store into ZA, single)
+
+Multi-vector add/sub, storing into ZA
+
+The additional '_write' suffix indicates that the operation is not accumulating,
+ the result is written directly into ZA.
+
+``` c
+  // Variants are available for:
+  //   _za32[_s32]
+  //   _za32[_u32]
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svadd_write[_single]_za32[_s32]_vg1x2(uint32_t slice_base,
+                                             uint64_t slice_offset,
+                                             svint32x2_t zn, svint32_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_s32]
+  //   _za32[_u32]
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svadd_write[_single]_za32[_s32]_vg1x4(uint32_t slice_base,
+                                             uint64_t slice_offset,
+                                             svint32x4_t zn, svint32_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_u32]
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsub_write[_single]_za32[_u32]_vg1x2(uint32_t slice_base,
+                                             uint64_t slice_offset,
+                                             svuint32x2_t zn, svuint32_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_u32]
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsub_write[_single]_za32[_u32]_vg1x4(uint32_t slice_base,
+                                             uint64_t slice_offset,
+                                             svuint32x4_t zn, svuint32_t zm);
+  
+  ```
+
+#### ADD, SUB (store into ZA, multi)
+
+Multi-vector add/sub, storing into ZA
+
+The additional '_write' suffix indicates that the operation is not accumulating,
+ the result is written directly into ZA.
+
+``` c
+  // Variants are available for:
+  //   _za32[_s32]
+  //   _za32[_u32]
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svadd_write_za32[_s32]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                    svint32x2_t zn, svint32x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_s32]
+  //   _za32[_u32]
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svadd_write_za32[_s32]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                    svint32x4_t zn, svint32x4_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_u32]
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsub_write_za32[_u32]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                    svuint32x2_t zn, svuint32x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_u32]
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsub_write_za32[_u32]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                    svuint32x4_t zn, svuint32x4_t zm);
+  
+  ```
+
+#### ADD, SUB (vectors)
+
+Multi-vector add/sub
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x2_t svadd[_single][_s8][_x2](svint8x2_t zdn, svint8_t zm);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x4_t svadd[_single][_s8][_x4](svint8x4_t zdn, svint8_t zm);
+  
+  ```
+
+#### ADD, SUB, FADD, FSUB (accumulate into ZA)
+
+Multi-vector add/sub and accumulate into ZA
+
+``` c
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za32[_s32]
+  //   _za32[_u32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svadd_za32[_f32]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                              svfloat32x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za32[_s32]
+  //   _za32[_u32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svadd_za32[_f32]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                              svfloat32x4_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za32[_u32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsub_za32[_f32]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                              svfloat32x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za32[_u32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsub_za32[_f32]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                              svfloat32x4_t zm);
+  
+  ```
+
+#### BFCVTN, FCVTN
+
+Multi-vector floating-point convert from single-precision to interleaved half-precision/BFloat16
+
+``` c
+  // Variants are also available for _f16[_f32]
+  __attribute__((arm_streaming))
+  svbfloat16_t svcvtn_bf16[_f32][_x2](svfloat32x2_t zn);
+  
+  ```
+
+#### FCVT, BFCVT, FCVTZS, FCVTZU, SCVTF, UCVTF
+
+Multi-vector convert to/from floating-point.
+
+``` c
+  // Variants are also available for _f16[_f32], _f32[_s32], _f32[_u32],
+  // _s32[_f32] and _u32[_f32]
+  __attribute__((arm_streaming))
+  svbfloat16_t svcvt_bf16[_f32][_x2](svfloat32x2_t zn);
+  
+  
+  // Variants are also available for _f32[_u32], _s32[_f32] and _u32[_f32]
+  __attribute__((arm_streaming))
+  svfloat32x4_t svcvt_f32[_s32][_x4](svint32x4_t zn);
+  
+  ```
+
+#### SQCVT, SQCVTU, UQCVT
+
+Multi-vector saturating extract narrow
+
+``` c
+  // Variants are also available for _u16[_s32] and _u16[_u32]
+  __attribute__((arm_streaming))
+  svint16_t svqcvt_s16[_s32][_x2](svint32x2_t zn);
+  
+  
+  // Variants are also available for _s16[_s64], _u8[_s32], _u8[_u32], _u16[_s64]
+  // and _u16[_u64]
+  __attribute__((arm_streaming))
+  svint8_t svqcvt_s8[_s32][_x4](svint32x4_t zn);
+  
+  ```
+
+#### SQCVTN, SQCVTUN, UQCVTN
+
+Multi-vector saturating extract narrow and interleave
+
+``` c
+  // Variants are also available for _u16[_s32] and _u16[_u32]
+  __attribute__((arm_streaming_compatible))
+  svint16_t svqcvtn_s16[_s32][_x2](svint32x2_t zn);
+  
+  
+  // Variants are also available for _s16[_s64], _u8[_s32], _u8[_u32], _u16[_s64]
+  // and _u16[_u64]
+  __attribute__((arm_streaming))
+  svint8_t svqcvtn_s8[_s32][_x4](svint32x4_t zn);
+  
+  ```
+
+#### UDOT, SDOT, FDOT (vectors)
+
+Multi-vector dot-product (2-way and 4-way)
+
+``` c
+  // Variants are also available for _s32 and _u32
+  __attribute__((arm_streaming_compatible))
+  svfloat32_t svdot[_f32](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
+  
+  ```
+
+#### UDOT, SDOT, FDOT (indexed)
+
+Multi-vector dot-product (2-way and 4-way)
+
+``` c
+  // Variants are also available for _s32 and _u32
+  __attribute__((arm_streaming_compatible))
+  svfloat32_t svdot_lane[_f32](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm,
+                               uint64_t imm_idx);
+  
+  ```
+
+#### FDOT, BFDOT, SUDOT, USDOT, SDOT, UDOT (store into ZA, single)
+
+Multi-vector dot-product (2-way and 4-way)
+
+``` c
+  // Variants are available for:
+  //   _za32[_bf16]
+  //   _za32[_f16]
+  //   _za32[_s8]
+  //   _za32[_s16]
+  //   _za32[_u8]
+  //   _za32[_u16]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svdot[_single]_za32[_bf16]_vg1x2(uint32_t slice_base,
+                                        uint64_t slice_offset,
+                                        svbfloat16x2_t zn, svbfloat16_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_bf16]
+  //   _za32[_f16]
+  //   _za32[_s8]
+  //   _za32[_s16]
+  //   _za32[_u8]
+  //   _za32[_u16]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svdot[_single]_za32[_bf16]_vg1x4(uint32_t slice_base,
+                                        uint64_t slice_offset,
+                                        svbfloat16x4_t zn, svbfloat16_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsudot[_single]_za32[_u8]_vg1x2(uint32_t slice_base,
+                                        uint64_t slice_offset, svint8x2_t zn,
+                                        svuint8_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsudot[_single]_za32[_u8]_vg1x4(uint32_t slice_base,
+                                        uint64_t slice_offset, svint8x4_t zn,
+                                        svuint8_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusdot[_single]_za32[_s8]_vg1x2(uint32_t slice_base,
+                                        uint64_t slice_offset, svuint8x2_t zn,
+                                        svint8_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusdot[_single]_za32[_s8]_vg1x4(uint32_t slice_base,
+                                        uint64_t slice_offset, svuint8x4_t zn,
+                                        svint8_t zm);
+  
+  ```
+
+#### FDOT, BFDOT, SUDOT, USDOT, SDOT, UDOT (store into ZA, multi)
+
+Multi-vector dot-product (2-way and 4-way)
+
+``` c
+  // Variants are available for:
+  //   _za32[_bf16]
+  //   _za32[_f16]
+  //   _za32[_s8]
+  //   _za32[_s16]
+  //   _za32[_u8]
+  //   _za32[_u16]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svdot_za32[_bf16]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                               svbfloat16x2_t zn, svbfloat16x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_bf16]
+  //   _za32[_f16]
+  //   _za32[_s8]
+  //   _za32[_s16]
+  //   _za32[_u8]
+  //   _za32[_u16]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svdot_za32[_bf16]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                               svbfloat16x4_t zn, svbfloat16x4_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusdot_za32[_s8]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                               svuint8x2_t zn, svint8x2_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusdot_za32[_s8]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                               svuint8x4_t zn, svint8x4_t zm);
+  
+  ```
+
+#### FDOT, BFDOT, SUDOT, USDOT, SDOT, UDOT (store into ZA, indexed)
+
+Multi-vector dot-product (2-way and 4-way)
+
+``` c
+  // Variants are available for:
+  //   _za32[_bf16]
+  //   _za32[_f16]
+  //   _za32[_s8]
+  //   _za32[_s16]
+  //   _za32[_u8]
+  //   _za32[_u16]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svdot_lane_za32[_bf16]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                    svbfloat16x2_t zn, svbfloat16_t zm,
+                                    uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_bf16]
+  //   _za32[_f16]
+  //   _za32[_s8]
+  //   _za32[_s16]
+  //   _za32[_u8]
+  //   _za32[_u16]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svdot_lane_za32[_bf16]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                    svbfloat16x4_t zn, svbfloat16_t zm,
+                                    uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsudot_lane_za32[_s8]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                    svint8x2_t zn, svuint8_t zm,
+                                    uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsudot_lane_za32[_s8]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                    svint8x4_t zn, svuint8_t zm,
+                                    uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusdot_lane_za32[_u8]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                    svuint8x2_t zn, svint8_t zm,
+                                    uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusdot_lane_za32[_u8]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                    svuint8x4_t zn, svint8_t zm,
+                                    uint64_t imm_idx);
+  
+  ```
+
+#### FVDOT, BFVDOT, SUVDOT, USVDOT, SVDOT, UVDOT
+
+Multi-vector vertical dot-product by indexed element.
+
+``` c
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsuvdot_lane_za32[_s8]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                     svint8x4_t zn, svuint8_t zm,
+                                     uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusvdot_lane_za32[_u8]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                     svuint8x4_t zn, svint8_t zm,
+                                     uint64_t imm_idx);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svvdot_lane_za32[_bf16]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                     svbfloat16x2_t zn, svbfloat16_t zm,
+                                     uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svvdot_lane_za32[_s8]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                   svint8x4_t zn, svint8_t zm, uint64_t imm_idx);
+  
+  ```
+
+#### UMOPA, SMOPA, UMOPS, SMOPS
+
+Integer sum of outer products and accumulate/subtract (2-way and 4-way)
+
+``` c
+  // Variants are also available for _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmopa_za32[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm, svint16_t zn,
+                           svint16_t zm);
+  
+  
+  // Variants are also available for _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmops_za32[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm, svint16_t zn,
+                           svint16_t zm);
+  
+  ```
+
+#### BMOPA, BMOPS
+
+Bitwise exclusive NOR population count outer product and accumulate/subtract
+
+``` c
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svbmopa_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svuint32_t zn, svuint32_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svbmops_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svuint32_t zn, svuint32_t zm);
+  
+  ```
+
+#### FMLA, FMLS (single)
+
+Multi-vector floating-point fused multiply-add/subtract
+
+``` c
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmla[_single]_za32[_f32]_vg1x2(uint32_t slice_base,
+                                       uint64_t slice_offset, svfloat32x2_t zn,
+                                       svfloat32_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmla[_single]_za32[_f32]_vg1x4(uint32_t slice_base,
+                                       uint64_t slice_offset, svfloat32x4_t zn,
+                                       svfloat32_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmls[_single]_za32[_f32]_vg1x2(uint32_t slice_base,
+                                       uint64_t slice_offset, svfloat32x2_t zn,
+                                       svfloat32_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmls[_single]_za32[_f32]_vg1x4(uint32_t slice_base,
+                                       uint64_t slice_offset, svfloat32x4_t zn,
+                                       svfloat32_t zm);
+  
+  ```
+
+#### FMLA, FMLS (multi)
+
+Multi-vector floating-point fused multiply-add/subtract
+
+``` c
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmla_za32[_f32]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                              svfloat32x2_t zn, svfloat32x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmla_za32[_f32]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                              svfloat32x4_t zn, svfloat32x4_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmls_za32[_f32]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                              svfloat32x2_t zn, svfloat32x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmls_za32[_f32]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                              svfloat32x4_t zn, svfloat32x4_t zm);
+  
+  ```
+
+#### FMLA, FMLS (indexed)
+
+Multi-vector floating-point fused multiply-add/subtract
+
+``` c
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmla_lane_za32[_f32]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                   svfloat32x2_t zn, svfloat32_t zm,
+                                   uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmla_lane_za32[_f32]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                   svfloat32x4_t zn, svfloat32_t zm,
+                                   uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmls_lane_za32[_f32]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                   svfloat32x2_t zn, svfloat32_t zm,
+                                   uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_f32]
+  //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmls_lane_za32[_f32]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                   svfloat32x4_t zn, svfloat32_t zm,
+                                   uint64_t imm_idx);
+  
+  ```
+
+#### FMLAL, BFMLAL, SMLAL, UMLAL (single)
+
+Multi-vector multiply-add long (widening)
+
+``` c
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal[_single]_za32[_bf16]_vg2x1(uint32_t slice_base,
+                                         uint64_t slice_x2_offset,
+                                         svbfloat16_t zn, svbfloat16_t zm);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal[_single]_za32[_bf16]_vg2x2(uint32_t slice_base,
+                                         uint64_t slice_x2_offset,
+                                         svbfloat16x2_t zn, svbfloat16_t zm);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal[_single]_za32[_bf16]_vg2x4(uint32_t slice_base,
+                                         uint64_t slice_x2_offset,
+                                         svbfloat16x4_t zn, svbfloat16_t zm);
+  
+  ```
+
+#### FMLAL, BFMLAL, SMLAL, UMLAL (multi)
+
+Multi-vector multiply-add long (widening)
+
+``` c
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_za32[_bf16]_vg2x2(uint32_t slice_base, uint64_t slice_x2_offset,
+                                svbfloat16x2_t zn, svbfloat16x2_t zm);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_za32[_bf16]_vg2x4(uint32_t slice_base, uint64_t slice_x2_offset,
+                                svbfloat16x4_t zn, svbfloat16x4_t zm);
+  
+  ```
+
+#### FMLAL, BFMLAL, SMLAL, UMLAL (indexed)
+
+Multi-vector multiply-add long (widening)
+
+``` c
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_lane_za32[_bf16]_vg2x1(uint32_t slice_base,
+                                     uint64_t slice_x2_offset, svbfloat16_t zn,
+                                     svbfloat16_t zm, uint64_t imm_idx);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_lane_za32[_bf16]_vg2x2(uint32_t slice_base,
+                                     uint64_t slice_x2_offset, svbfloat16x2_t zn,
+                                     svbfloat16_t zm, uint64_t imm_idx);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_lane_za32[_bf16]_vg2x4(uint32_t slice_base,
+                                     uint64_t slice_x2_offset, svbfloat16x4_t zn,
+                                     svbfloat16_t zm, uint64_t imm_idx);
+  
+  ```
+
+#### BFMLSL, FMLSL, UMLSL, SMLSL (single)
+
+Multi-vector multiply-subtract long (widening)
+
+``` c
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl[_single]_za32[_bf16]_vg2x1(uint32_t slice_base,
+                                         uint64_t slice_x2_offset,
+                                         svbfloat16_t zn, svbfloat16_t zm);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl[_single]_za32[_bf16]_vg2x2(uint32_t slice_base,
+                                         uint64_t slice_x2_offset,
+                                         svbfloat16x2_t zn, svbfloat16_t zm);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl[_single]_za32[_bf16]_vg2x4(uint32_t slice_base,
+                                         uint64_t slice_x2_offset,
+                                         svbfloat16x4_t zn, svbfloat16_t zm);
+  
+  ```
+
+#### BFMLSL, FMLSL, UMLSL, SMLSL (multi)
+
+Multi-vector multiply-subtract long (widening)
+
+``` c
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_za32[_bf16]_vg2x2(uint32_t slice_base, uint64_t slice_x2_offset,
+                                svbfloat16x2_t zn, svbfloat16x2_t zm);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_za32[_bf16]_vg2x4(uint32_t slice_base, uint64_t slice_x2_offset,
+                                svbfloat16x4_t zn, svbfloat16x4_t zm);
+  
+  ```
+
+#### BFMLSL, FMLSL, UMLSL, SMLSL (indexed)
+
+Multi-vector multiply-subtract long (widening)
+
+``` c
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_lane_za32[_bf16]_vg2x1(uint32_t slice_base,
+                                     uint64_t slice_x2_offset, svbfloat16_t zn,
+                                     svbfloat16_t zm, uint64_t imm_idx);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_lane_za32[_bf16]_vg2x2(uint32_t slice_base,
+                                     uint64_t slice_x2_offset, svbfloat16x2_t zn,
+                                     svbfloat16_t zm, uint64_t imm_idx);
+  
+  
+  // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_lane_za32[_bf16]_vg2x4(uint32_t slice_base,
+                                     uint64_t slice_x2_offset, svbfloat16x4_t zn,
+                                     svbfloat16_t zm, uint64_t imm_idx);
+  
+  ```
+
+#### UMLALL, SMLALL, USMLALL, SUMLALL (single)
+
+Multi-vector multiply-add long long (widening)
+
+``` c
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal[_single]_za32[_s8]_vg4x1(uint32_t slice_base,
+                                       uint64_t slice_x4_offset, svint8_t zn,
+                                       svint8_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal[_single]_za32[_s8]_vg4x2(uint32_t slice_base,
+                                       uint64_t slice_x4_offset, svint8x2_t zn,
+                                       svint8_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal[_single]_za32[_s8]_vg4x4(uint32_t slice_base,
+                                       uint64_t slice_x4_offset, svint8x4_t zn,
+                                       svint8_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsumlall[_single]_za32[_u8]_vg4x2(uint32_t slice_base,
+                                          uint64_t slice_x4_offset,
+                                          svint8x2_t zn, svuint8_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsumlall[_single]_za32[_u8]_vg4x4(uint32_t slice_base,
+                                          uint64_t slice_x4_offset,
+                                          svint8x4_t zn, svuint8_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusmlall[_single]_za32[_s8]_vg4x1(uint32_t slice_base,
+                                          uint64_t slice_x4_offset,
+                                          svuint8_t zn, svint8_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusmlall[_single]_za32[_s8]_vg4x2(uint32_t slice_base,
+                                          uint64_t slice_x4_offset,
+                                          svuint8x2_t zn, svint8_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusmlall[_single]_za32[_s8]_vg4x4(uint32_t slice_base,
+                                          uint64_t slice_x4_offset,
+                                          svuint8x4_t zn, svint8_t zm);
+  
+  ```
+
+#### UMLALL, SMLALL, USMLALL, SUMLALL (multi)
+
+Multi-vector multiply-add long long (widening)
+
+``` c
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_za32[_s8]_vg4x2(uint32_t slice_base, uint64_t slice_x4_offset,
+                              svint8x2_t zn, svint8x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_za32[_s8]_vg4x4(uint32_t slice_base, uint64_t slice_x4_offset,
+                              svint8x4_t zn, svint8x4_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusmlall_za32[_s8]_vg4x2(uint32_t slice_base, uint64_t slice_x4_offset,
+                                 svuint8x2_t zn, svint8x2_t zm);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusmlall_za32[_s8]_vg4x4(uint32_t slice_base, uint64_t slice_x4_offset,
+                                 svuint8x4_t zn, svint8x4_t zm);
+  
+  ```
+
+#### UMLALL, SMLALL, USMLALL, SUMLALL (indexed)
+
+Multi-vector multiply-add long long (widening)
+
+``` c
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_lane_za32[_s8]_vg4x1(uint32_t slice_base, uint64_t slice_x4_offset,
+                                   svint8_t zn, svint8_t zm, uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_lane_za32[_s8]_vg4x2(uint32_t slice_base, uint64_t slice_x4_offset,
+                                   svint8x2_t zn, svint8_t zm, uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlal_lane_za32[_s8]_vg4x4(uint32_t slice_base, uint64_t slice_x4_offset,
+                                   svint8x4_t zn, svint8_t zm, uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsumlall_lane_za32[_s8]_vg4x1(uint32_t slice_base,
+                                      uint64_t slice_x4_offset, svint8_t zn,
+                                      svuint8_t zm, uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsumlall_lane_za32[_s8]_vg4x2(uint32_t slice_base,
+                                      uint64_t slice_x4_offset, svint8x2_t zn,
+                                      svuint8_t zm, uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svsumlall_lane_za32[_s8]_vg4x4(uint32_t slice_base,
+                                      uint64_t slice_x4_offset, svint8x4_t zn,
+                                      svuint8_t zm, uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusmlall_lane_za32[_u8]_vg4x1(uint32_t slice_base,
+                                      uint64_t slice_x4_offset, svuint8_t zn,
+                                      svint8_t zm, uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusmlall_lane_za32[_u8]_vg4x2(uint32_t slice_base,
+                                      uint64_t slice_x4_offset, svuint8x2_t zn,
+                                      svint8_t zm, uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming, arm_shared_za))
+  void svusmlall_lane_za32[_u8]_vg4x4(uint32_t slice_base,
+                                      uint64_t slice_x4_offset, svuint8x4_t zn,
+                                      svint8_t zm, uint64_t imm_idx);
+  
+  ```
+
+#### SMLSLL, UMLSLL (single)
+
+Multi-vector multiply-subtract long long (widening)
+
+``` c
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl[_single]_za32[_s8]_vg4x1(uint32_t slice_base,
+                                       uint64_t slice_x4_offset, svint8_t zn,
+                                       svint8_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl[_single]_za32[_s8]_vg4x2(uint32_t slice_base,
+                                       uint64_t slice_x4_offset, svint8x2_t zn,
+                                       svint8_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl[_single]_za32[_s8]_vg4x4(uint32_t slice_base,
+                                       uint64_t slice_x4_offset, svint8x4_t zn,
+                                       svint8_t zm);
+  
+  ```
+
+#### SMLSLL, UMLSLL (multi)
+
+Multi-vector multiply-subtract long long (widening)
+
+``` c
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_za32[_s8]_vg4x2(uint32_t slice_base, uint64_t slice_x4_offset,
+                              svint8x2_t zn, svint8x2_t zm);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_za32[_s8]_vg4x4(uint32_t slice_base, uint64_t slice_x4_offset,
+                              svint8x4_t zn, svint8x4_t zm);
+  
+  ```
+
+#### SMLSLL, UMLSLL (indexed)
+
+Multi-vector multiply-subtract long long (widening)
+
+``` c
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_lane_za32[_s8]_vg4x1(uint32_t slice_base, uint64_t slice_x4_offset,
+                                   svint8_t zn, svint8_t zm, uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_lane_za32[_s8]_vg4x2(uint32_t slice_base, uint64_t slice_x4_offset,
+                                   svint8x2_t zn, svint8_t zm, uint64_t imm_idx);
+  
+  
+  // Variants are available for:
+  //   _za32[_s8]
+  //   _za32[_u8]
+  //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmlsl_lane_za32[_s8]_vg4x4(uint32_t slice_base, uint64_t slice_x4_offset,
+                                   svint8x4_t zn, svint8_t zm, uint64_t imm_idx);
+  
+  ```
+
+#### BFMLSLB, BFMLSLT
+
+BFloat16 floating-point multiply-subtract long from single-precision (top/bottom)
+
+``` c
+  
+  __attribute__((arm_streaming_compatible))
+  svfloat32_t svmlslb[_f32](svfloat32_t zda, svbfloat16_t zn, svbfloat16_t zm);
+  
+  
+  
+  __attribute__((arm_streaming_compatible))
+  svfloat32_t svmlslb_lane[_f32](svfloat32_t zda, svbfloat16_t zn,
+                                 svbfloat16_t zm, uint64_t imm_idx);
+  
+  
+  
+  __attribute__((arm_streaming_compatible))
+  svfloat32_t svmlslt[_f32](svfloat32_t zda, svbfloat16_t zn, svbfloat16_t zm);
+  
+  
+  
+  __attribute__((arm_streaming_compatible))
+  svfloat32_t svmlslt_lane[_f32](svfloat32_t zda, svbfloat16_t zn,
+                                 svbfloat16_t zm, uint64_t imm_idx);
+  
+  ```
+
+#### SMAX, SMIN, UMAX, UMIN, FMAX, FMIN (single)
+
+Multi-vector min/max
+
+``` c
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svmax[_single][_f16][_x2](svfloat16x2_t zdn, svfloat16_t zm);
+  
+  
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svmax[_single][_f16][_x4](svfloat16x4_t zdn, svfloat16_t zm);
+  
+  
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svmin[_single][_f16][_x2](svfloat16x2_t zdn, svfloat16_t zm);
+  
+  
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svmin[_single][_f16][_x4](svfloat16x4_t zdn, svfloat16_t zm);
+  
+  ```
+
+#### SMAX, SMIN, UMAX, UMIN, FMAX, FMIN (multi)
+
+Multi-vector min/max
+
+``` c
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svmax[_f16][_x2](svfloat16x2_t zdn, svfloat16x2_t zm);
+  
+  
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svmax[_f16][_x4](svfloat16x4_t zdn, svfloat16x4_t zm);
+  
+  
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svmin[_f16][_x2](svfloat16x2_t zdn, svfloat16x2_t zm);
+  
+  
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svmin[_f16][_x4](svfloat16x4_t zdn, svfloat16x4_t zm);
+  
+  ```
+
+#### FMAXNM, FMINNM (single)
+
+Multi-vector floating point min/max number
+
+``` c
+  // Variants are also available for _f32 and _f64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svmaxnm[_single][_f16][_x2](svfloat16x2_t zdn, svfloat16_t zm);
+  
+  
+  // Variants are also available for _f32 and _f64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svmaxnm[_single][_f16][_x4](svfloat16x4_t zdn, svfloat16_t zm);
+  
+  
+  // Variants are also available for _f32 and _f64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svminnm[_single][_f16][_x2](svfloat16x2_t zdn, svfloat16_t zm);
+  
+  
+  // Variants are also available for _f32 and _f64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svminnm[_single][_f16][_x4](svfloat16x4_t zdn, svfloat16_t zm);
+  
+  ```
+
+#### FMAXNM, FMINNM (multi)
+
+Multi-vector floating point min/max number
+
+``` c
+  // Variants are also available for _f32 and _f64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svmaxnm[_f16][_x2](svfloat16x2_t zdn, svfloat16x2_t zm);
+  
+  
+  // Variants are also available for _f32 and _f64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svmaxnm[_f16][_x4](svfloat16x4_t zdn, svfloat16x4_t zm);
+  
+  
+  // Variants are also available for _f32 and _f64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svminnm[_f16][_x2](svfloat16x2_t zdn, svfloat16x2_t zm);
+  
+  
+  // Variants are also available for _f32 and _f64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svminnm[_f16][_x4](svfloat16x4_t zdn, svfloat16x4_t zm);
+  
+  ```
+
+#### FRINTA, FRINTM, FRINTN, FRINTP
+
+Multi-vector floating-point round to integral value
+
+``` c
+  
+  __attribute__((arm_streaming))
+  svfloat32x2_t svrinta[_f32][_x2](svfloat32x2_t zn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svfloat32x4_t svrinta[_f32][_x4](svfloat32x4_t zn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svfloat32x2_t svrintm[_f32][_x2](svfloat32x2_t zn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svfloat32x4_t svrintm[_f32][_x4](svfloat32x4_t zn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svfloat32x2_t svrintn[_f32][_x2](svfloat32x2_t zn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svfloat32x4_t svrintn[_f32][_x4](svfloat32x4_t zn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svfloat32x2_t svrintp[_f32][_x2](svfloat32x2_t zn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svfloat32x4_t svrintp[_f32][_x4](svfloat32x4_t zn);
+  
+  ```
+
+#### LD1B, LD1D, LD1H, LD1W
+
+Contiguous load to multi-vector
+
+``` c
+  
+  __attribute__((arm_streaming))
+  svuint8x2_t svld1b_vnum[_u8]_x2(svcount_t png, const uint8_t *rn,
+                                  int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint8x4_t svld1b_vnum[_u8]_x4(svcount_t png, const uint8_t *rn,
+                                  int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint8x2_t svld1b[_u8]_x2(svcount_t png, const uint8_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint8x4_t svld1b[_u8]_x4(svcount_t png, const uint8_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint64x2_t svld1d_vnum[_u64]_x2(svcount_t png, const uint64_t *rn,
+                                    int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint64x4_t svld1d_vnum[_u64]_x4(svcount_t png, const uint64_t *rn,
+                                    int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint64x2_t svld1d[_u64]_x2(svcount_t png, const uint64_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint64x4_t svld1d[_u64]_x4(svcount_t png, const uint64_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16x2_t svld1h_vnum[_u16]_x2(svcount_t png, const uint16_t *rn,
+                                    int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16x4_t svld1h_vnum[_u16]_x4(svcount_t png, const uint16_t *rn,
+                                    int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16x2_t svld1h[_u16]_x2(svcount_t png, const uint16_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16x4_t svld1h[_u16]_x4(svcount_t png, const uint16_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint32x2_t svld1w_vnum[_u32]_x2(svcount_t png, const uint32_t *rn,
+                                    int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint32x4_t svld1w_vnum[_u32]_x4(svcount_t png, const uint32_t *rn,
+                                    int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint32x2_t svld1w[_u32]_x2(svcount_t png, const uint32_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint32x4_t svld1w[_u32]_x4(svcount_t png, const uint32_t *rn);
+  
+  ```
+
+#### LDNT1B, LDNT1D, LDNT1H, LDNT1W
+
+Contiguous non-temporal load to multi-vector
+
+``` c
+  
+  __attribute__((arm_streaming))
+  svuint8x2_t svldnt1b_vnum[_u8]_x2(svcount_t png, const uint8_t *rn,
+                                    int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint8x4_t svldnt1b_vnum[_u8]_x4(svcount_t png, const uint8_t *rn,
+                                    int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint8x2_t svldnt1b[_u8]_x2(svcount_t png, const uint8_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint8x4_t svldnt1b[_u8]_x4(svcount_t png, const uint8_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint64x2_t svldnt1d_vnum[_u64]_x2(svcount_t png, const uint64_t *rn,
+                                      int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint64x4_t svldnt1d_vnum[_u64]_x4(svcount_t png, const uint64_t *rn,
+                                      int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint64x2_t svldnt1d[_u64]_x2(svcount_t png, const uint64_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint64x4_t svldnt1d[_u64]_x4(svcount_t png, const uint64_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16x2_t svldnt1h_vnum[_u16]_x2(svcount_t png, const uint16_t *rn,
+                                      int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16x4_t svldnt1h_vnum[_u16]_x4(svcount_t png, const uint16_t *rn,
+                                      int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16x2_t svldnt1h[_u16]_x2(svcount_t png, const uint16_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16x4_t svldnt1h[_u16]_x4(svcount_t png, const uint16_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint32x2_t svldnt1w_vnum[_u32]_x2(svcount_t png, const uint32_t *rn,
+                                      int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint32x4_t svldnt1w_vnum[_u32]_x4(svcount_t png, const uint32_t *rn,
+                                      int64_t vnum);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint32x2_t svldnt1w[_u32]_x2(svcount_t png, const uint32_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint32x4_t svldnt1w[_u32]_x4(svcount_t png, const uint32_t *rn);
+  
+  ```
+
+#### ST1B, ST1D, ST1H, ST1W
+
+Contiguous store of multi-vector operand
+
+``` c
+  
+  __attribute__((arm_streaming))
+  void svst1b[_u8][_x2](svcount_t png, uint8_t *rn, svuint8x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1b[_u8][_x4](svcount_t png, uint8_t *rn, svuint8x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1b_vnum[_u8][_x2](svcount_t png, uint8_t *rn, int64_t vnum,
+                             svuint8x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1b_vnum[_u8][_x4](svcount_t png, uint8_t *rn, int64_t vnum,
+                             svuint8x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1d[_u64][_x2](svcount_t png, uint64_t *rn, svuint64x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1d[_u64][_x4](svcount_t png, uint64_t *rn, svuint64x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1d_vnum[_u64][_x2](svcount_t png, uint64_t *rn, int64_t vnum,
+                              svuint64x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1d_vnum[_u64][_x4](svcount_t png, uint64_t *rn, int64_t vnum,
+                              svuint64x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1h[_u16][_x2](svcount_t png, uint16_t *rn, svuint16x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1h[_u16][_x4](svcount_t png, uint16_t *rn, svuint16x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1h_vnum[_u16][_x2](svcount_t png, uint16_t *rn, int64_t vnum,
+                              svuint16x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1h_vnum[_u16][_x4](svcount_t png, uint16_t *rn, int64_t vnum,
+                              svuint16x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1w[_u32][_x2](svcount_t png, uint32_t *rn, svuint32x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1w[_u32][_x4](svcount_t png, uint32_t *rn, svuint32x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1w_vnum[_u32][_x2](svcount_t png, uint32_t *rn, int64_t vnum,
+                              svuint32x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svst1w_vnum[_u32][_x4](svcount_t png, uint32_t *rn, int64_t vnum,
+                              svuint32x4_t zt);
+  
+  ```
+
+#### STNT1B, STNT1D, STNT1H, STNT1W
+
+Contiguous non-temporal store of multi-vector operand
+
+``` c
+  
+  __attribute__((arm_streaming))
+  void svstnt1b[_u8][_x2](svcount_t png, uint8_t *rn, svuint8x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1b[_u8][_x4](svcount_t png, uint8_t *rn, svuint8x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1b_vnum[_u8][_x2](svcount_t png, uint8_t *rn, int64_t vnum,
+                               svuint8x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1b_vnum[_u8][_x4](svcount_t png, uint8_t *rn, int64_t vnum,
+                               svuint8x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1d[_u64][_x2](svcount_t png, uint64_t *rn, svuint64x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1d[_u64][_x4](svcount_t png, uint64_t *rn, svuint64x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1d_vnum[_u64][_x2](svcount_t png, uint64_t *rn, int64_t vnum,
+                                svuint64x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1d_vnum[_u64][_x4](svcount_t png, uint64_t *rn, int64_t vnum,
+                                svuint64x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1h[_u16][_x2](svcount_t png, uint16_t *rn, svuint16x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1h[_u16][_x4](svcount_t png, uint16_t *rn, svuint16x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1h_vnum[_u16][_x2](svcount_t png, uint16_t *rn, int64_t vnum,
+                                svuint16x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1h_vnum[_u16][_x4](svcount_t png, uint16_t *rn, int64_t vnum,
+                                svuint16x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1w[_u32][_x2](svcount_t png, uint32_t *rn, svuint32x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1w[_u32][_x4](svcount_t png, uint32_t *rn, svuint32x4_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1w_vnum[_u32][_x2](svcount_t png, uint32_t *rn, int64_t vnum,
+                                svuint32x2_t zt);
+  
+  
+  
+  __attribute__((arm_streaming))
+  void svstnt1w_vnum[_u32][_x4](svcount_t png, uint32_t *rn, int64_t vnum,
+                                svuint32x4_t zt);
+  
+  ```
+
+#### MOVT
+
+Move 8 bytes between general-purpose register and ZT0
+
+``` c
+  
+  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
+  uint64_t svread_lane_zt(uint64_t zt, uint64_t imm_x8_offset);
+  
+  
+  
+  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
+  void svwrite_lane_zt(uint64_t zt, uint64_t imm_x8_offset, uint64_t rt);
+  
+  ```
+
+#### LDR, STR
+
+Spill and fill of ZT0
+
+``` c
+  
+  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
+  void svldr_zt(uint64_t zt, const uint8_t *rn);
+  
+  
+  
+  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
+  void svstr_zt(uint64_t zt, uint8_t *rn);
+  
+  ```
+
+#### ZERO
+
+Zero ZT0
+
+``` c
+  
+  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
+  void svzero_zt(uint64_t zt);
+  
+  ```
+
+#### LUTI2, LUTI4
+
+Lookup table read with 2-bit and 4-bit indexes
+
+``` c
+  // Variants are also available for _zt[_u16] and _zt[_u32]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svuint8_t svluti2_lane_zt[_u8](uint64_t zt, svuint8_t zn, uint64_t imm_idx);
+  
+  
+  // Variants are also available for _zt[_u16] and _zt[_u32]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svuint8x2_t svluti2_lane_zt[_u8]_x2(uint64_t zt, svuint8_t zn,
+                                      uint64_t imm_idx);
+  
+  
+  // Variants are also available for _zt[_u16] and _zt[_u32]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svuint8x4_t svluti2_lane_zt[_u8]_x4(uint64_t zt, svuint8_t zn,
+                                      uint64_t imm_idx);
+  
+  
+  // Variants are also available for _zt[_u16] and _zt[_u32]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svuint8_t svluti4_lane_zt[_u8](uint64_t zt, svuint8_t zn, uint64_t imm_idx);
+  
+  
+  // Variants are also available for _zt[_u16] and _zt[_u32]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svuint8x2_t svluti4_lane_zt[_u8]_x2(uint64_t zt, svuint8_t zn,
+                                      uint64_t imm_idx);
+  
+  
+  // Variants are also available for _zt[_u32]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svuint16x4_t svluti4_lane_zt[_u16]_x4(uint64_t zt, svuint16_t zn,
+                                        uint64_t imm_idx);
+  
+  ```
+
+#### MOVA
+
+Move multi-vectors to/from ZA
+
+``` c
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za32[_s32], _za32[_u32], _za64[_s64] and _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svint8x2_t svread_hor_za8[_s8]_vg2(uint32_t slice_base,
+                                     uint64_t slice_x2_offset);
+  
+  
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za32[_s32], _za32[_u32], _za64[_s64] and _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svint8x4_t svread_hor_za8[_s8]_vg4(uint32_t slice_base,
+                                     uint64_t slice_x4_offset);
+  
+  
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za32[_s32], _za32[_u32], _za64[_s64] and _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svint8x2_t svread_ver_za8[_s8]_vg2(uint32_t slice_base,
+                                     uint64_t slice_x2_offset);
+  
+  
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za32[_s32], _za32[_u32], _za64[_s64] and _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svint8x4_t svread_ver_za8[_s8]_vg4(uint32_t slice_base,
+                                     uint64_t slice_x4_offset);
+  
+  
+  // Variants are also available for _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svint64x2_t svread_za64[_s64]_vg1x2(uint32_t slice_base,
+                                      uint64_t slice_offset);
+  
+  
+  // Variants are also available for _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
+  svint64x4_t svread_za64[_s64]_vg1x4(uint32_t slice_base,
+                                      uint64_t slice_offset);
+  
+  
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za32[_s32], _za32[_u32], _za64[_s64] and _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svwrite_hor_za8[_s8]_vg2(uint32_t slice_base, uint64_t slice_x2_offset,
+                                svint8x2_t zn);
+  
+  
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za32[_s32], _za32[_u32], _za64[_s64] and _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svwrite_hor_za8[_s8]_vg4(uint32_t slice_base, uint64_t slice_x4_offset,
+                                svint8x4_t zn);
+  
+  
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za32[_s32], _za32[_u32], _za64[_s64] and _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svwrite_ver_za8[_s8]_vg2(uint32_t slice_base, uint64_t slice_x2_offset,
+                                svint8x2_t zn);
+  
+  
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za32[_s32], _za32[_u32], _za64[_s64] and _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svwrite_ver_za8[_s8]_vg4(uint32_t slice_base, uint64_t slice_x4_offset,
+                                svint8x4_t zn);
+  
+  
+  // Variants are also available for _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svwrite_za64[_s64]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+                                svint64x2_t zn);
+  
+  
+  // Variants are also available for _za64[_u64]
+  __attribute__((arm_streaming, arm_shared_za))
+  void svwrite_za64[_s64]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+                                svint64x4_t zn);
+  
+  ```
+
+#### PTRUE
+
+Initialise predicate-as-counter to all active
+
+``` c
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svptrue_c8();
+  
+  ```
+
+#### PEXT
+
+Transform a predicate-as-counter to a predicate (pair).
+
+``` c
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svbool_t svpext_lane_c8(svcount_t pnn, uint64_t imm);
+  
+  
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svboolx2_t svpext_lane_c8_x2(svcount_t pnn, uint64_t imm);
+  
+  ```
+
+#### PSEL
+
+Predicate select between predicate value or all-false
+
+``` c
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svbool_t svpsel_lane_b8(svbool_t pn, svbool_t pm, uint32_t idx, uint64_t imm);
+  
+  ```
+
+#### CNTP
+
+Set scalar to count from predicate-as-counter
+
+
+``` c
+  enum sv_vgkind {
+    SV_VLx2 = 0,
+    SV_VLx4 = 1
+  }
+```
+
+``` c
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  uint64_t svcntp_c8(svcount_t pnn, sv_vgkind vl);
+  
+  ```
+
+#### UCLAMP, SCLAMP, FCLAMP
+
+Multi-vector clamp to minimum/maximum vector
+
+``` c
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming_compatible))
+  svfloat16_t svclamp[_f16](svfloat16_t zd, svfloat16_t zn, svfloat16_t zm);
+  
+  
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x2_t svclamp[_single][_f16][_x2](svfloat16x2_t zd, svfloat16_t zn,
+                                            svfloat16_t zm);
+  
+  
+  // Variants are also available for _f32, _f64, _s8, _s16, _s32, _s64, _u8, _u16,
+  // _u32 and _u64
+  __attribute__((arm_streaming))
+  svfloat16x4_t svclamp[_single][_f16][_x4](svfloat16x4_t zd, svfloat16_t zn,
+                                            svfloat16_t zm);
+  
+  ```
+
+#### REVD
+
+Reverse 64-bit doublewords in elements
+
+``` c
+  // Variants are also available for _u16, _u32 and _u64
+  __attribute__((arm_streaming_compatible))
+  svuint8_t svrevd[_u8]_m(svuint8_t zd, svbool_t pg, svuint8_t zn);
+  
+  
+  // Variants are also available for _u16, _u32 and _u64
+  __attribute__((arm_streaming_compatible))
+  svuint8_t svrevd[_u8]_x(svbool_t pg, svuint8_t zn);
+  
+  
+  // Variants are also available for _u16, _u32 and _u64
+  __attribute__((arm_streaming_compatible))
+  svuint8_t svrevd[_u8]_z(svbool_t pg, svuint8_t zn);
+  
+  ```
+
+#### SEL
+
+Multi-vector conditionally select elements from two vectors
+
+``` c
+  // Variants are also available for _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svuint8x2_t svsel[_u8][_x2](svcount_t png, svuint8x2_t zn, svuint8x2_t zm);
+  
+  
+  // Variants are also available for _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svuint8x4_t svsel[_u8][_x4](svcount_t png, svuint8x4_t zn, svuint8x4_t zm);
+  
+  ```
+
+#### URSHL, SRSHL (single)
+
+Multi-vector rounding shift left
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x2_t svrshl[_single][_s8][_x2](svint8x2_t zdn, svint8_t zm);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x4_t svrshl[_single][_s8][_x4](svint8x4_t zdn, svint8_t zm);
+  
+  ```
+
+#### URSHL, SRSHL (multi)
+
+Multi-vector rounding shift left
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x2_t svrshl[_s8][_x2](svint8x2_t zdn, svint8x2_t zm);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x4_t svrshl[_s8][_x4](svint8x4_t zdn, svint8x4_t zm);
+  
+  ```
+
+#### SQRSHR, UQRSHR
+
+Multi-vector saturating rounding shift right narrow
+
+``` c
+  
+  __attribute__((arm_streaming))
+  svint16_t svqrshr[_s16][_x2](svint32x2_t zn, uint64_t imm_1_8);
+  
+  
+  // Variants are also available for _s16
+  __attribute__((arm_streaming))
+  svint8_t svqrshr[_s8][_x4](svint32x4_t zn, uint64_t imm_1_8);
+  
+  
+  
+  __attribute__((arm_streaming))
+  svuint16_t svuqrshr[_u16][_x2](svuint32x2_t zn, uint64_t imm_1_8);
+  
+  
+  // Variants are also available for _u16
+  __attribute__((arm_streaming))
+  svuint8_t svuqrshr[_u8][_x4](svuint32x4_t zn, uint64_t imm_1_8);
+  
+  ```
+
+#### SQRSHRN, UQRSHRN
+
+Multi-vector saturating rounding shift right narrow and interleave
+
+``` c
+  // Variants are also available for _u16
+  __attribute__((arm_streaming_compatible))
+  svint16_t svqrshrn[_s16][_x2](svint32x2_t zn, uint64_t imm_1_8);
+  
+  
+  // Variants are also available for _s16, _u8 and _u16
+  __attribute__((arm_streaming))
+  svint8_t svqrshrn[_s8][_x4](svint32x4_t zn, uint64_t imm_1_8);
+  
+  ```
+
+#### SQRSHRU
+
+Multi-vector saturating rounding shift right unsigned narrow
+
+``` c
+  
+  __attribute__((arm_streaming))
+  svuint16_t svsqrshru[_u16][_x2](svint32x2_t zn, uint64_t imm_1_8);
+  
+  
+  // Variants are also available for _u16
+  __attribute__((arm_streaming))
+  svuint8_t svsqrshru[_u8][_x4](svint32x4_t zn, uint64_t imm_1_8);
+  
+  ```
+
+#### SQRSHRUN
+
+Multi-vector saturating rounding shift right unsigned narrow and interleave
+
+``` c
+  
+  __attribute__((arm_streaming_compatible))
+  svuint16_t svsqrshrun[_u16][_x2](svint32x2_t zn, uint64_t imm_1_8);
+  
+  
+  // Variants are also available for _u16
+  __attribute__((arm_streaming))
+  svuint8_t svsqrshrun[_u8][_x4](svint32x4_t zn, uint64_t imm_1_8);
+  
+  ```
+
+#### SQDMULH (single)
+
+Multi-vector signed saturating doubling multiply high
+
+``` c
+  // Variants are also available for _s16, _s32 and _s64
+  __attribute__((arm_streaming))
+  svint8x2_t svsqdmulh[_single][_s8][_x2](svint8x2_t zdn, svint8_t zm);
+  
+  
+  // Variants are also available for _s16, _s32 and _s64
+  __attribute__((arm_streaming))
+  svint8x4_t svsqdmulh[_single][_s8][_x4](svint8x4_t zdn, svint8_t zm);
+  
+  ```
+
+#### SQDMULH (multi)
+
+Multi-vector signed saturating doubling multiply high
+
+``` c
+  // Variants are also available for _s16, _s32 and _s64
+  __attribute__((arm_streaming))
+  svint8x2_t svsqdmulh[_s8][_x2](svint8x2_t zdn, svint8x2_t zm);
+  
+  
+  // Variants are also available for _s16, _s32 and _s64
+  __attribute__((arm_streaming))
+  svint8x4_t svsqdmulh[_s8][_x4](svint8x4_t zdn, svint8x4_t zm);
+  
+  ```
+
+#### WHILEGE, WHILEGT, WHILEHI, WHILEHS, WHILELE, WHILELO, WHILELS, WHILELT
+
+While (resulting in predicate-as-counter)
+
+``` c
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svwhilege_c8(int64_t rn, int64_t rm, sv_vgkind vl);
+  
+  
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svwhilegt_c8(int64_t rn, int64_t rm, sv_vgkind vl);
+  
+  
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svwhilehi_c8(uint64_t rn, uint64_t rm, sv_vgkind vl);
+  
+  
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svwhilehs_c8(uint64_t rn, uint64_t rm, sv_vgkind vl);
+  
+  
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svwhilele_c8(int64_t rn, int64_t rm, sv_vgkind vl);
+  
+  
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svwhilelo_c8(uint64_t rn, uint64_t rm, sv_vgkind vl);
+  
+  
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svwhilels_c8(uint64_t rn, uint64_t rm, sv_vgkind vl);
+  
+  
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming))
+  svcount_t svwhilelt_c8(int64_t rn, int64_t rm, sv_vgkind vl);
+  
+  ```
+
+#### WHILEGE, WHILEGT, WHILEHI, WHILEHS, WHILELE, WHILELO, WHILELS, WHILELT
+
+While (resulting in predicate tuple)
+
+``` c
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svboolx2_t svwhilege_b8_x2(int64_t rn, int64_t rm);
+  
+  
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svboolx2_t svwhilegt_b8_x2(int64_t rn, int64_t rm);
+  
+  
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svboolx2_t svwhilehi_b8_x2(uint64_t rn, uint64_t rm);
+  
+  
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svboolx2_t svwhilehs_b8_x2(uint64_t rn, uint64_t rm);
+  
+  
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svboolx2_t svwhilele_b8_x2(int64_t rn, int64_t rm);
+  
+  
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svboolx2_t svwhilelo_b8_x2(uint64_t rn, uint64_t rm);
+  
+  
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svboolx2_t svwhilels_b8_x2(uint64_t rn, uint64_t rm);
+  
+  
+  // Variants are also available for _b16, _b32 and _b64
+  __attribute__((arm_streaming_compatible))
+  svboolx2_t svwhilelt_b8_x2(int64_t rn, int64_t rm);
+  
+  ```
+
+#### SUNPK, UUNPK
+
+Multi-vector pack/unpack
+
+``` c
+  // Variants are also available for _s32, _s64, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint16x2_t svunpk[_s16][_x2](svint8_t zn);
+  
+  
+  // Variants are also available for _s32, _s64, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint16x4_t svunpk[_s16][_x4](svint8x2_t zn);
+  
+  ```
+
+#### ZIP, UZP
+
+Multi-vector zip/unzip (2 vectors)
+
+The uzipq instructions operate on quad-words, but for convenience accept all element types.
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x2_t svuzp[_s8]_x2(svint8_t zn, svint8_t zm);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x2_t svuzpq[_s8]_x2(svint8_t zn, svint8_t zm);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x2_t svzip[_s8]_x2(svint8_t zn, svint8_t zm);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x2_t svzipq[_s8]_x2(svint8_t zn, svint8_t zm);
+  
+  ```
+
+#### ZIP, UZP
+
+Multi-vector zip/unzip (4 vectors)
+
+The zipq instructions operate on quad-words, but for convenience accept all element types.
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x4_t svuzp[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
+                           svint8_t zn3);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x4_t svuzpq[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
+                            svint8_t zn3);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x4_t svzip[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
+                           svint8_t zn3);
+  
+  
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64
+  __attribute__((arm_streaming))
+  svint8x4_t svzipq[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
+                            svint8_t zn3);
+  
+  ```
+
+
 
 # M-profile Vector Extension (MVE) intrinsics
 
