@@ -9134,130 +9134,130 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svaddha_za32[_s32](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svint32_t zn);
+  void svaddha_za32[_s32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svint32_t zn);
 
   __attribute__((arm_streaming, arm_shared_za))
-  void svaddha_za32[_u32](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svuint32_t zn);
-
-  // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
-  void svaddha_za64[_s64](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svint64_t zn);
+  void svaddha_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svuint32_t zn);
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svaddha_za64[_u64](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svuint64_t zn);
+  void svaddha_za64[_s64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svint64_t zn);
+
+  // Only if __ARM_FEATURE_SME_I16I64 != 0
+  __attribute__((arm_streaming, arm_shared_za))
+  void svaddha_za64[_u64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svuint64_t zn);
 ```
 
 #### ADDVA
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svaddva_za32[_s32](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svint32_t zn);
+  void svaddva_za32[_s32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svint32_t zn);
 
   __attribute__((arm_streaming, arm_shared_za))
-  void svaddva_za32[_u32](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svuint32_t zn);
-
-  // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
-  void svaddva_za64[_s64](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svint64_t zn);
+  void svaddva_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svuint32_t zn);
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svaddva_za64[_u64](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svuint64_t zn);
+  void svaddva_za64[_s64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svint64_t zn);
+
+  // Only if __ARM_FEATURE_SME_I16I64 != 0
+  __attribute__((arm_streaming, arm_shared_za))
+  void svaddva_za64[_u64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svuint64_t zn);
 ```
 
 #### BFMOPA, FMOPA (widening), SMOPA, UMOPA
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svmopa_za32[_bf16](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svbfloat16_t zn, svbfloat16_t zm);
+  void svmopa_za32[_bf16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svbfloat16_t zn, svbfloat16_t zm);
 
   __attribute__((arm_streaming, arm_shared_za))
-  void svmopa_za32[_f16](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svfloat16_t zn, svfloat16_t zm);
+  void svmopa_za32[_f16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svfloat16_t zn, svfloat16_t zm);
 
   __attribute__((arm_streaming, arm_shared_za))
-  void svmopa_za32[_s8](uint64_t tile, svbool_t pn, svbool_t pm,
-                        svint8_t zn, svint8_t zm);
+  void svmopa_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                          svint8_t zn, svint8_t zm);
 
   __attribute__((arm_streaming, arm_shared_za))
-  void svmopa_za32[_u8](uint64_t tile, svbool_t pn, svbool_t pm,
-                        svuint8_t zn, svuint8_t zm);
-
-  // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
-  void svmopa_za64[_s16](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svint16_t zn, svint16_t zm);
+  void svmopa_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                          svuint8_t zn, svuint8_t zm);
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svmopa_za64[_u16](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svuint16_t zn, svuint16_t zm);
+  void svmopa_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svint16_t zn, svint16_t zm);
+
+  // Only if __ARM_FEATURE_SME_I16I64 != 0
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmopa_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svuint16_t zn, svuint16_t zm);
 ```
 
 #### FMOPA (non-widening)
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svmopa_za32[_f32](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svfloat32_t zn, svfloat32_t zm);
+  void svmopa_za32[_f32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svfloat32_t zn, svfloat32_t zm);
 
   // Only if __ARM_FEATURE_SME_F64F64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svmopa_za64[_f64](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svfloat64_t zn, svfloat64_t zm);
+  void svmopa_za64[_f64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svfloat64_t zn, svfloat64_t zm);
 ```
 
 #### BFMOPS, FMOPS (widening), SMOPS, UMOPS
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svmops_za32[_bf16](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svbfloat16_t zn, svbfloat16_t zm);
+  void svmops_za32[_bf16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svbfloat16_t zn, svbfloat16_t zm);
 
   __attribute__((arm_streaming, arm_shared_za))
-  void svmops_za32[_f16](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svfloat16_t zn, svfloat16_t zm);
+  void svmops_za32[_f16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svfloat16_t zn, svfloat16_t zm);
 
   __attribute__((arm_streaming, arm_shared_za))
-  void svmops_za32[_s8](uint64_t tile, svbool_t pn, svbool_t pm,
-                        svint8_t zn, svint8_t zm);
+  void svmops_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                          svint8_t zn, svint8_t zm);
 
   __attribute__((arm_streaming, arm_shared_za))
-  void svmops_za32[_u8](uint64_t tile, svbool_t pn, svbool_t pm,
-                        svuint8_t zn, svuint8_t zm);
-
-  // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
-  void svmops_za64[_s16](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svint16_t zn, svint16_t zm);
+  void svmops_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                          svuint8_t zn, svuint8_t zm);
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svmops_za64[_u16](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svuint16_t zn, svuint16_t zm);
+  void svmops_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svint16_t zn, svint16_t zm);
+
+  // Only if __ARM_FEATURE_SME_I16I64 != 0
+  __attribute__((arm_streaming, arm_shared_za))
+  void svmops_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svuint16_t zn, svuint16_t zm);
 ```
 
 #### FMOPS (non-widening)
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svmops_za32[_f32](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svfloat32_t zn, svfloat32_t zm);
+  void svmops_za32[_f32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svfloat32_t zn, svfloat32_t zm);
 
   // Only if __ARM_FEATURE_SME_F64F64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svmops_za64[_f64](uint64_t tile, svbool_t pn, svbool_t pm,
-                         svfloat64_t zn, svfloat64_t zm);
+  void svmops_za64[_f64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                           svfloat64_t zn, svfloat64_t zm);
 ```
 
 #### RDSVL
@@ -9304,52 +9304,52 @@ possible to write these operations using normal C arithmetic. For example:
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svsumopa_za32[_s8](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svint8_t zn, svuint8_t zm);
+  void svsumopa_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svint8_t zn, svuint8_t zm);
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svsumopa_za64[_s16](uint64_t tile, svbool_t pn, svbool_t pm,
-                           svint16_t zn, svuint16_t zm);
+  void svsumopa_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                             svint16_t zn, svuint16_t zm);
 ```
 
 #### SUMOPS
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svsumops_za32[_s8](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svint8_t zn, svuint8_t zm);
+  void svsumops_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svint8_t zn, svuint8_t zm);
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svsumops_za64[_s16](uint64_t tile, svbool_t pn, svbool_t pm,
-                           svint16_t zn, svuint16_t zm);
+  void svsumops_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                             svint16_t zn, svuint16_t zm);
 ```
 
 #### USMOPA
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svusmopa_za32[_u8](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svuint8_t zn, svint8_t zm);
+  void svusmopa_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svuint8_t zn, svint8_t zm);
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svusmopa_za64[_u16](uint64_t tile, svbool_t pn, svbool_t pm,
-                           svuint16_t zn, svint16_t zm);
+  void svusmopa_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                             svuint16_t zn, svint16_t zm);
 ```
 
 #### USMOPS
 
 ``` c
   __attribute__((arm_streaming, arm_shared_za))
-  void svusmops_za32[_u8](uint64_t tile, svbool_t pn, svbool_t pm,
-                          svuint8_t zn, svint8_t zm);
+  void svusmops_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                            svuint8_t zn, svint8_t zm);
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   __attribute__((arm_streaming, arm_shared_za))
-  void svusmops_za64[_u16](uint64_t tile, svbool_t pn, svbool_t pm,
-                           svuint16_t zn, svint16_t zm);
+  void svusmops_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
+                             svuint16_t zn, svint16_t zm);
 ```
 
 #### ZERO
