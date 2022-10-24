@@ -2403,15 +2403,15 @@ The following table lists the architectures feature mapping for AArch64
    | 30            | `FEAT_FlagM2`            | flagm2        | ```ID_AA64ISAR0_EL1.TS == 0b0010```       |
    | 40            | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
    | 50            | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP == 0b0001```       |
-   | 60            | `FEAT_SM3` && `FEAT_SM4` | sm4           | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
+   | 60            | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
    | 70            | `FEAT_RDM`               | rdm           | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
    | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic == 0b0001```   |
    | 90            | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
-   | 100           | Advanced SIMD            | simd          | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
-   | 110           | crc32                    | crc           | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
+   | 100           | `FEAT_AdvSIMD`           | simd          | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
+   | 110           | `FEAT_CRC32`             | crc           | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
    | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
    | 130           | `FEAT_SHA256`            | sha2          | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
-   | 140           | `FEAT_SHA512` `FEAT_SHA3`| sha3          | ```ID_AA64ISAR0_EL1.SHA3 != 0b0000```     |
+   | 140           | `FEAT_SHA512`,`FEAT_SHA3`| sha3          | ```ID_AA64ISAR0_EL1.SHA3 != 0b0000```     |
    | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
    | 160           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES == 0b0010```      |
    | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
@@ -2428,7 +2428,7 @@ The following table lists the architectures feature mapping for AArch64
    | 280           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 != 0b0000```     |
    | 290           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 == 0b0010```     |
    | 300           | `FEAT_RPRES`             | rpres         | ```ID_AA64ISAR2_EL1.RPRES == 0b0001```    |
-   | 310           | SVE                      | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
+   | 310           | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
    | 320           | `FEAT_BF16`              | sve-bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
    | 330           | `FEAT_EBF16`             | sve-ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
    | 340           | `FEAT_I8MM`              | sve-i8mm      | ```ID_AA64ZFR0_EL1.I8MM == 0b00001```     |
@@ -2439,13 +2439,13 @@ The following table lists the architectures feature mapping for AArch64
    | 390           | `FEAT_SVE_PMULL128`      | sve2-pmull128 | ```ID_AA64ZFR0_EL1.AES == 0b0010```       |
    | 400           | `FEAT_SVE_BitPerm`       | sve2-bitperm  | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
    | 410           | `FEAT_SVE_SHA3`          | sve2-sha3     | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
-   | 420           | `FEAT_SM3` `FEAT_SVE_SM4`| sve2-sm4      | ```ID_AA64ZFR0_EL1.SM4 == 0b0001```       |
+   | 420           | `FEAT_SM3`,`FEAT_SVE_SM4`| sve2-sm4      | ```ID_AA64ZFR0_EL1.SM4 == 0b0001```       |
    | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
    | 440           | `FEAT_MTE`               | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
    | 450           | `FEAT_MTE2`              | memtag2       | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
    | 460           | `FEAT_MTE3`              | memtag3       | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
    | 470           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB == 0b0001```       |
-   | 480           | `FEAT_SPECRES`           | pecres        | ```ID_AA64ISAR1_EL1.SPECRES == 0b0001```  |
+   | 480           | `FEAT_SPECRES`           | predres       | ```ID_AA64ISAR1_EL1.SPECRES == 0b0001```  |
    | 490           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS == 0b0001```      |
    | 500           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS == 0b0010```      |
    | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.bt == 0b0010```        |
@@ -2453,9 +2453,8 @@ The following table lists the architectures feature mapping for AArch64
    | 530           | `FEAT_LS64_V`            | ls64_v        | ```ID_AA64ISAR1_EL1.LS64 >= 0b0010```     |
    | 540           | `FEAT_LS64_ACCDATA`      | ls64_accdata  | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011```     |
    | 550           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT  == 0b0001```    |
-   | 550           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
    | 560           | `FEAT_SME_F64F64`        | sme-f64       | ```ID_AA64SMFR0_EL1.F64F64  == 0b0001```  |
-   | 570           | `FEAT_SME_I16I64`        | sme-i64       | ```ID_AA64SMFR0_EL1.I16I32  == 0b0001```  |
+   | 570           | `FEAT_SME_I16I64`        | sme-i64       | ```ID_AA64SMFR0_EL1.I16I32  == 0b1111```  |
    | 580           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SME == 0b0010```       |
 
 ### Selection
