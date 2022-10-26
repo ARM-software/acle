@@ -7,7 +7,7 @@ assignees: fpetrogalli
 
 ---
 
-<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 **Describe the bug**
@@ -26,4 +26,4 @@ We will work to solve the bug report in time for the upcoming
 release. However, we would like to encourage you to submit the fix
 yourself, if possible. If you intend to do so and this is your first
 contribution, we recommend reading our [contribution
-guidelines](../../CONTRIBUTING.md).
+guidelines](https://github.com/ARM-software/acle/blob/main/CONTRIBUTING.md).
