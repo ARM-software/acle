@@ -19,8 +19,8 @@ We are looking forward to evaluate your proposal, and if possible to
 make it part of the Arm C Language Extension (ACLE) specifications.
 
 We would like to encourage you reading through the [contribution
-guidelines](../CONTRIBUTING.md), in particular the section on [submitting
-a proposal](../CONTRIBUTING.md#proposals-for-new-content).
+guidelines](https://github.com/ARM-software/acle/blob/main/CONTRIBUTING.md), in particular the section on [submitting
+a proposal](https://github.com/ARM-software/acle/blob/main/CONTRIBUTING.md#proposals-for-new-content).
 
 Please use the proposal label.
 
@@ -45,7 +45,7 @@ Checklist: (mark with ``X`` those which apply)
 * [ ] I have run the CI scripts (if applicable, as they might be
       tricky to set up on non-*nix machines). The sequence can be
       found in the [contribution
-      guidelines](../CONTRIBUTING.md#continuous-integration). Don't
+      guidelines](https://github.com/ARM-software/acle/blob/main/CONTRIBUTING.md#continuous-integration). Don't
       worry if you cannot run these scripts on your machine, your
       patch will be automatically checked in the Actions of the pull
       request.
@@ -59,8 +59,8 @@ Checklist: (mark with ``X`` those which apply)
 * [ ] When modifying content and/or its rendering, I have checked the
       correctness of the result in the PDF output (please refer to the
       instructions on [how to build the PDFs
-      locally](../CONTRIBUTING.md#continuous-integration)).
+      locally](https://github.com/ARM-software/acle/blob/main/CONTRIBUTING.md#continuous-integration)).
 * [ ] The variable `draftversion` is set to `true` in the YAML header
       of the sources of the specifications I have modified.
 * [ ] Please *DO NOT* add my GitHub profile to the list of contributors
-      in the [README](../README.md#contributors-) page of the project.
+      in the [README](https://github.com/ARM-software/acle/blob/main/README.md#contributors-) page of the project.
