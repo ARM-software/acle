@@ -240,6 +240,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "vhscampos",
+      "name": "Victor Campos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3412620?v=4",
+      "profile": "https://www.linkedin.com/in/vhscampos",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -247,5 +256,6 @@
   "projectOwner": "ARM-software",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
