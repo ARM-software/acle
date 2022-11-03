@@ -299,8 +299,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   No functional change intended.
 * Reordered the sections in [Change history](#change-history) in
   chronological order.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  [support for SME](#arm_sme.h).
 
 #### Changes between ACLE Q1 2022 and ACLE Q2 2022
 
@@ -314,7 +312,16 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixes for [Function Multi Versioning](#function-multi-versioning):
   * typo in `FEAT_DPB2`.
   * added `FEAT_LS64*`.
+
+#### Changes for the next release
+
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  [support for SME](#arm_sme.h).
 * Added feature detection macro `__ARM_FEATURE_RCPC` for RCpc (Release Consistent processor consistent) model at [RCpc](#rcpc).
+* Added two new valid values to the
+  [SVE feature macros](#scalable-vector-extension-sve):
+  * `__ARM_FEATURE_SVE_VECTOR_OPERATORS=2`
+  * `__ARM_FEATURE_SVE_PREDICATE_OPERATORS=2`
 
 ### References
 
@@ -1654,7 +1661,7 @@ SVE language extensions:
 > The availability of operators on sizeless types is independent of
 > `__ARM_FEATURE_SVE_BITS`.
 
-**`__ARM_FEATURE_SVE_PREDICATE_OPERATORS==1`**
+**`__ARM_FEATURE_SVE_PREDICATE_OPERATORS==N`**
 
 > `N >= 1` indicates that applying the `arm_sve_vector_bits` attribute to
 > `svbool_t` creates a type that supports basic built-in vector operations.
@@ -8967,7 +8974,8 @@ following it. --><span id="__arm_za_disable"></span>
 The intrinsics in this section have the following properties in common:
 
 *   Every argument named `tile`, `slice_offset` or `tile_mask` must
-    be an integer constant expression.
+    be an integer constant expression in the range of the underlying
+    instruction.
 
 *   ZA loads and stores do not use typed pointers, since there is
     no C or C++ type information associated with the contents of ZA.
