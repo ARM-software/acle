@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+CC-BY-SA-4.0 AND Apache-Patent-License
+See LICENSE.md file for details
+-->
 # Function Multi Versioning support for Arm architectures
 
 Other architectures supports [Function Multi Versioning (FMV)]
