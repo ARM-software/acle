@@ -326,6 +326,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Added missing features of `ID_AA64ISAR1_EL1` and `ID_AA64ISAR2_EL1`.
   * Renamed the feature macro to `__HAVE_FUNCTION_MULTI_VERSIONING`
   * Added some clarifications.
+* Adds SLC as a valid Cache Level for the Memory prefetch intrinsics.
 
 ### References
 
@@ -2996,11 +2997,12 @@ values.
 | PLD             | 0         | Fetch the addressed location for reading |
 | PST             | 1         | Fetch the addressed location for writing |
 
-| Cache Level | Value | Summary                                  |
-| ----------- | ----- | ---------------------------------------- |
-| L1          | 0     | Fetch the addressed location to L1 cache |
-| L2          | 1     | Fetch the addressed location to L2 cache |
-| L3          | 2     | Fetch the addressed location to L3 cache |
+| Cache Level | Value | Summary                                                |
+| ----------- | ----- | ------------------------------------------------------ |
+| L1          | 0     | Fetch the addressed location to L1 cache               |
+| L2          | 1     | Fetch the addressed location to L2 cache               |
+| L3          | 2     | Fetch the addressed location to L3 cache               |
+| SLC         | 3     | Fetch the addressed location to the System-Level Cache |
 
 | **Retention Policy** | **Value** | **Summary**                                                                |
 | -------------------- | --------- | -------------------------------------------------------------------------- |
