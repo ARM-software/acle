@@ -2224,7 +2224,7 @@ be found in [[BA]](#BA).
 ## Attribute syntax
 
 The general rules for attribute syntax are described in the GCC
-documentation <http://gcc.gnu.org/onlinedocs/gcc/Attribute-Syntax.html>.
+documentation <https://gcc.gnu.org/onlinedocs/gcc/extensions-to-the-c-language-family/attribute-syntax.html>.
 Briefly, for this declaration:
 
 ``` c
