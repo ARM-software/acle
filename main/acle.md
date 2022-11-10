@@ -9997,7 +9997,7 @@ Multi-vector vertical dot-product by indexed element.
 
 #### UMOPA, SMOPA, UMOPS, SMOPS
 
-Integer sum of outer products and accumulate/subtract (2-way and 4-way)
+Integer sum of outer products and accumulate/subtract (2-way)
 
 ``` c
   // Variants are also available for _za32[_u16]
@@ -11468,23 +11468,20 @@ Multi-vector rounding shift left
 Multi-vector saturating rounding shift right narrow
 
 ``` c
-  
+  // Variants are also available for _u16_x2
   __attribute__((arm_streaming))
   svint16_t svqrshr[_s16_x2](svint32x2_t zn, uint64_t imm);
   
-  
-  // Variants are also available for _s16
+
+  // Variants are also available for _u8_x4
   __attribute__((arm_streaming))
   svint8_t svqrshr[_s8_x4](svint32x4_t zn, uint64_t imm);
   
-  
+
+  // Variants are also available for _u16_x4
   __attribute__((arm_streaming))
-  svuint16_t svqrshr[_u16_x2](svuint32x2_t zn, uint64_t imm);
+  svint16_t svqrshr[_s16_x4](svint64x4_t zn, uint64_t imm);
   
-  
-  // Variants are also available for _u16
-  __attribute__((arm_streaming))
-  svuint8_t svqrshr[_u8_x4](svuint32x4_t zn, uint64_t imm);
   
   ```
 
