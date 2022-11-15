@@ -258,6 +258,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "lenary",
+      "name": "Sam Elliott",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14548?v=4",
+      "profile": "https://lenary.co.uk",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
