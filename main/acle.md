@@ -536,10 +536,10 @@ anchor that can be referred via an internal hyperlink to the paragraph
 >   double f() { return another_func(1.0, 2, "oranges"); }
 > ```
 >
-> Functions like `some_func` and `another_func` are referred to as
+> Functions such as `some_func` and `another_func` are referred to as
 > (K&R-style) “unprototyped” functions. The first C standard categorized
-> them as an obsolescent feature and C18 removed all remaining support
-> for them.
+> these functions as an obsolescent feature and C18 removed all remaining
+> support for them.
 
 ## Conventions
 
@@ -2342,7 +2342,7 @@ following:
     two.
 * If a name is not recognized the compiler should ignore it[^fmv-note-ignore].
 
-[^fmv-note-ignore]: The intention is to support the usecase of newer code is
+[^fmv-note-ignore]: The intention is to support the usecase of newer code if
   compiled with an older compiler. The compiler may provide diagnostic message
   and could block the compilation for example in case of `-fpendantic`.
 
