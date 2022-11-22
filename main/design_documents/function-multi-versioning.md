@@ -25,7 +25,7 @@ derived from a function via FMV:
 2. the derived function obey to the same calling convention of the original
 function.
 
-Today the `target` [attribute for aarch64](https://gcc.gnu.org/onlinedocs/gcc/extensions-to-the-c-language-family/declaring-attributes-of-functions/aarch64-function-attributes.html)
+Currently the `target` [attribute for aarch64](https://gcc.gnu.org/onlinedocs/gcc/extensions-to-the-c-language-family/declaring-attributes-of-functions/aarch64-function-attributes.html)
 is used for many purposes, some of which might overlap the functionality
 introduced by FMV. To avoid confusion, we named the attributes used by FMV with
 `target_version` and `target_clones`.
