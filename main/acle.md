@@ -536,10 +536,10 @@ anchor that can be referred via an internal hyperlink to the paragraph
 >   double f() { return another_func(1.0, 2, "oranges"); }
 > ```
 >
-> Functions such as `some_func` and `another_func` are referred to as
+> Functions like `some_func` and `another_func` are referred to as
 > (K&R-style) “unprototyped” functions. The first C standard categorized
-> these functions as an obsolescent feature and C18 removed all remaining
-> support for them.
+> them as an obsolescent feature and C18 removed all remaining support
+> for them.
 
 ## Conventions
 
@@ -2342,7 +2342,7 @@ following:
     two.
 * If a name is not recognized the compiler should ignore it[^fmv-note-ignore].
 
-[^fmv-note-ignore]: The intention is to support the usecase of newer code if
+[^fmv-note-ignore]: The intention is to support the usecase of newer code is
   compiled with an older compiler. The compiler may provide diagnostic message
   and could block the compilation for example in case of `-fpendantic`.
 
@@ -8144,8 +8144,8 @@ boundaries. This can be useful in the following example situations:
     switches should be avoided for performance reasons.
 
 *   A function provides a public API that is specific to SME.
-    Again, callers to such functions should avoid the overhead
-    of switching modes at function call boundaries.
+    Again, callers to such functions would want to avoid the
+    overhead of switching modes at function call boundaries.
 
 *   Some functions are compatible with both streaming and
     non-streaming mode. Marking them as “streaming-compatible”
