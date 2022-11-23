@@ -8145,8 +8145,8 @@ boundaries. This can be useful in the following example situations:
     switches should be avoided for performance reasons.
 
 *   A function provides a public API that is specific to SME.
-    Again, callers to such functions should avoid the overhead
-    of switching modes at function call boundaries.
+    Again, callers to such functions would want to avoid the
+    overhead of switching modes at function call boundaries.
 
 *   Some functions are compatible with both streaming and
     non-streaming mode. Marking them as “streaming-compatible”
