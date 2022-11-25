@@ -4,7 +4,7 @@ version: 2022Q4
 date-of-issue: 23 November 2022
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: false
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -328,6 +328,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Renamed the feature macro to `__HAVE_FUNCTION_MULTI_VERSIONING`
   * Added some clarifications.
 * Adds SLC as a valid Cache Level for the Memory prefetch intrinsics.
+
+#### Changes for the next release
 
 ### References
 
