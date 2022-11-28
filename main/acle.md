@@ -327,6 +327,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Renamed the feature macro to `__HAVE_FUNCTION_MULTI_VERSIONING`
   * Added some clarifications.
 * Adds SLC as a valid Cache Level for the Memory prefetch intrinsics.
+* Added [support for 128-bit system registers](#special-register-intrinsics),
+  including two intrinsics for accessing them (`__rsr128` and `__wsr128`), and a
+  feature macro to detect if they are available (`__ARM_FEATURE_SYSREG128`).
 
 ### References
 
@@ -1539,6 +1542,16 @@ value of `LRCPC` field (bits [23:20]) in the `ID_AA64ISAR1_EL1` register.
 The `__ARM_FEATURE_RCPC` macro can only be implemented in the AArch64
 execution state.
 
+### 128-bit system registers
+
+If the `MRRS` and `MSRR` instructions are supported, `__ARM_FEATURE_SYSREG128`
+is defined to 1. These instructions were introduced in the Armv9.4-A
+architecture updates to support 128-bit system register accesses.
+
+The `__ARM_FEATURE_SYSREG128` macro can only be implemented in the AArch64
+execution state. Intrinsics for the use of these instructions are specified in
+[Special register intrinsics](#special-register-intrinsics).
+
 ## Floating-point and vector hardware
 
 ### Hardware floating point
@@ -2197,6 +2210,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE2_SHA3`](#sha3-extension)                                                                                                            | SVE2 support for the SHA3 crytographic extension (FEAT_SVE_SHA3)                                   | 1           |
 | [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 crytographic extension (FEAT_SVE_SM3)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 crytographic extension (FEAT_SVE_SM4)                                     | 1           |
+| [`__ARM_FEATURE_SYSREG128`](#bit-system-registers)                                                                                                      | Support for 128-bit system registers (FEAT_SYSREG128)                                              | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
 | [`__ARM_FP16_ARGS`](#half-precision-argument-and-result)                                                                                                | `__fp16` argument and result                                                                       | 0x0C        |
@@ -4469,6 +4483,13 @@ Reads a 32-bit system register.
 Reads a 64-bit system register.
 
 ``` c
+  __uint128_t __arm_rsr128(const char *special_register);
+```
+
+Reads a 128-bit system register. Only available if `__ARM_FEATURE_SYSREG128` is
+defined to 1.
+
+``` c
   void* __arm_rsrp(const char *special_register);
 ```
 
@@ -4497,6 +4518,13 @@ Writes a 32-bit system register.
 ```
 
 Writes a 64-bit system register.
+
+``` c
+  void __arm_wsr128(const char *special_register, __uint128_t value);
+```
+
+Writes a 128-bit system register. Only available if `__ARM_FEATURE_SYSREG128` is
+defined to 1.
 
 ``` c
   void __arm_wsrp(const char *special_register, const void *value);
@@ -4601,8 +4629,8 @@ Where:
 
 ### AArch64 system register
 
-When specifying a system register to `__arm_rsr`, `__arm_rsr64`,
-`__arm_rsrp`, `__arm_wsr`, `__arm_wsr64` or `__arm_wsrp`:
+When specifying a system register to `__arm_rsr`, `__arm_rsr64`, `__arm_rsr128`,
+`__arm_rsrp`, `__arm_wsr`, `__arm_wsr64`,`__arm_wsr128` or `__arm_wsrp`:
 
 ``` c
   "o0:op1:CRn:CRm:op2"
@@ -4754,6 +4782,7 @@ each architecture includes its predecessor instruction set.
 | LDRT            |           | all           | none                                                  |
 | MCR/MRC         |           | all           | see [System register access](#system-register-access) |
 | MSR/MRS         |           | 6-M           | see [System register access](#system-register-access) |
+| MSRR/MRRS       |           | 8-64          | see [System register access](#system-register-access) |
 | PKHBT           |           | 6             | C                                                     |
 | PKHTB           |           | 6             | C                                                     |
 | PLD             |           | 8-32,5TE, 7-M | `__pld`                                               |
