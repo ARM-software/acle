@@ -1,4 +1,4 @@
-<!-- SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-FileCopyrightText: Copyright 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 <!-- CC-BY-SA-4.0 AND Apache-Patent-License -->
 <!-- See LICENSE.md file for details -->
 <div align="center">
@@ -61,18 +61,25 @@ HTML version                                                                    
 [Arm Neon Intrinsics Reference](https://arm-software.github.io/acle/neon_intrinsics/)                         | [download](https://github.com/ARM-software/acle/releases/latest)
 [Arm®v8-M Security Extensions - Requirements on Development Tools](https://arm-software.github.io/acle/cmse/) | [download](https://github.com/ARM-software/acle/releases/latest)
 
+## Legacy releases
+
+Legacy versions of the documents were released on [Arm Developer](https://developer.arm.com).
+They are now also hosted in this repository and are to be found in [Legacy releases](legacyreleases/README.md).
+They follow the same folder naming scheme as the main document folders.
+
 # License
 
-All the ACLE documents themselves are not dependent on any assets
-outside of their own directory and all have their own license file
-included in the directory. Currently all the ACLE documents are
-licenced under the Creative Commons Attribution-ShareAlike 4.0
-International License + grant of Patent License. Contributions to
-these files are accepted under the same license.
+All the open-source ACLE documents are licensed under the Creative
+Commons Attribution-ShareAlike 4.0 International License + grant
+of Patent License.
 
-The files in the sub-directories of the tools directory are provided
-under the Apache 2.0 license. Contributions to these files are
-accepted under the same license.
+The closed-source [legacy ACLE releases](legacyreleases/README.md) are
+licensed under an Arm proprietary license.
+
+The files in the subdirectories of the `tools` directory are provided
+under the Apache 2.0 license.
+
+For more information see [LICENSE](LICENSE.md).
 
 ## Past contributors
 
