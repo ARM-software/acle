@@ -56,6 +56,10 @@ themselves, so for more information consult the individual documents.
 | Q3 2020 | [download](advsimd/NEON-intrinsics.pdf)                       |
 | Q2 2020 | [download](advsimd/NEON-intrinsics_Q22020_IHI0073F_final.pdf) |
 | Q3 2019 | [download](advsimd/IHI0073E_arm_neon_intrinsics_ref.pdf)      |
+| Q2 2019 | [download](advsimd/IHI0073D_arm_neon_intrinsics_ref.pdf)      |
+| Q1 2019 | [download](advsimd/IHI0073C_arm_neon_intrinsics_ref.pdf)      |
+| 2016    | [download](advsimd/IHI0073B_arm_neon_intrinsics_ref.pdf)      |
+| 2014    | [download](advsimd/IHI0073A_arm_neon_intrinsics_ref.pdf)      |
 
 ## Arm®v8-M Security Extensions - Requirements on Development Tools
 
