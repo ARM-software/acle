@@ -76,9 +76,6 @@ of Patent License.
 The closed-source [legacy ACLE releases](legacyreleases/README.md) are
 licensed under an Arm proprietary license.
 
-The files in the subdirectories of the `tools` directory are provided
-under the Apache 2.0 license.
-
 For more information see [LICENSE](LICENSE.md).
 
 ## Past contributors
