@@ -6,11 +6,11 @@
 All the open-source ACLE documents are not dependent on any assets
 outside of their own directory and all have their own license file
 included in the directory. Currently all the open-source ACLE documents
-are licenced under the **Creative Commons Attribution-ShareAlike 4.0
+are licensed under the **Creative Commons Attribution-ShareAlike 4.0
 International License + grant of Patent License**. Contributions to
 the specifications are accepted under the same license.
 
-This licence is applied to the content of the following folders and
+This license is applied to the content of the following folders and
 relative subfolders:
 
 * [main](main)
@@ -27,8 +27,9 @@ themselves, so for more information consult the individual documents.
 
 # License for the rest of the project
 
-All the remaining content not listed in the [previous
-section](#license-for-the-specifications) is covered by the Apache 2.0
-license. [A copy of the license is provided in the `tools`
-folder](tools/LICENSE). Contributions for this content is accepted
-under the same license.
+All the remaining content not listed in the previous sections is covered by
+the Apache 2.0 license, with the exception of one file in the
+[`tools`](tools) folder that is licensed under the BSD 3-Clause license.
+[A copy of these licenses is provided in the `tools`
+folder](tools/LICENSE.md). Contributions for this content is accepted under
+the same license.
