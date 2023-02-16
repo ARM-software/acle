@@ -334,6 +334,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [support for 128-bit system registers](#special-register-intrinsics),
   including two intrinsics for accessing them (`__rsr128` and `__wsr128`), and a
   feature macro to detect if they are available (`__ARM_FEATURE_SYSREG128`).
+* Corrected references to `-pedantic` flag.
 * Fixed typos.
 
 ### References
@@ -2363,8 +2364,8 @@ following:
 * If a name is not recognized the compiler should ignore it[^fmv-note-ignore].
 
 [^fmv-note-ignore]: The intention is to support the usecase of newer code if
-  compiled with an older compiler. The compiler may provide diagnostic message
-  and could block the compilation for example in case of `-fpendantic`.
+  compiled with an older compiler. The compiler may provide diagnostic messages
+  and could block the compilation (e.g. if the `-pedantic` flag is present).
 
 `__HAVE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the
 versioning mechanism described in this section is supported by the
