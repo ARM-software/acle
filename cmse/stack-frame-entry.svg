@@ -1495,7 +1495,7 @@ void foo(void) {
         <g
            aria-label="A pointer to the result value is passed in r0.
 g.a[0] to g.a[2] are passed in registers r1-r3.
-Uninitialized space is hightlighted in red."
+Uninitialized space is highlighted in red."
            id="text39177"
            style="font-size:2.82223px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;stroke-width:0.264583">
           <path

@@ -27,7 +27,7 @@ themselves, so for more information consult the individual documents.
 
 # License for the rest of the project
 
-All the remaining content not listes in the [previous
+All the remaining content not listed in the [previous
 section](#license-for-the-specifications) is covered by the Apache 2.0
 license. [A copy of the license is provided in the `tools`
 folder](tools/LICENSE). Contributions for this content is accepted

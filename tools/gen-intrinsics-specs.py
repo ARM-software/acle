@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021, 2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -228,9 +228,9 @@ class Intrinsic:
                 quote_literal(self.arch, workflow)]
 
 def recurse_set(parent, section_levels, value, object_type_target):
-    """Recursively fills the dictinoary `parent` with the keys provided in
+    """Recursively fills the dictionary `parent` with the keys provided in
     `section_levels`. The innermost key is mapped to a list object to which
-    the value of `value` is appened.
+    the value of `value` is appended.
 
     For example, given parent={}, section_levels=['a','b','c'] and value =
     'text', it creates the entry
@@ -466,7 +466,7 @@ def recurse_set(parent, section_levels, value, object_type_target):
       }
     }
 
-    >>> recurse_set(parent, ['Section X', 'Section X.X'], 'somethign', '__unhandled_keyword')
+    >>> recurse_set(parent, ['Section X', 'Section X.X'], 'something', '__unhandled_keyword')
     Traceback (most recent call last):
        ...
     Exception: Target is unsupported.
@@ -474,7 +474,7 @@ def recurse_set(parent, section_levels, value, object_type_target):
     >>> new = {}
     >>> recurse_set(new, ['Section X'], intrinsic_sample('001'), '__intrinsic_table')
     >>> recurse_set(new, ['Section X'], 'Description of Section X', '__section_text')
-    >>> recurse_set(new, ['Section X', 'Section X.X'], 'somethign', '__section_text')
+    >>> recurse_set(new, ['Section X', 'Section X.X'], 'something', '__section_text')
     >>> recurse_set(new, ['Section X', 'Section X.X'], 'Description of Section X.X', '__section_text')
     >>> jprint(new)
     {
@@ -703,7 +703,7 @@ def recurse_print_to_md(item, section_level_list, headers=__intrinsic_table_head
 
 
 def is_section_command(row):
-    """CSV rows are cosidered new section commands if they start with
+    """CSV rows are considered new section commands if they start with
     <SECTION> and consist of at least two columns column.
 
     >>> is_section_command('<SECTION>\tSection name'.split('\t'))
@@ -720,7 +720,7 @@ def is_section_command(row):
 
 
 def is_comment_line(row):
-    """CSV rows are cosidered new section commands if they start with
+    """CSV rows are considered new section commands if they start with
     <COMMENT>
 
     >>> is_comment_line('<COMMENT>\tSome text'.split('\t'))
@@ -941,7 +941,7 @@ if __name__ == "__main__":
     parser.add_argument("--intrinsic-defs", metavar="<path>", type=str,
                         help="CSV file with the database of the intrinsics.", required=True)
     parser.add_argument("--template", metavar="<path>", type=str,
-                        help="Template file for generating the MD of the specificaion.", required=True)
+                        help="Template file for generating the MD of the specification.", required=True)
     parser.add_argument("--classification", metavar="<path>", type=str,
                         help="CSV file that map the intrinsics to their classification.", required=True)
     parser.add_argument("--outfile", metavar="<path>", type=str,

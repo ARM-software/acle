@@ -4,8 +4,8 @@ version: 1.2
 date-of-issue: 06 April 2022
 set-quote-highlight: true
 # LaTeX specific variables
-copyright-text: Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: false
+copyright-text: Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -1414,7 +1414,7 @@ a secure gateway veneer the function starts with the `SG` instruction.
 > * The function’s special symbol labels the address following the `SG`
 > instruction. 
 
-No veneer is generated as defined in [Secure gatewayy
+No veneer is generated as defined in [Secure gateway
 veneers](#secure-gateway-veneers) because the special symbol’s value
 is different to the normal symbol’s value.
 
