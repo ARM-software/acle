@@ -37,7 +37,7 @@ Please report defects in or enhancements to the specifications in this folder to
 the [issue tracker page on
 GitHub](https://github.com/ARM-software/acle/issues).
 
-For reporting defects or enhancements to documents that currenlty are not yet
+For reporting defects or enhancements to documents that currently are not yet
 included in this repo and are thus only hosted on developer.arm.com, please send
 an email to arm.acle@arm.com.
 

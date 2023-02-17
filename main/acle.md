@@ -11,7 +11,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-FileCopyrightText: Copyright 2022 Google LLC.
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
@@ -333,6 +333,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   feature macro to detect if they are available (`__ARM_FEATURE_SYSREG128`).
 
 #### Changes for next release
+* Fix typos
 
 ### References
 
@@ -836,7 +837,7 @@ should be tested before including the header:
 ```
 
 When `__ARM_BF16_FORMAT_ALTERNATIVE` is defined to `1` the only scalar
-instructions available are conversion instrinstics between `bfloat16_t` and
+instructions available are conversion intrinsics between `bfloat16_t` and
 `float32_t`.  These instructions are:
 
 * `vcvth_bf16_f32` (convert float32_t to bfloat16_t)
@@ -1462,7 +1463,7 @@ are available.
 
 `__ARM_FEATURE_BTI_DEFAULT` is defined to 1 if the Branch Target
 Identification extension is used to protect branch destinations by default.
-The protection applied to any particular function may be overriden by
+The protection applied to any particular function may be overridden by
 mechanisms such as function attributes.
 
 `__ARM_FEATURE_BTI` is defined to 1 if Branch Target Identification
@@ -1484,7 +1485,7 @@ The bits are defined as follows:
 For example, a value of `0x5` indicates that the Pointer Authentication
 extension is used to protect function entry points, including leaf functions,
 using the A key for signing.
-The protection applied to any particular function may be overriden by
+The protection applied to any particular function may be overridden by
 mechanisms such as function attributes.
 
 `__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
@@ -2208,11 +2209,11 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_PREDICATE_OPERATORS`](#scalable-vector-extension-sve)                                                                               | Level of support for C and C++ operators on SVE vector types                                        | 1           |
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
-| [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES crytographic extension (FEAT_SVE_AES)                                     | 1           |
+| [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension (FEAT_SVE2_BitPerm)                                                     | 1           |
-| [`__ARM_FEATURE_SVE2_SHA3`](#sha3-extension)                                                                                                            | SVE2 support for the SHA3 crytographic extension (FEAT_SVE_SHA3)                                   | 1           |
-| [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 crytographic extension (FEAT_SVE_SM3)                                     | 1           |
-| [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 crytographic extension (FEAT_SVE_SM4)                                     | 1           |
+| [`__ARM_FEATURE_SVE2_SHA3`](#sha3-extension)                                                                                                            | SVE2 support for the SHA3 cryptographic extension (FEAT_SVE_SHA3)                                   | 1           |
+| [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 cryptographic extension (FEAT_SVE_SM3)                                     | 1           |
+| [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
 | [`__ARM_FEATURE_SYSREG128`](#bit-system-registers)                                                                                                      | Support for 128-bit system registers (FEAT_SYSREG128)                                              | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
@@ -2370,7 +2371,7 @@ compiler and it is enabled.
 
 ### Name mangling
 
-The `"default"` version is not mangled top of the languge specific name
+The `"default"` version is not mangled top of the language specific name
 mangling.
 
 The mangling function is compatible with the mangling for version information of
@@ -9854,7 +9855,7 @@ This section describes the intrinsic for the new instructions introduced in the
 Armv8.8-A and Armv9.3-A architecture updates for the `memcpy`, `memmove` and `memset`
 family of memory operations (MOPS).
 
-These intructions are designed to enable the standardization of the software
+These instructions are designed to enable the standardization of the software
 implementation of those operations. Therefore, most of the use cases for
 the new instructions are covered by the compiler's code generation or by library
 implementations.
@@ -10078,6 +10079,6 @@ The bit-banded memory feature of certain Cortex-M cores is now regarded
 as being outside the architecture, and there is no plan to standardize
 its support.
 
-<!-- Please add new extension chapters somwhere before the “Architectural
+<!-- Please add new extension chapters somewhere before the “Architectural
      Extension Bridges” chapter.  In particular, the “Future directions”
      chapter should be last.  -->
