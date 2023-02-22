@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-28-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -135,6 +135,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/vhscampos"><img src="https://avatars.githubusercontent.com/u/3412620?v=4?s=100" width="100px;" alt="Victor Campos"/><br /><sub><b>Victor Campos</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=vhscampos" title="Documentation">📖</a> <a href="https://github.com/ARM-software/acle/commits?author=vhscampos" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ilinpv"><img src="https://avatars.githubusercontent.com/u/61020334?v=4?s=100" width="100px;" alt="Pavel Iliin"/><br /><sub><b>Pavel Iliin</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Ailinpv" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://lenary.co.uk"><img src="https://avatars.githubusercontent.com/u/14548?v=4?s=100" width="100px;" alt="Sam Elliott"/><br /><sub><b>Sam Elliott</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Alenary" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ARM-software/acle/commits?author=lenary" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/bwmf2"><img src="https://avatars.githubusercontent.com/u/117049336?v=4?s=100" width="100px;" alt="bwmf2"/><br /><sub><b>bwmf2</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=bwmf2" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
