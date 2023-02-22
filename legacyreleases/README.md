@@ -32,6 +32,12 @@ themselves, so for more information consult the individual documents.
 | 2.0     | [download](acle/IHI0053C_acle_2_0.pdf)                       |
 | 1.1     | [download](acle/IHI0053B_arm_c_language_extensions_2013.pdf) |
 
+## Arm C Language Extensions for SVE
+
+| Version | PDF                                             |
+| ------- | ----------------------------------------------- |
+| 00bet6  | [download](acle/acle_sve_100987_0000_06_en.pdf) |
+
 ## Morello Supplement to the Arm C Language Extensions
 
 | Version | PDF                                               |
