@@ -327,13 +327,14 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Added missing features of `ID_AA64ISAR1_EL1` and `ID_AA64ISAR2_EL1`.
   * Renamed the feature macro to `__HAVE_FUNCTION_MULTI_VERSIONING`
   * Added some clarifications.
-* Adds SLC as a valid Cache Level for the Memory prefetch intrinsics.
+
+#### Changes for next release
+
+* Added SLC as a valid Cache Level for the Memory prefetch intrinsics.
 * Added [support for 128-bit system registers](#special-register-intrinsics),
   including two intrinsics for accessing them (`__rsr128` and `__wsr128`), and a
   feature macro to detect if they are available (`__ARM_FEATURE_SYSREG128`).
-
-#### Changes for next release
-* Fix typos
+* Fixed typos.
 
 ### References
 
