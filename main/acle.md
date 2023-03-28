@@ -11349,7 +11349,7 @@ Predicate select between predicate value or all-false
 
 #### CNTP
 
-Set scalar to count from predicate-as-counter
+Set scalar to count from predicate-as-counter. ``vl`` is expected to be 2 or 4.
 
 ``` c
   // Variants are also available for _c16, _c32 and _c64
@@ -11577,7 +11577,7 @@ Multi-vector signed saturating doubling multiply high
 
 #### WHILEGE, WHILEGT, WHILEHI, WHILEHS, WHILELE, WHILELO, WHILELS, WHILELT
 
-While (resulting in predicate-as-counter)
+While (resulting in predicate-as-counter). ``vl`` is expected to be 2 or 4.
 
 ``` c
   // Variants are also available for _c16, _c32 and _c64
