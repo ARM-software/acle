@@ -2469,8 +2469,8 @@ The following table lists the architectures feature mapping for AArch64
    | 530           | `FEAT_LS64_V`            | ls64_v        | ```ID_AA64ISAR1_EL1.LS64 >= 0b0010```     |
    | 540           | `FEAT_LS64_ACCDATA`      | ls64_accdata  | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011```     |
    | 550           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT  == 0b0001```    |
-   | 560           | `FEAT_SME_F64F64`        | sme-f64       | ```ID_AA64SMFR0_EL1.F64F64  == 0b0001```  |
-   | 570           | `FEAT_SME_I16I64`        | sme-i64       | ```ID_AA64SMFR0_EL1.I16I32  == 0b1111```  |
+   | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64  == 0b0001```  |
+   | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64  == 0b1111```  |
    | 580           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SME == 0b0010```       |
 
 ### Selection
