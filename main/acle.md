@@ -336,6 +336,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   feature macro to detect if they are available (`__ARM_FEATURE_SYSREG128`).
 * Corrected references to `-pedantic` flag.
 * Fixed typos.
+* Fixes for [Function Multi Versioning](#function-multi-versioning):
+  * Renamed features to `sme-f64f64` and `sme-i16i64`
+  * Corrected register name to `ID_AA64SMFR0_EL1.I16I64`
+
 
 ### References
 
