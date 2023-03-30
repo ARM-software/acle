@@ -10581,21 +10581,21 @@ BFloat16 floating-point multiply-subtract long from single-precision (top/bottom
 ``` c
   
   __attribute__((arm_streaming_compatible))
-  svfloat32_t svmlslb[_f32](svfloat32_t zda, svbfloat16_t zn, svbfloat16_t zm);
+  svfloat32_t svbfmlslb[_f32](svfloat32_t zda, svbfloat16_t zn, svbfloat16_t zm);
   
   
   __attribute__((arm_streaming_compatible))
-  svfloat32_t svmlslb_lane[_f32](svfloat32_t zda, svbfloat16_t zn,
-                                 svbfloat16_t zm, uint64_t imm_idx);
+  svfloat32_t svbfmlslb_lane[_f32](svfloat32_t zda, svbfloat16_t zn,
+                                   svbfloat16_t zm, uint64_t imm_idx);
   
   
   __attribute__((arm_streaming_compatible))
-  svfloat32_t svmlslt[_f32](svfloat32_t zda, svbfloat16_t zn, svbfloat16_t zm);
+  svfloat32_t svbfmlslt[_f32](svfloat32_t zda, svbfloat16_t zn, svbfloat16_t zm);
   
   
   __attribute__((arm_streaming_compatible))
-  svfloat32_t svmlslt_lane[_f32](svfloat32_t zda, svbfloat16_t zn,
-                                 svbfloat16_t zm, uint64_t imm_idx);
+  svfloat32_t svbfmlslt_lane[_f32](svfloat32_t zda, svbfloat16_t zn,
+                                   svbfloat16_t zm, uint64_t imm_idx);
   
   ```
 
