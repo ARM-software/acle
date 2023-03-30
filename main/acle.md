@@ -11256,16 +11256,16 @@ Move multi-vectors to/from ZA
                                      uint64_t slice_x4_offset);
   
   
-  // Variants are also available for _za64[_u64] and _za64[_f64]
+  // Variants are also available for _za64_u64 and _za64_f64
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  svint64x2_t svread_za64[_s64]_vg1x2(uint32_t slice_base,
-                                      uint64_t slice_offset);
+  svint64x2_t svread_za64_s64_vg1x2(uint32_t slice_base,
+                                    uint64_t slice_offset);
   
   
-  // Variants are also available for _za64[_u64] and _za64[_f64]
+  // Variants are also available for _za64_u64 and _za64_f64
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  svint64x4_t svread_za64[_s64]_vg1x4(uint32_t slice_base,
-                                      uint64_t slice_offset);
+  svint64x4_t svread_za64_s64_vg1x4(uint32_t slice_base,
+                                    uint64_t slice_offset);
   
   
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
