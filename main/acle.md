@@ -9777,9 +9777,9 @@ Multi-vector saturating extract narrow and interleave
 Multi-vector dot-product (2-way and 4-way)
 
 ``` c
-  // Variants are also available for _s32 and _u32
+  // Variants are also available for _s32_s16_s16 and _u32_u16_u16
   __attribute__((arm_streaming_compatible))
-  svfloat32_t svdot[_f32](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
+  svfloat32_t svdot[_f32_f16_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
   
   ```
 
