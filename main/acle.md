@@ -9831,25 +9831,25 @@ Multi-vector dot-product (2-way and 4-way)
   
   
   __attribute__((arm_streaming, arm_shared_za))
-  void svsudot[_single]_za32[_u8]_vg1x2(uint32_t slice_base,
+  void svsudot[_single]_za32[_s8]_vg1x2(uint32_t slice_base,
                                         uint64_t slice_offset, svint8x2_t zn,
                                         svuint8_t zm);
   
   
   __attribute__((arm_streaming, arm_shared_za))
-  void svsudot[_single]_za32[_u8]_vg1x4(uint32_t slice_base,
+  void svsudot[_single]_za32[_s8]_vg1x4(uint32_t slice_base,
                                         uint64_t slice_offset, svint8x4_t zn,
                                         svuint8_t zm);
   
   
   __attribute__((arm_streaming, arm_shared_za))
-  void svusdot[_single]_za32[_s8]_vg1x2(uint32_t slice_base,
+  void svusdot[_single]_za32[_u8]_vg1x2(uint32_t slice_base,
                                         uint64_t slice_offset, svuint8x2_t zn,
                                         svint8_t zm);
   
   
   __attribute__((arm_streaming, arm_shared_za))
-  void svusdot[_single]_za32[_s8]_vg1x4(uint32_t slice_base,
+  void svusdot[_single]_za32[_u8]_vg1x4(uint32_t slice_base,
                                         uint64_t slice_offset, svuint8x4_t zn,
                                         svint8_t zm);
   
@@ -9889,12 +9889,12 @@ Multi-vector dot-product (2-way and 4-way)
   
   
   __attribute__((arm_streaming, arm_shared_za))
-  void svusdot_za32[_s8]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
+  void svusdot_za32[_u8]_vg1x2(uint32_t slice_base, uint64_t slice_offset,
                                svuint8x2_t zn, svint8x2_t zm);
   
   
   __attribute__((arm_streaming, arm_shared_za))
-  void svusdot_za32[_s8]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
+  void svusdot_za32[_u8]_vg1x4(uint32_t slice_base, uint64_t slice_offset,
                                svuint8x4_t zn, svint8x4_t zm);
   
   ```
