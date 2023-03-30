@@ -11224,7 +11224,8 @@ Move multi-vectors to/from ZA
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64_[f64]
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  svint8x2_t svread_hor_za8[_s8]_vg2(uint32_t slice_base,
+  svint8x2_t svread_hor_za8[_s8]_vg2(uint64_t tile,
+                                     uint32_t slice_base,
                                      uint64_t slice_x2_offset);
   
   
@@ -11232,7 +11233,8 @@ Move multi-vectors to/from ZA
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64_[f64]
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  svint8x4_t svread_hor_za8[_s8]_vg4(uint32_t slice_base,
+  svint8x4_t svread_hor_za8[_s8]_vg4(uint64_t tile,
+                                     uint32_t slice_base,
                                      uint64_t slice_x4_offset);
   
   
@@ -11240,7 +11242,8 @@ Move multi-vectors to/from ZA
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64_[f64]
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  svint8x2_t svread_ver_za8[_s8]_vg2(uint32_t slice_base,
+  svint8x2_t svread_ver_za8[_s8]_vg2(uint64_t tile,
+                                     uint32_t slice_base,
                                      uint64_t slice_x2_offset);
   
   
@@ -11248,7 +11251,8 @@ Move multi-vectors to/from ZA
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64_[f64]
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  svint8x4_t svread_ver_za8[_s8]_vg4(uint32_t slice_base,
+  svint8x4_t svread_ver_za8[_s8]_vg4(uint64_t tile,
+                                     uint32_t slice_base,
                                      uint64_t slice_x4_offset);
   
   
@@ -11268,32 +11272,32 @@ Move multi-vectors to/from ZA
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64_[f64]
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_hor_za8[_s8]_vg2(uint32_t slice_base, uint64_t slice_x2_offset,
-                                svint8x2_t zn);
+  void svwrite_hor_za8[_s8]_vg2(uint64_t tile, uint32_t slice_base,
+                                uint64_t slice_x2_offset, svint8x2_t zn);
   
   
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64_[f64]
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_hor_za8[_s8]_vg4(uint32_t slice_base, uint64_t slice_x4_offset,
-                                svint8x4_t zn);
+  void svwrite_hor_za8[_s8]_vg4(uint64_t tile, uint32_t slice_base,
+                                uint64_t slice_x4_offset, svint8x4_t zn);
   
   
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64_[f64]
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_ver_za8[_s8]_vg2(uint32_t slice_base, uint64_t slice_x2_offset,
-                                svint8x2_t zn);
+  void svwrite_ver_za8[_s8]_vg2(uint64_t tile, uint32_t slice_base,
+                                uint64_t slice_x2_offset, svint8x2_t zn);
   
   
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64_[f64]
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_ver_za8[_s8]_vg4(uint32_t slice_base, uint64_t slice_x4_offset,
-                                svint8x4_t zn);
+  void svwrite_ver_za8[_s8]_vg4(uint64_t tile, uint32_t slice_base,
+                                uint64_t slice_x4_offset, svint8x4_t zn);
   
   
   // Variants are also available for _za64[_u64] and _za64[_f64]
