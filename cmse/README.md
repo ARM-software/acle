@@ -37,6 +37,7 @@ claims.
 
 ## Defects report
 
-Please report defects in the [Arm®v8-M Security Extensions - Requirements on
-Development Tools](cmse.md) to the [issue tracker page on
-GitHub](https://github.com/ARM-software/acle/issues).
+Please report defects in the
+[Arm®v8-M Security Extensions - Requirements on Development Tools](cmse.md)
+to the
+[issue tracker page on GitHub](https://github.com/ARM-software/acle/issues).
