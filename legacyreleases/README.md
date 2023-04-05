@@ -31,6 +31,7 @@ themselves, so for more information consult the individual documents.
 | 2.1     | [download](acle/IHI0053D_acle_2_1.pdf)                       |
 | 2.0     | [download](acle/IHI0053C_acle_2_0.pdf)                       |
 | 1.1     | [download](acle/IHI0053B_arm_c_language_extensions_2013.pdf) |
+| 1.0     | [download](acle/IHI0053A_acle.pdf)                           |
 
 ## Arm C Language Extensions for SVE
 
