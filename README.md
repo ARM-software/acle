@@ -41,16 +41,6 @@ For reporting defects or enhancements to documents that currently are not yet
 included in this repo and are thus only hosted on developer.arm.com, please send
 an email to arm.acle@arm.com.
 
-## Transitioning the ACLE specifications
-
-This is a work in progress. Any document added to the repository will
-be referenced in this README file when added.
-
-For the documents that are still missing in this project please see
-the [Arm developer ACLE
-page](https://developer.arm.com/architectures/system-architectures/software-standards/acle)
-
-
 ## List of documents
 
 HTML version                                                                                                  | PDF version
