@@ -11315,14 +11315,17 @@ Move multi-vectors to/from ZA
 
 #### PTRUE
 
-Initialise predicate-as-counter to all active
+Initialise predicate-as-counter to all active or all inactive.
 
 ``` c
   // Variants are also available for _c16, _c32 and _c64
   __attribute__((arm_streaming))
   svcount_t svptrue_c8();
   
-  ```
+  __attribute__((arm_streaming_compatible))
+  svcount_t svpfalse_c(void);
+```
+
 
 #### PEXT
 
@@ -11349,6 +11352,9 @@ Predicate select between predicate value or all-false
   __attribute__((arm_streaming_compatible))
   svbool_t svpsel_lane_b8(svbool_t pn, svbool_t pm, uint32_t idx, uint64_t imm);
   
+  // Variants are also available for _c16, _c32 and _c64
+  __attribute__((arm_streaming_compatible))
+  svcount_t svpsel_lane_c8(svcount_t pn, svbool_t pm, uint32_t idx, uint64_t imm);
   ```
 
 #### CNTP
