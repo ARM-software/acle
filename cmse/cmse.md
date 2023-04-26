@@ -12,7 +12,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -115,7 +115,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 
 # ABOUT THIS DOCUMENT
 
@@ -153,6 +153,11 @@ Anticipated changes to this document include:
   stack frame of a non-secure function call](#figure6) from `struct s
   NS nsfunc(struct s);` to `struct s NS (*nsfunc)(struct
   s);`. Non-secure functions have to be function pointers.
+
+#### Changes for next release
+
+* Removed incorrect optimisation remark in section
+  [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
 
 ## References
 
@@ -1837,11 +1842,6 @@ __acle_se_foo:
     @19: return to non-secure state
     bxns    lr
 ```  
-  
-The instruction sequence between comment 14 and 15 is an optimization to skip
-clearing floating point registers if they are not used by the secure state.
-Removing these instructions is functionally equivalent but might create an
-unnecessary floating point context.
 
 ### Return value on the stack
 
