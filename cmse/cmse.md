@@ -158,6 +158,8 @@ Anticipated changes to this document include:
 
 * Removed incorrect optimisation remark in section
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
+* Removed incorrect information about the floating-point ABI used in
+  [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
 
 ## References
 
@@ -1769,8 +1771,7 @@ The function `foo()` uses the stack to pass the last two arguments. It is
 unknown if the function `bar()` uses floating point registers to store secret
 information.
 
-The following T32 instruction sequence is an implementation of this function
-using the soft-float ABI:
+The following T32 instruction sequence is an implementation of this function:
 
 ``` c
 .global foo
@@ -1823,7 +1824,7 @@ __acle_se_foo:
     mrs     r1, control
     tst     r1, #8
     bne     .LdoneFP
-    @15: clear floating point caller-saved registers (soft ABI)
+    @15: clear floating point caller-saved registers
     mov     r1, #0
     vmov    s0, s1, r1, r1
     vmov    s2, s3, r1, r1
