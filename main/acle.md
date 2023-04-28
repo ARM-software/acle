@@ -9483,7 +9483,8 @@ ZA array vectors. The intrinsics model this in the following way:
 ``` c
     // Reads 2 consecutive horizontal tile slices from ZA into multi-vector.
     __attributes__((arm_streaming, arm_shared_za, arm_preserves_za))
-    svint8x2_t svread_hor_za8[_s8]_vg2(uint32_t slice_base,
+    svint8x2_t svread_hor_za8[_s8]_vg2(uint64_t tile,
+                                       uint32_t slice_base,
                                        uint64_t slice_x2_offset);
 ```
 
@@ -9636,9 +9637,9 @@ The additional '_write' suffix indicates that the operation is not accumulating,
   
   ```
 
-#### ADD, SUB (vectors)
+#### ADD (vectors)
 
-Multi-vector add/sub
+Multi-vector add
 
 ``` c
   // Variants are also available for _single_u8_x2, _single_s16_x2,
@@ -11348,10 +11349,6 @@ Transform a predicate-as-counter to a predicate (pair).
 Predicate select between predicate value or all-false
 
 ``` c
-  // Variants are also available for _b16, _b32 and _b64
-  __attribute__((arm_streaming_compatible))
-  svbool_t svpsel_lane_b8(svbool_t pn, svbool_t pm, uint32_t idx, uint64_t imm);
-  
   // Variants are also available for _c16, _c32 and _c64
   __attribute__((arm_streaming_compatible))
   svcount_t svpsel_lane_c8(svcount_t pn, svbool_t pm, uint32_t idx, uint64_t imm);
@@ -11396,26 +11393,6 @@ Multi-vector clamp to minimum/maximum vector
   
   ```
 
-#### REVD
-
-Reverse 64-bit doublewords in elements
-
-``` c
-  // Variants are also available for _s8, _u16, _s16, _u32, _s32, _u64 and _s64
-  __attribute__((arm_streaming_compatible))
-  svuint8_t svrevd[_u8]_m(svuint8_t zd, svbool_t pg, svuint8_t zn);
-  
-  
-  // Variants are also available for _s8, _u16, _s16, _u32, _s32, _u64 and _s64
-  __attribute__((arm_streaming_compatible))
-  svuint8_t svrevd[_u8]_x(svbool_t pg, svuint8_t zn);
-  
-  
-  // Variants are also available for _s8, _u16, _s16, _u32, _s32, _u64 and _s64
-  __attribute__((arm_streaming_compatible))
-  svuint8_t svrevd[_u8]_z(svbool_t pg, svuint8_t zn);
-  
-  ```
 
 #### SEL
 
