@@ -160,6 +160,8 @@ Anticipated changes to this document include:
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
 * Removed incorrect information about the floating-point ABI used in
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
+* Corrected description and example in section
+  [Non-secure function pointers](#non-secure-function-pointer).
 
 ## References
 
@@ -1344,9 +1346,7 @@ The stack usage during a non-secure function call is shown in figure
 ## Non-secure function pointer
 
 A function pointer that has its LSB unset is a non-secure function
-pointer (_nsfptr_). An nsfptr provides a way to test at run-time the
-security state that will be targeted when performing a call through
-this pointer. An nsfptr is not a type and must not be confused with
+pointer (_nsfptr_). An nsfptr is not a type and must not be confused with
 the non-secure function type ([Non-secure function
 call](#non-secure-function-call)).
 
@@ -1360,24 +1360,52 @@ non-secure function pointers:
 #include <arm_cmse.h>
 typedef void __attribute__((cmse_nonsecure_call)) nsfunc(void);
 void default_callback(void) { … }
-**// fp can point to a secure function or a non-secure function**
-nsfunc *fp = (nsfunc *) default_callback;           **// secure function pointer**
+// fp can point to a secure function or a non-secure function
+nsfunc *fp = (nsfunc *) default_callback;           // secure function pointer
 
 void __attribute__((cmse_nonsecure_entry)) entry(nsfunc *callback) {
-                fp = cmse_nsfptr_create(callback);  **// non-secure function pointer**
+                fp = cmse_nsfptr_create(callback);  // non-secure function pointer
 }
 
 void call_callback(void) {
-                if (cmse_is_nsfptr(fp)) fp();       **// non-secure function call**
-                else ((void (*)(void)) fp)();       **// normal function call**
+                fp(); // function call via pointer. It can be either secure or non-secure
 }
 ```
 
-The global variable `fp` is a non-secure function type but can hold the address
-of a secure or non-secure function. By using the nsfptr related intrinsics it is
-possible to check at runtime which function call to perform.
+The global variable `fp` is of a non-secure function type but can hold the
+address of a secure or non-secure function. Arm recommends that you do not
+share this variable.
 
-Arm recommends that you do not share this variable.
+Since `fp` can hold either type of function, the compiler may generate code
+to save and clear registers in preparation for a security state transition even
+if the function call nevers performs such transition at run-time.
+
+To mitigate this, an nsfptr provides a way to test at run-time the
+security state that will be targeted when performing a call through
+this pointer. By using the nsfptr related intrinsics, it is
+possible to check at run-time which function call to perform and thus
+avoid unnecessary register context saving and clearing.
+
+``` c
+#include <arm_cmse.h>
+typedef void __attribute__((cmse_nonsecure_call)) nsfunc(void);
+void default_callback(void) { … }
+// fp can point to a secure function or a non-secure function
+nsfunc *fp = (nsfunc *) default_callback;           // secure function pointer
+
+void __attribute__((cmse_nonsecure_entry)) entry(nsfunc *callback) {
+                fp = cmse_nsfptr_create(callback);  // non-secure function pointer
+}
+
+void call_callback(void) {
+                if (cmse_is_nsfptr(fp)) fp(); // non-secure function call.
+                                              // Context saved and cleared
+                else ((void (*)(void)) fp)(); // normal function call. Context untouched
+}
+```
+
+This is just an optimisation technique and hence it is not required for the
+correct usage of non-secure function pointers.
 
 <span id="requirement-57" class="requirement-box"></span>
 
