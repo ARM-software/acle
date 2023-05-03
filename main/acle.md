@@ -343,6 +343,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   register clearing.
 * Removed incorrect information about the floating-point ABI used in
   [CMSE](#CMSE-ACLE)'s Arguments on the stack and floating point handling.
+* Corrected description and example in [CMSE](#CMSE-ACLE)'s section about
+  non-secure function pointers.
 
 ### References
 
