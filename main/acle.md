@@ -11135,21 +11135,6 @@ Contiguous non-temporal store of multi-vector operand
   
   ```
 
-#### MOVT
-
-Move 8 bytes between general-purpose register and ZT0
-
-``` c
-  
-  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
-  uint64_t svread_lane_zt(uint64_t zt, uint64_t imm_x8_offset);
-  
-  
-  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
-  void svwrite_lane_zt(uint64_t zt, uint64_t imm_x8_offset, uint64_t rt);
-  
-  ```
-
 #### LDR, STR
 
 Spill and fill of ZT0
