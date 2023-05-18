@@ -12,6 +12,11 @@ difficult.
 
 This document describes one process to build the GitHub page locally.
 
+## Script
+
+The script `build-github-pages.sh` contained in this same directory automates
+this process.
+
 ## Prerequisites
 
  - Docker.
