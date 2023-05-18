@@ -6,7 +6,8 @@
 set -x
 IMAGE_NAME=acle_build
 # Build the image.
-docker build -t $IMAGE_NAME tools/docker
+docker build -t $IMAGE_NAME tools/pdf/docker
 # Run the image, mounting the current folder into the /src folder of
 # the docker image.
-docker run --rm --mount type=bind,source="$(pwd)",target=/src $IMAGE_NAME
+ROOTDIR=$(realpath "$(dirname "$(realpath "$0")")/..")
+docker run --rm -v "$ROOTDIR":/src $IMAGE_NAME
