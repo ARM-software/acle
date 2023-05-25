@@ -3104,6 +3104,19 @@ inclusive. See implementation documentation for the effect (if any) of
 this instruction and the meaning of the argument. This is available only
 when compiling for AArch32.
 
+``` c
+  uint64_t __chkfeat(uint64_t);
+```
+
+Checks for hardware features at runtime using the CHKFEAT hint instruction.
+`__chkfeat` returns a bitmask where a bit is set if the same bit in the
+input argument is set and the corresponding feature is enabled. (Note: for
+usability reasons the return value differs from how the CHKFEAT instruction
+sets X16.) It can be used with predefined macros:
+
+| **Macro name**           | **Value**           | **Meaning**                                        |
+| ``_CHKFEAT_GCS``         | 1                   | Guarded Control Stack (GCS) protection is enabled. |
+
 ## Swap
 
 `__swp` is available for all targets. This intrinsic expands to a
