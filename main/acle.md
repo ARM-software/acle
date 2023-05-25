@@ -1713,6 +1713,15 @@ mechanisms such as function attributes.
 Pointer Authentication extension (FEAT_PAuth_LR) are available on the target.
 It is undefined otherwise.
 
+### Guarded Control Stack
+
+`__ARM_FEATURE_GCS_DEFAULT` is defined to `1` if the code generation is
+compatible with enabling the Guarded Control Stack (GCS) extension based
+protection. It is undefined otherwise.
+
+`__ARM_FEATURE_GCS` is defined to `1` if the Guarded Control Stack (GCS)
+extension is available on the target. It is undefined otherwise.
+
 ### Large System Extensions
 
 `__ARM_FEATURE_ATOMICS` is defined if the Large System Extensions introduced in
@@ -2507,6 +2516,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_FP8DOT4`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8FMA`](#modal-8-bit-floating-point-extensions)                                                                                        | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
+| [`__ARM_FEATURE_GCS`](#guarded-control-stack)                                                                                                           | Guarded Control Stack                                                                              | 1           |
+| [`__ARM_FEATURE_GCS_DEFAULT`](#guarded-control-stack)                                                                                                   | Guarded Control Stack protection can be enabled                                                    | 1           |
 | [`__ARM_FEATURE_IDIV`](#hardware-integer-divide)                                                                                                        | Hardware Integer Divide                                                                            | 1           |
 | [`__ARM_FEATURE_JCVT`](#javascript-floating-point-conversion)                                                                                           | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
 | [`__ARM_FEATURE_LDREX`](#ldrexstrex) *(Deprecated)*                                                                                                     | Load/store exclusive instructions                                                                  | 0x0F        |
