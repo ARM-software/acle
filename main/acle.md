@@ -351,6 +351,14 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a requirement on [`arm_new_za`](#arm_new_za) to set the initial
   contents of ZA to zero.
 
+#### Changes for next release
+
+* Combined the SME `slice_base` and `slice_offset` arguments into a
+  single `slice` argument.
+* Added the [Keyword attributes](#keyword-attributes) section.
+* Changed the [SME language extensions](#sme-language-extensions-and-intrinsics)
+  to use keyword attributes instead of GNU-style attributes.
+
 ### References
 
 This document refers to the following documents.
@@ -728,6 +736,72 @@ of the Arm architecture being targeted, or how the C/C++ implementation
 uses the architecture. These macros are detailed in
 [Feature test macros](#feature-test-macros). All ACLE predefined macros
 start with the prefix `__ARM`.
+
+## Keyword attributes
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
+
+ACLE adds several non-standard keywords to C and C++. These keywords
+all start with the prefix `__arm_`. (However, not everything that
+starts with `__arm_` is a keyword.)
+
+The keywords are modeled after standard `[[…]]` attributes and
+fulfill a similar role to them.  However, the C++ standard says that
+“any [non-standard attribute] that is not recognized by the
+implementation is ignored” `[dcl.attr.grammar]`. It is therefore not
+appropriate to use standard attributes for properties that affect the
+type system, that affect the binary interface of the generated code, or
+that must be honored for other reasons. ACLE uses keywords for some of
+these properties instead. The keywords are therefore known as
+“keyword attributes”.
+
+A keyword attribute can appear wherever a standard `[[…]]` attribute
+can appear. Following the terminology of the C++ standard, a keyword
+attribute “appertains” to whatever a standard attribute would appertain
+to. For example, consider the placeholders A, B, C and D in the
+following function declaration:
+
+``` c
+  /*A*/ void /*B*/ f /*C*/ (void) /*D*/;
+```
+
+Here:
+
+*   Attributes in position A appertain to the function declaration `f`.
+
+*   Attributes in position B appertain to the return type (`void`).
+
+*   Attributes in position C appertain to the function declaration `f`,
+    as for A.
+
+*   Attributes in position D appertain to the type of `f` (`void ()(void)`).
+
+Position A is preferred over position C for ACLE code. This is because
+position A can also be used for GNU-style attributes, whereas position C
+cannot.
+
+The table below lists all the ACLE keyword attributes. The “Target” column
+says what the keyword is allowed to appertain to. For example, a function
+type keyword can appear in position D above, but it cannot appear in
+positions A, B or C.
+
+Keyword attributes are only guaranteed to be supported by compilers that
+predefine the associated macro to a nonzero value.
+
+<!-- Please keep this table sorted alphabetically. -->
+
+| **Name**                                                    | **Target**            | **Predefined macro**              |
+| ----------------------------------------------------------- | --------------------- | --------------------------------- |
+| [`__arm_locally_streaming`](#arm_locally_streaming)         | function declaration  | `__ARM_FEATURE_LOCALLY_STREAMING` |
+| [`__arm_new_za`](#arm_new_za)                               | function declaration  | `__ARM_FEATURE_SME`               |
+| [`__arm_preserves_za`](#arm_preserves_za)                   | function type         | `__ARM_FEATURE_SME`               |
+| [`__arm_shared_za`](#arm_shared_za)                         | function type         | `__ARM_FEATURE_SME`               |
+| [`__arm_streaming`](#arm_streaming)                         | function type         | `__ARM_FEATURE_SME`               |
+| [`__arm_streaming_compatible`](#arm_streaming_compatible)   | function type         | `__ARM_FEATURE_SME`               |
+
+Using a keyword attribute multiple times is equivalent to using it once.
 
 ## Intrinsics
 
@@ -2256,6 +2330,7 @@ be found in [[BA]](#BA).
 
 ## Attribute syntax
 
+This section describes ACLE features that use GNU-style attributes.
 The general rules for attribute syntax are described in the GCC
 documentation <https://gcc.gnu.org/onlinedocs/gcc/extensions-to-the-c-language-family/attribute-syntax.html>.
 Briefly, for this declaration:
@@ -2270,6 +2345,9 @@ recommended to keep declarations simple if attributes are used.
 
 Unless otherwise stated, all attribute arguments must be compile-time
 constants.
+
+In addition to the GNU-style attributes described in this section,
+ACLE also uses [keyword attributes](#keyword-attributes).
 
 ## Hardware/software floating-point calling convention
 
@@ -8143,14 +8221,15 @@ A program is [ill-formed](#ill-formed) if:
     [streaming intrinsic](#streaming-intrinsic).
 
 The current mode of the abstract machine can be queried using
-[`__arm_in_streaming_mode`](#__arm_in_streaming_mode).
+[`__arm_in_streaming_mode`](#arm_in_streaming_mode).
 
 ### Changing streaming mode locally
 
-Adding an [`arm_locally_streaming`](#arm_locally_streaming) attribute
-to a function specifies that all the statements in the function are
-[streaming statements](#streaming-statement). The program automatically
-puts the [abstract machine](#abstract-machine) into streaming mode before
+Adding an [`__arm_locally_streaming`](#arm_locally_streaming)
+[keyword attribute](#keyword-attributes) to a function specifies
+that all the statements in the function are [streaming
+statements](#streaming-statement). The program automatically puts
+the [abstract machine](#abstract-machine) into streaming mode before
 executing the statements and automatically restores the previous mode
 afterwards.
 
@@ -8166,8 +8245,7 @@ For example:
     return __arm_in_streaming_mode();  // Returns 0
   }
 
-  __attribute__((arm_locally_streaming))
-  int streaming_fn(void)
+  __arm_locally_streaming int streaming_fn(void)
   { // Function automatically switches into streaming mode on entry
     svsetffr();  // Ill-formed, calls a non-streaming intrinsic
     return __arm_in_streaming_mode();  // Returns 1
@@ -8181,16 +8259,17 @@ This approach can be useful when implementing existing APIs,
 including when overriding virtual functions. It allows the
 use of SME to be an internal implementation detail.
 
-The [`arm_locally_streaming`](#arm_locally_streaming) attribute
-is an optional feature; it is only guaranteed to be present if the
-implementation predefines the `__ARM_FEATURE_LOCALLY_STREAMING`
-macro to a nonzero value.
+The [`__arm_locally_streaming`](#arm_locally_streaming) [keyword
+attribute](#keyword-attributes) is an optional feature; it is only
+guaranteed to be present if the implementation predefines the
+`__ARM_FEATURE_LOCALLY_STREAMING` macro to a nonzero value.
 
 ### Managing streaming mode across function boundaries
 
 In addition to [changing streaming mode locally](#changing-streaming-mode-locally),
-ACLE provides attributes for managing streaming mode across function
-boundaries. This can be useful in the following example situations:
+ACLE provides [keyword attributes](#keyword-attributes) for managing
+streaming mode across function boundaries. This can be useful in the
+following example situations:
 
 *   An SME operation is split across several cooperating subroutines
     (as is often the case). The SME operation as a whole is designed
@@ -8207,16 +8286,23 @@ boundaries. This can be useful in the following example situations:
     the vector length. For example, this could be useful for
     “length agnostic” SVE math routines.
 
+<!-- Do not remove the following `span`s, they are needed to create an
+anchor that can be referred via an internal hyperlink to the paragraph
+following it. --><span id="streaming-type"></span><span
+id="streaming-compatible-type"></span>
+
 For this reason, the “streaming”, “non-streaming” and
 “streaming-compatible” classification extends to function types:
 
 *   By default, function types are “non-streaming types”.
 
-*   Attaching an [`arm_streaming`](#arm_streaming) attribute to a
-    function type makes it a “streaming type”.
+*   Attaching an [`__arm_streaming`](#arm_streaming) [keyword
+    attribute](#keyword-attributes) to a function type makes it a
+    “streaming type”.
 
-*   Attaching an [`arm_streaming_compatible`](#arm_streaming_compatible)
-    attribute to a function type makes it a “streaming-compatible type”.
+*   Attaching an [`__arm_streaming_compatible`](#arm_streaming_compatible)
+    [keyword attribute](#keyword-attributes) to a function type makes it
+    a “streaming-compatible type”.
 
 The function type classification decides which mode the
 [abstract machine](#abstract-machine) is in on entry to the function and
@@ -8233,9 +8319,9 @@ interface”; see [[AAPCS64]](#AAPCS64) for details.
 By default, the classification of a function type carries over to
 the classification of the statements in the function's definition,
 if any. However, this can be overridden by the
-[`arm_locally_streaming`](#arm_locally_streaming) attribute;
-see [Changing streaming mode locally](#changing-streaming-mode-locally)
-for details.
+[`__arm_locally_streaming`](#arm_locally_streaming) [keyword
+attribute](#keyword-attributes); see [Changing streaming mode
+locally](#changing-streaming-mode-locally) for details.
 
 For example:
 
@@ -8245,12 +8331,12 @@ For example:
   // "sc" stands for "streaming-compatible"
 
   void n_callee(void);
-  __attribute__((arm_streaming)) void s_callee(void);
-  __attribute__((arm_streaming_compatible)) void sc_callee(void);
+  void s_callee(void) __arm_streaming;
+  void sc_callee(void) __arm_streaming_compatible;
 
   void (*n_callback)(void);
-  __attribute__((arm_streaming)) void (*s_callback)(void);
-  __attribute__((arm_streaming_compatible)) void (*sc_callback)(void);
+  void (*s_callback)(void) __arm_streaming;
+  void (*sc_callback)(void)  __arm_streaming_compatible;
 
   int n_caller(void)
   {
@@ -8264,8 +8350,7 @@ For example:
     return __arm_in_streaming_mode();  // Returns 0
   }
 
-  __attribute__((arm_streaming))
-  int s_caller(void)
+  int s_caller(void) __arm_streaming
   {
     n_callee();        // Temporarily switches to non-streaming mode
     (*n_callback)();   // Temporarily switches to non-streaming mode
@@ -8277,8 +8362,7 @@ For example:
     return __arm_in_streaming_mode();  // Returns 1
   }
 
-  __attribute__((arm_streaming_compatible))
-  int sc_caller(void)
+  int sc_caller(void) __arm_streaming_compatible
   {
     n_callee();        // Temporarily switches to non-streaming mode
     (*n_callback)();   // Temporarily switches to non-streaming mode
@@ -8300,12 +8384,12 @@ another category, even if the types are otherwise identical. For example:
   // "sc" stands for "streaming-compatible"
 
   void n_callee(void);
-  __attribute__((arm_streaming)) void s_callee(void);
-  __attribute__((arm_streaming_compatible)) void sc_callee(void);
+  void s_callee(void) __arm_streaming;
+  void sc_callee(void) __arm_streaming_compatible;
 
   void (*n_callback)(void);
-  __attribute__((arm_streaming)) void (*s_callback)(void);
-  __attribute__((arm_streaming_compatible)) void (*sc_callback)(void);
+  void (*s_callback)(void) __arm_streaming;
+  void (*sc_callback)(void) __arm_streaming_compatible;
 
   void code() {
     n_callback = n_callee;    // OK
@@ -8322,9 +8406,10 @@ another category, even if the types are otherwise identical. For example:
   }
 ```
 
-A type that has both an [`arm_streaming`](#arm_streaming) attribute and
-an [`arm_streaming_compatible`](#arm_streaming_compatible) attribute is
-[ill-formed](#ill-formed).
+A type that has both an [`__arm_streaming`](#arm_streaming)
+[keyword attribute](#keyword-attributes) and an
+[`__arm_streaming_compatible`](#arm_streaming_compatible)
+[keyword attribute](#keyword-attributes) is [ill-formed](#ill-formed).
 
 ### Effect of streaming mode on VL
 
@@ -8405,10 +8490,10 @@ following it. --><span id="streaming-callee"></span>
     <span id="non-streaming-callee"></span>
     F2 is said to be a “streaming callee” if:
 
-    *   F2's type has an [`arm_streaming`](#arm_streaming) attribute; or
+    *   F2 has a [streaming type](#streaming-type); or
 
-    *   F2's type has an [`arm_streaming_compatible`](#arm_streaming_compatible)
-        attribute and F1 is a streaming caller.
+    *   F2 has a [streaming-compatible type](#streaming-compatible-type)
+        and F1 is a streaming caller.
 
     Otherwise, F2 is said to be a “non-streaming callee”.
 
@@ -8464,7 +8549,8 @@ then the behavior is undefined:
 
 *   a [non-streaming callee](#non-streaming-callee) receives a
     [VL-dependent](#vl-dependent) argument and the callee has
-    an [`arm_locally_streaming`](#arm_locally_streaming) attribute
+    an [`__arm_locally_streaming`](#arm_locally_streaming) [keyword
+    attribute](#keyword-attributes)
 
 *   a [streaming callee](#streaming-callee) returns a
     [VL-dependent](#vl-dependent) value to a
@@ -8476,7 +8562,8 @@ then the behavior is undefined:
 
 *   a [non-streaming callee](#non-streaming-callee) returns a
     [VL-dependent](#vl-dependent) value and the callee has an
-    [`arm_locally_streaming`](#arm_locally_streaming) attribute
+    [`__arm_locally_streaming`](#arm_locally_streaming) [keyword
+    attribute](#keyword-attributes)
 
 The following code gives some examples. In each case, the assumption is
 that the non-streaming vector length is different from the streaming
@@ -8489,11 +8576,10 @@ vector length:
   // "ls" stands for "locally streaming"
 
   void n_callee(svint8_t);
-  __attribute__((arm_streaming)) void s_callee(svbool_t);
-  __attribute__((arm_streaming_compatible)) void sc_callee(svint8_t);
+  void s_callee(svbool_t) __arm_streaming;
+  void sc_callee(svint8_t) __arm_streaming_compatible;
 
-  __attribute__((arm_locally_streaming))
-  void ls_callee(svbool_t pg) {
+  __arm_locally_streaming void ls_callee(svbool_t pg) {
     // Invokes undefined behavior if called.
   }
 
@@ -8510,8 +8596,7 @@ vector length:
                    //   behavior internally
   }
 
-  __attribute__((arm_streaming))
-  void s_caller(void)
+  void s_caller(void) __arm_streaming
   {
     svint8_t i = ...;
     svbool_t b = ...;
@@ -8522,8 +8607,7 @@ vector length:
     ls_callee(b);  // Undefined behavior: non-streaming callee
   }
 
-  __attribute__((arm_streaming_compatible))
-  void sc_caller(void)
+  void sc_caller(void) __arm_streaming_compatible
   {
     svint8_t i = ...;
     svbool_t b = ...;
@@ -8594,14 +8678,14 @@ handles ZA:
 1.  The function has no [ZA state](#za-state). This is the default.
 
 2.  The function has [ZA state](#za-state) that it shares with its caller.
-    This is indicated by the [`arm_shared_za`](#arm_shared_za) function type
-    attribute.
+    This is indicated by adding [`__arm_shared_za`](#arm_shared_za) to
+    the function type.
 
     This case is similar in concept to passing an uncopyable (move-only) value
     by reference to a C++ function:
 
     ``` c++
-      // Pseudo-code showing the conceptual effect of arm_shared_za.
+      // Pseudo-code showing the conceptual effect of __arm_shared_za.
       struct pseudo_za_state {
         ...
         pseudo_za_state(const pseudo_za_state &) = delete;
@@ -8618,8 +8702,8 @@ handles ZA:
     ```
 
 3.  The function has [ZA state](#za-state) that it creates “from scratch” and
-    that it does not share with its caller. This is indicated by the
-    [`arm_new_za`](#arm_new_za) function definition attribute.
+    that it does not share with its caller. This is indicated by adding
+    `__arm_new_za` to the function definition.
 
     This case is similar in spirit to declaring a single uncopyable C++
     variable at function scope. Continuing the pseudo-code above:
@@ -8648,8 +8732,8 @@ A program is [ill-formed](#ill-formed) if:
 *   a function that has no [ZA state](#za-state) contains an
     [evaluated call](#evaluated-call) to a [shared-ZA](#shared-za) function.
 
-*   the definition of a [shared-ZA](#shared-za) function has an
-    [`arm_new_za`](#arm_new_za) attribute.
+*   [`__arm_new_za`](#arm_new_za) is used to define a
+    [shared-ZA](#shared-za) function.
 
 If a function F1 has [ZA state](#za-state) and it calls a function F2, then:
 
@@ -8690,31 +8774,10 @@ function F. There are then two cases:
 
     The inline asm is [ill-formed](#ill-formed) if it has a `"za"` clobber.
 
-## SME attributes
+## SME keyword attributes
 
-All of the attributes described in this section can be specified
-using the GNU `__attribute__` syntax. Their names can be used
-directly or with two underscores added to each side. For example:
-
-``` c
-  __attribute__((arm_streaming))
-  __attribute__((__arm_streaming__))
-```
-
-Specifying an attribute multiple times is equivalent to specifying it once.
-
-Some of the attributes described in this section apply to function types.
-Their semantics are as follows:
-
-*   If the attribute is attached to a function declaration or definition,
-    it applies to the type of the function.
-
-*   If the attribute is attached to a function type, it applies to that type.
-
-*   If the attribute is attached to a pointer to a function type, it applies
-    to that function type.
-
-*   Otherwise, the attribute is [ill-formed](#ill-formed).
+ACLE adds several SME-related keyword attributes. See [Keyword
+attributes](#keyword-attributes) for general remarks about these keywords.
 
 Except where noted otherwise, function types that have an attribute are
 incompatible with function types that do not. For example:
@@ -8723,17 +8786,15 @@ incompatible with function types that do not. For example:
   // "n" stands for "non-streaming"
   // "s" stands for "streaming"
 
-  #define ATTR __attribute__((arm_streaming))
-
   typedef void (*n_callback_type)(void);
   n_callback_type n_callback_ptr;
   void n_extern_function(void);
   void n_local_function(void) { ... }
 
-  typedef ATTR void (*s_callback_type)(void);
+  typedef void (*s_callback_type)(void) __arm_streaming;
   s_callback_type s_callback_ptr;
-  ATTR void s_extern_function(void);
-  ATTR void s_local_function(void) { ... }
+  void s_extern_function(void) __arm_streaming;
+  void s_local_function(void) __arm_streaming { ... }
 
   void foo() {
     n_callback_ptr = n_callback_ptr;     // OK
@@ -8756,20 +8817,25 @@ The function type attributes cannot be used with K&R-style
 [unprototyped function](#unprototyped-function) types. For example:
 
 ``` c
-  #define ATTR __attribute__((arm_streaming))
+  #define ATTR __arm_streaming
 
-  typedef ATTR int ft1();      // Ill-formed in C, OK in C++
-  ATTR int f1() { ... }        // Ill-formed in C18 and earlier, OK in
+  typedef int ft1() ATTR;      // Ill-formed in C, OK in C++
+  int f1() ATTR { ... }        // Ill-formed in C18 and earlier, OK in
                                //   later versions of C and in C++
-  typedef ATTR int ft2(void);  // OK
-  ATTR int f2(void) { ... }    // OK
+  typedef int ft2(void) ATTR;  // OK
+  int f2(void) ATTR { ... }    // OK
 ```
 
-### SME attributes related to streaming mode
+### SME keyword attributes related to streaming mode
 
-#### `arm_streaming`
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the paragraph
+following it. --><span id="arm_streaming"></span>
 
-This attribute applies to **function types** and specifies the following:
+#### `__arm_streaming`
+
+This [keyword attribute](#keyword-attributes) applies to **function types**
+and specifies the following:
 
 *   If the function is defined, all statements in that definition are
     [streaming statements](#streaming-statement).
@@ -8783,21 +8849,26 @@ This attribute applies to **function types** and specifies the following:
     more details.
 
 Using this attribute does not place any restriction on the function's
-argument and return types. For example, an `arm_streaming` function
+argument and return types. For example, an `__arm_streaming` function
 can take arguments of type `int32x4_t` even though that type is
 generally associated with non-streaming Advanced SIMD code.
 
 See [Managing streaming mode across function boundaries](#managing-streaming-mode-across-function-boundaries)
 for more information.
 
-#### `arm_streaming_compatible`
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the paragraph
+following it. --><span id="arm_streaming_compatible"></span>
 
-This attribute applies to **function types** and specifies the following:
+#### `__arm_streaming_compatible`
+
+This [keyword attribute](#keyword-attributes) applies to **function types**
+and specifies the following:
 
 *   If the function is defined, all statements in that definition are
     by default [streaming-compatible statements](#streaming-compatible-statement).
-    This can be overridden by the [`arm_locally_streaming`](#arm_locally_streaming)
-    attribute.
+    This can be overridden by the [`__arm_locally_streaming`](#arm_locally_streaming)
+    keyword attribute.
 
 *   The [abstract machine](#abstract-machine) does not change into or out
     of streaming mode before calling the function and does not (need to)
@@ -8808,31 +8879,41 @@ This attribute applies to **function types** and specifies the following:
     for more details.
 
 Using this attribute does not place any restriction on the function's
-argument and return types. For example, an `arm_streaming_compatible`
+argument and return types. For example, an `__arm_streaming_compatible`
 function can take arguments of type `int32x4_t` even though that type
 is generally associated only with non-streaming Advanced SIMD code.
 
 See [Managing streaming mode across function boundaries](#managing-streaming-mode-across-function-boundaries)
 for more information.
 
-#### `arm_locally_streaming`
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the paragraph
+following it. --><span id="arm_locally_streaming"></span>
 
-This attribute is only guaranteed to be supported by ACLE implementations that
-define the macro `__ARM_FEATURE_LOCALLY_STREAMING` to a nonzero value.
+#### `__arm_locally_streaming`
+
+This [keyword attribute](#keyword-attributes) is only guaranteed to be
+supported by ACLE implementations that predefine the macro
+`__ARM_FEATURE_LOCALLY_STREAMING` to a nonzero value.
 
 The attribute applies to **function definitions** and specifies that all
 statements in the function definition are [streaming statements](#streaming-statement).
 The attribute is redundant (but still valid) for functions that have
-an [`arm_streaming`](#arm_streaming) type.
+an [`__arm_streaming`](#arm_streaming) type.
 
 See [Changing streaming mode locally](#changing-streaming-mode-locally)
 for more information.
 
 ### SME attributes relating to ZA
 
-#### `arm_shared_za`
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the paragraph
+following it. --><span id="arm_shared_za"></span>
 
-This attribute applies to **function types** and specifies the following:
+#### `__arm_shared_za`
+
+This [keyword attribute](#keyword-attributes) applies to **function types**
+and specifies the following:
 
 *   The function has [ZA state](#za-state).
 
@@ -8844,10 +8925,14 @@ This attribute applies to **function types** and specifies the following:
     function has a “shared-ZA interface”; see [[AAPCS64]](#AAPCS64)
     for more details.
 
-#### `arm_new_za`
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the paragraph
+following it. --><span id="arm_new_za"></span>
 
-This attribute applies to **function definitions**. It specifies the
-following:
+#### `__arm_new_za`
+
+This [keyword attribute](#keyword-attributes) applies to **function
+definitions**. It specifies the following:
 
 *   The function has [ZA state](#za-state).
 
@@ -8863,24 +8948,29 @@ following:
 
 This attribute does not change a function's binary interface. If the
 function forms part of the object code's ABI, that object code function
-has a “private-ZA interface”, just like all other non-`arm_shared_za`
+has a “private-ZA interface”, just like all other non-`__arm_shared_za`
 functions do. See [[AAPCS64]](#AAPCS64) for more details about
 private-ZA interfaces.
 
 A function definition with this attribute is [ill-formed](#ill-formed)
-if the function's type has an [`arm_shared_za`](#arm_shared_za)
-attribute or an [`arm_preserves_za`](#arm_preserves_za) attribute.
+if the function's type has an [`__arm_shared_za`](#arm_shared_za)
+attribute or an [`__arm_preserves_za`](#arm_preserves_za) attribute.
 
-#### `arm_preserves_za`
+<!-- Do not remove the following `span`, it is needed to create an
+anchor that can be referred via an internal hyperlink to the paragraph
+following it. --><span id="arm_preserves_za"></span>
 
-This attribute applies to **function types** and is simply an optimization
-hint to the compiler; it is never needed for correctness. It can be attached
-to any function type, including:
+#### `__arm_preserves_za`
 
-*   a function type that has an [`arm_shared_za`](#arm_shared_za) attribute
+This [keyword attribute](#keyword-attributes) applies to **function types**
+and is simply an optimization hint to the compiler; it is never needed
+for correctness. It can be attached to any function type, including:
 
-*   the type of a function whose definition has an [`arm_new_za`](#arm_new_za)
-    attribute
+*   a function type that has an [`__arm_shared_za`](#arm_shared_za)
+    keyword attribute
+
+*   the type of a function whose definition has an
+    [`__arm_new_za`](#arm_new_za) keyword attribute
 
 *   the type of a function whose definition has no ZA state
 
@@ -8898,17 +8988,17 @@ depends on whether the function is [shared-ZA](#shared-za) or
 
     Note: C and C++ calls from shared-ZA functions to private-ZA
     functions are defined to preserve ZA state. Such calls do not affect
-    whether a function can be marked [`arm_preserves_za`](#arm_preserves_za).
+    whether a function can be marked [`__arm_preserves_za`](#arm_preserves_za).
 
 *   If the function is [private-ZA](#private-za), the attribute guarantees
     that a call to the function does not directly or indirectly involve
     any of the following:
 
-    *   a call to an [`arm_new_za`](#arm_new_za) function
+    *   a call to an [`__arm_new_za`](#arm_new_za) function
 
     *   a call to `setjmp`
 
-    *   a call to [`__arm_za_disable`](#__arm_za_disable)
+    *   a call to [`__arm_za_disable`](#arm_za_disable)
 
     *   a call to a non-C/C++ function that “commits a lazy save”, in the
         sense of the [[APCS64]](#AAPCS64)
@@ -8923,7 +9013,7 @@ In both cases, the onus is on the definition of the function to honor
 the guarantee that is being made. The attribute does not direct the
 compiler to do anything to honor the guarantee.
 
-If a function with an `arm_preserves_za` type does not preserve ZA,
+If a function with an `__arm_preserves_za` type does not preserve ZA,
 the behavior is undefined. (There is an analogy with functions
 that are declared `noreturn` but do in fact return, and to functions
 that are declared `const` but do in fact change memory.)
@@ -8931,7 +9021,7 @@ that are declared `const` but do in fact change memory.)
 The attribute is intended to be useful for functions at API boundaries,
 where the compiler might not have access to the definition of the
 function being called. As the description above implies, attaching
-`arm_preserved_za` to a [private-ZA](#private-za) function is quite
+`__arm_preserves_za` to a [private-ZA](#private-za) function is quite
 a low-level feature, but it is useful for
 [streaming-compatible versions of standard routines](#streaming-compatible-versions-of-standard-routines)
 and could be useful for things like vector math routines.
@@ -8940,11 +9030,9 @@ Function types with this attribute implicitly convert to function types
 that do not have the attribute. However, the reverse is not true. For example:
 
 ``` c
-  #define ATTR __attribute__((arm_preserves_za))
-
-  ATTR void (*ptr1)(void);
+  void (*ptr1)(void) __arm_preserves_za;
   void (*ptr2)(void);
-  ATTR void f1(void);
+  void f1(void) __arm_preserves_za;
   void f2(void);
 
   void code() {
@@ -8980,15 +9068,12 @@ specified in this section.
 #### Prototypes
 
 ``` c
-  __attribute__((arm_streaming_compatible))
-  bool __arm_has_sme(void);
+  bool __arm_has_sme(void) __arm_streaming_compatible;
 
-  __attribute__((arm_streaming_compatible))
-  bool __arm_in_streaming_mode(void);
+  bool __arm_in_streaming_mode(void) __arm_streaming_compatible;
 
   // Function with external linkage.
-  __attribute__((arm_streaming_compatible))
-  void __arm_za_disable(void);
+  void __arm_za_disable(void) __arm_streaming_compatible;
 ```
 
 #### Semantics
@@ -9004,7 +9089,7 @@ specified in this section.
 
 <!-- Do not remove the following `span`, they are needed to create an
 anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="__arm_in_streaming_mode"></span>
+following it. --><span id="arm_in_streaming_mode"></span>
 
 **`__arm_in_streaming_mode()`**
 
@@ -9017,7 +9102,7 @@ following it. --><span id="__arm_in_streaming_mode"></span>
 
 <!-- Do not remove the following `span`, they are needed to create an
 anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="__arm_za_disable"></span>
+following it. --><span id="arm_za_disable"></span>
 
 **`__arm_za_disable()`**
 
@@ -9034,8 +9119,7 @@ following it. --><span id="__arm_za_disable"></span>
 #### Prototypes
 
 ``` c
-  __attribute__((arm_streaming_compatible, arm_shared_za))
-  void svundef_za();
+  void svundef_za() __arm_streaming_compatible;
 ```
 
 #### Semantics
@@ -9084,86 +9168,86 @@ The intrinsics in this section have the following properties in common:
 
 ``` c
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
-  __attribute__((arm_streaming, arm_shared_za))
   void svld1_hor_za8(uint64_t tile, uint32_t slice, svbool_t pg,
-                     const void *ptr);
+                     const void *ptr)
+    __arm_streaming __arm_shared_za;
 
   // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
   // address given by ptr.
   //
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
-  __attribute__((arm_streaming, arm_shared_za))
   void svld1_hor_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
-                          const void *ptr, int64_t vnum);
+                          const void *ptr, int64_t vnum)
+    __arm_streaming __arm_shared_za;
 
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
-  __attribute__((arm_streaming, arm_shared_za))
   void svld1_ver_za8(uint64_t tile, uint32_t slice, svbool_t pg,
-                     const void *ptr);
+                     const void *ptr)
+    __arm_streaming __arm_shared_za;
 
   // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
   // address given by ptr.
   //
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
-  __attribute__((arm_streaming, arm_shared_za))
   void svld1_ver_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
-                          const void *ptr, int64_t vnum);
+                          const void *ptr, int64_t vnum)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### LDR
 
 ``` c
-  __attribute__((arm_streaming_compatible, arm_shared_za))
-  void svldr_za(uint32_t slice, const void *ptr);
+  void svldr_za(uint32_t slice, const void *ptr)
+    __arm_streaming_compatible __arm_shared_za;
 
   // Adds vnum to slice and vnum * svcntsb() to the address given by ptr.
   // This can be done in a single instruction if vnum is a constant in the
   // range [0, 15].  The intrinsic is synthetic for other vnum parameters.
-  __attribute__((arm_streaming_compatible, arm_shared_za))
-  void svldr_vnum_za(uint32_t slice, const void *ptr, int64_t vnum);
+  void svldr_vnum_za(uint32_t slice, const void *ptr, int64_t vnum)
+     __arm_streaming_compatible __arm_shared_za;
 ```
 
 #### ST1B, ST1H, ST1W, ST1D, ST1Q
 
 ``` c
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   void svst1_hor_za8(uint64_t tile, uint32_t slice, svbool_t pg,
-                     void *ptr);
+                     void *ptr)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 
   // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
   // address given by ptr.
   //
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   void svst1_hor_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
-                          void *ptr, int64_t vnum);
+                          void *ptr, int64_t vnum)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   void svst1_ver_za8(uint64_t tile, uint32_t slice, svbool_t pg,
-                     void *ptr);
+                     void *ptr)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 
   // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
   // address given by ptr.
   //
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   void svst1_ver_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
-                          void *ptr, int64_t vnum);
+                          void *ptr, int64_t vnum)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 ```
 
 #### STR
 
 ``` c
-  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
-  void svstr_za(uint32_t slice, void *ptr);
+  void svstr_za(uint32_t slice, void *ptr)
+    __arm_streaming_compatible __arm_shared_za __arm_preserves_za;
 
   // Adds vnum to slice and vnum * svcntsb() to the address given by ptr.
   // This can be done in a single instruction if vnum is a constant in the
   // range [0, 15].  The intrinsic is synthetic for other vnum parameters.
-  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
-  void svstr_vnum_za(uint32_t slice, void *ptr, int64_t vnum);
+  void svstr_vnum_za(uint32_t slice, void *ptr, int64_t vnum)
+     __arm_streaming_compatible __arm_shared_za __arm_preserves_za;
 ```
 
 #### MOVA
@@ -9175,29 +9259,29 @@ parameter both have type `svuint8_t`.
 
 ``` c
   // And similarly for u8.
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint8_t svread_hor_za8[_s8]_m(svint8_t zd, svbool_t pg,
-                                 uint64_t tile, uint32_t slice);
+                                 uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 
   // And similarly for u16, bf16 and f16.
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint16_t svread_hor_za16[_s16]_m(svint16_t zd, svbool_t pg,
-                                    uint64_t tile, uint32_t slice);
+                                    uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 
   // And similarly for u32 and f32.
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint32_t svread_hor_za32[_s32]_m(svint32_t zd, svbool_t pg,
-                                    uint64_t tile, uint32_t slice);
+                                    uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 
   // And similarly for u64 and f64.
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint64_t svread_hor_za64[_s64]_m(svint64_t zd, svbool_t pg,
-                                    uint64_t tile, uint32_t slice);
+                                    uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 
   // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64
-  __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint8_t svread_hor_za128[_s8]_m(svint8_t zd, svbool_t pg,
-                                   uint64_t tile, uint32_t slice);
+                                   uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
 ```
 
 Replacing `_hor` with `_ver` gives the associated vertical forms.
@@ -9208,29 +9292,29 @@ the `zn` parameter to the `_u8` intrinsic has type `svuint8_t`.
 
 ``` c
   // And similarly for u8.
-  __attribute__((arm_streaming, arm_shared_za))
   void svwrite_hor_za8[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
-                              svint8_t zn);
+                              svint8_t zn)
+    __arm_streaming __arm_shared_za;
 
   // And similarly for u16, bf16 and f16.
-  __attribute__((arm_streaming, arm_shared_za))
   void svwrite_hor_za16[_s16]_m(uint64_t tile, uint32_t slice, svbool_t pg,
-                                svint16_t zn);
+                                svint16_t zn)
+    __arm_streaming __arm_shared_za;
 
   // And similarly for u32 and f32.
-  __attribute__((arm_streaming, arm_shared_za))
   void svwrite_hor_za32[_s32]_m(uint64_t tile, uint32_t slice, svbool_t pg,
-                                svint32_t zn);
+                                svint32_t zn)
+    __arm_streaming __arm_shared_za;
 
   // And similarly for u64 and f64.
-  __attribute__((arm_streaming, arm_shared_za))
   void svwrite_hor_za64[_s64]_m(uint64_t tile, uint32_t slice, svbool_t pg,
-                                svint64_t zn);
+                                svint64_t zn)
+    __arm_streaming __arm_shared_za;
 
   // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64
-  __attribute__((arm_streaming, arm_shared_za))
   void svwrite_hor_za128[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
-                                svint8_t zn);
+                                svint8_t zn)
+    __arm_streaming __arm_shared_za;
 ```
 
 Replacing `_hor` with `_ver` gives the associated vertical forms.
@@ -9238,131 +9322,131 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 #### ADDHA
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svaddha_za32[_s32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svint32_t zn);
+                            svint32_t zn)
+    __arm_streaming __arm_shared_za;
 
-  __attribute__((arm_streaming, arm_shared_za))
   void svaddha_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svuint32_t zn);
+                            svuint32_t zn)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svaddha_za64[_s64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svint64_t zn);
+                            svint64_t zn)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svaddha_za64[_u64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svuint64_t zn);
+                            svuint64_t zn)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### ADDVA
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svaddva_za32[_s32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svint32_t zn);
+                            svint32_t zn)
+    __arm_streaming __arm_shared_za;
 
-  __attribute__((arm_streaming, arm_shared_za))
   void svaddva_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svuint32_t zn);
+                            svuint32_t zn)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svaddva_za64[_s64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svint64_t zn);
+                            svint64_t zn)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svaddva_za64[_u64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svuint64_t zn);
+                            svuint64_t zn)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### BFMOPA, FMOPA (widening), SMOPA, UMOPA
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svmopa_za32[_bf16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svbfloat16_t zn, svbfloat16_t zm);
+                            svbfloat16_t zn, svbfloat16_t zm)
+    __arm_streaming __arm_shared_za;
 
-  __attribute__((arm_streaming, arm_shared_za))
   void svmopa_za32[_f16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svfloat16_t zn, svfloat16_t zm);
+                           svfloat16_t zn, svfloat16_t zm)
+    __arm_streaming __arm_shared_za;
 
-  __attribute__((arm_streaming, arm_shared_za))
   void svmopa_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                          svint8_t zn, svint8_t zm);
+                          svint8_t zn, svint8_t zm)
+    __arm_streaming;
 
-  __attribute__((arm_streaming, arm_shared_za))
   void svmopa_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                          svuint8_t zn, svuint8_t zm);
+                          svuint8_t zn, svuint8_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svmopa_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svint16_t zn, svint16_t zm);
+                           svint16_t zn, svint16_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svmopa_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svuint16_t zn, svuint16_t zm);
+                           svuint16_t zn, svuint16_t zm)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### FMOPA (non-widening)
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svmopa_za32[_f32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svfloat32_t zn, svfloat32_t zm);
+                           svfloat32_t zn, svfloat32_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_F64F64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svmopa_za64[_f64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svfloat64_t zn, svfloat64_t zm);
+                           svfloat64_t zn, svfloat64_t zm)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### BFMOPS, FMOPS (widening), SMOPS, UMOPS
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svmops_za32[_bf16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svbfloat16_t zn, svbfloat16_t zm);
+                            svbfloat16_t zn, svbfloat16_t zm)
+    __arm_streaming __arm_shared_za;
 
-  __attribute__((arm_streaming, arm_shared_za))
   void svmops_za32[_f16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svfloat16_t zn, svfloat16_t zm);
+                           svfloat16_t zn, svfloat16_t zm)
+    __arm_streaming __arm_shared_za;
 
-  __attribute__((arm_streaming, arm_shared_za))
   void svmops_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                          svint8_t zn, svint8_t zm);
+                          svint8_t zn, svint8_t zm)
+    __arm_streaming __arm_shared_za;
 
-  __attribute__((arm_streaming, arm_shared_za))
   void svmops_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                          svuint8_t zn, svuint8_t zm);
+                          svuint8_t zn, svuint8_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svmops_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svint16_t zn, svint16_t zm);
+                           svint16_t zn, svint16_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svmops_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svuint16_t zn, svuint16_t zm);
+                           svuint16_t zn, svuint16_t zm)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### FMOPS (non-widening)
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svmops_za32[_f32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svfloat32_t zn, svfloat32_t zm);
+                           svfloat32_t zn, svfloat32_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_F64F64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svmops_za64[_f64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                           svfloat64_t zn, svfloat64_t zm);
+                           svfloat64_t zn, svfloat64_t zm)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### RDSVL
@@ -9372,23 +9456,19 @@ The following intrinsics read the length of a streaming vector:
 ``` c
   // Return the number of bytes in a streaming vector.
   // Equivalent to svcntb() when called in streaming mode.
-  __attribute__((arm_streaming_compatible, arm_preserves_za))
-  uint64_t svcntsb();
+  uint64_t svcntsb() __arm_streaming_compatible __arm_preserves_za;
 
   // Return the number of halfwords in a streaming vector.
   // Equivalent to svcnth() when called in streaming mode.
-  __attribute__((arm_streaming_compatible, arm_preserves_za))
-  uint64_t svcntsh();
+  uint64_t svcntsh() __arm_streaming_compatible __arm_preserves_za;
 
   // Return the number of words in a streaming vector.
   // Equivalent to svcntw() when called in streaming mode.
-  __attribute__((arm_streaming_compatible, arm_preserves_za))
-  uint64_t svcntsw();
+  uint64_t svcntsw() __arm_streaming_compatible __arm_preserves_za;
 
   // Return the number of doublewords in a streaming vector.
   // Equivalent to svcntd() when called in streaming mode.
-  __attribute__((arm_streaming_compatible, arm_preserves_za))
-  uint64_t svcntsd();
+  uint64_t svcntsd() __arm_streaming_compatible __arm_preserves_za;
 ```
 
 `svcntsb()` is equivalent to an RDSVL instruction with an immediate
@@ -9408,63 +9488,62 @@ possible to write these operations using normal C arithmetic. For example:
 #### SUMOPA
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svsumopa_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svint8_t zn, svuint8_t zm);
+                            svint8_t zn, svuint8_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svsumopa_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                             svint16_t zn, svuint16_t zm);
+                             svint16_t zn, svuint16_t zm)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### SUMOPS
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svsumops_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svint8_t zn, svuint8_t zm);
+                            svint8_t zn, svuint8_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svsumops_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                             svint16_t zn, svuint16_t zm);
+                             svint16_t zn, svuint16_t zm)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### USMOPA
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svusmopa_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svuint8_t zn, svint8_t zm);
+                            svuint8_t zn, svint8_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svusmopa_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                             svuint16_t zn, svint16_t zm);
+                             svuint16_t zn, svint16_t zm)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### USMOPS
 
 ``` c
-  __attribute__((arm_streaming, arm_shared_za))
   void svusmops_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                            svuint8_t zn, svint8_t zm);
+                            svuint8_t zn, svint8_t zm)
+    __arm_streaming __arm_shared_za;
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
-  __attribute__((arm_streaming, arm_shared_za))
   void svusmops_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
-                             svuint16_t zn, svint16_t zm);
+                             svuint16_t zn, svint16_t zm)
+    __arm_streaming __arm_shared_za;
 ```
 
 #### ZERO
 
 ``` c
-  __attribute__((arm_streaming_compatible, arm_shared_za))
-  void svzero_mask_za(uint64_t tile_mask);
+  void svzero_mask_za(uint64_t tile_mask)
+    __arm_streaming_compatible __arm_shared_za;
 
-  __attribute__((arm_streaming_compatible, arm_shared_za))
-  void svzero_za();
+  void svzero_za() __arm_streaming_compatible __arm_shared_za;
 ```
 
 ### Streaming-compatible versions of standard routines
@@ -9474,17 +9553,17 @@ with the same behavior as the standard C functions that they
 are named after. All of the functions have external linkage.
 
 ``` c
-  __attribute__((arm_streaming_compatible, arm_preserves_za))
-  void *__arm_sc_memcpy(void *dest, const void *src, size_t n);
+  void *__arm_sc_memcpy(void *dest, const void *src, size_t n)
+    __arm_streaming_compatible __arm_preserves_za;
 
-  __attribute__((arm_streaming_compatible, arm_preserves_za))
-  void *__arm_sc_memmove(void *dest, const void *src, size_t n);
+  void *__arm_sc_memmove(void *dest, const void *src, size_t n)
+    __arm_streaming_compatible __arm_preserves_za;
 
-  __attribute__((arm_streaming_compatible, arm_preserves_za))
-  void *__arm_sc_memset(void *s, int c, size_t n);
+  void *__arm_sc_memset(void *s, int c, size_t n)
+    __arm_streaming_compatible __arm_preserves_za;
 
-  __attribute__((arm_streaming_compatible, arm_preserves_za))
-  void *__arm_sc_memchr(void *s, int c, size_t n);
+  void *__arm_sc_memchr(void *s, int c, size_t n)
+    __arm_streaming_compatible __arm_preserves_za;
 ```
 
 # M-profile Vector Extension (MVE) intrinsics
