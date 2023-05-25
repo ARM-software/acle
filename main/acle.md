@@ -4674,6 +4674,54 @@ two pointers, ignoring the tags.
 The return value is the sign-extended result of the computation.
 The tag bits in the input pointers are ignored for this operation.
 
+# Guarded Control Stack intrinsics
+
+## Introduction
+
+This section describes the intrinsics for the instructions of the
+Guarded Control Stack (GCS) extension. The GCS instructions are present
+in the AArch64 execution state only.
+
+When GCS protection is enabled then function calls save the return
+address to a separate stack, the GCS, that is checked against the actual
+return address when the function returns. At runtime GCS protection can
+be disabled and then calls and returns do not access the GCS. The GCS
+grows down and a GCS pointer points to the last entry of the GCS.
+Each thread has a separate GCS and GCS pointer.
+
+To use the intrinsics, `arm_acle.h` needs to be included.
+
+These intrinsics are available when GCS instructions are supported.
+The `__chkfeat` intrinsics with `_CHKFEAT_GCS` can be used to check
+if GCS protection is enabled at runtime. GCS protection is only
+enabled at runtime if the code is GCS compatible and the GCS
+instructions are supported.
+
+## Intrinsics
+
+
+``` c
+  const void *__gcspr(void);
+```
+
+Returns the GCS pointer of the current thread.
+
+``` c
+  uint64_t __gcspopm(void);
+```
+
+Reads and returns the last entry on the GCS of the current thread and
+updates the GCS pointer to point to the previous entry. If GCS
+protection is disabled then it has no side effect and returns `0`.
+
+``` c
+  const void *__gcsss(const void *);
+```
+
+Switches the GCS of the current thread, where the argument is the new
+GCS pointer, and returns the old GCS pointer. If GCS protection is
+disabled then it has no side effect and returns `NULL`.
+
 # State management
 
 The specification for SME is in
