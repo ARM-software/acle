@@ -334,6 +334,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [support for 128-bit system registers](#special-register-intrinsics),
   including two intrinsics for accessing them (`__rsr128` and `__wsr128`), and a
   feature macro to detect if they are available (`__ARM_FEATURE_SYSREG128`).
+* Added support for FEAT_LRCPC3 by listing the corresponding value of `__ARM_FEATURE_RCPC`.
+* Corrected the mandatory architecture versions for FEAT_LRCPC and FEAT_LRCPC2.
 * Corrected references to `-pedantic` flag.
 * Fixed typos.
 * Fixes for [Function Multi Versioning](#function-multi-versioning):
@@ -1546,13 +1548,15 @@ The value indicates the set of Load-Acquire and Store-Release
 instructions available. The intention is to allow programmers to guard
 the usage of these instructions in inline assembly.
 
-| **Value** | **Feature** | **Instructions**                 | **Availability**          |
-| --------- | ----------- |--------------------------------  | ------------------------- |
-| 1         | FEAT_LRCPC  |  LDAPR* instructions             | Armv8.4, optional Armv8.2 |
-| 2         | FEAT_LRCPC2 |  LDAPUR* and STLUR* instructions | Armv8.3, optional Armv8.2 |
-
 If defined, the value of `__ARM_FEATURE_RCPC` remains consistent with the decimal
 value of `LRCPC` field (bits [23:20]) in the `ID_AA64ISAR1_EL1` register.
+For convenience these are reproduced here:
+
+| **Value** | **Feature** | **Instructions**                | **Availability**          |
+| --------- | ----------- | ------------------------------- | ------------------------- |
+| 1         | FEAT_LRCPC  | LDAPR* instructions             | Armv8.3, optional Armv8.2 |
+| 2         | FEAT_LRCPC2 | LDAPUR* and STLUR* instructions | Armv8.4, optional Armv8.2 |
+| 3         | FEAT_LRCPC3 | See FEAT_LRCPC3 documentation.  | Armv8.9, optional Armv8.2 |
 
 The `__ARM_FEATURE_RCPC` macro can only be implemented in the AArch64
 execution state.
