@@ -160,8 +160,13 @@ Anticipated changes to this document include:
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
 * Removed incorrect information about the floating-point ABI used in
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
+* Replaced a conditional clearing of floating-point registers by the `VSCCLRM`
+  instruction in the example in
+  [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
 * Corrected description and example in section
   [Non-secure function pointers](#non-secure-function-pointer).
+* Corrected examples to save and restore `FPCXT` in Security state transitions.
+* Replaced sequences of `mov rX, #0` by the `CLRM` instruction in examples.
 
 ## References
 
@@ -1173,7 +1178,8 @@ registers that contain secret information
 > * Clear all registers and flags that have undefined values at the return of a
 >   procedure, according to [[AAPCS]](#AAPCS).
 > * Restore all callee-saved registers as mandated by [[AAPCS]](#AAPCS).
-> * Restore bits [27:0] of FPSCR (Armv8.1-M Mainline only).
+> * Restore the Non-secure Floating-point context payload (`FPCXTNS`)
+> (Armv8.1-M Mainline only).
 
 You can clear the floating-point registers conditionally by checking the 
 `SFPA` bit of the special-purpose `CONTROL` register.
@@ -1266,7 +1272,8 @@ the non-secure state to restore these registers.
 >  * Registers that do not hold secret information.
 > * Clear all registers and flags that have undefined values at the entry to a
 > procedure according to the [[AAPCS]](#AAPCS).
-> * Save and clear bits [27:0] of FPSCR (Armv8.1-M Mainline only).
+> * Save and clear the Secure Floating-point context payload (`FPCXTS`)
+> (Armv8.1-M Mainline only).
 
 A toolchain could provide you with the means to specify that some
 types of variables never hold secret information.
@@ -1274,8 +1281,8 @@ types of variables never hold secret information.
 <span id="requirement-54" class="requirement-box"></span>
 
 > When the non-secure function call returns, caller- and callee-saved
-> registers saved before the call must be restored. This includes bits [27:0]
-> of FPSCR (Armv8.1-M Mainline only).
+> registers saved before the call must be restored. This includes `FPCXTS`
+> (Armv8.1-M Mainline only).
 > An implementation need not save and restore a register if its value is not
 > live across the call. Note: callee-saved registers are live across the
 > call in almost all situations. These requirements specify behaviour that is
@@ -1286,7 +1293,7 @@ types of variables never hold secret information.
 > must be cleared.
 
 The floating point registers can very efficiently be saved and cleared using
-the `VLSTM`, and restored using `VLLDM` instructions.
+the `VLSTM`, and restored using `VLLDM` instructions. These include `FPCXTS`.
 
 An example instruction sequence for a non-secure call is listed in
 [Example non-secure function call](#example-non-secure-function-call).
@@ -1595,12 +1602,8 @@ bar:
     @ save callee-saved integer registers
     push    {r4-r12, lr}
     @ clear all integer registers (except for function pointer and arguments)
-    mov     r2,  #0
-    mov     r3,  #0
-    …
-    mov     r12, #0
-    @ clear the integer status flags
-    msr     APSR_nzcvqg, r2
+    @ and the integer status flags
+    clrm    {r2-r12, apsr}
     @ perform the call to the non-secure function 
     bic     r1, r1, #1
     blxns   r1
@@ -1642,12 +1645,8 @@ bar:
     @ setup floating point arguments of the call
     vmov    s0, r1
     @ clear all integer registers (except for function pointer and arguments)
-    mov     r2,  #0
-    mov     r3,  #0
-    …
-    mov     r12, #0
-    @ clear the integer status flags
-    msr     APSR_nzcvqg, r2
+    @ and the integer status flags
+    clrm    {r2-r12, apsr}
     @ perform the call to the non-secure function 
     bic     r0, r0, #1
     blxns   r0
@@ -1723,12 +1722,8 @@ bar:
     @ load the function pointer
     ldr     r4, =foo
     @ clear all integer registers (except for function pointer and arguments)
-    mov     r6,  #0
-    mov     r7,  #0
-    …
-    mov     r12, #0
-    @ clear the integer status flags
-    msr     APSR_nzcvqg, r6
+    @ and the integer status flags
+    clrm    {r6-r12, apsr}
     @ perform the call to the non-secure function 
     bic     r4, r4, #1
     blxns   r4
@@ -1810,65 +1805,53 @@ __acle_se_foo:
     tst     lr, #1
     it      eq
     subeq   sp, sp, #8
-    @ 2: push used callee-saved register onto the stack
+    @ 2: save Non-secure Floating-point context payload
+    vstr    fpcxtns, [sp, #-8]!
+    @ 3: push used callee-saved register onto the stack
     push    {r4-r6, lr}
-    @ 3: if called from secure the arguments are already in the correct place
-    tst     lr, #1
+    @ 4: if called from secure the arguments are already in the correct place
     bne     .LdoneARGS
-    @ 4: get the non-secure stack pointer
+    @ 5: get the non-secure stack pointer
     mrs     r4, SP_NS
-    @ 5: calculate end of range
+    @ 6: calculate end of range
     adds    r6, r4, #7
-    @ 6: take permissions at begin and end of range
+    @ 7: take permissions at begin and end of range
     tta     r5, r4
     tta     r6, r6
-    @ 7: check if range is in one region (this means identical permissions)
+    @ 8: check if range is in one region (this means identical permissions)
     cmp     r5, r6
     it      ne
     blne    cmse_abort
-    @ 8: check bit 20 of the TT result (non-secure read flag)
+    @ 9: check bit 20 of the TT result (non-secure read flag)
     tst     r5, #0x100000
     it      eq
     bleq    cmse_abort
-    @ 9: copy arguments from non-secure stack to secure stack
+    @10: copy arguments from non-secure stack to secure stack
     ldr     r5, [r4     ]
     ldr     r6, [r4, #4 ]
     str     r5, [sp, #16]
     str     r6, [sp, #20]
 .LdoneARGS:
-    @10: function body
+    @11: function body
     ldr     r0, [sp, #16]
     ldr     r1, [sp, #20]
     bl      bar
-    @11: restore used callee-saved registers
+    @12: restore used callee-saved registers
     pop     {r4-r6, lr}
-    @12: if called from secure, we are done
+    @13: restore Non-secure Floating-point context payload
+    vldr    fpcxtns, [sp], #8
+    @14: if called from secure, we are done
     tst     lr, #1
-    it      ne
     bxne    lr
-    @13: pop secure stack space
+    @15: pop secure stack space
     add     sp, sp, #8
-    @14: check SFPA bit to see if FP is used
-    mrs     r1, control
-    tst     r1, #8
-    bne     .LdoneFP
-    @15: clear floating point caller-saved registers
-    mov     r1, #0
-    vmov    s0, s1, r1, r1
-    vmov    s2, s3, r1, r1
-    ...
-    vmov    s30, s31, r1, r1
-    @16: clear floating point flags
-    vmsr    fpscr, r1
+    @16: clear floating point caller-saved registers if a FP context is active
+    vscclrm {s0-s31}
 .LdoneFP:
-    @17: clear integer caller-saved registers except for return value
-    mov     r1, #0
-    mov     r2, #0
-    mov     r3, #0
-    @18: clear other registers and the integer status flags
-    mov     r12, #0
-    msr     APSR_nzcvqg, r3
-    @19: return to non-secure state
+    @17: clear integer caller-saved registers except for return value,
+    @    r12 and the integer status flags
+    clrm    {r1-r3, r12, apsr}
+    @18: return to non-secure state
     bxns    lr
 ```  
 
