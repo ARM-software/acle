@@ -1,4 +1,4 @@
-<COMMENT>	SPDX-FileCopyrightText: Copyright 2014-2021 Arm Limited <open-source-office@arm.com>
+<COMMENT>	SPDX-FileCopyrightText: Copyright 2014-2023 Arm Limited <open-source-office@arm.com>
 <COMMENT>	SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 <COMMENT>	SPDX-License-Identifier: Apache-2.0
 <COMMENT>	
@@ -2114,6 +2114,14 @@ poly16x4_t vld1_lane_p16(poly16_t const *ptr, poly16x4_t src, __builtin_constant
 poly16x8_t vld1q_lane_p16(poly16_t const *ptr, poly16x8_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.8H;0 <= lane <= 7	LD1 {Vt.H}[lane],[Xn]	Vt.8H -> result	v7/A32/A64
 float64x1_t vld1_lane_f64(float64_t const *ptr, float64x1_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.1D;0 <= lane <= 0	LD1 {Vt.D}[lane],[Xn]	Vt.1D -> result	A64
 float64x2_t vld1q_lane_f64(float64_t const *ptr, float64x2_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.2D;0 <= lane <= 1	LD1 {Vt.D}[lane],[Xn]	Vt.2D -> result	A64
+uint64x1_t vldap1_lane_u64(uint64_t const *ptr, uint64x1_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.1D;0 <= lane <= 0	LDAP1 {Vt.D}[lane],[Xn]	Vt.1D -> result	A64
+uint64x2_t vldap1q_lane_u64(uint64_t const *ptr, uint64x2_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.2D;0 <= lane <= 1	LDAP1 {Vt.D}[lane],[Xn]	Vt.2D -> result	A64
+int64x1_t vldap1_lane_s64(int64_t const *ptr, int64x1_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.1D;0 <= lane <= 0	LDAP1 {Vt.D}[lane],[Xn]	Vt.1D -> result	A64
+int64x2_t vldap1q_lane_s64(int64_t const *ptr, int64x2_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.2D;0 <= lane <= 1	LDAP1 {Vt.D}[lane],[Xn]	Vt.2D -> result	A64
+float64x1_t vldap1_lane_f64(float64_t const *ptr, float64x1_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.1D;0 <= lane <= 0	LDAP1 {Vt.D}[lane],[Xn]	Vt.1D -> result	A64
+float64x2_t vldap1q_lane_f64(float64_t const *ptr, float64x2_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.2D;0 <= lane <= 1	LDAP1 {Vt.D}[lane],[Xn]	Vt.2D -> result	A64
+poly64x1_t vldap1_lane_p64(poly64_t const *ptr, poly64x1_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.1D;0 <= lane <= 0	LDAP1 {Vt.D}[lane],[Xn]	Vt.1D -> result	A64
+poly64x2_t vldap1q_lane_p64(poly64_t const *ptr, poly64x2_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.2D;0 <= lane <= 1	LDAP1 {Vt.D}[lane],[Xn]	Vt.2D -> result	A64
 int8x8_t vld1_dup_s8(int8_t const *ptr)	ptr -> Xn	LD1R {Vt.8B},[Xn]	Vt.8B -> result	v7/A32/A64
 int8x16_t vld1q_dup_s8(int8_t const *ptr)	ptr -> Xn	LD1R {Vt.16B},[Xn]	Vt.16B -> result	v7/A32/A64
 int16x4_t vld1_dup_s16(int16_t const *ptr)	ptr -> Xn	LD1R {Vt.4H},[Xn]	Vt.4H -> result	v7/A32/A64
@@ -2198,6 +2206,14 @@ void vst1_lane_p16(poly16_t *ptr, poly16x4_t val, __builtin_constant_p(lane))	va
 void vst1q_lane_p16(poly16_t *ptr, poly16x8_t val, __builtin_constant_p(lane))	val -> Vt.8H;ptr -> Xn;0 <= lane <= 7	ST1 {Vt.h}[lane],[Xn]		v7/A32/A64
 void vst1_lane_f64(float64_t *ptr, float64x1_t val, __builtin_constant_p(lane))	val -> Vt.1D;ptr -> Xn;0 <= lane <= 0	ST1 {Vt.d}[lane],[Xn]		A64
 void vst1q_lane_f64(float64_t *ptr, float64x2_t val, __builtin_constant_p(lane))	val -> Vt.2D;ptr -> Xn;0 <= lane <= 1	ST1 {Vt.d}[lane],[Xn]		A64
+void vstl1_lane_u64(uint64_t *ptr, uint64x1_t val, __builtin_constant_p(lane))	val -> Vt.1D;ptr -> Xn;0 <= lane <= 0	STL1 {Vt.d}[lane],[Xn]		A64
+void vstl1q_lane_u64(uint64_t *ptr, uint64x2_t val, __builtin_constant_p(lane))	val -> Vt.2D;ptr -> Xn;0 <= lane <= 1	STL1 {Vt.d}[lane],[Xn]		A64
+void vstl1_lane_s64(int64_t *ptr, int64x1_t val, __builtin_constant_p(lane))	val -> Vt.1D;ptr -> Xn;0 <= lane <= 0	STL1 {Vt.d}[lane],[Xn]		A64
+void vstl1q_lane_s64(int64_t *ptr, int64x2_t val, __builtin_constant_p(lane))	val -> Vt.2D;ptr -> Xn;0 <= lane <= 1	STL1 {Vt.d}[lane],[Xn]		A64
+void vstl1_lane_f64(float64_t *ptr, float64x1_t val, __builtin_constant_p(lane))	val -> Vt.1D;ptr -> Xn;0 <= lane <= 0	STL1 {Vt.d}[lane],[Xn]		A64
+void vstl1q_lane_f64(float64_t *ptr, float64x2_t val, __builtin_constant_p(lane))	val -> Vt.2D;ptr -> Xn;0 <= lane <= 1	STL1 {Vt.d}[lane],[Xn]		A64
+void vstl1_lane_p64(poly64_t *ptr, poly64x1_t val, __builtin_constant_p(lane))	val -> Vt.1D;ptr -> Xn;0 <= lane <= 0	STL1 {Vt.d}[lane],[Xn]		A64
+void vstl1q_lane_p64(poly64_t *ptr, poly64x2_t val, __builtin_constant_p(lane))	val -> Vt.2D;ptr -> Xn;0 <= lane <= 1	STL1 {Vt.d}[lane],[Xn]		A64
 int8x8x2_t vld2_s8(int8_t const *ptr)	ptr -> Xn	LD2 {Vt.8B - Vt2.8B},[Xn]	Vt2.8B -> result.val[1];Vt.8B -> result.val[0]	v7/A32/A64
 int8x16x2_t vld2q_s8(int8_t const *ptr)	ptr -> Xn	LD2 {Vt.16B - Vt2.16B},[Xn]	Vt2.16B -> result.val[1];Vt.16B -> result.val[0]	v7/A32/A64
 int16x4x2_t vld2_s16(int16_t const *ptr)	ptr -> Xn	LD2 {Vt.4H - Vt2.4H},[Xn]	Vt2.4H -> result.val[1];Vt.4H -> result.val[0]	v7/A32/A64
