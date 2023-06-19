@@ -334,7 +334,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [support for 128-bit system registers](#special-register-intrinsics),
   including two intrinsics for accessing them (`__rsr128` and `__wsr128`), and a
   feature macro to detect if they are available (`__ARM_FEATURE_SYSREG128`).
-* Added support for FEAT_LRCPC3 by listing the corresponding value of `__ARM_FEATURE_RCPC`.
+* Added support for FEAT_LRCPC3 LDAP1/STL1 intrinsics and `__ARM_FEATURE_RCPC`.
 * Corrected the mandatory architecture versions for FEAT_LRCPC and FEAT_LRCPC2.
 * Corrected references to `-pedantic` flag.
 * Fixed typos.
