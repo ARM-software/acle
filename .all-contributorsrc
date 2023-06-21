@@ -279,6 +279,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "tmatheson-arm",
+      "name": "tmatheson-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76168689?v=4",
+      "profile": "https://github.com/tmatheson-arm",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -287,5 +296,6 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true,
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }
