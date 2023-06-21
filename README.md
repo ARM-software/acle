@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-30-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -117,7 +117,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sdesmalen-arm"><img src="https://avatars.githubusercontent.com/u/36851054?v=4?s=100" width="100px;" alt="sdesmalen-arm"/><br /><sub><b>sdesmalen-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asdesmalen-arm" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/bryanpkc"><img src="https://avatars.githubusercontent.com/u/7143326?v=4?s=100" width="100px;" alt="Bryan Chan"/><br /><sub><b>Bryan Chan</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Abryanpkc" title="Reviewed Pull Requests">👀</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://pthariensflame.wordpress.com"><img src="https://avatars.githubusercontent.com/u/1847577?v=4?s=100" width="100px;" alt="Alexander Ronald Altman"/><br /><sub><b>Alexander Ronald Altman</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Apthariensflame" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/pthariensflame"><img src="https://avatars.githubusercontent.com/u/1847577?v=4?s=100" width="100px;" alt="Laine Taffin Altman"/><br /><sub><b>Laine Taffin Altman</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Apthariensflame" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sagarkulkarni19"><img src="https://avatars.githubusercontent.com/u/24480535?v=4?s=100" width="100px;" alt="Sagar Kulkarni"/><br /><sub><b>Sagar Kulkarni</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asagarkulkarni19" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/vhscampos"><img src="https://avatars.githubusercontent.com/u/3412620?v=4?s=100" width="100px;" alt="Victor Campos"/><br /><sub><b>Victor Campos</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=vhscampos" title="Documentation">📖</a> <a href="https://github.com/ARM-software/acle/commits?author=vhscampos" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ilinpv"><img src="https://avatars.githubusercontent.com/u/61020334?v=4?s=100" width="100px;" alt="Pavel Iliin"/><br /><sub><b>Pavel Iliin</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Ailinpv" title="Reviewed Pull Requests">👀</a></td>
@@ -125,6 +125,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/bwmf2"><img src="https://avatars.githubusercontent.com/u/117049336?v=4?s=100" width="100px;" alt="bwmf2"/><br /><sub><b>bwmf2</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=bwmf2" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tmatheson-arm"><img src="https://avatars.githubusercontent.com/u/76168689?v=4?s=100" width="100px;" alt="tmatheson-arm"/><br /><sub><b>tmatheson-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=tmatheson-arm" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
