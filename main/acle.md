@@ -341,12 +341,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixes for [Function Multi Versioning](#function-multi-versioning):
   * Renamed features to `sme-f64f64` and `sme-i16i64`
   * Corrected register name to `ID_AA64SMFR0_EL1.I16I64`
-* Removed incorrect optimisation remark in [CMSE](#CMSE-ACLE)'s floating-point
-  register clearing.
-* Removed incorrect information about the floating-point ABI used in
-  [CMSE](#CMSE-ACLE)'s Arguments on the stack and floating point handling.
-* Corrected description and example in [CMSE](#CMSE-ACLE)'s section about
-  non-secure function pointers.
+* Several fixes in [CMSE](#CMSE-ACLE).
 
 ### References
 
