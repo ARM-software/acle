@@ -32,21 +32,21 @@ function check_changes() {
 # Function that invokes the script to generate the md out of the db
 # of the specs.
 function generate_specs() {
-    ./tools/pdf/gen-intrinsics-specs.py --intrinsic-defs $1 \
+    ./tools/gen-intrinsics-specs.py --intrinsic-defs $1 \
 			    --classification $2 \
 			    --template $3 --outfile $4 \
 			    --workflow $5
 }
 
 # Generate specs
-generate_specs ./tools/pdf/intrinsic_db/advsimd.csv \
-		   ./tools/pdf/intrinsic_db/advsimd_classification.csv \
+generate_specs ./tools/intrinsic_db/advsimd.csv \
+		   ./tools/intrinsic_db/advsimd_classification.csv \
 		   ./neon_intrinsics/advsimd.template.md \
 		   ./tmp/advsimd.new.md \
 		   markdown
 
-generate_specs ./tools/pdf/intrinsic_db/mve.csv \
-		   ./tools/pdf/intrinsic_db/mve_classification.csv \
+generate_specs ./tools/intrinsic_db/mve.csv \
+		   ./tools/intrinsic_db/mve_classification.csv \
 		   ./mve_intrinsics/mve.template.md \
 		   ./tmp/mve.new.md \
 		   markdown
@@ -56,14 +56,14 @@ check_changes ./tmp/advsimd.new.md ./neon_intrinsics/advsimd.md
 check_changes ./tmp/mve.new.md ./mve_intrinsics/mve.md
 
 # Generate tmp file for pdfs
-generate_specs ./tools/pdf/intrinsic_db/mve.csv \
-       ./tools/pdf/intrinsic_db/mve_classification.csv \
+generate_specs ./tools/intrinsic_db/mve.csv \
+       ./tools/intrinsic_db/mve_classification.csv \
        ./mve_intrinsics/mve.template.md \
        ./tmp/mve.for-pdf.md \
        pdf
 
-generate_specs ./tools/pdf/intrinsic_db/advsimd.csv \
-       ./tools/pdf/intrinsic_db/advsimd_classification.csv \
+generate_specs ./tools/intrinsic_db/advsimd.csv \
+       ./tools/intrinsic_db/advsimd_classification.csv \
        ./neon_intrinsics/advsimd.template.md \
        ./tmp/advsimd.for-pdf.md \
        pdf

@@ -36,16 +36,16 @@ function generate_pdfs_from_md() {
 	# in the specific case of the cmse.md file.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
 	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
-	pandoc --template=tools/pdf/acle_template.tex -o $outputPdfFile --resource-path=$(dirname $inputMdFile):.
+	pandoc --template=tools/acle_template.tex -o $outputPdfFile --resource-path=$(dirname $inputMdFile)
 }
 
-mkdir -p output_pdfs tmp
+mkdir -p pdfs tmp
 
 # Convert svg image to pdf for use in pdf generation via pandoc.
-inkscape Arm_logo_blue_RGB.svg  -o tmp/Arm-logo-blue-RGB.pdf
+inkscape -z Arm_logo_blue_RGB.svg  -e tmp/Arm-logo-blue-RGB.pdf
 
-generate_pdfs_from_md ./cmse/cmse.md ./output_pdfs/cmse.pdf
-generate_pdfs_from_md ./morello/morello.md ./output_pdfs/morello.pdf
-generate_pdfs_from_md ./main/acle.md ./output_pdfs/acle.pdf
-generate_pdfs_from_md ./tmp/mve.for-pdf.md ./output_pdfs/mve.pdf
-generate_pdfs_from_md ./tmp/advsimd.for-pdf.md ./output_pdfs/advsimd.pdf
+generate_pdfs_from_md ./cmse/cmse.md ./pdfs/cmse.pdf
+generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
+generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf
+generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf
+generate_pdfs_from_md ./tmp/advsimd.for-pdf.md ./pdfs/advsimd.pdf

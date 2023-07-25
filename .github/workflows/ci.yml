@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright 2021, 2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
 #
 # SPDX-License-Identifier: Apache-2.0
 name: CI
@@ -6,16 +6,17 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build-pdfs:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     - name: check the correctness of the sources and generate the PDFs
-      run: ./tools/build-pdfs.sh
-    - uses: actions/upload-artifact@v3
+      run: ./build_with_docker.sh
+    - uses: actions/upload-artifact@v2
       with:
         name: pdfs
-        path: output_pdfs
+        path: pdfs
 
   build-github-pages:
     runs-on: ubuntu-latest
@@ -27,7 +28,7 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@master
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
           config-file: '.github/workflows/markdown-link-check.json'
