@@ -114,7 +114,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+* Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 * Copyright 2022 Google LLC.
 
 ## About this document
@@ -1550,13 +1550,13 @@ the usage of these instructions in inline assembly.
 
 If defined, the value of `__ARM_FEATURE_RCPC` remains consistent with the decimal
 value of `LRCPC` field (bits [23:20]) in the `ID_AA64ISAR1_EL1` register.
-For convenience these are reproduced here:
+For convenience these are shown below:
 
 | **Value** | **Feature** | **Instructions**                | **Availability**          |
 | --------- | ----------- | ------------------------------- | ------------------------- |
 | 1         | FEAT_LRCPC  | LDAPR* instructions             | Armv8.3, optional Armv8.2 |
 | 2         | FEAT_LRCPC2 | LDAPUR* and STLUR* instructions | Armv8.4, optional Armv8.2 |
-| 3         | FEAT_LRCPC3 | See FEAT_LRCPC3 documentation.  | Armv8.9, optional Armv8.2 |
+| 3         | FEAT_LRCPC3 | See FEAT_LRCPC3 documentation   | Armv8.9, optional Armv8.2 |
 
 The `__ARM_FEATURE_RCPC` macro can only be implemented in the AArch64
 execution state.

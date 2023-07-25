@@ -121,16 +121,6 @@ Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@
 
 ## Change control
 
-### Current status and anticipated changes
-
-This document is a development version based on release 1.1.
-
-Anticipated changes to this document include:
-
-* Typographical corrections.
-* Clarifications.
-* Compatible extensions.
-
 ### Change history
 
 | Issue | Date          | By   | Change         |
@@ -162,6 +152,7 @@ Anticipated changes to this document include:
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
 * Corrected description and example in section
   [Non-secure function pointers](#non-secure-function-pointer).
+* Fixed typos.
 
 ## References
 
@@ -1376,14 +1367,14 @@ The global variable `fp` is of a non-secure function type but can hold the
 address of a secure or non-secure function. Arm recommends that you do not
 share this variable.
 
-Since `fp` can hold either type of function, the compiler may generate code
+Since `fp` can hold either type of function, the compiler might generate code
 to save and clear registers in preparation for a security state transition even
 if the function call nevers performs such transition at run-time.
 
 To mitigate this, an nsfptr provides a way to test at run-time the
 security state that will be targeted when performing a call through
 this pointer. By using the nsfptr related intrinsics, it is
-possible to check at run-time which function call to perform and thus
+possible to check at run-time which function call to perform and therefore
 avoid unnecessary register context saving and clearing.
 
 ``` c
