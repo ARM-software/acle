@@ -1,10 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: 2022Q4
-date-of-issue: 23 November 2022
+version: 2023Q2
+date-of-issue: 04 August 2023
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -175,6 +175,7 @@ unless a different support level is specified in the text.
 | 2022Q1       | 06 April 2022     | Arm    | See [Changes between ACLE Q4 2021 and ACLE Q1 2022](#changes-between-acle-q4-2021-and-acle-q1-2022)                  |
 | 2022Q2       | 01 Jul 2022       | Arm    | See [Changes between ACLE Q1 2021 and ACLE Q2 2022](#changes-between-acle-q1-2022-and-acle-q2-2022)                  |
 | 2022Q4       | 23 November 2022  | Arm    | See [Changes between ACLE Q2 2022 and ACLE Q4 2022](#changes-between-acle-q2-2022-and-acle-q4-2022)                  |
+| 2023Q2       | 04 August 2023    | Arm    | See [Changes between ACLE Q4 2022 and ACLE Q2 2023](#changes-between-acle-q4-2022-and-acle-q2-2023)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -328,7 +329,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Renamed the feature macro to `__HAVE_FUNCTION_MULTI_VERSIONING`
   * Added some clarifications.
 
-#### Changes for next release
+#### Changes between ACLE Q4 2022 and ACLE Q2 2023
 
 * Added SLC as a valid Cache Level for the Memory prefetch intrinsics.
 * Added [support for 128-bit system registers](#special-register-intrinsics),

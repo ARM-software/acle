@@ -1,7 +1,7 @@
 ---
 title: Arm Neon Intrinsics Reference
 version: 2023Q2
-date-of-issue: TBC
+date-of-issue: 04 August 2023
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
@@ -124,7 +124,7 @@ for more information about Arm’s trademarks.
 | H     | 02 July 2021      | 2021Q2               |
 | I     | 30 September 2021 | 2021Q3               |
 | J     | 11 January 2022   | 2021Q4               |
-| K     | TBC               | 2023Q2               |
+| K     | 04 August 2023    | 2023Q2               |
 
 ### Changes between 2021Q2 and 2021Q3
 

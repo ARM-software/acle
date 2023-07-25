@@ -1,11 +1,11 @@
 ---
 title: Arm®v8-M Security Extensions <br /> Requirements on Development Tools
-version: 1.2
-date-of-issue: 06 April 2022
+version: 1.3
+date-of-issue: 04 August 2023
 set-quote-highlight: true
 # LaTeX specific variables
 copyright-text: Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -123,11 +123,12 @@ Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@
 
 ### Change history
 
-| Issue | Date          | By   | Change         |
-| :---  | :---          | :--- | :---           |
-| 1.0   | 23/10/2015    | Arm  | First release  |
-| 1.1   | 01/11/2019    | Arm  | Second release |
-| 1.2   | 06 April 2022 | Arm  | See [Changes for version 1.2](#changes-for-version-1.2)|
+| Issue | Date           | By   | Change         |
+| :---  | :---           | :--- | :---           |
+| 1.0   | 23/10/2015     | Arm  | First release  |
+| 1.1   | 01/11/2019     | Arm  | Second release |
+| 1.2   | 06 April 2022  | Arm  | See [Changes for version 1.2](#changes-for-version-1.2)|
+| 1.3   | 04 August 2023 | Arm  | See [Changes for version 1.3](#changes-for-version-1.3)|
 
 #### Changes for version 1.2
 
@@ -144,7 +145,7 @@ Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@
   NS nsfunc(struct s);` to `struct s NS (*nsfunc)(struct
   s);`. Non-secure functions have to be function pointers.
 
-#### Changes for next release
+#### Changes for version 1.3
 
 * Removed incorrect optimisation remark in section
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
