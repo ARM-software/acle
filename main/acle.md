@@ -347,6 +347,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   [CMSE](#CMSE-ACLE)'s Arguments on the stack and floating point handling.
 * Corrected description and example in [CMSE](#CMSE-ACLE)'s section about
   non-secure function pointers.
+* Added a requirement on [`arm_new_za`](#arm_new_za) to set the initial
+  contents of ZA to zero.
 
 ### References
 
@@ -8848,9 +8850,15 @@ following:
 
 *   The function has [ZA state](#za-state).
 
-*   The function's ZA state is created on entry to the function and destroyed
-    on return from the function. That is, the function does not use ZA
-    to receive data from callers or to pass data back to callers.
+*   The function does not use ZA to receive data from callers or to pass
+    data back to callers.
+
+*   Instead, the [abstract machine](#abstract-machine) creates new ZA state
+    on entry to the function and destroys the state on return from the
+    function.
+
+*   The abstract machine initializes each byte of the function's ZA state
+    to zero.
 
 This attribute does not change a function's binary interface. If the
 function forms part of the object code's ABI, that object code function
