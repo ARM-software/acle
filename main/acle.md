@@ -1,10 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: 2022Q4
-date-of-issue: 23 November 2022
+version: 2023Q2
+date-of-issue: 04 August 2023
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -114,7 +114,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2011-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+* Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 * Copyright 2022 Google LLC.
 
 ## About this document
@@ -175,6 +175,7 @@ unless a different support level is specified in the text.
 | 2022Q1       | 06 April 2022     | Arm    | See [Changes between ACLE Q4 2021 and ACLE Q1 2022](#changes-between-acle-q4-2021-and-acle-q1-2022)                  |
 | 2022Q2       | 01 Jul 2022       | Arm    | See [Changes between ACLE Q1 2021 and ACLE Q2 2022](#changes-between-acle-q1-2022-and-acle-q2-2022)                  |
 | 2022Q4       | 23 November 2022  | Arm    | See [Changes between ACLE Q2 2022 and ACLE Q4 2022](#changes-between-acle-q2-2022-and-acle-q4-2022)                  |
+| 2023Q2       | 04 August 2023    | Arm    | See [Changes between ACLE Q4 2022 and ACLE Q2 2023](#changes-between-acle-q4-2022-and-acle-q2-2023)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -328,7 +329,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Renamed the feature macro to `__HAVE_FUNCTION_MULTI_VERSIONING`
   * Added some clarifications.
 
-#### Changes for next release
+#### Changes between ACLE Q4 2022 and ACLE Q2 2023
 
 * Added SLC as a valid Cache Level for the Memory prefetch intrinsics.
 * Added [support for 128-bit system registers](#special-register-intrinsics),
@@ -1552,13 +1553,13 @@ the usage of these instructions in inline assembly.
 
 If defined, the value of `__ARM_FEATURE_RCPC` remains consistent with the decimal
 value of `LRCPC` field (bits [23:20]) in the `ID_AA64ISAR1_EL1` register.
-For convenience these are reproduced here:
+For convenience these are shown below:
 
 | **Value** | **Feature** | **Instructions**                | **Availability**          |
 | --------- | ----------- | ------------------------------- | ------------------------- |
 | 1         | FEAT_LRCPC  | LDAPR* instructions             | Armv8.3, optional Armv8.2 |
 | 2         | FEAT_LRCPC2 | LDAPUR* and STLUR* instructions | Armv8.4, optional Armv8.2 |
-| 3         | FEAT_LRCPC3 | See FEAT_LRCPC3 documentation.  | Armv8.9, optional Armv8.2 |
+| 3         | FEAT_LRCPC3 | See FEAT_LRCPC3 documentation   | Armv8.9, optional Armv8.2 |
 
 The `__ARM_FEATURE_RCPC` macro can only be implemented in the AArch64
 execution state.

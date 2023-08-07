@@ -1,11 +1,11 @@
 ---
 title: Arm®v8-M Security Extensions <br /> Requirements on Development Tools
-version: 1.2
-date-of-issue: 06 April 2022
+version: 1.3
+date-of-issue: 04 August 2023
 set-quote-highlight: true
 # LaTeX specific variables
 copyright-text: Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -121,23 +121,14 @@ Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@
 
 ## Change control
 
-### Current status and anticipated changes
-
-This document is a development version based on release 1.1.
-
-Anticipated changes to this document include:
-
-* Typographical corrections.
-* Clarifications.
-* Compatible extensions.
-
 ### Change history
 
-| Issue | Date          | By   | Change         |
-| :---  | :---          | :--- | :---           |
-| 1.0   | 23/10/2015    | Arm  | First release  |
-| 1.1   | 01/11/2019    | Arm  | Second release |
-| 1.2   | 06 April 2022 | Arm  | See [Changes for version 1.2](#changes-for-version-1.2)|
+| Issue | Date           | By   | Change         |
+| :---  | :---           | :--- | :---           |
+| 1.0   | 23/10/2015     | Arm  | First release  |
+| 1.1   | 01/11/2019     | Arm  | Second release |
+| 1.2   | 06 April 2022  | Arm  | See [Changes for version 1.2](#changes-for-version-1.2)|
+| 1.3   | 04 August 2023 | Arm  | See [Changes for version 1.3](#changes-for-version-1.3)|
 
 #### Changes for version 1.2
 
@@ -154,7 +145,7 @@ Anticipated changes to this document include:
   NS nsfunc(struct s);` to `struct s NS (*nsfunc)(struct
   s);`. Non-secure functions have to be function pointers.
 
-#### Changes for next release
+#### Changes for version 1.3
 
 * Removed incorrect optimisation remark in section
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
@@ -162,6 +153,7 @@ Anticipated changes to this document include:
   [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
 * Corrected description and example in section
   [Non-secure function pointers](#non-secure-function-pointer).
+* Fixed typos.
 
 ## References
 
@@ -1376,14 +1368,14 @@ The global variable `fp` is of a non-secure function type but can hold the
 address of a secure or non-secure function. Arm recommends that you do not
 share this variable.
 
-Since `fp` can hold either type of function, the compiler may generate code
+Since `fp` can hold either type of function, the compiler might generate code
 to save and clear registers in preparation for a security state transition even
 if the function call nevers performs such transition at run-time.
 
 To mitigate this, an nsfptr provides a way to test at run-time the
 security state that will be targeted when performing a call through
 this pointer. By using the nsfptr related intrinsics, it is
-possible to check at run-time which function call to perform and thus
+possible to check at run-time which function call to perform and therefore
 avoid unnecessary register context saving and clearing.
 
 ``` c

@@ -1,7 +1,7 @@
 ---
 title: Arm Neon Intrinsics Reference
-version: 2021Q4
-date-of-issue: 11 January 2022
+version: 2023Q2
+date-of-issue: 04 August 2023
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{{\\nameref{{copyright}}}}{{Copyright}}."
@@ -124,6 +124,7 @@ for more information about Arm’s trademarks.
 | H     | 02 July 2021      | 2021Q2               |
 | I     | 30 September 2021 | 2021Q3               |
 | J     | 11 January 2022   | 2021Q4               |
+| K     | 04 August 2023    | 2023Q2               |
 
 ### Changes between 2021Q2 and 2021Q3
 
@@ -140,6 +141,10 @@ for more information about Arm’s trademarks.
   standard layout used in Arm specifications.
 * Added missing item for release 2021Q3 in the table with the list of
   versions in section [Document history](#document-history).
+
+### Changes between 2021Q4 and 2023Q2
+
+* Added support for FEAT_LRCPC3 LDAP1/STL1 intrinsics.
 
 <!---
 **** Do not remove! ****
