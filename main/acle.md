@@ -9057,9 +9057,21 @@ following it. --><span id="__arm_za_disable"></span>
 
 The intrinsics in this section have the following properties in common:
 
-*   Every argument named `tile`, `slice_offset` or `tile_mask` must
-    be an integer constant expression in the range of the underlying
-    instruction.
+*   Every argument named `tile` or `tile_mask` must be an integer constant
+    expression in the range of the underlying instruction.
+
+*   Some SME instructions identify a slice of ZA using the sum of a 32-bit
+    general-purpose register and an immediate offset.  The intrinsics for
+    these instructions have a 32-bit argument called `slice`, which is
+    interpreted as follows:
+
+    *   If the intrinsic also has a `vnum` argument, the ZA slice number
+        is calculated by adding `vnum` to `slice`.  Both `slice` and `vnum`
+        can both be variable.
+
+    *   Otherwise, `slice` specifies the ZA slice number directly; that is,
+        it represents the sum of the 32-bit register and the immediate
+        offset.  `slice` can be variable.
 
 *   ZA loads and stores do not use typed pointers, since there is
     no C or C++ type information associated with the contents of ZA.
@@ -9073,36 +9085,42 @@ The intrinsics in this section have the following properties in common:
 ``` c
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   __attribute__((arm_streaming, arm_shared_za))
-  void svld1_hor_za8(uint64_t tile, uint32_t slice_base,
-                     uint64_t slice_offset, svbool_t pg, const void *ptr);
+  void svld1_hor_za8(uint64_t tile, uint32_t slice, svbool_t pg,
+                     const void *ptr);
 
-  // Synthetic intrinsic: adds vnum * svcntsb() to the address given by ptr.
+  // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
+  // address given by ptr.
+  //
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   __attribute__((arm_streaming, arm_shared_za))
-  void svld1_hor_vnum_za8(uint64_t tile, uint32_t slice_base,
-                          uint64_t slice_offset, svbool_t pg,
+  void svld1_hor_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                           const void *ptr, int64_t vnum);
 
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   __attribute__((arm_streaming, arm_shared_za))
-  void svld1_ver_za8(uint64_t tile, uint32_t slice_base,
-                     uint64_t slice_offset, svbool_t pg, const void *ptr);
+  void svld1_ver_za8(uint64_t tile, uint32_t slice, svbool_t pg,
+                     const void *ptr);
 
-  // Synthetic intrinsic: adds vnum * svcntsb() to the address given by ptr.
+  // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
+  // address given by ptr.
+  //
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   __attribute__((arm_streaming, arm_shared_za))
-  void svld1_ver_vnum_za8(uint64_t tile, uint32_t slice_base,
-                          uint64_t slice_offset, svbool_t pg,
+  void svld1_ver_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                           const void *ptr, int64_t vnum);
 ```
 
 #### LDR
 
 ``` c
-  // slice_offset fills the role of the usual vnum parameter.
   __attribute__((arm_streaming_compatible, arm_shared_za))
-  void svldr_vnum_za(uint32_t slice_base, uint64_t slice_offset,
-                     const void *ptr);
+  void svldr_za(uint32_t slice, const void *ptr);
+
+  // Adds vnum to slice and vnum * svcntsb() to the address given by ptr.
+  // This can be done in a single instruction if vnum is a constant in the
+  // range [0, 15].  The intrinsic is synthetic for other vnum parameters.
+  __attribute__((arm_streaming_compatible, arm_shared_za))
+  void svldr_vnum_za(uint32_t slice, const void *ptr, int64_t vnum);
 ```
 
 #### ST1B, ST1H, ST1W, ST1D, ST1Q
@@ -9110,37 +9128,42 @@ The intrinsics in this section have the following properties in common:
 ``` c
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  void svst1_hor_za8(uint64_t tile, uint32_t slice_base,
-                     uint64_t slice_offset, svbool_t pg,
+  void svst1_hor_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                      void *ptr);
 
-  // Synthetic intrinsic: adds vnum * svcntsb() to the address given by ptr.
+  // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
+  // address given by ptr.
+  //
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  void svst1_hor_vnum_za8(uint64_t tile, uint32_t slice_base,
-                          uint64_t slice_offset, svbool_t pg,
+  void svst1_hor_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                           void *ptr, int64_t vnum);
 
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  void svst1_ver_za8(uint64_t tile, uint32_t slice_base,
-                     uint64_t slice_offset, svbool_t pg,
+  void svst1_ver_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                      void *ptr);
 
-  // Synthetic intrinsic: adds vnum * svcntsb() to the address given by ptr.
+  // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
+  // address given by ptr.
+  //
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
-  void svst1_ver_vnum_za8(uint64_t tile, uint32_t slice_base,
-                          uint64_t slice_offset, svbool_t pg,
+  void svst1_ver_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                           void *ptr, int64_t vnum);
 ```
 
 #### STR
 
 ``` c
-  // slice_offset fills the role of the usual vnum parameter.
   __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
-  void svstr_vnum_za(uint32_t slice_base, uint64_t slice_offset, void *ptr);
+  void svstr_za(uint32_t slice, void *ptr);
+
+  // Adds vnum to slice and vnum * svcntsb() to the address given by ptr.
+  // This can be done in a single instruction if vnum is a constant in the
+  // range [0, 15].  The intrinsic is synthetic for other vnum parameters.
+  __attribute__((arm_streaming_compatible, arm_shared_za, arm_preserves_za))
+  void svstr_vnum_za(uint32_t slice, void *ptr, int64_t vnum);
 ```
 
 #### MOVA
@@ -9154,32 +9177,27 @@ parameter both have type `svuint8_t`.
   // And similarly for u8.
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint8_t svread_hor_za8[_s8]_m(svint8_t zd, svbool_t pg,
-                                 uint64_t tile, uint32_t slice_base,
-                                 uint64_t slice_offset);
+                                 uint64_t tile, uint32_t slice);
 
   // And similarly for u16, bf16 and f16.
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint16_t svread_hor_za16[_s16]_m(svint16_t zd, svbool_t pg,
-                                    uint64_t tile, uint32_t slice_base,
-                                    uint64_t slice_offset);
+                                    uint64_t tile, uint32_t slice);
 
   // And similarly for u32 and f32.
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint32_t svread_hor_za32[_s32]_m(svint32_t zd, svbool_t pg,
-                                    uint64_t tile, uint32_t slice_base,
-                                    uint64_t slice_offset);
+                                    uint64_t tile, uint32_t slice);
 
   // And similarly for u64 and f64.
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint64_t svread_hor_za64[_s64]_m(svint64_t zd, svbool_t pg,
-                                    uint64_t tile, uint32_t slice_base,
-                                    uint64_t slice_offset);
+                                    uint64_t tile, uint32_t slice);
 
   // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64
   __attribute__((arm_streaming, arm_shared_za, arm_preserves_za))
   svint8_t svread_hor_za128[_s8]_m(svint8_t zd, svbool_t pg,
-                                   uint64_t tile, uint32_t slice_base,
-                                   uint64_t slice_offset);
+                                   uint64_t tile, uint32_t slice);
 ```
 
 Replacing `_hor` with `_ver` gives the associated vertical forms.
@@ -9191,32 +9209,27 @@ the `zn` parameter to the `_u8` intrinsic has type `svuint8_t`.
 ``` c
   // And similarly for u8.
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_hor_za8[_s8]_m(uint64_t tile, uint32_t slice_base,
-                              uint64_t slice_offset, svbool_t pg,
+  void svwrite_hor_za8[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                               svint8_t zn);
 
   // And similarly for u16, bf16 and f16.
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_hor_za16[_s16]_m(uint64_t tile, uint32_t slice_base,
-                                uint64_t slice_offset, svbool_t pg,
+  void svwrite_hor_za16[_s16]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint16_t zn);
 
   // And similarly for u32 and f32.
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_hor_za32[_s32]_m(uint64_t tile, uint32_t slice_base,
-                                uint64_t slice_offset, svbool_t pg,
+  void svwrite_hor_za32[_s32]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint32_t zn);
 
   // And similarly for u64 and f64.
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_hor_za64[_s64]_m(uint64_t tile, uint32_t slice_base,
-                                uint64_t slice_offset, svbool_t pg,
+  void svwrite_hor_za64[_s64]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint64_t zn);
 
   // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64
   __attribute__((arm_streaming, arm_shared_za))
-  void svwrite_hor_za128[_s8]_m(uint64_t tile, uint32_t slice_base,
-                                uint64_t slice_offset, svbool_t pg,
+  void svwrite_hor_za128[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint8_t zn);
 ```
 
