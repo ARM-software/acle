@@ -4,7 +4,7 @@ version: 2023Q2
 date-of-issue: 04 August 2023
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: false
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
