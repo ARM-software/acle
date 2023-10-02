@@ -2,8 +2,9 @@
 layout: default
 title: Contribution Guidelines
 ---
-<!-- SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-FileCopyrightText: Copyright 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- See LICENSE.md file for details -->
 
 # Thank you for considering contributing!
 
@@ -63,7 +64,7 @@ can download the PDFs in the `Actions` tab of any pull request.
 An additional step uses
 [``markdown-link-check```](https://github.com/tcort/markdown-link-check)
 to check that all the links in the markdown files are resolving
-correcly.
+correctly.
 
 # Branches and pull requests.
 

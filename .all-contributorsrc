@@ -11,7 +11,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/48126768?v=4",
       "profile": "https://github.com/TamarChristinaArm",
       "contributions": [
-        "code"
+        "code",
+        "review"
       ]
     },
     {
@@ -225,9 +226,9 @@
     },
     {
       "login": "pthariensflame",
-      "name": "Alexander Ronald Altman",
+      "name": "Laine Taffin Altman",
       "avatar_url": "https://avatars.githubusercontent.com/u/1847577?v=4",
-      "profile": "https://pthariensflame.wordpress.com",
+      "profile": "https://github.com/pthariensflame",
       "contributions": [
         "review"
       ]
@@ -240,6 +241,53 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "vhscampos",
+      "name": "Victor Campos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3412620?v=4",
+      "profile": "https://www.linkedin.com/in/vhscampos",
+      "contributions": [
+        "doc",
+        "code"
+      ]
+    },
+    {
+      "login": "ilinpv",
+      "name": "Pavel Iliin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61020334?v=4",
+      "profile": "https://github.com/ilinpv",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "lenary",
+      "name": "Sam Elliott",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14548?v=4",
+      "profile": "https://lenary.co.uk",
+      "contributions": [
+        "review",
+        "code"
+      ]
+    },
+    {
+      "login": "bwmf2",
+      "name": "bwmf2",
+      "avatar_url": "https://avatars.githubusercontent.com/u/117049336?v=4",
+      "profile": "https://github.com/bwmf2",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "tmatheson-arm",
+      "name": "tmatheson-arm",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76168689?v=4",
+      "profile": "https://github.com/tmatheson-arm",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -247,5 +295,7 @@
   "projectOwner": "ARM-software",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular",
+  "commitType": "docs"
 }

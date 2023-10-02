@@ -1,10 +1,10 @@
 ---
 title: Arm®v8-M Security Extensions <br /> Requirements on Development Tools
-version: 1.2
-date-of-issue: 06 April 2022
+version: 1.3
+date-of-issue: 04 August 2023
 set-quote-highlight: true
 # LaTeX specific variables
-copyright-text: Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+copyright-text: Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 draftversion: false
 # Jekyll specific variables
 header_counter: true
@@ -12,7 +12,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -115,29 +115,20 @@ about Arm’s trademarks.
 
 ## Copyright
 
-Copyright 2019, 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 
 # ABOUT THIS DOCUMENT
 
 ## Change control
 
-### Current status and anticipated changes
-
-This document is a development version based on release 1.1.
-
-Anticipated changes to this document include:
-
-* Typographical corrections.
-* Clarifications.
-* Compatible extensions.
-
 ### Change history
 
-| Issue | Date          | By   | Change         |
-| :---  | :---          | :--- | :---           |
-| 1.0   | 23/10/2015    | Arm  | First release  |
-| 1.1   | 01/11/2019    | Arm  | Second release |
-| 1.2   | 06 April 2022 | Arm  | See [Changes for version 1.2](#changes-for-version-1.2)|
+| Issue | Date           | By   | Change         |
+| :---  | :---           | :--- | :---           |
+| 1.0   | 23/10/2015     | Arm  | First release  |
+| 1.1   | 01/11/2019     | Arm  | Second release |
+| 1.2   | 06 April 2022  | Arm  | See [Changes for version 1.2](#changes-for-version-1.2)|
+| 1.3   | 04 August 2023 | Arm  | See [Changes for version 1.3](#changes-for-version-1.3)|
 
 #### Changes for version 1.2
 
@@ -153,6 +144,16 @@ Anticipated changes to this document include:
   stack frame of a non-secure function call](#figure6) from `struct s
   NS nsfunc(struct s);` to `struct s NS (*nsfunc)(struct
   s);`. Non-secure functions have to be function pointers.
+
+#### Changes for version 1.3
+
+* Removed incorrect optimisation remark in section
+  [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
+* Removed incorrect information about the floating-point ABI used in
+  [Arguments on the stack and floating point handling](#arguments-on-the-stack-and-floating-point-handling).
+* Corrected description and example in section
+  [Non-secure function pointers](#non-secure-function-pointer).
+* Fixed typos.
 
 ## References
 
@@ -1337,9 +1338,7 @@ The stack usage during a non-secure function call is shown in figure
 ## Non-secure function pointer
 
 A function pointer that has its LSB unset is a non-secure function
-pointer (_nsfptr_). An nsfptr provides a way to test at run-time the
-security state that will be targeted when performing a call through
-this pointer. An nsfptr is not a type and must not be confused with
+pointer (_nsfptr_). An nsfptr is not a type and must not be confused with
 the non-secure function type ([Non-secure function
 call](#non-secure-function-call)).
 
@@ -1353,24 +1352,52 @@ non-secure function pointers:
 #include <arm_cmse.h>
 typedef void __attribute__((cmse_nonsecure_call)) nsfunc(void);
 void default_callback(void) { … }
-**// fp can point to a secure function or a non-secure function**
-nsfunc *fp = (nsfunc *) default_callback;           **// secure function pointer**
+// fp can point to a secure function or a non-secure function
+nsfunc *fp = (nsfunc *) default_callback;           // secure function pointer
 
 void __attribute__((cmse_nonsecure_entry)) entry(nsfunc *callback) {
-                fp = cmse_nsfptr_create(callback);  **// non-secure function pointer**
+                fp = cmse_nsfptr_create(callback);  // non-secure function pointer
 }
 
 void call_callback(void) {
-                if (cmse_is_nsfptr(fp)) fp();       **// non-secure function call**
-                else ((void (*)(void)) fp)();       **// normal function call**
+                fp(); // function call via pointer. It can be either secure or non-secure
 }
 ```
 
-The global variable `fp` is a non-secure function type but can hold the address
-of a secure or non-secure function. By using the nsfptr related intrinsics it is
-possible to check at runtime which function call to perform.
+The global variable `fp` is of a non-secure function type but can hold the
+address of a secure or non-secure function. Arm recommends that you do not
+share this variable.
 
-Arm recommends that you do not share this variable.
+Since `fp` can hold either type of function, the compiler might generate code
+to save and clear registers in preparation for a security state transition even
+if the function call nevers performs such transition at run-time.
+
+To mitigate this, an nsfptr provides a way to test at run-time the
+security state that will be targeted when performing a call through
+this pointer. By using the nsfptr related intrinsics, it is
+possible to check at run-time which function call to perform and therefore
+avoid unnecessary register context saving and clearing.
+
+``` c
+#include <arm_cmse.h>
+typedef void __attribute__((cmse_nonsecure_call)) nsfunc(void);
+void default_callback(void) { … }
+// fp can point to a secure function or a non-secure function
+nsfunc *fp = (nsfunc *) default_callback;           // secure function pointer
+
+void __attribute__((cmse_nonsecure_entry)) entry(nsfunc *callback) {
+                fp = cmse_nsfptr_create(callback);  // non-secure function pointer
+}
+
+void call_callback(void) {
+                if (cmse_is_nsfptr(fp)) fp(); // non-secure function call.
+                                              // Context saved and cleared
+                else ((void (*)(void)) fp)(); // normal function call. Context untouched
+}
+```
+
+This is just an optimisation technique and hence it is not required for the
+correct usage of non-secure function pointers.
 
 <span id="requirement-57" class="requirement-box"></span>
 
@@ -1414,7 +1441,7 @@ a secure gateway veneer the function starts with the `SG` instruction.
 > * The function’s special symbol labels the address following the `SG`
 > instruction. 
 
-No veneer is generated as defined in [Secure gatewayy
+No veneer is generated as defined in [Secure gateway
 veneers](#secure-gateway-veneers) because the special symbol’s value
 is different to the normal symbol’s value.
 
@@ -1764,8 +1791,7 @@ The function `foo()` uses the stack to pass the last two arguments. It is
 unknown if the function `bar()` uses floating point registers to store secret
 information.
 
-The following T32 instruction sequence is an implementation of this function
-using the soft-float ABI:
+The following T32 instruction sequence is an implementation of this function:
 
 ``` c
 .global foo
@@ -1818,7 +1844,7 @@ __acle_se_foo:
     mrs     r1, control
     tst     r1, #8
     bne     .LdoneFP
-    @15: clear floating point caller-saved registers (soft ABI)
+    @15: clear floating point caller-saved registers
     mov     r1, #0
     vmov    s0, s1, r1, r1
     vmov    s2, s3, r1, r1
@@ -1837,11 +1863,6 @@ __acle_se_foo:
     @19: return to non-secure state
     bxns    lr
 ```  
-  
-The instruction sequence between comment 14 and 15 is an optimization to skip
-clearing floating point registers if they are not used by the secure state.
-Removing these instructions is functionally equivalent but might create an
-unnecessary floating point context.
 
 ### Return value on the stack
 

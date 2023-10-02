@@ -18,6 +18,13 @@ jobs:
         name: pdfs
         path: pdfs
 
+  build-github-pages:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: generate the GitHub Pages locally in order to check for errors
+      run: ./tools/build-github-pages.sh build
+
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:

@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+CC-BY-SA-4.0 AND Apache-Patent-License
+See LICENSE.md file for details
+-->
 # Function Multi Versioning support for Arm architectures
 
 Other architectures supports [Function Multi Versioning (FMV)]
@@ -20,7 +25,7 @@ derived from a function via FMV:
 2. the derived function obey to the same calling convention of the original
 function.
 
-Today the `target` [attribute for aarch64](https://gcc.gnu.org/onlinedocs/gcc/AArch64-Function-Attributes.html#AArch64-Function-Attributes>)
+Currently the `target` [attribute for aarch64](https://gcc.gnu.org/onlinedocs/gcc/extensions-to-the-c-language-family/declaring-attributes-of-functions/aarch64-function-attributes.html)
 is used for many purposes, some of which might overlap the functionality
 introduced by FMV. To avoid confusion, we named the attributes used by FMV with
 `target_version` and `target_clones`.
@@ -41,7 +46,7 @@ we propose the following feature test macro, to be
 defined to 1 if the support is available:
 
 ``` c
-  __ARM_FEATURE_FUNCTION_MULTI_VERSIONING
+  __HAVE_FUNCTION_MULTI_VERSIONING
 ```
 
 Enabling this feature and using one of the attributes on a given function does
