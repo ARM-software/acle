@@ -8971,9 +8971,6 @@ definitions**. It specifies the following:
     to zero.
 
 *   When the hardware supports SME2, the function has [ZT state](#zt-state).
-    The function's ZT state is created on entry to the function and destroyed
-    on return from the function. That is, the function does not use ZT0
-    to receive data from callers or to pass data back to callers.
 
 This attribute does not change a function's binary interface. If the
 function forms part of the object code's ABI, that object code function
@@ -9078,6 +9075,44 @@ that do not have the attribute. However, the reverse is not true. For example:
   }
 ```
 
+## SME types
+
+### Predicate-as-counter
+
+SME2 adds a new kind of predicate, named *predicate-as-counter* which is used
+for multi-vector predication. It describes a predicate mask that can span
+multiple predicate registers with `K` `true` values followed by all `false`
+values, or `K` `false` values followed by all `true` values, for a given element
+type.
+
+When `__ARM_FEATURE_SME2` is defined,  [`<arm_sme.h>`](#arm_sme.h)  defines a
+single sizeless predicate-as-counter type named `svcount_t`.
+
+`svcount_t` and `svbool_t` are both used to represent predicate masks, but
+they cannot be used interchangeably.
+
+The ACLE allows these types to be casted from one to another using the
+`svcount_t svreinterpret_c(svbool_t)` and `svbool_t svreinterpret_b(svcount_t)`
+intrinsics, although the reinterpreted values may not be sensible in the other
+format. To safely extract a sensible mask from a `svcount_t`, the `svpext`
+functions should be used.
+
+### Multi-vector predicates
+
+When `__ARM_FEATURE_SME2` is defined, [`<arm_sme.h>`](#arm_sme.h) defines the
+tuple types `svboolx2_t` and `svboolx4_t`.
+
+These are opaque tuple types that can be accessed using the SVE intrinsics
+`svsetN`, `svgetN` and `svcreateN`. `svundef2` and `svundef4` are also extended
+to work with `svboolx2_t` and `svboolx4_t`.  e.g.
+
+``` c
+    svbool_t svget2[_b](svboolx2_t tuple, uint64_t imm_index);
+    svboolx2_t svset2[_b](svboolx2_t tuple, uint64_t imm_index, svbool_t x);
+    svboolx2_t svcreate2[_b](svbool_t x, svbool_t y);
+    svboolx2_t svundef2_b();
+```
+
 ## SME functions and intrinsics
 
 [`<arm_sme.h>`](#arm_sme.h) declares various support functions and
@@ -9167,9 +9202,8 @@ following it. --><span id="arm_za_disable"></span>
 > the compiler does not insert unnecessary code to save and restore the
 > current ZA contents. The call might also be useful for static analysis.
 
-### SME instruction intrinsics
 
-#### Common rules
+### SME instruction intrinsics
 
 The intrinsics in this section have the following properties in common:
 
@@ -9195,6 +9229,74 @@ The intrinsics in this section have the following properties in common:
 *   Intrinsics have a `_hor` suffix if they operate on horizontal slices
     of a given ZA tile and a `_ver` suffix if they operate on vertical
     slices of a given ZA tile.
+
+
+SME2 adds operations that work on groups of SVE vectors, ZA tile slices or
+ZA array vectors. The intrinsics model this in the following way:
+
+*   Multi-vector operands are groups of SVE data vectors, that use the same
+    tuple types as defined in the [SVE ACLE](#sve-vector-types), e.g.
+    `svint32x2_t` for a multi-vector operand of two 32-bit element vectors, or
+    `svint64x4_t` for a multi-vector operand of four 64-bit element vectors.
+
+*   The architecture distinguishes between multi-vector operands with
+    consecutive registers and multi-vector operands with strided registers.
+    This level of detail is not exposed to the C/C++ intrinsics or types. It is
+    left up to the compiler to choose the most optimal form.
+
+*   Intrinsic functions have a `_x2` or `_x4` suffix if the
+    function\'s return value is a vector group of 2 or 4 data vectors
+    and the function operates purely on vectors, not on the matrix array or
+    tile slices.
+
+*   Intrinsic functions have a `_vg2` or `_vg4` suffix if the function
+    operates on groups of 2 or 4 ZA tile slices.  For example:
+
+``` c
+    // Reads 2 consecutive horizontal tile slices from ZA into multi-vector.
+    __attributes__((arm_streaming, arm_shared_za, arm_preserves_za))
+    svint8x2_t svread_hor_za8[_s8]_vg2(uint64_t tile, uint64_t slice);
+```
+
+*   Intrinsic functions have a `_vg1x2`, `_vg1x4` suffix if the function
+    operates on 2 or 4 single-vector groups within the ZA array.
+
+*   Intrinsic functions have a `_vg2x1`, `_vg2x2`, `_vg2x4` suffix if
+    the function operates on 1, 2 or 4 double-vector groups within the ZA array.
+
+*   Intrinsic functions have a `_vg4x1`, `_vg4x2`, `_vg4x4` suffix if the
+    function operates on 1, 2 or 4 quad-vector groups within the ZA array.
+    For example:
+
+``` c
+    // SMLAL intrinsic for 2 quad-vector groups.
+    __attributes__((arm_streaming, arm_shared_za))
+    void svmla_lane_za32[_s8]_vg4x2(uint64_t slice, svint8x2_t zn,
+                                    svint8_t zm, uint64_t imm_idx);
+```
+
+*   Intrinsic functions that take a multi-vector operand may have additional
+    suffixes to distinguish them from other forms for the same intrinsic:
+    *   a `_single` suffix if they take one multi-vector operand and one
+        (single) vector operand.
+    *   a `_lane` suffix if they take one multi-vector operand and one
+        indexed vector operand with an immediate to specify the indexed
+        elements.
+
+``` c
+    __attributes__((arm_streaming, arm_shared_za))
+    void svmla_za32[_s8]_vg4x2(uint64_t slice, svint8x2_t zn, svint8x2_t zm);
+
+
+    __attributes__((arm_streaming, arm_shared_za))
+    void svmla[_single]_za32[_s8]_vg4x2(uint64_t slice, svint8x2_t zn,
+                                        svint8_t zm);
+
+    __attributes__((arm_streaming, arm_shared_za))
+    void svmla_lane_za32[_s8]_vg4x2(uint64_t slice, svint8x2_t zn,
+                                    svint8_t zm, uint64_t imm_idx);
+```
+
 
 #### LD1B, LD1H, LD1W, LD1D, LD1Q
 
@@ -9578,145 +9680,17 @@ possible to write these operations using normal C arithmetic. For example:
   void svzero_za() __arm_streaming_compatible __arm_shared_za;
 ```
 
-### Streaming-compatible versions of standard routines
+### SME2 instruction intrinsics
 
-ACLE provides the following streaming-compatible functions,
-with the same behavior as the standard C functions that they
-are named after. All of the functions have external linkage.
-
-``` c
-  void *__arm_sc_memcpy(void *dest, const void *src, size_t n)
-    __arm_streaming_compatible __arm_preserves_za;
-
-  void *__arm_sc_memmove(void *dest, const void *src, size_t n)
-    __arm_streaming_compatible __arm_preserves_za;
-
-  void *__arm_sc_memset(void *s, int c, size_t n)
-    __arm_streaming_compatible __arm_preserves_za;
-
-  void *__arm_sc_memchr(void *s, int c, size_t n)
-    __arm_streaming_compatible __arm_preserves_za;
-```
-
-## SME2 Types
-
-### Predicate-as-counter
-
-SME2 adds a new kind of predicate, named *predicate-as-counter* which is used
-for multi-vector predication. It describes a predicate mask that can span multiple
-predicate registers with `K` `true` values followed by all `false` values, or
-`K` `false` values followed by all `true` values, for a given element type.
-
-When `__ARM_FEATURE_SME2` is defined,  [`<arm_sme.h>`](#arm_sme.h)  defines a
-single sizeless predicate-as-counter type named `svcount_t`.
-
-`svcount_t` and `svbool_t` are both used to represent predicate masks, but
-they cannot be used interchangeably.
-
-The ACLE allows these types to be casted from one to another using the
-`svcount_t svreinterpret_c(svbool_t)` and `svbool_t svreinterpret_b(svcount_t)`
-intrinsics, although the reinterpreted values may not be sensible in the other
-format. To safely extract a sensible mask from a `svcount_t`, the `svpext`
-functions should be used.
-
-### Multi-vector predicates
-
-When `__ARM_FEATURE_SME2` is defined, [`<arm_sme.h>`](#arm_sme.h) defines the tuple types
-`svboolx2_t` and `svboolx4_t`.
-
-These are opaque tuple types that can be accessed using the existing SVE
-intrinsics `svsetN`, `svgetN` and `svcreateN`. `svundef2` and `svundef4`
-are also extended to work with `svboolx2_t` and `svboolx4_t`.  e.g.
-
-``` c
-    svbool_t svget2[_b](svboolx2_t tuple, uint64_t imm_index);
-    svboolx2_t svset2[_b](svboolx2_t tuple, uint64_t imm_index, svbool_t x);
-    svboolx2_t svcreate2[_b](svbool_t x, svbool_t y);
-    svboolx2_t svundef2_b();
-```
-
-## SME2 functions
-
-The functions in this section are defined by the header file
+The intrinsics in this section are defined by the header file
 [`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` is defined.
-
-#### Common rules
-
-SME2 adds operations that work on groups of SVE vectors, ZA tile slices or
-ZA array vectors. The intrinsics model this in the following way:
-
-*   Multi-vector operands are groups of SVE data vectors, that use the same
-    tuple types as defined in the [SVE ACLE](#sve-vector-types), e.g.
-    `svint32x2_t` for a multi-vector operand of two 32-bit element vectors, or
-    `svint64x4_t` for a multi-vector operand of four 64-bit element vectors.
-
-*   The architecture distinguishes between multi-vector operands with
-    consecutive registers and multi-vector operands with strided registers.
-    This level of detail is not exposed to the C/C++ intrinsics or types. It is
-    left up to the compiler to choose the most optimal form.
-
-*   Intrinsic functions have a `_x2` or `_x4` suffix if the
-    function\'s return value is a vector group of 2 or 4 data vectors
-    and the function operates purely on vectors, not on the matrix array or
-    tile slices.
-
-*   Intrinsic functions have a `_vg2` or `_vg4` suffix if the function
-    operates on groups of 2 or 4 ZA tile slices.  For example:
-
-``` c
-    // Reads 2 consecutive horizontal tile slices from ZA into multi-vector.
-    __attributes__((arm_streaming, arm_shared_za, arm_preserves_za))
-    svint8x2_t svread_hor_za8[_s8]_vg2(uint64_t tile,
-                                       uint64_t slice);
-```
-
-*   Intrinsic functions have a `_vg1x2`, `_vg1x4` suffix if the function
-    operates on 2 or 4 single-vector groups within a ZA array.
-
-*   Intrinsic functions have a `_vg2x1`, `_vg2x2`, `_vg2x4` suffix if
-    the function operates on 1, 2 or 4 double-vector groups within a ZA array.
-
-*   Intrinsic functions have a `_vg4x1`, `_vg4x2`, `_vg4x4` suffix if the
-    function operates on 1, 2 or 4 quad-vector groups within a ZA array.
-    For example:
-
-``` c
-    // SMLAL intrinsic for 2 quad-vector groups.
-    __attributes__((arm_streaming, arm_shared_za))
-    void svmla_lane_za32[_s8]_vg4x2(uint64_t slice, svint8x2_t zn,
-                                    svint8_t zm, uint64_t imm_idx);
-```
-
-*   Intrinsic functions that take a multi-vector operand may have additional
-    suffixes to distinguish them from other forms for the same intrinsic:
-    *   a `_single` suffix if they take one multi-vector operand and one
-        (single) vector operand.
-    *   a `_lane` suffix if they take one multi-vector operand and one
-        indexed vector operand with an immediate to specify the indexed
-        elements.
-
-``` c
-    __attributes__((arm_streaming, arm_shared_za))
-    void svmla_za32[_s8]_vg4x2(uint64_t slice, svint8x2_t zn, svint8x2_t zm);
-
-
-    __attributes__((arm_streaming, arm_shared_za))
-    void svmla[_single]_za32[_s8]_vg4x2(uint64_t slice, svint8x2_t zn,
-                                        svint8_t zm);
-
-    __attributes__((arm_streaming, arm_shared_za))
-    void svmla_lane_za32[_s8]_vg4x2(uint64_t slice, svint8x2_t zn,
-                                    svint8_t zm, uint64_t imm_idx);
-```
-
-### SME2 data-processing instructions.
 
 #### ADD, SUB (store into ZA, single)
 
 Multi-vector add/sub, storing into ZA
 
-The additional '_write' suffix indicates that the operation is not accumulating,
- the result is written directly into ZA.
+The additional '_write' suffix indicates that the operation is not accumulating;
+the result is written directly into ZA.
 
 ``` c
   // Variants are available for:
@@ -9760,8 +9734,8 @@ The additional '_write' suffix indicates that the operation is not accumulating,
 
 Multi-vector add/sub, storing into ZA
 
-The additional '_write' suffix indicates that the operation is not accumulating,
- the result is written directly into ZA.
+The additional '_write' suffix indicates that the operation is not accumulating;
+the result is written directly into ZA.
 
 ``` c
   // Variants are available for:
@@ -11681,8 +11655,6 @@ While (resulting in predicate-as-counter). ``vl`` is expected to be 2 or 4.
   
   ```
 
-#### WHILEGE, WHILEGT, WHILEHI, WHILEHS, WHILELE, WHILELO, WHILELS, WHILELT
-
 While (resulting in predicate tuple)
 
 ``` c
@@ -11743,11 +11715,45 @@ Multi-vector pack/unpack
   
   ```
 
-#### ZIP, UZP
+#### ZIP
 
-Multi-vector zip/unzip (2 vectors)
+Multi-vector zip.
 
-The uzipq instructions operate on quad-words, but for convenience accept all element types.
+``` c
+  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
+  // _u64, _s64 and _f64
+  __attribute__((arm_streaming))
+  svint8x2_t svzip[_s8]_x2(svint8_t zn, svint8_t zm);
+  
+  
+  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
+  // _u64, _s64 and _f64
+  __attribute__((arm_streaming))
+  svint8x4_t svzip[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
+                           svint8_t zn3);
+  ```
+
+The `svzipq` intrinsics operate on quad-words, but for convenience accept all
+element types.
+
+
+``` c
+  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
+  // _u64, _s64 and _f64
+  __attribute__((arm_streaming))
+  svint8x2_t svzipq[_s8]_x2(svint8_t zn, svint8_t zm);
+  
+
+  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
+  // _u64, _s64 and _f64
+  __attribute__((arm_streaming))
+  svint8x4_t svzipq[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
+                            svint8_t zn3);
+  ```
+
+#### UZP
+
+Multi-vector unzip.
 
 ``` c
   // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
@@ -11759,34 +11765,18 @@ The uzipq instructions operate on quad-words, but for convenience accept all ele
   // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
   // _u64, _s64 and _f64
   __attribute__((arm_streaming))
-  svint8x2_t svuzpq[_s8]_x2(svint8_t zn, svint8_t zm);
-  
-  
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  __attribute__((arm_streaming))
-  svint8x2_t svzip[_s8]_x2(svint8_t zn, svint8_t zm);
-  
-  
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  __attribute__((arm_streaming))
-  svint8x2_t svzipq[_s8]_x2(svint8_t zn, svint8_t zm);
-  
+  svint8x4_t svuzp[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
+                           svint8_t zn3);
   ```
-
-#### ZIP, UZP
-
-Multi-vector zip/unzip (4 vectors)
-
-The zipq instructions operate on quad-words, but for convenience accept all element types.
+  
+The `svuzpq` intrinsics operate on quad-words, but for convenience accept all
+element types.
 
 ``` c
   // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
   // _u64, _s64 and _f64
   __attribute__((arm_streaming))
-  svint8x4_t svuzp[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
-                           svint8_t zn3);
+  svint8x2_t svuzpq[_s8]_x2(svint8_t zn, svint8_t zm);
   
   
   // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
@@ -11795,22 +11785,27 @@ The zipq instructions operate on quad-words, but for convenience accept all elem
   svint8x4_t svuzpq[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
                             svint8_t zn3);
   
-  
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  __attribute__((arm_streaming))
-  svint8x4_t svzip[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
-                           svint8_t zn3);
-  
-  
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  __attribute__((arm_streaming))
-  svint8x4_t svzipq[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
-                            svint8_t zn3);
-  
   ```
 
+### Streaming-compatible versions of standard routines
+
+ACLE provides the following streaming-compatible functions,
+with the same behavior as the standard C functions that they
+are named after. All of the functions have external linkage.
+
+``` c
+  void *__arm_sc_memcpy(void *dest, const void *src, size_t n)
+    __arm_streaming_compatible __arm_preserves_za;
+
+  void *__arm_sc_memmove(void *dest, const void *src, size_t n)
+    __arm_streaming_compatible __arm_preserves_za;
+
+  void *__arm_sc_memset(void *s, int c, size_t n)
+    __arm_streaming_compatible __arm_preserves_za;
+
+  void *__arm_sc_memchr(void *s, int c, size_t n)
+    __arm_streaming_compatible __arm_preserves_za;
+```
 
 
 # M-profile Vector Extension (MVE) intrinsics
