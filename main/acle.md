@@ -358,6 +358,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added the [Keyword attributes](#keyword-attributes) section.
 * Changed the [SME language extensions](#sme-language-extensions-and-intrinsics)
   to use keyword attributes instead of GNU-style attributes.
+* Added missing word to Function Multi Versioning's [Name mangling](#name-mangling).
 
 ### References
 
@@ -2467,7 +2468,7 @@ compiler and it is enabled.
 
 ### Name mangling
 
-The `"default"` version is not mangled top of the language specific name
+The `"default"` version is not mangled on top of the language-specific name
 mangling.
 
 The mangling function is compatible with the mangling for version information of
