@@ -9714,7 +9714,9 @@ the result is written directly into ZA.
   
   
   // Variants are available for:
+  //   _za32[_s32]
   //   _za32[_u32]
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   __attribute__((arm_streaming, arm_shared_za))
   void svsub_write[_single]_za32[_u32]_vg1x2(uint32_t slice, svuint32x2_t zn,
@@ -9722,7 +9724,9 @@ the result is written directly into ZA.
   
   
   // Variants are available for:
+  //   _za32[_s32]
   //   _za32[_u32]
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   __attribute__((arm_streaming, arm_shared_za))
   void svsub_write[_single]_za32[_u32]_vg1x4(uint32_t slice, svuint32x4_t zn,
@@ -9759,7 +9763,9 @@ the result is written directly into ZA.
   
   
   // Variants are available for:
+  //   _za32[_s32]
   //   _za32[_u32]
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   __attribute__((arm_streaming, arm_shared_za))
   void svsub_write_za32[_u32]_vg1x2(uint32_t slice,
@@ -9767,7 +9773,9 @@ the result is written directly into ZA.
   
   
   // Variants are available for:
+  //   _za32[_s32]
   //   _za32[_u32]
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   __attribute__((arm_streaming, arm_shared_za))
   void svsub_write_za32[_u32]_vg1x4(uint32_t slice,
