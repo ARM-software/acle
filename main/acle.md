@@ -11406,7 +11406,7 @@ Predicate select between predicate value or all-false
 ``` c
   // Variants are also available for _c16, _c32 and _c64
   __attribute__((arm_streaming_compatible))
-  svcount_t svpsel_lane_c8(svcount_t pn, svbool_t pm, uint32_t idx, uint64_t imm);
+  svcount_t svpsel_lane_c8(svcount_t pn, svbool_t pm, uint32_t idx);
   ```
 
 #### CNTP
