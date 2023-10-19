@@ -359,6 +359,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed the [SME language extensions](#sme-language-extensions-and-intrinsics)
   to use keyword attributes instead of GNU-style attributes.
 * Added missing word to Function Multi Versioning's [Name mangling](#name-mangling).
+* Added description of SVE reinterpret intrinsics.
 
 ### References
 
@@ -5927,18 +5928,6 @@ definition of `bfloat16_t` (see [Scalar types defined by
 `<arm_sve.h>`](#scalar-types-defined-by-arm_sve.h)). The other
 types are available unconditionally.
 
-ACLE provides two sets of intrinsics for converting between vector types:
-
-*   The [`svreinterpret`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svreinterpret)
-    intrinsics simply reinterpret a vector of one type as a vector of another
-    type, without changing any of the bits.
-
-*   The [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt_)
-    intrinsics instead perform numerical conversion from one type to another,
-    such as converting integers to floating-point values.
-
-To avoid any ambiguity between the two operations, ACLE does not allow
-C-style casting from one vector type to another.
 
 [`<arm_sve.h>`](#arm_sve.h) also defines tuples of two, three, and four
 vectors, as follows:
@@ -5997,6 +5986,20 @@ vectors using [`svundef`](https://developer.arm.com/architectures/instruction-se
 [`svundef2`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svundef2),
 [`svundef3`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svundef3) and
 [`svundef4`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svundef4).
+
+ACLE provides two sets of intrinsics for converting between vector types
+and between vector tuple types:
+
+*   The [`svreinterpret`](#sve-reinterpret-intrinsics) intrinsics simply
+    reinterpret a vector (or vector tuple) of one type as a vector (or
+    vector tuple) of another type, without changing any of the bits.
+
+*   The [`svcvt`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svcvt_)
+    intrinsics instead perform numerical conversion from one type to another,
+    such as converting integers to floating-point values.
+
+To avoid any ambiguity between the two operations, ACLE does not allow
+C-style casting from one vector type to another.
 
 ### SVE predicate types
 
@@ -7156,9 +7159,29 @@ Assuming `float64_t` data, the C version of the code above would be:
   p3 = svrdffr();
 ```
 
+### SVE reinterpret intrinsics
+
+The `svreinterpret` intrinsics for vector types and vector tuple types take the form
+
+``` c
+svreinterpret_type0[_type1_xN]
+```
+
+where `N` refers to the number of elements in a tuple type (2, 3, or 4).
+
+For example:
+``` c
+svuin16_t svreinterpret_u16_s32(svint32_t op);
+svuin16_t svreinterpret_u16(svint32_t op);
+svuin16x2_t svreinterpret_u16_s32_x2(svint32x2_t op);
+svuin16x2_t svreinterpret_u16(svint32x2_t op);
+```
+
+A list of SVE reinterpret intrinsics can be found on [developer.arm.com](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svreinterpret).
+
 ### List of SVE intrinsics
 
-The full list of SVE intrinsics can be found on
+The list of SVE intrinsics can be found on
 [developer.arm.com](https://developer.arm.com/architectures/instruction-sets/intrinsics/#f:@navigationhierarchiessimdisa=[sve,sve2]).
 This list includes SVE2 and other SVE extensions (such as the 32-bit
 matrix multiply extensions).
