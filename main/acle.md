@@ -11543,78 +11543,58 @@ Multi-vector signed saturating doubling multiply high
 While (resulting in predicate-as-counter). ``vl`` is expected to be 2 or 4.
 
 ``` c
-  // Variants are also available for _c16, _c32 and _c64
-  svcount_t svwhilege_c8(int64_t rn, int64_t rm, uint64_t vl) __arm_streaming;
+  // Variants are also available for _c16[_s64], _c32[_s64] _c64[_s64],
+  // _c8[_u64], _c16[_u64], _c32[_u64] and _c64[_u64]
+  svcount_t svwhilege_c8[_s64](int64_t rn, int64_t rm, uint64_t vl)
+    __arm_streaming;
 
 
-  // Variants are also available for _c16, _c32 and _c64
-  svcount_t svwhilegt_c8(int64_t rn, int64_t rm, uint64_t vl) __arm_streaming;
+  // Variants are also available for _c16[_s64], _c32[_s64] _c64[_s64],
+  // _c8[_u64], _c16[_u64], _c32[_u64] and _c64[_u64]
+  svcount_t svwhilegt_c8[_s64](int64_t rn, int64_t rm, uint64_t vl)
+    __arm_streaming;
 
 
-  // Variants are also available for _c16, _c32 and _c64
-  svcount_t svwhilehi_c8(uint64_t rn, uint64_t rm, uint64_t vl) __arm_streaming;
+  // Variants are also available for _c16[_s64], _c32[_s64] _c64[_s64],
+  // _c8[_u64], _c16[_u64], _c32[_u64] and _c64[_u64]
+  svcount_t svwhilele_c8[_s64](int64_t rn, int64_t rm, uint64_t vl)
+    __arm_streaming;
 
 
-  // Variants are also available for _c16, _c32 and _c64
-  svcount_t svwhilehs_c8(uint64_t rn, uint64_t rm, uint64_t vl) __arm_streaming;
-
-
-  // Variants are also available for _c16, _c32 and _c64
-  svcount_t svwhilele_c8(int64_t rn, int64_t rm, uint64_t vl) __arm_streaming;
-
-
-  // Variants are also available for _c16, _c32 and _c64
-  svcount_t svwhilelo_c8(uint64_t rn, uint64_t rm, uint64_t vl) __arm_streaming;
-
-
-  // Variants are also available for _c16, _c32 and _c64
-  svcount_t svwhilels_c8(uint64_t rn, uint64_t rm, uint64_t vl) __arm_streaming;
-
-
-  // Variants are also available for _c16, _c32 and _c64
-  svcount_t svwhilelt_c8(int64_t rn, int64_t rm, uint64_t vl) __arm_streaming;
+  // Variants are also available for _c16[_s64], _c32[_s64] _c64[_s64],
+  // _c8[_u64], _c16[_u64], _c32[_u64] and _c64[_u64]
+  svcount_t svwhilelt_c8[_s64](int64_t rn, int64_t rm, uint64_t vl)
+    __arm_streaming;
   ```
 
 While (resulting in predicate tuple)
 
 ``` c
-  // Variants are also available for _b16, _b32 and _b64
-  svboolx2_t svwhilege_b8_x2(int64_t rn, int64_t rm)
+  // Variants are also available for _b16[_s64]_x2, _b32[_s64]_x2,
+  // _b64[_s64]_x2, _b8[_u64]_x2, _b16[_u64]_x2, _b32[_u64]_x2 and
+  // _b64[_u64]_x2
+  svboolx2_t svwhilege_b8[_s64]_x2(int64_t rn, int64_t rm)
     __arm_streaming_compatible;
 
 
-  // Variants are also available for _b16, _b32 and _b64
-  svboolx2_t svwhilegt_b8_x2(int64_t rn, int64_t rm)
+  // Variants are also available for _b16[_s64]_x2, _b32[_s64]_x2,
+  // _b64[_s64]_x2, _b8[_u64]_x2, _b16[_u64]_x2, _b32[_u64]_x2 and
+  // _b64[_u64]_x2
+  svboolx2_t svwhilegt_b8[_s64]_x2(int64_t rn, int64_t rm)
     __arm_streaming_compatible;
 
 
-  // Variants are also available for _b16, _b32 and _b64
-  svboolx2_t svwhilehi_b8_x2(uint64_t rn, uint64_t rm)
+  // Variants are also available for _b16[_s64]_x2, _b32[_s64]_x2,
+  // _b64[_s64]_x2, _b8[_u64]_x2, _b16[_u64]_x2, _b32[_u64]_x2 and
+  // _b64[_u64]_x2
+  svboolx2_t svwhilele_b8[_s64]_x2(int64_t rn, int64_t rm)
     __arm_streaming_compatible;
 
 
-  // Variants are also available for _b16, _b32 and _b64
-  svboolx2_t svwhilehs_b8_x2(uint64_t rn, uint64_t rm)
-    __arm_streaming_compatible;
-
-
-  // Variants are also available for _b16, _b32 and _b64
-  svboolx2_t svwhilele_b8_x2(int64_t rn, int64_t rm)
-    __arm_streaming_compatible;
-
-
-  // Variants are also available for _b16, _b32 and _b64
-  svboolx2_t svwhilelo_b8_x2(uint64_t rn, uint64_t rm)
-    __arm_streaming_compatible;
-
-
-  // Variants are also available for _b16, _b32 and _b64
-  svboolx2_t svwhilels_b8_x2(uint64_t rn, uint64_t rm)
-    __arm_streaming_compatible;
-
-
-  // Variants are also available for _b16, _b32 and _b64
-  svboolx2_t svwhilelt_b8_x2(int64_t rn, int64_t rm)
+  // Variants are also available for _b16[_s64]_x2, _b32[_s64]_x2,
+  // _b64[_s64]_x2, _b8[_u64]_x2, _b16[_u64]_x2, _b32[_u64]_x2 and
+  // _b64[_u64]_x2
+  svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm)
     __arm_streaming_compatible;
   ```
 
