@@ -9245,9 +9245,10 @@ ZA array vectors. The intrinsics model this in the following way:
     left up to the compiler to choose the most optimal form.
 
 *   Intrinsic functions have a `_x2` or `_x4` suffix if the
-    function\'s return value is a vector group of 2 or 4 data vectors
+    function\'s widest type is a vector tuple of 2 or 4 data vectors
     and the function operates purely on vectors, not on the matrix array or
-    tile slices.
+    tile slices. The suffix is only present on overloaded names if it cannot
+    be inferred from arguments.
 
 *   Intrinsic functions have a `_vg2` or `_vg4` suffix if the function
     operates on groups of 2 or 4 ZA tile slices.  For example:
@@ -11447,16 +11448,16 @@ Multi-vector rounding shift left
 Multi-vector saturating rounding shift right narrow
 
 ``` c
-  // Variants are also available for _u16_x2
-  svint16_t svqrshr[_s16_x2](svint32x2_t zn, uint64_t imm) __arm_streaming;
+  // Variants are also available for _u8[_u32_x4]
+  svint8_t svqrshr_s8[_s32_x4](svint32x4_t zn, uint64_t imm) __arm_streaming;
 
 
-  // Variants are also available for _u8_x4
-  svint8_t svqrshr[_s8_x4](svint32x4_t zn, uint64_t imm) __arm_streaming;
+  // Variants are also available for _u16[_u32_x2]
+  svint16_t svqrshr_s16[_s32_x2](svint32x2_t zn, uint64_t imm) __arm_streaming;
 
 
-  // Variants are also available for _u16_x4
-  svint16_t svqrshr[_s16_x4](svint64x4_t zn, uint64_t imm) __arm_streaming;
+  // Variants are also available for _u16[_u64_x4]
+  svint16_t svqrshr_s16[_s64_x4](svint64x4_t zn, uint64_t imm) __arm_streaming;
   ```
 
 #### SQRSHRN, UQRSHRN
@@ -11464,18 +11465,18 @@ Multi-vector saturating rounding shift right narrow
 Multi-vector saturating rounding shift right narrow and interleave
 
 ``` c
-  // Variants are also available for _u16_x2
-  svint16_t svqrshrn[_s16_x2](svint32x2_t zn, uint64_t imm)
+  // Variants are also available for _u8[_u32_x4]
+  svint8_t svqrshrn_s8[_s32_x4](svint32x4_t zn, uint64_t imm)
     __arm_streaming;
 
 
-  // Variants are also available for _u8_x4
-  svint8_t svqrshrn[_s8_x4](svint32x4_t zn, uint64_t imm)
+  // Variants are also available for _u16[_u32_x2]
+  svint16_t svqrshrn_s16[_s32_x2](svint32x2_t zn, uint64_t imm)
     __arm_streaming_compatible;
 
 
-  // Variants are also available for _u16_x4
-  svint16_t svqrshrn[_s16_x4](svint64x4_t zn, uint64_t imm)
+  // Variants are also available for _u16[_u64_x4]
+  svint16_t svqrshrn_s16[_s64_x4](svint64x4_t zn, uint64_t imm)
     __arm_streaming;
   ```
 
@@ -11484,13 +11485,13 @@ Multi-vector saturating rounding shift right narrow and interleave
 Multi-vector saturating rounding shift right unsigned narrow
 
 ``` c
-  svuint16_t svsqrshru[_u16_x2](svint32x2_t zn, uint64_t imm) __arm_streaming;
+  svuint8_t svqrshru_u8[_s32_x4](svint32x4_t zn, uint64_t imm) __arm_streaming;
 
 
-  svuint8_t svsqrshru[_u8_x4](svint32x4_t zn, uint64_t imm) __arm_streaming;
+  svuint16_t svqrshru_u16[_s32_x2](svint32x2_t zn, uint64_t imm) __arm_streaming;
 
 
-  svuint16_t svsqrshru[_u16_x4](svint64x4_t zn, uint64_t imm) __arm_streaming;
+  svuint16_t svqrshru_u16[_s64_x4](svint64x4_t zn, uint64_t imm) __arm_streaming;
   ```
 
 #### SQRSHRUN
@@ -11498,12 +11499,12 @@ Multi-vector saturating rounding shift right unsigned narrow
 Multi-vector saturating rounding shift right unsigned narrow and interleave
 
 ``` c
-  svuint16_t svsqrshrun[_u16_x2](svint32x2_t zn, uint64_t imm)
+  svuint16_t svqrshrun_u16[_s32_x2](svint32x2_t zn, uint64_t imm)
     __arm_streaming_compatible;
 
 
-  // Variants are also available for _u16
-  svuint8_t svsqrshrun[_u8_x4](svint32x4_t zn, uint64_t imm)
+  // Variants are also available for _u16[_s64_x4]
+  svuint8_t svqrshrun_u8[_s32_x4](svint32x4_t zn, uint64_t imm)
     __arm_streaming;
   ```
 
@@ -11622,12 +11623,14 @@ While (resulting in predicate tuple)
 Multi-vector pack/unpack
 
 ``` c
-  // Variants are also available for _u16_x2, _u32_x2, _s32_x2, _u64_x2 and _s64_x2
-  svint16x2_t svunpk[_s16_x2](svint8_t zn) __arm_streaming;
+  // Variants are also available for _u16[_u8_x2], _u32[_u16_x2], _s32[_s16_x2],
+  // _u64[_u32_x2] and _s64[_s32_x2]
+  svint16x2_t svunpk_s16[_s8_x2](svint8_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u16_x4, _u32_x4, _s32_x4, _u64_x4 and _s64_x4
-  svint16x4_t svunpk[_s16_x4](svint8x2_t zn) __arm_streaming;
+  // Variants are also available for _u16[_u8_x4], _u32[_u16_x4], _s32[_s16_x4],
+  // _u64[_u32_x4] and _s64[_s32_x4]
+  svint16x4_t svunpk_s16[_s8_x4](svint8x2_t zn) __arm_streaming;
   ```
 
 #### ZIP
@@ -11635,15 +11638,14 @@ Multi-vector pack/unpack
 Multi-vector zip.
 
 ``` c
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  svint8x2_t svzip[_s8]_x2(svint8_t zn, svint8_t zm) __arm_streaming;
+  // Variants are also available for _u8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
+  svint8x2_t svzip[_s8_x2](svint8x2_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  svint8x4_t svzip[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
-                           svint8_t zn3) __arm_streaming;
+  // Variants are also available for _u8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
+  svint8x4_t svzip[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
 
 The `svzipq` intrinsics operate on quad-words, but for convenience accept all
@@ -11651,15 +11653,14 @@ element types.
 
 
 ``` c
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  svint8x2_t svzipq[_s8]_x2(svint8_t zn, svint8_t zm) __arm_streaming;
+  // Variants are also available for _u8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
+  svint8x2_t svzipq[_s8_x2](svint8x2_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  svint8x4_t svzipq[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
-                            svint8_t zn3) __arm_streaming;
+  // Variants are also available for _u8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
+  svint8x4_t svzipq[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
 
 #### UZP
@@ -11667,30 +11668,28 @@ element types.
 Multi-vector unzip.
 
 ``` c
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  svint8x2_t svuzp[_s8]_x2(svint8_t zn, svint8_t zm) __arm_streaming;
+  // Variants are also available for _u8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
+  svint8x2_t svuzp[_s8_x2](svint8x2_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  svint8x4_t svuzp[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
-                           svint8_t zn3) __arm_streaming;
+  // Variants are also available for _u8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
+  svint8x4_t svuzp[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
 
 The `svuzpq` intrinsics operate on quad-words, but for convenience accept all
 element types.
 
 ``` c
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  svint8x2_t svuzpq[_s8]_x2(svint8_t zn, svint8_t zm) __arm_streaming;
+  // Variants are also available for _u8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
+  svint8x2_t svuzpq[_s8_x2](svint8x2_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u8, _u16, _s16, _f16, _bf16, _u32, _s32, _f32,
-  // _u64, _s64 and _f64
-  svint8x4_t svuzpq[_s8]_x4(svint8_t zn, svint8_t zn1, svint8_t zn2,
-                            svint8_t zn3) __arm_streaming;
+  // Variants are also available for _u8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
+  svint8x4_t svuzpq[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
 
 ### Streaming-compatible versions of standard routines
