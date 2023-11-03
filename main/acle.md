@@ -10008,6 +10008,14 @@ Multi-vector dot-product (2-way and 4-way)
     __arm_streaming __arm_shared_za;
 
 
+  void svsudot_za32[_s8]_vg1x2(uint32_t slice, svint8x2_t zn, svuint8x2_t zm)
+    __arm_streaming __arm_shared_za;
+
+
+  void svsudot_za32[_s8]_vg1x4(uint32_t slice, svint8x4_t zn, svuint8x4_t zm)
+    __arm_streaming __arm_shared_za;
+
+
   void svusdot_za32[_u8]_vg1x2(uint32_t slice, svuint8x2_t zn, svint8x2_t zm)
     __arm_streaming __arm_shared_za;
 
@@ -10405,6 +10413,10 @@ Multi-vector multiply-add long long (widening)
     __arm_streaming __arm_shared_za;
 
 
+  void svsumla_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn, svuint8_t zm)
+    __arm_streaming __arm_shared_za;
+
+
   void svsumla[_single]_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                         svuint8_t zm)
     __arm_streaming __arm_shared_za;
@@ -10452,11 +10464,19 @@ Multi-vector multiply-add long long (widening)
     __arm_streaming __arm_shared_za;
 
 
-  void svusmla_za32[_s8]_vg4x2(uint32_t slice, svuint8x2_t zn, svint8x2_t zm)
+  void svsumla_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn, svuint8x2_t zm)
     __arm_streaming __arm_shared_za;
 
 
-  void svusmla_za32[_s8]_vg4x4(uint32_t slice, svuint8x4_t zn, svint8x4_t zm)
+  void svsumla_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn, svuint8x4_t zm)
+    __arm_streaming __arm_shared_za;
+
+
+  void svusmla_za32[_u8]_vg4x2(uint32_t slice, svuint8x2_t zn, svint8x2_t zm)
+    __arm_streaming __arm_shared_za;
+
+
+  void svusmla_za32[_u8_vg4x4(uint32_t slice, svuint8x4_t zn, svint8x4_t zm)
     __arm_streaming __arm_shared_za;
   ```
 
