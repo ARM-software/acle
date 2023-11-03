@@ -11515,13 +11515,13 @@ Multi-vector signed saturating doubling multiply high
 ``` c
   // Variants are also available for _single_s16_x2, _single_s32_x2
   // and _single_s64_x2
-  svint8x2_t svsqdmulh[_single_s8_x2](svint8x2_t zdn, svint8_t zm)
+  svint8x2_t svqdmulh[_single_s8_x2](svint8x2_t zdn, svint8_t zm)
     __arm_streaming;
 
 
   // Variants are also available for _single_s16_x4, _single_s32_x4
   // and _single_s64_x4
-  svint8x4_t svsqdmulh[_single_s8_x4](svint8x4_t zdn, svint8_t zm)
+  svint8x4_t svqdmulh[_single_s8_x4](svint8x4_t zdn, svint8_t zm)
     __arm_streaming;
   ```
 
@@ -11531,11 +11531,11 @@ Multi-vector signed saturating doubling multiply high
 
 ``` c
   // Variants are also available for _s16_x2, _s32_x2 and _s64_x2
-  svint8x2_t svsqdmulh[_s8_x2](svint8x2_t zdn, svint8x2_t zm) __arm_streaming;
+  svint8x2_t svqdmulh[_s8_x2](svint8x2_t zdn, svint8x2_t zm) __arm_streaming;
 
 
   // Variants are also available for _s16_x4, _s32_x4 and _s64_x4
-  svint8x4_t svsqdmulh[_s8_x4](svint8x4_t zdn, svint8x4_t zm) __arm_streaming;
+  svint8x4_t svqdmulh[_s8_x4](svint8x4_t zdn, svint8x4_t zm) __arm_streaming;
   ```
 
 #### WHILEGE, WHILEGT, WHILEHI, WHILEHS, WHILELE, WHILELO, WHILELS, WHILELT
