@@ -10251,8 +10251,8 @@ Multi-vector multiply-add long (widening)
 
 ``` c
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
-  void svmla[_single]_za32[_bf16]_vg2x1(uint32_t slice, svbfloat16_t zn,
-                                        svbfloat16_t zm)
+  void svmla_za32[_bf16]_vg2x1(uint32_t slice, svbfloat16_t zn,
+                               svbfloat16_t zm)
     __arm_streaming __arm_shared_za;
 
 
@@ -10314,8 +10314,8 @@ Multi-vector multiply-subtract long (widening)
 
 ``` c
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
-  void svmls[_single]_za32[_bf16]_vg2x1(uint32_t slice, svbfloat16_t zn,
-                                        svbfloat16_t zm)
+  void svmls_za32[_bf16]_vg2x1(uint32_t slice, svbfloat16_t zn,
+                               svbfloat16_t zm)
     __arm_streaming __arm_shared_za;
 
 
@@ -10381,8 +10381,7 @@ Multi-vector multiply-add long long (widening)
   //   _za32[_u8]
   //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmla[_single]_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn,
-                                      svint8_t zm)
+  void svmla_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn, svint8_t zm)
     __arm_streaming __arm_shared_za;
 
 
@@ -10416,8 +10415,7 @@ Multi-vector multiply-add long long (widening)
     __arm_streaming __arm_shared_za;
 
 
-  void svusmla[_single]_za32[_u8]_vg4x1(uint32_t slice, svuint8_t zn,
-                                        svint8_t zm)
+  void svusmla_za32[_u8]_vg4x1(uint32_t slice, svuint8_t zn, svint8_t zm)
     __arm_streaming __arm_shared_za;
 
 
@@ -10537,8 +10535,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za32[_u8]
   //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmls[_single]_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn,
-                                      svint8_t zm)
+  void svmls_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn, svint8_t zm)
     __arm_streaming __arm_shared_za;
 
 
