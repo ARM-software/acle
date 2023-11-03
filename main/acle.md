@@ -9826,8 +9826,10 @@ Multi-vector add/sub and accumulate into ZA
 
   // Variants are available for:
   //   _za32[_f32]
+  //   _za32[_s32]
   //   _za32[_u32]
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svsub_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zm)
     __arm_streaming __arm_shared_za;
@@ -9835,8 +9837,10 @@ Multi-vector add/sub and accumulate into ZA
 
   // Variants are available for:
   //   _za32[_f32]
+  //   _za32[_s32]
   //   _za32[_u32]
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svsub_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zm)
     __arm_streaming __arm_shared_za;
@@ -9898,22 +9902,23 @@ Multi-vector saturating extract narrow and interleave
 
 #### UDOT, SDOT, FDOT (vectors)
 
-Multi-vector dot-product (2-way and 4-way)
+Multi-vector dot-product (2-way)
 
 ``` c
-  // Variants are also available for _s32_s16_s16 and _u32_u16_u16
-  svfloat32_t svdot[_f32_f16_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm)
+  // Variants are also available for _s32_s16 and _u32_u16
+  svfloat32_t svdot[_f32_f16](svfloat32_t zda, svfloat16_t zn,
+                              svfloat16_t zm)
     __arm_streaming_compatible;
   ```
 
 #### UDOT, SDOT, FDOT (indexed)
 
-Multi-vector dot-product (2-way and 4-way)
+Multi-vector dot-product (2-way)
 
 ``` c
-  // Variants are also available for _s32 and _u32
-  svfloat32_t svdot_lane[_f32](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm,
-                               uint64_t imm_idx)
+  // Variants are also available for _s32_s16 and _u32_u16
+  svfloat32_t svdot_lane[_f32_f16](svfloat32_t zda, svfloat16_t zn,
+                                   svfloat16_t zm, uint64_t imm_idx)
     __arm_streaming_compatible;
   ```
 
@@ -10117,11 +10122,13 @@ Integer sum of outer products and accumulate/subtract (2-way)
 Bitwise exclusive NOR population count outer product and accumulate/subtract
 
 ``` c
+  // Variants are also available for _za32[_s32]
   void svbmopa_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint32_t zn, svuint32_t zm)
     __arm_streaming __arm_shared_za;
 
 
+  // Variants are also available for _za32[_s32]
   void svbmops_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint32_t zn, svuint32_t zm)
     __arm_streaming __arm_shared_za;
@@ -10399,27 +10406,27 @@ Multi-vector multiply-add long long (widening)
     __arm_streaming __arm_shared_za;
 
 
-  void svsumla[_single]_za32[_u8]_vg4x2(uint32_t slice, svint8x2_t zn,
+  void svsumla[_single]_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                         svuint8_t zm)
     __arm_streaming __arm_shared_za;
 
 
-  void svsumla[_single]_za32[_u8]_vg4x4(uint32_t slice, svint8x4_t zn,
+  void svsumla[_single]_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn,
                                         svuint8_t zm)
     __arm_streaming __arm_shared_za;
 
 
-  void svusmla[_single]_za32[_s8]_vg4x1(uint32_t slice, svuint8_t zn,
+  void svusmla[_single]_za32[_u8]_vg4x1(uint32_t slice, svuint8_t zn,
                                         svint8_t zm)
     __arm_streaming __arm_shared_za;
 
 
-  void svusmla[_single]_za32[_s8]_vg4x2(uint32_t slice, svuint8x2_t zn,
+  void svusmla[_single]_za32[_u8]_vg4x2(uint32_t slice, svuint8x2_t zn,
                                         svint8_t zm)
     __arm_streaming __arm_shared_za;
 
 
-  void svusmla[_single]_za32[_s8]_vg4x4(uint32_t slice, svuint8x4_t zn,
+  void svusmla[_single]_za32[_u8]_vg4x4(uint32_t slice, svuint8x4_t zn,
                                         svint8_t zm)
     __arm_streaming __arm_shared_za;
   ```
@@ -11176,35 +11183,40 @@ Zero ZT0
 Lookup table read with 2-bit and 4-bit indexes
 
 ``` c
-  // Variants are also available for _zt[_u16] and _zt[_u32]
+  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
+  // and _zt[_s32]
   svuint8_t svluti2_lane_zt[_u8](uint64_t zt, svuint8_t zn, uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_u16] and _zt[_u32]
+  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
+  // and _zt[_s32]
   svuint8x2_t svluti2_lane_zt[_u8]_x2(uint64_t zt, svuint8_t zn,
                                       uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_u16] and _zt[_u32]
+  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
+  // and _zt[_s32]
   svuint8x4_t svluti2_lane_zt[_u8]_x4(uint64_t zt, svuint8_t zn,
                                       uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_u16] and _zt[_u32]
+  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
+  // and _zt[_s32]
   svuint8_t svluti4_lane_zt[_u8](uint64_t zt, svuint8_t zn, uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_u16] and _zt[_u32]
+  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
+  // and _zt[_s32]
   svuint8x2_t svluti4_lane_zt[_u8]_x2(uint64_t zt, svuint8_t zn,
                                       uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_u32]
+  // Variants are also available for _zt[_s16], _zt[_u32] and _zt[_s32]
   svuint16x4_t svluti4_lane_zt[_u16]_x4(uint64_t zt, svuint16_t zn,
                                         uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
