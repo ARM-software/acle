@@ -9279,7 +9279,7 @@ ZA array vectors. The intrinsics model this in the following way:
 
 ``` c
     // Reads 2 consecutive horizontal tile slices from ZA into multi-vector.
-    svint8x2_t svread_hor_za8[_s8]_vg2(uint64_t tile, uint32_t slice)
+    svint8x2_t svread_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
       __arm_streaming __arm_shared_za __arm_preserves_za;
 ```
 
@@ -11225,42 +11225,43 @@ Zero ZT0
 Lookup table read with 2-bit and 4-bit indexes
 
 ``` c
-  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
-  // and _zt[_s32]
-  svuint8_t svluti2_lane_zt[_u8](uint64_t zt, svuint8_t zn, uint64_t imm_idx)
+  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
+  svint8_t svluti2_lane_zt_s8(uint64_t zt, svuint8_t zn, uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
-  // and _zt[_s32]
-  svuint8x2_t svluti2_lane_zt[_u8]_x2(uint64_t zt, svuint8_t zn,
-                                      uint64_t imm_idx)
+  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
+  svint8x2_t svluti2_lane_zt_s8_x2(uint64_t zt, svuint8_t zn,
+                                   uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
-  // and _zt[_s32]
-  svuint8x4_t svluti2_lane_zt[_u8]_x4(uint64_t zt, svuint8_t zn,
-                                      uint64_t imm_idx)
+  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
+  svint8x4_t svluti2_lane_zt_s8_x4(uint64_t zt, svuint8_t zn,
+                                   uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
-  // and _zt[_s32]
-  svuint8_t svluti4_lane_zt[_u8](uint64_t zt, svuint8_t zn, uint64_t imm_idx)
+  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
+  svint8_t svluti4_lane_zt_s8(uint64_t zt, svuint8_t zn, uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_s8], _zt[_u16], _zt[_s16], _zt[_u32]
-  // and _zt[_s32]
-  svuint8x2_t svluti4_lane_zt[_u8]_x2(uint64_t zt, svuint8_t zn,
-                                      uint64_t imm_idx)
+  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
+  svint8x2_t svluti4_lane_zt_s8_x2(uint64_t zt, svuint8_t zn,
+                                   uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
-  // Variants are also available for _zt[_s16], _zt[_u32] and _zt[_s32]
-  svuint16x4_t svluti4_lane_zt[_u16]_x4(uint64_t zt, svuint16_t zn,
-                                        uint64_t imm_idx)
+  // Variants are also available for _zt_u16, _zt_f16, _zt_bf16, _zt_s32,
+  // _zt_u32 and _zt_f32
+  svint16x4_t svluti4_lane_zt_s16_x4(uint64_t zt, svuint16_t zn,
+                                     uint64_t imm_idx)
     __arm_streaming __arm_shared_za __arm_preserves_za;
   ```
 
@@ -11269,79 +11270,87 @@ Lookup table read with 2-bit and 4-bit indexes
 Move multi-vectors to/from ZA
 
 ``` c
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
-  // _za64[_s64], _za64[_u64] and _za64_[f64]
-  svint8x2_t svread_hor_za8[_s8]_vg2(uint64_t tile, uint32_t slice)
+  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // _za64_s64, _za64_u64 and _za64_f64
+  svint8x2_t svread_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
+
+
+  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // _za64_s64, _za64_u64 and _za64_f64
+  svint8x4_t svread_hor_za8_s8_vg4(uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
+
+
+  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // _za64_s64, _za64_u64 and _za64_f64
+  svint8x2_t svread_ver_za8_s8_vg2(uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
+
+
+  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // _za64_s64, _za64_u64 and _za64_f64
+  svint8x4_t svread_ver_za8_s8_vg4(uint64_t tile, uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
+
+
+  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // _za64_s64, _za64_u64 and _za64_f64
+  svint8x2_t svread_za8_s8_vg1x2(uint32_t slice)
+    __arm_streaming __arm_shared_za __arm_preserves_za;
+
+
+  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // _za64_s64, _za64_u64 and _za64_f64
+  svint8x4_t svread_za8_s8_vg1x4(uint32_t slice)
     __arm_streaming __arm_shared_za __arm_preserves_za;
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
-  // _za64[_s64], _za64[_u64] and _za64_[f64]
-  svint8x4_t svread_hor_za8[_s8]_vg4(uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
-
-
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
-  // _za64[_s64], _za64[_u64] and _za64_[f64]
-  svint8x2_t svread_ver_za8[_s8]_vg2(uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
-
-
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
-  // _za64[_s64], _za64[_u64] and _za64_[f64]
-  svint8x4_t svread_ver_za8[_s8]_vg4(uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
-
-
-  // Variants are also available for _za64_u64 and _za64_f64
-  svint64x2_t svread_za64_s64_vg1x2(uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
-
-
-  // Variants are also available for _za64_u64 and _za64_f64
-  svint64x4_t svread_za64_s64_vg1x4(uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
-
-
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
-  // _za64[_s64], _za64[_u64] and _za64_[f64]
+  // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_hor_za8[_s8]_vg2(uint64_t tile, uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_shared_za;
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
-  // _za64[_s64], _za64[_u64] and _za64_[f64]
+  // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_hor_za8[_s8]_vg4(uint64_t tile, uint32_t slice, svint8x4_t zn)
     __arm_streaming __arm_shared_za;
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
-  // _za64[_s64], _za64[_u64] and _za64_[f64]
+  // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_ver_za8[_s8]_vg2(uint64_t tile, uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_shared_za;
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
-  // _za64[_s64], _za64[_u64] and _za64_[f64]
+  // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_ver_za8[_s8]_vg4(uint64_t tile, uint32_t slice, svint8x4_t zn)
     __arm_streaming __arm_shared_za;
 
 
-  // Variants are also available for _za64[_u64] and _za64[_f64]
-  void svwrite_za64[_s64]_vg1x2(uint32_t slice, svint64x2_t zn)
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
+  // _za64[_s64], _za64[_u64] and _za64[_f64]
+  void svwrite_za8[_s8]_vg1x2(uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_shared_za;
 
 
-  // Variants are also available for _za64[_u64] and _za64[_f64]
-  void svwrite_za64[_s64]_vg1x4(uint32_t slice, svint64x4_t zn)
+  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
+  // _za64[_s64], _za64[_u64] and _za64[_f64]
+  void svwrite_za8[_s8]_vg1x4(uint32_t slice, svint8x4_t zn)
     __arm_streaming __arm_shared_za;
   ```
 
@@ -11473,15 +11482,18 @@ Multi-vector saturating rounding shift right narrow
 
 ``` c
   // Variants are also available for _u8[_u32_x4]
-  svint8_t svqrshr_s8[_s32_x4](svint32x4_t zn, uint64_t imm) __arm_streaming;
+  svint8_t svqrshr[_n]_s8[_s32_x4](svint32x4_t zn, uint64_t imm)
+    __arm_streaming;
 
 
   // Variants are also available for _u16[_u32_x2]
-  svint16_t svqrshr_s16[_s32_x2](svint32x2_t zn, uint64_t imm) __arm_streaming;
+  svint16_t svqrshr[_n]_s16[_s32_x2](svint32x2_t zn, uint64_t imm)
+    __arm_streaming;
 
 
   // Variants are also available for _u16[_u64_x4]
-  svint16_t svqrshr_s16[_s64_x4](svint64x4_t zn, uint64_t imm) __arm_streaming;
+  svint16_t svqrshr[_n]_s16[_s64_x4](svint64x4_t zn, uint64_t imm)
+    __arm_streaming;
   ```
 
 #### SQRSHRN, UQRSHRN
@@ -11490,17 +11502,17 @@ Multi-vector saturating rounding shift right narrow and interleave
 
 ``` c
   // Variants are also available for _u8[_u32_x4]
-  svint8_t svqrshrn_s8[_s32_x4](svint32x4_t zn, uint64_t imm)
+  svint8_t svqrshrn[_n]_s8[_s32_x4](svint32x4_t zn, uint64_t imm)
     __arm_streaming;
 
 
   // Variants are also available for _u16[_u32_x2]
-  svint16_t svqrshrn_s16[_s32_x2](svint32x2_t zn, uint64_t imm)
+  svint16_t svqrshrn[_n]_s16[_s32_x2](svint32x2_t zn, uint64_t imm)
     __arm_streaming_compatible;
 
 
   // Variants are also available for _u16[_u64_x4]
-  svint16_t svqrshrn_s16[_s64_x4](svint64x4_t zn, uint64_t imm)
+  svint16_t svqrshrn[_n]_s16[_s64_x4](svint64x4_t zn, uint64_t imm)
     __arm_streaming;
   ```
 
@@ -11509,13 +11521,16 @@ Multi-vector saturating rounding shift right narrow and interleave
 Multi-vector saturating rounding shift right unsigned narrow
 
 ``` c
-  svuint8_t svqrshru_u8[_s32_x4](svint32x4_t zn, uint64_t imm) __arm_streaming;
+  svuint8_t svqrshru[_n]_u8[_s32_x4](svint32x4_t zn, uint64_t imm)
+    __arm_streaming;
 
 
-  svuint16_t svqrshru_u16[_s32_x2](svint32x2_t zn, uint64_t imm) __arm_streaming;
+  svuint16_t svqrshru[_n]_u16[_s32_x2](svint32x2_t zn, uint64_t imm)
+    __arm_streaming;
 
 
-  svuint16_t svqrshru_u16[_s64_x4](svint64x4_t zn, uint64_t imm) __arm_streaming;
+  svuint16_t svqrshru[_n]_u16[_s64_x4](svint64x4_t zn, uint64_t imm)
+    __arm_streaming;
   ```
 
 #### SQRSHRUN
@@ -11523,12 +11538,12 @@ Multi-vector saturating rounding shift right unsigned narrow
 Multi-vector saturating rounding shift right unsigned narrow and interleave
 
 ``` c
-  svuint16_t svqrshrun_u16[_s32_x2](svint32x2_t zn, uint64_t imm)
+  svuint16_t svqrshrun[_n]_u16[_s32_x2](svint32x2_t zn, uint64_t imm)
     __arm_streaming_compatible;
 
 
   // Variants are also available for _u16[_s64_x4]
-  svuint8_t svqrshrun_u8[_s32_x4](svint32x4_t zn, uint64_t imm)
+  svuint8_t svqrshrun[_n]_u8[_s32_x4](svint32x4_t zn, uint64_t imm)
     __arm_streaming;
   ```
 
