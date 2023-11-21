@@ -2490,8 +2490,9 @@ compiler and it is enabled.
 
 ### Name mangling
 
-The `"default"` version is not mangled on top of the language-specific name
-mangling.
+The `"default"` version is mangled with `".default"` on top of the
+language-specific name mangling. When the `"default"` version matches with an
+explicitly provided version an alias to be generated.
 
 The mangling function is compatible with the mangling for version information of
 the [[cxxabi]](#cxxabi), and it is defined as follows:
@@ -2510,7 +2511,7 @@ For example:
 __attribute__((target_clones("crc32", "aes+sha1")))
 int foo(){..}
 ```
-will produce these mangled names for C language: `foo`, `foo._Mcrc32`,
+will produce these mangled names for C language: `foo.default`, `foo._Mcrc32`,
 `foo._Msha1Maes`.
 
 
