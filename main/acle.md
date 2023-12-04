@@ -2577,7 +2577,7 @@ The following table lists the architectures feature mapping for AArch64
    | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64  == 0b0001```  |
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64  == 0b1111```  |
    | 580           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SME == 0b0010```       |
-   | 650           | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS == 0b0010```     |
+   | 650           | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS == 0b0001```     |
 
 ### Selection
 
