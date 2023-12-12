@@ -12080,18 +12080,27 @@ Multi-vector saturating extract narrow and interleave.
  ``` c
    // All the intrinsics below are [SVE2.1 or SME2]
    // Variants are also available for _u16[_s32]_x2 and _u16[_u32]_x2
-   svint16_t svqcvtn_s16[_s32]_x2(svint32x2_t zn);
+   svint16_t svqcvtn_s16[_s32_x2](svint32x2_t zn);
    ```
 
-#### SQRSHRN, SQRSHRUN, UQRSHRN
+#### SQRSHRN, UQRSHRN
 
-Multi-vector saturating rounding shift right narrow and interleave.
+Multi-vector saturating rounding shift right narrow and interleave
 
 ``` c
-   // All the intrinsics below are: [SVE2.1 or SME2]
-   // Variants are also available for _u16[_s32]_x2 and _u16[_u32]_x2
-   svint16_t svqrshrn_s16[_s32]_x2(svint32x2_t zn, uint64_t imm);
-   ```
+  // All the intrinsics below are: [SVE2.1 or SME2]
+  // Variants are also available for _u16[_u32_x2]
+  svint16_t svqrshrn[_n]_s16[_s32_x2](svint32x2_t zn, uint64_t imm)
+  ```
+
+#### SQRSHRUN
+
+Multi-vector saturating rounding shift right unsigned narrow and interleave
+
+``` c
+  // The intrinsic below is: [SVE2.1 or SME2]
+  svuint16_t svqrshrun[_n]_u16[_s32_x2](svint32x2_t zn, uint64_t imm)
+  ```
 
 #### ST1D, ST1W
 
