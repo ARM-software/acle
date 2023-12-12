@@ -12311,11 +12311,7 @@ While (resulting in predicate-as-counter). ``vl`` is expected to be 2 or 4.
    // _c8[_u64], _c16[_u64], _c32[_u64] and _c64[_u64]
    svcount_t svwhilege_c8[_s64](int64_t rn, int64_t rm, uint64_t vl);
    svcount_t svwhilegt_c8[_s64](int64_t rn, int64_t rm, uint64_t vl);
-   svcount_t svwhilehi_c8[_s64](int64_t rn, int64_t rm, uint64_t vl);
-   svcount_t svwhilehs_c8[_s64](int64_t rn, int64_t rm, uint64_t vl);
    svcount_t svwhilele_c8[_s64](int64_t rn, int64_t rm, uint64_t vl);
-   svcount_t svwhilelo_c8[_s64](int64_t rn, int64_t rm, uint64_t vl);
-   svcount_t svwhilels_c8[_s64](int64_t rn, int64_t rm, uint64_t vl);
    svcount_t svwhilelt_c8[_s64](int64_t rn, int64_t rm, uint64_t vl);
    ```
 
@@ -12330,11 +12326,7 @@ While (resulting in predicate tuple).
    // _b8[_u64]_x2,  _b16[_u64]_x2, _b32[_u64]_x2 and _b64[_u64]_x2
    svboolx2_t svwhilege_b8[_s64]_x2(int64_t rn, int64_t rm);
    svboolx2_t svwhilegt_b8[_s64]_x2(int64_t rn, int64_t rm);
-   svboolx2_t svwhilehi_b8[_s64]_x2(int64_t rn, int64_t rm);
-   svboolx2_t svwhilehs_b8[_s64]_x2(int64_t rn, int64_t rm);
    svboolx2_t svwhilele_b8[_s64]_x2(int64_t rn, int64_t rm);
-   svboolx2_t svwhilelo_b8[_s64]_x2(int64_t rn, int64_t rm);
-   svboolx2_t svwhilels_b8[_s64]_x2(int64_t rn, int64_t rm);
    svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
    ```
 
