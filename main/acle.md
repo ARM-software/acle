@@ -12330,7 +12330,7 @@ While (resulting in predicate tuple).
    svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
    ```
 
-### SVE2.1 BFloat16 data-processing instructions.
+### SVE2 BFloat16 data-processing instructions.
 
 The instructions in this section are available when __ARM_FEATURE_B16B16 is
 non-zero.
