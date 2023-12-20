@@ -11815,9 +11815,9 @@ Dot-product (2-way).
 
  ``` c
    // All the intrinsics below are [SVE2p1 or SME2]
-   // Variants are also available for _s32_s16_s16 and _u32_u16_u16
-   svfloat32_t svdot[_f32_f16_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
-   svfloat32_t svdot_lane[_f32_f16_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm,
+   // Variants are also available for _s32_s16 and _u32_u16
+   svfloat32_t svdot[_f32_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
+   svfloat32_t svdot_lane[_f32_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm,
                                 uint64_t imm_idx);
    ```
 
@@ -11829,7 +11829,7 @@ Extract vector segment from each pair of quadword segments.
    // Variants are also available for:
    // _s8, _s16, _u16, _s32, _u32, _s64, _u64
    // _bf16, _f16, _f32, _f64
-   svuint8_t svextq_lane[_u8](svuint8_t zdn, svuint8_t zm, uint64_t imm);
+   svuint8_t svextq[_u8](svuint8_t zdn, svuint8_t zm, uint64_t imm);
    ```
 
 #### LD1D, LD1W
@@ -12109,14 +12109,14 @@ Contiguous store of single vector operand. It is truncating store from quadword.
  ``` c
    // Variants are also available for:
    // _u32, _s32
-   void svst1uwq[_f32](svbool_t, const float32_t *ptr, svfloat32_t data);
-   void svst1uwq_vnum[_f32](svbool_t, const float32_t *ptr, int64_t vnum, svfloat32_t data);
+   void svst1wq[_f32](svbool_t, const float32_t *ptr, svfloat32_t data);
+   void svst1wq_vnum[_f32](svbool_t, const float32_t *ptr, int64_t vnum, svfloat32_t data);
  
 
    // Variants are also available for:
    // _u64, _s64
-   void svst1udq[_f64](svbool_t, const float64_t *ptr, svfloat64_t data);
-   void svst1udq_vnum[_f64](svbool_t, const float64_t *ptr, int64_t vnum, svfloat64_t data);
+   void svst1dq[_f64](svbool_t, const float64_t *ptr, svfloat64_t data);
+   void svst1dq_vnum[_f64](svbool_t, const float64_t *ptr, int64_t vnum, svfloat64_t data);
    ```
 
 #### ST1B, ST1D, ST1H, ST1W
