@@ -362,7 +362,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added description of SVE reinterpret intrinsics.
 * Fixes for [Function Multi Versioning](#function-multi-versioning):
   * Align priorities to account for feature dependencies.
-  * Introduce alternative names (aliases) `rdma` for `rdm`, `compnum` for `fcma`.
+  * Introduce alternative names (aliases) `rdma` for `rdm`.
 
 ### References
 
@@ -2540,7 +2540,7 @@ The following table lists the architectures feature mapping for AArch64
    | 190           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
    | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0010```     |
    | 210           | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT == 0b0001```    |
-   | 220           | `FEAT_FCMA`              | fcma, compnum | ```ID_AA64ISAR1_EL1.FCMA == 0b0001```     |
+   | 220           | `FEAT_FCMA`              | fcma          | ```ID_AA64ISAR1_EL1.FCMA == 0b0001```     |
    | 230           | `FEAT_LRCPC`             | rcpc          | ```ID_AA64ISAR1_EL1.LRCPC != 0b0000```    |
    | 240           | `FEAT_LRCPC2`            | rcpc2         | ```ID_AA64ISAR1_EL1.LRCPC == 0b0010```    |
    | 241           | `FEAT_LRCPC3`            | rcpc3         | ```ID_AA64ISAR1_EL1.LRCPC == 0b0011```    |
