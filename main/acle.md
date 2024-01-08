@@ -361,6 +361,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added missing word to Function Multi Versioning's [Name mangling](#name-mangling).
 * Added description of SVE reinterpret intrinsics.
 * Fixes for [Function Multi Versioning](#function-multi-versioning):
+  * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
   * Align priorities to account for feature dependencies.
   * Introduce alternative names (aliases) `rdma` for `rdm`.
 
@@ -2578,6 +2579,7 @@ The following table lists the architectures feature mapping for AArch64
    | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64  == 0b0001```  |
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64  == 0b1111```  |
    | 580           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SME == 0b0010```       |
+   | 650           | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS == 0b0001```     |
 
 ### Selection
 
