@@ -11,7 +11,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2011-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-FileCopyrightText: Copyright 2022 Google LLC.
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
@@ -114,7 +114,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+* Copyright 2011-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 * Copyright 2022 Google LLC.
 
 ## About this document
@@ -5429,7 +5429,7 @@ Armv8.4-A:
 * New SHA3 crypto instructions (available if `__ARM_FEATURE_SHA3`)
 * SM3 crypto instructions (available if `__ARM_FEATURE_SM3`)
 * SM4 crypto instructions (available if `__ARM_FEATURE_SM4`)
-* New FML[A|S] instructions (available if `__ARM_FEATURE_FP16_FML`).
+* New FML[A\|S] instructions (available if `__ARM_FEATURE_FP16_FML`).
 
 These instructions have been backported as optional instructions to Armv8.2-A
 and Armv8.3-A.
