@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-30-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -126,6 +126,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/bwmf2"><img src="https://avatars.githubusercontent.com/u/117049336?v=4?s=100" width="100px;" alt="bwmf2"/><br /><sub><b>bwmf2</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=bwmf2" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tmatheson-arm"><img src="https://avatars.githubusercontent.com/u/76168689?v=4?s=100" width="100px;" alt="tmatheson-arm"/><br /><sub><b>tmatheson-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=tmatheson-arm" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://atrosinenko.github.io"><img src="https://avatars.githubusercontent.com/u/9654772?v=4?s=100" width="100px;" alt="Anatoly Trosinenko"/><br /><sub><b>Anatoly Trosinenko</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=atrosinenko" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
