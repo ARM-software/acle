@@ -1585,6 +1585,15 @@ mechanisms such as function attributes.
 `__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
 is available on the target. It is undefined otherwise.
 
+### Guarded Control Stack
+
+`__ARM_FEATURE_GCS_DEFAULT` is defined to `1` if the code generation is
+compatible with enabling the Guarded Control Stack (GCS) extension based
+protection.  It is undefined otherwise.
+
+`__ARM_FEATURE_GCS` is defined to `1` if the Guarded Control Stack (GCS)
+extension is available on the target.  It is undefined otherwise.
+
 ### Large System Extensions
 
 `__ARM_FEATURE_ATOMICS` is defined if the Large System Extensions introduced in
@@ -2276,6 +2285,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_FMA`](#fused-multiply-accumulate-fma)                                                                                                   | Floating-point fused multiply-accumulate                                                           | 1           |
 | [`__ARM_FEATURE_FP16_FML`](#fp16-fml-extension)                                                                                                         | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
 | [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
+| [`__ARM_FEATURE_GCS`](#guarded-control-stack)                                                                                                           | Guarded Control Stack                                                                              | 1           |
+| [`__ARM_FEATURE_GCS_DEFAULT`](#guarded-control-stack)                                                                                                   | Guarded Control Stack protection can be enabled                                                    | 1           |
 | [`__ARM_FEATURE_IDIV`](#hardware-integer-divide)                                                                                                        | Hardware Integer Divide                                                                            | 1           |
 | [`__ARM_FEATURE_JCVT`](#javascript-floating-point-conversion)                                                                                           | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
 | [`__ARM_FEATURE_LDREX`](#ldrexstrex) *(Deprecated)*                                                                                                     | Load/store exclusive instructions                                                                  | 0x0F        |
@@ -3027,6 +3038,19 @@ related systems. The argument must be a constant integer from 0 to 15
 inclusive. See implementation documentation for the effect (if any) of
 this instruction and the meaning of the argument. This is available only
 when compiling for AArch32.
+
+``` c
+  uint64_t __chkfeat(uint64_t);
+```
+
+Checks for hardware features at runtime using the CHKFEAT hint instruction.
+`__chkfeat` returns a bitmask where a bit is set if the same bit in the
+input argument is set and the corresponding feature is enabled. (Note: for
+usability reasons the return value differs from how the CHKFEAT instruction
+sets X16.) It can be used with predefined macros:
+
+| **Macro name**           | **Value**           | **Meaning**                                        |
+| ``_CHKFEAT_GCS``         | 1                   | Guarded Control Stack (GCS) protection is enabled. |
 
 ## Swap
 
@@ -4573,6 +4597,56 @@ The intrinsic calculates the difference between the address parts of the
 two pointers, ignoring the tags.
 The return value is the sign-extended result of the computation.
 The tag bits in the input pointers are ignored for this operation.
+
+# Guarded Control Stack intrinsics
+
+## Introduction
+
+This section describes the intrinsics for the instructions of the
+Guarded Control Stack (GCS) extension. The GCS instructions are present
+in the AArch64 execution state only.
+
+When GCS protection is enabled then function calls save the return
+address to a separate stack, the GCS, that is checked against the actual
+return address when the function returns. At runtime GCS protection can
+be disabled and then calls and returns do not access the GCS. The GCS
+grows down and a GCS pointer points to the last entry of the GCS.
+Each thread has a separate GCS and GCS pointer.
+
+To use the intrinsics, `arm_acle.h` needs to be included.
+
+The intrinsics are only valid to call when GCS instructions are
+supported. The `__chkfeat` intrinsics with `_CHKFEAT_GCS` can be used
+to check if GCS protection is enabled at runtime. If GCS protection is
+enabled then GCS instructions are supported and the code was compiled
+in a GCS protection compatible way (`__ARM_FEATURE_GCS_DEFAULT` was
+defined).
+
+
+## Intrinsics
+
+
+``` c
+  const void *__gcspr(void);
+```
+
+Returns the GCS pointer of the current thread.
+
+``` c
+  uint64_t __gcspopm(void);
+```
+
+Reads and returns the last entry on the GCS of the current thread and
+updates the GCS pointer to point to the previous entry. If GCS
+protection is disabled then it has no side effect and returns `0`.
+
+``` c
+  const void *__gcsss(const void *);
+```
+
+Switches the GCS of the current thread, where the argument is the new
+GCS pointer, and returns the old GCS pointer. If GCS protection is
+disabled then it has no side effect and returns `NULL`.
 
 # System register access
 
