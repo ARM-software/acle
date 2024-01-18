@@ -2493,8 +2493,8 @@ compiler and it is enabled.
 
 The `"default"` version is mangled with `".default"` on top of the
 language-specific name mangling.
-language-specific name mangling. When the `"default"` version matches with an
-explicitly provided version an alias to be generated.
+All versioned functions with their mangled name are always resolvable.
+A function is expected to be resolvable with the original mangled name of the function.
 
 The mangling function is compatible with the mangling for version information of
 the [[cxxabi]](#cxxabi), and it is defined as follows:
@@ -2514,7 +2514,8 @@ __attribute__((target_clones("crc32", "aes+sha1")))
 int foo(){..}
 ```
 will produce these mangled names for C language: `foo.default`, `foo._Mcrc32`,
-`foo._Msha1Maes`.
+`foo._Msha1Maes` while `foo` is a callable external symbol which leads to one
+of the versioned function.
 
 
 ### Mapping
