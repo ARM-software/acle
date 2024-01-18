@@ -362,6 +362,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added description of SVE reinterpret intrinsics.
 * Changes and fixes for [Function Multi Versioning](#function-multi-versioning):
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
+  * Change name mangling of the default version.
   * Align priorities to account for feature dependencies.
   * Introduce alternative names (aliases) `rdma` for `rdm`.
 * Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
@@ -2491,6 +2492,7 @@ compiler and it is enabled.
 ### Name mangling
 
 The `"default"` version is mangled with `".default"` on top of the
+language-specific name mangling.
 language-specific name mangling. When the `"default"` version matches with an
 explicitly provided version an alias to be generated.
 
