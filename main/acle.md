@@ -1313,10 +1313,13 @@ enclose them in parentheses if they are not simple constants.
 
 ## Testing for Arm C Language Extensions
 
-`__ARM_ACLE` is defined to the version of this specification
-implemented, as `100 * major_version + minor_version`. An implementation
-implementing version 2.1 of the ACLE specification will define
-`__ARM_ACLE` as 201.
+`__ARM_ACLE` is defined to the version of this specification implemented,
+formatted as `{YEAR}{QUARTER}{PATCH}`. Examples:
+
+ - An implementation based on the version 2023 Q2 of the ACLE with no
+   further patch releases will define `__ARM_ACLE` as `202320`.
+ - An implementation based on a hypothetical version 2024 Q3 of the ACLE
+   with two patch releases will define `__ARM_ACLE` as `202432`.
 
 ## Endianness
 
