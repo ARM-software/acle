@@ -353,6 +353,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 #### Changes for next release
 
+* Changed the definition of the `__ARM_ACLE` macro to reflect the current
+  versioning scheme.
 * Combined the SME `slice_base` and `slice_offset` arguments into a
   single `slice` argument.
 * Added the [Keyword attributes](#keyword-attributes) section.
