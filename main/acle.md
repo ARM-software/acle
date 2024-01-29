@@ -364,7 +364,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
 * Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
   [Pointer Authentication](#pointer-authentication) to indicate target support
-  for the Armv9.5a's PAC Enhancements.
+  for the Armv9.5-A's PAC Enhancements.
 * Introduced a new value to the `__ARM_FEATURE_PAC_DEFAULT` macro to indicate
   the use of PC as a diversifier for [Pointer Authentication](#pointer-authentication).
 
@@ -1591,7 +1591,7 @@ mechanisms such as function attributes.
 `__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
 (FEAT_PAuth) is available on the target. It is undefined otherwise.
 
-`__ARM_FEATURE_PAUTH_LR` is defined to 1 if Armv9.5a enhancements to the
+`__ARM_FEATURE_PAUTH_LR` is defined to 1 if Armv9.5-A enhancements to the
 Pointer Authentication extension (FEAT_PAuth_LR) are available on the target.
 It is undefined otherwise.
 
@@ -2296,7 +2296,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_NUMERIC_MAXMIN`](#numeric-maximum-and-minimum)                                                                                          | Numeric Maximum and Minimum                                                                        | 1           |
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
 | [`__ARM_FEATURE_PAUTH`](#pointer-authentication)                                                                                                        | Pointer Authentication Extension (FEAT_PAuth)                                                      | 1           |
-| [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5a Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                          | 1           |
+| [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5-A Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                         | 1           |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
