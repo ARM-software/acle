@@ -11,7 +11,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2011-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-FileCopyrightText: Copyright 2022 Google LLC.
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
@@ -114,7 +114,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+* Copyright 2011-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 * Copyright 2022 Google LLC.
 
 ## About this document
@@ -364,6 +364,11 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
   * Align priorities to account for feature dependencies.
   * Introduce alternative names (aliases) `rdma` for `rdm`.
+* Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
+  [Pointer Authentication](#pointer-authentication) to indicate target support
+  for the Armv9.5-A's PAC Enhancements.
+* Introduced a new value to the `__ARM_FEATURE_PAC_DEFAULT` macro to indicate
+  the use of PC as a diversifier for [Pointer Authentication](#pointer-authentication).
 
 ### References
 
@@ -1572,11 +1577,12 @@ Pointer Authentication extension to protect code against code reuse attacks
 by default.
 The bits are defined as follows:
 
-| **Bit** | **Meaning**                         |
-| ------- | ----------------------------------- |
-| 0       | Protection using the A key          |
-| 1       | Protection using the B key          |
-| 2       | Protection including leaf functions |
+| **Bit** | **Meaning**                          |
+| ------- | ------------------------------------ |
+| 0       | Protection using the A key           |
+| 1       | Protection using the B key           |
+| 2       | Protection including leaf functions  |
+| 3       | Protection using PC as a diversifier |
 
 For example, a value of `0x5` indicates that the Pointer Authentication
 extension is used to protect function entry points, including leaf functions,
@@ -1585,7 +1591,11 @@ The protection applied to any particular function may be overridden by
 mechanisms such as function attributes.
 
 `__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
-is available on the target. It is undefined otherwise.
+(FEAT_PAuth) is available on the target. It is undefined otherwise.
+
+`__ARM_FEATURE_PAUTH_LR` is defined to 1 if Armv9.5-A enhancements to the
+Pointer Authentication extension (FEAT_PAuth_LR) are available on the target.
+It is undefined otherwise.
 
 ### Large System Extensions
 
@@ -2286,7 +2296,9 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_MOPS`](#memcpy-family-of-memory-operations-standarization-instructions---mops)                                                          | `memcpy`, `memset`, and `memmove` family of operations standardization instructions               | 1           |
 | [`__ARM_FEATURE_MVE`](#m-profile-vector-extension)                                                                                                      | M-profile Vector Extension                                                                         | 1           |
 | [`__ARM_FEATURE_NUMERIC_MAXMIN`](#numeric-maximum-and-minimum)                                                                                          | Numeric Maximum and Minimum                                                                        | 1           |
-| [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication                                                                             | 0x5         |
+| [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
+| [`__ARM_FEATURE_PAUTH`](#pointer-authentication)                                                                                                        | Pointer Authentication Extension (FEAT_PAuth)                                                      | 1           |
+| [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5-A Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                         | 1           |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
@@ -5431,7 +5443,7 @@ Armv8.4-A:
 * New SHA3 crypto instructions (available if `__ARM_FEATURE_SHA3`)
 * SM3 crypto instructions (available if `__ARM_FEATURE_SM3`)
 * SM4 crypto instructions (available if `__ARM_FEATURE_SM4`)
-* New FML[A|S] instructions (available if `__ARM_FEATURE_FP16_FML`).
+* New FML[A\|S] instructions (available if `__ARM_FEATURE_FP16_FML`).
 
 These instructions have been backported as optional instructions to Armv8.2-A
 and Armv8.3-A.

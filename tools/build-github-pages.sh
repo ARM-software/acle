@@ -34,9 +34,9 @@ set -x
 ROOTDIR=$(realpath "$(dirname "$(realpath "$0")")/..")
 TEMPDIR=$(mktemp -d)
 cd $TEMPDIR
-git clone https://github.com/github/pages-gem.git
+git clone --depth 1 https://github.com/github/pages-gem.git
 cd pages-gem
-make image
+docker build -t gh-pages --build-arg RUBY_VERSION=3.2 .
 cd $ROOTDIR
 echo -e "plugins:\n \
         - jekyll-coffeescript\n \
