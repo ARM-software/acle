@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-32-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-33-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -128,6 +128,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tmatheson-arm"><img src="https://avatars.githubusercontent.com/u/76168689?v=4?s=100" width="100px;" alt="tmatheson-arm"/><br /><sub><b>tmatheson-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=tmatheson-arm" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://atrosinenko.github.io"><img src="https://avatars.githubusercontent.com/u/9654772?v=4?s=100" width="100px;" alt="Anatoly Trosinenko"/><br /><sub><b>Anatoly Trosinenko</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=atrosinenko" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/pratlucas"><img src="https://avatars.githubusercontent.com/u/7014318?v=4?s=100" width="100px;" alt="Lucas Duarte Prates"/><br /><sub><b>Lucas Duarte Prates</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=pratlucas" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/andrewcarlotti"><img src="https://avatars.githubusercontent.com/u/11681428?v=4?s=100" width="100px;" alt="Andrew Carlotti"/><br /><sub><b>Andrew Carlotti</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Aandrewcarlotti" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
