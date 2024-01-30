@@ -306,6 +306,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "andrewcarlotti",
+      "name": "Andrew Carlotti",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11681428?v=4",
+      "profile": "https://github.com/andrewcarlotti",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
