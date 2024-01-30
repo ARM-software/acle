@@ -360,8 +360,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   to use keyword attributes instead of GNU-style attributes.
 * Added missing word to Function Multi Versioning's [Name mangling](#name-mangling).
 * Added description of SVE reinterpret intrinsics.
-* Changes for [Function Multi Versioning](#function-multi-versioning):
+* Changes and fixes for [Function Multi Versioning](#function-multi-versioning):
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
+  * Align priorities to account for feature dependencies.
+  * Introduce alternative names (aliases) `rdma` for `rdm`.
 * Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
   [Pointer Authentication](#pointer-authentication) to indicate target support
   for the Armv9.5-A's PAC Enhancements.
@@ -2533,13 +2535,12 @@ The following table lists the architectures feature mapping for AArch64
    | 10            | `FEAT_RNG`               | rng           | ```ID_AA64ISAR0_EL1.RNDR == 0b0001```     |
    | 20            | `FEAT_FlagM`             | flagm         | ```ID_AA64ISAR0_EL1.TS == 0b0001 OR ``` <br> ```ID_AA64ISAR0_EL1.TS == 0b0010``` |
    | 30            | `FEAT_FlagM2`            | flagm2        | ```ID_AA64ISAR0_EL1.TS == 0b0010```       |
-   | 40            | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
-   | 50            | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP == 0b0001```       |
-   | 60            | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
-   | 70            | `FEAT_RDM`               | rdm           | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
    | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic == 0b0001```   |
    | 90            | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
    | 100           | `FEAT_AdvSIMD`           | simd          | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
+   | 104           | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP == 0b0001```       |
+   | 106           | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
+   | 108           | `FEAT_RDM`               | rdm, rdma     | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
    | 110           | `FEAT_CRC32`             | crc           | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
    | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
    | 130           | `FEAT_SHA256`            | sha2          | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
@@ -2547,6 +2548,7 @@ The following table lists the architectures feature mapping for AArch64
    | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
    | 160           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES == 0b0010```      |
    | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
+   | 175           | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
    | 180           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT == 0b0001```       |
    | 190           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
    | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0010```     |
