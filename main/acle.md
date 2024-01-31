@@ -2492,8 +2492,8 @@ compiler and it is enabled.
 ### Name mangling
 
 The `"default"` version is mangled with `".default"` on top of the
-language-specific name mangling.
-All versioned functions with their mangled name are always resolvable.
+language-specific name mangling. All versioned functions with their mangled names
+are always resolvable.
 A function is expected to be resolvable with the original mangled name of the function.
 
 The mangling function is compatible with the mangling for version information of
@@ -2515,7 +2515,7 @@ int foo(){..}
 ```
 will produce these mangled names for C language: `foo.default`, `foo._Mcrc32`,
 `foo._Msha1Maes` while `foo` is a callable external symbol which leads to one
-of the versioned function.
+of the versioned functions.
 
 
 ### Mapping
