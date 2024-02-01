@@ -364,6 +364,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
   * Align priorities to account for feature dependencies.
   * Introduce alternative names (aliases) `rdma` for `rdm`.
+  * Correct FEAT_BTI feature register value.
 * Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
   [Pointer Authentication](#pointer-authentication) to indicate target support
   for the Armv9.5-A's PAC Enhancements.
