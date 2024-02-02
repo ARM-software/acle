@@ -11465,7 +11465,7 @@ Lookup table read with 2-bit and 4-bit indexes
 
   // Variants are also available for _zt_u16, _zt_f16, _zt_bf16, _zt_s32,
   // _zt_u32 and _zt_f32
-  svint16x4_t svluti4_lane_zt_s16_x4(uint64_t zt, svuint16_t zn,
+  svint16x4_t svluti4_lane_zt_s16_x4(uint64_t zt, svuint8_t zn,
                                      uint64_t imm_idx)
     __arm_streaming __arm_in("zt0");
   ```
