@@ -373,6 +373,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a [State management](#state-management) section, replacing the
   `__arm_shared_za`, `__arm_new_za`, and `__arm_preserves_za` attributes
   in the previous Alpha SME spec.
+* Changed the status of the SME ACLE from Alpha to Beta.
 
 ### References
 
@@ -755,7 +756,7 @@ start with the prefix `__ARM`.
 ## Keyword attributes
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 ACLE adds several non-standard keywords to C and C++. These keywords
@@ -1037,7 +1038,7 @@ header:
 ### `<arm_sme.h>`
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may
+[**Beta** state](#current-status-and-anticipated-changes) and may
 change or be extended in the future.
 
 `<arm_sme.h>` declares functions and defines intrinsics for SME
@@ -1829,7 +1830,7 @@ intrinsics are available. This implies that the following macros are nonzero:
 #### Scalable Matrix Extension (SME)
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may
+[**Beta** state](#current-status-and-anticipated-changes) and may
 change or be extended in the future.
 
 `__ARM_FEATURE_SME` is defined to 1 if there is hardware support
@@ -2117,7 +2118,7 @@ following it. --><span id="16-bit-to-64-bit-integer-widening-outer-product-intri
 #### 16-bit to 64-bit integer widening outer product intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_I16I64` is defined to `1` if there is hardware
@@ -2128,7 +2129,7 @@ available. This implies that `__ARM_FEATURE_SME` is nonzero.
 #### Double precision floating-point outer product intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_F64F64` is defined to `1` if there is hardware
@@ -4597,7 +4598,7 @@ The tag bits in the input pointers are ignored for this operation.
 # State management
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 ## Introduction
@@ -8597,7 +8598,7 @@ when move instructions are required.
 # SME language extensions and intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 ## Controlling the use of streaming mode
