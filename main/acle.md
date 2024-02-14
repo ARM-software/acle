@@ -353,6 +353,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 #### Changes for next release
 
+* Changed the definition of the `__ARM_ACLE` macro to reflect the current
+  versioning scheme.
 * Combined the SME `slice_base` and `slice_offset` arguments into a
   single `slice` argument.
 * Added the [Keyword attributes](#keyword-attributes) section.
@@ -1327,10 +1329,23 @@ enclose them in parentheses if they are not simple constants.
 
 ## Testing for Arm C Language Extensions
 
-`__ARM_ACLE` is defined to the version of this specification
-implemented, as `100 * major_version + minor_version`. An implementation
-implementing version 2.1 of the ACLE specification will define
-`__ARM_ACLE` as 201.
+`__ARM_ACLE` is defined as the version of this specification that is
+implemented, formatted as `{YEAR}{QUARTER}{PATCH}`. The `YEAR` segment is
+composed of 4 digits, the `QUARTER` segment is composed of 1 digit, and
+the `PATCH` segment is also composed of 1 digit.
+
+For example:
+
+ - An implementation based on the version 2023 Q2 of the ACLE with no
+   further patch releases will define `__ARM_ACLE` as `202320`.
+ - An implementation based on a hypothetical version 2024 Q3 of the ACLE
+   with two patch releases will define `__ARM_ACLE` as `202432`.
+
+NOTE: Previously, the macro followed the previous versioning scheme and
+was defined as `100 * major_version + minor_version`, which was the
+version of this specification implemented. For instance, an implementation
+implementing version 2.1 of the ACLE specification defined `__ARM_ACLE`
+as `201`.
 
 ## Endianness
 
