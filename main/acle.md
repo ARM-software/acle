@@ -361,6 +361,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed the [SME language extensions](#sme-language-extensions-and-intrinsics)
   to use keyword attributes instead of GNU-style attributes.
 * Added missing word to Function Multi Versioning's [Name mangling](#name-mangling).
+* Change the value of `__HAVE_FUNCTION_MULTI_VERSIONING` to the version of the `ACLE`.
 * Added description of SVE reinterpret intrinsics.
 * Changes and fixes for [Function Multi Versioning](#function-multi-versioning):
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
@@ -2506,9 +2507,9 @@ following:
   compiled with an older compiler. The compiler may provide diagnostic messages
   and could block the compilation (e.g. if the `-pedantic` flag is present).
 
-`__HAVE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the
-versioning mechanism described in this section is supported by the
-compiler and it is enabled.
+`__HAVE_FUNCTION_MULTI_VERSIONING` is defined to the currently implemented
+version of the ACLE if the versioning mechanism described in this section is
+supported by the compiler and it is enabled.
 
 ### Name mangling
 
