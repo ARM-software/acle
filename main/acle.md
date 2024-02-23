@@ -355,6 +355,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Changed the definition of the `__ARM_ACLE` macro to reflect the current
   versioning scheme.
+* Added `__ARM_ACLE_VERSION` to express a given ACLE version.
 * Combined the SME `slice_base` and `slice_offset` arguments into a
   single `slice` argument.
 * Added the [Keyword attributes](#keyword-attributes) section.
@@ -1346,6 +1347,10 @@ was defined as `100 * major_version + minor_version`, which was the
 version of this specification implemented. For instance, an implementation
 implementing version 2.1 of the ACLE specification defined `__ARM_ACLE`
 as `201`.
+
+`__ARM_ACLE_VERSION(year, quarter, patch)` is defined to express a given
+ACLE version. Returns with the version number in the same format as the
+`__ARM_ACLE` does.
 
 ## Endianness
 
