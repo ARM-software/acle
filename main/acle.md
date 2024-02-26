@@ -11821,6 +11821,17 @@ Dot-product (2-way).
                                 uint64_t imm_idx);
    ```
 
+#### DUPQ
+
+Broadcast indexed element within each quadword vector segment
+
+ ``` c
+   // Variants are also available for:
+   // _s8, _u16, _s16, _u32, _s32, _u64, _s64
+   // _bf16, _f16, _f32, _f64
+   svuint8_t svdup_laneq[_u8](svuint8_t zn, uint64_t imm_idx);
+   ```
+
 #### EXTQ
 
 Extract vector segment from each pair of quadword segments.
