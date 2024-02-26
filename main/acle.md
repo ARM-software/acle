@@ -1350,7 +1350,12 @@ as `201`.
 
 `__ARM_ACLE_VERSION(year, quarter, patch)` is defined to express a given
 ACLE version. Returns with the version number in the same format as the
-`__ARM_ACLE` does.
+`__ARM_ACLE` does. Checking the minimum required ACLE version could be
+written as:
+
+``` c
+#if __ARM_ACLE >= __ARM_ACLE_VERSION(2024, 1, 0)
+```
 
 ## Endianness
 
