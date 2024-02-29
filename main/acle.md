@@ -2524,8 +2524,8 @@ the [[cxxabi]](#cxxabi), and it is defined as follows:
 <vendor specific suffix> := `_` followed by token obtained from the tables below and prefixed with `M`
 ```
 
-If multiple features are requested then those shall be appended in increasing
-priority order and prefixed with `M`.
+If multiple features are requested then those shall be appended in lexicographic
+order and prefixed with `M`.
 
 For example:
 ``` c
@@ -2533,7 +2533,7 @@ __attribute__((target_clones("crc32", "aes+sha1")))
 int foo(){..}
 ```
 will produce these mangled names for C language: `foo`, `foo._Mcrc32`,
-`foo._Msha1Maes`.
+`foo._MaesMsha1`.
 
 
 ### Mapping
