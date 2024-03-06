@@ -360,9 +360,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added the [Keyword attributes](#keyword-attributes) section.
 * Changed the [SME language extensions](#sme-language-extensions-and-intrinsics)
   to use keyword attributes instead of GNU-style attributes.
-* Added missing word to Function Multi Versioning's [Name mangling](#name-mangling).
 * Added description of SVE reinterpret intrinsics.
 * Changes and fixes for [Function Multi Versioning](#function-multi-versioning):
+  * Changed the mangling rules [Name mangling](#name-mangling), such that
+    feature names are appended in lexicographic order, not in priority order.
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
   * Align priorities to account for feature dependencies.
   * Introduce alternative names (aliases) `rdma` for `rdm`.
