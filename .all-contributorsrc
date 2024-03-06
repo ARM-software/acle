@@ -315,6 +315,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "labrinea",
+      "name": "Alexandros Lamprineas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9527365?v=4",
+      "profile": "https://github.com/labrinea",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
