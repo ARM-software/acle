@@ -364,6 +364,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changes and fixes for [Function Multi Versioning](#function-multi-versioning):
   * Changed the mangling rules [Name mangling](#name-mangling), such that
     feature names are appended in lexicographic order, not in priority order.
+  * Mangled names contain a unique set of features (no duplicates).
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
   * Align priorities to account for feature dependencies.
   * Introduce alternative names (aliases) `rdma` for `rdm`.
@@ -2526,7 +2527,8 @@ the [[cxxabi]](#cxxabi), and it is defined as follows:
 ```
 
 If multiple features are requested then those shall be appended in lexicographic
-order and prefixed with `M`.
+order and prefixed with `M`. The mangled name shall contain a unique set of
+features (duplication of features is not allowed).
 
 For example:
 ``` c
