@@ -32,3 +32,12 @@ jobs:
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
           config-file: '.github/workflows/markdown-link-check.json'
+
+  draftversion-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: check correctness of draftversion fields
+      run:  python ./tools/acle_draftversion_value_check.py .

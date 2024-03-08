@@ -11,7 +11,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2011-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-FileCopyrightText: Copyright 2022 Google LLC.
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
@@ -114,7 +114,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2011-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+* Copyright 2011-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 * Copyright 2022 Google LLC.
 
 ## About this document
@@ -348,18 +348,38 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   [CMSE](#CMSE-ACLE)'s Arguments on the stack and floating point handling.
 * Corrected description and example in [CMSE](#CMSE-ACLE)'s section about
   non-secure function pointers.
-* Added a requirement on [`arm_new_za`](#arm_new_za) to set the initial
-  contents of ZA to zero.
+* Added a requirement on [`arm_new_za`] to set the initial contents of
+  ZA to zero.
 
 #### Changes for next release
 
+* Changed the definition of the `__ARM_ACLE` macro to reflect the current
+  versioning scheme.
+* Added `__ARM_ACLE_VERSION` to express a given ACLE version.
 * Combined the SME `slice_base` and `slice_offset` arguments into a
   single `slice` argument.
 * Added the [Keyword attributes](#keyword-attributes) section.
 * Changed the [SME language extensions](#sme-language-extensions-and-intrinsics)
   to use keyword attributes instead of GNU-style attributes.
-* Added missing word to Function Multi Versioning's [Name mangling](#name-mangling).
 * Added description of SVE reinterpret intrinsics.
+* Changes and fixes for [Function Multi Versioning](#function-multi-versioning):
+  * Changed the mangling rules [Name mangling](#name-mangling), such that
+    feature names are appended in lexicographic order, not in priority order.
+  * Mangled names contain a unique set of features (no duplicates).
+  * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
+  * Change name mangling of the default version.
+  * Align priorities to account for feature dependencies.
+  * Introduce alternative names (aliases) `rdma` for `rdm`.
+  * Correct FEAT_BTI feature register value.
+* Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
+  [Pointer Authentication](#pointer-authentication) to indicate target support
+  for the Armv9.5-A's PAC Enhancements.
+* Introduced a new value to the `__ARM_FEATURE_PAC_DEFAULT` macro to indicate
+  the use of PC as a diversifier for [Pointer Authentication](#pointer-authentication).
+* Added a [State management](#state-management) section, replacing the
+  `__arm_shared_za`, `__arm_new_za`, and `__arm_preserves_za` attributes
+  in the previous Alpha SME spec.
+* Changed the status of the SME ACLE from Alpha to Beta.
 
 ### References
 
@@ -742,7 +762,7 @@ start with the prefix `__ARM`.
 ## Keyword attributes
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 ACLE adds several non-standard keywords to C and C++. These keywords
@@ -797,9 +817,11 @@ predefine the associated macro to a nonzero value.
 | **Name**                                                    | **Target**            | **Predefined macro**              |
 | ----------------------------------------------------------- | --------------------- | --------------------------------- |
 | [`__arm_locally_streaming`](#arm_locally_streaming)         | function declaration  | `__ARM_FEATURE_LOCALLY_STREAMING` |
-| [`__arm_new_za`](#arm_new_za)                               | function declaration  | `__ARM_FEATURE_SME`               |
-| [`__arm_preserves_za`](#arm_preserves_za)                   | function type         | `__ARM_FEATURE_SME`               |
-| [`__arm_shared_za`](#arm_shared_za)                         | function type         | `__ARM_FEATURE_SME`               |
+| [`__arm_in`](#ways-of-sharing-state)                        | function type         | Argument-dependent                |
+| [`__arm_inout`](#ways-of-sharing-state)                     | function type         | Argument-dependent                |
+| [`__arm_new`](#arm_new)                                     | function declaration  | Argument-dependent                |
+| [`__arm_out`](#ways-of-sharing-state)                       | function type         | Argument-dependent                |
+| [`__arm_preserves`](#ways-of-sharing-state)                 | function type         | Argument-dependent                |
 | [`__arm_streaming`](#arm_streaming)                         | function type         | `__ARM_FEATURE_SME`               |
 | [`__arm_streaming_compatible`](#arm_streaming_compatible)   | function type         | `__ARM_FEATURE_SME`               |
 
@@ -1022,7 +1044,7 @@ header:
 ### `<arm_sme.h>`
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may
+[**Beta** state](#current-status-and-anticipated-changes) and may
 change or be extended in the future.
 
 `<arm_sme.h>` declares functions and defines intrinsics for SME
@@ -1311,10 +1333,32 @@ enclose them in parentheses if they are not simple constants.
 
 ## Testing for Arm C Language Extensions
 
-`__ARM_ACLE` is defined to the version of this specification
-implemented, as `100 * major_version + minor_version`. An implementation
-implementing version 2.1 of the ACLE specification will define
-`__ARM_ACLE` as 201.
+`__ARM_ACLE` is defined as the version of this specification that is
+implemented, formatted as `{YEAR}{QUARTER}{PATCH}`. The `YEAR` segment is
+composed of 4 digits, the `QUARTER` segment is composed of 1 digit, and
+the `PATCH` segment is also composed of 1 digit.
+
+For example:
+
+ - An implementation based on the version 2023 Q2 of the ACLE with no
+   further patch releases will define `__ARM_ACLE` as `202320`.
+ - An implementation based on a hypothetical version 2024 Q3 of the ACLE
+   with two patch releases will define `__ARM_ACLE` as `202432`.
+
+NOTE: Previously, the macro followed the previous versioning scheme and
+was defined as `100 * major_version + minor_version`, which was the
+version of this specification implemented. For instance, an implementation
+implementing version 2.1 of the ACLE specification defined `__ARM_ACLE`
+as `201`.
+
+`__ARM_ACLE_VERSION(year, quarter, patch)` is defined to express a given
+ACLE version. Returns with the version number in the same format as the
+`__ARM_ACLE` does. Checking the minimum required ACLE version could be
+written as:
+
+``` c
+#if __ARM_ACLE >= __ARM_ACLE_VERSION(2024, 1, 0)
+```
 
 ## Endianness
 
@@ -1568,11 +1612,12 @@ Pointer Authentication extension to protect code against code reuse attacks
 by default.
 The bits are defined as follows:
 
-| **Bit** | **Meaning**                         |
-| ------- | ----------------------------------- |
-| 0       | Protection using the A key          |
-| 1       | Protection using the B key          |
-| 2       | Protection including leaf functions |
+| **Bit** | **Meaning**                          |
+| ------- | ------------------------------------ |
+| 0       | Protection using the A key           |
+| 1       | Protection using the B key           |
+| 2       | Protection including leaf functions  |
+| 3       | Protection using PC as a diversifier |
 
 For example, a value of `0x5` indicates that the Pointer Authentication
 extension is used to protect function entry points, including leaf functions,
@@ -1581,7 +1626,11 @@ The protection applied to any particular function may be overridden by
 mechanisms such as function attributes.
 
 `__ARM_FEATURE_PAUTH` is defined to 1 if Pointer Authentication extension
-is available on the target. It is undefined otherwise.
+(FEAT_PAuth) is available on the target. It is undefined otherwise.
+
+`__ARM_FEATURE_PAUTH_LR` is defined to 1 if Armv9.5-A enhancements to the
+Pointer Authentication extension (FEAT_PAuth_LR) are available on the target.
+It is undefined otherwise.
 
 ### Large System Extensions
 
@@ -1813,7 +1862,7 @@ intrinsics are available. This implies that the following macros are nonzero:
 #### Scalable Matrix Extension (SME)
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may
+[**Beta** state](#current-status-and-anticipated-changes) and may
 change or be extended in the future.
 
 `__ARM_FEATURE_SME` is defined to 1 if there is hardware support
@@ -2101,7 +2150,7 @@ following it. --><span id="16-bit-to-64-bit-integer-widening-outer-product-intri
 #### 16-bit to 64-bit integer widening outer product intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_I16I64` is defined to `1` if there is hardware
@@ -2112,7 +2161,7 @@ available. This implies that `__ARM_FEATURE_SME` is nonzero.
 #### Double precision floating-point outer product intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_F64F64` is defined to `1` if there is hardware
@@ -2286,7 +2335,9 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_MOPS`](#memcpy-family-of-memory-operations-standarization-instructions---mops)                                                          | `memcpy`, `memset`, and `memmove` family of operations standardization instructions               | 1           |
 | [`__ARM_FEATURE_MVE`](#m-profile-vector-extension)                                                                                                      | M-profile Vector Extension                                                                         | 1           |
 | [`__ARM_FEATURE_NUMERIC_MAXMIN`](#numeric-maximum-and-minimum)                                                                                          | Numeric Maximum and Minimum                                                                        | 1           |
-| [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication                                                                             | 0x5         |
+| [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
+| [`__ARM_FEATURE_PAUTH`](#pointer-authentication)                                                                                                        | Pointer Authentication Extension (FEAT_PAuth)                                                      | 1           |
+| [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5-A Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                         | 1           |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
@@ -2479,8 +2530,10 @@ compiler and it is enabled.
 
 ### Name mangling
 
-The `"default"` version is not mangled on top of the language-specific name
-mangling.
+The `"default"` version is mangled with `".default"` on top of the
+language-specific name mangling. All versioned functions with their mangled names
+are always resolvable.
+A function is expected to be resolvable with the original mangled name of the function.
 
 The mangling function is compatible with the mangling for version information of
 the [[cxxabi]](#cxxabi), and it is defined as follows:
@@ -2491,17 +2544,18 @@ the [[cxxabi]](#cxxabi), and it is defined as follows:
 <vendor specific suffix> := `_` followed by token obtained from the tables below and prefixed with `M`
 ```
 
-If multiple features are requested then those shall be appended in increasing
-priority order and prefixed with `M`.
+If multiple features are requested then those shall be appended in lexicographic
+order and prefixed with `M`. The mangled name shall contain a unique set of
+features (duplication of features is not allowed).
 
 For example:
 ``` c
 __attribute__((target_clones("crc32", "aes+sha1")))
 int foo(){..}
 ```
-will produce these mangled names for C language: `foo`, `foo._Mcrc32`,
-`foo._Msha1Maes`.
-
+will produce these mangled names for C language: `foo.default`, `foo._Mcrc32`,
+`foo._MaesMsha1` while `foo` is a callable external symbol which leads to one
+of the versioned functions.
 
 ### Mapping
 
@@ -2524,13 +2578,12 @@ The following table lists the architectures feature mapping for AArch64
    | 10            | `FEAT_RNG`               | rng           | ```ID_AA64ISAR0_EL1.RNDR == 0b0001```     |
    | 20            | `FEAT_FlagM`             | flagm         | ```ID_AA64ISAR0_EL1.TS == 0b0001 OR ``` <br> ```ID_AA64ISAR0_EL1.TS == 0b0010``` |
    | 30            | `FEAT_FlagM2`            | flagm2        | ```ID_AA64ISAR0_EL1.TS == 0b0010```       |
-   | 40            | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
-   | 50            | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP == 0b0001```       |
-   | 60            | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
-   | 70            | `FEAT_RDM`               | rdm           | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
    | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic == 0b0001```   |
    | 90            | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
    | 100           | `FEAT_AdvSIMD`           | simd          | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
+   | 104           | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP == 0b0001```       |
+   | 106           | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
+   | 108           | `FEAT_RDM`               | rdm, rdma     | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
    | 110           | `FEAT_CRC32`             | crc           | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
    | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
    | 130           | `FEAT_SHA256`            | sha2          | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
@@ -2538,6 +2591,7 @@ The following table lists the architectures feature mapping for AArch64
    | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
    | 160           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES == 0b0010```      |
    | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
+   | 175           | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
    | 180           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT == 0b0001```       |
    | 190           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
    | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0010```     |
@@ -2572,7 +2626,7 @@ The following table lists the architectures feature mapping for AArch64
    | 480           | `FEAT_SPECRES`           | predres       | ```ID_AA64ISAR1_EL1.SPECRES == 0b0001```  |
    | 490           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS == 0b0001```      |
    | 500           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS == 0b0010```      |
-   | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.bt == 0b0010```        |
+   | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.BT == 0b0001```        |
    | 520           | `FEAT_LS64`              | ls64          | ```ID_AA64ISAR1_EL1.LS64 >= 0b0001```     |
    | 530           | `FEAT_LS64_V`            | ls64_v        | ```ID_AA64ISAR1_EL1.LS64 >= 0b0010```     |
    | 540           | `FEAT_LS64_ACCDATA`      | ls64_accdata  | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011```     |
@@ -2580,6 +2634,7 @@ The following table lists the architectures feature mapping for AArch64
    | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64  == 0b0001```  |
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64  == 0b1111```  |
    | 580           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SME == 0b0010```       |
+   | 650           | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS == 0b0001```     |
 
 ### Selection
 
@@ -4576,6 +4631,427 @@ two pointers, ignoring the tags.
 The return value is the sign-extended result of the computation.
 The tag bits in the input pointers are ignored for this operation.
 
+# State management
+
+The specification for SME is in
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
+
+## Introduction
+
+ACLE often uses normal C and C++ objects to represent architectural state.
+These objects are passed to intrinsics and returned from intrinsics in
+the same way as they would be for a normal function.
+
+For example, ACLE defines an `svbool_t` type to represent the
+contents of an SVE predicate register. SVE intrinsics that read
+a predicate register have an `svbool_t` argument for that register.
+SVE intrinsics that write to a predicate register have an `svbool_t`
+return type for that register.
+
+SVE provides 16 predicate registers, but this number is not exposed to
+C and C++ code. Instead, the program can have as many `svbool_t` objects
+as it needs, and it is the compiler's responsibility to manage the
+register allocation.
+
+However, there are some pieces of architectural state for which this
+approach is not suitable. For example, [SME's ZA](#za-storage) is a
+single piece of storage: there are not multiple ZAs, and so it does
+not make sense for a C or C++ function to have multiple ZA objects.
+It would also be inefficient to copy state from one ZA object to another.
+
+ACLE models this kind of architectural state using [keyword
+attributes](#keyword-attributes) rather than types and objects.
+The main purpose of these keyword attributes is to establish the following
+binary choices for a given piece of architectural state S:
+
+<span id="shares-state"></span><span id="uses-state"></span>
+
+1.  A function with a given type either shares S with its caller,
+    or it does not.
+
+2.  A given function definition either uses S internally, or it does not.
+
+A function definition that shares S with its caller also (implicitly) uses
+S internally.
+
+<span id="new-state-scope"></span>
+
+A function definition that uses S internally but does not share S with
+its caller is said to create a “new scope” for S.
+
+ACLE uses strings to identify each piece of state that is managed in
+this way. The strings are listed in the table below.
+
+<span id="state-strings"></span>
+
+| **String** | **State**          | **State macro**   | **Feature macro**    |
+| ---------- | ------------------ | ----------------- | -------------------- |
+| `"za"`     | SME's ZA storage   | `__ARM_STATE_ZA`  | `__ARM_FEATURE_SME`  |
+| `"zt0"`    | SME2's ZT0         | `__ARM_STATE_ZT0` | `__ARM_FEATURE_SME2` |
+
+For each string, there are two associated macros:
+
+*   a so-called “state macro” that compilers predefine if they recognize
+    the string
+
+*   a so-called “feature macro” that compilers predefine if they can compile
+    functions that use the state
+
+A compiler that predefines the feature macro must also predefine the
+state macro.
+
+For example, `__ARM_STATE_ZA` allows declarations of functions that share ZA.
+`__ARM_FEATURE_SME` allows function definitions to use ZA internally.
+
+The strings are case-sensitive. For example, `"za"` cannot be written `"ZA"`.
+
+## Ways of sharing state
+
+ACLE identifies several different ways in which a callee can share
+state with its caller. Each one has an associated [keyword
+attribute](#keyword-attributes):
+
+*   `__arm_in`: the callee takes the state as input and returns with
+    the state unchanged. This is similar to a const reference in C++.
+
+*   `__arm_out`: the callee ignores the incoming state and returns new state.
+    This is similar to a function return value.
+
+*   `__arm_inout`: the callee takes the state as input and returns new state.
+    This is similar to a non-const reference in C++.
+
+*   `__arm_preserves`: the callee does not read the incoming state and
+    returns with the state unchanged.
+
+Each keyword attribute takes a comma-separated list of state strings as
+an argument. The list must be non-empty.
+
+For example:
+
+``` c
+   void f() __arm_inout("za") __arm_preserves("zt0");
+```
+
+says that `f` uses ZA to receive data from callers and to pass data
+back to callers. `f` also promises to preserve the contents of ZT0.
+
+A program is [ill-formed](#ill-formed) if a function type has two
+attributes that specify different behavior for the same piece of state.
+For example, a program is ill-formed if a function type has both
+`__arm_in("za")` and `__arm_out("za")`, or both `__arm_in("za")`
+and `__arm_inout("za")`.
+
+The same information may be specified multiple times. For example:
+
+``` c
+  void f() __arm_in("za", "za") __arm_in("za");
+```
+
+is well-formed.
+
+Two function types are incompatible if they handle a piece of
+architectural state differently. For example:
+
+``` c
+   void f1() __arm_in("za");
+   void f2() __arm_out("za");
+   void f3() __arm_inout("za");
+   void f4() __arm_preserves("za");
+   void f5();
+
+   void (*ptr1)() __arm_in("za");
+   void (*ptr2)() __arm_out("za");
+   void (*ptr3)() __arm_inout("za");
+   void (*ptr4)() __arm_preserves("za");
+   void (*ptr5)();
+
+   void test() {
+     ptr1 = f1;    // OK
+     ptr2 = f1;    // Invalid
+     ptr3 = f1;    // Invalid
+     ptr4 = f1;    // Invalid
+     ptr5 = f1;    // Invalid
+
+     ptr1 = f2;    // Invalid
+     ptr2 = f2;    // OK
+     ptr3 = f2;    // Invalid
+     ptr4 = f2;    // Invalid
+     ptr5 = f2;    // Invalid
+
+     ptr1 = f3;    // Invalid
+     ptr2 = f3;    // Invalid
+     ptr3 = f3;    // OK
+     ptr4 = f3;    // Invalid
+     ptr5 = f3;    // Invalid
+
+     ptr1 = f4;    // Invalid
+     ptr2 = f4;    // Invalid
+     ptr3 = f4;    // Invalid
+     ptr4 = f4;    // OK
+     ptr5 = f4;    // Invalid
+
+     ptr1 = f5;    // Invalid
+     ptr2 = f5;    // Invalid
+     ptr3 = f5;    // Invalid
+     ptr4 = f5;    // Invalid
+     ptr5 = f5;    // OK
+   }
+```
+
+`__arm_in` and `__arm_preserves` both guarantee that a function leaves
+the contents of the state unchanged on return. Functions are not
+[ill-formed](#ill-formed) if they write to such state, but they must ensure
+that the cumulative effect of such writes is to leave the state unchanged.
+
+A program is [ill-formed](#ill-formed) if a function that does not [use
+state](#uses-state) S contains a call to a function that shares S with
+its caller. This is conceptually similar to an undefined variable in
+C. For example:
+
+``` c
+   void callee() __arm_inout("za");
+   void caller() {
+     callee(); // Ill-formed, caller does not use ZA
+   }
+```
+
+If a C or C++ function F [uses state](#uses-state) S internally and calls
+a function F2 that does not share S with its callers, the call to F2 has
+no effect on F's S state. The compiler must ensure this by [restoring
+the old contents of S](#za-implementation-notes) after the call to F2,
+if such a restoration is necessary. For example:
+
+``` c
+   void za_callee() __arm_inout("za");
+   void za_caller() __arm_inout("za") {
+     za_callee();
+     printf("Here\n"); // Does not change za_caller's ZA state
+     za_callee();
+   }
+```
+
+## Mapping to the Procedure Call Standard
+
+[[AAPCS64]](#AAPCS64) classifies functions as having one of the following
+interfaces:
+
+<span id="private-za"></span>
+
+*   a “private-ZA” interface
+
+*   a “shared-ZA” interface
+
+If a C or C++ function F forms part of the object code's ABI, that
+object code function has a shared-ZA interface if and only if at least
+one of the following is true:
+
+*   F shares ZA with its caller
+
+*   F shares ZT0 with its caller
+
+All other functions have a private-ZA interface.
+
+## Function definitions
+
+<span id="arm_new"></span>
+
+The [keyword attribute](#keyword-attributes) `__arm_new(...)`
+applies to function definitions. It specifies that the function
+creates a [new scope](#new-state-scope) for the given state. `...` is a
+comma-separated list of [state strings](#state-strings). The list
+must be non-empty.
+
+Each piece of state specified by `__arm_new` is zero-initialized.
+
+This attribute does not change a function's binary interface. If the
+function forms part of the object code's ABI, that object code function
+has the same interface as it would have had without `__arm_new`.
+
+A program is [ill-formed](#ill-formed) if a function definition F
+uses `__arm_new` for some state that F also [shares](#shares-state)
+with its caller. For example:
+
+``` c
+  __arm_new("za") void f1() __arm_in("za") { ... }     // Invalid
+  __arm_new("za") void f2() __arm_out("za") { ... }    // Invalid
+  __arm_new("za") void f3() __arm_inout("za") { ... }  // Invalid
+  __arm_new("za") void f4() __arm_inout("zt0") { ... } // OK
+  __arm_new("zt0") void f5() __arm_inout("za") { ... } // OK
+```
+
+## Inline assembly
+
+Some ACLE implementations might support the GNU inline asm extension.
+For implementations that do, suppose that an inline asm occurs in a
+function F that [uses state](#uses-state) S. There are then two
+possibilities:
+
+*   S is not an input to the asm and S is not an output from the asm.
+    The contents of S immediately after executing the asm's instructions
+    are the same as the contents of S immediately before executing the
+    instructions. This is the default assumption.
+
+*   S might be an input to the asm, might be an output from the asm,
+    and might be changed by the asm's instructions. This is indicated by
+    adding S's string to the asm's clobber list. For example, if an asm's
+    clobber list includes `"za"`, ZA might be an input to the asm,
+    an output from the asm, or something that the asm changes.
+
+If instead the inline asm occurs in a function that does not [use
+state](#uses-state) S, the two possibilities are:
+
+*   S is not an input to the asm and S is not an output from the asm.
+    The contents of S immediately after executing the asm's instructions
+    are the same as the contents of S immediately before executing the
+    instructions. This is the default assumption.
+
+*   S is not an input to the asm and S is not an output from the asm.
+    However, the contents of S after executing the asm's instructions might
+    be different from the contents of S before executing the instructions.
+    This is indicated by adding S's string to the asm's clobber list.
+
+    If an asm takes this option for state that is controlled by PSTATE.ZA,
+    the asm itself is responsible for handling the [[AAPCS64]](#AAPCS64)
+    lazy save scheme.
+
+[[AAPCS64]](#AAPCS64) defines three possible states for ZA:
+“off”, “dormant” or “active”. These states describe the values
+of two things:
+
+*   the PSTATE.ZA bit
+
+*   the TPIDR2_EL0 register
+
+ZA is guaranteed to be active on entry to an inline asm A in a
+function F if at least one of the following is true:
+
+*   F [uses `"za"`](#uses-state) and A's clobber list includes `"za"`.
+
+*   F [uses `"zt0"`](#uses-state) and A's clobber list includes `"zt0"`.
+
+Otherwise, ZA can be in any state on entry to A if at least one of the
+following is true:
+
+*   F [uses](#uses-state) `"za"`
+
+*   F [uses](#uses-state) `"zt0"`
+
+Otherwise, ZA can be off or dormant on entry to A, as for what AAPCS64
+calls “private-ZA” functions.
+
+If ZA is active on entry to A then A's instructions must ensure that
+ZA is also active when the asm finishes.
+
+Similarly, if ZA is off on entry to A then A's instructions must ensure
+that ZA is off when the asm finishes.
+
+If ZA is dormant on entry to A and A's clobber list does not include `"za"`,
+A's instructions must ensure that ZA is dormant when the asm finishes.
+
+Otherwise, if ZA is dormant on entry to A and A's clobber list
+includes `"za"`, A's instructions can leave ZA unchanged or in
+the off state (A's choice).  In the latter case, A's instructions
+must commit the lazy save that was pending on entry to A.
+
+The table below summarizes the possible ZA states on entry to an
+inline asm A in a function F. It also specifies what the state
+is required to be when A finishes; it is the asm's responsibility
+to ensure this. Since PSTATE.ZA controls both ZA and ZT0, the rules
+depend on ZT0 as well as ZA.
+
+| **ZA state before A** | **ZA state after A** | **Possible if…**                       |
+| --------------------- | -------------------- | -------------------------------------- |
+| off                   | off                  | F's uses and A's clobbers are disjoint |
+| dormant               | dormant              | " " "                                  |
+| dormant               | off                  | " " ", and A clobbers `"za"`           |
+| active                | active               | F uses `"za"` and/or `"zt0"`           |
+
+The [`__ARM_STATE` macros](#state-strings) indicate whether a compiler
+is guaranteed to support a particular clobber string. For example,
+the following code is a safe way to indicate that an asm might commit
+a lazy ZA save:
+
+``` c
+  // Function foo doesn't use ZA or ZT0.
+  void foo() {
+    ...
+    asm volatile("bl something"
+                 ::: ...call-clobbered registers...
+#ifdef __ARM_STATE_ZA
+                     , "za"
+#endif
+                );
+    ...
+  }
+```
+
+## Implementation notes
+
+<span id="za-implementation-notes"></span>
+
+A piece of state S can be said to be “live” at a point P during the
+execution of a function F if:
+
+*   F [uses](#uses-state) S; and
+
+*   a random, exogenous change to S at P could change the behavior
+    of the program.
+
+If S is live before a call from F to a function F2 that does not share S
+with its caller, the compiler must arrange for S to be preserved around
+the call to F2. One way to do this is to save S before the call and
+restore it afterwards. However, if S is ZA and F2 is a private-ZA
+function, the compiler can instead make use of the lazy-save scheme
+described in [[AAPCS64]](#AAPCS64).
+
+For example, the code below shows a function that uses ZA and ZT0
+internally. The comments describe when ZA should be saved and restored:
+
+``` c
+  void f_shares_zt0() __arm_inout("zt0");
+  void f_shares_za() __arm_inout("za");
+  void f_private();
+
+  void setup_za() __arm_out("za");
+  void use_za() __arm_in("za");
+
+  __arm_new("za", "zt0") void test() {
+    f_private();     // ZA is not live, no save necessary
+
+    setup_za();      // ZA is live after this call
+    f_shares_zt0();  // The compiler should save and restore ZA
+                     // around the call ("caller-save")
+    f_shares_za();   // ZA is live before and after this call
+    f_private();     // The compiler should preserve ZA across the call
+                     // It can use the lazy-save mechanism
+    use_za();        // ZA is no longer live after this call
+
+    f_private();     // ZA is not live, no save necessary
+  }
+```
+
+ZT0 cannot be lazily saved, so if ZT0 is live before a call to a
+function that does not share ZT0, the compiler must save and restore
+ZT0 around the call. For example:
+
+``` c
+  void setup_zt0() __arm_out("zt0");
+  void use_zt0() __arm_in("zt0");
+  void f_private();
+
+  __arm_new("zt0") void test() {
+    f_private();     // ZT0 is not live, no save necessary
+
+    setup_zt0();     // ZT0 is live after this call
+    f_private();     // The compiler should save and restore ZT0
+                     // around the call ("caller-save")
+    use_zt0();       // ZT0 is no longer live after this call
+
+    f_private();     // ZT0 is not live, no save necessary
+  }
+```
+
 # System register access
 
 ## Special register intrinsics
@@ -5431,7 +5907,7 @@ Armv8.4-A:
 * New SHA3 crypto instructions (available if `__ARM_FEATURE_SHA3`)
 * SM3 crypto instructions (available if `__ARM_FEATURE_SM3`)
 * SM4 crypto instructions (available if `__ARM_FEATURE_SM4`)
-* New FML[A|S] instructions (available if `__ARM_FEATURE_FP16_FML`).
+* New FML[A\|S] instructions (available if `__ARM_FEATURE_FP16_FML`).
 
 These instructions have been backported as optional instructions to Armv8.2-A
 and Armv8.3-A.
@@ -8158,7 +8634,7 @@ when move instructions are required.
 # SME language extensions and intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 ## Controlling the use of streaming mode
@@ -8685,8 +9161,6 @@ whose values might be changed by the asm.
 
 ## ZA storage
 
-### Introduction to ZA storage
-
 SME provides an area of storage called ZA, of size SVL.B×SVL.B bytes.
 It also provides a processor state bit called PSTATE.ZA to control
 whether ZA is enabled.
@@ -8696,15 +9170,15 @@ anchor that can be referred via an internal hyperlink to the paragraph
 following it. --><span id="za-state"></span>
 
 In C and C++ code, access to ZA is controlled at function granularity:
-a function either uses ZA or it does not. Another way to say this is
-that a function either “has ZA state” or it does not.
+a function either [uses](#uses-state) ZA or it does not. Another way to
+say this is that a function either “has ZA state” or it does not.
 
-If a function does have ZA state, the function can either share that ZA
-state with the function's caller or create new ZA state “from scratch”.
-In the latter case, it is the compiler's responsibility to free up ZA
-so that the function can use it; see the description of the lazy saving
-scheme in [[AAPCS64]](#AAPCS64) for details about how the compiler
-does this.
+If a function does have ZA state, the function can either
+[share](#shares-state) that ZA state with the function's caller or create
+new ZA state “from scratch”. In the latter case, it is the compiler's
+responsibility to free up ZA so that the function can use it; see the
+description of the lazy saving scheme in [[AAPCS64]](#AAPCS64) for
+details about how the compiler does this.
 
 These possibilities give a one-out-of-three choice for how a function
 handles ZA:
@@ -8712,101 +9186,16 @@ handles ZA:
 1.  The function has no [ZA state](#za-state). This is the default.
 
 2.  The function has [ZA state](#za-state) that it shares with its caller.
-    This is indicated by adding [`__arm_shared_za`](#arm_shared_za) to
-    the function type.
-
-    This case is similar in concept to passing an uncopyable (move-only) value
-    by reference to a C++ function:
-
-    ``` c++
-      // Pseudo-code showing the conceptual effect of __arm_shared_za.
-      struct pseudo_za_state {
-        ...
-        pseudo_za_state(const pseudo_za_state &) = delete;
-        pseudo_za_state &operator=(const pseudo_za_state &) = delete;
-        pseudo_za_state *operator&() const = delete;
-        ...
-      };
-      void shared_za_f1(pseudo_za_state &);
-      void shared_za_f2(pseudo_za_state &shared_za) {
-        ...
-        shared_za_f1(shared_za);
-        ...
-      }
-    ```
+    This is indicated by adding a [state-sharing
+    attribute](#ways-of-sharing-state) to the function type,
+    such as `__arm_inout("za")`.
 
 3.  The function has [ZA state](#za-state) that it creates “from scratch” and
     that it does not share with its caller. This is indicated by adding
-    `__arm_new_za` to the function definition.
-
-    This case is similar in spirit to declaring a single uncopyable C++
-    variable at function scope. Continuing the pseudo-code above:
-
-    ``` c++
-      // Pseudo-code showing the conceptual effect of arm_new_za.
-      void new_za_f3() {
-        pseudo_za_state new_za;
-        ...
-        shared_za_f2(new_za);
-        ...
-      }
-    ```
-
-<!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="shared-za"></span><span id="private-za"></span>
-
-Reusing a term from [[AAPCS64]](#AAPCS64), the functions in category (2)
-are called “shared-ZA” functions whereas the functions in categories (1) and
-(3) are called “private-ZA” functions. Therefore, “private-ZA” is the
-opposite of “shared-ZA”.
-
-A program is [ill-formed](#ill-formed) if:
-
-*   a function that has no [ZA state](#za-state) contains an
-    [evaluated call](#evaluated-call) to a [shared-ZA](#shared-za) function.
-
-*   [`__arm_new_za`](#arm_new_za) is used to define a
-    [shared-ZA](#shared-za) function.
-
-If a function F1 has [ZA state](#za-state) and it calls a function F2, then:
-
-*   if F2 is a [shared-ZA](#shared-za) function, F1 shares its ZA state
-    with F2.
-
-*   otherwise, F1's ZA state is unchanged by F2.
-
-Again the analogy is with passing or not passing a `pseudo_za_state`
-reference to F2.
+    [`__arm_new("za")`](#arm_new) to the function definition.
 
 Functions that have ZA state can use the [SME instruction intrinsics](#sme-instruction-intrinsics)
-to manipulate that state. These intrinsics themselves act as shared-ZA
-functions and so share ZA state with their callers.
-
-### `asm` statements and ZA
-
-Some ACLE implementations might support the GNU “inline asm” extension.
-For implementations that do, suppose that an inline asm occurs in a
-function F. There are then two cases:
-
-1.  If F has [ZA state](#za-state), PSTATE.ZA is guaranteed to be 1 on entry
-    to the inline asm. The inline asm must finish with PSTATE.ZA equal
-    to 1, otherwise the behavior is undefined.
-
-    The inline asm can indicate that it reads the current contents of ZA
-    and/or that it changes the contents of ZA by adding `"za"` to the
-    asm's clobber list. Using the clobber list for this purpose is a
-    syntactic convenience: it does not fit the normal semantics for clobbers.
-
-    If the inline asm does not have a `"za"` clobber but nevertheless
-    reads the current contents of ZA or changes the contents of ZA,
-    the behavior is undefined.
-
-2.  If F does not have [ZA state](#za-state), the inline asm must
-    “comply with the lazy saving scheme”, in the sense of
-    [[AAPCS64]](#AAPCS64). The behavior in other cases is undefined.
-
-    The inline asm is [ill-formed](#ill-formed) if it has a `"za"` clobber.
+to manipulate that state.
 
 ## ZT0 Lookup Table
 
@@ -8867,9 +9256,9 @@ The function type attributes cannot be used with K&R-style
 ``` c
   #define ATTR __arm_streaming
 
-  typedef int ft1() ATTR;      // Ill-formed in C, OK in C++
-  int f1() ATTR { ... }        // Ill-formed in C18 and earlier, OK in
+  typedef int ft1() ATTR;      // Ill-formed in C, C18 and earlier, OK in
                                //   later versions of C and in C++
+  int f1() ATTR { ... }        // Likewise
   typedef int ft2(void) ATTR;  // OK
   int f2(void) ATTR { ... }    // OK
 ```
@@ -8951,158 +9340,6 @@ an [`__arm_streaming`](#arm_streaming) type.
 
 See [Changing streaming mode locally](#changing-streaming-mode-locally)
 for more information.
-
-### SME attributes relating to ZA
-
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_shared_za"></span>
-
-#### `__arm_shared_za`
-
-This [keyword attribute](#keyword-attributes) applies to **function types**
-and specifies the following:
-
-*   The function has [ZA state](#za-state).
-
-*   The function shares ZA state with the function's callers: the function
-    can use ZA to receive data from its callers and to pass data back to
-    its callers.
-
-*   When the hardware supports SME2, the function has [ZT state](#zt-state).
-    The function's ZT state is created on entry to the function and destroyed
-    on return from the function. That is, the function does not use ZT0
-    to receive data from callers or to pass data back to callers.
-
-*   If the function forms part of the object code's ABI, that object code
-    function has a “shared-ZA interface”; see [[AAPCS64]](#AAPCS64)
-    for more details.
-
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_new_za"></span>
-
-#### `__arm_new_za`
-
-This [keyword attribute](#keyword-attributes) applies to **function
-definitions**. It specifies the following:
-
-*   The function has [ZA state](#za-state).
-
-*   The function does not use ZA to receive data from callers or to pass
-    data back to callers.
-
-*   Instead, the [abstract machine](#abstract-machine) creates new ZA state
-    on entry to the function and destroys the state on return from the
-    function.
-
-*   The abstract machine initializes each byte of the function's ZA state
-    to zero.
-
-*   When the hardware supports SME2, the function has [ZT state](#zt-state).
-
-This attribute does not change a function's binary interface. If the
-function forms part of the object code's ABI, that object code function
-has a “private-ZA interface”, just like all other non-`__arm_shared_za`
-functions do. See [[AAPCS64]](#AAPCS64) for more details about
-private-ZA interfaces.
-
-A function definition with this attribute is [ill-formed](#ill-formed)
-if the function's type has an [`__arm_shared_za`](#arm_shared_za)
-attribute or an [`__arm_preserves_za`](#arm_preserves_za) attribute.
-
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_preserves_za"></span>
-
-#### `__arm_preserves_za`
-
-This [keyword attribute](#keyword-attributes) applies to **function types**
-and is simply an optimization hint to the compiler; it is never needed
-for correctness. It can be attached to any function type, including:
-
-*   a function type that has an [`__arm_shared_za`](#arm_shared_za)
-    keyword attribute
-
-*   the type of a function whose definition has an
-    [`__arm_new_za`](#arm_new_za) keyword attribute
-
-*   the type of a function whose definition has no ZA state
-
-The attribute specifies that the function “preserves ZA”, in the sense
-of [[AAPCS64]](#AAPCS64). The mapping of this PCS concept to C and C++
-depends on whether the function is [shared-ZA](#shared-za) or
-[private-ZA](#private-za):
-
-*   If the function is [shared-ZA](#shared-za), the attribute guarantees
-    that the contents of the shared [ZA state](#za-state) on return from
-    the function are the same as the contents of the shared ZA state on
-    entry to the function. Either the function does not change the ZA
-    state at all, or the function undoes any changes to the ZA state
-    before returning.
-
-    Note: C and C++ calls from shared-ZA functions to private-ZA
-    functions are defined to preserve ZA state. Such calls do not affect
-    whether a function can be marked [`__arm_preserves_za`](#arm_preserves_za).
-
-*   If the function is [private-ZA](#private-za), the attribute guarantees
-    that a call to the function does not directly or indirectly involve
-    any of the following:
-
-    *   a call to an [`__arm_new_za`](#arm_new_za) function
-
-    *   a call to `setjmp`
-
-    *   a call to [`__arm_za_disable`](#arm_za_disable)
-
-    *   a call to a non-C/C++ function that “commits a lazy save”, in the
-        sense of the [[APCS64]](#AAPCS64)
-
-    *   an inline asm that commits a lazy save
-
-    *   the catching of an exception
-
-    The platform may place additional requirements as well.
-
-*   ZT state is also considered preserved when a function is marked with
-    [`arm_preserves_za`](#arm_preserves_za).
-
-In both cases, the onus is on the definition of the function to honor
-the guarantee that is being made. The attribute does not direct the
-compiler to do anything to honor the guarantee.
-
-If a function with an `__arm_preserves_za` type does not preserve ZA,
-the behavior is undefined. (There is an analogy with functions
-that are declared `noreturn` but do in fact return, and to functions
-that are declared `const` but do in fact change memory.)
-
-The attribute is intended to be useful for functions at API boundaries,
-where the compiler might not have access to the definition of the
-function being called. As the description above implies, attaching
-`__arm_preserves_za` to a [private-ZA](#private-za) function is quite
-a low-level feature, but it is useful for
-[streaming-compatible versions of standard routines](#streaming-compatible-versions-of-standard-routines)
-and could be useful for things like vector math routines.
-
-Function types with this attribute implicitly convert to function types
-that do not have the attribute. However, the reverse is not true. For example:
-
-``` c
-  void (*ptr1)(void) __arm_preserves_za;
-  void (*ptr2)(void);
-  void f1(void) __arm_preserves_za;
-  void f2(void);
-
-  void code() {
-    ptr1 = ptr2;  // Ill-formed
-    ptr1 = f1;    // OK
-    ptr1 = f2;    // Ill-formed
-
-    ptr2 = ptr1;  // OK
-    ptr2 = f1;    // OK
-    ptr2 = f2;    // OK
-  }
-```
 
 ## SME types
 
@@ -9285,7 +9522,7 @@ ZA array vectors. The intrinsics model this in the following way:
 ``` c
     // Reads 2 consecutive horizontal tile slices from ZA into multi-vector.
     svint8x2_t svread_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
-      __arm_streaming __arm_shared_za __arm_preserves_za;
+      __arm_streaming __arm_in("za");
 ```
 
 *   Intrinsic functions have a `_vg1x2`, `_vg1x4` suffix if the function
@@ -9302,7 +9539,7 @@ ZA array vectors. The intrinsics model this in the following way:
     // SMLAL intrinsic for 2 quad-vector groups.
     void svmla_lane_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                     svint8_t zm, uint64_t imm_idx)
-      __arm_streaming __arm_shared_za;
+      __arm_streaming __arm_inout("za");
 ```
 
 *   Intrinsic functions that take a multi-vector operand may have additional
@@ -9315,15 +9552,15 @@ ZA array vectors. The intrinsics model this in the following way:
 
 ``` c
     void svmla_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn, svint8x2_t zm)
-      __arm_streaming __arm_shared_za;
+      __arm_streaming __arm_inout("za");
 
     void svmla[_single]_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                         svint8_t zm)
-      __arm_streaming __arm_shared_za;
+      __arm_streaming __arm_inout("za");
 
     void svmla_lane_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                     svint8_t zm, uint64_t imm_idx)
-      __arm_streaming __arm_shared_za;
+      __arm_streaming __arm_inout("za");
 ```
 
 
@@ -9333,7 +9570,7 @@ ZA array vectors. The intrinsics model this in the following way:
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   void svld1_hor_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                      const void *ptr)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
   // address given by ptr.
@@ -9341,12 +9578,12 @@ ZA array vectors. The intrinsics model this in the following way:
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   void svld1_hor_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                           const void *ptr, int64_t vnum)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   void svld1_ver_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                      const void *ptr)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
   // address given by ptr.
@@ -9354,20 +9591,20 @@ ZA array vectors. The intrinsics model this in the following way:
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   void svld1_ver_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                           const void *ptr, int64_t vnum)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### LDR
 
 ``` c
   void svldr_za(uint32_t slice, const void *ptr)
-    __arm_streaming_compatible __arm_shared_za;
+    __arm_streaming_compatible __arm_inout("za");
 
   // Adds vnum to slice and vnum * svcntsb() to the address given by ptr.
   // This can be done in a single instruction if vnum is a constant in the
   // range [0, 15].  The intrinsic is synthetic for other vnum parameters.
   void svldr_vnum_za(uint32_t slice, const void *ptr, int64_t vnum)
-     __arm_streaming_compatible __arm_shared_za;
+     __arm_streaming_compatible __arm_inout("za");
 ```
 
 #### ST1B, ST1H, ST1W, ST1D, ST1Q
@@ -9376,7 +9613,7 @@ ZA array vectors. The intrinsics model this in the following way:
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   void svst1_hor_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                      void *ptr)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
   // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
   // address given by ptr.
@@ -9384,12 +9621,12 @@ ZA array vectors. The intrinsics model this in the following way:
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   void svst1_hor_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                           void *ptr, int64_t vnum)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   void svst1_ver_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                      void *ptr)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
   // Synthetic intrinsic: adds vnum to slice and vnum * svcntsb() to the
   // address given by ptr.
@@ -9397,20 +9634,20 @@ ZA array vectors. The intrinsics model this in the following way:
   // Also for _za16, _za32, _za64 and _za128 (with the same prototype).
   void svst1_ver_vnum_za8(uint64_t tile, uint32_t slice, svbool_t pg,
                           void *ptr, int64_t vnum)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 ```
 
 #### STR
 
 ``` c
   void svstr_za(uint32_t slice, void *ptr)
-    __arm_streaming_compatible __arm_shared_za __arm_preserves_za;
+    __arm_streaming_compatible __arm_in("za");
 
   // Adds vnum to slice and vnum * svcntsb() to the address given by ptr.
   // This can be done in a single instruction if vnum is a constant in the
   // range [0, 15].  The intrinsic is synthetic for other vnum parameters.
   void svstr_vnum_za(uint32_t slice, void *ptr, int64_t vnum)
-     __arm_streaming_compatible __arm_shared_za __arm_preserves_za;
+     __arm_streaming_compatible __arm_in("za");
 ```
 
 #### MOVA
@@ -9424,27 +9661,27 @@ parameter both have type `svuint8_t`.
   // And similarly for u8.
   svint8_t svread_hor_za8[_s8]_m(svint8_t zd, svbool_t pg,
                                  uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
   // And similarly for u16, bf16 and f16.
   svint16_t svread_hor_za16[_s16]_m(svint16_t zd, svbool_t pg,
                                     uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
   // And similarly for u32 and f32.
   svint32_t svread_hor_za32[_s32]_m(svint32_t zd, svbool_t pg,
                                     uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
   // And similarly for u64 and f64.
   svint64_t svread_hor_za64[_s64]_m(svint64_t zd, svbool_t pg,
                                     uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
   // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64
   svint8_t svread_hor_za128[_s8]_m(svint8_t zd, svbool_t pg,
                                    uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 ```
 
 Replacing `_hor` with `_ver` gives the associated vertical forms.
@@ -9457,27 +9694,27 @@ the `zn` parameter to the `_u8` intrinsic has type `svuint8_t`.
   // And similarly for u8.
   void svwrite_hor_za8[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                               svint8_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // And similarly for u16, bf16 and f16.
   void svwrite_hor_za16[_s16]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint16_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // And similarly for u32 and f32.
   void svwrite_hor_za32[_s32]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint32_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // And similarly for u64 and f64.
   void svwrite_hor_za64[_s64]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint64_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64
   void svwrite_hor_za128[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint8_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 Replacing `_hor` with `_ver` gives the associated vertical forms.
@@ -9487,21 +9724,21 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 ``` c
   void svaddha_za32[_s32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svint32_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   void svaddha_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint32_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svaddha_za64[_s64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svint64_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svaddha_za64[_u64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint64_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### ADDVA
@@ -9509,21 +9746,21 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 ``` c
   void svaddva_za32[_s32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svint32_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   void svaddva_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint32_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svaddva_za64[_s64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svint64_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svaddva_za64[_u64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint64_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### BFMOPA, FMOPA (widening), SMOPA, UMOPA
@@ -9531,11 +9768,11 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 ``` c
   void svmopa_za32[_bf16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svbfloat16_t zn, svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   void svmopa_za32[_f16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svfloat16_t zn, svfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   void svmopa_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                           svint8_t zn, svint8_t zm)
@@ -9543,17 +9780,17 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 
   void svmopa_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                           svuint8_t zn, svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svmopa_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svint16_t zn, svint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svmopa_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svuint16_t zn, svuint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### FMOPA (non-widening)
@@ -9561,12 +9798,12 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 ``` c
   void svmopa_za32[_f32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svfloat32_t zn, svfloat32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_F64F64 != 0
   void svmopa_za64[_f64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svfloat64_t zn, svfloat64_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### BFMOPS, FMOPS (widening), SMOPS, UMOPS
@@ -9574,29 +9811,29 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 ``` c
   void svmops_za32[_bf16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svbfloat16_t zn, svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   void svmops_za32[_f16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svfloat16_t zn, svfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   void svmops_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                           svint8_t zn, svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   void svmops_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                           svuint8_t zn, svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svmops_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svint16_t zn, svint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svmops_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svuint16_t zn, svuint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### FMOPS (non-widening)
@@ -9604,12 +9841,12 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 ``` c
   void svmops_za32[_f32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svfloat32_t zn, svfloat32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_F64F64 != 0
   void svmops_za64[_f64]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svfloat64_t zn, svfloat64_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### RDSVL
@@ -9619,19 +9856,19 @@ The following intrinsics read the length of a streaming vector:
 ``` c
   // Return the number of bytes in a streaming vector.
   // Equivalent to svcntb() when called in streaming mode.
-  uint64_t svcntsb() __arm_streaming_compatible __arm_preserves_za;
+  uint64_t svcntsb() __arm_streaming_compatible;
 
   // Return the number of halfwords in a streaming vector.
   // Equivalent to svcnth() when called in streaming mode.
-  uint64_t svcntsh() __arm_streaming_compatible __arm_preserves_za;
+  uint64_t svcntsh() __arm_streaming_compatible;
 
   // Return the number of words in a streaming vector.
   // Equivalent to svcntw() when called in streaming mode.
-  uint64_t svcntsw() __arm_streaming_compatible __arm_preserves_za;
+  uint64_t svcntsw() __arm_streaming_compatible;
 
   // Return the number of doublewords in a streaming vector.
   // Equivalent to svcntd() when called in streaming mode.
-  uint64_t svcntsd() __arm_streaming_compatible __arm_preserves_za;
+  uint64_t svcntsd() __arm_streaming_compatible;
 ```
 
 `svcntsb()` is equivalent to an RDSVL instruction with an immediate
@@ -9653,12 +9890,12 @@ possible to write these operations using normal C arithmetic. For example:
 ``` c
   void svsumopa_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svint8_t zn, svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svsumopa_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                              svint16_t zn, svuint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### SUMOPS
@@ -9666,12 +9903,12 @@ possible to write these operations using normal C arithmetic. For example:
 ``` c
   void svsumops_za32[_s8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svint8_t zn, svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svsumops_za64[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                              svint16_t zn, svuint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### USMOPA
@@ -9679,12 +9916,12 @@ possible to write these operations using normal C arithmetic. For example:
 ``` c
   void svusmopa_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint8_t zn, svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svusmopa_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                              svuint16_t zn, svint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### USMOPS
@@ -9692,21 +9929,21 @@ possible to write these operations using normal C arithmetic. For example:
 ``` c
   void svusmops_za32[_u8]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint8_t zn, svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_I16I64 != 0
   void svusmops_za64[_u16]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                              svuint16_t zn, svint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 ```
 
 #### ZERO
 
 ``` c
   void svzero_mask_za(uint64_t tile_mask)
-    __arm_streaming_compatible __arm_shared_za;
+    __arm_streaming_compatible __arm_inout("za");
 
-  void svzero_za() __arm_streaming_compatible __arm_shared_za;
+  void svzero_za() __arm_streaming_compatible __arm_out("za");
 ```
 
 ### SME2 instruction intrinsics
@@ -9729,7 +9966,7 @@ the result is written directly into ZA.
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svadd_write[_single]_za32[_s32]_vg1x2(uint32_t slice, svint32x2_t zn,
                                              svint32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9739,7 +9976,7 @@ the result is written directly into ZA.
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svadd_write[_single]_za32[_s32]_vg1x4(uint32_t slice, svint32x4_t zn,
                                              svint32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9749,7 +9986,7 @@ the result is written directly into ZA.
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svsub_write[_single]_za32[_u32]_vg1x2(uint32_t slice, svuint32x2_t zn,
                                              svuint32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9759,7 +9996,7 @@ the result is written directly into ZA.
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svsub_write[_single]_za32[_u32]_vg1x4(uint32_t slice, svuint32x4_t zn,
                                              svuint32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### ADD, SUB (store into ZA, multi)
@@ -9777,7 +10014,7 @@ the result is written directly into ZA.
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svadd_write_za32[_s32]_vg1x2(uint32_t slice,
                                     svint32x2_t zn, svint32x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9787,7 +10024,7 @@ the result is written directly into ZA.
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svadd_write_za32[_s32]_vg1x4(uint32_t slice,
                                     svint32x4_t zn, svint32x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9797,7 +10034,7 @@ the result is written directly into ZA.
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svsub_write_za32[_u32]_vg1x2(uint32_t slice,
                                     svuint32x2_t zn, svuint32x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9807,7 +10044,7 @@ the result is written directly into ZA.
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svsub_write_za32[_u32]_vg1x4(uint32_t slice,
                                     svuint32x4_t zn, svuint32x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### ADD (vectors)
@@ -9840,7 +10077,7 @@ Multi-vector add/sub and accumulate into ZA
   //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svadd_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9851,7 +10088,7 @@ Multi-vector add/sub and accumulate into ZA
   //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svadd_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9862,7 +10099,7 @@ Multi-vector add/sub and accumulate into ZA
   //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svsub_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9873,7 +10110,7 @@ Multi-vector add/sub and accumulate into ZA
   //   _za64[_s64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u64] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svsub_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### BFCVTN, FCVTN
@@ -9968,7 +10205,7 @@ Multi-vector dot-product (2-way and 4-way)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svdot[_single]_za32[_bf16]_vg1x2(uint32_t slice, svbfloat16x2_t zn,
                                         svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -9982,27 +10219,27 @@ Multi-vector dot-product (2-way and 4-way)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svdot[_single]_za32[_bf16]_vg1x4(uint32_t slice,
                                         svbfloat16x4_t zn, svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsudot[_single]_za32[_s8]_vg1x2(uint32_t slice, svint8x2_t zn,
                                         svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsudot[_single]_za32[_s8]_vg1x4(uint32_t slice, svint8x4_t zn,
                                         svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusdot[_single]_za32[_u8]_vg1x2(uint32_t slice, svuint8x2_t zn,
                                         svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusdot[_single]_za32[_u8]_vg1x4(uint32_t slice, svuint8x4_t zn,
                                         svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FDOT, BFDOT, SUDOT, USDOT, SDOT, UDOT (store into ZA, multi)
@@ -10021,7 +10258,7 @@ Multi-vector dot-product (2-way and 4-way)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svdot_za32[_bf16]_vg1x2(uint32_t slice, svbfloat16x2_t zn,
                                svbfloat16x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10035,23 +10272,23 @@ Multi-vector dot-product (2-way and 4-way)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svdot_za32[_bf16]_vg1x4(uint32_t slice, svbfloat16x4_t zn,
                                svbfloat16x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsudot_za32[_s8]_vg1x2(uint32_t slice, svint8x2_t zn, svuint8x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsudot_za32[_s8]_vg1x4(uint32_t slice, svint8x4_t zn, svuint8x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusdot_za32[_u8]_vg1x2(uint32_t slice, svuint8x2_t zn, svint8x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusdot_za32[_u8]_vg1x4(uint32_t slice, svuint8x4_t zn, svint8x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FDOT, BFDOT, SUDOT, USDOT, SDOT, UDOT (store into ZA, indexed)
@@ -10070,7 +10307,7 @@ Multi-vector dot-product (2-way and 4-way)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svdot_lane_za32[_bf16]_vg1x2(uint32_t slice, svbfloat16x2_t zn,
                                     svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10084,27 +10321,27 @@ Multi-vector dot-product (2-way and 4-way)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svdot_lane_za32[_bf16]_vg1x4(uint32_t slice, svbfloat16x4_t zn,
                                     svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsudot_lane_za32[_s8]_vg1x2(uint32_t slice, svint8x2_t zn, svuint8_t zm,
                                     uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsudot_lane_za32[_s8]_vg1x4(uint32_t slice, svint8x4_t zn, svuint8_t zm,
                                     uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusdot_lane_za32[_u8]_vg1x2(uint32_t slice, svuint8x2_t zn, svint8_t zm,
                                     uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusdot_lane_za32[_u8]_vg1x4(uint32_t slice, svuint8x4_t zn, svint8_t zm,
                                     uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FVDOT, BFVDOT, SUVDOT, USVDOT, SVDOT, UVDOT
@@ -10114,18 +10351,18 @@ Multi-vector vertical dot-product by indexed element.
 ``` c
   void svsuvdot_lane_za32[_s8]_vg1x4(uint32_t slice, svint8x4_t zn,
                                      svuint8_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusvdot_lane_za32[_u8]_vg1x4(uint32_t slice, svuint8x4_t zn,
                                      svint8_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svvdot_lane_za32[_bf16]_vg1x2(uint32_t slice, svbfloat16x2_t zn,
                                      svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10135,7 +10372,7 @@ Multi-vector vertical dot-product by indexed element.
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svvdot_lane_za32[_s8]_vg1x4(uint32_t slice, svint8x4_t zn, svint8_t zm,
                                    uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### UMOPA, SMOPA, UMOPS, SMOPS
@@ -10146,13 +10383,13 @@ Integer sum of outer products and accumulate/subtract (2-way)
   // Variants are also available for _za32[_u16]
   void svmopa_za32[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm, svint16_t zn,
                            svint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_u16]
   void svmops_za32[_s16]_m(uint64_t tile, svbool_t pn, svbool_t pm, svint16_t zn,
                            svint16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### BMOPA, BMOPS
@@ -10163,13 +10400,13 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
   // Variants are also available for _za32[_s32]
   void svbmopa_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint32_t zn, svuint32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_s32]
   void svbmops_za32[_u32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                             svuint32_t zn, svuint32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FMLA, FMLS (single)
@@ -10182,7 +10419,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmla[_single]_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zn,
                                        svfloat32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10190,7 +10427,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmla[_single]_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zn,
                                        svfloat32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10198,7 +10435,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmls[_single]_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zn,
                                        svfloat32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10206,7 +10443,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmls[_single]_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zn,
                                        svfloat32_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FMLA, FMLS (multi)
@@ -10219,7 +10456,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmla_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zn,
                               svfloat32x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10227,7 +10464,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmla_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zn,
                               svfloat32x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10235,7 +10472,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmls_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zn,
                               svfloat32x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10243,7 +10480,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmls_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zn,
                               svfloat32x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FMLA, FMLS (indexed)
@@ -10256,7 +10493,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmla_lane_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zn,
                                    svfloat32_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10264,7 +10501,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmla_lane_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zn,
                                    svfloat32_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10272,7 +10509,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmls_lane_za32[_f32]_vg1x2(uint32_t slice, svfloat32x2_t zn,
                                    svfloat32_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10280,7 +10517,7 @@ Multi-vector floating-point fused multiply-add/subtract
   //   _za64[_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmls_lane_za32[_f32]_vg1x4(uint32_t slice, svfloat32x4_t zn,
                                    svfloat32_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FMLAL, BFMLAL, SMLAL, UMLAL (single)
@@ -10291,19 +10528,19 @@ Multi-vector multiply-add long (widening)
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmla_za32[_bf16]_vg2x1(uint32_t slice, svbfloat16_t zn,
                                svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmla[_single]_za32[_bf16]_vg2x2(uint32_t slice, svbfloat16x2_t zn,
                                         svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmla[_single]_za32[_bf16]_vg2x4(uint32_t slice, svbfloat16x4_t zn,
                                         svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FMLAL, BFMLAL, SMLAL, UMLAL (multi)
@@ -10314,13 +10551,13 @@ Multi-vector multiply-add long (widening)
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmla_za32[_bf16]_vg2x2(uint32_t slice, svbfloat16x2_t zn,
                                svbfloat16x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmla_za32[_bf16]_vg2x4(uint32_t slice, svbfloat16x4_t zn,
                                svbfloat16x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### FMLAL, BFMLAL, SMLAL, UMLAL (indexed)
@@ -10331,19 +10568,19 @@ Multi-vector multiply-add long (widening)
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmla_lane_za32[_bf16]_vg2x1(uint32_t slice, svbfloat16_t zn,
                                     svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmla_lane_za32[_bf16]_vg2x2(uint32_t slice, svbfloat16x2_t zn,
                                     svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmla_lane_za32[_bf16]_vg2x4(uint32_t slice, svbfloat16x4_t zn,
                                     svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### BFMLSL, FMLSL, UMLSL, SMLSL (single)
@@ -10354,19 +10591,19 @@ Multi-vector multiply-subtract long (widening)
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmls_za32[_bf16]_vg2x1(uint32_t slice, svbfloat16_t zn,
                                svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmls[_single]_za32[_bf16]_vg2x2(uint32_t slice, svbfloat16x2_t zn,
                                         svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmls[_single]_za32[_bf16]_vg2x4(uint32_t slice, svbfloat16x4_t zn,
                                         svbfloat16_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### BFMLSL, FMLSL, UMLSL, SMLSL (multi)
@@ -10377,13 +10614,13 @@ Multi-vector multiply-subtract long (widening)
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmls_za32[_bf16]_vg2x2(uint32_t slice, svbfloat16x2_t zn,
                                svbfloat16x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmls_za32[_bf16]_vg2x4(uint32_t slice, svbfloat16x4_t zn,
                                svbfloat16x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### BFMLSL, FMLSL, UMLSL, SMLSL (indexed)
@@ -10394,19 +10631,19 @@ Multi-vector multiply-subtract long (widening)
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmls_lane_za32[_bf16]_vg2x1(uint32_t slice, svbfloat16_t zn,
                                     svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmls_lane_za32[_bf16]_vg2x2(uint32_t slice, svbfloat16x2_t zn,
                                     svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za32[_f16], _za32[_s16] and _za32[_u16]
   void svmls_lane_za32[_bf16]_vg2x4(uint32_t slice, svbfloat16x4_t zn,
                                     svbfloat16_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### UMLALL, SMLALL, USMLALL, SUMLALL (single)
@@ -10420,7 +10657,7 @@ Multi-vector multiply-add long long (widening)
   //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmla_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn, svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10430,7 +10667,7 @@ Multi-vector multiply-add long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmla[_single]_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                       svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10440,35 +10677,35 @@ Multi-vector multiply-add long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmla[_single]_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn,
                                       svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsumla_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn, svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsumla[_single]_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                         svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsumla[_single]_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn,
                                         svuint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusmla_za32[_u8]_vg4x1(uint32_t slice, svuint8_t zn, svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusmla[_single]_za32[_u8]_vg4x2(uint32_t slice, svuint8x2_t zn,
                                         svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusmla[_single]_za32[_u8]_vg4x4(uint32_t slice, svuint8x4_t zn,
                                         svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### UMLALL, SMLALL, USMLALL, SUMLALL (multi)
@@ -10482,7 +10719,7 @@ Multi-vector multiply-add long long (widening)
   //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmla_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn, svint8x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10491,23 +10728,23 @@ Multi-vector multiply-add long long (widening)
   //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmla_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn, svint8x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsumla_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn, svuint8x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsumla_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn, svuint8x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusmla_za32[_u8]_vg4x2(uint32_t slice, svuint8x2_t zn, svint8x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusmla_za32[_u8_vg4x4(uint32_t slice, svuint8x4_t zn, svint8x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### UMLALL, SMLALL, USMLALL, SUMLALL (indexed)
@@ -10522,7 +10759,7 @@ Multi-vector multiply-add long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmla_lane_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn, svint8_t zm,
                                   uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10532,7 +10769,7 @@ Multi-vector multiply-add long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmla_lane_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn, svint8_t zm,
                                   uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10542,37 +10779,37 @@ Multi-vector multiply-add long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmla_lane_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn, svint8_t zm,
                                   uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsumla_lane_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn,
                                     svuint8_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsumla_lane_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                     svuint8_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svsumla_lane_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn,
                                     svuint8_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusmla_lane_za32[_u8]_vg4x1(uint32_t slice, svuint8_t zn,
                                     svint8_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusmla_lane_za32[_u8]_vg4x2(uint32_t slice, svuint8x2_t zn,
                                     svint8_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   void svusmla_lane_za32[_u8]_vg4x4(uint32_t slice, svuint8x4_t zn,
                                     svint8_t zm, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### SMLSLL, UMLSLL (single)
@@ -10586,7 +10823,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmls_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn, svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10596,7 +10833,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmls[_single]_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
                                       svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10606,7 +10843,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmls[_single]_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn,
                                       svint8_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### SMLSLL, UMLSLL (multi)
@@ -10620,7 +10857,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmls_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn, svint8x2_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10629,7 +10866,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za64[_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmls_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn, svint8x4_t zm)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### SMLSLL, UMLSLL (indexed)
@@ -10644,7 +10881,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmls_lane_za32[_s8]_vg4x1(uint32_t slice, svint8_t zn, svint8_t zm,
                                   uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10654,7 +10891,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmls_lane_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn, svint8_t zm,
                                   uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are available for:
@@ -10664,7 +10901,7 @@ Multi-vector multiply-subtract long long (widening)
   //   _za64[_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmls_lane_za32[_s8]_vg4x4(uint32_t slice, svint8x4_t zn, svint8_t zm,
                                   uint64_t imm_idx)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### BFMLSLB, BFMLSLT
@@ -11209,11 +11446,11 @@ Spill and fill of ZT0
 
 ``` c
   void svldr_zt(uint64_t zt, const void *rn)
-    __arm_streaming_compatible __arm_shared_za __arm_preserves_za;
+    __arm_streaming_compatible __arm_inout("zt0");
 
 
   void svstr_zt(uint64_t zt, void *rn)
-    __arm_streaming_compatible __arm_shared_za __arm_preserves_za;
+    __arm_streaming_compatible __arm_in("zt0");
   ```
 
 #### ZERO
@@ -11222,7 +11459,7 @@ Zero ZT0
 
 ``` c
   void svzero_zt(uint64_t zt)
-    __arm_streaming_compatible __arm_shared_za __arm_preserves_za;
+    __arm_streaming_compatible __arm_out("zt0");
   ```
 
 #### LUTI2, LUTI4
@@ -11233,41 +11470,41 @@ Lookup table read with 2-bit and 4-bit indexes
   // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8_t svluti2_lane_zt_s8(uint64_t zt, svuint8_t zn, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("zt0");
 
 
   // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8x2_t svluti2_lane_zt_s8_x2(uint64_t zt, svuint8_t zn,
                                    uint64_t imm_idx)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("zt0");
 
 
   // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8x4_t svluti2_lane_zt_s8_x4(uint64_t zt, svuint8_t zn,
                                    uint64_t imm_idx)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("zt0");
 
 
   // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8_t svluti4_lane_zt_s8(uint64_t zt, svuint8_t zn, uint64_t imm_idx)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("zt0");
 
 
   // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8x2_t svluti4_lane_zt_s8_x2(uint64_t zt, svuint8_t zn,
                                    uint64_t imm_idx)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("zt0");
 
 
   // Variants are also available for _zt_u16, _zt_f16, _zt_bf16, _zt_s32,
   // _zt_u32 and _zt_f32
-  svint16x4_t svluti4_lane_zt_s16_x4(uint64_t zt, svuint16_t zn,
+  svint16x4_t svluti4_lane_zt_s16_x4(uint64_t zt, svuint8_t zn,
                                      uint64_t imm_idx)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("zt0");
   ```
 
 #### MOVA
@@ -11279,84 +11516,84 @@ Move multi-vectors to/from ZA
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
 
   // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_hor_za8_s8_vg4(uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
 
   // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_ver_za8_s8_vg2(uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
 
   // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_ver_za8_s8_vg4(uint64_t tile, uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
 
   // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_za8_s8_vg1x2(uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
 
   // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_za8_s8_vg1x4(uint32_t slice)
-    __arm_streaming __arm_shared_za __arm_preserves_za;
+    __arm_streaming __arm_in("za");
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_hor_za8[_s8]_vg2(uint64_t tile, uint32_t slice, svint8x2_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_hor_za8[_s8]_vg4(uint64_t tile, uint32_t slice, svint8x4_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_ver_za8[_s8]_vg2(uint64_t tile, uint32_t slice, svint8x2_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_ver_za8[_s8]_vg4(uint64_t tile, uint32_t slice, svint8x4_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_za8[_s8]_vg1x2(uint32_t slice, svint8x2_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
 
 
   // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_za8[_s8]_vg1x4(uint32_t slice, svint8x4_t zn)
-    __arm_streaming __arm_shared_za;
+    __arm_streaming __arm_inout("za");
   ```
 
 #### PTRUE
@@ -11724,16 +11961,16 @@ are named after. All of the functions have external linkage.
 
 ``` c
   void *__arm_sc_memcpy(void *dest, const void *src, size_t n)
-    __arm_streaming_compatible __arm_preserves_za;
+    __arm_streaming_compatible;
 
   void *__arm_sc_memmove(void *dest, const void *src, size_t n)
-    __arm_streaming_compatible __arm_preserves_za;
+    __arm_streaming_compatible;
 
   void *__arm_sc_memset(void *s, int c, size_t n)
-    __arm_streaming_compatible __arm_preserves_za;
+    __arm_streaming_compatible;
 
   void *__arm_sc_memchr(void *s, int c, size_t n)
-    __arm_streaming_compatible __arm_preserves_za;
+    __arm_streaming_compatible;
 ```
 
 

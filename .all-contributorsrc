@@ -288,6 +288,42 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "atrosinenko",
+      "name": "Anatoly Trosinenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9654772?v=4",
+      "profile": "https://atrosinenko.github.io",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "pratlucas",
+      "name": "Lucas Duarte Prates",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7014318?v=4",
+      "profile": "https://github.com/pratlucas",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "andrewcarlotti",
+      "name": "Andrew Carlotti",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11681428?v=4",
+      "profile": "https://github.com/andrewcarlotti",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "labrinea",
+      "name": "Alexandros Lamprineas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9527365?v=4",
+      "profile": "https://github.com/labrinea",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
