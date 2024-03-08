@@ -366,6 +366,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
     feature names are appended in lexicographic order, not in priority order.
   * Mangled names contain a unique set of features (no duplicates).
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
+  * Change name mangling of the default version.
   * Align priorities to account for feature dependencies.
   * Introduce alternative names (aliases) `rdma` for `rdm`.
   * Correct FEAT_BTI feature register value.
@@ -2514,8 +2515,10 @@ compiler and it is enabled.
 
 ### Name mangling
 
-The `"default"` version is not mangled on top of the language-specific name
-mangling.
+The `"default"` version is mangled with `".default"` on top of the
+language-specific name mangling. All versioned functions with their mangled names
+are always resolvable.
+A function is expected to be resolvable with the original mangled name of the function.
 
 The mangling function is compatible with the mangling for version information of
 the [[cxxabi]](#cxxabi), and it is defined as follows:
@@ -2535,9 +2538,9 @@ For example:
 __attribute__((target_clones("crc32", "aes+sha1")))
 int foo(){..}
 ```
-will produce these mangled names for C language: `foo`, `foo._Mcrc32`,
-`foo._MaesMsha1`.
-
+will produce these mangled names for C language: `foo.default`, `foo._Mcrc32`,
+`foo._MaesMsha1` while `foo` is a callable external symbol which leads to one
+of the versioned functions.
 
 ### Mapping
 
