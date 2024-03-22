@@ -363,6 +363,11 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   to use keyword attributes instead of GNU-style attributes.
 * Added description of SVE reinterpret intrinsics.
 * Changes and fixes for [Function Multi Versioning](#function-multi-versioning):
+  * Combination of attributes `target_version` and `target_clones` is allowed.
+  * Clarify the existance of a single default version across all translation
+    units with the explicitly provided version being the preferred in case
+    `target_version` and `target_clones` are mixed.
+  * Emphasise that all instances of the versions share the same calling convention.
   * Changed the mangling rules [Name mangling](#name-mangling), such that
     feature names are appended in lexicographic order, not in priority order.
   * Mangled names contain a unique set of features (no duplicates).
@@ -2474,11 +2479,11 @@ The following attributes trigger the multi version code generation:
 `__attribute__((target_version("name")))` and
 `__attribute__((target_clones("name",...)))`.
 
-* These attributes can't be mixed with each other.
+* These attributes can be mixed with each other.
 * The `default` version means the version of the function that would
   be generated without these attributes.
 * `name` is the dependent features from the tables below.
-  * If a feature depends on an other feature as defined by the Architecture
+  * If a feature depends on another feature as defined by the Architecture
     Reference Manual then no need to explicitly state in the attribute[^fmv-note-names].
 * The dependent features could be joined by the `+` sign.
 * None of these attributes will enable the corresponding ACLE feature(s)
@@ -2498,11 +2503,15 @@ following:
 * when applied to a function it becomes one of the versions. Function
   with the same name may exist with multiple versions in the same
   translation unit.
-* One `default` version of the function is required to be provided.
+* Function versions may reside in different translation units.
+* Each version declaration should be visible at the translation
+  unit in which the corresponding function version resides.
+* One `default` version of the function is required to be provided
+  in one of the translation units.
   * Implicitly, without this attribute,
   * or explicitly providing the `default` in the attribute.
 * All instances of the versions shall share the same function
-  signature.
+  signature and calling convention.
 
 The attribute `__attribute__((target_clones("name",...)))` expresses the
 following:
@@ -2510,9 +2519,10 @@ following:
 * when applied to a function the compiler emits multiple versions
   based on the arguments.
   * One of them is implicitly the `default`.
-  * If the `default` matches with an other explicitly provided
-    version the compiler can emit only one function instead of the
-    two.
+  * If the `default` matches with another explicitly provided
+    version in the same translation unit, then the compiler can
+    emit only one function instead of the two. The explicitly
+    provided version shall be preferred.
 * If a name is not recognized the compiler should ignore it[^fmv-note-ignore].
 
 [^fmv-note-ignore]: The intention is to support the usecase of newer code if
