@@ -9483,12 +9483,12 @@ The intrinsics in this section have the following properties in common:
 
 *   Some SME instructions identify a slice of ZA using the sum of a 32-bit
     general-purpose register and an immediate offset.  The intrinsics for
-    these instructions have a 32-bit argument called `slice`, which is
+    these instructions have a 32-bit argument named `slice`, which is
     interpreted as follows:
 
     *   If the intrinsic also has a `vnum` argument, the ZA slice number
         is calculated by adding `vnum` to `slice`.  Both `slice` and `vnum`
-        can both be variable.
+        can be variable.
 
     *   Otherwise, `slice` specifies the ZA slice number directly; that is,
         it represents the sum of the 32-bit register and the immediate
