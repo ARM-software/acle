@@ -9365,7 +9365,7 @@ tuple types `svboolx2_t` and `svboolx4_t`.
 
 These are opaque tuple types that can be accessed using the SVE intrinsics
 `svsetN`, `svgetN` and `svcreateN`. `svundef2` and `svundef4` are also extended
-to work with `svboolx2_t` and `svboolx4_t`.  e.g.
+to work with `svboolx2_t` and `svboolx4_t`. For example:
 
 ``` c
     svbool_t svget2[_b](svboolx2_t tuple, uint64_t imm_index);
@@ -9496,7 +9496,7 @@ SME2 adds operations that work on groups of SVE vectors, ZA tile slices or
 ZA array vectors. The intrinsics model this in the following way:
 
 *   Multi-vector operands are groups of SVE data vectors, that use the same
-    tuple types as defined in the [SVE ACLE](#sve-vector-types), e.g.
+    tuple types as defined in the [SVE ACLE](#sve-vector-types), for example,
     `svint32x2_t` for a multi-vector operand of two 32-bit element vectors, or
     `svint64x4_t` for a multi-vector operand of four 64-bit element vectors.
 
