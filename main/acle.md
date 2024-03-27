@@ -367,10 +367,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
     feature names are appended in lexicographic order, not in priority order.
   * Mangled names contain a unique set of features (no duplicates).
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
-  * Change name mangling of the default version.
-  * Align priorities to account for feature dependencies.
-  * Introduce alternative names (aliases) `rdma` for `rdm`.
-  * Correct FEAT_BTI feature register value.
+  * Changed name mangling of the default version.
+  * Aligned priorities to account for feature dependencies.
+  * Introduced alternative names (aliases) `rdma` for `rdm`.
+  * Corrected FEAT_BTI feature register value.
 * Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
   [Pointer Authentication](#pointer-authentication) to indicate target support
   for the Armv9.5-A PAC Enhancements.
