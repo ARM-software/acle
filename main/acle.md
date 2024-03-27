@@ -5026,7 +5026,7 @@ internally. The comments describe when ZA should be saved and restored:
   }
 ```
 
-ZT0 cannot be lazily saved, so if ZT0 is live before a call to a
+ZT0 cannot be saved lazily, so if ZT0 is live before a call to a
 function that does not share ZT0, the compiler must save and restore
 ZT0 around the call. For example:
 
