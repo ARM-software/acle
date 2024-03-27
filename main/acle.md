@@ -373,7 +373,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Correct FEAT_BTI feature register value.
 * Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
   [Pointer Authentication](#pointer-authentication) to indicate target support
-  for the Armv9.5-A's PAC Enhancements.
+  for the Armv9.5-A PAC Enhancements.
 * Introduced a new value to the `__ARM_FEATURE_PAC_DEFAULT` macro to indicate
   the use of PC as a diversifier for [Pointer Authentication](#pointer-authentication).
 * Added a [State management](#state-management) section, replacing the
