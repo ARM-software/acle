@@ -375,7 +375,14 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   * Change name mangling of the default version.
   * Align priorities to account for feature dependencies.
   * Introduce alternative names (aliases) `rdma` for `rdm`.
-  * Correct FEAT_BTI feature register value.
+  * Combine some features, to align more closely with compiler command line
+    options (eliminating sha1, pmull, sve2-pmull128, memtag2, ssbs2, ls64_v
+    and ls64_accdata).
+  * Remove features that are combinations of other features (sve-bf16 and
+    sve-i8mm).
+  * Remove features that only enable hint instructions (dgh and bti).
+  * Remove features that indicate only that a specific behaviour can be
+    separately switched on (dit, ebf16, sve-ebf16 and memtag3).
 * Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
   [Pointer Authentication](#pointer-authentication) to indicate target support
   for the Armv9.5-A's PAC Enhancements.
@@ -2590,14 +2597,11 @@ The following table lists the architectures feature mapping for AArch64
    | 106           | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 == 0b0001 AND ``` <br> ```ID_AA64ISAR0_EL1.SM3 == 0b0001``` |
    | 108           | `FEAT_RDM`               | rdm, rdma     | ```ID_AA64ISAR0_EL1.RDM == 0b0001```      |
    | 110           | `FEAT_CRC32`             | crc           | ```ID_AA64ISAR0_EL1.CRC32 == 0b0001```    |
-   | 120           | `FEAT_SHA1`              | sha1          | ```ID_AA64ISAR0_EL1.SHA1 == 0b0001```     |
-   | 130           | `FEAT_SHA256`            | sha2          | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
+   | 130           | `FEAT_SHA1`,`FEAT_SHA256`| sha2          | ```ID_AA64ISAR0_EL1.SHA2 == 0b0001```     |
    | 140           | `FEAT_SHA512`,`FEAT_SHA3`| sha3          | ```ID_AA64ISAR0_EL1.SHA3 != 0b0000```     |
-   | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
-   | 160           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES == 0b0010```      |
+   | 150           | `FEAT_AES`,`FEAT_PMULL`  | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0010```      |
    | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
    | 175           | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM == 0b0001```      |
-   | 180           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT == 0b0001```       |
    | 190           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
    | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB  == 0b0010```     |
    | 210           | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT == 0b0001```    |
@@ -2606,35 +2610,23 @@ The following table lists the architectures feature mapping for AArch64
    | 240           | `FEAT_LRCPC2`            | rcpc2         | ```ID_AA64ISAR1_EL1.LRCPC == 0b0010```    |
    | 241           | `FEAT_LRCPC3`            | rcpc3         | ```ID_AA64ISAR1_EL1.LRCPC == 0b0011```    |
    | 250           | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS == 0b0001```  |
-   | 260           | `FEAT_DGH`               | dgh           | ```ID_AA64ISAR1_EL1.DGH == 0b0001```      |
    | 270           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM == 0b0001```     |
    | 280           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 != 0b0000```     |
-   | 290           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 == 0b0010```     |
    | 300           | `FEAT_RPRES`             | rpres         | ```ID_AA64ISAR2_EL1.RPRES == 0b0001```    |
    | 310           | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0000``` |
-   | 320           | `FEAT_BF16`              | sve-bf16      | ```ID_AA64ZFR0_EL1.BF16 != 0b0000```      |
-   | 330           | `FEAT_EBF16`             | sve-ebf16     | ```ID_AA64ZFR0_EL1.BF16 == 0b0010```      |
-   | 340           | `FEAT_I8MM`              | sve-i8mm      | ```ID_AA64ZFR0_EL1.I8MM == 0b00001```     |
    | 350           | `FEAT_F32MM`             | f32mm         | ```ID_AA64ZFR0_EL1.F32MM == 0b00001```    |
    | 360           | `FEAT_F64MM`             | f64mm         | ```ID_AA64ZFR0_EL1.F64MM == 0b00001```    |
    | 370           | `FEAT_SVE2`              | sve2          | ```ID_AA64PFR0_EL1.SVE != 0b0000 AND ``` <br> ```ID_AA64ZFR0_EL1.SVEver == 0b0001``` |
-   | 380           | `FEAT_SVE_AES`           | sve2-aes      | ```ID_AA64ZFR0_EL1.AES == 0b0001 OR ``` <br> ```ID_AA64ZFR0_EL1.AES == 0b0010``` |
-   | 390           | `FEAT_SVE_PMULL128`      | sve2-pmull128 | ```ID_AA64ZFR0_EL1.AES == 0b0010```       |
+   | 380           | `FEAT_SVE_AES`,<br>`FEAT_SVE_PMULL128`| sve2-aes | ```ID_AA64ZFR0_EL1.AES == 0b0010``` |
    | 400           | `FEAT_SVE_BitPerm`       | sve2-bitperm  | ```ID_AA64ZFR0_EL1.BitPerm == 0b0001```   |
    | 410           | `FEAT_SVE_SHA3`          | sve2-sha3     | ```ID_AA64ZFR0_EL1.SHA3 == 0b0001```      |
    | 420           | `FEAT_SM3`,`FEAT_SVE_SM4`| sve2-sm4      | ```ID_AA64ZFR0_EL1.SM4 == 0b0001```       |
    | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME == 0b0001```       |
-   | 440           | `FEAT_MTE`               | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
-   | 450           | `FEAT_MTE2`              | memtag2       | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
-   | 460           | `FEAT_MTE3`              | memtag3       | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
+   | 440           | `FEAT_MTE`,`FEAT_MTE2`   | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
    | 470           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB == 0b0001```       |
    | 480           | `FEAT_SPECRES`           | predres       | ```ID_AA64ISAR1_EL1.SPECRES == 0b0001```  |
-   | 490           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS == 0b0001```      |
-   | 500           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS == 0b0010```      |
-   | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.BT == 0b0001```        |
-   | 520           | `FEAT_LS64`              | ls64          | ```ID_AA64ISAR1_EL1.LS64 >= 0b0001```     |
-   | 530           | `FEAT_LS64_V`            | ls64_v        | ```ID_AA64ISAR1_EL1.LS64 >= 0b0010```     |
-   | 540           | `FEAT_LS64_ACCDATA`      | ls64_accdata  | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011```     |
+   | 490           | `FEAT_SSBS`,`FEAT_SSBS2` | ssbs          | ```ID_AA64PFR1_EL1.SSBS >= 0b0010```      |
+   | 520           | `FEAT_LS64`,`FEAT_LS64_V`,<br>`FEAT_LS64_ACCDATA`| ls64 | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011``` |
    | 550           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT  == 0b0001```    |
    | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64  == 0b0001```  |
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64  == 0b1111```  |
