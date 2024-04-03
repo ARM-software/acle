@@ -1,10 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: 2023Q2
-date-of-issue: 04 August 2023
+version: 2024Q1
+date-of-issue: 05 April 2024
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -176,6 +176,7 @@ unless a different support level is specified in the text.
 | 2022Q2       | 01 Jul 2022       | Arm    | See [Changes between ACLE Q1 2021 and ACLE Q2 2022](#changes-between-acle-q1-2022-and-acle-q2-2022)                  |
 | 2022Q4       | 23 November 2022  | Arm    | See [Changes between ACLE Q2 2022 and ACLE Q4 2022](#changes-between-acle-q2-2022-and-acle-q4-2022)                  |
 | 2023Q2       | 04 August 2023    | Arm    | See [Changes between ACLE Q4 2022 and ACLE Q2 2023](#changes-between-acle-q4-2022-and-acle-q2-2023)                  |
+| 2024Q1       | 05 April 2024     | Arm    | See [Changes between ACLE Q2 2023 and ACLE Q1 2024](#changes-between-acle-q2-2023-and-acle-q1-2024)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -351,7 +352,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a requirement on [`arm_new_za`] to set the initial contents of
   ZA to zero.
 
-#### Changes for next release
+#### Changes between ACLE Q2 2023 and ACLE Q1 2024
 
 * Changed the definition of the `__ARM_ACLE` macro to reflect the current
   versioning scheme.
