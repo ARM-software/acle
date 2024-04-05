@@ -8776,8 +8776,8 @@ The functions in this section are defined by the header file
 Some instructions overlap with the SME and SME2 architecture extensions and
 are additionally available in Streaming SVE mode when __ARM_FEATURE_SME is
 non-zero or __ARM_FEATURE_SME2 are non-zero.
-For convenience, these the intrinsics for these instructions  are listed in
-the following section.
+For convenience, the intrinsics fo these instructions  are listed in the
+ following section.
 
 #### Multi-vector predicates
 
@@ -11835,15 +11835,15 @@ are named after. All of the functions have external linkage.
 
 ### SVE2.1 and SME2 instruction intrinsics
 
-These intrinsics can only be called from non-streaming code if
-`__ARM_FEATURE_SVE2p1` is defined. They can only be called from streaming code
-if the appropriate SME feature macro is defined (see next paragraph).
-They can only be called from streaming-compatible code if they could be called
-from both non-streaming code and streaming code
-
 The functions in this section are defined by either the header file
  [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
 when `__ARM_FEATURE_SVE2.1` or `__ARM_FEATURE_SME2` is defined, respectively.
+
+These intrinsics can only be called from non-streaming code if
+`__ARM_FEATURE_SVE2p1` is defined. They can only be called from streaming code
+if the appropriate SME feature macro is defined (see previous paragraph).
+They can only be called from streaming-compatible code if they could be called
+from both non-streaming code and streaming code
 
 Most function in this section are SME2 or SVE2.1. However some are available in
 SME. For convinience the ones available in SME will be tagged in the function
