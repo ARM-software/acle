@@ -1,10 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: 2023Q2
-date-of-issue: 04 August 2023
+version: 2024Q1
+date-of-issue: 11 April 2024
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -176,6 +176,7 @@ unless a different support level is specified in the text.
 | 2022Q2       | 01 Jul 2022       | Arm    | See [Changes between ACLE Q1 2021 and ACLE Q2 2022](#changes-between-acle-q1-2022-and-acle-q2-2022)                  |
 | 2022Q4       | 23 November 2022  | Arm    | See [Changes between ACLE Q2 2022 and ACLE Q4 2022](#changes-between-acle-q2-2022-and-acle-q4-2022)                  |
 | 2023Q2       | 04 August 2023    | Arm    | See [Changes between ACLE Q4 2022 and ACLE Q2 2023](#changes-between-acle-q4-2022-and-acle-q2-2023)                  |
+| 2024Q1       | 11 April 2024     | Arm    | See [Changes between ACLE Q2 2023 and ACLE Q1 2024](#changes-between-acle-q2-2023-and-acle-q1-2024)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -351,7 +352,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a requirement on [`arm_new_za`] to set the initial contents of
   ZA to zero.
 
-#### Changes for next release
+#### Changes between ACLE Q2 2023 and ACLE Q1 2024
 
 * Changed the definition of the `__ARM_ACLE` macro to reflect the current
   versioning scheme.
@@ -372,13 +373,13 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
     feature names are appended in lexicographic order, not in priority order.
   * Mangled names contain a unique set of features (no duplicates).
   * Added [MOPS](#memcpy-family-of-operations-intrinsics---mops).
-  * Change name mangling of the default version.
-  * Align priorities to account for feature dependencies.
-  * Introduce alternative names (aliases) `rdma` for `rdm`.
-  * Correct FEAT_BTI feature register value.
+  * Changed name mangling of the default version.
+  * Aligned priorities to account for feature dependencies.
+  * Introduced alternative names (aliases) `rdma` for `rdm`.
+  * Corrected FEAT_BTI feature register value.
 * Introduced the `__ARM_FEATURE_PAUTH_LR` feature macro in section
   [Pointer Authentication](#pointer-authentication) to indicate target support
-  for the Armv9.5-A's PAC Enhancements.
+  for the Armv9.5-A PAC Enhancements.
 * Introduced a new value to the `__ARM_FEATURE_PAC_DEFAULT` macro to indicate
   the use of PC as a diversifier for [Pointer Authentication](#pointer-authentication).
 * Added a [State management](#state-management) section, replacing the
@@ -5036,7 +5037,7 @@ internally. The comments describe when ZA should be saved and restored:
   }
 ```
 
-ZT0 cannot be lazily saved, so if ZT0 is live before a call to a
+ZT0 cannot be saved lazily, so if ZT0 is live before a call to a
 function that does not share ZT0, the compiler must save and restore
 ZT0 around the call. For example:
 
@@ -9375,7 +9376,7 @@ tuple types `svboolx2_t` and `svboolx4_t`.
 
 These are opaque tuple types that can be accessed using the SVE intrinsics
 `svsetN`, `svgetN` and `svcreateN`. `svundef2` and `svundef4` are also extended
-to work with `svboolx2_t` and `svboolx4_t`.  e.g.
+to work with `svboolx2_t` and `svboolx4_t`. For example:
 
 ``` c
     svbool_t svget2[_b](svboolx2_t tuple, uint64_t imm_index);
@@ -9506,7 +9507,7 @@ SME2 adds operations that work on groups of SVE vectors, ZA tile slices or
 ZA array vectors. The intrinsics model this in the following way:
 
 *   Multi-vector operands are groups of SVE data vectors, that use the same
-    tuple types as defined in the [SVE ACLE](#sve-vector-types), e.g.
+    tuple types as defined in the [SVE ACLE](#sve-vector-types), for example,
     `svint32x2_t` for a multi-vector operand of two 32-bit element vectors, or
     `svint64x4_t` for a multi-vector operand of four 64-bit element vectors.
 
