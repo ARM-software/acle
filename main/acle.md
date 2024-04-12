@@ -8776,7 +8776,7 @@ The functions in this section are defined by the header file
 Some instructions overlap with the SME and SME2 architecture extensions and
 are additionally available in Streaming SVE mode when __ARM_FEATURE_SME is
 non-zero or __ARM_FEATURE_SME2 are non-zero.
-For convenience, the intrinsics fo these instructions  are listed in the
+For convenience, the intrinsics for these instructions  are listed in the
  following section.
 
 #### Multi-vector predicates
