@@ -386,11 +386,11 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   `__arm_shared_za`, `__arm_new_za`, and `__arm_preserves_za` attributes
   in the previous Alpha SME spec.
 * Changed the status of the SME ACLE from Alpha to Beta.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.1 (FEAT_SVE2p1).
-
 
 #### Changes for next release
+
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.1 (FEAT_SVE2p1).
 
 ### References
 
