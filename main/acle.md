@@ -387,6 +387,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   in the previous Alpha SME spec.
 * Changed the status of the SME ACLE from Alpha to Beta.
 
+
 #### Changes for next release
 
 * Added [**Alpha**](#current-status-and-anticipated-changes)
