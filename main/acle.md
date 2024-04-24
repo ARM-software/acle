@@ -389,6 +389,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 
 #### Changes for next release
+* Added new content for the handling of arguments in CMSE Entry functions and
+  return values of CMSE Non-secure calls in order to address security issues.
 
 ### References
 
