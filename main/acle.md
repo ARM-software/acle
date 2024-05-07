@@ -390,6 +390,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 #### Changes for next release
 
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.1 (FEAT_SVE2p1).
+
 ### References
 
 This document refers to the following documents.
@@ -8648,6 +8651,10 @@ when move instructions are required.
 
 ### SVE2 BFloat16 data-processing instructions.
 
+The specification for B16B16 is in
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
+
 The instructions in this section are available when __ARM_FEATURE_B16B16 is
 non-zero.
 
@@ -8773,6 +8780,10 @@ BFloat16 floating-point multiply vectors.
    ```
 
 ### SVE2.1 instruction intrinsics
+
+The specification for SVE2.1 is in
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
 
 The functions in this section are defined by the header file
  [`<arm_sve.h>`](#arm_sve.h) when `__ARM_FEATURE_SVE2p1` is defined.
@@ -11838,6 +11849,10 @@ are named after. All of the functions have external linkage.
 ```
 
 ### SVE2.1 and SME2 instruction intrinsics
+
+The specification for SVE2.1 is in
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
 
 The functions in this section are defined by either the header file
  [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
