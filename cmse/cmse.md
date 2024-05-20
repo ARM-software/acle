@@ -1155,14 +1155,17 @@ declared type's range in an attempt to cause out-of-bounds memory accesses.
 
 <span id="requirement-47" class="requirement-box"></span>
 > A compiler generating code for an entry function must, for each parameter
-> that is an integral Fundamental Data Type smaller than a word, narrow the
-> parameter to a value within its declared type's range.
+> that is an integral Fundamental Data Type smaller than a word, make no
+> assumptions about the value of the padding bits, even when the value of
+> those bits are defined by the AAPCS.
 
 A possible implementation is shown below:
 
 ```c
+int array[256];
+
 __attribute__((cmse_nonsecure_entry))
-int func(int *array, unsigned short idx) {
+int func(unsigned char idx) {
     return array[idx];
 }
 ```
@@ -1170,16 +1173,19 @@ int func(int *array, unsigned short idx) {
 ```c
 __acle_se_func:
 func:
-@ narrow 'idx' to 16 bits before first use
-uxth    r1, r1
-ldr.w   r0, [r0, r1, lsl #2]
+...
+@ narrow 'idx' to 8 bits before first use
+uxtb	r0, r0
+movw	r1, :lower16:array
+movt	r1, :upper16:array
+ldr.w	r0, [r1, r0, lsl #2]
 ...
 bxns lr
 ```
 
 We recommend that function parameters with integral types smaller than 4
-bytes should be avoided. This guidance extends to underlying types of `enum`
-used as parameters.
+bytes should be avoided. This recommendation extends to underlying types of
+`enum` used as parameters.
 
 ### Return from an entry function
 
@@ -1390,7 +1396,8 @@ attempt to cause out-of-bounds memory accesses.
 <span id="requirement-58" class="requirement-box"></span>
 > A compiler generating code for a Non-secure function call must, for each
 > returned value that is an integral Fundamental Data Type smaller than a word,
-> narrow the returned value to a value within its declared type's range.
+> make no assumptions about the value of the padding bits, even when the value
+> of those bits are defined by the AAPCS.
 
 A possible implementation is shown below:
 
@@ -1419,8 +1426,8 @@ bl print
 ```
 
 We recommend that function return values with integral types smaller than 4
-bytes should be avoided. This guidance extends to underlying types of `enum`
-used as return values.
+bytes should be avoided. This recommendation extends to underlying types of
+`enum` used as return values.
 
 ## Non-secure function pointer
 
