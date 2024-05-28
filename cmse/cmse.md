@@ -1,11 +1,11 @@
 ---
 title: Arm®v8-M Security Extensions <br /> Requirements on Development Tools
-version: 1.3
-date-of-issue: 04 August 2023
+version: 1.4
+date-of-issue: 05 April 2024
 set-quote-highlight: true
 # LaTeX specific variables
-copyright-text: Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: false
+copyright-text: Copyright 2019, 2021-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -154,6 +154,13 @@ Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@
 * Corrected description and example in section
   [Non-secure function pointers](#non-secure-function-pointer).
 * Fixed typos.
+
+#### Changes for next release
+
+* Added [Requirement #47](#requirement-47) to address a security issue in the
+  handling of arguments to CMSE Entry functions.
+* Added [Requirement #58](#requirement-58) to address a security issue in the
+  handling of return values from CMSE Non-secure calls.
 
 ## References
 
@@ -1138,9 +1145,51 @@ caller stack frame](#figure5).
 
 ![<span id="figure5" class="citation-label">**Entry function's caller stack frame**</span>](stack-frame-entry.svg)
 
-### Return from an entry function
+Calls from Non-secure state follow the [[AAPCS]](#AAPCS), which states that the
+caller is responsible for zero- or sign-extending arguments of integral
+Fundamental Data Types smaller than a word to 4 bytes. An Entry function must
+not assume that callers follow this rule, that is, it cannot presume that
+integral parameters will have been zero- or sign-extended to 4 bytes. For
+example, an attacker might create code that passes arguments out of their
+declared type's range in an attempt to cause out-of-bounds memory accesses.
 
 <span id="requirement-47" class="requirement-box"></span>
+> A compiler generating code for an entry function must, for each parameter
+> that is an integral Fundamental Data Type smaller than a word, make no
+> assumptions about the value of the padding bits, even when the value of
+> those bits are defined by the AAPCS.
+
+A possible implementation is shown below:
+
+```c
+int array[256];
+
+__attribute__((cmse_nonsecure_entry))
+int func(unsigned char idx) {
+    return array[idx];
+}
+```
+
+```c
+__acle_se_func:
+func:
+...
+@ narrow 'idx' to 8 bits before first use
+uxtb	r0, r0
+movw	r1, :lower16:array
+movt	r1, :upper16:array
+ldr.w	r0, [r1, r0, lsl #2]
+...
+bxns lr
+```
+
+We recommend that function parameters with integral types smaller than 4
+bytes should be avoided. This recommendation extends to underlying types of
+`enum` used as parameters.
+
+### Return from an entry function
+
+<span id="requirement-48" class="requirement-box"></span>
 
 > An entry function must use the BXNS instruction to return to its
 > non-secure caller.
@@ -1153,7 +1202,7 @@ To prevent information leakage when an entry function returns, you must clear th
 registers that contain secret information
 ([Information leakage](#information-leakage)).
 
-<span id="requirement-48" class="requirement-box"></span>
+<span id="requirement-49" class="requirement-box"></span>
 
 > The code sequence directly preceding the `BXNS` instruction that transitions
 > to non-secure code must:
@@ -1186,7 +1235,7 @@ difficult.
 An entry function can be called from secure or non-secure state. Software needs
 to distinguish between these cases.
 
-<span id="requirement-49" class="requirement-box"></span>
+<span id="requirement-50" class="requirement-box"></span>
 
 > The following intrinsic function must be provided if bit 1 of macro 
 > `__ARM_FEATURE_CMSE` is set:
@@ -1212,12 +1261,12 @@ only happen via function pointers. This is a consequence of separating
 secure and non-secure code into separate executable files as described
 in [Executable files](#executable-files).
 
-<span id="requirement-50" class="requirement-box"></span>
+<span id="requirement-51" class="requirement-box"></span>
 
 > A non-secure function type must be declared using the function attribute 
 > `__attribute__((cmse_nonsecure_call))`.
 
-<span id="requirement-51" class="requirement-box"></span>
+<span id="requirement-52" class="requirement-box"></span>
 
 > A non-secure function type must only be used as a base type of a pointer.
 
@@ -1226,7 +1275,7 @@ executable file only contains secure function definitions.
 
 ### Performing a call
 
-<span id="requirement-52" class="requirement-box"></span>
+<span id="requirement-53" class="requirement-box"></span>
 
 > A function call through a pointer with a non-secure function type as its
 > base type must switch to the non-secure state.
@@ -1245,7 +1294,7 @@ that contain values that are used after the non-secure function call
 must be restored after the call returns. Secure code cannot depend on
 the non-secure state to restore these registers.
 
-<span id="requirement-53" class="requirement-box"></span>
+<span id="requirement-54" class="requirement-box"></span>
 
 > The code sequence directly preceding the `BLXNS` instruction that
 > transitions to non-secure code must:
@@ -1263,7 +1312,7 @@ the non-secure state to restore these registers.
 A toolchain could provide you with the means to specify that some
 types of variables never hold secret information.
 
-<span id="requirement-54" class="requirement-box"></span>
+<span id="requirement-55" class="requirement-box"></span>
 
 > When the non-secure function call returns, caller- and callee-saved
 > registers saved before the call must be restored. This includes bits [27:0]
@@ -1290,7 +1339,7 @@ usage is required according to [[AAPCS]](#AAPCS), the non-secure state expects
 the arguments on the non-secure stack and writes the return value to non-secure
 memory.
 
-<span id="requirement-55" class="requirement-box"></span>
+<span id="requirement-56" class="requirement-box"></span>
 
 > To avoid using the non-secure stack, a toolchain may constrain the
 > following, for a non-secure function type:
@@ -1299,7 +1348,7 @@ memory.
 > * The type of each parameter.
 > * The return type.
 
-<span id="requirement-56" class="requirement-box"></span>
+<span id="requirement-57" class="requirement-box"></span>
 
 > A compiler compiling a call to a non-secure function must do either of the
 > following:
@@ -1334,6 +1383,51 @@ The stack usage during a non-secure function call is shown in figure
 [Caller's stack frame of a non-secure function call](#figure6).
 
 ![<span id="figure6" class="citation-label">**Caller's stack frame of a non-secure function call**</span>](stack-frame-non-secure.svg)
+
+The return of values from Non-secure function calls follows the
+[[AAPCS]](#AAPCS), which states that the callee is responsible for zero- or
+sign-extending return values of integral Fundamental Data Types smaller than a
+word to 4 bytes. A Secure function must not assume that Non-secure callees
+follow this rule, that is, it cannot presume that integral returned values will
+have been zero- or sign-extended to 4 bytes. For example, an attacker might
+create code that returns values out of their declared type's range in an
+attempt to cause out-of-bounds memory accesses.
+
+<span id="requirement-58" class="requirement-box"></span>
+> A compiler generating code for a Non-secure function call must, for each
+> returned value that is an integral Fundamental Data Type smaller than a word,
+> make no assumptions about the value of the padding bits, even when the value
+> of those bits are defined by the AAPCS.
+
+A possible implementation is shown below:
+
+```c
+__attribute__((cmse_nonsecure_call))
+unsigned short (*nonsecurefunc)(void);
+
+void securefunc(int *array) {
+    unsigned short idx = nonsecurefunc();
+    print(array[idx]);
+}
+```
+
+```c
+securefunc:
+...
+@ r1 has the address of 'nonsecurefunc'
+@ r2 has 'array'
+@ non-secure function call
+blxns   r1
+@ narrow 'idx' (returned value in r0) to a 16-bit value
+uxth    r0, r0
+ldr.w   r0, [r2, r0, lsl #2]
+bl print
+...
+```
+
+We recommend that function return values with integral types smaller than 4
+bytes should be avoided. This recommendation extends to underlying types of
+`enum` used as return values.
 
 ## Non-secure function pointer
 
@@ -1399,7 +1493,7 @@ void call_callback(void) {
 This is just an optimisation technique and hence it is not required for the
 correct usage of non-secure function pointers.
 
-<span id="requirement-57" class="requirement-box"></span>
+<span id="requirement-59" class="requirement-box"></span>
 
 > The following intrinsics are defined if bit 1 of macro
 > `__ARM_FEATURE_CMSE` is set:
@@ -1428,12 +1522,12 @@ A non-secure callable function is a function that is expected to be placed in an
 NSC region. Its functionality is identical to an entry function, but instead of
 a secure gateway veneer the function starts with the `SG` instruction.
 
-<span id="requirement-58" class="requirement-box"></span>
+<span id="requirement-60" class="requirement-box"></span>
 
 > A non-secure callable function must be declared by using the attribute 
 > `__attribute__((cmse_nonsecure_callable))` on a function declaration.
 
-<span id="requirement-59" class="requirement-box"></span>
+<span id="requirement-61" class="requirement-box"></span>
 
 > A non-secure callable function is identical to an entry function except that:
 >
@@ -1449,7 +1543,7 @@ Toolchain support is needed to prevent inadvertent secure gateways
 from occurring ([Inadverted secure
 gataway](#inadvertent-secure-gateway)).
 
-<span id="requirement-60" class="requirement-box"></span>
+<span id="requirement-62" class="requirement-box"></span>
 
 > A toolchain must provide a way for the programmer to guarantee that a
 > non-secure callable function does not contain an inadvertent `SG` instruction
@@ -1465,7 +1559,7 @@ non-secure state, but cannot be called by the non-secure state. An example use
 would be to provide tail-calls from an entry function to non-secure returning
 functions.
 
-<span id="requirement-61" class="requirement-box"></span>
+<span id="requirement-63" class="requirement-box"></span>
 
 > A non-secure returning function must be declared by using the attribute 
 > `__attribute__((cmse_nonsecure_return))` on a function declaration.
