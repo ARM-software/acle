@@ -904,7 +904,6 @@ correctly:
 
 ``` c
   #include <stdint.h>
-  // UINT64_C not defined here since we did not set __STDC_FORMAT_MACROS
   ...
   #include <arm_neon.h>
 ```
@@ -914,9 +913,7 @@ and:
 ``` c
   #include <arm_neon.h>
   ...
-  #define __STDC_FORMAT_MACROS
   #include <stdint.h>
-  // ... UINT64_C is now defined
 ```
 
 ### `<arm_acle.h>`
@@ -925,13 +922,10 @@ and:
 to the more specific header files below. These intrinsics are in the
 C implementation namespace and begin with double underscores. It is
 unspecified whether they are available without the header being
-included. The `__ARM_ACLE` macro should be tested before including the
-header:
+included.
 
 ``` c
-  #ifdef __ARM_ACLE
   #include <arm_acle.h>
-  #endif /* __ARM_ACLE */
 ```
 
 ### `<arm_fp16.h>`
@@ -939,13 +933,10 @@ header:
 `<arm_fp16.h>` is provided to define the scalar 16-bit floating point
 arithmetic intrinsics. As these intrinsics are in the user namespace,
 an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` feature macro
-should be tested before including the header:
+included.
 
 ``` c
-  #ifdef __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
   #include <arm_fp16.h>
-  #endif /* __ARM_FEATURE_FP16_SCALAR_ARITHMETIC */
 ```
 
 ### `<arm_bf16.h>`
@@ -953,13 +944,10 @@ should be tested before including the header:
 `<arm_bf16.h>` is provided to define the 16-bit brain floating point
 arithmetic intrinsics. As these intrinsics are in the user namespace,
 an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_BF16` feature macro
-should be tested before including the header:
+included.
 
 ``` c
-  #ifdef __ARM_FEATURE_BF16
   #include <arm_bf16.h>
-  #endif /* __ARM_FEATURE_BF16 */
 ```
 
 When `__ARM_BF16_FORMAT_ALTERNATIVE` is defined to `1` the only scalar
@@ -975,13 +963,10 @@ instructions available are conversion intrinsics between `bfloat16_t` and
 intrinsics](#advanced-simd-neon-intrinsics) and associated
 [data types](#vector-data-types). As these intrinsics and data types are
 in the user namespace, an implementation would not normally define them
-until the header is included. The `__ARM_NEON` macro should be tested
-before including the header:
+until the header is included.
 
 ``` c
-  #ifdef __ARM_NEON
   #include <arm_neon.h>
-  #endif /* __ARM_NEON */
 ```
 
 Including `<arm_neon.h>` will also cause the following header files
@@ -999,13 +984,9 @@ following it. --><span id="arm_sve.h"></span>
 `<arm_sve.h>` defines data types and intrinsics for SVE and its
 extensions; see [SVE language extensions and
 intrinsics](#sve-language-extensions-and-intrinsics) for details.
-You should test the `__ARM_FEATURE_SVE` macro before including the
-header:
 
 ``` c
-  #ifdef __ARM_FEATURE_SVE
   #include <arm_sve.h>
-  #endif /* __ARM_FEATURE_SVE */
 ```
 
 Including `<arm_sve.h>` also includes the following header files:
@@ -1019,13 +1000,10 @@ Including `<arm_sve.h>` also includes the following header files:
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
 Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
-for details.  The `__ARM_NEON_SVE_BRIDGE` macro should be tested
-before including the header:
+for details.
 
 ``` c
-  #ifdef __ARM_NEON_SVE_BRIDGE
   #include <arm_neon_sve_bridge.h>
-  #endif /* __ARM_NEON_SVE_BRIDGE */
 ```
 
 Including `<arm_neon_sve_bridge.h>` will also include
@@ -1040,17 +1018,8 @@ intrinsics occupy both the user namespace and the `__arm_` namespace;
 defining `__ARM_MVE_PRESERVE_USER_NAMESPACE` will hide the definition of
 the user namespace variants.
 
-The `__ARM_FEATURE_MVE` macro should be tested before including the
-header:
-
 ``` c
-  #if (__ARM_FEATURE_MVE & 3) == 3
   #include <arm_mve.h>
-  /* MVE integer and floating point intrinsics are now available to use.  */
-  #elif __ARM_FEATURE_MVE & 1
-  #include <arm_mve.h>
-  /* MVE integer intrinsics are now available to use.  */
-  #endif
 ```
 
 ### `<arm_sme.h>`
@@ -1061,13 +1030,10 @@ change or be extended in the future.
 
 `<arm_sme.h>` declares functions and defines intrinsics for SME
 and its extensions; see [SME language extensions and intrinsics](#sme-language-extensions-and-intrinsics)
-for details. The `__ARM_FEATURE_SME` macro should be tested before
-including the header:
+for details. 
 
 ``` c
-  #ifdef __ARM_FEATURE_SME
   #include <arm_sme.h>
-  #endif
 ```
 
 Including `<arm_sme.h>` also includes [`<arm_sve.h>`](#arm_sve.h).
