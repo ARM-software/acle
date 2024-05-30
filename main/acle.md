@@ -1006,7 +1006,9 @@ Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
 for details.
 
 ``` c
+  #ifdef __ARM_NEON_SVE_BRIDGE
   #include <arm_neon_sve_bridge.h>
+  #endif /* __ARM_NEON_SVE_BRIDGE */
 ```
 
 Including `<arm_neon_sve_bridge.h>` will also include
