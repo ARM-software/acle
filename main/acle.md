@@ -913,8 +913,8 @@ and:
 
 ``` c
   #include <arm_neon.h>
-  #define __STDC_FORMAT_MACROS
   ...
+  #define __STDC_FORMAT_MACROS
   #include <stdint.h>
   // ... UINT64_C is now defined
 ```
