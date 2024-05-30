@@ -1003,7 +1003,8 @@ Including `<arm_sve.h>` also includes the following header files:
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
 Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
-for details.
+for details. The `__ARM_NEON_SVE_BRIDGE` macro should be tested
+-before including the header:
 
 ``` c
   #ifdef __ARM_NEON_SVE_BRIDGE
