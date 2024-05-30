@@ -904,6 +904,7 @@ correctly:
 
 ``` c
   #include <stdint.h>
+  // UINT64_C not defined here since we did not set __STDC_FORMAT_MACROS
   ...
   #include <arm_neon.h>
 ```
@@ -912,8 +913,10 @@ and:
 
 ``` c
   #include <arm_neon.h>
+  #define __STDC_FORMAT_MACROS
   ...
   #include <stdint.h>
+  // ... UINT64_C is now defined
 ```
 
 ### `<arm_acle.h>`
