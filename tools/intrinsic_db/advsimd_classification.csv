@@ -1843,6 +1843,8 @@ vcopy_lane_p8	Vector manipulation|Copy vector lane
 vcopyq_lane_p8	Vector manipulation|Copy vector lane
 vcopy_lane_p16	Vector manipulation|Copy vector lane
 vcopyq_lane_p16	Vector manipulation|Copy vector lane
+vcopy_lane_mf8	Vector manipulation|Copy vector lane
+vcopyq_lane_mf8	Vector manipulation|Copy vector lane
 vcopy_laneq_s8	Vector manipulation|Copy vector lane
 vcopyq_laneq_s8	Vector manipulation|Copy vector lane
 vcopy_laneq_s16	Vector manipulation|Copy vector lane
@@ -1869,6 +1871,8 @@ vcopy_laneq_p8	Vector manipulation|Copy vector lane
 vcopyq_laneq_p8	Vector manipulation|Copy vector lane
 vcopy_laneq_p16	Vector manipulation|Copy vector lane
 vcopyq_laneq_p16	Vector manipulation|Copy vector lane
+vcopy_laneq_mf8	Vector manipulation|Copy vector lane
+vcopyq_laneq_mf8	Vector manipulation|Copy vector lane
 vrbit_s8	Vector manipulation|Reverse bits within elements
 vrbitq_s8	Vector manipulation|Reverse bits within elements
 vrbit_u8	Vector manipulation|Reverse bits within elements
@@ -1889,6 +1893,7 @@ vcreate_f32	Vector manipulation|Create vector
 vcreate_p8	Vector manipulation|Create vector
 vcreate_p16	Vector manipulation|Create vector
 vcreate_f64	Vector manipulation|Create vector
+vcreate_mf8	Vector manipulation|Create vector
 vdup_n_s8	Vector manipulation|Set all lanes to the same value
 vdupq_n_s8	Vector manipulation|Set all lanes to the same value
 vdup_n_s16	Vector manipulation|Set all lanes to the same value
@@ -1915,6 +1920,8 @@ vdup_n_p16	Vector manipulation|Set all lanes to the same value
 vdupq_n_p16	Vector manipulation|Set all lanes to the same value
 vdup_n_f64	Vector manipulation|Set all lanes to the same value
 vdupq_n_f64	Vector manipulation|Set all lanes to the same value
+vdup_n_mf8	Vector manipulation|Set all lanes to the same value
+vdupq_n_mf8	Vector manipulation|Set all lanes to the same value
 vmov_n_s8	Vector manipulation|Set all lanes to the same value
 vmovq_n_s8	Vector manipulation|Set all lanes to the same value
 vmov_n_s16	Vector manipulation|Set all lanes to the same value
@@ -1939,6 +1946,8 @@ vmov_n_p16	Vector manipulation|Set all lanes to the same value
 vmovq_n_p16	Vector manipulation|Set all lanes to the same value
 vmov_n_f64	Vector manipulation|Set all lanes to the same value
 vmovq_n_f64	Vector manipulation|Set all lanes to the same value
+vmov_n_mf8	Vector manipulation|Set all lanes to the same value
+vmovq_n_mf8	Vector manipulation|Set all lanes to the same value
 vdup_lane_s8	Vector manipulation|Set all lanes to the same value
 vdupq_lane_s8	Vector manipulation|Set all lanes to the same value
 vdup_lane_s16	Vector manipulation|Set all lanes to the same value
@@ -1965,6 +1974,8 @@ vdup_lane_p16	Vector manipulation|Set all lanes to the same value
 vdupq_lane_p16	Vector manipulation|Set all lanes to the same value
 vdup_lane_f64	Vector manipulation|Set all lanes to the same value
 vdupq_lane_f64	Vector manipulation|Set all lanes to the same value
+vdup_lane_mf8	Vector manipulation|Set all lanes to the same value
+vdupq_lane_mf8	Vector manipulation|Set all lanes to the same value
 vdup_laneq_s8	Vector manipulation|Set all lanes to the same value
 vdupq_laneq_s8	Vector manipulation|Set all lanes to the same value
 vdup_laneq_s16	Vector manipulation|Set all lanes to the same value
@@ -1991,6 +2002,8 @@ vdup_laneq_p16	Vector manipulation|Set all lanes to the same value
 vdupq_laneq_p16	Vector manipulation|Set all lanes to the same value
 vdup_laneq_f64	Vector manipulation|Set all lanes to the same value
 vdupq_laneq_f64	Vector manipulation|Set all lanes to the same value
+vdup_laneq_mf8	Vector manipulation|Set all lanes to the same value
+vdupq_laneq_mf8	Vector manipulation|Set all lanes to the same value
 vcombine_s8	Vector manipulation|Combine vectors
 vcombine_s16	Vector manipulation|Combine vectors
 vcombine_s32	Vector manipulation|Combine vectors
@@ -2005,6 +2018,7 @@ vcombine_f32	Vector manipulation|Combine vectors
 vcombine_p8	Vector manipulation|Combine vectors
 vcombine_p16	Vector manipulation|Combine vectors
 vcombine_f64	Vector manipulation|Combine vectors
+vcombine_mf8	Vector manipulation|Combine vectors
 vget_high_s8	Vector manipulation|Split vectors
 vget_high_s16	Vector manipulation|Split vectors
 vget_high_s32	Vector manipulation|Split vectors
@@ -2019,6 +2033,7 @@ vget_high_f32	Vector manipulation|Split vectors
 vget_high_p8	Vector manipulation|Split vectors
 vget_high_p16	Vector manipulation|Split vectors
 vget_high_f64	Vector manipulation|Split vectors
+vget_high_mf8	Vector manipulation|Split vectors
 vget_low_s8	Vector manipulation|Split vectors
 vget_low_s16	Vector manipulation|Split vectors
 vget_low_s32	Vector manipulation|Split vectors
@@ -2033,6 +2048,7 @@ vget_low_f32	Vector manipulation|Split vectors
 vget_low_p8	Vector manipulation|Split vectors
 vget_low_p16	Vector manipulation|Split vectors
 vget_low_f64	Vector manipulation|Split vectors
+vget_low_mf8	Vector manipulation|Split vectors
 vdupb_lane_s8	Vector manipulation|Extract one element from vector
 vduph_lane_s16	Vector manipulation|Extract one element from vector
 vdups_lane_s32	Vector manipulation|Extract one element from vector
@@ -2045,6 +2061,7 @@ vdups_lane_f32	Vector manipulation|Extract one element from vector
 vdupd_lane_f64	Vector manipulation|Extract one element from vector
 vdupb_lane_p8	Vector manipulation|Extract one element from vector
 vduph_lane_p16	Vector manipulation|Extract one element from vector
+vdupb_lane_mf8	Vector manipulation|Extract one element from vector
 vdupb_laneq_s8	Vector manipulation|Extract one element from vector
 vduph_laneq_s16	Vector manipulation|Extract one element from vector
 vdups_laneq_s32	Vector manipulation|Extract one element from vector
@@ -2057,6 +2074,7 @@ vdups_laneq_f32	Vector manipulation|Extract one element from vector
 vdupd_laneq_f64	Vector manipulation|Extract one element from vector
 vdupb_laneq_p8	Vector manipulation|Extract one element from vector
 vduph_laneq_p16	Vector manipulation|Extract one element from vector
+vdupb_laneq_mf8	Vector manipulation|Extract one element from vector
 vld1_s8	Load|Stride
 vld1q_s8	Load|Stride
 vld1_s16	Load|Stride
@@ -2085,6 +2103,8 @@ vld1_p16	Load|Stride
 vld1q_p16	Load|Stride
 vld1_f64	Load|Stride
 vld1q_f64	Load|Stride
+vld1_mf8	Load|Stride
+vld1q_mf8	Load|Stride
 vld1_lane_s8	Load|Stride
 vld1q_lane_s8	Load|Stride
 vld1_lane_s16	Load|Stride
@@ -2113,6 +2133,8 @@ vld1_lane_p16	Load|Stride
 vld1q_lane_p16	Load|Stride
 vld1_lane_f64	Load|Stride
 vld1q_lane_f64	Load|Stride
+vld1_lane_mf8	Load|Stride
+vld1q_lane_mf8	Load|Stride
 vldap1q_lane_u64	Load|Stride
 vldap1q_lane_s64	Load|Stride
 vldap1q_lane_f64	Load|Stride
@@ -2157,6 +2179,8 @@ vld1_dup_p16	Load|Stride
 vld1q_dup_p16	Load|Stride
 vld1_dup_f64	Load|Stride
 vld1q_dup_f64	Load|Stride
+vld1_dup_mf8	Load|Stride
+vld1q_dup_mf8	Load|Stride
 vst1_s8	Store|Stride
 vst1q_s8	Store|Stride
 vst1_s16	Store|Stride
@@ -2185,6 +2209,8 @@ vst1_p16	Store|Stride
 vst1q_p16	Store|Stride
 vst1_f64	Store|Stride
 vst1q_f64	Store|Stride
+vst1_mf8	Store|Stride
+vst1q_mf8	Store|Stride
 vst1_lane_s8	Store|Stride
 vst1q_lane_s8	Store|Stride
 vst1_lane_s16	Store|Stride
@@ -2213,6 +2239,8 @@ vst1_lane_p16	Store|Stride
 vst1q_lane_p16	Store|Stride
 vst1_lane_f64	Store|Stride
 vst1q_lane_f64	Store|Stride
+vst1_lane_mf8	Store|Stride
+vst1q_lane_mf8	Store|Stride
 vld2_s8	Load|Stride
 vld2q_s8	Load|Stride
 vld2_s16	Load|Stride
@@ -2241,6 +2269,8 @@ vld2q_u64	Load|Stride
 vld2q_p64	Load|Stride
 vld2_f64	Load|Stride
 vld2q_f64	Load|Stride
+vld2_mf8	Load|Stride
+vld2q_mf8	Load|Stride
 vld3_s8	Load|Stride
 vld3q_s8	Load|Stride
 vld3_s16	Load|Stride
@@ -2269,6 +2299,8 @@ vld3q_u64	Load|Stride
 vld3q_p64	Load|Stride
 vld3_f64	Load|Stride
 vld3q_f64	Load|Stride
+vld3_mf8	Load|Stride
+vld3q_mf8	Load|Stride
 vld4_s8	Load|Stride
 vld4q_s8	Load|Stride
 vld4_s16	Load|Stride
@@ -2297,6 +2329,8 @@ vld4q_u64	Load|Stride
 vld4q_p64	Load|Stride
 vld4_f64	Load|Stride
 vld4q_f64	Load|Stride
+vld4_mf8	Load|Stride
+vld4q_mf8	Load|Stride
 vld2_dup_s8	Load|Stride
 vld2q_dup_s8	Load|Stride
 vld2_dup_s16	Load|Stride
@@ -2325,6 +2359,8 @@ vld2q_dup_u64	Load|Stride
 vld2q_dup_p64	Load|Stride
 vld2_dup_f64	Load|Stride
 vld2q_dup_f64	Load|Stride
+vld2_dup_mf8	Load|Stride
+vld2q_dup_mf8	Load|Stride
 vld3_dup_s8	Load|Stride
 vld3q_dup_s8	Load|Stride
 vld3_dup_s16	Load|Stride
@@ -2353,6 +2389,8 @@ vld3q_dup_u64	Load|Stride
 vld3q_dup_p64	Load|Stride
 vld3_dup_f64	Load|Stride
 vld3q_dup_f64	Load|Stride
+vld3_dup_mf8	Load|Stride
+vld3q_dup_mf8	Load|Stride
 vld4_dup_s8	Load|Stride
 vld4q_dup_s8	Load|Stride
 vld4_dup_s16	Load|Stride
@@ -2381,6 +2419,8 @@ vld4q_dup_u64	Load|Stride
 vld4q_dup_p64	Load|Stride
 vld4_dup_f64	Load|Stride
 vld4q_dup_f64	Load|Stride
+vld4_dup_mf8	Load|Stride
+vld4q_dup_mf8	Load|Stride
 vst2_s8	Store|Stride
 vst2q_s8	Store|Stride
 vst2_s16	Store|Stride
@@ -2409,6 +2449,8 @@ vst2q_u64	Store|Stride
 vst2q_p64	Store|Stride
 vst2_f64	Store|Stride
 vst2q_f64	Store|Stride
+vst2_mf8	Store|Stride
+vst2q_mf8	Store|Stride
 vst3_s8	Store|Stride
 vst3q_s8	Store|Stride
 vst3_s16	Store|Stride
@@ -2437,6 +2479,8 @@ vst3q_u64	Store|Stride
 vst3q_p64	Store|Stride
 vst3_f64	Store|Stride
 vst3q_f64	Store|Stride
+vst3_mf8	Store|Stride
+vst3q_mf8	Store|Stride
 vst4_s8	Store|Stride
 vst4q_s8	Store|Stride
 vst4_s16	Store|Stride
@@ -2465,6 +2509,8 @@ vst4q_u64	Store|Stride
 vst4q_p64	Store|Stride
 vst4_f64	Store|Stride
 vst4q_f64	Store|Stride
+vst4_mf8	Store|Stride
+vst4q_mf8	Store|Stride
 vld2_lane_s16	Load|Stride
 vld2q_lane_s16	Load|Stride
 vld2_lane_s32	Load|Stride
@@ -2493,6 +2539,8 @@ vld2_lane_p64	Load|Stride
 vld2q_lane_p64	Load|Stride
 vld2_lane_f64	Load|Stride
 vld2q_lane_f64	Load|Stride
+vld2_lane_mf8	Load|Stride
+vld2q_lane_mf8	Load|Stride
 vld3_lane_s16	Load|Stride
 vld3q_lane_s16	Load|Stride
 vld3_lane_s32	Load|Stride
@@ -2521,6 +2569,8 @@ vld3_lane_p64	Load|Stride
 vld3q_lane_p64	Load|Stride
 vld3_lane_f64	Load|Stride
 vld3q_lane_f64	Load|Stride
+vld3_lane_mf8	Load|Stride
+vld3q_lane_mf8	Load|Stride
 vld4_lane_s16	Load|Stride
 vld4q_lane_s16	Load|Stride
 vld4_lane_s32	Load|Stride
@@ -2549,15 +2599,20 @@ vld4_lane_p64	Load|Stride
 vld4q_lane_p64	Load|Stride
 vld4_lane_f64	Load|Stride
 vld4q_lane_f64	Load|Stride
+vld4_lane_mf8	Load|Stride
+vld4q_lane_mf8	Load|Stride
 vst2_lane_s8	Store|Stride
 vst2_lane_u8	Store|Stride
 vst2_lane_p8	Store|Stride
+vst2_lane_mf8	Store|Stride
 vst3_lane_s8	Store|Stride
 vst3_lane_u8	Store|Stride
 vst3_lane_p8	Store|Stride
+vst3_lane_mf8	Store|Stride
 vst4_lane_s8	Store|Stride
 vst4_lane_u8	Store|Stride
 vst4_lane_p8	Store|Stride
+vst4_lane_mf8	Store|Stride
 vst2_lane_s16	Store|Stride
 vst2q_lane_s16	Store|Stride
 vst2_lane_s32	Store|Stride
@@ -2583,6 +2638,7 @@ vst2_lane_p64	Store|Stride
 vst2q_lane_p64	Store|Stride
 vst2_lane_f64	Store|Stride
 vst2q_lane_f64	Store|Stride
+vst2q_lane_mf8	Store|Stride
 vst3_lane_s16	Store|Stride
 vst3q_lane_s16	Store|Stride
 vst3_lane_s32	Store|Stride
@@ -2608,6 +2664,7 @@ vst3_lane_p64	Store|Stride
 vst3q_lane_p64	Store|Stride
 vst3_lane_f64	Store|Stride
 vst3q_lane_f64	Store|Stride
+vst3q_lane_mf8	Store|Stride
 vst4_lane_s16	Store|Stride
 vst4q_lane_s16	Store|Stride
 vst4_lane_s32	Store|Stride
@@ -2633,6 +2690,7 @@ vst4_lane_p64	Store|Stride
 vst4q_lane_p64	Store|Stride
 vst4_lane_f64	Store|Stride
 vst4q_lane_f64	Store|Stride
+vst4q_lane_mf8	Store|Stride
 vst1_s8_x2	Store|Stride
 vst1q_s8_x2	Store|Stride
 vst1_s16_x2	Store|Stride
@@ -2661,6 +2719,8 @@ vst1q_u64_x2	Store|Stride
 vst1q_p64_x2	Store|Stride
 vst1_f64_x2	Store|Stride
 vst1q_f64_x2	Store|Stride
+vst1_mf8_x2	Store|Stride
+vst1q_mf8_x2	Store|Stride
 vst1_s8_x3	Store|Stride
 vst1q_s8_x3	Store|Stride
 vst1_s16_x3	Store|Stride
@@ -2689,6 +2749,8 @@ vst1q_u64_x3	Store|Stride
 vst1q_p64_x3	Store|Stride
 vst1_f64_x3	Store|Stride
 vst1q_f64_x3	Store|Stride
+vst1_mf8_x3	Store|Stride
+vst1q_mf8_x3	Store|Stride
 vst1_s8_x4	Store|Stride
 vst1q_s8_x4	Store|Stride
 vst1_s16_x4	Store|Stride
@@ -2717,6 +2779,8 @@ vst1q_u64_x4	Store|Stride
 vst1q_p64_x4	Store|Stride
 vst1_f64_x4	Store|Stride
 vst1q_f64_x4	Store|Stride
+vst1_mf8_x4	Store|Stride
+vst1q_mf8_x4	Store|Stride
 vld1_s8_x2	Load|Stride
 vld1q_s8_x2	Load|Stride
 vld1_s16_x2	Load|Stride
@@ -2745,6 +2809,8 @@ vld1q_u64_x2	Load|Stride
 vld1q_p64_x2	Load|Stride
 vld1_f64_x2	Load|Stride
 vld1q_f64_x2	Load|Stride
+vld1_mf8_x2	Load|Stride
+vld1q_mf8_x2	Load|Stride
 vld1_s8_x3	Load|Stride
 vld1q_s8_x3	Load|Stride
 vld1_s16_x3	Load|Stride
@@ -2773,6 +2839,8 @@ vld1q_u64_x3	Load|Stride
 vld1q_p64_x3	Load|Stride
 vld1_f64_x3	Load|Stride
 vld1q_f64_x3	Load|Stride
+vld1_mf8_x3	Load|Stride
+vld1q_mf8_x3	Load|Stride
 vld1_s8_x4	Load|Stride
 vld1q_s8_x4	Load|Stride
 vld1_s16_x4	Load|Stride
@@ -2801,6 +2869,8 @@ vld1q_u64_x4	Load|Stride
 vld1q_p64_x4	Load|Stride
 vld1_f64_x4	Load|Stride
 vld1q_f64_x4	Load|Stride
+vld1_mf8_x4	Load|Stride
+vld1q_mf8_x4	Load|Stride
 vpadd_s8	Vector arithmetic|Pairwise arithmetic|Pairwise addition
 vpadd_s16	Vector arithmetic|Pairwise arithmetic|Pairwise addition
 vpadd_s32	Vector arithmetic|Pairwise arithmetic|Pairwise addition
@@ -2981,6 +3051,8 @@ vext_p8	Vector manipulation|Extract vector from a pair of vectors
 vextq_p8	Vector manipulation|Extract vector from a pair of vectors
 vext_p16	Vector manipulation|Extract vector from a pair of vectors
 vextq_p16	Vector manipulation|Extract vector from a pair of vectors
+vext_mf8	Vector manipulation|Extract vector from a pair of vectors
+vextq_mf8	Vector manipulation|Extract vector from a pair of vectors
 vrev64_s8	Vector manipulation|Reverse elements
 vrev64q_s8	Vector manipulation|Reverse elements
 vrev64_s16	Vector manipulation|Reverse elements
@@ -2999,6 +3071,8 @@ vrev64_p8	Vector manipulation|Reverse elements
 vrev64q_p8	Vector manipulation|Reverse elements
 vrev64_p16	Vector manipulation|Reverse elements
 vrev64q_p16	Vector manipulation|Reverse elements
+vrev64_mf8	Vector manipulation|Reverse elements
+vrev64q_mf8	Vector manipulation|Reverse elements
 vrev32_s8	Vector manipulation|Reverse elements
 vrev32q_s8	Vector manipulation|Reverse elements
 vrev32_s16	Vector manipulation|Reverse elements
@@ -3011,12 +3085,16 @@ vrev32_p8	Vector manipulation|Reverse elements
 vrev32q_p8	Vector manipulation|Reverse elements
 vrev32_p16	Vector manipulation|Reverse elements
 vrev32q_p16	Vector manipulation|Reverse elements
+vrev32_mf8	Vector manipulation|Reverse elements
+vrev32q_mf8	Vector manipulation|Reverse elements
 vrev16_s8	Vector manipulation|Reverse elements
 vrev16q_s8	Vector manipulation|Reverse elements
 vrev16_u8	Vector manipulation|Reverse elements
 vrev16q_u8	Vector manipulation|Reverse elements
 vrev16_p8	Vector manipulation|Reverse elements
 vrev16q_p8	Vector manipulation|Reverse elements
+vrev16_mf8	Vector manipulation|Reverse elements
+vrev16q_mf8	Vector manipulation|Reverse elements
 vzip1_s8	Vector manipulation|Zip elements
 vzip1q_s8	Vector manipulation|Zip elements
 vzip1_s16	Vector manipulation|Zip elements
@@ -3039,6 +3117,8 @@ vzip1_p8	Vector manipulation|Zip elements
 vzip1q_p8	Vector manipulation|Zip elements
 vzip1_p16	Vector manipulation|Zip elements
 vzip1q_p16	Vector manipulation|Zip elements
+vzip1_mf8	Vector manipulation|Zip elements
+vzip1q_mf8	Vector manipulation|Zip elements
 vzip2_s8	Vector manipulation|Zip elements
 vzip2q_s8	Vector manipulation|Zip elements
 vzip2_s16	Vector manipulation|Zip elements
@@ -3061,6 +3141,8 @@ vzip2_p8	Vector manipulation|Zip elements
 vzip2q_p8	Vector manipulation|Zip elements
 vzip2_p16	Vector manipulation|Zip elements
 vzip2q_p16	Vector manipulation|Zip elements
+vzip2_mf8	Vector manipulation|Zip elements
+vzip2q_mf8	Vector manipulation|Zip elements
 vuzp1_s8	Vector manipulation|Unzip elements
 vuzp1q_s8	Vector manipulation|Unzip elements
 vuzp1_s16	Vector manipulation|Unzip elements
@@ -3083,6 +3165,8 @@ vuzp1_p8	Vector manipulation|Unzip elements
 vuzp1q_p8	Vector manipulation|Unzip elements
 vuzp1_p16	Vector manipulation|Unzip elements
 vuzp1q_p16	Vector manipulation|Unzip elements
+vuzp1_mf8	Vector manipulation|Unzip elements
+vuzp1q_mf8	Vector manipulation|Unzip elements
 vuzp2_s8	Vector manipulation|Unzip elements
 vuzp2q_s8	Vector manipulation|Unzip elements
 vuzp2_s16	Vector manipulation|Unzip elements
@@ -3105,6 +3189,8 @@ vuzp2_p8	Vector manipulation|Unzip elements
 vuzp2q_p8	Vector manipulation|Unzip elements
 vuzp2_p16	Vector manipulation|Unzip elements
 vuzp2q_p16	Vector manipulation|Unzip elements
+vuzp2_mf8	Vector manipulation|Unzip elements
+vuzp2q_mf8	Vector manipulation|Unzip elements
 vtrn1_s8	Vector manipulation|Transpose elements
 vtrn1q_s8	Vector manipulation|Transpose elements
 vtrn1_s16	Vector manipulation|Transpose elements
@@ -3127,6 +3213,8 @@ vtrn1_p8	Vector manipulation|Transpose elements
 vtrn1q_p8	Vector manipulation|Transpose elements
 vtrn1_p16	Vector manipulation|Transpose elements
 vtrn1q_p16	Vector manipulation|Transpose elements
+vtrn1_mf8	Vector manipulation|Transpose elements
+vtrn1q_mf8	Vector manipulation|Transpose elements
 vtrn2_s8	Vector manipulation|Transpose elements
 vtrn2q_s8	Vector manipulation|Transpose elements
 vtrn2_s16	Vector manipulation|Transpose elements
@@ -3149,78 +3237,104 @@ vtrn2_p8	Vector manipulation|Transpose elements
 vtrn2q_p8	Vector manipulation|Transpose elements
 vtrn2_p16	Vector manipulation|Transpose elements
 vtrn2q_p16	Vector manipulation|Transpose elements
+vtrn2_mf8	Vector manipulation|Transpose elements
+vtrn2q_mf8	Vector manipulation|Transpose elements
 vtbl1_s8	Table lookup|Table lookup
 vtbl1_u8	Table lookup|Table lookup
 vtbl1_p8	Table lookup|Table lookup
+vtbl1_mf8	Table lookup|Table lookup
 vtbx1_s8	Table lookup|Table lookup
 vtbx1_u8	Table lookup|Table lookup
 vtbx1_p8	Table lookup|Table lookup
+vtbx1_mf8	Table lookup|Table lookup
 vtbl2_s8	Table lookup|Table lookup
 vtbl2_u8	Table lookup|Table lookup
 vtbl2_p8	Table lookup|Table lookup
+vtbl2_mf8	Table lookup|Table lookup
 vtbl3_s8	Table lookup|Table lookup
 vtbl3_u8	Table lookup|Table lookup
 vtbl3_p8	Table lookup|Table lookup
+vtbl3_mf8	Table lookup|Table lookup
 vtbl4_s8	Table lookup|Table lookup
 vtbl4_u8	Table lookup|Table lookup
 vtbl4_p8	Table lookup|Table lookup
+vtbl4_mf8	Table lookup|Table lookup
 vtbx2_s8	Table lookup|Extended table lookup
 vtbx2_u8	Table lookup|Extended table lookup
 vtbx2_p8	Table lookup|Extended table lookup
+vtbx2_mf8	Table lookup|Extended table lookup
 vtbx3_s8	Table lookup|Extended table lookup
 vtbx3_u8	Table lookup|Extended table lookup
 vtbx3_p8	Table lookup|Extended table lookup
+vtbx3_mf8	Table lookup|Extended table lookup
 vtbx4_s8	Table lookup|Extended table lookup
 vtbx4_u8	Table lookup|Extended table lookup
 vtbx4_p8	Table lookup|Extended table lookup
+vtbx4_mf8	Table lookup|Extended table lookup
 vqtbl1_s8	Table lookup|Table lookup
 vqtbl1q_s8	Table lookup|Table lookup
 vqtbl1_u8	Table lookup|Table lookup
 vqtbl1q_u8	Table lookup|Table lookup
 vqtbl1_p8	Table lookup|Table lookup
 vqtbl1q_p8	Table lookup|Table lookup
+vqtbl1_mf8	Table lookup|Table lookup
+vqtbl1q_mf8	Table lookup|Table lookup
 vqtbx1_s8	Table lookup|Extended table lookup
 vqtbx1q_s8	Table lookup|Extended table lookup
 vqtbx1_u8	Table lookup|Extended table lookup
 vqtbx1q_u8	Table lookup|Extended table lookup
 vqtbx1_p8	Table lookup|Extended table lookup
 vqtbx1q_p8	Table lookup|Extended table lookup
+vqtbx1_mf8	Table lookup|Extended table lookup
+vqtbx1q_mf8	Table lookup|Extended table lookup
 vqtbl2_s8	Table lookup|Table lookup
 vqtbl2q_s8	Table lookup|Table lookup
 vqtbl2_u8	Table lookup|Table lookup
 vqtbl2q_u8	Table lookup|Table lookup
 vqtbl2_p8	Table lookup|Table lookup
 vqtbl2q_p8	Table lookup|Table lookup
+vqtbl2_mf8	Table lookup|Table lookup
+vqtbl2q_mf8	Table lookup|Table lookup
 vqtbl3_s8	Table lookup|Table lookup
 vqtbl3q_s8	Table lookup|Table lookup
 vqtbl3_u8	Table lookup|Table lookup
 vqtbl3q_u8	Table lookup|Table lookup
 vqtbl3_p8	Table lookup|Table lookup
 vqtbl3q_p8	Table lookup|Table lookup
+vqtbl3_mf8	Table lookup|Table lookup
+vqtbl3q_mf8	Table lookup|Table lookup
 vqtbl4_s8	Table lookup|Table lookup
 vqtbl4q_s8	Table lookup|Table lookup
 vqtbl4_u8	Table lookup|Table lookup
 vqtbl4q_u8	Table lookup|Table lookup
 vqtbl4_p8	Table lookup|Table lookup
 vqtbl4q_p8	Table lookup|Table lookup
+vqtbl4_mf8	Table lookup|Table lookup
+vqtbl4q_mf8	Table lookup|Table lookup
 vqtbx2_s8	Table lookup|Extended table lookup
 vqtbx2q_s8	Table lookup|Extended table lookup
 vqtbx2_u8	Table lookup|Extended table lookup
 vqtbx2q_u8	Table lookup|Extended table lookup
 vqtbx2_p8	Table lookup|Extended table lookup
 vqtbx2q_p8	Table lookup|Extended table lookup
+vqtbx2_mf8	Table lookup|Extended table lookup
+vqtbx2q_mf8	Table lookup|Extended table lookup
 vqtbx3_s8	Table lookup|Extended table lookup
 vqtbx3q_s8	Table lookup|Extended table lookup
 vqtbx3_u8	Table lookup|Extended table lookup
 vqtbx3q_u8	Table lookup|Extended table lookup
 vqtbx3_p8	Table lookup|Extended table lookup
 vqtbx3q_p8	Table lookup|Extended table lookup
+vqtbx3_mf8	Table lookup|Extended table lookup
+vqtbx3q_mf8	Table lookup|Extended table lookup
 vqtbx4_s8	Table lookup|Extended table lookup
 vqtbx4q_s8	Table lookup|Extended table lookup
 vqtbx4_u8	Table lookup|Extended table lookup
 vqtbx4q_u8	Table lookup|Extended table lookup
 vqtbx4_p8	Table lookup|Extended table lookup
 vqtbx4q_p8	Table lookup|Extended table lookup
+vqtbx4_mf8	Table lookup|Extended table lookup
+vqtbx4q_mf8	Table lookup|Extended table lookup
 vget_lane_u8	Vector manipulation|Extract one element from vector
 vget_lane_u16	Vector manipulation|Extract one element from vector
 vget_lane_u32	Vector manipulation|Extract one element from vector
@@ -3277,6 +3391,8 @@ vsetq_lane_p8	Vector manipulation|Set vector lane
 vsetq_lane_p16	Vector manipulation|Set vector lane
 vsetq_lane_f32	Vector manipulation|Set vector lane
 vsetq_lane_f64	Vector manipulation|Set vector lane
+vset_lane_mf8	Vector manipulation|Set vector lane
+vsetq_lane_mf8	Vector manipulation|Set vector lane
 vrecpxs_f32	Vector arithmetic|Reciprocal|Reciprocal exponent
 vrecpxd_f64	Vector arithmetic|Reciprocal|Reciprocal exponent
 vfma_n_f32	Scalar arithmetic|Fused multiply-accumulate by scalar
@@ -3296,6 +3412,7 @@ vtrn_p16	Vector manipulation|Transpose elements
 vtrn_s32	Vector manipulation|Transpose elements
 vtrn_f32	Vector manipulation|Transpose elements
 vtrn_u32	Vector manipulation|Transpose elements
+vtrn_mf8	Vector manipulation|Transpose elements
 vtrnq_s8	Vector manipulation|Transpose elements
 vtrnq_s16	Vector manipulation|Transpose elements
 vtrnq_s32	Vector manipulation|Transpose elements
@@ -3305,12 +3422,14 @@ vtrnq_u16	Vector manipulation|Transpose elements
 vtrnq_u32	Vector manipulation|Transpose elements
 vtrnq_p8	Vector manipulation|Transpose elements
 vtrnq_p16	Vector manipulation|Transpose elements
+vtrnq_mf8	Vector manipulation|Transpose elements
 vzip_s8	Vector manipulation|Zip elements
 vzip_s16	Vector manipulation|Zip elements
 vzip_u8	Vector manipulation|Zip elements
 vzip_u16	Vector manipulation|Zip elements
 vzip_p8	Vector manipulation|Zip elements
 vzip_p16	Vector manipulation|Zip elements
+vzip_mf8	Vector manipulation|Zip elements
 vzip_s32	Vector manipulation|Zip elements
 vzip_f32	Vector manipulation|Zip elements
 vzip_u32	Vector manipulation|Zip elements
@@ -3323,6 +3442,7 @@ vzipq_u16	Vector manipulation|Zip elements
 vzipq_u32	Vector manipulation|Zip elements
 vzipq_p8	Vector manipulation|Zip elements
 vzipq_p16	Vector manipulation|Zip elements
+vzipq_mf8	Vector manipulation|Zip elements
 vuzp_s8	Vector manipulation|Unzip elements
 vuzp_s16	Vector manipulation|Unzip elements
 vuzp_s32	Vector manipulation|Unzip elements
@@ -3332,15 +3452,17 @@ vuzp_u16	Vector manipulation|Unzip elements
 vuzp_u32	Vector manipulation|Unzip elements
 vuzp_p8	Vector manipulation|Unzip elements
 vuzp_p16	Vector manipulation|Unzip elements
+vuzp_mf8	Vector manipulation|Unzip elements
 vuzpq_s8	Vector manipulation|Unzip elements
 vuzpq_s16	Vector manipulation|Unzip elements
 vuzpq_s32	Vector manipulation|Unzip elements
 vuzpq_f32	Vector manipulation|Unzip elements
 vuzpq_u8	Vector manipulation|Unzip elements
-vuzpq_u16	Vector manipulation|Unzip elements
+vuzpq_u16	Vector manipulation|Unzip elements`
 vuzpq_u32	Vector manipulation|Unzip elements
 vuzpq_p8	Vector manipulation|Unzip elements
 vuzpq_p16	Vector manipulation|Unzip elements
+vuzpq_mf8	Vector manipulation|Unzip elements
 vreinterpret_s16_s8	Data type conversion|Reinterpret casts
 vreinterpret_s32_s8	Data type conversion|Reinterpret casts
 vreinterpret_f32_s8	Data type conversion|Reinterpret casts
@@ -3349,6 +3471,7 @@ vreinterpret_u16_s8	Data type conversion|Reinterpret casts
 vreinterpret_u32_s8	Data type conversion|Reinterpret casts
 vreinterpret_p8_s8	Data type conversion|Reinterpret casts
 vreinterpret_p16_s8	Data type conversion|Reinterpret casts
+vreinterpret_mf8_s8	Data type conversion|Reinterpret casts
 vreinterpret_u64_s8	Data type conversion|Reinterpret casts
 vreinterpret_s64_s8	Data type conversion|Reinterpret casts
 vreinterpret_f64_s8	Data type conversion|Reinterpret casts
@@ -3362,6 +3485,7 @@ vreinterpret_u16_s16	Data type conversion|Reinterpret casts
 vreinterpret_u32_s16	Data type conversion|Reinterpret casts
 vreinterpret_p8_s16	Data type conversion|Reinterpret casts
 vreinterpret_p16_s16	Data type conversion|Reinterpret casts
+vreinterpret_mf8_s16	Data type conversion|Reinterpret casts
 vreinterpret_u64_s16	Data type conversion|Reinterpret casts
 vreinterpret_s64_s16	Data type conversion|Reinterpret casts
 vreinterpret_f64_s16	Data type conversion|Reinterpret casts
@@ -3375,6 +3499,7 @@ vreinterpret_u16_s32	Data type conversion|Reinterpret casts
 vreinterpret_u32_s32	Data type conversion|Reinterpret casts
 vreinterpret_p8_s32	Data type conversion|Reinterpret casts
 vreinterpret_p16_s32	Data type conversion|Reinterpret casts
+vreinterpret_mf8_s32	Data type conversion|Reinterpret casts
 vreinterpret_u64_s32	Data type conversion|Reinterpret casts
 vreinterpret_s64_s32	Data type conversion|Reinterpret casts
 vreinterpret_f64_s32	Data type conversion|Reinterpret casts
@@ -3388,6 +3513,7 @@ vreinterpret_u16_f32	Data type conversion|Reinterpret casts
 vreinterpret_u32_f32	Data type conversion|Reinterpret casts
 vreinterpret_p8_f32	Data type conversion|Reinterpret casts
 vreinterpret_p16_f32	Data type conversion|Reinterpret casts
+vreinterpret_mf8_f32	Data type conversion|Reinterpret casts
 vreinterpret_u64_f32	Data type conversion|Reinterpret casts
 vreinterpret_s64_f32	Data type conversion|Reinterpret casts
 vreinterpret_f64_f32	Data type conversion|Reinterpret casts
@@ -3402,6 +3528,7 @@ vreinterpret_u16_u8	Data type conversion|Reinterpret casts
 vreinterpret_u32_u8	Data type conversion|Reinterpret casts
 vreinterpret_p8_u8	Data type conversion|Reinterpret casts
 vreinterpret_p16_u8	Data type conversion|Reinterpret casts
+vreinterpret_mf8_u8	Data type conversion|Reinterpret casts
 vreinterpret_u64_u8	Data type conversion|Reinterpret casts
 vreinterpret_s64_u8	Data type conversion|Reinterpret casts
 vreinterpret_f64_u8	Data type conversion|Reinterpret casts
@@ -3415,6 +3542,7 @@ vreinterpret_u8_u16	Data type conversion|Reinterpret casts
 vreinterpret_u32_u16	Data type conversion|Reinterpret casts
 vreinterpret_p8_u16	Data type conversion|Reinterpret casts
 vreinterpret_p16_u16	Data type conversion|Reinterpret casts
+vreinterpret_mf8_u16	Data type conversion|Reinterpret casts
 vreinterpret_u64_u16	Data type conversion|Reinterpret casts
 vreinterpret_s64_u16	Data type conversion|Reinterpret casts
 vreinterpret_f64_u16	Data type conversion|Reinterpret casts
@@ -3428,6 +3556,7 @@ vreinterpret_u8_u32	Data type conversion|Reinterpret casts
 vreinterpret_u16_u32	Data type conversion|Reinterpret casts
 vreinterpret_p8_u32	Data type conversion|Reinterpret casts
 vreinterpret_p16_u32	Data type conversion|Reinterpret casts
+vreinterpret_mf8_u32	Data type conversion|Reinterpret casts
 vreinterpret_u64_u32	Data type conversion|Reinterpret casts
 vreinterpret_s64_u32	Data type conversion|Reinterpret casts
 vreinterpret_f64_u32	Data type conversion|Reinterpret casts
@@ -3446,6 +3575,21 @@ vreinterpret_s64_p8	Data type conversion|Reinterpret casts
 vreinterpret_f64_p8	Data type conversion|Reinterpret casts
 vreinterpret_p64_p8	Data type conversion|Reinterpret casts
 vreinterpret_f16_p8	Data type conversion|Reinterpret casts
+
+vreinterpret_s8_mf8	Data type conversion|Reinterpret casts
+vreinterpret_s16_mf8	Data type conversion|Reinterpret casts
+vreinterpret_s32_mf8	Data type conversion|Reinterpret casts
+vreinterpret_f32_mf8	Data type conversion|Reinterpret casts
+vreinterpret_u8_mf8	Data type conversion|Reinterpret casts
+vreinterpret_u16_mf8	Data type conversion|Reinterpret casts
+vreinterpret_u32_mf8	Data type conversion|Reinterpret casts
+vreinterpret_p16_mf8	Data type conversion|Reinterpret casts
+vreinterpret_u64_mf8	Data type conversion|Reinterpret casts
+vreinterpret_s64_mf8	Data type conversion|Reinterpret casts
+vreinterpret_f64_mf8	Data type conversion|Reinterpret casts
+vreinterpret_p64_mf8	Data type conversion|Reinterpret casts
+vreinterpret_f16_mf8	Data type conversion|Reinterpret casts
+
 vreinterpret_s8_p16	Data type conversion|Reinterpret casts
 vreinterpret_s16_p16	Data type conversion|Reinterpret casts
 vreinterpret_s32_p16	Data type conversion|Reinterpret casts
@@ -3454,6 +3598,7 @@ vreinterpret_u8_p16	Data type conversion|Reinterpret casts
 vreinterpret_u16_p16	Data type conversion|Reinterpret casts
 vreinterpret_u32_p16	Data type conversion|Reinterpret casts
 vreinterpret_p8_p16	Data type conversion|Reinterpret casts
+vreinterpret_mf8_p16	Data type conversion|Reinterpret casts
 vreinterpret_u64_p16	Data type conversion|Reinterpret casts
 vreinterpret_s64_p16	Data type conversion|Reinterpret casts
 vreinterpret_f64_p16	Data type conversion|Reinterpret casts
@@ -3468,6 +3613,7 @@ vreinterpret_u16_u64	Data type conversion|Reinterpret casts
 vreinterpret_u32_u64	Data type conversion|Reinterpret casts
 vreinterpret_p8_u64	Data type conversion|Reinterpret casts
 vreinterpret_p16_u64	Data type conversion|Reinterpret casts
+vreinterpret_mf8_u64	Data type conversion|Reinterpret casts
 vreinterpret_s64_u64	Data type conversion|Reinterpret casts
 vreinterpret_f64_u64	Data type conversion|Reinterpret casts
 vreinterpret_p64_u64	Data type conversion|Reinterpret casts
@@ -3481,6 +3627,7 @@ vreinterpret_u16_s64	Data type conversion|Reinterpret casts
 vreinterpret_u32_s64	Data type conversion|Reinterpret casts
 vreinterpret_p8_s64	Data type conversion|Reinterpret casts
 vreinterpret_p16_s64	Data type conversion|Reinterpret casts
+vreinterpret_mf8_s64	Data type conversion|Reinterpret casts
 vreinterpret_u64_s64	Data type conversion|Reinterpret casts
 vreinterpret_f64_s64	Data type conversion|Reinterpret casts
 vreinterpret_u64_p64	Data type conversion|Reinterpret casts
@@ -3494,6 +3641,7 @@ vreinterpret_u16_f16	Data type conversion|Reinterpret casts
 vreinterpret_u32_f16	Data type conversion|Reinterpret casts
 vreinterpret_p8_f16	Data type conversion|Reinterpret casts
 vreinterpret_p16_f16	Data type conversion|Reinterpret casts
+vreinterpret_mf8_f16	Data type conversion|Reinterpret casts
 vreinterpret_u64_f16	Data type conversion|Reinterpret casts
 vreinterpret_s64_f16	Data type conversion|Reinterpret casts
 vreinterpret_f64_f16	Data type conversion|Reinterpret casts
@@ -3506,6 +3654,7 @@ vreinterpretq_u16_s8	Data type conversion|Reinterpret casts
 vreinterpretq_u32_s8	Data type conversion|Reinterpret casts
 vreinterpretq_p8_s8	Data type conversion|Reinterpret casts
 vreinterpretq_p16_s8	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_s8	Data type conversion|Reinterpret casts
 vreinterpretq_u64_s8	Data type conversion|Reinterpret casts
 vreinterpretq_s64_s8	Data type conversion|Reinterpret casts
 vreinterpretq_f64_s8	Data type conversion|Reinterpret casts
@@ -3520,6 +3669,7 @@ vreinterpretq_u16_s16	Data type conversion|Reinterpret casts
 vreinterpretq_u32_s16	Data type conversion|Reinterpret casts
 vreinterpretq_p8_s16	Data type conversion|Reinterpret casts
 vreinterpretq_p16_s16	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_s16	Data type conversion|Reinterpret casts
 vreinterpretq_u64_s16	Data type conversion|Reinterpret casts
 vreinterpretq_s64_s16	Data type conversion|Reinterpret casts
 vreinterpretq_f64_s16	Data type conversion|Reinterpret casts
@@ -3534,6 +3684,7 @@ vreinterpretq_u16_s32	Data type conversion|Reinterpret casts
 vreinterpretq_u32_s32	Data type conversion|Reinterpret casts
 vreinterpretq_p8_s32	Data type conversion|Reinterpret casts
 vreinterpretq_p16_s32	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_s32	Data type conversion|Reinterpret casts
 vreinterpretq_u64_s32	Data type conversion|Reinterpret casts
 vreinterpretq_s64_s32	Data type conversion|Reinterpret casts
 vreinterpretq_f64_s32	Data type conversion|Reinterpret casts
@@ -3548,6 +3699,7 @@ vreinterpretq_u16_f32	Data type conversion|Reinterpret casts
 vreinterpretq_u32_f32	Data type conversion|Reinterpret casts
 vreinterpretq_p8_f32	Data type conversion|Reinterpret casts
 vreinterpretq_p16_f32	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_f32	Data type conversion|Reinterpret casts
 vreinterpretq_u64_f32	Data type conversion|Reinterpret casts
 vreinterpretq_s64_f32	Data type conversion|Reinterpret casts
 vreinterpretq_f64_f32	Data type conversion|Reinterpret casts
@@ -3564,6 +3716,7 @@ vreinterpretq_u16_u8	Data type conversion|Reinterpret casts
 vreinterpretq_u32_u8	Data type conversion|Reinterpret casts
 vreinterpretq_p8_u8	Data type conversion|Reinterpret casts
 vreinterpretq_p16_u8	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_u8	Data type conversion|Reinterpret casts
 vreinterpretq_u64_u8	Data type conversion|Reinterpret casts
 vreinterpretq_s64_u8	Data type conversion|Reinterpret casts
 vreinterpretq_f64_u8	Data type conversion|Reinterpret casts
@@ -3578,6 +3731,7 @@ vreinterpretq_u8_u16	Data type conversion|Reinterpret casts
 vreinterpretq_u32_u16	Data type conversion|Reinterpret casts
 vreinterpretq_p8_u16	Data type conversion|Reinterpret casts
 vreinterpretq_p16_u16	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_u16	Data type conversion|Reinterpret casts
 vreinterpretq_u64_u16	Data type conversion|Reinterpret casts
 vreinterpretq_s64_u16	Data type conversion|Reinterpret casts
 vreinterpretq_f64_u16	Data type conversion|Reinterpret casts
@@ -3592,6 +3746,7 @@ vreinterpretq_u8_u32	Data type conversion|Reinterpret casts
 vreinterpretq_u16_u32	Data type conversion|Reinterpret casts
 vreinterpretq_p8_u32	Data type conversion|Reinterpret casts
 vreinterpretq_p16_u32	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_u32	Data type conversion|Reinterpret casts
 vreinterpretq_u64_u32	Data type conversion|Reinterpret casts
 vreinterpretq_s64_u32	Data type conversion|Reinterpret casts
 vreinterpretq_f64_u32	Data type conversion|Reinterpret casts
@@ -3612,6 +3767,22 @@ vreinterpretq_f64_p8	Data type conversion|Reinterpret casts
 vreinterpretq_p64_p8	Data type conversion|Reinterpret casts
 vreinterpretq_p128_p8	Data type conversion|Reinterpret casts
 vreinterpretq_f16_p8	Data type conversion|Reinterpret casts
+
+vreinterpretq_s8_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_s16_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_s32_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_f32_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_u8_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_u16_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_u32_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_p16_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_u64_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_s64_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_f64_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_p64_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_p128_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_f16_mf8	Data type conversion|Reinterpret casts
+
 vreinterpretq_s8_p16	Data type conversion|Reinterpret casts
 vreinterpretq_s16_p16	Data type conversion|Reinterpret casts
 vreinterpretq_s32_p16	Data type conversion|Reinterpret casts
@@ -3620,6 +3791,7 @@ vreinterpretq_u8_p16	Data type conversion|Reinterpret casts
 vreinterpretq_u16_p16	Data type conversion|Reinterpret casts
 vreinterpretq_u32_p16	Data type conversion|Reinterpret casts
 vreinterpretq_p8_p16	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_p16	Data type conversion|Reinterpret casts
 vreinterpretq_u64_p16	Data type conversion|Reinterpret casts
 vreinterpretq_s64_p16	Data type conversion|Reinterpret casts
 vreinterpretq_f64_p16	Data type conversion|Reinterpret casts
@@ -3635,6 +3807,7 @@ vreinterpretq_u16_u64	Data type conversion|Reinterpret casts
 vreinterpretq_u32_u64	Data type conversion|Reinterpret casts
 vreinterpretq_p8_u64	Data type conversion|Reinterpret casts
 vreinterpretq_p16_u64	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_u64	Data type conversion|Reinterpret casts
 vreinterpretq_s64_u64	Data type conversion|Reinterpret casts
 vreinterpretq_f64_u64	Data type conversion|Reinterpret casts
 vreinterpretq_f64_s64	Data type conversion|Reinterpret casts
@@ -3652,6 +3825,7 @@ vreinterpretq_u16_s64	Data type conversion|Reinterpret casts
 vreinterpretq_u32_s64	Data type conversion|Reinterpret casts
 vreinterpretq_p8_s64	Data type conversion|Reinterpret casts
 vreinterpretq_p16_s64	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_s64	Data type conversion|Reinterpret casts
 vreinterpretq_u64_s64	Data type conversion|Reinterpret casts
 vreinterpretq_u64_p64	Data type conversion|Reinterpret casts
 vreinterpretq_f16_s64	Data type conversion|Reinterpret casts
@@ -3664,6 +3838,7 @@ vreinterpretq_u16_f16	Data type conversion|Reinterpret casts
 vreinterpretq_u32_f16	Data type conversion|Reinterpret casts
 vreinterpretq_p8_f16	Data type conversion|Reinterpret casts
 vreinterpretq_p16_f16	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_f16	Data type conversion|Reinterpret casts
 vreinterpretq_u64_f16	Data type conversion|Reinterpret casts
 vreinterpretq_s64_f16	Data type conversion|Reinterpret casts
 vreinterpretq_f64_f16	Data type conversion|Reinterpret casts
@@ -3677,6 +3852,7 @@ vreinterpret_u16_f64	Data type conversion|Reinterpret casts
 vreinterpret_u32_f64	Data type conversion|Reinterpret casts
 vreinterpret_p8_f64	Data type conversion|Reinterpret casts
 vreinterpret_p16_f64	Data type conversion|Reinterpret casts
+vreinterpret_mf8_f64	Data type conversion|Reinterpret casts
 vreinterpret_u64_f64	Data type conversion|Reinterpret casts
 vreinterpret_s64_f64	Data type conversion|Reinterpret casts
 vreinterpret_f16_f64	Data type conversion|Reinterpret casts
@@ -3689,6 +3865,7 @@ vreinterpretq_u16_f64	Data type conversion|Reinterpret casts
 vreinterpretq_u32_f64	Data type conversion|Reinterpret casts
 vreinterpretq_p8_f64	Data type conversion|Reinterpret casts
 vreinterpretq_p16_f64	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_f64	Data type conversion|Reinterpret casts
 vreinterpretq_u64_f64	Data type conversion|Reinterpret casts
 vreinterpretq_s64_f64	Data type conversion|Reinterpret casts
 vreinterpretq_f16_f64	Data type conversion|Reinterpret casts
@@ -3701,6 +3878,7 @@ vreinterpret_u16_p64	Data type conversion|Reinterpret casts
 vreinterpret_u32_p64	Data type conversion|Reinterpret casts
 vreinterpret_p8_p64	Data type conversion|Reinterpret casts
 vreinterpret_p16_p64	Data type conversion|Reinterpret casts
+vreinterpret_mf8_p64	Data type conversion|Reinterpret casts
 vreinterpret_s64_p64	Data type conversion|Reinterpret casts
 vreinterpret_f64_p64	Data type conversion|Reinterpret casts
 vreinterpret_f16_p64	Data type conversion|Reinterpret casts
@@ -3712,6 +3890,7 @@ vreinterpretq_u16_p64	Data type conversion|Reinterpret casts
 vreinterpretq_u32_p64	Data type conversion|Reinterpret casts
 vreinterpretq_p8_p64	Data type conversion|Reinterpret casts
 vreinterpretq_p16_p64	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_p64	Data type conversion|Reinterpret casts
 vreinterpretq_s64_p64	Data type conversion|Reinterpret casts
 vreinterpretq_f64_p64	Data type conversion|Reinterpret casts
 vreinterpretq_f16_p64	Data type conversion|Reinterpret casts
@@ -3723,10 +3902,15 @@ vreinterpretq_u16_p128	Data type conversion|Reinterpret casts
 vreinterpretq_u32_p128	Data type conversion|Reinterpret casts
 vreinterpretq_p8_p128	Data type conversion|Reinterpret casts
 vreinterpretq_p16_p128	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_p128	Data type conversion|Reinterpret casts
 vreinterpretq_u64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_s64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_f64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_f16_p128	Data type conversion|Reinterpret casts
+vreinterpret_mf8_u8	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_u8	Data type conversion|Reinterpret casts
+vreinterpret_u8_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_u8_mf8	Data type conversion|Reinterpret casts
 vldrq_p128	Load|Load
 vstrq_p128	Store|Store
 vaeseq_u8	Cryptography|AES
@@ -4320,6 +4504,7 @@ vreinterpret_bf16_u16	Data type conversion|Reinterpret casts
 vreinterpret_bf16_u32	Data type conversion|Reinterpret casts
 vreinterpret_bf16_p8	Data type conversion|Reinterpret casts
 vreinterpret_bf16_p16	Data type conversion|Reinterpret casts
+vreinterpret_bf16_mf8	Data type conversion|Reinterpret casts
 vreinterpret_bf16_u64	Data type conversion|Reinterpret casts
 vreinterpret_bf16_s64	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_s8	Data type conversion|Reinterpret casts
@@ -4331,6 +4516,7 @@ vreinterpretq_bf16_u16	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_u32	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_p8	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_p16	Data type conversion|Reinterpret casts
+vreinterpretq_bf16_mf8	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_u64	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_s64	Data type conversion|Reinterpret casts
 vreinterpret_bf16_f64	Data type conversion|Reinterpret casts
@@ -4347,6 +4533,7 @@ vreinterpret_u16_bf16	Data type conversion|Reinterpret casts
 vreinterpret_u32_bf16	Data type conversion|Reinterpret casts
 vreinterpret_p8_bf16	Data type conversion|Reinterpret casts
 vreinterpret_p16_bf16	Data type conversion|Reinterpret casts
+vreinterpret_mf8_bf16	Data type conversion|Reinterpret casts
 vreinterpret_u64_bf16	Data type conversion|Reinterpret casts
 vreinterpret_s64_bf16	Data type conversion|Reinterpret casts
 vreinterpret_f64_bf16	Data type conversion|Reinterpret casts
@@ -4360,6 +4547,7 @@ vreinterpretq_u16_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_u32_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_p8_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_p16_bf16	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_u64_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_s64_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_f64_bf16	Data type conversion|Reinterpret casts
@@ -4448,3 +4636,54 @@ vluti4q_lane_p16_x2	Table lookup|Lookup table read with 4-bit indices
 vluti4q_lane_u8	Table lookup|Lookup table read with 4-bit indices
 vluti4q_lane_s8	Table lookup|Lookup table read with 4-bit indices
 vluti4q_lane_p8	Table lookup|Lookup table read with 4-bit indices
+vcvt1_bf16_mf8_fpm	Data type conversion|Conversions
+vcvt1_low_bf16_mf8_fpm	Data type conversion|Conversions
+vcvt2_bf16_mf8_fpm	Data type conversion|Conversions
+vcvt2_low_bf16_mf8_fpm	Data type conversion|Conversions
+vcvt1_high_bf16_mf8_fpm	Data type conversion|Conversions
+vcvt2_high_bf16_mf8_fpm	Data type conversion|Conversions
+vcvt1_f16_mf8_fpm	Data type conversion|Conversions
+vcvt1_low_f16_mf8_fpm	Data type conversion|Conversions
+vcvt2_f16_mf8_fpm	Data type conversion|Conversions
+vcvt2_low_f16_mf8_fpm	Data type conversion|Conversions
+vcvt1_high_f16_mf8_fpm	Data type conversion|Conversions
+vcvt2_high_f16_mf8_fpm	Data type conversion|Conversions
+vcvt_mf8_f32_fpm	Data type conversion|Conversions
+vcvt_high_mf8_f32_fpm	Data type conversion|Conversions
+vcvt_mf8_f16_fpm	Data type conversion|Conversions
+vcvtq_mf8_f16_fpm	Data type conversion|Conversions
+vscale_f16	Vector arithmetic|Exponent
+vscaleq_f16	Vector arithmetic|Exponent
+vscale_f32	Vector arithmetic|Exponent
+vscaleq_f32	Vector arithmetic|Exponent
+vscaleq_f64	Vector arithmetic|Exponent
+vdot_f32_mf8_fpm	Vector arithmetic|Dot product
+vdotq_f32_mf8_fpm	Vector arithmetic|Dot product
+vdot_lane_f32_mf8_fpm	Vector arithmetic|Dot product
+vdot_laneq_f32_mf8_fpm	Vector arithmetic|Dot product
+vdotq_lane_f32_mf8_fpm	Vector arithmetic|Dot product
+vdotq_laneq_f32_mf8_fpm	Vector arithmetic|Dot product
+vdot_f16_mf8_fpm	Vector arithmetic|Dot product
+vdotq_f16_mf8_fpm	Vector arithmetic|Dot product
+vdot_lane_f16_mf8_fpm	Vector arithmetic|Dot product
+vdot_laneq_f16_mf8_fpm	Vector arithmetic|Dot product
+vdotq_lane_f16_mf8_fpm	Vector arithmetic|Dot product
+vdotq_laneq_f16_mf8_fpm	Vector arithmetic|Dot product
+vmlalbq_f16_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlaltq_f16_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlalbq_lane_f16_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlalbq_laneq_f16_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlaltq_lane_f16_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlaltq_laneq_f16_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallbbq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallbtq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlalltbq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallttq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallbbq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallbbq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallbtq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallbtq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlalltbq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlalltbq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallttq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmlallttq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
