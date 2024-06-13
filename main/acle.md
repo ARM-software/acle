@@ -405,6 +405,11 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
 
+* Added specifications for floating-point absolute minimum
+  and maximum intrinsics (FEAT_FAMINMAX).
+
+* Added specifications for table lookup intrinsicss (FEAT_LUT, FEAT_SME_LUTv2).
+
 ### References
 
 This document refers to the following documents.
@@ -2123,6 +2128,22 @@ In addition, `__ARM_FEATURE_SVE2_SM4` is defined to `1` if there is hardware
 support for the SVE2 SM4 (FEAT_SVE_SM4) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 `__ARM_FEATURE_SVE2` are both nonzero.
+
+### Floating-point absolute minimum and maximum extension
+
+`__ARM_FEATURE_FAMINMAX` is defined to 1 if there is hardware support for
+floating-point absolute minimum and maximum instructions (FEAT_FAMINMAX)
+and if the associated ACLE intrinsics are available.
+
+### Lookup table extensions
+
+`__ARM_FEATURE_LUT` is defined to 1 if there is hardware support for
+lookup table instructions with 2-bit and 4-bit indices (FEAT_LUT)
+and if the associated ACLE intrinsics are available.
+
+`__ARM_FEATURE_SME_LUTv2` is defined to 1 if there is hardware support for
+lookup table instructions with 4-bit indices and 8-bit elements (FEAT_SME_LUTv2)
+and if the associated ACLE intrinsics are available.
 
 ### Other floating-point and vector extensions
 
@@ -9125,6 +9146,61 @@ Interleave elements from halves of each pair of quadword vector segments.
    svuint8_t svzipq2[_u8](svuint8_t zn, svuint8_t zm);
    ```
 
+### SVE2 maximum and minimum absolute value
+
+#### FAMAX
+
+Floating-point absolute maximum (predicated).
+``` c
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svamax[_f16]_m(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+  svfloat16_t svamax[_f16]_x(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+  svfloat16_t svamax[_f16]_z(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+
+  svfloat16_t svamax[_n_f16]_m(svbool_t pg, svfloat16_t zn, float16_t zm);
+  svfloat16_t svamax[_n_f16]_x(svbool_t pg, svfloat16_t zn, float16_t zm);
+  svfloat16_t svamax[_n_f16]_z(svbool_t pg, svfloat16_t zn, float16_t zm);
+```
+
+#### FAMIN
+
+Floating-point absolute minimum (predicated).
+``` c
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svamin[_f16]_m(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+  svfloat16_t svamin[_f16]_x(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+  svfloat16_t svamin[_f16]_z(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+
+  svfloat16_t svamin[_n_f16]_m(svbool_t pg, svfloat16_t zn, float16_t zm);
+  svfloat16_t svamin[_n_f16]_x(svbool_t pg, svfloat16_t zn, float16_t zm);
+  svfloat16_t svamin[_n_f16]_z(svbool_t pg, svfloat16_t zn, float16_t zm);
+```
+
+### SVE2 lookup table
+
+#### LUTI2
+
+Lookup table read with 2-bit indices.
+```c
+  // Variant is  also available for: _u8
+  svint8_t svluti2[_s8](svint8_t table, svuint8_t indices, uint64_t imm0_3);
+
+  // Variant are also available for: _u16, _f16 and _bf16
+  svint16_t svluti2[_s16]( svint16_t table, svuint8_t indices, uint64_t imm0_7);
+```
+
+#### LUTI4
+
+Lookup table read with 4-bit indices.
+```c
+  // Variant is also available for: _u8
+  svint8_t svluti4[_s8](svint8_t table, svuint8_t indices, uint64_t imm0_1);
+
+  // Variant are also available for: _u16, _f16, _bf16
+  svint16_t svluti4[_s16](svint16_t table, svuint8_t indices, uint64_t imm0_7);
+  svint16_t svluti4[_s16]_x2(svint16x2_t table, svuint8_t indices, uint64_t imm0_7);
+```
+
 # SME language extensions and intrinsics
 
 The specification for SME is in
@@ -12714,7 +12790,27 @@ While (resulting in predicate tuple)
   // _b64[_s64]_x2, _b8[_u64]_x2, _b16[_u64]_x2, _b32[_u64]_x2 and
   // _b64[_u64]_x2
   svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
-  ```
+```
+
+### SME2 lookup table
+
+#### MOVT
+
+Move vector register to ZT0.
+``` c
+  // Variants are also available for:
+  // [_s8], [_u16], [_s16], [_u32], [_s32], [_u64], [_s64]
+  //[_bf16], [_f16], [_f32], [_f64]
+  void svmovt_zt[_u8](uint64_t zt0, svuint8_t zt, uint64_t idx) __arm_streaming __arm_inout("zt0");
+```
+
+#### LUTI4
+
+Lookup table read with 4-bit indexes and 8-bit elements.
+``` c
+  // Variants are also available for: _s8
+  svuint8x4_t svluti4_zt_u8_x4(uint64_t zt0, svuint8x2_t zn) __arm_streaming __arm_in("zt0");
+```
 
 # M-profile Vector Extension (MVE) intrinsics
 
