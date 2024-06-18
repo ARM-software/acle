@@ -1155,6 +1155,7 @@ example, an attacker might create code that passes arguments out of their
 declared type's range in an attempt to cause out-of-bounds memory accesses.
 
 <span id="requirement-47" class="requirement-box"></span>
+
 > A compiler generating code for an entry function must, for each parameter
 > that is an integral Fundamental Data Type smaller than a word, make no
 > assumptions about the value of the padding bits, even when the value of
@@ -1395,6 +1396,7 @@ create code that returns values out of their declared type's range in an
 attempt to cause out-of-bounds memory accesses.
 
 <span id="requirement-58" class="requirement-box"></span>
+
 > A compiler generating code for a Non-secure function call must, for each
 > returned value that is an integral Fundamental Data Type smaller than a word,
 > make no assumptions about the value of the padding bits, even when the value
