@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2024Q1
-date-of-issue: 11 April 2024
+version: 2024Q2
+date-of-issue: 21 June 2024
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
