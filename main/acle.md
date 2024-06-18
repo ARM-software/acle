@@ -8895,7 +8895,7 @@ Gather Load Quadword.
 
 #### LD2Q, LD3Q, LD4Q
 
-Contiguous load two, three or four quadword structures.
+Contiguous load two, three, or four quadword structures.
 
 ``` c
    // Variants are also available for:
