@@ -177,6 +177,7 @@ unless a different support level is specified in the text.
 | 2022Q4       | 23 November 2022  | Arm    | See [Changes between ACLE Q2 2022 and ACLE Q4 2022](#changes-between-acle-q2-2022-and-acle-q4-2022)                  |
 | 2023Q2       | 04 August 2023    | Arm    | See [Changes between ACLE Q4 2022 and ACLE Q2 2023](#changes-between-acle-q4-2022-and-acle-q2-2023)                  |
 | 2024Q1       | 11 April 2024     | Arm    | See [Changes between ACLE Q2 2023 and ACLE Q1 2024](#changes-between-acle-q2-2023-and-acle-q1-2024)                  |
+| 2024Q2       | 21 June 2024      | Arm    | See [Changes between ACLE Q1 2024 and ACLE Q2 2024](#changes-between-acle-q1-2024-and-acle-q2-2024)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -387,11 +388,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   in the previous Alpha SME spec.
 * Changed the status of the SME ACLE from Alpha to Beta.
 
-
-#### Changes for next release
+#### Changes between ACLE Q1 2024 and ACLE Q2 2024
 * Added new content for the handling of arguments in CMSE Entry functions and
   return values of CMSE Non-secure calls in order to address security issues.
-
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.1 (FEAT_SVE2p1).
 
