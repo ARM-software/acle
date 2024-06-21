@@ -1,4 +1,4 @@
-<COMMENT>	SPDX-FileCopyrightText: Copyright 2021 Arm Limited <open-source-office@arm.com>
+<COMMENT>	SPDX-FileCopyrightText: Copyright 2021,2024 Arm Limited <open-source-office@arm.com>
 <COMMENT>	SPDX-License-Identifier: Apache-2.0
 <COMMENT>	
 <COMMENT>	Licensed under the Apache License, Version 2.0 (the "License");
@@ -4390,3 +4390,54 @@ vbfmlalbq_lane_f32	Scalar arithmetic|Vector multiply-accumulate by scalar
 vbfmlalbq_laneq_f32	Scalar arithmetic|Vector multiply-accumulate by scalar
 vbfmlaltq_lane_f32	Scalar arithmetic|Vector multiply-accumulate by scalar
 vbfmlaltq_laneq_f32	Scalar arithmetic|Vector multiply-accumulate by scalar
+vcvt1_bf16_f8_fpm	Conversion|Convert to BFloat16 (vector, lower)
+vcvt1_low_bf16_f8_fpm	Conversion|Convert to BFloat16 (vector, lower)
+vcvt2_bf16_f8_fpm	Conversion|Convert to BFloat16 (vector, lower)
+vcvt2_low_bf16_f8_fpm	Conversion|Convert to BFloat16 (vector, lower)
+vcvt1_high_bf16_f8_fpm	Conversion|Convert to BFloat16 (vector, upper)
+vcvt2_high_bf16_f8_fpm	Conversion|Convert to BFloat16 (vector, upper)
+vcvt1_f16_f8_fpm	Conversion|Convert to half-precision (vector, lower)
+vcvt1_low_f16_f8_fpm	Conversion|Convert to half-precision (vector, lower)
+vcvt2_f16_f8_fpm	Conversion|Convert to half-precision (vector, lower)
+vcvt2_low_f16_f8_fpm	Conversion|Convert to half-precision (vector, lower)
+vcvt1_high_f16_f8_fpm	Conversion|Convert to half-precision (vector, upper)
+vcvt2_high_f16_f8_fpm	Conversion|Convert to half-precision (vector, upper)
+vcvt_f8_f32_fpm	Conversion|Convert single-precision to floating point (vector, lower)
+vcvt_high_f32_fpm	Conversion|Convert single-precision to floating point (vector, upper)
+vcvt_f8_f16_fpm	Conversion|Convert half-precision to floating point
+vcvtq_f8_f16_fpm	Conversion|Convert half-precision to floating point
+vscale_f16	Floating-point adjust exponent by vector
+vscaleq_f16	Floating-point adjust exponent by vector
+vscale_f32	Floating-point adjust exponent by vector
+vscaleq_f32	Floating-point adjust exponent by vector
+vscaleq_f64	Floating-point adjust exponent by vector
+vdot_f32_f8_fpm	Dot product|Floating-point dot product to single-precision (vector)
+vdotq_f32_f8_fpm	Dot product|Floating-point dot product to single-precision (vector)
+vdot_lane_f32_f8_fpm	Dot product|Floating-point dot product to single-precision (vector, by element)
+vdot_laneq_f32_f8_fpm	Dot product|Floating-point dot product to single-precision (vector, by element)
+vdotq_lane_f32_f8_fpm	Dot product|Floating-point dot product to single-precision (vector, by element)
+vdotq_laneq_f32_f8_fpm	Dot product|Floating-point dot product to single-precision (vector, by element)
+vdot_f16_f8_fpm	Dot product|Floating-point dot product to half-precision (vector)
+vdotq_f16_f8_fpm	Dot product|Floating-point dot product to half-precision (vector)
+vdot_lane_f16_f8_fpm	Dot product|Floating-point dot product to half-prevision (vector, by element)
+vdot_laneq_f16_f8_fpm	Dot product|Floating-point dot product to half-prevision (vector, by element)
+vdotq_lane_f16_f8_fpm	Dot product|Floating-point dot product to half-prevision (vector, by element)
+vdotq_laneq_f16_f8_fpm	Dot product|Floating-point dot product to half-prevision (vector, by element)
+vmlalbq_f16_f8_fpm	Multiply-add|Floating-point multiply-add long to half-precision (vector)
+vmlaltq_f16_f8_fpm	Multiply-add|Floating-point multiply-add long to half-precision (vector)
+vmlalbq_lane_f16_f8_fpm	Multiply-add|Floating-point multiply-add long to half-precision (vector, by element)
+vmlalbq_laneq_f16_f8_fpm	Multiply-add|Floating-point multiply-add long to half-precision (vector, by element)
+vmlaltq_lane_f16_f8_fpm	Multiply-add|Floating-point multiply-add long to half-precision (vector, by element)
+vmlaltq_laneq_f16_f8_fpm	Multiply-add|Floating-point multiply-add long to half-precision (vector, by element)
+vmlallbbq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector)
+vmlallbtq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector)
+vmlalltbq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector)
+vmlallttq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector)
+vmlallbbq_lane_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlallbbq_laneq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlallbtq_lane_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlallbtq_laneq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlalltbq_lane_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlalltbq_laneq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlallttq_lane_f132_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlallttq_laneq_f132_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
