@@ -9183,10 +9183,10 @@ Floating-point absolute minimum (predicated).
 Lookup table read with 2-bit indices.
 ```c
   // Variant is  also available for: _u8
-  svint8_t svluti2[_s8](svint8_t table, svuint8_t indices, uint64_t imm0_3);
+  svint8_t svluti2_lane[_s8](svint8_t table, svuint8_t indices, uint64_t imm_idx);
 
   // Variant are also available for: _u16, _f16 and _bf16
-  svint16_t svluti2[_s16]( svint16_t table, svuint8_t indices, uint64_t imm0_7);
+  svint16_t svluti2_lane[_s16]( svint16_t table, svuint8_t indices, uint64_t imm_idx);
 ```
 
 #### LUTI4
@@ -9194,11 +9194,11 @@ Lookup table read with 2-bit indices.
 Lookup table read with 4-bit indices.
 ```c
   // Variant is also available for: _u8
-  svint8_t svluti4[_s8](svint8_t table, svuint8_t indices, uint64_t imm0_1);
+  svint8_t svluti4_lane[_s8](svint8_t table, svuint8_t indices, uint64_t imm_idx);
 
   // Variant are also available for: _u16, _f16, _bf16
-  svint16_t svluti4[_s16](svint16_t table, svuint8_t indices, uint64_t imm0_7);
-  svint16_t svluti4[_s16]_x2(svint16x2_t table, svuint8_t indices, uint64_t imm0_7);
+  svint16_t svluti4_lane[_s16](svint16_t table, svuint8_t indices, uint64_t imm_idx);
+  svint16_t svluti4_lane[_s16]_x2(svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
 ```
 
 # SME language extensions and intrinsics
