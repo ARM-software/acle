@@ -5583,16 +5583,22 @@ each architecture includes its predecessor instruction set.
 The specification for FP8 intrinsics is in
 [**Alpha** state](#current-status-and-anticipated-changes).
 
-Each 8-bit floating point intrinsic call has a parameter to define the format,
-saturation, and scale of its operands. This parameter is typically
-declared as `fpm_t fpm`.
+Each 8-bit floating point intrinsic call has a parameter to define the format
+and scale of the operands, and the overflow behaviour, as applicable to each
+operation. This parameter is typically declared as `fpm_t fpm`.
 
 ```c
   typedef uint64_t fpm_t;
 ```
 
-The ACLE declares several helper types and functions to
-facilitate construction of `fpm` arguments.
+The ACLE declares several helper types and intrisics to
+facilitate construction of `fpm` arguments. The helper intrinsics do not have
+side effects and their return depends only on their parameters.
+
+Note: where a helper intrinsic description refers to "updating the FP8 mode"
+it means the intrinsic only modifies the bits of input `fpm_t` parameter that
+correspond to the new mode and returns the resulting value. No side effects
+(such as changing processor state) occur.
 
 ## Support enumerations
 
@@ -5608,25 +5614,75 @@ enum __ARM_FPM_OVERFLOW {
 };
 ```
 
-## Helper functions
+## Helper intrinsics
 
 ```c
-  fpm_t arm_fpm_init();
-
-  fpm_t arm_set_fpm_src1_format(fpm_t fpm, enum __ARM_FPM_FORMAT format);
-  fpm_t arm_set_fpm_src2_format(fpm_t fpm, enum __ARM_FPM_FORMAT format);
-  fpm_t arm_set_fpm_dst_format(fpm_t fpm,  enum __ARM_FPM_FORMAT format);
-
-  fpm_t arm_set_fpm_overflow_cvt(fpm_t fpm, enum __ARM_FPM_OVERFLOW behaviour);
-  fpm_t arm_set_fpm_overflow_mul(fpm_t fpm, enum __ARM_FPM_OVERFLOW behaviour);
-
-  fpm_t arm_set_fpm_lscale(fpm_t fpm, uint64_t scale);
-  fpm_t arm_set_fpm_lscale2(fpm_t fpm, uint64_t scale);
-  fpm_t arm_set_fpm_nscale(fpm_t fpm,  int64_t scale);
+  fpm_t __arm_fpm_init();
 ```
+Initializes a value, suitable for use as an `fpm` argument ("FP8 mode").
+The value corresponds to a mode of operation where:
+  * the sources and destination operands are interpreted as E5M2
+  * overflow behaviour is to yield infinity or NaN (depending on operation)
+  * no scaling occurs
 
-Individual FP8 intrinsics are descibed in their respective Advanced SIMD (NEON), SVE,
-and SME sections.
+```c
+  fpm_t __arm_set_fpm_src1_format(fpm_t fpm, enum __ARM_FPM_FORMAT format);
+  fpm_t __arm_set_fpm_src2_format(fpm_t fpm, enum __ARM_FPM_FORMAT format);
+```
+Updates the FP8 mode to set the first or the second source operand format,
+respectively.
+
+```c
+  fpm_t __arm_set_fpm_dst_format(fpm_t fpm,  enum __ARM_FPM_FORMAT format);
+```
+Updates the FP8 mode to set the destination format.
+
+```c
+  fpm_t __arm_set_fpm_overflow_cvt(fpm_t fpm, enum __ARM_FPM_OVERFLOW behaviour);
+```
+Updates the FP8 mode to set the overflow behaviour for conversion operations.
+
+``` c
+  fpm_t __arm_set_fpm_overflow_mul(fpm_t fpm, enum __ARM_FPM_OVERFLOW behaviour);
+```
+Updates the FP8 mode to set the overflow behaviour for multiplicative
+operations.
+
+``` c
+  fpm_t __arm_set_fpm_lscale(fpm_t fpm, uint64_t scale);
+```
+Updates the FP8 mode to set the downscaling value that is subtracted from:
+* The product or the sum-of-products exponent, for multiplication instructions
+   with FP8 operands.
+* The result exponent, for instructions that convert the first FP8
+  input data stream to other floating-point formats.
+  
+The valid range for the `scale` parameter is [0, 127], inclusive.
+
+``` c
+  fpm_t __arm_set_fpm_lscale2(fpm_t fpm, uint64_t scale);
+```
+Updates the FP8 mode to set the downscaling value that is subtracted from
+the result exponent for instructions that convert
+the second FP8 input data stream to other floating-point formats.
+
+The valid range for the `scale` parameter is [0, 63], inclusive.
+
+``` c
+  fpm_t __arm_set_fpm_nscale(fpm_t fpm,  int64_t scale);
+```
+Updates the FP8 mode valiue to set the scaling value that is added to
+the operand exponent for instructions that convert other floating-point formats
+to an FP8 format.
+
+The valid range for the `scale` parameter is [-128, 127], inclusive.
+
+Passing an out of range argument to a helper intrinsic results in the intrinsic
+returning an indeterminate value. Passing such an indeterminate value as
+an argument to an FP8 intrinsic results in undefined behavior.
+
+Individual FP8 intrinsics are described in their respective
+Advanced SIMD (NEON), SVE, and SME sections.
 
 # Advanced SIMD (Neon) intrinsics
 
