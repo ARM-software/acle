@@ -12800,8 +12800,13 @@ Move vector register to ZT0.
 ``` c
   // Variants are also available for:
   // [_s8], [_u16], [_s16], [_u32], [_s32], [_u64], [_s64]
-  //[_bf16], [_f16], [_f32], [_f64]
-  void svmovt_zt[_u8](uint64_t zt0, svuint8_t zt, uint64_t idx) __arm_streaming __arm_inout("zt0");
+  // [_bf16], [_f16], [_f32], [_f64]
+  void svwrite_zt[_u8](uint64_t zt0, svuint8_t zt) __arm_streaming __arm_out("zt0");
+
+  // Variants are also available for:
+  // [_s8], [_u16], [_s16], [_u32], [_s32], [_u64], [_s64]
+  // [_bf16], [_f16], [_f32], [_f64]
+  void svwrite_lane_zt[_u8](uint64_t zt0, svuint8_t zt, uint64_t idx) __arm_streaming __arm_inout("zt0");
 ```
 
 #### LUTI4
