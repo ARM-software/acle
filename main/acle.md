@@ -5641,7 +5641,7 @@ Updates the FP8 mode to set the downscaling value that is subtracted from:
    with FP8 operands.
 * The result exponent, for instructions that convert the first FP8
   input data stream to other floating-point formats.
-  
+
 The valid range for the `scale` parameter is [0, 127], inclusive.
 
 ``` c

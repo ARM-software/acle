@@ -1843,6 +1843,8 @@ vcopy_lane_p8	Vector manipulation|Copy vector lane
 vcopyq_lane_p8	Vector manipulation|Copy vector lane
 vcopy_lane_p16	Vector manipulation|Copy vector lane
 vcopyq_lane_p16	Vector manipulation|Copy vector lane
+vcopy_lane_f8	Vector manipulation|Copy vector lane
+vcopyq_lane_f8	Vector manipulation|Copy vector lane
 vcopy_laneq_s8	Vector manipulation|Copy vector lane
 vcopyq_laneq_s8	Vector manipulation|Copy vector lane
 vcopy_laneq_s16	Vector manipulation|Copy vector lane
@@ -1869,6 +1871,8 @@ vcopy_laneq_p8	Vector manipulation|Copy vector lane
 vcopyq_laneq_p8	Vector manipulation|Copy vector lane
 vcopy_laneq_p16	Vector manipulation|Copy vector lane
 vcopyq_laneq_p16	Vector manipulation|Copy vector lane
+vcopy_laneq_f8	Vector manipulation|Copy vector lane
+vcopyq_laneq_f8	Vector manipulation|Copy vector lane
 vrbit_s8	Vector manipulation|Reverse bits within elements
 vrbitq_s8	Vector manipulation|Reverse bits within elements
 vrbit_u8	Vector manipulation|Reverse bits within elements
@@ -1889,6 +1893,7 @@ vcreate_f32	Vector manipulation|Create vector
 vcreate_p8	Vector manipulation|Create vector
 vcreate_p16	Vector manipulation|Create vector
 vcreate_f64	Vector manipulation|Create vector
+vcreate_f8	Vector manipulation|Create vector
 vdup_n_s8	Vector manipulation|Set all lanes to the same value
 vdupq_n_s8	Vector manipulation|Set all lanes to the same value
 vdup_n_s16	Vector manipulation|Set all lanes to the same value
@@ -1915,6 +1920,8 @@ vdup_n_p16	Vector manipulation|Set all lanes to the same value
 vdupq_n_p16	Vector manipulation|Set all lanes to the same value
 vdup_n_f64	Vector manipulation|Set all lanes to the same value
 vdupq_n_f64	Vector manipulation|Set all lanes to the same value
+vdup_n_f8	Vector manipulation|Set all lanes to the same value
+vdupq_n_f8	Vector manipulation|Set all lanes to the same value
 vmov_n_s8	Vector manipulation|Set all lanes to the same value
 vmovq_n_s8	Vector manipulation|Set all lanes to the same value
 vmov_n_s16	Vector manipulation|Set all lanes to the same value
@@ -1939,6 +1946,8 @@ vmov_n_p16	Vector manipulation|Set all lanes to the same value
 vmovq_n_p16	Vector manipulation|Set all lanes to the same value
 vmov_n_f64	Vector manipulation|Set all lanes to the same value
 vmovq_n_f64	Vector manipulation|Set all lanes to the same value
+vmov_n_f8	Vector manipulation|Set all lanes to the same value
+vmovq_n_f8	Vector manipulation|Set all lanes to the same value
 vdup_lane_s8	Vector manipulation|Set all lanes to the same value
 vdupq_lane_s8	Vector manipulation|Set all lanes to the same value
 vdup_lane_s16	Vector manipulation|Set all lanes to the same value
@@ -1965,6 +1974,8 @@ vdup_lane_p16	Vector manipulation|Set all lanes to the same value
 vdupq_lane_p16	Vector manipulation|Set all lanes to the same value
 vdup_lane_f64	Vector manipulation|Set all lanes to the same value
 vdupq_lane_f64	Vector manipulation|Set all lanes to the same value
+vdup_lane_f8	Vector manipulation|Set all lanes to the same value
+vdupq_lane_f8	Vector manipulation|Set all lanes to the same value
 vdup_laneq_s8	Vector manipulation|Set all lanes to the same value
 vdupq_laneq_s8	Vector manipulation|Set all lanes to the same value
 vdup_laneq_s16	Vector manipulation|Set all lanes to the same value
@@ -1991,6 +2002,8 @@ vdup_laneq_p16	Vector manipulation|Set all lanes to the same value
 vdupq_laneq_p16	Vector manipulation|Set all lanes to the same value
 vdup_laneq_f64	Vector manipulation|Set all lanes to the same value
 vdupq_laneq_f64	Vector manipulation|Set all lanes to the same value
+vdup_laneq_f8	Vector manipulation|Set all lanes to the same value
+vdupq_laneq_f8	Vector manipulation|Set all lanes to the same value
 vcombine_s8	Vector manipulation|Combine vectors
 vcombine_s16	Vector manipulation|Combine vectors
 vcombine_s32	Vector manipulation|Combine vectors
@@ -2005,6 +2018,7 @@ vcombine_f32	Vector manipulation|Combine vectors
 vcombine_p8	Vector manipulation|Combine vectors
 vcombine_p16	Vector manipulation|Combine vectors
 vcombine_f64	Vector manipulation|Combine vectors
+vcombine_f8	Vector manipulation|Combine vectors
 vget_high_s8	Vector manipulation|Split vectors
 vget_high_s16	Vector manipulation|Split vectors
 vget_high_s32	Vector manipulation|Split vectors
@@ -2019,6 +2033,7 @@ vget_high_f32	Vector manipulation|Split vectors
 vget_high_p8	Vector manipulation|Split vectors
 vget_high_p16	Vector manipulation|Split vectors
 vget_high_f64	Vector manipulation|Split vectors
+vget_high_f8	Vector manipulation|Split vectors
 vget_low_s8	Vector manipulation|Split vectors
 vget_low_s16	Vector manipulation|Split vectors
 vget_low_s32	Vector manipulation|Split vectors
@@ -2033,6 +2048,7 @@ vget_low_f32	Vector manipulation|Split vectors
 vget_low_p8	Vector manipulation|Split vectors
 vget_low_p16	Vector manipulation|Split vectors
 vget_low_f64	Vector manipulation|Split vectors
+vget_low_f8	Vector manipulation|Split vectors
 vdupb_lane_s8	Vector manipulation|Extract one element from vector
 vduph_lane_s16	Vector manipulation|Extract one element from vector
 vdups_lane_s32	Vector manipulation|Extract one element from vector
@@ -2045,6 +2061,7 @@ vdups_lane_f32	Vector manipulation|Extract one element from vector
 vdupd_lane_f64	Vector manipulation|Extract one element from vector
 vdupb_lane_p8	Vector manipulation|Extract one element from vector
 vduph_lane_p16	Vector manipulation|Extract one element from vector
+vdupb_lane_f8	Vector manipulation|Extract one element from vector
 vdupb_laneq_s8	Vector manipulation|Extract one element from vector
 vduph_laneq_s16	Vector manipulation|Extract one element from vector
 vdups_laneq_s32	Vector manipulation|Extract one element from vector
@@ -2057,6 +2074,7 @@ vdups_laneq_f32	Vector manipulation|Extract one element from vector
 vdupd_laneq_f64	Vector manipulation|Extract one element from vector
 vdupb_laneq_p8	Vector manipulation|Extract one element from vector
 vduph_laneq_p16	Vector manipulation|Extract one element from vector
+vdupb_laneq_f8	Vector manipulation|Extract one element from vector
 vld1_s8	Load|Stride
 vld1q_s8	Load|Stride
 vld1_s16	Load|Stride
@@ -2085,6 +2103,8 @@ vld1_p16	Load|Stride
 vld1q_p16	Load|Stride
 vld1_f64	Load|Stride
 vld1q_f64	Load|Stride
+vld1_f8	Load|Stride
+vld1q_f8	Load|Stride
 vld1_lane_s8	Load|Stride
 vld1q_lane_s8	Load|Stride
 vld1_lane_s16	Load|Stride
@@ -2113,6 +2133,8 @@ vld1_lane_p16	Load|Stride
 vld1q_lane_p16	Load|Stride
 vld1_lane_f64	Load|Stride
 vld1q_lane_f64	Load|Stride
+vld1_lane_f8	Load|Stride
+vld1q_lane_f8	Load|Stride
 vldap1q_lane_u64	Load|Stride
 vldap1q_lane_s64	Load|Stride
 vldap1q_lane_f64	Load|Stride
@@ -2157,6 +2179,8 @@ vld1_dup_p16	Load|Stride
 vld1q_dup_p16	Load|Stride
 vld1_dup_f64	Load|Stride
 vld1q_dup_f64	Load|Stride
+vld1_dup_f8	Load|Stride
+vld1q_dup_f8	Load|Stride
 vst1_s8	Store|Stride
 vst1q_s8	Store|Stride
 vst1_s16	Store|Stride
@@ -2185,6 +2209,8 @@ vst1_p16	Store|Stride
 vst1q_p16	Store|Stride
 vst1_f64	Store|Stride
 vst1q_f64	Store|Stride
+vst1_f8	Store|Stride
+vst1q_f8	Store|Stride
 vst1_lane_s8	Store|Stride
 vst1q_lane_s8	Store|Stride
 vst1_lane_s16	Store|Stride
@@ -2213,6 +2239,8 @@ vst1_lane_p16	Store|Stride
 vst1q_lane_p16	Store|Stride
 vst1_lane_f64	Store|Stride
 vst1q_lane_f64	Store|Stride
+vst1_lane_f8	Store|Stride
+vst1q_lane_f8	Store|Stride
 vld2_s8	Load|Stride
 vld2q_s8	Load|Stride
 vld2_s16	Load|Stride
@@ -2241,6 +2269,8 @@ vld2q_u64	Load|Stride
 vld2q_p64	Load|Stride
 vld2_f64	Load|Stride
 vld2q_f64	Load|Stride
+vld2_f8	Load|Stride
+vld2q_f8	Load|Stride
 vld3_s8	Load|Stride
 vld3q_s8	Load|Stride
 vld3_s16	Load|Stride
@@ -2269,6 +2299,8 @@ vld3q_u64	Load|Stride
 vld3q_p64	Load|Stride
 vld3_f64	Load|Stride
 vld3q_f64	Load|Stride
+vld3_f8	Load|Stride
+vld3q_f8	Load|Stride
 vld4_s8	Load|Stride
 vld4q_s8	Load|Stride
 vld4_s16	Load|Stride
@@ -2297,6 +2329,8 @@ vld4q_u64	Load|Stride
 vld4q_p64	Load|Stride
 vld4_f64	Load|Stride
 vld4q_f64	Load|Stride
+vld4_f8	Load|Stride
+vld4q_f8	Load|Stride
 vld2_dup_s8	Load|Stride
 vld2q_dup_s8	Load|Stride
 vld2_dup_s16	Load|Stride
@@ -2325,6 +2359,8 @@ vld2q_dup_u64	Load|Stride
 vld2q_dup_p64	Load|Stride
 vld2_dup_f64	Load|Stride
 vld2q_dup_f64	Load|Stride
+vld2_dup_f8	Load|Stride
+vld2q_dup_f8	Load|Stride
 vld3_dup_s8	Load|Stride
 vld3q_dup_s8	Load|Stride
 vld3_dup_s16	Load|Stride
@@ -2353,6 +2389,8 @@ vld3q_dup_u64	Load|Stride
 vld3q_dup_p64	Load|Stride
 vld3_dup_f64	Load|Stride
 vld3q_dup_f64	Load|Stride
+vld3_dup_f8	Load|Stride
+vld3q_dup_f8	Load|Stride
 vld4_dup_s8	Load|Stride
 vld4q_dup_s8	Load|Stride
 vld4_dup_s16	Load|Stride
@@ -2381,6 +2419,8 @@ vld4q_dup_u64	Load|Stride
 vld4q_dup_p64	Load|Stride
 vld4_dup_f64	Load|Stride
 vld4q_dup_f64	Load|Stride
+vld4_dup_f8	Load|Stride
+vld4q_dup_f8	Load|Stride
 vst2_s8	Store|Stride
 vst2q_s8	Store|Stride
 vst2_s16	Store|Stride
@@ -2409,6 +2449,8 @@ vst2q_u64	Store|Stride
 vst2q_p64	Store|Stride
 vst2_f64	Store|Stride
 vst2q_f64	Store|Stride
+vst2_f8	Store|Stride
+vst2q_f8	Store|Stride
 vst3_s8	Store|Stride
 vst3q_s8	Store|Stride
 vst3_s16	Store|Stride
@@ -2437,6 +2479,8 @@ vst3q_u64	Store|Stride
 vst3q_p64	Store|Stride
 vst3_f64	Store|Stride
 vst3q_f64	Store|Stride
+vst3_f8	Store|Stride
+vst3q_f8	Store|Stride
 vst4_s8	Store|Stride
 vst4q_s8	Store|Stride
 vst4_s16	Store|Stride
@@ -2465,6 +2509,8 @@ vst4q_u64	Store|Stride
 vst4q_p64	Store|Stride
 vst4_f64	Store|Stride
 vst4q_f64	Store|Stride
+vst4_f8	Store|Stride
+vst4q_f8	Store|Stride
 vld2_lane_s16	Load|Stride
 vld2q_lane_s16	Load|Stride
 vld2_lane_s32	Load|Stride
@@ -2493,6 +2539,8 @@ vld2_lane_p64	Load|Stride
 vld2q_lane_p64	Load|Stride
 vld2_lane_f64	Load|Stride
 vld2q_lane_f64	Load|Stride
+vld2_lane_f8	Load|Stride
+vld2q_lane_f8	Load|Stride
 vld3_lane_s16	Load|Stride
 vld3q_lane_s16	Load|Stride
 vld3_lane_s32	Load|Stride
@@ -2521,6 +2569,8 @@ vld3_lane_p64	Load|Stride
 vld3q_lane_p64	Load|Stride
 vld3_lane_f64	Load|Stride
 vld3q_lane_f64	Load|Stride
+vld3_lane_f8	Load|Stride
+vld3q_lane_f8	Load|Stride
 vld4_lane_s16	Load|Stride
 vld4q_lane_s16	Load|Stride
 vld4_lane_s32	Load|Stride
@@ -2549,15 +2599,20 @@ vld4_lane_p64	Load|Stride
 vld4q_lane_p64	Load|Stride
 vld4_lane_f64	Load|Stride
 vld4q_lane_f64	Load|Stride
+vld4_lane_f8	Load|Stride
+vld4q_lane_f8	Load|Stride
 vst2_lane_s8	Store|Stride
 vst2_lane_u8	Store|Stride
 vst2_lane_p8	Store|Stride
+vst2_lane_f8	Store|Stride
 vst3_lane_s8	Store|Stride
 vst3_lane_u8	Store|Stride
 vst3_lane_p8	Store|Stride
+vst3_lane_f8	Store|Stride
 vst4_lane_s8	Store|Stride
 vst4_lane_u8	Store|Stride
 vst4_lane_p8	Store|Stride
+vst4_lane_f8	Store|Stride
 vst2_lane_s16	Store|Stride
 vst2q_lane_s16	Store|Stride
 vst2_lane_s32	Store|Stride
@@ -2583,6 +2638,7 @@ vst2_lane_p64	Store|Stride
 vst2q_lane_p64	Store|Stride
 vst2_lane_f64	Store|Stride
 vst2q_lane_f64	Store|Stride
+vst2q_lane_f8	Store|Stride
 vst3_lane_s16	Store|Stride
 vst3q_lane_s16	Store|Stride
 vst3_lane_s32	Store|Stride
@@ -2608,6 +2664,7 @@ vst3_lane_p64	Store|Stride
 vst3q_lane_p64	Store|Stride
 vst3_lane_f64	Store|Stride
 vst3q_lane_f64	Store|Stride
+vst3q_lane_f8	Store|Stride
 vst4_lane_s16	Store|Stride
 vst4q_lane_s16	Store|Stride
 vst4_lane_s32	Store|Stride
@@ -2633,6 +2690,7 @@ vst4_lane_p64	Store|Stride
 vst4q_lane_p64	Store|Stride
 vst4_lane_f64	Store|Stride
 vst4q_lane_f64	Store|Stride
+vst4q_lane_f8	Store|Stride
 vst1_s8_x2	Store|Stride
 vst1q_s8_x2	Store|Stride
 vst1_s16_x2	Store|Stride
@@ -2661,6 +2719,8 @@ vst1q_u64_x2	Store|Stride
 vst1q_p64_x2	Store|Stride
 vst1_f64_x2	Store|Stride
 vst1q_f64_x2	Store|Stride
+vst1_f8_x2	Store|Stride
+vst1q_f8_x2	Store|Stride
 vst1_s8_x3	Store|Stride
 vst1q_s8_x3	Store|Stride
 vst1_s16_x3	Store|Stride
@@ -2689,6 +2749,8 @@ vst1q_u64_x3	Store|Stride
 vst1q_p64_x3	Store|Stride
 vst1_f64_x3	Store|Stride
 vst1q_f64_x3	Store|Stride
+vst1_f8_x3	Store|Stride
+vst1q_f8_x3	Store|Stride
 vst1_s8_x4	Store|Stride
 vst1q_s8_x4	Store|Stride
 vst1_s16_x4	Store|Stride
@@ -2717,6 +2779,8 @@ vst1q_u64_x4	Store|Stride
 vst1q_p64_x4	Store|Stride
 vst1_f64_x4	Store|Stride
 vst1q_f64_x4	Store|Stride
+vst1_f8_x4	Store|Stride
+vst1q_f8_x4	Store|Stride
 vld1_s8_x2	Load|Stride
 vld1q_s8_x2	Load|Stride
 vld1_s16_x2	Load|Stride
@@ -2745,6 +2809,8 @@ vld1q_u64_x2	Load|Stride
 vld1q_p64_x2	Load|Stride
 vld1_f64_x2	Load|Stride
 vld1q_f64_x2	Load|Stride
+vld1_f8_x2	Load|Stride
+vld1q_f8_x2	Load|Stride
 vld1_s8_x3	Load|Stride
 vld1q_s8_x3	Load|Stride
 vld1_s16_x3	Load|Stride
@@ -2773,6 +2839,8 @@ vld1q_u64_x3	Load|Stride
 vld1q_p64_x3	Load|Stride
 vld1_f64_x3	Load|Stride
 vld1q_f64_x3	Load|Stride
+vld1_f8_x3	Load|Stride
+vld1q_f8_x3	Load|Stride
 vld1_s8_x4	Load|Stride
 vld1q_s8_x4	Load|Stride
 vld1_s16_x4	Load|Stride
@@ -2801,6 +2869,8 @@ vld1q_u64_x4	Load|Stride
 vld1q_p64_x4	Load|Stride
 vld1_f64_x4	Load|Stride
 vld1q_f64_x4	Load|Stride
+vld1_f8_x4	Load|Stride
+vld1q_f8_x4	Load|Stride
 vpadd_s8	Vector arithmetic|Pairwise arithmetic|Pairwise addition
 vpadd_s16	Vector arithmetic|Pairwise arithmetic|Pairwise addition
 vpadd_s32	Vector arithmetic|Pairwise arithmetic|Pairwise addition
@@ -2981,6 +3051,8 @@ vext_p8	Vector manipulation|Extract vector from a pair of vectors
 vextq_p8	Vector manipulation|Extract vector from a pair of vectors
 vext_p16	Vector manipulation|Extract vector from a pair of vectors
 vextq_p16	Vector manipulation|Extract vector from a pair of vectors
+vext_f8	Vector manipulation|Extract vector from a pair of vectors
+vextq_f8	Vector manipulation|Extract vector from a pair of vectors
 vrev64_s8	Vector manipulation|Reverse elements
 vrev64q_s8	Vector manipulation|Reverse elements
 vrev64_s16	Vector manipulation|Reverse elements
@@ -2999,6 +3071,8 @@ vrev64_p8	Vector manipulation|Reverse elements
 vrev64q_p8	Vector manipulation|Reverse elements
 vrev64_p16	Vector manipulation|Reverse elements
 vrev64q_p16	Vector manipulation|Reverse elements
+vrev64_f8	Vector manipulation|Reverse elements
+vrev64q_f8	Vector manipulation|Reverse elements
 vrev32_s8	Vector manipulation|Reverse elements
 vrev32q_s8	Vector manipulation|Reverse elements
 vrev32_s16	Vector manipulation|Reverse elements
@@ -3011,12 +3085,16 @@ vrev32_p8	Vector manipulation|Reverse elements
 vrev32q_p8	Vector manipulation|Reverse elements
 vrev32_p16	Vector manipulation|Reverse elements
 vrev32q_p16	Vector manipulation|Reverse elements
+vrev32_f8	Vector manipulation|Reverse elements
+vrev32q_f8	Vector manipulation|Reverse elements
 vrev16_s8	Vector manipulation|Reverse elements
 vrev16q_s8	Vector manipulation|Reverse elements
 vrev16_u8	Vector manipulation|Reverse elements
 vrev16q_u8	Vector manipulation|Reverse elements
 vrev16_p8	Vector manipulation|Reverse elements
 vrev16q_p8	Vector manipulation|Reverse elements
+vrev16_f8	Vector manipulation|Reverse elements
+vrev16q_f8	Vector manipulation|Reverse elements
 vzip1_s8	Vector manipulation|Zip elements
 vzip1q_s8	Vector manipulation|Zip elements
 vzip1_s16	Vector manipulation|Zip elements
@@ -3039,6 +3117,8 @@ vzip1_p8	Vector manipulation|Zip elements
 vzip1q_p8	Vector manipulation|Zip elements
 vzip1_p16	Vector manipulation|Zip elements
 vzip1q_p16	Vector manipulation|Zip elements
+vzip1_f8	Vector manipulation|Zip elements
+vzip1q_f8	Vector manipulation|Zip elements
 vzip2_s8	Vector manipulation|Zip elements
 vzip2q_s8	Vector manipulation|Zip elements
 vzip2_s16	Vector manipulation|Zip elements
@@ -3061,6 +3141,8 @@ vzip2_p8	Vector manipulation|Zip elements
 vzip2q_p8	Vector manipulation|Zip elements
 vzip2_p16	Vector manipulation|Zip elements
 vzip2q_p16	Vector manipulation|Zip elements
+vzip2_f8	Vector manipulation|Zip elements
+vzip2q_f8	Vector manipulation|Zip elements
 vuzp1_s8	Vector manipulation|Unzip elements
 vuzp1q_s8	Vector manipulation|Unzip elements
 vuzp1_s16	Vector manipulation|Unzip elements
@@ -3083,6 +3165,8 @@ vuzp1_p8	Vector manipulation|Unzip elements
 vuzp1q_p8	Vector manipulation|Unzip elements
 vuzp1_p16	Vector manipulation|Unzip elements
 vuzp1q_p16	Vector manipulation|Unzip elements
+vuzp1_f8	Vector manipulation|Unzip elements
+vuzp1q_f8	Vector manipulation|Unzip elements
 vuzp2_s8	Vector manipulation|Unzip elements
 vuzp2q_s8	Vector manipulation|Unzip elements
 vuzp2_s16	Vector manipulation|Unzip elements
@@ -3105,6 +3189,8 @@ vuzp2_p8	Vector manipulation|Unzip elements
 vuzp2q_p8	Vector manipulation|Unzip elements
 vuzp2_p16	Vector manipulation|Unzip elements
 vuzp2q_p16	Vector manipulation|Unzip elements
+vuzp2_f8	Vector manipulation|Unzip elements
+vuzp2q_f8	Vector manipulation|Unzip elements
 vtrn1_s8	Vector manipulation|Transpose elements
 vtrn1q_s8	Vector manipulation|Transpose elements
 vtrn1_s16	Vector manipulation|Transpose elements
@@ -3127,6 +3213,8 @@ vtrn1_p8	Vector manipulation|Transpose elements
 vtrn1q_p8	Vector manipulation|Transpose elements
 vtrn1_p16	Vector manipulation|Transpose elements
 vtrn1q_p16	Vector manipulation|Transpose elements
+vtrn1_f8	Vector manipulation|Transpose elements
+vtrn1q_f8	Vector manipulation|Transpose elements
 vtrn2_s8	Vector manipulation|Transpose elements
 vtrn2q_s8	Vector manipulation|Transpose elements
 vtrn2_s16	Vector manipulation|Transpose elements
@@ -3149,6 +3237,8 @@ vtrn2_p8	Vector manipulation|Transpose elements
 vtrn2q_p8	Vector manipulation|Transpose elements
 vtrn2_p16	Vector manipulation|Transpose elements
 vtrn2q_p16	Vector manipulation|Transpose elements
+vtrn2_f8	Vector manipulation|Transpose elements
+vtrn2q_f8	Vector manipulation|Transpose elements
 vtbl1_s8	Table lookup|Table lookup
 vtbl1_u8	Table lookup|Table lookup
 vtbl1_p8	Table lookup|Table lookup
@@ -3277,6 +3367,8 @@ vsetq_lane_p8	Vector manipulation|Set vector lane
 vsetq_lane_p16	Vector manipulation|Set vector lane
 vsetq_lane_f32	Vector manipulation|Set vector lane
 vsetq_lane_f64	Vector manipulation|Set vector lane
+vset_lane_f8	Vector manipulation|Set vector lane
+vsetq_lane_f8	Vector manipulation|Set vector lane
 vrecpxs_f32	Vector arithmetic|Reciprocal|Reciprocal exponent
 vrecpxd_f64	Vector arithmetic|Reciprocal|Reciprocal exponent
 vfma_n_f32	Scalar arithmetic|Fused multiply-accumulate by scalar
@@ -3296,6 +3388,7 @@ vtrn_p16	Vector manipulation|Transpose elements
 vtrn_s32	Vector manipulation|Transpose elements
 vtrn_f32	Vector manipulation|Transpose elements
 vtrn_u32	Vector manipulation|Transpose elements
+vtrn_f8	Vector manipulation|Transpose elements
 vtrnq_s8	Vector manipulation|Transpose elements
 vtrnq_s16	Vector manipulation|Transpose elements
 vtrnq_s32	Vector manipulation|Transpose elements
@@ -3305,6 +3398,7 @@ vtrnq_u16	Vector manipulation|Transpose elements
 vtrnq_u32	Vector manipulation|Transpose elements
 vtrnq_p8	Vector manipulation|Transpose elements
 vtrnq_p16	Vector manipulation|Transpose elements
+vtrnq_f8	Vector manipulation|Transpose elements
 vzip_s8	Vector manipulation|Zip elements
 vzip_s16	Vector manipulation|Zip elements
 vzip_u8	Vector manipulation|Zip elements
@@ -3727,6 +3821,10 @@ vreinterpretq_u64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_s64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_f64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_f16_p128	Data type conversion|Reinterpret casts
+vreinterpret_f8_u8	Data type conversion|Reinterpret casts
+vreinterpretq_f8_u8	Data type conversion|Reinterpret casts
+vreinterpret_u8_f8	Data type conversion|Reinterpret casts
+vreinterpretq_u8_f8	Data type conversion|Reinterpret casts
 vldrq_p128	Load|Load
 vstrq_p128	Store|Store
 vaeseq_u8	Cryptography|AES
@@ -4439,5 +4537,5 @@ vmlallbtq_lane_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to 
 vmlallbtq_laneq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
 vmlalltbq_lane_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
 vmlalltbq_laneq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
-vmlallttq_lane_f132_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
-vmlallttq_laneq_f132_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlallttq_lane_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
+vmlallttq_laneq_f32_f8_fpm	Multiply-add|Floating-point multiply-add long-long to single-precision (vector, by element)
