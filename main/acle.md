@@ -1074,24 +1074,23 @@ header, but this might limit function multi-versioning capabilities:
 
 Including `<arm_sme.h>` also includes [`<arm_sve.h>`](#arm_sve.h).
 
-These macro features:
-`__ARM_ACLE`, `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC`, `__ARM_FEATURE_BF16`,
-`__ARM_NEON`, `__ARM_FEATURE_SVE` and ` __ARM_FEATURE_SME`
-represent a compiler's ability to use the instructions associated
-with the feature via ACLE documented builtins and within inline assembly.
-They may also be influenced by source code mechanisms like `#pragma` or
-`attribute`, but users should not rely on this. They are defined for user
-convenience.
+### Predefined Macros and Headers
+
+The macros can represent a compiler's ability to use the instructions
+associated with the feature via ACLE documented intrinsics and within inline
+assembly. However users should not rely solely on macro definition, because
+there are intrinsics that may be influenced by mechanisms like `#pragma` or
+`attribute`. The macros are defined only for user convenience.
 
 For example:
 
 ``` c
    #ifdef __ARM_FEATURE_SME
    #include<arm_sme.h>
+     void foo(svbool_t pg, void *ptr, uint32_t slice_base) {
+        svst1_hor_za8(0, slice_base, pg, ptr);
+      }
    #endif
-   void foo(svbool_t pg, void *ptr, uint32_t slice_base) {
-      svst1_hor_za8(0, slice_base, pg, ptr);
-   }
 ```
 
 `foo`  uses `__ARM_FEATURE_SME` to have available SME intriniscs,
