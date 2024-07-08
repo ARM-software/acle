@@ -8995,7 +8995,7 @@ Broadcast indexed element within each quadword vector segment.
 ``` c
    // Variants are also available for:
    // _s8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    svuint8_t svdup_laneq[_u8](svuint8_t zn, uint64_t imm_idx);
    ```
 
@@ -9006,7 +9006,7 @@ Extract vector segment from each pair of quadword segments.
 ``` c
    // Variants are also available for:
    // _s8, _s16, _u16, _s32, _u32, _s64, _u64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    svuint8_t svextq[_u8](svuint8_t zdn, svuint8_t zm, uint64_t imm);
    ```
 #### LD1D, LD1W
@@ -9033,7 +9033,7 @@ Gather Load Quadword.
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    svint8_t svld1q_gather[_u64base]_s8(svbool_t pg, svuint64_t zn);
    svint8_t svld1q_gather[_u64base]_offset_s8(svbool_t pg, svuint64_t zn, int64_t offset);
    svint8_t svld1q_gather_[u64]offset[_s8](svbool_t pg, const int8_t *base, svuint64_t offset);
@@ -9043,7 +9043,6 @@ Gather Load Quadword.
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
    svint16_t svld1q_gather_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index);
-   svint8_t svld1q_gather[_u64base]_index_s8(svbool_t pg, svuint64_t zn, int64_t index);
    ```
 
 #### LD2Q, LD3Q, LD4Q
@@ -9053,7 +9052,7 @@ Contiguous load two, three, or four quadword structures.
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    svint8x2_t svld2q[_s8](svbool_t pg, const int8_t *rn);
    svint8x2_t svld2q_vnum[_s8](svbool_t pg, const int8_t *rn, uint64_t vnum);
    svint8x3_t svld3q[_s8](svbool_t pg, const int8_t *rn);
@@ -9128,7 +9127,7 @@ Scatter store quadwords.
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    void svst1q_scatter[_u64base][_s8](svbool_t pg, svuint64_t zn, svint8_t data);
    void svst1q_scatter[_u64base]_offset[_s8](svbool_t pg, svuint64_t zn, int64_t offset, svint8_t data);
    void svst1q_scatter_[u64]offset[_s8](svbool_t pg, const uint8_t *base, svuint64_t offset, svint8_t data);
@@ -9136,7 +9135,6 @@ Scatter store quadwords.
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
-   void svst1q_scatter[_u64base]_index[_s8](svbool_t pg, svuint64_t zn, int64_t index, svint8_t data);
    void svst1q_scatter_[u64]index_[s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
    ```
 
@@ -9147,7 +9145,7 @@ Contiguous store.
 ``` c
    // Variants are also available for:
    // _s8 _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    void svst2q[_u8](svbool_t pg, uint8_t *rn, svuint8x2_t zt);
    void svst2q_vnum[_u8](svbool_t pg, uint8_t *rn, int64_t vnum, svuint8x2_t zt);
    void svst3q[_u8](svbool_t pg, uint8_t *rn, svuint8x3_t zt);
@@ -9163,7 +9161,7 @@ Programmable table lookup within each quadword vector segment (zeroing).
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    svint8_t svtblq[_s8](svint8_t zn, svuint8_t zm);
    ```
 
@@ -9174,7 +9172,7 @@ Programmable table lookup within each quadword vector segment (merging).
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    svint8_t svtbxq[_s8](svint8_t fallback, svint8_t zn, svuint8_t zm);
    ```
 
@@ -9185,7 +9183,7 @@ Concatenate elements within each pair of quadword vector segments.
 ``` c
    // Variants are also available for:
    // _s8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    svuint8_t svuzpq1[_u8](svuint8_t zn, svuint8_t zm);
    svuint8_t svuzpq2[_u8](svuint8_t zn, svuint8_t zm);
    ```
@@ -9197,7 +9195,7 @@ Interleave elements from halves of each pair of quadword vector segments.
 ``` c
    // Variants are also available for:
    // _s8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64
+   // _bf16, _f16, _f32, _f64, _f8
    svuint8_t svzipq1[_u8](svuint8_t zn, svuint8_t zm);
    svuint8_t svzipq2[_u8](svuint8_t zn, svuint8_t zm);
    ```
@@ -10376,7 +10374,7 @@ For example, in the `_u8` intrinsic, the return value and the `zd`
 parameter both have type `svuint8_t`.
 
 ``` c
-  // And similarly for u8.
+  // And similarly for u8, f8
   svint8_t svread_hor_za8[_s8]_m(svint8_t zd, svbool_t pg,
                                  uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
@@ -10396,7 +10394,7 @@ parameter both have type `svuint8_t`.
                                     uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
-  // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64
+  // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64, f8
   svint8_t svread_hor_za128[_s8]_m(svint8_t zd, svbool_t pg,
                                    uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
@@ -10409,7 +10407,7 @@ the type of the `zn` parameter varies with the type suffix. For example,
 the `zn` parameter to the `_u8` intrinsic has type `svuint8_t`.
 
 ``` c
-  // And similarly for u8.
+  // And similarly for u8, f8.
   void svwrite_hor_za8[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                               svint8_t zn)
     __arm_streaming __arm_inout("za");
@@ -10429,7 +10427,7 @@ the `zn` parameter to the `_u8` intrinsic has type `svuint8_t`.
                                 svint64_t zn)
     __arm_streaming __arm_inout("za");
 
-  // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64
+  // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64, f8
   void svwrite_hor_za128[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint8_t zn)
     __arm_streaming __arm_inout("za");
@@ -11764,33 +11762,33 @@ Zero ZT0
 Lookup table read with 2-bit and 4-bit indexes
 
 ``` c
-  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // Variants are also available for _zt_u8, _zt_f8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8_t svluti2_lane_zt_s8(uint64_t zt, svuint8_t zn, uint64_t imm_idx)
     __arm_streaming __arm_in("zt0");
 
 
-  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // Variants are also available for _zt_u8, _zt_f8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8x2_t svluti2_lane_zt_s8_x2(uint64_t zt, svuint8_t zn,
                                    uint64_t imm_idx)
     __arm_streaming __arm_in("zt0");
 
 
-  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // Variants are also available for _zt_u8, _zt_f8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8x4_t svluti2_lane_zt_s8_x4(uint64_t zt, svuint8_t zn,
                                    uint64_t imm_idx)
     __arm_streaming __arm_in("zt0");
 
 
-  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // Variants are also available for _zt_u8, _zt_f8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8_t svluti4_lane_zt_s8(uint64_t zt, svuint8_t zn, uint64_t imm_idx)
     __arm_streaming __arm_in("zt0");
 
 
-  // Variants are also available for _zt_u8, _zt_s16, _zt_u16, _zt_f16,
+  // Variants are also available for _zt_u8, _zt_f8, _zt_s16, _zt_u16, _zt_f16,
   // _zt_bf16, _zt_s32, _zt_u32 and _zt_f32
   svint8x2_t svluti4_lane_zt_s8_x2(uint64_t zt, svuint8_t zn,
                                    uint64_t imm_idx)
@@ -11809,84 +11807,84 @@ Lookup table read with 2-bit and 4-bit indexes
 Move multi-vectors to/from ZA
 
 ``` c
-  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // Variants are also available for _za8_u8, _za8_f8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // Variants are also available for _za8_u8, _za8_f8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_hor_za8_s8_vg4(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // Variants are also available for _za8_u8, _za8_f8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_ver_za8_s8_vg2(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // Variants are also available for _za8_u8, _za8_f8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_ver_za8_s8_vg4(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // Variants are also available for _za8_u8, _za8_f8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_za8_s8_vg1x2(uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za16_s16, _za16_u16,
+  // Variants are also available for _za8_u8, _za8_f8, _za16_s16, _za16_u16,
   // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_za8_s8_vg1x4(uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // Variants are also available for _za8[_u8], _za8[_f8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_hor_za8[_s8]_vg2(uint64_t tile, uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // Variants are also available for _za8[_u8], _za8[_f8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_hor_za8[_s8]_vg4(uint64_t tile, uint32_t slice, svint8x4_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // Variants are also available for _za8[_u8], _za8[_f8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_ver_za8[_s8]_vg2(uint64_t tile, uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // Variants are also available for _za8[_u8], _za8[_f8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_ver_za8[_s8]_vg4(uint64_t tile, uint32_t slice, svint8x4_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // Variants are also available for _za8[_u8], _za8[_f8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_za8[_s8]_vg1x2(uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za16[_s16], _za16[_u16],
+  // Variants are also available for _za8[_u8], za8[_f8], _za16[_s16], _za16[_u16],
   // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_za8[_s8]_vg1x4(uint32_t slice, svint8x4_t zn)
@@ -11920,13 +11918,13 @@ Multi-vector clamp to minimum/maximum vector
 Multi-vector conditionally select elements from two vectors
 
 ``` c
-  // Variants are also available for _s8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // Variants are also available for _s8_x2, _f8_x2, _u16_x2, _s16_x2, _f16_x2,
   // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
   svuint8x2_t svsel[_u8_x2](svcount_t png, svuint8x2_t zn, svuint8x2_t zm)
     __arm_streaming;
 
 
-  // Variants are also available for _s8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // Variants are also available for _s8_x4, _f8_x4, _u16_x4, _s16_x4, _f16_x4,
   // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
   svuint8x4_t svsel[_u8_x4](svcount_t png, svuint8x4_t zn, svuint8x4_t zm)
     __arm_streaming;
@@ -12076,12 +12074,12 @@ Multi-vector pack/unpack
 Multi-vector zip.
 
 ``` c
-  // Variants are also available for _u8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // Variants are also available for _u8_x2, _f8_x2, _u16_x2, _s16_x2, _f16_x2,
   // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
   svint8x2_t svzip[_s8_x2](svint8x2_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // Variants are also available for _u8_x4, _f8_x4, _u16_x4, _s16_x4, _f16_x4,
   // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
   svint8x4_t svzip[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
@@ -12091,12 +12089,12 @@ element types.
 
 
 ``` c
-  // Variants are also available for _u8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // Variants are also available for _u8_x2, _f8_x2, _u16_x2, _s16_x2, _f16_x2,
   // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
   svint8x2_t svzipq[_s8_x2](svint8x2_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // Variants are also available for _u8_x4, _f8_x4, _u16_x4, _s16_x4, _f16_x4,
   // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
   svint8x4_t svzipq[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
@@ -12106,12 +12104,12 @@ element types.
 Multi-vector unzip.
 
 ``` c
-  // Variants are also available for _u8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // Variants are also available for _u8_x2, _f8_x2, _u16_x2, _s16_x2, _f16_x2,
   // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
   svint8x2_t svuzp[_s8_x2](svint8x2_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // Variants are also available for _u8_x4, _f8_x4, _u16_x4, _s16_x4, _f16_x4,
   // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
   svint8x4_t svuzp[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
@@ -12120,12 +12118,12 @@ The `svuzpq` intrinsics operate on quad-words, but for convenience accept all
 element types.
 
 ``` c
-  // Variants are also available for _u8_x2, _u16_x2, _s16_x2, _f16_x2,
+  // Variants are also available for _u8_x2, _f8_x2, _u16_x2, _s16_x2, _f16_x2,
   // _bf16_x2, _u32_x2, _s32_x2, _f32_x2, _u64_x2, _s64_x2 and _f64_x2
   svint8x2_t svuzpq[_s8_x2](svint8x2_t zn) __arm_streaming;
 
 
-  // Variants are also available for _u8_x4, _u16_x4, _s16_x4, _f16_x4,
+  // Variants are also available for _u8_x4, _f8_x4, _u16_x4, _s16_x4, _f16_x4,
   // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
   svint8x4_t svuzpq[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
@@ -12215,20 +12213,20 @@ Multi-vector dot-product (2-way)
 Contiguous load to multi-vector
 
 ``` c
-  // Variants are also available for _s8
+  // Variants are also available for _s8, _f8
   svuint8x2_t svld1[_u8]_x2(svcount_t png, const uint8_t *rn);
 
 
-  // Variants are also available for _s8
+  // Variants are also available for _s8, _f8
   svuint8x4_t svld1[_u8]_x4(svcount_t png, const uint8_t *rn);
 
 
-  // Variants are also available for _s8
+  // Variants are also available for _s8, _f8
   svuint8x2_t svld1_vnum[_u8]_x2(svcount_t png, const uint8_t *rn,
                                  int64_t vnum);
 
 
-  // Variants are also available for _s8
+  // Variants are also available for _s8, _f8
   svuint8x4_t svld1_vnum[_u8]_x4(svcount_t png, const uint8_t *rn,
                                  int64_t vnum);
 
@@ -12292,20 +12290,20 @@ Contiguous load to multi-vector
 Contiguous non-temporal load to multi-vector
 
 ``` c
-  // Variants are also available for _s8
+  // Variants are also available for _s8, _f8
   svuint8x2_t svldnt1[_u8]_x2(svcount_t png, const uint8_t *rn);
 
 
-  // Variants are also available for _s8
+  // Variants are also available for _s8, _f8
   svuint8x4_t svldnt1[_u8]_x4(svcount_t png, const uint8_t *rn);
 
 
-  // Variants are also available for _s8
+  // Variants are also available for _s8, _f8
   svuint8x2_t svldnt1_vnum[_u8]_x2(svcount_t png, const uint8_t *rn,
                                    int64_t vnum);
 
 
-  // Variants are also available for _s8
+  // Variants are also available for _s8, _f8
   svuint8x4_t svldnt1_vnum[_u8]_x4(svcount_t png, const uint8_t *rn,
                                    int64_t vnum);
 
@@ -12429,19 +12427,19 @@ Reverse doublewords in elements.
   // All the intrinsics below are [SME]
   // Variants are available for:
   // _s8, _s16, _u16, _s32, _u32, _s64, _u64
-  // _bf16, _f16, _f32, _f64
+  // _bf16, _f16, _f32, _f64, _f8
   svuint8_t svrevd[_u8]_m(svuint8_t zd, svbool_t pg, svuint8_t zn);
 
 
   // Variants are available for:
   // _s8, _s16, _u16, _s32, _u32, _s64, _u64
-  // _bf16, _f16, _f32, _f64
+  // _bf16, _f16, _f32, _f64, _f8
   svuint8_t svrevd[_u8]_z(svbool_t pg, svuint8_t zn);
 
 
   // Variants are available for:
   // _s8, _s16, _u16, _s32, _u32, _s64, _u64
-  // _bf16, _f16, _f32, _f64
+  // _bf16, _f16, _f32, _f64, _f8
   svuint8_t svrevd[_u8]_x(svbool_t pg, svuint8_t zn);
   ```
 
@@ -12476,20 +12474,20 @@ Multi-vector saturating rounding shift right unsigned narrow and interleave
 Contiguous store of multi-vector operand
 
 ``` c
-  // Variants are also available for _s8_x2
+  // Variants are also available for _s8_x2, _f8_x2
   void svst1[_u8_x2](svcount_t png, uint8_t *rn, svuint8x2_t zt);
 
 
-  // Variants are also available for _s8_x4
+  // Variants are also available for _s8_x4, _f8_x4
   void svst1[_u8_x4](svcount_t png, uint8_t *rn, svuint8x4_t zt);
 
 
-  // Variants are also available for _s8_x2
+  // Variants are also available for _s8_x2, _f8_x2
   void svst1_vnum[_u8_x2](svcount_t png, uint8_t *rn, int64_t vnum,
                           svuint8x2_t zt);
 
 
-  // Variants are also available for _s8_x4
+  // Variants are also available for _s8_x4, _f8_x4
   void svst1_vnum[_u8_x4](svcount_t png, uint8_t *rn, int64_t vnum,
                           svuint8x4_t zt);
 
@@ -12553,20 +12551,20 @@ Contiguous store of multi-vector operand
 Contiguous non-temporal store of multi-vector operand
 
 ``` c
-  // Variants are also available for _s8_x2
+  // Variants are also available for _s8_x2, _f8_x2
   void svstnt1[_u8_x2](svcount_t png, uint8_t *rn, svuint8x2_t zt);
 
 
-  // Variants are also available for _s8_x4
+  // Variants are also available for _s8_x4, _f8_x4
   void svstnt1[_u8_x4](svcount_t png, uint8_t *rn, svuint8x4_t zt);
 
 
-  // Variants are also available for _s8_x2
+  // Variants are also available for _s8_x2, _f8_x2
   void svstnt1_vnum[_u8_x2](svcount_t png, uint8_t *rn, int64_t vnum,
                             svuint8x2_t zt);
 
 
-  // Variants are also available for _s8_x4
+  // Variants are also available for _s8_x4, _f8_x4
   void svstnt1_vnum[_u8_x4](svcount_t png, uint8_t *rn, int64_t vnum,
                             svuint8x4_t zt);
 
@@ -13371,6 +13369,7 @@ additional instructions.
 | `svfloat32_t svset_neonq[_f32](svfloat32_t vec, float32x4_t subvec)`     |
 | `svfloat64_t svset_neonq[_f64](svfloat64_t vec, float64x2_t subvec)`     |
 | `svbfloat16_t svset_neonq[_bf16](svbfloat16_t vec, bfloat16x8_t subvec)` |
+| `svfpm8_t svset_neonq[_f8](svfpm8_t vec, fpm8x16_t subvec)`              |
 
 ### `svget_neonq`
 
@@ -13391,6 +13390,7 @@ NEON vector.
 | `float32x4_t svget_neonq[_f32](svfloat32_t vec)`    |
 | `float64x2_t svget_neonq[_f64](svfloat64_t vec)`    |
 | `bfloat16x8_t svget_neonq[_bf16](svbfloat16_t vec)` |
+| `fpm8x16_t svget_neonq[_f8](svfpm8_t vec)`          |
 
 ### `svdup_neonq`
 
@@ -13411,6 +13411,7 @@ duplicated NEON vector `vec`.
 | `svfloat32_t svdup_neonq[_f32](float32x4_t vec)`    |
 | `svfloat64_t svdup_neonq[_f64](float64x2_t vec)`    |
 | `svbfloat16_t svdup_neonq[_bf16](bfloat16x8_t vec)` |
+| `svfpm8_t svdup_neonq[_f8](fpm8x16_t vec)`          |
 
 # Future directions
 
