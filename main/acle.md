@@ -12792,6 +12792,29 @@ While (resulting in predicate tuple)
   svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
 ```
 
+
+### SME2 maximum and minimum absolute value
+
+#### FAMAX
+
+Absolute maximum.
+``` c
+  // Variants are also available for:
+  //  [_f32_x2], [_f64_x2],
+  //  [_f16_x4], [_f32_x4] and [_f64_x4]
+  svfloat16x2_t svamax[_f16_x2](svfloat16x2 zd, svfloat16x2_t zm) __arm_streaming;
+```
+
+#### FAMIN
+
+Absolute minimum.
+``` c
+  // Variants are also available for:
+  //  [_f32_x2], [_f64_x2],
+  //  [_f16_x4], [_f32_x4] and [_f64_x4]
+  svfloat16x2_t svamin[_f16_x2](svfloat16x2 zd, svfloat16x2_t zm) __arm_streaming;
+```
+
 ### SME2 lookup table
 
 #### MOVT
