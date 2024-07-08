@@ -397,6 +397,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 #### Changes for next release
 
 * Fixed incorrect system register dependencies in Function Multi Versioning.
+* Added a requirement for function version declaration in Function Multi Versioning.
 
 ### References
 
@@ -2519,16 +2520,15 @@ following:
 
 * when applied to a function it becomes one of the versions. Function
   with the same name may exist with multiple versions in the same
-  translation unit.
-* Function versions may reside in different translation units.
-* Each version declaration should be visible at the translation
-  unit in which the corresponding function version resides.
+  or in different translation units.
 * One `default` version of the function is required to be provided
   in one of the translation units.
   * Implicitly, without this attribute,
   * or explicitly providing the `default` in the attribute.
 * All instances of the versions shall share the same function
   signature and calling convention.
+* All the function versions must be declared at the translation
+  unit in which the definition of the default version resides.
 
 The attribute `__attribute__((target_clones("name",...)))` expresses the
 following:
