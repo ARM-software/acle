@@ -4445,3 +4445,6 @@ vluti4q_lane_s16_x2	Table lookup|Lookup table read with 4-bit indices
 vluti4q_lane_f16_x2	Table lookup|Lookup table read with 4-bit indices
 vluti4q_lane_bf16_x2	Table lookup|Lookup table read with 4-bit indices
 vluti4q_lane_p16_x2	Table lookup|Lookup table read with 4-bit indices
+vluti4q_lane_u8	Table lookup|Lookup table read with 4-bit indices
+vluti4q_lane_s8	Table lookup|Lookup table read with 4-bit indices
+vluti4q_lane_p8	Table lookup|Lookup table read with 4-bit indices
