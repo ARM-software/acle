@@ -5576,6 +5576,27 @@ operation. This parameter is typically declared as `fpm_t fpm`.
   typedef uint64_t fpm_t;
 ```
 
+The bits of an argument to an `fpm` parameter are interpreted as follows:
+
+| **Bit range** | **Name**       | **Meaning**                                                        |
+| ------------- | -------------- | ------------------------------------------------------------------ |
+| 0-2           | `src1_format`  | first source operand format:  0 - FP8 E5M2, 1 - FP8 E4M3           |
+| 3-5           | `src2_format`  | second source operand format: 0 - FP8 E5M2, 1 - FP8 E4M3           |
+| 6-8           | `dst_format`   | destination format: 0  - FP8 E5M2, 1 - FP8 E4M3                    |
+| 9-13          |                | must be zero                                                       |
+| 14            | `overflow_mul` | overflow behaviour for multiplication instructions:                |
+|               |                |   0 - generate infinity, 1 - generate maxumum normal number        |
+| 15            | `overflow_cvt` | overflow behaviour for conversion inrtructions:                    |
+|               |                |   0 - generate infinity or NaN, 1 - generate maximum normal number |
+| 16-22         | `lscale`       | downscaling value                                                  |
+| 23            |                | must be zero                                                       |
+| 24-31         | `nscale`       | scaling value for conversions                                      |
+| 32-37         | `lscale2`      | downscaling value for conversions of the second input stream       |
+| 38-63         |                | must be zero                                                       |
+
+Bit patterns other than as described above are invalid. Passing an invalid value as an argument
+to an FP8 intrinsic results in undefined behavior.
+
 The ACLE declares several helper types and intrisics to
 facilitate construction of `fpm` arguments. The helper intrinsics do not have
 side effects and their return depends only on their parameters.
