@@ -25,7 +25,7 @@ exceptions.
 
 First, several changes were made related to the defined terms so as to
 reflect the fact that such defined terms need to align with the
-terminology in CC-BY-SA-4.0 rather than Apache-2.0 (e.g., changing
+terminology in CC-BY-SA-4.0 rather than Apache-2.0 (for example, changing
 “Work” to “Licensed Material”).
 
 Second, the defensive termination clause was changed such that the
