@@ -35,9 +35,11 @@ jobs:
 
   draftversion-check:
     runs-on: ubuntu-latest
+    if: (github.event_name == 'pull_request' && github.base_ref == 'main') ||
+        (github.event_name == 'push' && github.ref == 'refs/heads/main')
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: check correctness of draftversion fields
-      run:  python ./tools/acle_draftversion_value_check.py .
+    - name: Check correctness of draftversion fields
+      run:  echo "event name: ${{ github.event_name }}; base ref: ${{ github.base_ref }}; ref: ${{ github.ref }}"; python ./tools/acle_draftversion_value_check.py .
