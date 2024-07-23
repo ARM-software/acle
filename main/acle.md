@@ -398,6 +398,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Fixed incorrect system register dependencies in Function Multi Versioning.
 * Added a requirement for function version declaration in Function Multi Versioning.
+* Fixed some rendering issues in the online Markdown documentation and fixed
+  a misplaced anchor.
 
 ### References
 
@@ -531,18 +533,14 @@ This document uses the following terms and abbreviations.
 
 The following terms are used to specify C and C++ semantics:
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="abstract-machine"></span>
+<span id="abstract-machine"></span>
 
 **abstract machine**
 
 > The conceptual machine that the C and C++ language standards use to define
 > the behavior of programs.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="evaluated-call"></span>
+<span id="evaluated-call"></span>
 
 **evaluated call**
 
@@ -552,9 +550,7 @@ following it. --><span id="evaluated-call"></span>
 > For example, any calls that occur in the operand of a `sizeof`
 > expression are not evaluated.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="external-linkage"></span>
+<span id="external-linkage"></span>
 
 **external linkage**
 
@@ -566,9 +562,7 @@ following it. --><span id="external-linkage"></span>
 > intrinsics are functions and, if so, what linkage they have. However,
 > certain ACLE support functions are defined to have external linkage.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-2following it. --><span id="ill-formed"></span>
+<span id="ill-formed"></span>
 
 **ill-formed** programs or pieces of programs
 
@@ -586,9 +580,7 @@ anchor that can be referred via an internal hyperlink to the paragraph
 > quality-of-implementation perspective, it is better to reject
 > ill-formed programs wherever possible.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-2following it. --><span id="unprototyped-function"></span>
+<span id="unprototyped-function"></span>
 
 **unprototyped functions**
 
@@ -996,9 +988,7 @@ to be included, if the header files are available:
 * [`<arm_fp16.h>`](#arm_fp16.h)
 * [`<arm_bf16.h>`](#arm_bf16.h)
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="arm_sve.h"></span>
+<span id="arm_sve.h"></span>
 
 ### `<arm_sve.h>`
 
@@ -1567,9 +1557,7 @@ feature also implies support for the Q flag.
 ACLE 2.0 for A-profile. They are fully supported for M and R-profiles.
 This macro is defined for AArch32 only.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="32-bit-simd-instructions"></span>
+<span id="32-bit-simd-instructions"></span>
 
 ### 32-bit SIMD instructions
 
@@ -1917,6 +1905,8 @@ support Wireless MMX.
 
 ### 16-bit floating-point extensions
 
+<span id="16-bit-floating-point-data-processing-operations"></span>
+
 #### 16-bit floating-point data processing operations
 
 `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1` if the
@@ -2103,10 +2093,6 @@ is only available when `__ARM_ARCH >= 8`.
 `__ARM_FEATURE_QRDMX` is defined to 1 if SQRDMLAH and SQRDMLSH
 instructions and their associated intrinsics are available.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="16-bit-floating-point-data-processing-operations"></span>
-
 #### Dot Product extension
 
 `__ARM_FEATURE_DOTPROD`  is defined if the dot product data manipulation
@@ -2161,9 +2147,7 @@ the SVE2 bit permute (FEAT_SVE_BitPerm) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_SVE2` is
 nonzero.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="16-bit-to-64-bit-integer-widening-outer-product-intrinsics"></span>
+<span id="16-bit-to-64-bit-integer-widening-outer-product-intrinsics"></span>
 
 #### 16-bit to 64-bit integer widening outer product intrinsics
 
@@ -3656,9 +3640,7 @@ operations [[G.191]](#G.191):
 This example assumes the implementation preserves the Q flag on return
 from an inline function.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="32-bit-simd-operations"></span>
+<span id="32-bit-simd-operations"></span>
 
 ## 32-bit SIMD Operations
 
@@ -5543,9 +5525,7 @@ The intrinsics in this section provide C and C++ programmers with a
 simple programming model allowing easy access to code-generation of the
 Advanced SIMD instructions for both AArch64 and AArch32 execution states.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="neon-intrinsics-concepts"></span>
+<span id="neon-intrinsics-concepts"></span>
 
 ### Concepts
 
@@ -5655,9 +5635,7 @@ mangling purposes.
 
 `float64_t` is defined as an alias for `double`.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="16-bit-floating-point-arithmetic-scalar-intrinsics"></span>
+<span id="16-bit-floating-point-arithmetic-scalar-intrinsics"></span>
 
 ### 16-bit floating-point arithmetic scalar intrinsics
 
@@ -5682,9 +5660,7 @@ an implementation is required to ensure that including
 To only enable support for the scalar 16-bit floating-point intrinsics,
 the header `<arm_fp16.h>` may be included directly.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="16-bit-brain-floating-point-arithmetic-scalar-intrinsics"></span>
+<span id="16-bit-brain-floating-point-arithmetic-scalar-intrinsics"></span>
 
 ### 16-bit brain floating-point arithmetic scalar intrinsics
 
@@ -6251,9 +6227,7 @@ N1570 version of the C standard.
 
 > Update the entries that refer to the clauses above.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="sizeless-types-in-cxx"></span>
+<span id="sizeless-types-in-cxx"></span>
 
 ##### Sizeless types in C++
 
@@ -9063,9 +9037,7 @@ extended in the future.
 
 ### Introduction to streaming and non-streaming mode
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-mode"></span>
+<span id="streaming-mode"></span>
 
 The AArch64 architecture defines a concept called “streaming mode”,
 controlled by a processor state bit called PSTATE.SM. At any given
@@ -9082,16 +9054,12 @@ Streaming mode has three main effects on C and C++ code:
     vector length. See [Effect of streaming mode on VL](#effect-of-streaming-mode-on-vl)
     for more details.
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-intrinsic"></span>
+*   <span id="streaming-intrinsic"></span>
     Some instructions can only be executed in streaming mode, which means
     that their associated ACLE intrinsics can only be used in streaming mode.
     These intrinsics are called “streaming intrinsics”.
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="non-streaming-intrinsic"></span>
+*   <span id="non-streaming-intrinsic"></span>
     Some other instructions can only be executed in non-streaming mode,
     which means that their associated ACLE intrinsics can only be used
     in non-streaming mode. These intrinsics are called
@@ -9114,9 +9082,7 @@ instructions go. For example, when stepping through a program in a
 debugger, the processor mode might sometimes be different from the one
 implied by the source code.
 
-<!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="non-streaming-statement"></span>
+<span id="non-streaming-statement"></span>
 <span id="streaming-statement"></span>
 <span id="streaming-compatible-statement"></span>
 
@@ -9218,10 +9184,7 @@ following example situations:
     the vector length. For example, this could be useful for
     “length agnostic” SVE math routines.
 
-<!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-type"></span><span
-id="streaming-compatible-type"></span>
+<span id="streaming-type"></span><span id="streaming-compatible-type"></span>
 
 For this reason, the “streaming”, “non-streaming” and
 “streaming-compatible” classification extends to function types:
@@ -9360,9 +9323,7 @@ the size specified by the non-streaming vector length.
 The following definitions are useful when describing the consequences
 of this behavior on the vector length:
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="vl-dependent"></span>
+*   <span id="vl-dependent"></span>
     A type T is said to be “VL-dependent” if an object of type T created
     while the [abstract machine](#abstract-machine) is in streaming mode
     has a different size from an object of type T created while the abstract
@@ -9378,15 +9339,11 @@ following it. --><span id="vl-dependent"></span>
     it has been created. The “VL-dependent” classification instead
     decides when it is valid to access the object, as described below.
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-object"></span>
+*   <span id="streaming-object"></span>
     A VL-dependent object created while the abstract machine is in
     streaming mode is called a “streaming object”.
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="non-streaming-object"></span>
+*   <span id="non-streaming-object"></span>
     A VL-dependent object created while the abstract machine is in
     non-streaming mode is called a “non-streaming object”.
 
@@ -9403,9 +9360,7 @@ then the behavior is undefined:
 
 If, during the execution of a program, a function F1 calls a function F2, then:
 
-*   <!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-caller"></span>
+*   <span id="streaming-caller"></span>
     <span id="non-streaming-caller"></span>
     F1 is said to be a “streaming caller” if:
 
@@ -9416,9 +9371,7 @@ following it. --><span id="streaming-caller"></span>
 
     Otherwise, F1 is said to be a “non-streaming caller”.
 
-*   <!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-callee"></span>
+*   <span id="streaming-callee"></span>
     <span id="non-streaming-callee"></span>
     F2 is said to be a “streaming callee” if:
 
@@ -9587,9 +9540,7 @@ SME provides an area of storage called ZA, of size SVL.B×SVL.B bytes.
 It also provides a processor state bit called PSTATE.ZA to control
 whether ZA is enabled.
 
-<!-- Do not remove the following `span`, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="za-state"></span>
+<span id="za-state"></span>
 
 In C and C++ code, access to ZA is controlled at function granularity:
 a function either [uses](#uses-state) ZA or it does not. Another way to
@@ -9626,9 +9577,7 @@ lookup table called ZT0 which can be accessed through specialized instructions.
 ZT0 is architecturally linked to ZA such that changing PSTATE.ZA enables or
 disables both ZA and ZT0 simultaneously.
 
-<!-- Do not remove the following `span`, they are needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="zt-state"></span>
+<span id="zt-state"></span>
 This means that when the hardware supports SME2, a function that has
 [ZA state](#za-state) also has ZT state.
 
@@ -9687,9 +9636,7 @@ The function type attributes cannot be used with K&R-style
 
 ### SME keyword attributes related to streaming mode
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_streaming"></span>
+<span id="arm_streaming"></span>
 
 #### `__arm_streaming`
 
@@ -9715,9 +9662,7 @@ generally associated with non-streaming Advanced SIMD code.
 See [Managing streaming mode across function boundaries](#managing-streaming-mode-across-function-boundaries)
 for more information.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_streaming_compatible"></span>
+<span id="arm_streaming_compatible"></span>
 
 #### `__arm_streaming_compatible`
 
@@ -9745,9 +9690,7 @@ is generally associated only with non-streaming Advanced SIMD code.
 See [Managing streaming mode across function boundaries](#managing-streaming-mode-across-function-boundaries)
 for more information.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_locally_streaming"></span>
+<span id="arm_locally_streaming"></span>
 
 #### `__arm_locally_streaming`
 
@@ -9842,9 +9785,7 @@ specified in this section.
 > and then return the top bit of X0.  See [[AAPCS64]](#AAPCS64) for
 > more details about `__arm_sme_state`.
 
-<!-- Do not remove the following `span`, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_in_streaming_mode"></span>
+<span id="arm_in_streaming_mode"></span>
 
 **`__arm_in_streaming_mode()`**
 
@@ -9855,9 +9796,7 @@ following it. --><span id="arm_in_streaming_mode"></span>
 > However, the call is not semantically a constant expression even in
 > those cases.
 
-<!-- Do not remove the following `span`, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_za_disable"></span>
+<span id="arm_za_disable"></span>
 
 **`__arm_za_disable()`**
 
