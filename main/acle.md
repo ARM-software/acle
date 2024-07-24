@@ -408,7 +408,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added specifications for floating-point absolute minimum
   and maximum intrinsics (FEAT_FAMINMAX).
 
-* Added specifications for table lookup intrinsicss (FEAT_LUT, FEAT_SME_LUTv2).
+* Added specifications for table lookup intrinsics (FEAT_LUT, FEAT_SME_LUTv2).
 
 ### References
 
