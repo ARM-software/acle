@@ -47,8 +47,8 @@ the future. The C standard requires a unique function name for each set of
 input and return types from these functions. C Generics enable inferring the
 intended function from its parameter types, but not from the return type.
 Therefore we adopt the NEON convention of using the letter `q` in the name to
-indicate a 128-bit vector in the return type. e.g. `svget_neonq[_u16]`. If
-64-bit vectors are added later they will omit the `q`.
+indicate a 128-bit vector in the return type, for instance,
+`svget_neonq[_u16]`. If 64-bit vectors are added later they will omit the `q`.
 
 #### NEON Vector duplication across all SVE vectors
 

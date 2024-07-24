@@ -5,7 +5,7 @@ date-of-issue: 11 January 2022
 # LaTeX specific variables
 landscape: true
 copyright-text: Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: false
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -76,7 +76,7 @@ exceptions.
 
 First, several changes were made related to the defined terms so as to
 reflect the fact that such defined terms need to align with the
-terminology in CC-BY-SA-4.0 rather than Apache-2.0 (e.g., changing
+terminology in CC-BY-SA-4.0 rather than Apache-2.0 (for example, changing
 "Work" to "Licensed Material").
 
 Second, the defensive termination clause was changed such that the scope
@@ -126,6 +126,10 @@ Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.co
   Markdown (`.md`). The tool [`pandoc`](https://pandoc.org/) is now
   used to render the PDF of the specs. The PDF is rendered using the
   standard layout used in Arm specifications.
+
+### Changes for next release
+
+* Textual improvements (non-functional changes).
 
 <!---
 **** Do not remove! ****

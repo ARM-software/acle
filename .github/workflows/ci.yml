@@ -35,9 +35,10 @@ jobs:
 
   draftversion-check:
     runs-on: ubuntu-latest
+    if: github.base_ref == 'main' || github.ref == 'refs/heads/main'
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: check correctness of draftversion fields
+    - name: Check correctness of draftversion fields
       run:  python ./tools/acle_draftversion_value_check.py .

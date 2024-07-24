@@ -82,7 +82,7 @@ exceptions.
 
 First, several changes were made related to the defined terms so as to
 reflect the fact that such defined terms need to align with the
-terminology in CC-BY-SA-4.0 rather than Apache-2.0 (e.g., changing
+terminology in CC-BY-SA-4.0 rather than Apache-2.0 (for example, changing
 “Work” to “Licensed Material”).
 
 Second, the defensive termination clause was changed such that the
@@ -398,6 +398,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Fixed incorrect system register dependencies in Function Multi Versioning.
 * Added a requirement for function version declaration in Function Multi Versioning.
+* Fixed some rendering issues in the online Markdown documentation and fixed
+  a misplaced anchor.
 * Release support level of the [Custom Datapath Extension](#custom-datapath-extension).
 
 ### References
@@ -532,18 +534,14 @@ This document uses the following terms and abbreviations.
 
 The following terms are used to specify C and C++ semantics:
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="abstract-machine"></span>
+<span id="abstract-machine"></span>
 
 **abstract machine**
 
 > The conceptual machine that the C and C++ language standards use to define
 > the behavior of programs.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="evaluated-call"></span>
+<span id="evaluated-call"></span>
 
 **evaluated call**
 
@@ -553,9 +551,7 @@ following it. --><span id="evaluated-call"></span>
 > For example, any calls that occur in the operand of a `sizeof`
 > expression are not evaluated.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="external-linkage"></span>
+<span id="external-linkage"></span>
 
 **external linkage**
 
@@ -567,9 +563,7 @@ following it. --><span id="external-linkage"></span>
 > intrinsics are functions and, if so, what linkage they have. However,
 > certain ACLE support functions are defined to have external linkage.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-2following it. --><span id="ill-formed"></span>
+<span id="ill-formed"></span>
 
 **ill-formed** programs or pieces of programs
 
@@ -587,9 +581,7 @@ anchor that can be referred via an internal hyperlink to the paragraph
 > quality-of-implementation perspective, it is better to reject
 > ill-formed programs wherever possible.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-2following it. --><span id="unprototyped-function"></span>
+<span id="unprototyped-function"></span>
 
 **unprototyped functions**
 
@@ -997,9 +989,7 @@ to be included, if the header files are available:
 * [`<arm_fp16.h>`](#arm_fp16.h)
 * [`<arm_bf16.h>`](#arm_bf16.h)
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="arm_sve.h"></span>
+<span id="arm_sve.h"></span>
 
 ### `<arm_sve.h>`
 
@@ -1088,7 +1078,7 @@ are defined in [Attributes and pragmas](#attributes-and-pragmas).
 ## Implementation strategies
 
 An implementation may choose to define all the ACLE non-Neon intrinsics
-as true compiler intrinsics, i.e. built-in functions. The `<arm_acle.h>`
+as true compiler intrinsics, that is, built-in functions. The `<arm_acle.h>`
 header would then have no effect.
 
 Alternatively, `<arm_acle.h>` could define the ACLE intrinsics in terms
@@ -1133,8 +1123,8 @@ values using standard C operators.
   }
 ```
 
-Armv8 introduces floating point instructions to convert 64-bit to 16-bit
-i.e. from double to `__fp16`. They are not available in earlier
+Armv8 introduces floating point instructions to convert 64-bit to 16-bit,
+that is, from double to `__fp16`. They are not available in earlier
 architectures, therefore have to rely on emulation libraries or a
 sequence of instructions to achieve the conversion.
 
@@ -1236,7 +1226,7 @@ single-precision floating point format and the value be converted to `__bf16`
 when required using ACLE intrinsics.
 
 Armv8.2-A introduces floating point instructions to convert 32-bit to brain
-16-bit i.e. from float to `__bf16`. They are not available in earlier
+16-bit, that is, from float to `__bf16`. They are not available in earlier
 architectures, therefore have to rely on emulation libraries or a
 sequence of instructions to achieve the conversion.
 
@@ -1568,9 +1558,7 @@ feature also implies support for the Q flag.
 ACLE 2.0 for A-profile. They are fully supported for M and R-profiles.
 This macro is defined for AArch32 only.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="32-bit-simd-instructions"></span>
+<span id="32-bit-simd-instructions"></span>
 
 ### 32-bit SIMD instructions
 
@@ -1918,6 +1906,8 @@ support Wireless MMX.
 
 ### 16-bit floating-point extensions
 
+<span id="16-bit-floating-point-data-processing-operations"></span>
+
 #### 16-bit floating-point data processing operations
 
 `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1` if the
@@ -2055,7 +2045,7 @@ ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 #### Fused multiply-accumulate (FMA)
 
 `__ARM_FEATURE_FMA` is defined to 1 if the hardware floating-point
-architecture supports fused floating-point multiply-accumulate, i.e.
+architecture supports fused floating-point multiply-accumulate, that is,
 without intermediate rounding. Note that C implementations are
 encouraged [[C99]](#C99) (7.12) to ensure that <math.h> defines `FP_FAST_FMAF` or
 `FP_FAST_FMA`, which can be tested by portable C code. A C
@@ -2103,10 +2093,6 @@ is only available when `__ARM_ARCH >= 8`.
 
 `__ARM_FEATURE_QRDMX` is defined to 1 if SQRDMLAH and SQRDMLSH
 instructions and their associated intrinsics are available.
-
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="16-bit-floating-point-data-processing-operations"></span>
 
 #### Dot Product extension
 
@@ -2162,9 +2148,7 @@ the SVE2 bit permute (FEAT_SVE_BitPerm) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_SVE2` is
 nonzero.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="16-bit-to-64-bit-integer-widening-outer-product-intrinsics"></span>
+<span id="16-bit-to-64-bit-integer-widening-outer-product-intrinsics"></span>
 
 #### 16-bit to 64-bit integer widening outer product intrinsics
 
@@ -2456,7 +2440,7 @@ passed, so no PCS attributes are supported.
 
 The pcs attribute applies to functions and function types.
 Implementations are allowed to treat the procedure call specification as
-part of the type, i.e. as a language linkage in the sense of [C++ \#1].
+part of the type, that is, as a language linkage in the sense of [C++ \#1].
 
 ## Target selection
 
@@ -2545,7 +2529,8 @@ following:
 
 [^fmv-note-ignore]: The intention is to support the usecase of newer code if
   compiled with an older compiler. The compiler may provide diagnostic messages
-  and could block the compilation (e.g. if the `-pedantic` flag is present).
+  and could block the compilation (for instance, if the `-pedantic` flag is
+  present).
 
 `__HAVE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the
 versioning mechanism described in this section is supported by the
@@ -2757,8 +2742,8 @@ restrictions on their alignment demands.
 ### Alignment of stack objects
 
 It must be possible to align any local object up to the stack alignment
-as specified in the AAPCS for AArch32 (i.e. 8 bytes) or as specified in
-AAPCS64 for AArch64 (i.e. 16 bytes) this being also the maximal
+as specified in the AAPCS for AArch32 (that is, 8 bytes) or as specified in
+AAPCS64 for AArch64 (that is, 16 bytes) this being also the maximal
 alignment of any native type.
 
 An implementation may, but is not required to, permit the allocation of
@@ -2803,7 +2788,7 @@ rather than `R1/R2`.
 ### Alignment of C heap storage
 
 The standard C allocation functions [[C99]](#C99) (7.20.3), such as malloc(),
-return storage aligned to the normal maximal alignment, i.e. the largest
+return storage aligned to the normal maximal alignment, that is, the largest
 alignment of any (standard) type.
 
 Implementations may, but are not required to, provide a function to
@@ -2923,7 +2908,7 @@ of their arguments.
 Memory barriers ensure specific ordering properties between memory
 accesses. For more details on memory barriers, see [ARMARM] (A3.8.3).
 The intrinsics in this section are available for all targets.
-They may be no-ops (i.e. generate no code, but possibly act as a code
+They may be no-ops (that is, generate no code, but possibly act as a code
 motion barrier in compilers) on targets where the relevant instructions
 do not exist, but only if the property they guarantee would have held
 anyway. On targets where the relevant instructions exist but are
@@ -3050,7 +3035,7 @@ it on a queue.
 ## Hints
 
 The intrinsics in this section are available for all targets. They may
-be no-ops (i.e. generate no code, but possibly act as a code motion
+be no-ops (that is, generate no code, but possibly act as a code motion
 barrier in compilers) on targets where the relevant instructions do not
 exist. On targets where the relevant instructions exist but are
 implemented as no-ops, these intrinsics generate the instructions.
@@ -3169,10 +3154,10 @@ load-exclusive/store-conditional.)
 
 Intrinsics are provided to prefetch data or instructions. The size of
 the data or function is ignored. Note that the intrinsics may be
-implemented as no-ops (i.e. not generate a prefetch instruction, if none
+implemented as no-ops (that is, not generate a prefetch instruction, if none
 is available). Also, even where the architecture does provide a prefetch
 instruction, a particular implementation may implement the instruction
-as a no-op (i.e. the instruction has no effect).
+as a no-op (that is, the instruction has no effect).
 
 ### Data prefetch
 
@@ -3211,8 +3196,8 @@ values.
 
 | **Retention Policy** | **Value** | **Summary**                                                                |
 | -------------------- | --------- | -------------------------------------------------------------------------- |
-| KEEP                 | 0         | Temporal fetch of the addressed location (i.e. allocate in cache normally) |
-| STRM                 | 1         | Streaming fetch of the addressed location (i.e. memory used only once)     |
+| KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
+| STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
 
 ### Instruction prefetch
 
@@ -3392,7 +3377,7 @@ These intrinsics are available on all targets.
 ```
 
 Returns the number of leading zero bits in `x`. When `x` is zero it
-returns the argument width, i.e. 32 or 64. These intrinsics are available
+returns the argument width, that is, 32 or 64. These intrinsics are available
 on all targets. On targets without the CLZ instruction it should be
 implemented as an instruction sequence or a call to such a sequence. A
 suitable sequence can be found in [Warren](#Warren) (fig. 5-7). Hardware support
@@ -3405,7 +3390,7 @@ for these intrinsics is indicated by `__ARM_FEATURE_CLZ`.
 ```
 
 Returns the number of leading sign bits in `x`. When `x` is zero it
-returns the argument width - 1, i.e. 31 or 63. These intrinsics are
+returns the argument width - 1, that is, 31 or 63. These intrinsics are
 available on all targets. On targets without the CLZ instruction it
 should be implemented as an instruction sequence or a call to such a
 sequence. Fast hardware implementation (using a CLS instruction or a short code
@@ -3492,7 +3477,7 @@ available on non-5E targets. These multiplies cannot overflow.
   int32_t __smulbb(int32_t, int32_t);
 ```
 
-Multiplies two 16-bit signed integers, i.e. the low halfwords of the
+Multiplies two 16-bit signed integers, that is, the low halfwords of the
 operands.
 
 ``` c
@@ -3656,15 +3641,13 @@ operations [[G.191]](#G.191):
 This example assumes the implementation preserves the Q flag on return
 from an inline function.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="32-bit-simd-operations"></span>
+<span id="32-bit-simd-operations"></span>
 
 ## 32-bit SIMD Operations
 
 ### Availability
 
-Armv6 introduced instructions to perform 32-bit SIMD operations (i.e.
+Armv6 introduced instructions to perform 32-bit SIMD operations (that is,
 two 16-bit operations or four 8-bit operations) on the Arm
 general-purpose registers. These instructions are not related to the
 much more versatile Advanced SIMD (Neon) extension, whose support is
@@ -3715,7 +3698,7 @@ flag if saturation occurs in either lane.
 
 Some instructions, such as `__smlad`, set the Q flag if overflow occurs
 on an accumulation, even though the accumulation is not a saturating
-operation (i.e. does not clip its result to the limits of the type).
+operation (that is, does not clip its result to the limits of the type).
 
 ### Parallel 16-bit saturation
 
@@ -4624,7 +4607,7 @@ to the tag memory thereby setting the allocation tag for the 16-byte
 granule of memory.
 The argument is a pointer `tag_address` containing  a logical tag and an address.
 The address must be 16-byte aligned.
-The type of the pointer is ignored (i.e. allocation tag is set only for a
+The type of the pointer is ignored (that is, allocation tag is set only for a
 single granule even if the pointer points  to a type that is greater than 16 bytes).
 These intrinsics generate an unchecked access to memory.
 
@@ -5540,9 +5523,7 @@ The intrinsics in this section provide C and C++ programmers with a
 simple programming model allowing easy access to code-generation of the
 Advanced SIMD instructions for both AArch64 and AArch32 execution states.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="neon-intrinsics-concepts"></span>
+<span id="neon-intrinsics-concepts"></span>
 
 ### Concepts
 
@@ -5600,10 +5581,10 @@ or whether `uint64x1_t` is the same type as `uint64_t`, or whether
 `poly64x1_t` is the same as `poly64_t` for example for C++ overloading
 purposes.
 
-float16 types are only available when the `__fp16` type is defined, i.e.
+float16 types are only available when the `__fp16` type is defined, that is,
 when supported by the hardware.
 
-bfloat types are only available when the `__bf16` type is defined, i.e.
+bfloat types are only available when the `__bf16` type is defined, that is,
 when supported by the hardware. The bfloat types are all opaque types.  That is
 to say they can only be used by intrinsics.
 
@@ -5652,9 +5633,7 @@ mangling purposes.
 
 `float64_t` is defined as an alias for `double`.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="16-bit-floating-point-arithmetic-scalar-intrinsics"></span>
+<span id="16-bit-floating-point-arithmetic-scalar-intrinsics"></span>
 
 ### 16-bit floating-point arithmetic scalar intrinsics
 
@@ -5679,9 +5658,7 @@ an implementation is required to ensure that including
 To only enable support for the scalar 16-bit floating-point intrinsics,
 the header `<arm_fp16.h>` may be included directly.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --> <span id="16-bit-brain-floating-point-arithmetic-scalar-intrinsics"></span>
+<span id="16-bit-brain-floating-point-arithmetic-scalar-intrinsics"></span>
 
 ### 16-bit brain floating-point arithmetic scalar intrinsics
 
@@ -5717,7 +5694,7 @@ underlying type for them is `uint16_t`.
 ### Operations on data types
 
 ACLE does not define implicit conversion between different data types.
-E.g.
+For example:
 
 ``` c
   int32x4_t x;
@@ -5735,7 +5712,7 @@ intrinsics to convert between integer and floating types; for example:
   float32x4_t z = vcvt_f32_s32(x);
 ```
 
-ACLE does not define static construction of vector types. E.g.
+ACLE does not define static construction of vector types. For instance:
 
 ``` c
   int32x4_t x = { 1, 2, 3, 4 };
@@ -6248,9 +6225,7 @@ N1570 version of the C standard.
 
 > Update the entries that refer to the clauses above.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="sizeless-types-in-cxx"></span>
+<span id="sizeless-types-in-cxx"></span>
 
 ##### Sizeless types in C++
 
@@ -7168,8 +7143,8 @@ where the individual parts are as follows:
 > *   Conversely, extending loads always specify an explicit extension
 >     type, since this information is not available in the suffixes.
 >     A sign-extending load has the same base as the architectural
->     instruction (e.g. `ld1sb`) while a zero-extending load replaces
->     the `s` with a `u` (e.g. `ld1ub` for a zero-extending `LD1B`).
+>     instruction (for instance, `ld1sb`) while a zero-extending load replaces
+>     the `s` with a `u` (for instance, `ld1ub` for a zero-extending `LD1B`).
 >     Thus [`svld1ub_u32`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1ub_u32)
 >     zero-extends 8-bit data to a vector of
 >     `uint32_t`s while [`svld1sb_u32`](https://developer.arm.com/architectures/instruction-sets/intrinsics/#q=svld1sb_u32)
@@ -8804,7 +8779,7 @@ tuple types `svboolx2_t` and `svboolx4_t`.
 
 These are opaque tuple types that can be accessed using the SVE intrinsics
 `svsetN`, `svgetN` and `svcreateN`. `svundef2` and `svundef4` are also extended
-to work with `svboolx2_t` and `svboolx4_t`.  e.g.
+to work with `svboolx2_t` and `svboolx4_t`.  For example:
 
 ``` c
     svbool_t svget2[_b](svboolx2_t tuple, uint64_t imm_index);
@@ -9060,9 +9035,7 @@ extended in the future.
 
 ### Introduction to streaming and non-streaming mode
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-mode"></span>
+<span id="streaming-mode"></span>
 
 The AArch64 architecture defines a concept called “streaming mode”,
 controlled by a processor state bit called PSTATE.SM. At any given
@@ -9079,16 +9052,12 @@ Streaming mode has three main effects on C and C++ code:
     vector length. See [Effect of streaming mode on VL](#effect-of-streaming-mode-on-vl)
     for more details.
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-intrinsic"></span>
+*   <span id="streaming-intrinsic"></span>
     Some instructions can only be executed in streaming mode, which means
     that their associated ACLE intrinsics can only be used in streaming mode.
     These intrinsics are called “streaming intrinsics”.
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="non-streaming-intrinsic"></span>
+*   <span id="non-streaming-intrinsic"></span>
     Some other instructions can only be executed in non-streaming mode,
     which means that their associated ACLE intrinsics can only be used
     in non-streaming mode. These intrinsics are called
@@ -9111,9 +9080,7 @@ instructions go. For example, when stepping through a program in a
 debugger, the processor mode might sometimes be different from the one
 implied by the source code.
 
-<!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="non-streaming-statement"></span>
+<span id="non-streaming-statement"></span>
 <span id="streaming-statement"></span>
 <span id="streaming-compatible-statement"></span>
 
@@ -9215,10 +9182,7 @@ following example situations:
     the vector length. For example, this could be useful for
     “length agnostic” SVE math routines.
 
-<!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-type"></span><span
-id="streaming-compatible-type"></span>
+<span id="streaming-type"></span><span id="streaming-compatible-type"></span>
 
 For this reason, the “streaming”, “non-streaming” and
 “streaming-compatible” classification extends to function types:
@@ -9357,9 +9321,7 @@ the size specified by the non-streaming vector length.
 The following definitions are useful when describing the consequences
 of this behavior on the vector length:
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="vl-dependent"></span>
+*   <span id="vl-dependent"></span>
     A type T is said to be “VL-dependent” if an object of type T created
     while the [abstract machine](#abstract-machine) is in streaming mode
     has a different size from an object of type T created while the abstract
@@ -9375,15 +9337,11 @@ following it. --><span id="vl-dependent"></span>
     it has been created. The “VL-dependent” classification instead
     decides when it is valid to access the object, as described below.
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-object"></span>
+*   <span id="streaming-object"></span>
     A VL-dependent object created while the abstract machine is in
     streaming mode is called a “streaming object”.
 
-*   <!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="non-streaming-object"></span>
+*   <span id="non-streaming-object"></span>
     A VL-dependent object created while the abstract machine is in
     non-streaming mode is called a “non-streaming object”.
 
@@ -9400,9 +9358,7 @@ then the behavior is undefined:
 
 If, during the execution of a program, a function F1 calls a function F2, then:
 
-*   <!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-caller"></span>
+*   <span id="streaming-caller"></span>
     <span id="non-streaming-caller"></span>
     F1 is said to be a “streaming caller” if:
 
@@ -9413,9 +9369,7 @@ following it. --><span id="streaming-caller"></span>
 
     Otherwise, F1 is said to be a “non-streaming caller”.
 
-*   <!-- Do not remove the following `span`s, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="streaming-callee"></span>
+*   <span id="streaming-callee"></span>
     <span id="non-streaming-callee"></span>
     F2 is said to be a “streaming callee” if:
 
@@ -9584,9 +9538,7 @@ SME provides an area of storage called ZA, of size SVL.B×SVL.B bytes.
 It also provides a processor state bit called PSTATE.ZA to control
 whether ZA is enabled.
 
-<!-- Do not remove the following `span`, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="za-state"></span>
+<span id="za-state"></span>
 
 In C and C++ code, access to ZA is controlled at function granularity:
 a function either [uses](#uses-state) ZA or it does not. Another way to
@@ -9623,9 +9575,7 @@ lookup table called ZT0 which can be accessed through specialized instructions.
 ZT0 is architecturally linked to ZA such that changing PSTATE.ZA enables or
 disables both ZA and ZT0 simultaneously.
 
-<!-- Do not remove the following `span`, they are needed to create an
-anchor that can be referred via an internal hyperlink to the section
-following it. --><span id="zt-state"></span>
+<span id="zt-state"></span>
 This means that when the hardware supports SME2, a function that has
 [ZA state](#za-state) also has ZT state.
 
@@ -9684,9 +9634,7 @@ The function type attributes cannot be used with K&R-style
 
 ### SME keyword attributes related to streaming mode
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_streaming"></span>
+<span id="arm_streaming"></span>
 
 #### `__arm_streaming`
 
@@ -9712,9 +9660,7 @@ generally associated with non-streaming Advanced SIMD code.
 See [Managing streaming mode across function boundaries](#managing-streaming-mode-across-function-boundaries)
 for more information.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_streaming_compatible"></span>
+<span id="arm_streaming_compatible"></span>
 
 #### `__arm_streaming_compatible`
 
@@ -9742,9 +9688,7 @@ is generally associated only with non-streaming Advanced SIMD code.
 See [Managing streaming mode across function boundaries](#managing-streaming-mode-across-function-boundaries)
 for more information.
 
-<!-- Do not remove the following `span`, it is needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_locally_streaming"></span>
+<span id="arm_locally_streaming"></span>
 
 #### `__arm_locally_streaming`
 
@@ -9839,9 +9783,7 @@ specified in this section.
 > and then return the top bit of X0.  See [[AAPCS64]](#AAPCS64) for
 > more details about `__arm_sme_state`.
 
-<!-- Do not remove the following `span`, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_in_streaming_mode"></span>
+<span id="arm_in_streaming_mode"></span>
 
 **`__arm_in_streaming_mode()`**
 
@@ -9852,9 +9794,7 @@ following it. --><span id="arm_in_streaming_mode"></span>
 > However, the call is not semantically a constant expression even in
 > those cases.
 
-<!-- Do not remove the following `span`, they are needed to create an
-anchor that can be referred via an internal hyperlink to the paragraph
-following it. --><span id="arm_za_disable"></span>
+<span id="arm_za_disable"></span>
 
 **`__arm_za_disable()`**
 
@@ -12560,7 +12500,7 @@ an alias for `__fp16` and `mve_pred16_t` is defined as an alias for
 ## Operations on data types
 
 ACLE does not define implicit conversion between different data types.
-E.g.
+For example:
 
 ``` c
   int32x4_t x;
@@ -12578,7 +12518,7 @@ intrinsics to convert between integer and floating types; for example:
   float32x4_t z = vcvtq_f32_s32(x);
 ```
 
-ACLE does not define static construction of vector types. E.g.
+ACLE does not define static construction of vector types. For example:
 
 ``` c
   int32x4_t x = { 1, 2, 3, 4 };
@@ -12934,7 +12874,7 @@ As a type attribute this would allow things like
 
 This would indicate that the result registers should be used as if the
 type had been passed as the first argument. The implementation should
-not complain if the attribute is applied inappropriately (i.e. where
+not complain if the attribute is applied inappropriately (that is, where
 insufficient registers are available) it might be a template instance.
 
 ### Custom calling conventions
@@ -12984,7 +12924,7 @@ standards.
 ### Memory access with non-temporal hints
 
 Supporting memory access with cacheability hints through language
-extensions is being investigated. Eg.
+extensions is being investigated. For example:
 
 ``` c
   int *__attribute__((nontemporal)) p;
