@@ -400,6 +400,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a requirement for function version declaration in Function Multi Versioning.
 * Fixed some rendering issues in the online Markdown documentation and fixed
   a misplaced anchor.
+* Added [`__arm_agnostic`](#arm_agnostic) keyword attribute
 
 ### References
 
@@ -832,6 +833,7 @@ predefine the associated macro to a nonzero value.
 | [`__arm_new`](#arm_new)                                     | function declaration  | Argument-dependent                |
 | [`__arm_out`](#ways-of-sharing-state)                       | function type         | Argument-dependent                |
 | [`__arm_preserves`](#ways-of-sharing-state)                 | function type         | Argument-dependent                |
+| [`__arm_agnostic`](#arm_agnostic)                           | function type         | `__ARM_FEATURE_SME`               |
 | [`__arm_streaming`](#arm_streaming)                         | function type         | `__ARM_FEATURE_SME`               |
 | [`__arm_streaming_compatible`](#arm_streaming_compatible)   | function type         | `__ARM_FEATURE_SME`               |
 
@@ -4835,6 +4837,47 @@ if such a restoration is necessary. For example:
      za_callee();
    }
 ```
+
+## `__arm_agnostic`
+
+A function with the `__arm_agnostic` [keyword attribute](#keyword-attributes) must
+preserve the architectural state that is specified by its arguments when such
+state exists at runtime. The function is otherwise unconcerned with the contents
+of this state.
+
+The `__arm_agnostic` [keyword attribute](#keyword-attributes) applies to
+**function types** and accepts the following arguments:
+
+```"sme_za_state"```
+
+*   If the function is defined and PSTATE.ZA is available, the definition must
+    preserve all architectural state enabled by PSTATE.ZA.
+
+    It is the compiler's responsibility to ensure that this state is preserved.
+
+    The compiled function must be forward-compatible and should not make any
+    assumptions on what state is enabled by PSTATE.ZA, which could be done by
+    relying on ABI routines available on the platform for the allocation of
+    a buffer and the saving and restoring of state.
+
+*   If PSTATE.ZA is available, then the [abstract machine](#abstract-machine)
+    ensures that on return from the function, the value of PSTATE.ZA is the same
+    as it was on entry to the function.
+
+*   If the function forms part of the object code's ABI, that object code
+    function has a “ZA-compatible interface”; see [[AAPCS64]](#AAPCS64)
+    for more details.
+
+*   It is not valid for a function declaration with `__arm_agnostic("sme_za_state")`
+    to be combined with any of the following [keyword attributes](#keyword-attributes):
+    *  `__arm_new(<state>)`
+    *  `__arm_in(<state>)`
+    *  `__arm_out(<state>)`
+    *  `__arm_inout(<state>)`
+    *  `__arm_preserves(<state>)`
+
+    when `<state>` describes state that is enabled by PSTATE.ZA.
+
 
 ## Mapping to the Procedure Call Standard
 
