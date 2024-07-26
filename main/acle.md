@@ -9151,6 +9151,11 @@ Interleave elements from halves of each pair of quadword vector segments.
 
 ### SVE2 maximum and minimum absolute value
 
+The intrinsics in this section are defined by the header file
+[`<arm_sve.h>`](#arm_sve.h) when either `__ARM_FEATURE_SVE2` or
+`__ARM_FEATURE_SME2` is defined to 1, and `__ARM_FEATURE_FAMINMAX`
+is defined to 1.
+
 #### FAMAX
 
 Floating-point absolute maximum (predicated).
@@ -9180,6 +9185,11 @@ Floating-point absolute minimum (predicated).
 ```
 
 ### SVE2 lookup table
+
+The intrinsics in this section are defined by the header file
+[`<arm_sve.h>`](#arm_sve.h) when either `__ARM_FEATURE_SVE2` or
+`__ARM_FEATURE_SME2` is defined to 1, and `__ARM_FEATURE_LUT`
+is defined to 1.
 
 #### LUTI2
 
@@ -12798,6 +12808,10 @@ While (resulting in predicate tuple)
 
 ### SME2 maximum and minimum absolute value
 
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` is defined to 1
+and `__ARM_FEATURE_FAMINMAX` is defined to 1.
+
 #### FAMAX
 
 Absolute maximum.
@@ -12819,6 +12833,9 @@ Absolute minimum.
 ```
 
 ### SME2 lookup table
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME_LUTv2` is defined to 1.
 
 #### MOVT
 
