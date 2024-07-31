@@ -3772,24 +3772,28 @@ poly16x8_t vluti2q_lane_p16(poly16x8_t vn, uint8x8_t vm, __builtin_constant_p(in
 poly16x8_t vluti2q_laneq_p16(poly16x8_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn -> Vn.8H;vm -> Vm;0 <= index <= 7	LUTI2 Vd.8H, {Vn.8H}, Vm[index]	Vd.8H -> result	A64
 
 uint8x16_t vluti4q_lane_u8(uint8x16_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn -> Vn.16B;vm -> Vm;0 <= index <= 0	LUTI4 Vd.16B, {Vn.16B}, Vm[index]	Vd.16B -> result	A64
-int8x16_t vluti4q_lane_s8(int8x16_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn -> Vn.16B;vm -> Vm;0 <= index <= 0	LUTI4 Vd.16B, {Vn.16B}, Vm[index]	Vd.16B -> result	A64
-poly8x16_t vluti4q_lane_p8(poly8x16_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn -> Vn.16B;vm -> Vm;0 <= index <= 0	LUTI4 Vd.16B, {Vn.16B}, Vm[index]	Vd.16B -> result	A64
-
 uint8x16_t vluti4q_laneq_u8(uint8x16_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn -> Vn.16B;vm -> Vm;0 <= index <= 1	LUTI4 Vd.16B, {Vn.16B}, Vm[index]	Vd.16B -> result	A64
+
+int8x16_t vluti4q_lane_s8(int8x16_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn -> Vn.16B;vm -> Vm;0 <= index <= 0	LUTI4 Vd.16B, {Vn.16B}, Vm[index]	Vd.16B -> result	A64
 int8x16_t vluti4q_laneq_s8(int8x16_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn -> Vn.16B;vm -> Vm;0 <= index <= 1	LUTI4 Vd.16B, {Vn.16B}, Vm[index]	Vd.16B -> result	A64
+
+poly8x16_t vluti4q_lane_p8(poly8x16_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn -> Vn.16B;vm -> Vm;0 <= index <= 0	LUTI4 Vd.16B, {Vn.16B}, Vm[index]	Vd.16B -> result	A64
 poly8x16_t vluti4q_laneq_p8(poly8x16_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn -> Vn.16B;vm -> Vm;0 <= index <= 1	LUTI4 Vd.16B, {Vn.16B}, Vm[index]	Vd.16B -> result	A64
 
-uint16x8_t vluti4q_laneq_u16_x2(uint16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
-int16x8_t vluti4q_laneq_s16_x2(int16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
-float16x8_t vluti4q_laneq_f16_x2(float16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
-bfloat16x8_t vluti4q_laneq_bf16_x2(bfloat16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
-poly16x8_t vluti4q_laneq_p16_x2(poly16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
-
 uint16x8_t vluti4q_lane_u16_x2(uint16x8x2_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 1	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+uint16x8_t vluti4q_laneq_u16_x2(uint16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+
 int16x8_t vluti4q_lane_s16_x2(int16x8x2_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 1	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+int16x8_t vluti4q_laneq_s16_x2(int16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+
 float16x8_t vluti4q_lane_f16_x2(float16x8x2_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 1	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+float16x8_t vluti4q_laneq_f16_x2(float16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+
 bfloat16x8_t vluti4q_lane_bf16_x2(bfloat16x8x2_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 1	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+bfloat16x8_t vluti4q_laneq_bf16_x2(bfloat16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+
 poly16x8_t vluti4q_lane_p16_x2(poly16x8x2_t vn, uint8x8_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 1	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
+poly16x8_t vluti4q_laneq_p16_x2(poly16x8x2_t vn, uint8x16_t vm, __builtin_constant_p(index))	vn.val[0] -> Vn1.8H;vn.val[1] -> Vn2.8H;vm -> Vm;0 <= index <= 3	LUTI4 Vd.8H, {Vn1.8H, Vn2.8H}, Vm[index]	Vd.8H -> result	A64
 
 float16x4_t vamax_f16(float16x4_t vn, float16x4_t vm)	vn -> Vn.4H;vm -> Vm.4H	FAMAX Vd.4H, Vn.4H, Vm.4H	Vd.4H -> result	A64
 float16x8_t vamaxq_f16(float16x8_t vn, float16x8_t vm)	vn -> Vn.8H;vm -> Vm.8H	FAMAX Vd.8H, Vn.8H, Vm.8H	Vd.8H -> result	A64
