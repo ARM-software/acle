@@ -2050,16 +2050,6 @@ support for the SVE2 SM4 (FEAT_SVE_SM4) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 `__ARM_FEATURE_SVE2` are both nonzero.
 
-### Lookup table extensions
-
-`__ARM_FEATURE_LUT` is defined to 1 if there is hardware support for
-lookup table instructions with 2-bit and 4-bit indices (FEAT_LUT)
-and if the associated ACLE intrinsics are available.
-
-`__ARM_FEATURE_SME_LUTv2` is defined to 1 if there is hardware support for
-lookup table instructions with 4-bit indices and 8-bit elements (FEAT_SME_LUTv2)
-and if the associated ACLE intrinsics are available.
-
 ### Modal 8-bit floating point extensions
 
 `__ARM_FEATURE_FP8` is defined to 1 if there is hardware support for FP8 conversion
@@ -2077,7 +2067,7 @@ and if the associated ACLE intrinsics are available.
 FP8 4-way dot product to single-precision instructions (FEAT_FP8DOT4)
 and if the associated ACLE intrinsics are available.
 
-`__ARM_FEATURE_SSVE_FP8DOT`4 is defined to 1 if there is hardware support for
+`__ARM_FEATURE_SSVE_FP8DOT4` is defined to 1 if there is hardware support for
 SVE2 FP8 4-way dot product to single-precision instructions
 in Streaming SVE mode (FEAT_SSVE_FP8DOT4) and if the associated ACLE
 intrinsics are available.
@@ -2092,13 +2082,15 @@ SVE2 FP8 multiply-accumulate to half-precision and single-precision
 instructions in Streaming SVE mode (FEAT_SSVE_FP8FMA) and if the associated
 ACLE intrinsics are available.
 
-`__ARM_FEATURE_SME_F8F32` is defined to 1 if there is hardware support for
-SME2 FP8 dot product, multiply-accumulate, and outer product to single precision
-instructions and if the associated ACLE intrinsics are available.
+`__ARM_FEATURE_SME_F8F32` is defined to 1 if there is hardware support for SME2
+FP8 dot product, multiply-accumulate, and outer product to single-precision
+instructions (FEAT_SME_F8F32) and if the associated ACLE intrinsics are
+available.
 
-`__ARM_FEATURE_SME_F8F16` is defined to 1 if there is hardware support for
-SME2 FP8 dot product, multiply-accumulate, and outer product to half precision
-instructions and if the associated ACLE intrinsics are available.
+`__ARM_FEATURE_SME_F8F16` is defined to 1 if there is hardware support for SME2
+FP8 dot product, multiply-accumulate, and outer product to half-precision
+instructions (FEAT_SME_F8F16) and if the associated ACLE intrinsics are
+available.
 
 ### Other floating-point and vector extensions
 
@@ -5569,7 +5561,7 @@ The specification for FP8 intrinsics is in
 [**Alpha** state](#current-status-and-anticipated-changes).
 
 Each 8-bit floating point intrinsic call has a parameter to define the format
-and scale of the operands, and the overflow behaviour, as applicable to each
+and scale of the operands, and the overflow behavior, as applicable to each
 operation. This parameter is typically declared as `fpm_t fpm`.
 
 ```c
@@ -5584,9 +5576,9 @@ The bits of an argument to an `fpm` parameter are interpreted as follows:
 | 3-5           | `src2_format`  | second source operand format: 0 - FP8 E5M2, 1 - FP8 E4M3           |
 | 6-8           | `dst_format`   | destination format: 0  - FP8 E5M2, 1 - FP8 E4M3                    |
 | 9-13          |                | must be zero                                                       |
-| 14            | `overflow_mul` | overflow behaviour for multiplication instructions:                |
+| 14            | `overflow_mul` | overflow behavior for multiplication instructions:                 |
 |               |                |   0 - generate infinity, 1 - generate maxumum normal number        |
-| 15            | `overflow_cvt` | overflow behaviour for conversion inrtructions:                    |
+| 15            | `overflow_cvt` | overflow behavior for conversion inrtructions:                     |
 |               |                |   0 - generate infinity or NaN, 1 - generate maximum normal number |
 | 16-22         | `lscale`       | downscaling value                                                  |
 | 23            |                | must be zero                                                       |
@@ -5605,8 +5597,8 @@ The helper types and intrinsics are available after including any of
 [`<arm_neon.h>`](#arm_neon.h), [`<arm_sve.h>`](#arm_sve.h), or
 [`<arm_sme.h>`](#arm_sme.h).
 
-Note: where a helper intrinsic description refers to "updating the FP8 mode"
-it means the intrinsic only modifies the bits of input `fpm_t` parameter that
+Note: where a helper intrinsic description refers to "updating the FP8 mode" it
+means the intrinsic only modifies the bits of the input `fpm_t` parameter that
 correspond to the new mode and returns the resulting value. No side effects
 (such as changing processor state) occur.
 
@@ -5632,7 +5624,7 @@ enum __ARM_FPM_OVERFLOW {
 Initializes a value, suitable for use as an `fpm` argument ("FP8 mode").
 The value corresponds to a mode of operation where:
   * the sources and destination operands are interpreted as E5M2
-  * overflow behaviour is to yield infinity or NaN (depending on operation)
+  * overflow behavior is to yield infinity or NaN (depending on operation)
   * no scaling occurs
 
 ```c
@@ -5648,14 +5640,14 @@ respectively.
 Updates the FP8 mode to set the destination format.
 
 ```c
-  fpm_t __arm_set_fpm_overflow_cvt(fpm_t fpm, enum __ARM_FPM_OVERFLOW behaviour);
+  fpm_t __arm_set_fpm_overflow_cvt(fpm_t fpm, enum __ARM_FPM_OVERFLOW behavior);
 ```
-Updates the FP8 mode to set the overflow behaviour for conversion operations.
+Updates the FP8 mode to set the overflow behavior for conversion operations.
 
 ``` c
-  fpm_t __arm_set_fpm_overflow_mul(fpm_t fpm, enum __ARM_FPM_OVERFLOW behaviour);
+  fpm_t __arm_set_fpm_overflow_mul(fpm_t fpm, enum __ARM_FPM_OVERFLOW behavior);
 ```
-Updates the FP8 mode to set the overflow behaviour for multiplicative
+Updates the FP8 mode to set the overflow behavior for multiplicative
 operations.
 
 ``` c
@@ -6601,7 +6593,6 @@ single vectors:
 | `svint32_t`          | `svuint32_t`         | `svfloat32_t`        |                      |
 | `svint64_t`          | `svuint64_t`         | `svfloat64_t`        |                      |
 
-
 Each type `svBASE_t` is an opaque length-agnostic vector of `BASE_t`
 elements. The types in each row have the same number of elements and
 have twice as many elements as the types in the row below them.
@@ -6622,7 +6613,7 @@ vectors, as follows:
 | `svint32x2_t`        | `svuint32x2_t`       | `svfloat32x2_t`       |                      |
 | `svint64x2_t`        | `svuint64x2_t`       | `svfloat64x2_t`       |                      |
 |                      |                      |                       |                      |
-| `svint8x3_t`         | `svuint8x3_t`        |                       |                      |
+| `svint8x3_t`         | `svuint8x3_t`        |                       | `svmfloat8x3_t`      |
 | `svint16x3_t`        | `svuint16x3_t`       | `svfloat16x3_t`       | `svbfloat16x3_t`     |
 | `svint32x3_t`        | `svuint32x3_t`       | `svfloat32x3_t`       |                      |
 | `svint64x3_t`        | `svuint64x3_t`       | `svfloat64x3_t`       |                      |
@@ -9020,7 +9011,7 @@ Broadcast indexed element within each quadword vector segment.
 ``` c
    // Variants are also available for:
    // _s8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    svuint8_t svdup_laneq[_u8](svuint8_t zn, uint64_t imm_idx);
    ```
 
@@ -9031,7 +9022,7 @@ Extract vector segment from each pair of quadword segments.
 ``` c
    // Variants are also available for:
    // _s8, _s16, _u16, _s32, _u32, _s64, _u64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    svuint8_t svextq[_u8](svuint8_t zdn, svuint8_t zm, uint64_t imm);
    ```
 #### LD1D, LD1W
@@ -9058,17 +9049,17 @@ Gather Load Quadword.
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    svint8_t svld1q_gather[_u64base]_s8(svbool_t pg, svuint64_t zn);
    svint8_t svld1q_gather[_u64base]_offset_s8(svbool_t pg, svuint64_t zn, int64_t offset);
-   svint8_t svld1q_gather_[u64]offset[_s8](svbool_t pg, const int8_t *base, svuint64_t offset);
+   svint8_t svld1q_gather[_u64]_offset[_s8](svbool_t pg, const int8_t *base, svuint64_t offset);
 
 
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
-   svint16_t svld1q_gather_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index);
-   ```
+   svint16_t svld1q_gather[_u64]_index[_s16](svbool_t pg, const int16_t *base, svuint64_t index);
+```
 
 #### LD2Q, LD3Q, LD4Q
 
@@ -9077,7 +9068,7 @@ Contiguous load two, three, or four quadword structures.
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8_, _bf16, _f16, _f32, _f64
    svint8x2_t svld2q[_s8](svbool_t pg, const int8_t *rn);
    svint8x2_t svld2q_vnum[_s8](svbool_t pg, const int8_t *rn, uint64_t vnum);
    svint8x3_t svld3q[_s8](svbool_t pg, const int8_t *rn);
@@ -9152,16 +9143,16 @@ Scatter store quadwords.
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    void svst1q_scatter[_u64base][_s8](svbool_t pg, svuint64_t zn, svint8_t data);
    void svst1q_scatter[_u64base]_offset[_s8](svbool_t pg, svuint64_t zn, int64_t offset, svint8_t data);
-   void svst1q_scatter_[u64]offset[_s8](svbool_t pg, const uint8_t *base, svuint64_t offset, svint8_t data);
+   void svst1q_scatter[_u64]_offset[_s8](svbool_t pg, const uint8_t *base, svuint64_t offset, svint8_t data);
 
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
-   void svst1q_scatter_[u64]index_[s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
-   ```
+   void svst1q_scatter[_u64]_index[_s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
+```
 
 #### ST2Q, ST3Q, ST4Q
 
@@ -9170,7 +9161,7 @@ Contiguous store.
 ``` c
    // Variants are also available for:
    // _s8 _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    void svst2q[_u8](svbool_t pg, uint8_t *rn, svuint8x2_t zt);
    void svst2q_vnum[_u8](svbool_t pg, uint8_t *rn, int64_t vnum, svuint8x2_t zt);
    void svst3q[_u8](svbool_t pg, uint8_t *rn, svuint8x3_t zt);
@@ -9186,7 +9177,7 @@ Programmable table lookup within each quadword vector segment (zeroing).
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    svint8_t svtblq[_s8](svint8_t zn, svuint8_t zm);
    ```
 
@@ -9197,7 +9188,7 @@ Programmable table lookup within each quadword vector segment (merging).
 ``` c
    // Variants are also available for:
    // _u8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    svint8_t svtbxq[_s8](svint8_t fallback, svint8_t zn, svuint8_t zm);
    ```
 
@@ -9208,7 +9199,7 @@ Concatenate elements within each pair of quadword vector segments.
 ``` c
    // Variants are also available for:
    // _s8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    svuint8_t svuzpq1[_u8](svuint8_t zn, svuint8_t zm);
    svuint8_t svuzpq2[_u8](svuint8_t zn, svuint8_t zm);
    ```
@@ -9220,56 +9211,42 @@ Interleave elements from halves of each pair of quadword vector segments.
 ``` c
    // Variants are also available for:
    // _s8, _u16, _s16, _u32, _s32, _u64, _s64
-   // _bf16, _f16, _f32, _f64, _mf8
+   // _mf8, _bf16, _f16, _f32, _f64
    svuint8_t svzipq1[_u8](svuint8_t zn, svuint8_t zm);
    svuint8_t svzipq2[_u8](svuint8_t zn, svuint8_t zm);
    ```
 
 ### Modal 8-bit floating-point intrinsics
 
-#### BF1CVT, BF2CVT
+The intrinsics in this section are defined by the header file
+[`<arm_sve.h>`](#arm_sve.h) when `__ARM_FEATURE_SVE2` and
+`__ARM_FEATURE_FP8` are defined. Individual intrinsics may have
+additional target feature requirements.
 
-8-bit floating-point convert to BFloat16.
+#### BF1CVT, BF2CVT, F1CVT, F2CVT
+
+8-bit floating-point convert to half-precision and BFloat16.
 ``` c
-  svbfloat16_t svcvt1_bf16[_mf8]_fpm(svmfloat8_t zn, fpm_t fpm);
-  svbfloat16_t svcvt2_bf16[_mf8]_fpm(svmfloat8_t zn, fpm_t fpm);
-```
-
-#### BF1CVTLT, BF2CVTLT
-
-8-bit floating-point convert to BFloat16 (top).
-``` c
-  svbfloat16_t svcvtlt1_bf16[_mf8]_fpm(svmfloat8_t zn, fpm_t fpm);
-  svbfloat16_t svcvtlt2_bf16[_mf8]_fpm(svmfloat8_t zn, fpm_t fpm);
-```
-
-#### BFCVTN
-
-BFloat16 convert, narrow and interleave to 8-bit floating-point.
-``` c
-  svmfloat8_t svcvtn_mf8[_bf16_x2]_fpm(svbfloat16x2_t zn, fpm_t fpm);
-```
-
-#### F1CVT, F2CVT
-
-8-bit floating-point convert to half-precision.
-``` c
+  // Variants are also available for: _bf16
   svfloat16_t svcvt1_f16[_mf8]_fpm(svmfloat8_t zn, fpm_t fpm);
   svfloat16_t svcvt2_f16[_mf8]_fpm(svmfloat8_t zn, fpm_t fpm);
 ```
 
-#### F1CVTLT, F2CVTLT
+#### BF1CVTLT, BF2CVTLT, F1CVTLT, F2CVTLT
 
-8-bit floating-point convert to half-precision (top).
+8-bit floating-point convert to half-precision and BFloat16 (top).
 ``` c
+  // Variants are also available for: _bf16
   svfloat16_t svcvtlt1_f16[_mf8]_fpm(svmfloat8_t zn, fpm_t fpm);
   svfloat16_t svcvtlt2_f16[_mf8]_fpm(svmfloat8_t zn, fpm_t fpm);
 ```
 
-#### FCVTN
+#### BFCVTN, FCVTN
 
-Half-precision convert, narrow and interleave to 8-bit floating-point.
+Half-precision and BFloat16 convert, narrow and interleave to 8-bit
+floating-point.
 ``` c
+  // Variant is also available for: _bf16_x2
   svmfloat8_t svcvtn_mf8[_f16_x2]_fpm(svfloat16x2_t zn, fpm_t fpm);
 ```
 
@@ -9285,13 +9262,15 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point dot product to single-precision.
 ``` c
-  svfloat32_t svdot[_f32_mf8]_fpm(svfloat32_t zda ,svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8DOT4) || __ARM_FEATURE_SSVE_FP8DOT4
+  svfloat32_t svdot[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
 ```
 
 #### FDOT (4-way, indexed)
 
 8-bit floating-point indexed dot product to single-precision.
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8DOT4) || __ARM_FEATURE_SSVE_FP8DOT4
   svfloat32_t svdot_lane[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm,
                                        uint64_t imm0_3, fpm_t fpm);
 ```
@@ -9300,6 +9279,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point dot product to half-precision.
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8DOT2) || __ARM_FEATURE_SSVE_FP8DOT2
   svfloat16_t svdot[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
 ```
 
@@ -9307,6 +9287,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point dot product to half-precision.
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8DOT2) || __ARM_FEATURE_SSVE_FP8DOT2
   svfloat16_t svdot_lane[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm,
                                        uint64_t imm0_7, fpm_t fpm);
 ```
@@ -9315,6 +9296,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long to half-precision (bottom).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat16_t svmlalb[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
   svfloat16_t svmlalb[_n_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, mfloat8_t zm, fpm_t fpm);
 ```
@@ -9323,6 +9305,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long to half-precision (bottom, indexed).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat16_t svmlalb_lane[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm,
                                          uint64_t imm0_15, fpm_t fpm);
 ```
@@ -9331,6 +9314,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long long to single-precision (bottom bottom).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat32_t svmlallbb[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
   svfloat32_t svmlallbb[_n_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, mfloat8_t zm, fpm_t fpm);
 ```
@@ -9339,6 +9323,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long long to single-precision (bottom bottom, indexed).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat32_t svmlallbb_lane[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm,
                                            uint64_t imm0_15, fpm_t fpm);
 ```
@@ -9347,6 +9332,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long long to single-precision (bottom top).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat32_t svmlallbt[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
   svfloat32_t svmlallbt[_n_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, mfloat8_t zm, fpm_t fpm);
 ```
@@ -9355,6 +9341,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long long to single-precision (bottom top, indexed).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat32_t svmlallbt_lane[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm,
                                            uint64_t imm0_15, fpm_t fpm);
 ```
@@ -9363,6 +9350,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long long to single-precision (top bottom).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat32_t svmlalltb[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
   svfloat32_t svmlalltb[_n_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, mfloat8_t zm, fpm_t fpm);
 ```
@@ -9371,6 +9359,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long long to single-precision (top bottom, indexed).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat32_t svmlalltb_lane[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm,
                                            uint64_t imm0_15, fpm_t fpm);
 ```
@@ -9379,6 +9368,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long long to single-precision (top top).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat32_t svmlalltt[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
   svfloat32_t svmlalltt[_n_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, mfloat8_t zm, fpm_t fpm);
 ```
@@ -9387,6 +9377,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long long to single-precision (top top, indexed).
 ``` c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat32_t svmlalltt_lane[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm,
                                            uint64_t imm0_15, fpm_t fpm);
 ```
@@ -9395,6 +9386,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long to half-precision (top).
 ```c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat16_t svmlalt[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
   svfloat16_t svmlalt[_n_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, mfloat8_t zm, fpm_t fpm);
 ```
@@ -9403,6 +9395,7 @@ Single-precision convert, narrow and interleave to 8-bit floating-point (top and
 
 8-bit floating-point multiply-add long to half-precision (top, indexed).
 ```c
+  // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8FMA) || __ARM_FEATURE_SSVE_FP8FMA
   svfloat16_t svmlalt_lane[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm,
                                          uint64_t imm0_15, fpm_t fpm);
 ```
@@ -10399,7 +10392,7 @@ For example, in the `_u8` intrinsic, the return value and the `zd`
 parameter both have type `svuint8_t`.
 
 ``` c
-  // And similarly for u8, fm8
+  // And similarly for u8, mf8
   svint8_t svread_hor_za8[_s8]_m(svint8_t zd, svbool_t pg,
                                  uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
@@ -10419,7 +10412,7 @@ parameter both have type `svuint8_t`.
                                     uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
-  // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64, fm8
+  // And similarly for s16, s32, s64, u8, u16, u32, u64, mf8, bf16, f16, f32, f64
   svint8_t svread_hor_za128[_s8]_m(svint8_t zd, svbool_t pg,
                                    uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
@@ -10432,7 +10425,7 @@ the type of the `zn` parameter varies with the type suffix. For example,
 the `zn` parameter to the `_u8` intrinsic has type `svuint8_t`.
 
 ``` c
-  // And similarly for u8, fm8.
+  // And similarly for u8, mf8.
   void svwrite_hor_za8[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                               svint8_t zn)
     __arm_streaming __arm_inout("za");
@@ -10452,7 +10445,7 @@ the `zn` parameter to the `_u8` intrinsic has type `svuint8_t`.
                                 svint64_t zn)
     __arm_streaming __arm_inout("za");
 
-  // And similarly for s16, s32, s64, u8, u16, u32, u64, bf16, f16, f32, f64, fm8
+  // And similarly for s16, s32, s64, u8, u16, u32, u64, mf8, bf16, f16, f32, f64
   void svwrite_hor_za128[_s8]_m(uint64_t tile, uint32_t slice, svbool_t pg,
                                 svint8_t zn)
     __arm_streaming __arm_inout("za");
@@ -12452,19 +12445,19 @@ Reverse doublewords in elements.
   // All the intrinsics below are [SME]
   // Variants are available for:
   // _s8, _s16, _u16, _s32, _u32, _s64, _u64
-  // _bf16, _f16, _f32, _f64, _mf8
+  // _mf8, _bf16, _f16, _f32, _f64
   svuint8_t svrevd[_u8]_m(svuint8_t zd, svbool_t pg, svuint8_t zn);
 
 
   // Variants are available for:
   // _s8, _s16, _u16, _s32, _u32, _s64, _u64
-  // _bf16, _f16, _f32, _f64, _mf8
+  // _mf8, _bf16, _f16, _f32, _f64
   svuint8_t svrevd[_u8]_z(svbool_t pg, svuint8_t zn);
 
 
   // Variants are available for:
   // _s8, _s16, _u16, _s32, _u32, _s64, _u64
-  // _bf16, _f16, _f32, _f64, _mf8
+  // _mf8, _bf16, _f16, _f32, _f64
   svuint8_t svrevd[_u8]_x(svbool_t pg, svuint8_t zn);
   ```
 
@@ -12702,7 +12695,12 @@ While (resulting in predicate tuple)
 
 ### SME2 modal 8-bit floating-point intrinsics
 
-#### F1CVT, F2CVT
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` and
+`__ARM_FEATURE_FP8` are defined. Individual intrinsics may have
+additional target feature requirements.
+
+#### BF1CVT, BF2CVT, F1CVT, F2CVT
 
 8-bit floating-point convert to half-precision or BFloat16.
 ``` c
@@ -12711,7 +12709,7 @@ While (resulting in predicate tuple)
   svfloat16x2_t svcvt2_f16[_mf8]_x2_fpm(svmfloat8_t zn, fpm_t fpm) __arm_streaming;
 ```
 
-#### F1CVTL, F2CVTL
+#### BF1CVTL, BF2CVTL, F1CVTL, F2CVTL
 
 8-bit floating-point convert to deinterleaved half-precision or BFloat16.
 ``` c
@@ -12720,7 +12718,7 @@ While (resulting in predicate tuple)
   svfloat16x2_t svcvtl2_f16[_mf8]_x2_fpm(svmfloat8_t zn, fpm_t fpm) __arm_streaming;
 ```
 
-#### FCVT
+#### BFCVT, FCVT
 
 Convert to packed 8-bit floating-point format.
 ``` c
@@ -12748,20 +12746,12 @@ Convert to interleaved 8-bit floating-point format.
   svfloat16x2_t svscale[_f16_x2](svfloat16x2_t zd, svint16x2_t zm) __arm_streaming;
 ```
 
-#### FVDOT
-
-Multi-vector 8-bit floating-point vertical dot-product by indexed element to
-half-precision.
-``` c
-  void svvdot_lane_za16[_mf8]_vg1x2_fpm(uint32_t slice, svmfloat8x2_t zn,
-                                        svmfloat8_t zm, uint64_t imm_idx,
-                                        fpm_t fpm)  __arm_streaming __arm_inout("za");
-```
-
 #### FDOT
 
 Multi-vector 8-bit floating-point dot-product.
 ``` c
+  // Available variants are: _za16 if __ARM_FEATURE_SME_F8F16 != 0
+  //                         _za32 if __ARM_FEATURE_SME_F8F32 != 0
   void svdot_lane_za16[_mf8]_vg1x2_fpm(uint32_t slice, svmfloat8x2_t zn,
                                        svmfloat8_t zm, uint64_t imm_idx,
                                        fpm_t fpm) __arm_streaming __arm_inout("za");
@@ -12785,10 +12775,36 @@ Multi-vector 8-bit floating-point dot-product.
                                   fpm_t fpm)  __arm_streaming __arm_inout("za");
 ```
 
+#### FVDOT
+
+Multi-vector 8-bit floating-point vertical dot-product by indexed element to
+half-precision.
+``` c
+  // Only if __ARM_FEATURE_SME_F8F16 != 0
+  void svvdot_lane_za16[_mf8]_vg1x2_fpm(uint32_t slice, svmfloat8x2_t zn,
+                                        svmfloat8_t zm, uint64_t imm_idx,
+                                        fpm_t fpm)  __arm_streaming __arm_inout("za");
+```
+
+#### FVDOTB, FVDOTT
+
+Multi-vector 8-bit floating-point vertical dot-product.
+``` c
+  // Only if __ARM_FEATURE_SME_F8F32 != 0
+  void svvdott_lane_za32[_mf8]_vg1x4_fpm(uint32_t slice, svmfloat8x2_t zn,
+                                         svmfloat8_t zm, uint64_t imm_idx,
+                                         fpm_t fpm) __arm_streaming __arm_inout("za");
+
+  void svvdotb_lane_za32[_mf8]_vg1x4_fpm(uint32_t slice, svmfloat8x2_t zn,
+                                         svmfloat8_t zm, uint64_t imm_idx,
+                                         fpm_t fpm) __arm_streaming __arm_inout("za");
+```
+
 #### FMLAL
 
 Multi-vector 8-bit floating-point multiply-add long.
 ``` c
+  // Only if __ARM_FEATURE_SME_F8F16 != 0
   void svmla_lane_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
                                        svmfloat8_t zm, uint64_t imm_idx,
                                        fpm_t fpm)  __arm_streaming __arm_inout("za");
@@ -12820,58 +12836,11 @@ Multi-vector 8-bit floating-point multiply-add long.
                                   fpm_t fpm) __arm_streaming __arm_inout("za");
 ```
 
-#### FMOPA
-
-8-bit floating-point sum of outer products and accumulate.
-``` c
-    void svmopa_za16[_mf8]_m_fpm(uint64_t tile, svbool_t pn, svbool_t pm,
-                                 svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm) __arm_streaming __arm_inout("za");
-```
-
-#### FDOT
-
-Multi-vector 8-bit floating-point dot-product.
-``` c
-  void svdot_lane_za32[_mf8]_vg1x2_fpm(uint32_t slice, svmfloat8x2_t zn,
-                                       svmfloat8_t zm, uint64_t imm_idx,
-                                       fpm_t fpm) __arm_streaming __arm_inout("za");
-
-  void svdot_lane_za32[_mf8]_vg1x4_fpm(uint32_t slice, svmfloat8x4_t zn,
-                                       svmfloat8_t zm, uint64_t imm_idx,
-                                       fpm_t fpm) __arm_streaming __arm_inout("za");
-
-  void svdot[_single]_za32[_mf8]_vg1x2_fpm(uint32_t slice, svmfloat8x2_t zn,
-                                           svmfloat8_t zm, int64_t fpmr)
-                                           __arm_streaming __arm_inout("za");
-
-  void svdot[_single]_za32[_mf8]_vg1x4_fpm(uint32_t slice, svmfloat8x4_t zn,
-                                           svmfloat8_t zm, int64_t fpmr)
-                                           __arm_streaming __arm_inout("za");
-
-  void svdot_za32[_mf8]_vg1x2_fpm(uint32_t slice, svmfloat8x2_t zn, svmfloat8x2_t zm,
-                                  fpm_t fpm) __arm_streaming __arm_inout("za");
-
-  void svdot_za32[_mf8]_vg1x4_fpm(uint32_t slice, svmfloat8x4_t zn, svmfloat8x4_t zm,
-                                  fpm_t fpm)__arm_streaming __arm_inout("za");
-```
-
-#### FVDOTB and FVDOTT
-
-Multi-vector 8-bit floating-point vertical dot-product.
-``` c
-  void svvdott_lane_za32[_mf8]_vg1x4_fpm(uint32_t slice, svmfloat8x2_t zn,
-                                         svmfloat8_t zm, uint64_t imm_idx,
-                                         fpm_t fpm) __arm_streaming __arm_inout("za");
-
-  void svvdotb_lane_za32[_mf8]_vg1x4_fpm(uint32_t slice, svmfloat8x2_t zn,
-                                         svmfloat8_t zm, uint64_t imm_idx,
-                                         fpm_t fpm) __arm_streaming __arm_inout("za");
-```
-
 #### FMLALL
 
 Multi-vector 8-bit floating-point multiply-add long.
 ``` c
+// Only if __ARM_FEATURE_SME_F8F32 != 0
   void svmla_lane_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
                                        svmfloat8_t zm, uint64_t imm_idx,
                                        fpm_t fpm)__arm_streaming __arm_inout("za");
@@ -12907,6 +12876,12 @@ Multi-vector 8-bit floating-point multiply-add long.
 
 8-bit floating-point sum of outer products and accumulate.
 ``` c
+  // Only if __ARM_FEATURE_SME_F8F16 != 0
+    void svmopa_za16[_mf8]_m_fpm(uint64_t tile, svbool_t pn, svbool_t pm,
+                                 svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm)
+                                 __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_F8F32 != 0
     void svmopa_za32[_mf8]_m_fpm(uint64_t tile, svbool_t pn, svbool_t pm,
                                  svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm)
                                  __arm_streaming __arm_inout("za");
