@@ -925,8 +925,9 @@ and:
 to the more specific header files below. These intrinsics are in the
 C implementation namespace and begin with double underscores. It is
 unspecified whether they are available without the header being
-included. The `__ARM_ACLE` macro can be tested before including the
-header, but this might limit function multi-versioning capabilities:
+included. The `__ARM_ACLE` macro can be tested before including the header.
+However, this is not recommended for cases where target feature selection is
+overridden within code, for example, when using #function-multi-versioning.
 
 ``` c
   #ifdef __ARM_ACLE
@@ -939,9 +940,10 @@ header, but this might limit function multi-versioning capabilities:
 `<arm_fp16.h>` is provided to define the scalar 16-bit floating point
 arithmetic intrinsics. As these intrinsics are in the user namespace,
 an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` macro can be
-tested before including the header, but this might limit function
-multi-versioning capabilities:
+included. The `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` macro can be tested before
+including the header. However, this is not recommended for cases where target
+feature selection is overridden within code, for example, when using
+#function-multi-versioning.
 
 ``` c
   #ifdef __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
@@ -954,8 +956,10 @@ multi-versioning capabilities:
 `<arm_bf16.h>` is provided to define the 16-bit brain floating point
 arithmetic intrinsics. As these intrinsics are in the user namespace,
 an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_BF16` macro can be tested before including
-the header, but this might limit function multi-versioning capabilities:
+included. The `__ARM_FEATURE_BF16` macro can be tested before including the
+header. However, this is not recommended for cases where target feature
+selection is overridden within code, for example, when using
+function-multi-versioning.
 
 ``` c
   #ifdef __ARM_FEATURE_BF16
@@ -977,8 +981,10 @@ intrinsics](#advanced-simd-neon-intrinsics) and associated
 [data types](#vector-data-types). As these intrinsics and data types are
 in the user namespace, an implementation would not normally define them
 until the header is included. The `__ARM_NEON` macro can be tested before
-including the header, but this might limit function multi-versioning
-capabilities:
+including the header. However, this is not recommended for cases where target
+feature selection is overridden within code, for example, when using
+#function-multi-versioning.
+
 
 ``` c
   #ifdef __ARM_NEON
@@ -1001,8 +1007,9 @@ following it. --><span id="arm_sve.h"></span>
 `<arm_sve.h>` defines data types and intrinsics for SVE and its
 extensions; see [SVE language extensions and
 intrinsics](#sve-language-extensions-and-intrinsics) for details.
-The `__ARM_FEATURE_SVE` macro can be tested before including the header,
-but this might limit function multi-versioning capabilities:
+The `__ARM_FEATURE_SVE` macro can be tested before including the header.
+However, this is not recommended for cases where target feature selection is
+overridden within code, for example, when using #function-multi-versioning.
 
 ``` c
   #ifdef __ARM_FEATURE_SVE
@@ -1064,7 +1071,9 @@ change or be extended in the future.
 `<arm_sme.h>` declares functions and defines intrinsics for SME
 and its extensions; see [SME language extensions and intrinsics](#sme-language-extensions-and-intrinsics)
 for details. The `__ARM_FEATURE_SME` macro can be tested before including the
-header, but this might limit function multi-versioning capabilities:
+header. However, this is not recommended for cases where target feature
+selection is overridden within code, for example, when using
+#function-multi-versioning.
 
 ``` c
   #ifdef __ARM_FEATURE_SME
@@ -1074,31 +1083,30 @@ header, but this might limit function multi-versioning capabilities:
 
 Including `<arm_sme.h>` also includes [`<arm_sve.h>`](#arm_sve.h).
 
-### Predefined Macros and Headers
+### Predefined feature macros and header files
 
-The macros can represent a compiler's ability to use the instructions
-associated with the feature via ACLE documented intrinsics and within inline
-assembly. However users should not rely solely on macro definition, because
-there are intrinsics that may be influenced by mechanisms like `#pragma` or
-`attribute`. The macros are defined only for user convenience.
-
-For example:
+Testing a feature macro returns the compiler's availability for the feature via ACLE
+documented intrinsics and inline assembly. This property can be independent of
+where the test is performed, meaning a feature macro does not guarantee the
+validity of using the feature at the point it is tested. For example:
 
 ``` c
-   #ifdef __ARM_FEATURE_SME
-   #include<arm_sme.h>
-     void foo(svbool_t pg, void *ptr, uint32_t slice_base) {
-        svst1_hor_za8(0, slice_base, pg, ptr);
-      }
-   #endif
+    #include <arm_sme.h>
+
+    void foo(svbool_t pg, void *ptr, uint32_t slice_base) {
+    #ifdef __ARM_FEATURE_SME
+      svst1_hor_za8(0, slice_base, pg, ptr);
+    #endif
+    }
 ```
 
-`foo`  uses `__ARM_FEATURE_SME` to have available SME intriniscs,
-like `svst1_hor_za8`. However it has the compilation error:
-`builtin can only be called from a streaming function`
-for the command line:
-`armclang -O3 -target aarch64-linux-gnu -march=armv8-a+sme`
-that defines `__ARM_FEATURE_SME` to one.
+Whilst testing `__ARM_FEATURE_SME` ensures the compiler has available the SME
+intrinsic `svst1_hor_za8`, `foo` will fail to compile because it has not been
+decorated with the necessary keywords to guarantee the function will be
+executed in streaming mode.
+
+Not all such issues can be caught during compilation and may instead result in
+runtime failures.
 
 ## Attributes
 
