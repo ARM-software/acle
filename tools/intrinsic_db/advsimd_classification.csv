@@ -3242,75 +3242,99 @@ vtrn2q_mf8	Vector manipulation|Transpose elements
 vtbl1_s8	Table lookup|Table lookup
 vtbl1_u8	Table lookup|Table lookup
 vtbl1_p8	Table lookup|Table lookup
+vtbl1_mf8	Table lookup|Table lookup
 vtbx1_s8	Table lookup|Table lookup
 vtbx1_u8	Table lookup|Table lookup
 vtbx1_p8	Table lookup|Table lookup
+vtbx1_mf8	Table lookup|Table lookup
 vtbl2_s8	Table lookup|Table lookup
 vtbl2_u8	Table lookup|Table lookup
 vtbl2_p8	Table lookup|Table lookup
+vtbl2_mf8	Table lookup|Table lookup
 vtbl3_s8	Table lookup|Table lookup
 vtbl3_u8	Table lookup|Table lookup
 vtbl3_p8	Table lookup|Table lookup
+vtbl3_mf8	Table lookup|Table lookup
 vtbl4_s8	Table lookup|Table lookup
 vtbl4_u8	Table lookup|Table lookup
 vtbl4_p8	Table lookup|Table lookup
+vtbl4_mf8	Table lookup|Table lookup
 vtbx2_s8	Table lookup|Extended table lookup
 vtbx2_u8	Table lookup|Extended table lookup
 vtbx2_p8	Table lookup|Extended table lookup
+vtbx2_mf8	Table lookup|Extended table lookup
 vtbx3_s8	Table lookup|Extended table lookup
 vtbx3_u8	Table lookup|Extended table lookup
 vtbx3_p8	Table lookup|Extended table lookup
+vtbx3_mf8	Table lookup|Extended table lookup
 vtbx4_s8	Table lookup|Extended table lookup
 vtbx4_u8	Table lookup|Extended table lookup
 vtbx4_p8	Table lookup|Extended table lookup
+vtbx4_mf8	Table lookup|Extended table lookup
 vqtbl1_s8	Table lookup|Table lookup
 vqtbl1q_s8	Table lookup|Table lookup
 vqtbl1_u8	Table lookup|Table lookup
 vqtbl1q_u8	Table lookup|Table lookup
 vqtbl1_p8	Table lookup|Table lookup
 vqtbl1q_p8	Table lookup|Table lookup
+vqtbl1_mf8	Table lookup|Table lookup
+vqtbl1q_mf8	Table lookup|Table lookup
 vqtbx1_s8	Table lookup|Extended table lookup
 vqtbx1q_s8	Table lookup|Extended table lookup
 vqtbx1_u8	Table lookup|Extended table lookup
 vqtbx1q_u8	Table lookup|Extended table lookup
 vqtbx1_p8	Table lookup|Extended table lookup
 vqtbx1q_p8	Table lookup|Extended table lookup
+vqtbx1_mf8	Table lookup|Extended table lookup
+vqtbx1q_mf8	Table lookup|Extended table lookup
 vqtbl2_s8	Table lookup|Table lookup
 vqtbl2q_s8	Table lookup|Table lookup
 vqtbl2_u8	Table lookup|Table lookup
 vqtbl2q_u8	Table lookup|Table lookup
 vqtbl2_p8	Table lookup|Table lookup
 vqtbl2q_p8	Table lookup|Table lookup
+vqtbl2_mf8	Table lookup|Table lookup
+vqtbl2q_mf8	Table lookup|Table lookup
 vqtbl3_s8	Table lookup|Table lookup
 vqtbl3q_s8	Table lookup|Table lookup
 vqtbl3_u8	Table lookup|Table lookup
 vqtbl3q_u8	Table lookup|Table lookup
 vqtbl3_p8	Table lookup|Table lookup
 vqtbl3q_p8	Table lookup|Table lookup
+vqtbl3_mf8	Table lookup|Table lookup
+vqtbl3q_mf8	Table lookup|Table lookup
 vqtbl4_s8	Table lookup|Table lookup
 vqtbl4q_s8	Table lookup|Table lookup
 vqtbl4_u8	Table lookup|Table lookup
 vqtbl4q_u8	Table lookup|Table lookup
 vqtbl4_p8	Table lookup|Table lookup
 vqtbl4q_p8	Table lookup|Table lookup
+vqtbl4_mf8	Table lookup|Table lookup
+vqtbl4q_mf8	Table lookup|Table lookup
 vqtbx2_s8	Table lookup|Extended table lookup
 vqtbx2q_s8	Table lookup|Extended table lookup
 vqtbx2_u8	Table lookup|Extended table lookup
 vqtbx2q_u8	Table lookup|Extended table lookup
 vqtbx2_p8	Table lookup|Extended table lookup
 vqtbx2q_p8	Table lookup|Extended table lookup
+vqtbx2_mf8	Table lookup|Extended table lookup
+vqtbx2q_mf8	Table lookup|Extended table lookup
 vqtbx3_s8	Table lookup|Extended table lookup
 vqtbx3q_s8	Table lookup|Extended table lookup
 vqtbx3_u8	Table lookup|Extended table lookup
 vqtbx3q_u8	Table lookup|Extended table lookup
 vqtbx3_p8	Table lookup|Extended table lookup
 vqtbx3q_p8	Table lookup|Extended table lookup
+vqtbx3_mf8	Table lookup|Extended table lookup
+vqtbx3q_mf8	Table lookup|Extended table lookup
 vqtbx4_s8	Table lookup|Extended table lookup
 vqtbx4q_s8	Table lookup|Extended table lookup
 vqtbx4_u8	Table lookup|Extended table lookup
 vqtbx4q_u8	Table lookup|Extended table lookup
 vqtbx4_p8	Table lookup|Extended table lookup
 vqtbx4q_p8	Table lookup|Extended table lookup
+vqtbx4_mf8	Table lookup|Extended table lookup
+vqtbx4q_mf8	Table lookup|Extended table lookup
 vget_lane_u8	Vector manipulation|Extract one element from vector
 vget_lane_u16	Vector manipulation|Extract one element from vector
 vget_lane_u32	Vector manipulation|Extract one element from vector
@@ -3405,6 +3429,7 @@ vzip_u8	Vector manipulation|Zip elements
 vzip_u16	Vector manipulation|Zip elements
 vzip_p8	Vector manipulation|Zip elements
 vzip_p16	Vector manipulation|Zip elements
+vzip_mf8	Vector manipulation|Zip elements
 vzip_s32	Vector manipulation|Zip elements
 vzip_f32	Vector manipulation|Zip elements
 vzip_u32	Vector manipulation|Zip elements
@@ -3417,6 +3442,7 @@ vzipq_u16	Vector manipulation|Zip elements
 vzipq_u32	Vector manipulation|Zip elements
 vzipq_p8	Vector manipulation|Zip elements
 vzipq_p16	Vector manipulation|Zip elements
+vzipq_mf8	Vector manipulation|Zip elements
 vuzp_s8	Vector manipulation|Unzip elements
 vuzp_s16	Vector manipulation|Unzip elements
 vuzp_s32	Vector manipulation|Unzip elements
@@ -3426,6 +3452,7 @@ vuzp_u16	Vector manipulation|Unzip elements
 vuzp_u32	Vector manipulation|Unzip elements
 vuzp_p8	Vector manipulation|Unzip elements
 vuzp_p16	Vector manipulation|Unzip elements
+vuzp_mf8	Vector manipulation|Unzip elements
 vuzpq_s8	Vector manipulation|Unzip elements
 vuzpq_s16	Vector manipulation|Unzip elements
 vuzpq_s32	Vector manipulation|Unzip elements
@@ -3435,6 +3462,7 @@ vuzpq_u16	Vector manipulation|Unzip elements
 vuzpq_u32	Vector manipulation|Unzip elements
 vuzpq_p8	Vector manipulation|Unzip elements
 vuzpq_p16	Vector manipulation|Unzip elements
+vuzpq_mf8	Vector manipulation|Unzip elements
 vreinterpret_s16_s8	Data type conversion|Reinterpret casts
 vreinterpret_s32_s8	Data type conversion|Reinterpret casts
 vreinterpret_f32_s8	Data type conversion|Reinterpret casts

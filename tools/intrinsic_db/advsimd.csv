@@ -3243,75 +3243,99 @@ mfloat8x16_t vtrn2q_mf8(mfloat8x16_t a, mfloat8x16_t b)	a -> Vn.16B;b -> Vm.16B	
 int8x8_t vtbl1_s8(int8x8_t a, int8x8_t idx)	Zeros(64):a -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 uint8x8_t vtbl1_u8(uint8x8_t a, uint8x8_t idx)	Zeros(64):a -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbl1_p8(poly8x8_t a, uint8x8_t idx)	Zeros(64):a -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbl1_mf8(mfloat8x8_t a, uint8x8_t idx)	Zeros(64):a -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 int8x8_t vtbx1_s8(int8x8_t a, int8x8_t b, int8x8_t idx)	Zeros(64):b -> Vn.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#8;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	v7/A32/A64
 uint8x8_t vtbx1_u8(uint8x8_t a, uint8x8_t b, uint8x8_t idx)	Zeros(64):b -> Vn.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#8;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbx1_p8(poly8x8_t a, poly8x8_t b, uint8x8_t idx)	Zeros(64):b -> Vn.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#8;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B, Vtmp.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbx1_mf8(mfloat8x8_t a, mfloat8x8_t b, uint8x8_t idx)	Zeros(64):b -> Vn.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#8;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B, Vtmp.8B	Vd.8B -> result	A64
 int8x8_t vtbl2_s8(int8x8x2_t a, int8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 uint8x8_t vtbl2_u8(uint8x8x2_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbl2_p8(poly8x8x2_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbl2_mf8(mfloat8x8x2_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 int8x8_t vtbl3_s8(int8x8x3_t a, int8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;Zeros(64):a.val[2] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 uint8x8_t vtbl3_u8(uint8x8x3_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;Zeros(64):a.val[2] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbl3_p8(poly8x8x3_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;Zeros(64):a.val[2] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbl3_mf8(mfloat8x8x3_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;Zeros(64):a.val[2] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 int8x8_t vtbl4_s8(int8x8x4_t a, int8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;a.val[3]:a.val[2] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 uint8x8_t vtbl4_u8(uint8x8x4_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;a.val[3]:a.val[2] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbl4_p8(poly8x8x4_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;a.val[3]:a.val[2] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbl4_mf8(mfloat8x8x4_t a, uint8x8_t idx)	a.val[1]:a.val[0] -> Vn.16B;a.val[3]:a.val[2] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 int8x8_t vtbx2_s8(int8x8_t a, int8x8x2_t b, int8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;a -> Vd.8B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 uint8x8_t vtbx2_u8(uint8x8_t a, uint8x8x2_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;a -> Vd.8B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbx2_p8(poly8x8_t a, poly8x8x2_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;a -> Vd.8B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbx2_mf8(mfloat8x8_t a, mfloat8x8x2_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;a -> Vd.8B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 int8x8_t vtbx3_s8(int8x8_t a, int8x8x3_t b, int8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;Zeros(64):b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#24;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B,Vn+1.16B},Vm.8;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	v7/A32/A64
 uint8x8_t vtbx3_u8(uint8x8_t a, uint8x8x3_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;Zeros(64):b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#24;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B,Vn+1.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbx3_p8(poly8x8_t a, poly8x8x3_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;Zeros(64):b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#24;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B,Vn+1.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbx3_mf8(mfloat8x8_t a, mfloat8x8x3_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;Zeros(64):b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#24;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B,Vn+1.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	A64
 int8x8_t vtbx4_s8(int8x8_t a, int8x8x4_t b, int8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B; c-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 uint8x8_t vtbx4_u8(uint8x8_t a, uint8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B; c-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbx4_p8(poly8x8_t a, poly8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B; c-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbx4_mf8(mfloat8x8_t a, mfloat8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B; c-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 int8x8_t vqtbl1_s8(int8x16_t t, uint8x8_t idx)	t -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbl1q_s8(int8x16_t t, uint8x16_t idx)	t -> Vn.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbl1_u8(uint8x16_t t, uint8x8_t idx)	t -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 uint8x16_t vqtbl1q_u8(uint8x16_t t, uint8x16_t idx)	t -> Vn.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
 poly8x8_t vqtbl1_p8(poly8x16_t t, uint8x8_t idx)	t -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 poly8x16_t vqtbl1q_p8(poly8x16_t t, uint8x16_t idx)	t -> Vn.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
+mfloat8x8_t vqtbl1_mf8(mfloat8x16_t t, uint8x8_t idx)	t -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vqtbl1q_mf8(mfloat8x16_t t, uint8x16_t idx)	t -> Vn.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
 int8x8_t vqtbx1_s8(int8x8_t a, int8x16_t t, uint8x8_t idx)	a -> Vd.8B;t -> Vn.16B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbx1q_s8(int8x16_t a, int8x16_t t, uint8x16_t idx)	a -> Vd.16B;t -> Vn.16B;idx -> Vm.16B	TBX Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbx1_u8(uint8x8_t a, uint8x16_t t, uint8x8_t idx)	a -> Vd.8B;t -> Vn.16B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 uint8x16_t vqtbx1q_u8(uint8x16_t a, uint8x16_t t, uint8x16_t idx)	a -> Vd.16B;t -> Vn.16B;idx -> Vm.16B	TBX Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
 poly8x8_t vqtbx1_p8(poly8x8_t a, poly8x16_t t, uint8x8_t idx)	a -> Vd.8B;t -> Vn.16B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 poly8x16_t vqtbx1q_p8(poly8x16_t a, poly8x16_t t, uint8x16_t idx)	a -> Vd.16B;t -> Vn.16B;idx -> Vm.16B	TBX Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
+mfloat8x8_t vqtbx1_mf8(mfloat8x8_t a, mfloat8x16_t t, uint8x8_t idx)	a -> Vd.8B;t -> Vn.16B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vqtbx1q_mf8(mfloat8x16_t a, mfloat8x16_t t, uint8x16_t idx)	a -> Vd.16B;t -> Vn.16B;idx -> Vm.16B	TBX Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
 int8x8_t vqtbl2_s8(int8x16x2_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbl2q_s8(int8x16x2_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+1.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbl2_u8(uint8x16x2_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 uint8x16_t vqtbl2q_u8(uint8x16x2_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+1.16B},Vm.16B	Vd.16B -> result	A64
 poly8x8_t vqtbl2_p8(poly8x16x2_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 poly8x16_t vqtbl2q_p8(poly8x16x2_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+1.16B},Vm.16B	Vd.16B -> result	A64
+mfloat8x8_t vqtbl2_mf8(mfloat8x16x2_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+1.16B},Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vqtbl2q_mf8(mfloat8x16x2_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+1.16B},Vm.16B	Vd.16B -> result	A64
 int8x8_t vqtbl3_s8(int8x16x3_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+2.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbl3q_s8(int8x16x3_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+2.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbl3_u8(uint8x16x3_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+2.16B},Vm.8B	Vd.8B -> result	A64
 uint8x16_t vqtbl3q_u8(uint8x16x3_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+2.16B},Vm.16B	Vd.16B -> result	A64
 poly8x8_t vqtbl3_p8(poly8x16x3_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+2.16B},Vm.8B	Vd.8B -> result	A64
 poly8x16_t vqtbl3q_p8(poly8x16x3_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+2.16B},Vm.16B	Vd.16B -> result	A64
+mfloat8x8_t vqtbl3_mf8(mfloat8x16x3_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+2.16B},Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vqtbl3q_mf8(mfloat8x16x3_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+2.16B},Vm.16B	Vd.16B -> result	A64
 int8x8_t vqtbl4_s8(int8x16x4_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+3.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbl4q_s8(int8x16x4_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+3.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbl4_u8(uint8x16x4_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+3.16B},Vm.8B	Vd.8B -> result	A64
 uint8x16_t vqtbl4q_u8(uint8x16x4_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+3.16B},Vm.16B	Vd.16B -> result	A64
 poly8x8_t vqtbl4_p8(poly8x16x4_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+3.16B},Vm.8B	Vd.8B -> result	A64
 poly8x16_t vqtbl4q_p8(poly8x16x4_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+3.16B},Vm.16B	Vd.16B -> result	A64
+mfloat8x8_t vqtbl4_mf8(mfloat8x16x4_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B - Vn+3.16B},Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vqtbl4q_mf8(mfloat8x16x4_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B - Vn+3.16B},Vm.16B	Vd.16B -> result	A64
 int8x8_t vqtbx2_s8(int8x8_t a, int8x16x2_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbx2q_s8(int8x16_t a, int8x16x2_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+1.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbx2_u8(uint8x8_t a, uint8x16x2_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 uint8x16_t vqtbx2q_u8(uint8x16_t a, uint8x16x2_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+1.16B},Vm.16B	Vd.16B -> result	A64
 poly8x8_t vqtbx2_p8(poly8x8_t a, poly8x16x2_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 poly8x16_t vqtbx2q_p8(poly8x16_t a, poly8x16x2_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+1.16B},Vm.16B	Vd.16B -> result	A64
+mfloat8x8_t vqtbx2_mf8(mfloat8x8_t a, mfloat8x16x2_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+1.16B},Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vqtbx2q_mf8(mfloat8x16_t a, mfloat8x16x2_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+1.16B},Vm.16B	Vd.16B -> result	A64
 int8x8_t vqtbx3_s8(int8x8_t a, int8x16x3_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+2.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbx3q_s8(int8x16_t a, int8x16x3_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+2.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbx3_u8(uint8x8_t a, uint8x16x3_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+2.16B},Vm.8B	Vd.8B -> result	A64
 uint8x16_t vqtbx3q_u8(uint8x16_t a, uint8x16x3_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+2.16B},Vm.16B	Vd.16B -> result	A64
 poly8x8_t vqtbx3_p8(poly8x8_t a, poly8x16x3_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+2.16B},Vm.8B	Vd.8B -> result	A64
 poly8x16_t vqtbx3q_p8(poly8x16_t a, poly8x16x3_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+2.16B},Vm.16B	Vd.16B -> result	A64
+mfloat8x8_t vqtbx3_mf8(mfloat8x8_t a, mfloat8x16x3_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+2.16B},Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vqtbx3q_mf8(mfloat8x16_t a, mfloat8x16x3_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+2.16B},Vm.16B	Vd.16B -> result	A64
 int8x8_t vqtbx4_s8(int8x8_t a, int8x16x4_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+3.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbx4q_s8(int8x16_t a, int8x16x4_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+3.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbx4_u8(uint8x8_t a, uint8x16x4_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+3.16B},Vm.8B	Vd.8B -> result	A64
 uint8x16_t vqtbx4q_u8(uint8x16_t a, uint8x16x4_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+3.16B},Vm.16B	Vd.16B -> result	A64
 poly8x8_t vqtbx4_p8(poly8x8_t a, poly8x16x4_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+3.16B},Vm.8B	Vd.8B -> result	A64
 poly8x16_t vqtbx4q_p8(poly8x16_t a, poly8x16x4_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+3.16B},Vm.16B	Vd.16B -> result	A64
+mfloat8x8_t vqtbx4_mf8(mfloat8x8_t a, mfloat8x16x4_t t, uint8x8_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.8B;a -> Vd.8B	TBX Vd.8B,{Vn.16B - Vn+3.16B},Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vqtbx4q_mf8(mfloat8x16_t a, mfloat8x16x4_t t, uint8x16_t idx)	t.val[0] -> Vn.16B;t.val[1] -> Vn+1.16B;t.val[2] -> Vn+2.16B;t.val[3] -> Vn+3.16B;idx -> Vm.16B;a -> Vd.16B	TBX Vd.16B,{Vn.16B - Vn+3.16B},Vm.16B	Vd.16B -> result	A64
 uint8_t vget_lane_u8(uint8x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8B	UMOV Rd,Vn.B[lane]	Rd -> result	v7/A32/A64
 uint16_t vget_lane_u16(uint16x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> Vn.4H	UMOV Rd,Vn.H[lane]	Rd -> result	v7/A32/A64
 uint32_t vget_lane_u32(uint32x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> Vn.2S	UMOV Rd,Vn.S[lane]	Rd -> result	v7/A32/A64
@@ -3406,6 +3430,7 @@ uint8x8x2_t vzip_u8(uint8x8_t a, uint8x8_t b)	a -> Vn.8B;b -> Vm.8B	ZIP1 Vd1.8B,
 uint16x4x2_t vzip_u16(uint16x4_t a, uint16x4_t b)	a -> Vn.4H;b -> Vm.4H	ZIP1 Vd1.4H,Vn.4H,Vm.4H;ZIP2 Vd2.4H,Vn.4H,Vm.4H	Vd1.4H -> result.val[0];Vd2.4H -> result.val[1]	v7/A32/A64
 poly8x8x2_t vzip_p8(poly8x8_t a, poly8x8_t b)	a -> Vn.8B;b -> Vm.8B	ZIP1 Vd1.8B,Vn.8B,Vm.8B;ZIP2 Vd2.8B,Vn.8B,Vm.8B	Vd1.8B -> result.val[0];Vd2.8B -> result.val[1]	v7/A32/A64
 poly16x4x2_t vzip_p16(poly16x4_t a, poly16x4_t b)	a -> Vn.4H;b -> Vm.4H	ZIP1 Vd1.4H,Vn.4H,Vm.4H;ZIP2 Vd2.4H,Vn.4H,Vm.4H	Vd1.4H -> result.val[0];Vd2.4H -> result.val[1]	v7/A32/A64
+mfloat8x8x2_t vzip_mf8(mfloat8x8_t a, mfloat8x8_t b)	a -> Vn.8B;b -> Vm.8B	ZIP1 Vd1.8B,Vn.8B,Vm.8B;ZIP2 Vd2.8B,Vn.8B,Vm.8B	Vd1.8B -> result.val[0];Vd2.8B -> result.val[1]	A64
 int32x2x2_t vzip_s32(int32x2_t a, int32x2_t b)	a -> Vn.2S;b -> Vm.2S	ZIP1 Vd1.2S,Vn.2S,Vm.2S;ZIP2 Vd2.2S,Vn.2S,Vm.2S	Vd1.2S -> result.val[0];Vd2.2S -> result.val[1]	v7/A32/A64
 float32x2x2_t vzip_f32(float32x2_t a, float32x2_t b)	a -> Vn.2S;b -> Vm.2S	ZIP1 Vd1.2S,Vn.2S,Vm.2S;ZIP2 Vd2.2S,Vn.2S,Vm.2S	Vd1.2S -> result.val[0];Vd2.2S -> result.val[1]	v7/A32/A64
 uint32x2x2_t vzip_u32(uint32x2_t a, uint32x2_t b)	a -> Vn.2S;b -> Vm.2S	ZIP1 Vd1.2S,Vn.2S,Vm.2S;ZIP2 Vd2.2S,Vn.2S,Vm.2S	Vd1.2S -> result.val[0];Vd2.2S -> result.val[1]	v7/A32/A64
@@ -3418,6 +3443,7 @@ uint16x8x2_t vzipq_u16(uint16x8_t a, uint16x8_t b)	a -> Vn.8H;b -> Vm.8H	ZIP1 Vd
 uint32x4x2_t vzipq_u32(uint32x4_t a, uint32x4_t b)	a -> Vn.4S;b -> Vm.4S	ZIP1 Vd1.4S,Vn.4S,Vm.4S;ZIP2 Vd2.4S,Vn.4S,Vm.4S	Vd1.4S -> result.val[0];Vd2.4S -> result.val[1]	v7/A32/A64
 poly8x16x2_t vzipq_p8(poly8x16_t a, poly8x16_t b)	a -> Vn.16B;b -> Vm.16B	ZIP1 Vd1.16B,Vn.16B,Vm.16B;ZIP2 Vd2.16B,Vn.16B,Vm.16B	Vd1.16B -> result.val[0];Vd2.16B -> result.val[1]	v7/A32/A64
 poly16x8x2_t vzipq_p16(poly16x8_t a, poly16x8_t b)	a -> Vn.8H;b -> Vm.8H	ZIP1 Vd1.8H,Vn.8H,Vm.8H;ZIP2 Vd2.8H,Vn.8H,Vm.8H	Vd1.8H -> result.val[0];Vd2.8H -> result.val[1]	v7/A32/A64
+mfloat8x16x2_t vzipq_mf8(mfloat8x16_t a, mfloat8x16_t b)	a -> Vn.16B;b -> Vm.16B	ZIP1 Vd1.16B,Vn.16B,Vm.16B;ZIP2 Vd2.16B,Vn.16B,Vm.16B	Vd1.16B -> result.val[0];Vd2.16B -> result.val[1]	A64
 int8x8x2_t vuzp_s8(int8x8_t a, int8x8_t b)	a -> Vn.8B;b -> Vm.8B	UZP1 Vd1.8B,Vn.8B,Vm.8B;UZP2 Vd2.8B,Vn.8B,Vm.8B	Vd1.8B -> result.val[0];Vd2.8B -> result.val[1]	v7/A32/A64
 int16x4x2_t vuzp_s16(int16x4_t a, int16x4_t b)	a -> Vn.4H;b -> Vm.4H	UZP1 Vd1.4H,Vn.4H,Vm.4H;UZP2 Vd2.4H,Vn.4H,Vm.4H	Vd1.4H -> result.val[0];Vd2.4H -> result.val[1]	v7/A32/A64
 int32x2x2_t vuzp_s32(int32x2_t a, int32x2_t b)	a -> Vn.2S;b -> Vm.2S	UZP1 Vd1.2S,Vn.2S,Vm.2S;UZP2 Vd2.2S,Vn.2S,Vm.2S	Vd1.2S -> result.val[0];Vd2.2S -> result.val[1]	v7/A32/A64
@@ -3427,6 +3453,7 @@ uint16x4x2_t vuzp_u16(uint16x4_t a, uint16x4_t b)	a -> Vn.4H;b -> Vm.4H	UZP1 Vd1
 uint32x2x2_t vuzp_u32(uint32x2_t a, uint32x2_t b)	a -> Vn.2S;b -> Vm.2S	UZP1 Vd1.2S,Vn.2S,Vm.2S;UZP2 Vd2.2S,Vn.2S,Vm.2S	Vd1.2S -> result.val[0];Vd2.2S -> result.val[1]	v7/A32/A64
 poly8x8x2_t vuzp_p8(poly8x8_t a, poly8x8_t b)	a -> Vn.8B;b -> Vm.8B	UZP1 Vd1.8B,Vn.8B,Vm.8B;UZP2 Vd2.8B,Vn.8B,Vm.8B	Vd1.8B -> result.val[0];Vd2.8B -> result.val[1]	v7/A32/A64
 poly16x4x2_t vuzp_p16(poly16x4_t a, poly16x4_t b)	a -> Vn.4H;b -> Vm.4H	UZP1 Vd1.4H,Vn.4H,Vm.4H;UZP2 Vd2.4H,Vn.4H,Vm.4H	Vd1.4H -> result.val[0];Vd2.4H -> result.val[1]	v7/A32/A64
+mfloat8x8x2_t vuzp_mf8(mfloat8x8_t a, mfloat8x8_t b)	a -> Vn.8B;b -> Vm.8B	UZP1 Vd1.8B,Vn.8B,Vm.8B;UZP2 Vd2.8B,Vn.8B,Vm.8B	Vd1.8B -> result.val[0];Vd2.8B -> result.val[1]	A64
 int8x16x2_t vuzpq_s8(int8x16_t a, int8x16_t b)	a -> Vn.16B;b -> Vm.16B	UZP1 Vd1.16B,Vn.16B,Vm.16B;UZP2 Vd2.16B,Vn.16B,Vm.16B	Vd1.16B -> result.val[0];Vd2.16B -> result.val[1]	v7/A32/A64
 int16x8x2_t vuzpq_s16(int16x8_t a, int16x8_t b)	a -> Vn.8H;b -> Vm.8H	UZP1 Vd1.8H,Vn.8H,Vm.8H;UZP2 Vd2.8H,Vn.8H,Vm.8H	Vd1.8H -> result.val[0];Vd2.8H -> result.val[1]	v7/A32/A64
 int32x4x2_t vuzpq_s32(int32x4_t a, int32x4_t b)	a -> Vn.4S;b -> Vm.4S	UZP1 Vd1.4S,Vn.4S,Vm.4S;UZP2 Vd2.4S,Vn.4S,Vm.4S	Vd1.4S -> result.val[0];Vd2.4S -> result.val[1]	v7/A32/A64
@@ -3436,6 +3463,7 @@ uint16x8x2_t vuzpq_u16(uint16x8_t a, uint16x8_t b)	a -> Vn.8H;b -> Vm.8H	UZP1 Vd
 uint32x4x2_t vuzpq_u32(uint32x4_t a, uint32x4_t b)	a -> Vn.4S;b -> Vm.4S	UZP1 Vd1.4S,Vn.4S,Vm.4S;UZP2 Vd2.4S,Vn.4S,Vm.4S	Vd1.4S -> result.val[0];Vd2.4S -> result.val[1]	v7/A32/A64
 poly8x16x2_t vuzpq_p8(poly8x16_t a, poly8x16_t b)	a -> Vn.16B;b -> Vm.16B	UZP1 Vd1.16B,Vn.16B,Vm.16B;UZP2 Vd2.16B,Vn.16B,Vm.16B	Vd1.16B -> result.val[0];Vd2.16B -> result.val[1]	v7/A32/A64
 poly16x8x2_t vuzpq_p16(poly16x8_t a, poly16x8_t b)	a -> Vn.8H;b -> Vm.8H	UZP1 Vd1.8H,Vn.8H,Vm.8H;UZP2 Vd2.8H,Vn.8H,Vm.8H	Vd1.8H -> result.val[0];Vd2.8H -> result.val[1]	v7/A32/A64
+mfloat8x16x2_t vuzpq_mf8(mfloat8x16_t a, mfloat8x16_t b)	a -> Vn.16B;b -> Vm.16B	UZP1 Vd1.16B,Vn.16B,Vm.16B;UZP2 Vd2.16B,Vn.16B,Vm.16B	Vd1.16B -> result.val[0];Vd2.16B -> result.val[1]	A64
 int16x4_t vreinterpret_s16_s8(int8x8_t a)	a -> Vd.8B	NOP	Vd.4H -> result	v7/A32/A64
 int32x2_t vreinterpret_s32_s8(int8x8_t a)	a -> Vd.8B	NOP	Vd.2S -> result	v7/A32/A64
 float32x2_t vreinterpret_f32_s8(int8x8_t a)	a -> Vd.8B	NOP	Vd.2S -> result	v7/A32/A64
