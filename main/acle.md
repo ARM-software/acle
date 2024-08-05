@@ -11801,7 +11801,7 @@ extended in the future.
 
 The functions in this section are defined by either the header file
  [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
-when `__ARM_FEATURE_SVE2.1` or `__ARM_FEATURE_SME2` is defined, respectively.
+when `__ARM_FEATURE_SVE2p1` or `__ARM_FEATURE_SME2` is defined, respectively.
 
 These intrinsics can only be called from non-streaming code if
 `__ARM_FEATURE_SVE2p1` is defined. They can only be called from streaming code
