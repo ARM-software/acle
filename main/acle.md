@@ -401,6 +401,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixed some rendering issues in the online Markdown documentation and fixed
   a misplaced anchor.
 
+#### Changes for next release
+
+* Add intrinsics availability to function scope.
+
 ### References
 
 This document refers to the following documents.
@@ -842,6 +846,15 @@ Using a keyword attribute multiple times is equivalent to using it once.
 ACLE standardizes intrinsics to access various features of the
 Arm ® architecture. It also standardizes a set of [header
 files](#header-files) that provide access to these intrinsics.
+
+Availability of a given intrinsics is indicated by the corresponding
+`_ARM_FEATURE_` macro, as detailed in the [Feature test
+macros](#feature-test-macros) section. A given architecture feature could
+be enabled in function scope, for example with the `target` or
+[`target_version`](#function-multi-versioning) attributes. If an
+implementation supports such then the related intrinsics of the enabled
+architecture feature must be available in that scope via the standard
+header files.
 
 Whether intrinsics are macros, functions or built-in operators is
 unspecified. For example:
