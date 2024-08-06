@@ -1085,10 +1085,14 @@ Including `<arm_sme.h>` also includes [`<arm_sve.h>`](#arm_sve.h).
 
 ### Predefined feature macros and header files
 
-Testing a feature macro returns the compiler's availability for the feature via ACLE
-documented intrinsics and inline assembly. This property can be independent of
-where the test is performed, meaning a feature macro does not guarantee the
-validity of using the feature at the point it is tested. For example:
+Feature macros indicate whether that feature's intrinsics and inline assembly instructions
+are available in normal unannotated functions. In some implementations, the macro definitions
+are invariant throughout a translation unit, while in other implementations, the macro
+definitions can vary with pragmas.
+
+The macro definitions are otherwise independent of where the test is performed,
+meaning that a feature macro does not guarantee that the feature can be used at the
+point that it is tested. For example:
 
 ``` c
     #include <arm_sme.h>
@@ -1100,10 +1104,9 @@ validity of using the feature at the point it is tested. For example:
     }
 ```
 
-Whilst testing `__ARM_FEATURE_SME` ensures the compiler has available the SME
-intrinsic `svst1_hor_za8`, `foo` will fail to compile because it has not been
-decorated with the necessary keywords to guarantee the function will be
-executed in streaming mode.
+While testing `__ARM_FEATURE_SME` ensures that the SME intrinsic `svst1_hor_za8`
+is available, `foo` will fail to compile because the call does not occur in a
+[streaming statement](#streaming-statement).
 
 Not all such issues can be caught during compilation and may instead result in
 runtime failures.
