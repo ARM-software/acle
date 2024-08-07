@@ -400,6 +400,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a requirement for function version declaration in Function Multi Versioning.
 * Fixed some rendering issues in the online Markdown documentation and fixed
   a misplaced anchor.
+* Release support level of the [Custom Datapath Extension](#custom-datapath-extension).
 
 ### References
 
@@ -4397,9 +4398,6 @@ stored to memory is modified by replacing the low 32 bits of
 The returned value is the same as for `__arm_st64bv`.
 
 # Custom Datapath Extension
-
-The specification for CDE is in `BETA` state and may change or be extended
-in the future.
 
 The intrinsics in this section provide access to instructions in the
 Custom Datapath Extension.
