@@ -1075,10 +1075,9 @@ Including `<arm_sme.h>` also includes [`<arm_sve.h>`](#arm_sve.h).
 
 ### Predefined feature macros and header files
 
-Testing a feature macro returns the compiler's availability for the feature
-via ACLE documented intrinsics and inline assembly. This property can be
-independent of where the test is performed. There should be no assumption on
-the order or context in wich the preprocessor macros are evaluated.
+Evaluating a feature macro returns the availability of intrinsics and inline
+assembly for that feature, but no assumptions should be made on the order or
+context in which the preprocessor macros are evaluated.
 
 The compiler may add additional restrictions to the intrinsics beyond what is
 captured by the ACLE macros depending on the context in which the intrinsics
@@ -1093,8 +1092,8 @@ are used. For example:
     }
 ```
 
-While testing `__ARM_FEATURE_SME` ensures that the SME intrinsic `svst1_hor_za8`
-is available, `foo` will fail to compile because the call does not occur in a
+If `__ARM_FEATURE_SME` evaluates to `true` the SME intrinsic `svst1_hor_za8`
+is available, but `foo` may still fail to compile because the call does not occur in a
 [streaming statement](#streaming-statement).
 
 ## Attributes
