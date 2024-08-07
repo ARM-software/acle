@@ -923,8 +923,8 @@ and:
 to the more specific header files below. These intrinsics are in the
 C implementation namespace and begin with double underscores. It is
 unspecified whether they are available without the header being
-included. The `__ARM_ACLE` macro should be tested before including the
-header:
+included. When `__ARM_ACLE` is defined to `1`, the header file is
+guaranteed to be available.
 
 ``` c
   #ifdef __ARM_ACLE
@@ -937,8 +937,9 @@ header:
 `<arm_fp16.h>` is provided to define the scalar 16-bit floating point
 arithmetic intrinsics. As these intrinsics are in the user namespace,
 an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` feature macro
-should be tested before including the header:
+included. When `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1`,
+the header file is available regardless of the context in which the macro
+is evaluated.
 
 ``` c
   #ifdef __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
@@ -951,8 +952,9 @@ should be tested before including the header:
 `<arm_bf16.h>` is provided to define the 16-bit brain floating point
 arithmetic intrinsics. As these intrinsics are in the user namespace,
 an implementation would not normally define them until the header is
-included. The `__ARM_FEATURE_BF16` feature macro
-should be tested before including the header:
+included. When `__ARM_FEATURE_BF16` is defined to `1`, the header file is
+guaranteed to be available regardless of the context in which the macro
+is evaluated.
 
 ``` c
   #ifdef __ARM_FEATURE_BF16
@@ -973,8 +975,10 @@ instructions available are conversion intrinsics between `bfloat16_t` and
 intrinsics](#advanced-simd-neon-intrinsics) and associated
 [data types](#vector-data-types). As these intrinsics and data types are
 in the user namespace, an implementation would not normally define them
-until the header is included. The `__ARM_NEON` macro should be tested
-before including the header:
+until the header is included. When `__ARM_NEON` is defined to `1`,
+the header file is available regardless of the context in which the macro is
+evaluated.
+
 
 ``` c
   #ifdef __ARM_NEON
@@ -995,8 +999,8 @@ to be included, if the header files are available:
 `<arm_sve.h>` defines data types and intrinsics for SVE and its
 extensions; see [SVE language extensions and
 intrinsics](#sve-language-extensions-and-intrinsics) for details.
-You should test the `__ARM_FEATURE_SVE` macro before including the
-header:
+When `__ARM_FEATURE_SVE` is defined to `1`, the header file is available
+regardless of the context in which the macro is evaluated.
 
 ``` c
   #ifdef __ARM_FEATURE_SVE
@@ -1015,7 +1019,7 @@ Including `<arm_sve.h>` also includes the following header files:
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
 Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
-for details.  The `__ARM_NEON_SVE_BRIDGE` macro should be tested
+for details. The `__ARM_NEON_SVE_BRIDGE` macro should be tested
 before including the header:
 
 ``` c
@@ -1057,8 +1061,8 @@ change or be extended in the future.
 
 `<arm_sme.h>` declares functions and defines intrinsics for SME
 and its extensions; see [SME language extensions and intrinsics](#sme-language-extensions-and-intrinsics)
-for details. The `__ARM_FEATURE_SME` macro should be tested before
-including the header:
+for details. When `__ARM_FEATURE_SME` is defined to `1`, the header file is
+available regardless of the context in which the macro is evaluated.
 
 ``` c
   #ifdef __ARM_FEATURE_SME
@@ -1067,6 +1071,39 @@ including the header:
 ```
 
 Including `<arm_sme.h>` also includes [`<arm_sve.h>`](#arm_sve.h).
+
+### Predefined feature macros and header files
+
+Evaluating a feature macro returns the availability of intrinsics and inline
+assembly for that feature, but no assumptions should be made on the order or
+context in which the preprocessor macros are evaluated. For example:
+
+``` c
+    __attribute__((target("+sve")))
+    void foo() {
+    #ifdef __ARM_FEATURE_SVE
+      // The user should make no assumptions that the target attribute
+     // has enabled the __ARM_FEATURE_SVE macro.
+    #endif
+}
+```
+
+The compiler may add additional restrictions to the intrinsics beyond what is
+captured by the ACLE macros depending on the context in which the intrinsics
+are used. For example:
+
+``` c
+    #include <arm_sme.h>
+    void foo(svbool_t pg, void *ptr, uint32_t slice_base) {
+    #ifdef __ARM_FEATURE_SME
+      svst1_hor_za8(0, slice_base, pg, ptr);
+    #endif
+    }
+```
+
+If `__ARM_FEATURE_SME` evaluates to `true` the SME intrinsic `svst1_hor_za8`
+is available, but `foo` may still fail to compile because the call does not
+occur in a [streaming statement](#streaming-statement).
 
 ## Attributes
 
