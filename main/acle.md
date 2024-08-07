@@ -940,7 +940,7 @@ guaranteed to be available.
 arithmetic intrinsics. As these intrinsics are in the user namespace,
 an implementation would not normally define them until the header is
 included. When `__ARM_FEATURE_FP16_SCALAR_ARITHMETIC` is defined to `1`,
-the header file is available in a normal unannotated function.
+the header file is guaranteed to be available.
 
 ``` c
   #ifdef __ARM_FEATURE_FP16_SCALAR_ARITHMETIC
@@ -954,7 +954,7 @@ the header file is available in a normal unannotated function.
 arithmetic intrinsics. As these intrinsics are in the user namespace,
 an implementation would not normally define them until the header is
 included. The `__ARM_FEATURE_BF16` is defined to `1`, the header file is
-available in a normal unannotated function.
+guaranteed to be available in a normal unannotated function.
 
 ``` c
   #ifdef __ARM_FEATURE_BF16
@@ -976,7 +976,7 @@ intrinsics](#advanced-simd-neon-intrinsics) and associated
 [data types](#vector-data-types). As these intrinsics and data types are
 in the user namespace, an implementation would not normally define them
 until the header is included. The `__ARM_NEON` is defined to `1`,
-the header file is available in a normal unannotated function.
+the header file is guaranteed to be available in a normal unannotated function.
 
 
 ``` c
@@ -1000,8 +1000,8 @@ following it. --><span id="arm_sve.h"></span>
 `<arm_sve.h>` defines data types and intrinsics for SVE and its
 extensions; see [SVE language extensions and
 intrinsics](#sve-language-extensions-and-intrinsics) for details.
-The `__ARM_FEATURE_SVE` is defined to `1`, the header file is available
-in a normal unannotated function.
+The `__ARM_FEATURE_SVE` is defined to `1`, the header file is guaranteed to be
+available in a normal unannotated function.
 
 ``` c
   #ifdef __ARM_FEATURE_SVE
@@ -1063,7 +1063,7 @@ change or be extended in the future.
 `<arm_sme.h>` declares functions and defines intrinsics for SME
 and its extensions; see [SME language extensions and intrinsics](#sme-language-extensions-and-intrinsics)
 for details. The `__ARM_FEATURE_SME` is defined to `1`,
-the header file is available in a normal unannotated function.
+the header file is guaranteed to be available in a normal unannotated function.
 
 ``` c
   #ifdef __ARM_FEATURE_SME
@@ -1077,7 +1077,17 @@ Including `<arm_sme.h>` also includes [`<arm_sve.h>`](#arm_sve.h).
 
 Evaluating a feature macro returns the availability of intrinsics and inline
 assembly for that feature, but no assumptions should be made on the order or
-context in which the preprocessor macros are evaluated.
+context in which the preprocessor macros are evaluated. For example:
+
+``` c
+    __attribute__((target("+sve")))
+    void foo() {
+    #ifdef __ARM_FEATURE_SVE
+      // The user should make no assumptions that the target attribute
+     // has enabled the __ARM_FEATURE_SVE macro.
+    #endif
+}
+```
 
 The compiler may add additional restrictions to the intrinsics beyond what is
 captured by the ACLE macros depending on the context in which the intrinsics
@@ -1093,8 +1103,8 @@ are used. For example:
 ```
 
 If `__ARM_FEATURE_SME` evaluates to `true` the SME intrinsic `svst1_hor_za8`
-is available, but `foo` may still fail to compile because the call does not occur in a
-[streaming statement](#streaming-statement).
+is available, but `foo` may still fail to compile because the call does not
+occur in a [streaming statement](#streaming-statement).
 
 ## Attributes
 
