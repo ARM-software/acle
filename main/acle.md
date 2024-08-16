@@ -1083,7 +1083,7 @@ context in which the preprocessor macros are evaluated. For example:
     void foo() {
     #ifdef __ARM_FEATURE_SVE
       // The user should make no assumptions that the target attribute
-     // has enabled the __ARM_FEATURE_SVE macro.
+      // has enabled the __ARM_FEATURE_SVE macro.
     #endif
 }
 ```
