@@ -400,6 +400,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a requirement for function version declaration in Function Multi Versioning.
 * Fixed some rendering issues in the online Markdown documentation and fixed
   a misplaced anchor.
+* Added `__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` to indicate the support
+  level of the [Function Multi Versioning](#function-multi-versioning).
 
 ### References
 
@@ -2571,6 +2573,15 @@ following:
 `__HAVE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the
 versioning mechanism described in this section is supported by the
 compiler and it is enabled.
+
+`__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` is defined to the currently supported
+version of the ACLE. The value and the format are the same as the `__ARM_ACLE`.
+
+For example, it can be implemented as:
+
+``` c
+#define __FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL __ARM_ACLE_VERSION(2024, 3, 0)
+```
 
 ### Name mangling
 
