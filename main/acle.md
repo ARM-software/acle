@@ -404,6 +404,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   level of the [Function Multi Versioning](#function-multi-versioning).
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
+* Fixed range of operand `o0` (too small) in AArch64 system register designations.
 
 ### References
 
@@ -5329,7 +5330,7 @@ When specifying a system register to `__arm_rsr`, `__arm_rsr64`, `__arm_rsr128`,
 
 Where:
 
-* `<o0>` is a decimal integer in the range `[0, 1]`
+* `<o0>` is a decimal integer in the range `[0, 3]`
 * `<op1>`, `<op2>` are decimal integers in the range `[0, 7]`
 * `<CRm>`, `<CRn>` are decimal integers in the range `[0, 15]`
 
