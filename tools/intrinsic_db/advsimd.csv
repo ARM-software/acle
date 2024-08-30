@@ -2583,7 +2583,7 @@ void vst2q_lane_u64(uint64_t *ptr, uint64x2x2_t val, __builtin_constant_p(lane))
 void vst2_lane_p64(poly64_t *ptr, poly64x1x2_t val, __builtin_constant_p(lane))	val.val[1] -> Vt2.1D;val.val[0] -> Vt.1D;ptr -> Xn;0 <= lane <= 0	ST2 {Vt.d - Vt2.d}[lane],[Xn]		A64
 void vst2q_lane_p64(poly64_t *ptr, poly64x2x2_t val, __builtin_constant_p(lane))	val.val[1] -> Vt2.2D;val.val[0] -> Vt.2D;ptr -> Xn;0 <= lane <= 1	ST2 {Vt.d - Vt2.d}[lane],[Xn]		A64
 void vst2_lane_f64(float64_t *ptr, float64x1x2_t val, __builtin_constant_p(lane))	val.val[1] -> Vt2.1D;val.val[0] -> Vt.1D;ptr -> Xn;0 <= lane <= 0	ST2 {Vt.d - Vt2.d}[lane],[Xn]		A64
-void vst2q_lane_f64(float64_t *ptr, float64x2x2_t val, __builtin_constant_p(lane))	val.val[1] -> Vt2.2D;val.val[0] -> Vt.2D;ptr -> Xn;0 <= lane <= 2	ST2 {Vt.d - Vt2.d}[lane],[Xn]		A64
+void vst2q_lane_f64(float64_t *ptr, float64x2x2_t val, __builtin_constant_p(lane))	val.val[1] -> Vt2.2D;val.val[0] -> Vt.2D;ptr -> Xn;0 <= lane <= 1	ST2 {Vt.d - Vt2.d}[lane],[Xn]		A64
 void vst3_lane_s16(int16_t *ptr, int16x4x3_t val, __builtin_constant_p(lane))	val.val[2] -> Vt3.4H;val.val[1] -> Vt2.4H;val.val[0] -> Vt.4H;ptr -> Xn;0 <= lane <= 3	ST3 {Vt.h - Vt3.h}[lane],[Xn]		v7/A32/A64
 void vst3q_lane_s16(int16_t *ptr, int16x8x3_t val, __builtin_constant_p(lane))	val.val[2] -> Vt3.8H;val.val[1] -> Vt2.8H;val.val[0] -> Vt.8H;ptr -> Xn;0 <= lane <= 7	ST3 {Vt.h - Vt3.h}[lane],[Xn]		v7/A32/A64
 void vst3_lane_s32(int32_t *ptr, int32x2x3_t val, __builtin_constant_p(lane))	val.val[2] -> Vt3.2S;val.val[1] -> Vt2.2S;val.val[0] -> Vt.2S;ptr -> Xn;0 <= lane <= 1	ST3 {Vt.s - Vt3.s}[lane],[Xn]		v7/A32/A64

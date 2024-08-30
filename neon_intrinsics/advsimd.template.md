@@ -149,6 +149,7 @@ for more information about Arm’s trademarks.
 ### Changes for next release
 
 * Textual improvements (non-functional changes).
+* Fixed the range of the ``lane`` immediate argument for ``vst2q_lane_f64``.
 
 <!---
 **** Do not remove! ****
