@@ -404,6 +404,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   level of the [Function Multi Versioning](#function-multi-versioning).
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
+* Removed requirement to add preprocessor guards for header files
 
 ### References
 
@@ -1023,7 +1024,7 @@ Including `<arm_sve.h>` also includes the following header files:
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
 Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
-for details. The `__ARM_NEON_SVE_BRIDGE` macro should be tested
+for details.  The `__ARM_NEON_SVE_BRIDGE` macro should be tested
 before including the header:
 
 ``` c
@@ -1087,7 +1088,7 @@ context in which the preprocessor macros are evaluated. For example:
     void foo() {
     #ifdef __ARM_FEATURE_SVE
       // The user should make no assumptions that the target attribute
-     // has enabled the __ARM_FEATURE_SVE macro.
+      // has enabled the __ARM_FEATURE_SVE macro.
     #endif
 }
 ```
