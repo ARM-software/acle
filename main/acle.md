@@ -827,13 +827,13 @@ predefine the associated macro to a nonzero value.
 
 | **Name**                                                    | **Target**            | **Predefined macro**              |
 | ----------------------------------------------------------- | --------------------- | --------------------------------- |
+| [`__arm_agnostic`](#arm_agnostic)                           | function type         | `__ARM_FEATURE_SME`               |
 | [`__arm_locally_streaming`](#arm_locally_streaming)         | function declaration  | `__ARM_FEATURE_LOCALLY_STREAMING` |
 | [`__arm_in`](#ways-of-sharing-state)                        | function type         | Argument-dependent                |
 | [`__arm_inout`](#ways-of-sharing-state)                     | function type         | Argument-dependent                |
 | [`__arm_new`](#arm_new)                                     | function declaration  | Argument-dependent                |
 | [`__arm_out`](#ways-of-sharing-state)                       | function type         | Argument-dependent                |
 | [`__arm_preserves`](#ways-of-sharing-state)                 | function type         | Argument-dependent                |
-| [`__arm_agnostic`](#arm_agnostic)                           | function type         | `__ARM_FEATURE_SME`               |
 | [`__arm_streaming`](#arm_streaming)                         | function type         | `__ARM_FEATURE_SME`               |
 | [`__arm_streaming_compatible`](#arm_streaming_compatible)   | function type         | `__ARM_FEATURE_SME`               |
 
@@ -4840,44 +4840,27 @@ if such a restoration is necessary. For example:
 
 ## `__arm_agnostic`
 
-A function with the `__arm_agnostic` [keyword attribute](#keyword-attributes) must
-preserve the architectural state that is specified by its arguments when such
-state exists at runtime. The function is otherwise unconcerned with the contents
-of this state.
+A function with the `__arm_agnostic` [keyword attribute](#keyword-attributes)
+must preserve the architectural state that is specified by its arguments when
+such state exists at runtime. The function is otherwise unconcerned with this
+state.
 
 The `__arm_agnostic` [keyword attribute](#keyword-attributes) applies to
 **function types** and accepts the following arguments:
 
 ```"sme_za_state"```
 
-*   If the function is defined and PSTATE.ZA is available, the definition must
-    preserve all architectural state enabled by PSTATE.ZA.
+*   This attribute affects the ABI of a function, which must implement an
+    [agnostic-ZA interface](#agnostic-za). It is the compiler's responsibility
+    to ensure that the function's object code honors the ABI requirements.
 
-    It is the compiler's responsibility to ensure that this state is preserved.
+*   The use of `__arm_agnostic("sme_za_state")` allows writing functions that
+    are compatible with ZA state without having to share ZA state with the
+    caller, as required by `__arm_preserves`.
 
-    The compiled function must be forward-compatible and should not make any
-    assumptions on what state is enabled by PSTATE.ZA, which could be done by
-    relying on ABI routines available on the platform for the allocation of
-    a buffer and the saving and restoring of state.
-
-*   If PSTATE.ZA is available, then the [abstract machine](#abstract-machine)
-    ensures that on return from the function, the value of PSTATE.ZA is the same
-    as it was on entry to the function.
-
-*   If the function forms part of the object code's ABI, that object code
-    function has a “ZA-compatible interface”; see [[AAPCS64]](#AAPCS64)
-    for more details.
-
-*   It is not valid for a function declaration with `__arm_agnostic("sme_za_state")`
-    to be combined with any of the following [keyword attributes](#keyword-attributes):
-    *  `__arm_new(<state>)`
-    *  `__arm_in(<state>)`
-    *  `__arm_out(<state>)`
-    *  `__arm_inout(<state>)`
-    *  `__arm_preserves(<state>)`
-
-    when `<state>` describes state that is enabled by PSTATE.ZA.
-
+*   It is not valid for a function declaration with
+    `__arm_agnostic("sme_za_state")` to [share](#shares-state) PSTATE.ZA state
+    with its caller.
 
 ## Mapping to the Procedure Call Standard
 
@@ -4890,6 +4873,10 @@ interfaces:
 
 *   a “shared-ZA” interface
 
+<span id="agnostic-za"></span>
+
+*   a "agnostic-ZA" interface
+
 If a C or C++ function F forms part of the object code's ABI, that
 object code function has a shared-ZA interface if and only if at least
 one of the following is true:
@@ -4898,7 +4885,17 @@ one of the following is true:
 
 *   F shares ZT0 with its caller
 
-All other functions have a private-ZA interface.
+All other functions have either a private-ZA or an agnostic-ZA interface.
+
+If F implements an agnostic-ZA interface and PSTATE.ZA is available at runtime,
+then a call to F must return with its ZA state unchanged in accordance
+to the [[AAPCS64]](#AAPCS64). In practice this means that calls to F don't have
+to emit code to set up a lazy-save for ZA or to preserve other state like ZT0
+when such state is live at the call site.
+
+The implementation of F must not make any assumptions on the availability of
+PSTATE.ZA or any architectural state associated with it.
+
 
 ## Function definitions
 
