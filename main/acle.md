@@ -8960,13 +8960,13 @@ Gather Load Quadword.
    // _bf16, _f16, _f32, _f64
    svint8_t svld1q_gather[_u64base]_s8(svbool_t pg, svuint64_t zn);
    svint8_t svld1q_gather[_u64base]_offset_s8(svbool_t pg, svuint64_t zn, int64_t offset);
-   svint8_t svld1q_gather[_u64]_offset[_s8](svbool_t pg, const int8_t *base, svuint64_t offset);
+   svint8_t svld1q_gather_[u64]offset[_s8](svbool_t pg, const int8_t *base, svuint64_t offset);
 
 
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
-   svint16_t svld1q_gather[_u64]_index[_s16](svbool_t pg, const int16_t *base, svuint64_t index);
+   svint16_t svld1q_gather_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index);
    svint16_t svld1q_gather[_u64base]_index_s16(svbool_t pg, svuint64_t zn, int64_t index);
    ```
 
@@ -9055,12 +9055,12 @@ Scatter store quadwords.
    // _bf16, _f16, _f32, _f64
    void svst1q_scatter[_u64base][_s8](svbool_t pg, svuint64_t zn, svint8_t data);
    void svst1q_scatter[_u64base]_offset[_s8](svbool_t pg, svuint64_t zn, int64_t offset, svint8_t data);
-   void svst1q_scatter[_u64]_offset[_s8](svbool_t pg, const uint8_t *base, svuint64_t offset, svint8_t data);
+   void svst1q_scatter_[u64]offset[_s8](svbool_t pg, const uint8_t *base, svuint64_t offset, svint8_t data);
 
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
-   void svst1q_scatter[_u64]_index[_s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
+   void svst1q_scatter_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
    void svst1q_scatter[_u64base]_index[_s16](svbool_t pg, svuint64_t zn, int64_t index, svint16_t data);
 ```
 
