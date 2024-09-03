@@ -405,6 +405,11 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
 
+* Added specifications for floating-point absolute minimum
+  and maximum intrinsics (FEAT_FAMINMAX).
+
+* Added specifications for table lookup intrinsics (FEAT_LUT, FEAT_SME_LUTv2).
+
 ### References
 
 This document refers to the following documents.
@@ -2124,6 +2129,22 @@ support for the SVE2 SM4 (FEAT_SVE_SM4) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 `__ARM_FEATURE_SVE2` are both nonzero.
 
+### Floating-point absolute minimum and maximum extension
+
+`__ARM_FEATURE_FAMINMAX` is defined to 1 if there is hardware support for
+floating-point absolute minimum and maximum instructions (FEAT_FAMINMAX)
+and if the associated ACLE intrinsics are available.
+
+### Lookup table extensions
+
+`__ARM_FEATURE_LUT` is defined to 1 if there is hardware support for
+lookup table instructions with 2-bit and 4-bit indices (FEAT_LUT)
+and if the associated ACLE intrinsics are available.
+
+`__ARM_FEATURE_SME_LUTv2` is defined to 1 if there is hardware support for
+lookup table instructions with 4-bit indices and 8-bit elements (FEAT_SME_LUTv2)
+and if the associated ACLE intrinsics are available.
+
 ### Other floating-point and vector extensions
 
 #### Fused multiply-accumulate (FMA)
@@ -2411,12 +2432,14 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_DIRECTED_ROUNDING`](#directed-rounding)                                                                                                 | Directed Rounding                                                                                  | 1           |
 | [`__ARM_FEATURE_DOTPROD`](#availability-of-dot-product-intrinsics)                                                                                      | Dot product extension (ARM v8.2-A)                                                                 | 1           |
 | [`__ARM_FEATURE_DSP`](#dsp-instructions)                                                                                                                | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
+| [`__ARM_FEATURE_FAMINMAX`](#floating-point-absolute-minimum-and-maximum-extension)                                                                      | Floating-point absolute minimum and maximum extension                                              | 1           |
 | [`__ARM_FEATURE_FMA`](#fused-multiply-accumulate-fma)                                                                                                   | Floating-point fused multiply-accumulate                                                           | 1           |
 | [`__ARM_FEATURE_FP16_FML`](#fp16-fml-extension)                                                                                                         | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
 | [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_IDIV`](#hardware-integer-divide)                                                                                                        | Hardware Integer Divide                                                                            | 1           |
 | [`__ARM_FEATURE_JCVT`](#javascript-floating-point-conversion)                                                                                           | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
 | [`__ARM_FEATURE_LDREX`](#ldrexstrex) *(Deprecated)*                                                                                                     | Load/store exclusive instructions                                                                  | 0x0F        |
+| [`__ARM_FEATURE_LUT`](#lookup-table-extensions)                                                                                                         | Lookup table extensions (FEAT_LUT)                                                                 | 1           |
 | [`__ARM_FEATURE_MATMUL_INT8`](#availability-of-armv8.6-a-integer-matrix-multiply-intrinsics)                                                            | Integer Matrix Multiply extension (Armv8.6-A, optional Armv8.2-A, Armv8.3-A, Armv8.4-A, Armv8.5-A) | 1           |
 | [`__ARM_FEATURE_MEMORY_TAGGING`](#memory-tagging)                                                                                                       | Memory Tagging (Armv8.5-A)                                                                         | 1           |
 | [`__ARM_FEATURE_MOPS`](#memcpy-family-of-memory-operations-standarization-instructions---mops)                                                          | `memcpy`, `memset`, and `memmove` family of operations standardization instructions               | 1           |
@@ -2443,6 +2466,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SME_F64F64`](#double-precision-floating-point-outer-product-intrinsics)                                                                 | Double precision floating-point outer product intrinsics (FEAT_SME_F64F64)                         | 1           |
 | [`__ARM_FEATURE_SME_I16I64`](#16-bit-to-64-bit-integer-widening-outer-product-intrinsics)                                                               | 16-bit to 64-bit integer widening outer product intrinsics (FEAT_SME_I16I64)                       | 1           |
 | [`__ARM_FEATURE_SME_LOCALLY_STREAMING`](#scalable-matrix-extension-sme)                                                                                 | Support for the `arm_locally_streaming` attribute                                                  | 1           |
+| [`__ARM_FEATURE_SME_LUTv2`](#lookup-table-extensions)                                                                                                   | Lookup table extensions (FEAT_SME_LUTv2)                                                           | 1           |
 | [`__ARM_FEATURE_SVE`](#scalable-vector-extension-sve)                                                                                                   | Scalable Vector Extension (FEAT_SVE)                                                               | 1           |
 | [`__ARM_FEATURE_SVE_B16B16`](#non-widening-brain-16-bit-floating-point-support)                                                                         | Non-widening brain 16-bit floating-point intrinsics (FEAT_SVE_B16B16)                              | 1           |
 | [`__ARM_FEATURE_SVE_BF16`](#brain-16-bit-floating-point-support)                                                                                        | SVE support for the 16-bit brain floating-point extension (FEAT_BF16)                              | 1           |
@@ -9125,6 +9149,73 @@ Interleave elements from halves of each pair of quadword vector segments.
    svuint8_t svzipq2[_u8](svuint8_t zn, svuint8_t zm);
    ```
 
+### SVE2 maximum and minimum absolute value
+
+The intrinsics in this section are defined by the header file
+[`<arm_sve.h>`](#arm_sve.h) when either `__ARM_FEATURE_SVE2` or
+`__ARM_FEATURE_SME2` is defined to 1, and `__ARM_FEATURE_FAMINMAX`
+is defined to 1.
+
+#### FAMAX
+
+Floating-point absolute maximum (predicated).
+``` c
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svamax[_f16]_m(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+  svfloat16_t svamax[_f16]_x(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+  svfloat16_t svamax[_f16]_z(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svamax[_n_f16]_m(svbool_t pg, svfloat16_t zn, float16_t zm);
+  svfloat16_t svamax[_n_f16]_x(svbool_t pg, svfloat16_t zn, float16_t zm);
+  svfloat16_t svamax[_n_f16]_z(svbool_t pg, svfloat16_t zn, float16_t zm);
+```
+
+#### FAMIN
+
+Floating-point absolute minimum (predicated).
+``` c
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svamin[_f16]_m(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+  svfloat16_t svamin[_f16]_x(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+  svfloat16_t svamin[_f16]_z(svbool_t pg, svfloat16_t zn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svamin[_n_f16]_m(svbool_t pg, svfloat16_t zn, float16_t zm);
+  svfloat16_t svamin[_n_f16]_x(svbool_t pg, svfloat16_t zn, float16_t zm);
+  svfloat16_t svamin[_n_f16]_z(svbool_t pg, svfloat16_t zn, float16_t zm);
+```
+
+### SVE2 lookup table
+
+The intrinsics in this section are defined by the header file
+[`<arm_sve.h>`](#arm_sve.h) when either `__ARM_FEATURE_SVE2` or
+`__ARM_FEATURE_SME2` is defined to 1, and `__ARM_FEATURE_LUT`
+is defined to 1.
+
+#### LUTI2
+
+Lookup table read with 2-bit indices.
+```c
+  // Variant is  also available for: _u8
+  svint8_t svluti2_lane[_s8](svint8_t table, svuint8_t indices, uint64_t imm_idx);
+
+  // Variant are also available for: _u16, _f16 and _bf16
+  svint16_t svluti2_lane[_s16]( svint16_t table, svuint8_t indices, uint64_t imm_idx);
+```
+
+#### LUTI4
+
+Lookup table read with 4-bit indices.
+```c
+  // Variant is also available for: _u8
+  svint8_t svluti4_lane[_s8](svint8_t table, svuint8_t indices, uint64_t imm_idx);
+
+  // Variant are also available for: _u16, _f16, _bf16
+  svint16_t svluti4_lane[_s16](svint16_t table, svuint8_t indices, uint64_t imm_idx);
+  svint16_t svluti4_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
+```
+
 # SME language extensions and intrinsics
 
 The specification for SME is in
@@ -12714,7 +12805,62 @@ While (resulting in predicate tuple)
   // _b64[_s64]_x2, _b8[_u64]_x2, _b16[_u64]_x2, _b32[_u64]_x2 and
   // _b64[_u64]_x2
   svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
-  ```
+```
+
+
+### SME2 maximum and minimum absolute value
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` is defined to 1
+and `__ARM_FEATURE_FAMINMAX` is defined to 1.
+
+#### FAMAX
+
+Absolute maximum.
+``` c
+  // Variants are also available for:
+  //  [_f32_x2], [_f64_x2],
+  //  [_f16_x4], [_f32_x4] and [_f64_x4]
+  svfloat16x2_t svamax[_f16_x2](svfloat16x2 zd, svfloat16x2_t zm) __arm_streaming;
+```
+
+#### FAMIN
+
+Absolute minimum.
+``` c
+  // Variants are also available for:
+  //  [_f32_x2], [_f64_x2],
+  //  [_f16_x4], [_f32_x4] and [_f64_x4]
+  svfloat16x2_t svamin[_f16_x2](svfloat16x2 zd, svfloat16x2_t zm) __arm_streaming;
+```
+
+### SME2 lookup table
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME_LUTv2` is defined to 1.
+
+#### MOVT
+
+Move vector register to ZT0.
+``` c
+  // Variants are also available for:
+  // [_s8], [_u16], [_s16], [_u32], [_s32], [_u64], [_s64]
+  // [_bf16], [_f16], [_f32], [_f64]
+  void svwrite_zt[_u8](uint64_t zt0, svuint8_t zt) __arm_streaming __arm_out("zt0");
+
+  // Variants are also available for:
+  // [_s8], [_u16], [_s16], [_u32], [_s32], [_u64], [_s64]
+  // [_bf16], [_f16], [_f32], [_f64]
+  void svwrite_lane_zt[_u8](uint64_t zt0, svuint8_t zt, uint64_t idx) __arm_streaming __arm_inout("zt0");
+```
+
+#### LUTI4
+
+Lookup table read with 4-bit indexes and 8-bit elements.
+``` c
+  // Variants are also available for: _u8
+  svint8x4_t svluti4_zt_s8_x4(uint64_t zt0, svuint8x2_t zn) __arm_streaming __arm_in("zt0");
+```
 
 # M-profile Vector Extension (MVE) intrinsics
 
