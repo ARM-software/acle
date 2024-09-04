@@ -404,6 +404,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   level of the [Function Multi Versioning](#function-multi-versioning).
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
+* Removed requirement to add preprocessor guards for header files.
 
 * Added specifications for floating-point absolute minimum
   and maximum intrinsics (FEAT_FAMINMAX).
@@ -1028,7 +1029,7 @@ Including `<arm_sve.h>` also includes the following header files:
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
 Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
-for details. The `__ARM_NEON_SVE_BRIDGE` macro should be tested
+for details.  The `__ARM_NEON_SVE_BRIDGE` macro should be tested
 before including the header:
 
 ``` c
