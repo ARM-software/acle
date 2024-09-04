@@ -404,7 +404,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   level of the [Function Multi Versioning](#function-multi-versioning).
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
-* Removed requirement to add preprocessor guards for header files
+* Removed requirement to add preprocessor guards for header files.
 
 ### References
 
