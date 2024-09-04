@@ -403,6 +403,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` to indicate the support
   level of the [Function Multi Versioning](#function-multi-versioning).
 * Unified Function Multi Versioning features sha1, sha2.
+* Unified Function Multi Versioning features ls64, ls64_v, ls64_accdata.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
 * Removed requirement to add preprocessor guards for header files.
@@ -2755,9 +2756,7 @@ The following table lists the architectures feature mapping for AArch64
    | 490           | `FEAT_SSBS`              | ssbs          | ```ID_AA64PFR1_EL1.SSBS >= 0b0001```      |
    | 500           | `FEAT_SSBS2`             | ssbs2         | ```ID_AA64PFR1_EL1.SSBS >= 0b0010```      |
    | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.BT >= 0b0001```        |
-   | 520           | `FEAT_LS64`              | ls64          | ```ID_AA64ISAR1_EL1.LS64 >= 0b0001```     |
-   | 530           | `FEAT_LS64_V`            | ls64_v        | ```ID_AA64ISAR1_EL1.LS64 >= 0b0010```     |
-   | 540           | `FEAT_LS64_ACCDATA`      | ls64_accdata  | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011```     |
+   | 520           | `FEAT_LS64`, `FEAT_LS64_V`, <br> `FEAT_LS64_ACCDATA` | ls64 | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011``` |
    | 550           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT >= 0b0010```     |
    | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64 == 0b1```      |
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
