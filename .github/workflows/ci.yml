@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4.1.7
     - name: check the correctness of the sources and generate the PDFs
       run: ./build_with_docker.sh
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4.4.0
       with:
         name: pdfs
         path: pdfs
@@ -21,14 +21,14 @@ jobs:
   build-github-pages:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4.1.7
     - name: generate the GitHub Pages locally in order to check for errors
       run: ./tools/build-github-pages.sh build
 
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@4.1.7
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
           config-file: '.github/workflows/markdown-link-check.json'
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.base_ref == 'main' || github.ref == 'refs/heads/main'
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.7
       with:
         fetch-depth: 0
     - name: Check correctness of draftversion fields
