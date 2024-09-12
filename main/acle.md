@@ -2715,8 +2715,8 @@ The following table lists the architectures feature mapping for AArch64
    | 106           | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 >= 0b0001```      |
    | 108           | `FEAT_RDM`               | rdm, rdma     | ```ID_AA64ISAR0_EL1.RDM >= 0b0001```      |
    | 110           | `FEAT_CRC32`             | crc           | ```ID_AA64ISAR0_EL1.CRC32 >= 0b0001```    |
-   | 130           | `FEAT_SHA1`,`FEAT_SHA256`| sha2          | ```ID_AA64ISAR0_EL1.SHA2 >= 0b0001```     |
-   | 140           | `FEAT_SHA512`,`FEAT_SHA3`| sha3          | ```ID_AA64ISAR0_EL1.SHA3 >= 0b0001```     |
+   | 130           | `FEAT_SHA1`, `FEAT_SHA256` | sha2        | ```ID_AA64ISAR0_EL1.SHA2 >= 0b0001```     |
+   | 140           | `FEAT_SHA512`, `FEAT_SHA3` | sha3        | ```ID_AA64ISAR0_EL1.SHA3 >= 0b0001```     |
    | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
    | 160           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES >= 0b0010```      |
    | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
@@ -2746,7 +2746,7 @@ The following table lists the architectures feature mapping for AArch64
    | 390           | `FEAT_SVE_PMULL128`      | sve2-pmull128 | ```ID_AA64ZFR0_EL1.AES >= 0b0010```       |
    | 400           | `FEAT_SVE_BitPerm`       | sve2-bitperm  | ```ID_AA64ZFR0_EL1.BitPerm >= 0b0001```   |
    | 410           | `FEAT_SVE_SHA3`          | sve2-sha3     | ```ID_AA64ZFR0_EL1.SHA3 >= 0b0001```      |
-   | 420           | `FEAT_SM3`,`FEAT_SVE_SM4`| sve2-sm4      | ```ID_AA64ZFR0_EL1.SM4 >= 0b0001```       |
+   | 420           | `FEAT_SM3`, `FEAT_SVE_SM4` | sve2-sm4    | ```ID_AA64ZFR0_EL1.SM4 >= 0b0001```       |
    | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME >= 0b0001```       |
    | 440           | `FEAT_MTE`               | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
    | 450           | `FEAT_MTE2`              | memtag2       | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
