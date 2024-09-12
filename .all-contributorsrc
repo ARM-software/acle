@@ -324,6 +324,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Lukacma",
+      "name": "Lukacma",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46606997?v=4",
+      "profile": "https://github.com/Lukacma",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,

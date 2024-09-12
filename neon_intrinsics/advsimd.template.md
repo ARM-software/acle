@@ -12,7 +12,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2014-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2014-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
@@ -107,7 +107,7 @@ for more information about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2014-2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+* Copyright 2014-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
 * Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 
 ## Document history
@@ -149,6 +149,7 @@ for more information about Arm’s trademarks.
 ### Changes for next release
 
 * Textual improvements (non-functional changes).
+* Fixed the range of the ``lane`` immediate argument for ``vst2q_lane_f64``.
 
 <!---
 **** Do not remove! ****
