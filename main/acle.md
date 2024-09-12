@@ -406,11 +406,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
 * Removed requirement to add preprocessor guards for header files.
-
 * Added specifications for floating-point absolute minimum
   and maximum intrinsics (FEAT_FAMINMAX).
-
 * Added specifications for table lookup intrinsics (FEAT_LUT, FEAT_SME_LUTv2).
+* Release support level of the [Custom Datapath Extension](#custom-datapath-extension).
 
 ### References
 
@@ -4519,9 +4518,6 @@ stored to memory is modified by replacing the low 32 bits of
 The returned value is the same as for `__arm_st64bv`.
 
 # Custom Datapath Extension
-
-The specification for CDE is in `BETA` state and may change or be extended
-in the future.
 
 The intrinsics in this section provide access to instructions in the
 Custom Datapath Extension.
