@@ -4741,7 +4741,7 @@ bfloat16x8_t vcvt2_low_bf16_mf8_fpm(mfloat8x16_t vn, fpm_t fpm)	vn -> Vn.8B	BF2C
 bfloat16x8_t vcvt1_high_bf16_mf8_fpm(mfloat8x16_t vn, fpm_t fpm)	vn -> Vn.16B	BF1CVTL2 Vd.8H,Vn.16B	Vd.8H -> result	A64
 bfloat16x8_t vcvt2_high_bf16_mf8_fpm(mfloat8x16_t vn, fpm_t fpm)	vn -> Vn.16B	BF2CVTL2 Vd.8H,Vn.16B	Vd.8H -> result	A64
 
-float16x8_t vcvt1_bf16_mf8_fpm(mfloat8x8_t vn, fpm_t fpm)	vn -> Vn.8B	F1CVTL Vd.8H,Vn.8B	Vd.8H -> result	A64
+float16x8_t vcvt1_f16_mf8_fpm(mfloat8x8_t vn, fpm_t fpm)	vn -> Vn.8B	F1CVTL Vd.8H,Vn.8B	Vd.8H -> result	A64
 float16x8_t vcvt1_low_f16_mf8_fpm(mfloat8x16_t vn, fpm_t fpm)	vn -> Vn.8B	F1CVTL Vd.8H,Vn.8B	Vd.8H -> result	A64
 float16x8_t vcvt2_f16_mf8_fpm(mfloat8x8_t vn, fpm_t fpm)	vn -> Vn.8B	F2CVTL Vd.8H,Vn.8B	Vd.8H -> result	A64
 float16x8_t vcvt2_low_f16_mf8_fpm(mfloat8x16_t vn, fpm_t fpm)	vn -> Vn.8B	F2CVTL Vd.8H,Vn.8B	Vd.8H -> result	A64
