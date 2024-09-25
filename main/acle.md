@@ -1,10 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: 2024Q2
-date-of-issue: 21 June 2024
+version: 2024Q3
+date-of-issue: 30 September 2024
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -178,6 +178,7 @@ unless a different support level is specified in the text.
 | 2023Q2       | 04 August 2023    | Arm    | See [Changes between ACLE Q4 2022 and ACLE Q2 2023](#changes-between-acle-q4-2022-and-acle-q2-2023)                  |
 | 2024Q1       | 11 April 2024     | Arm    | See [Changes between ACLE Q2 2023 and ACLE Q1 2024](#changes-between-acle-q2-2023-and-acle-q1-2024)                  |
 | 2024Q2       | 21 June 2024      | Arm    | See [Changes between ACLE Q1 2024 and ACLE Q2 2024](#changes-between-acle-q1-2024-and-acle-q2-2024)                  |
+| 2024Q3       | 30 September 2024 | Arm    | See [Changes between ACLE Q2 2024 and ACLE Q3 2024](#changes-between-acle-q2-2024-and-acle-q3-2024)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -394,7 +395,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.1 (FEAT_SVE2p1).
 
-#### Changes for next release
+#### Changes between ACLE Q2 2024 and ACLE Q3 2024
 
 * Fixed incorrect system register dependencies in Function Multi Versioning.
 * Added a requirement for function version declaration in Function Multi Versioning.
