@@ -398,19 +398,17 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Fixed incorrect system register dependencies in Function Multi Versioning.
 * Added a requirement for function version declaration in Function Multi Versioning.
-* Fixed some rendering issues in the online Markdown documentation and fixed
-  a misplaced anchor.
 * Added `__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` to indicate the support
   level of the [Function Multi Versioning](#function-multi-versioning).
-* Unified Function Multi Versioning features sha1, sha2.
-* Unified Function Multi Versioning features ls64, ls64_v, ls64_accdata.
+* Unified Function Multi Versioning features sha1 and sha2.
+* Unified Function Multi Versioning features ls64, ls64_v, and ls64_accdata.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
 * Removed requirement to add preprocessor guards for header files.
 * Added specifications for floating-point absolute minimum
   and maximum intrinsics (FEAT_FAMINMAX).
 * Added specifications for table lookup intrinsics (FEAT_LUT, FEAT_SME_LUTv2).
-* Release support level of the [Custom Datapath Extension](#custom-datapath-extension).
+* Added Release support level for the [Custom Datapath Extension](#custom-datapath-extension).
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for modal 8-bit floating point intrinsics.
 
@@ -1035,8 +1033,9 @@ Including `<arm_sve.h>` also includes the following header files:
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
 Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
-for details.  The `__ARM_NEON_SVE_BRIDGE` macro should be tested
-before including the header:
+for details. Before including the header, you should test the
+`__ARM_NEON_SVE_BRIDGE` macro.
+:
 
 ``` c
   #ifdef __ARM_NEON_SVE_BRIDGE
@@ -1099,12 +1098,12 @@ context in which the preprocessor macros are evaluated. For example:
     void foo() {
     #ifdef __ARM_FEATURE_SVE
       // The user should make no assumptions that the target attribute
-      // has enabled the __ARM_FEATURE_SVE macro.
+      // enables the __ARM_FEATURE_SVE macro.
     #endif
 }
 ```
 
-The compiler may add additional restrictions to the intrinsics beyond what is
+The compiler might add additional restrictions to the intrinsics beyond what is
 captured by the ACLE macros depending on the context in which the intrinsics
 are used. For example:
 
@@ -1118,7 +1117,7 @@ are used. For example:
 ```
 
 If `__ARM_FEATURE_SME` evaluates to `true` the SME intrinsic `svst1_hor_za8`
-is available, but `foo` may still fail to compile because the call does not
+is available, but `foo` might still fail to compile because the call does not
 occur in a [streaming statement](#streaming-statement).
 
 ## Attributes
@@ -5897,11 +5896,11 @@ float16 types are only available when the `__fp16` type is defined, that is,
 when supported by the hardware.
 
 bfloat types are only available when the `__bf16` type is defined, that is,
-when supported by the hardware. The bfloat types are all opaque types.  That is
-to say they can only be used by intrinsics.
+when supported by the hardware. The bfloat types are all opaque types. That is,
+they can only be used by intrinsics.
 
-The FP8 types are all opaque types. That is to say they can only be used
-by intrinsics.
+The FP8 types are all opaque types. That is, they can only be used by
+intrinsics.
 
 ### Advanced SIMD Scalar data types
 
@@ -6713,7 +6712,7 @@ single vectors:
 
 | **Signed integer**   | **Unsigned integer** | **Floating-point**   |                      |
 | -------------------- | -------------------- | -------------------- | -------------------- |
-| `svint8_t`           | `svuint8_t`          |                      | `svmfloat8_t         |
+| `svint8_t`           | `svuint8_t`          |                      | `svmfloat8_t`        |
 | `svint16_t`          | `svuint16_t`         | `svfloat16_t`        | `svbfloat16_t`       |
 | `svint32_t`          | `svuint32_t`         | `svfloat32_t`        |                      |
 | `svint64_t`          | `svuint64_t`         | `svfloat64_t`        |                      |
@@ -12320,8 +12319,8 @@ element types.
 ### SME2.1 instruction intrinsics
 
 The specification for SME2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
-extended in the future.
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or
+be extended in the future.
 
 The intrinsics in this section are defined by the header file
 [`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p1` is defined.
@@ -13083,7 +13082,7 @@ intrinsics may have additional target feature requirements.
 
 #### BFCVTN, FCVTN
 
-Half-precision and BFloat16 convert, narrow and interleave to 8-bit
+Half-precision and BFloat16 convert, narrow, and interleave to 8-bit
 floating-point.
 ``` c
   // Variant is also available for: _bf16_x2
@@ -13092,7 +13091,7 @@ floating-point.
 
 #### FCVTNT, FCVTNB
 
-Single-precision convert, narrow and interleave to 8-bit floating-point (top and bottom).
+Single-precision convert, narrow, and interleave to 8-bit floating-point (top and bottom).
 ``` c
   svmfloat8_t svcvtnt_mf8[_f32_x2]_fpm(svmfloat8_t zd, svfloat32x2_t zn, fpm_t fpm);
   svmfloat8_t svcvtnb_mf8[_f32_x2]_fpm(svmfloat8_t zd, svfloat32x2_t zn, fpm_t fpm);
