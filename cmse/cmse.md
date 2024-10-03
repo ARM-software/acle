@@ -83,7 +83,7 @@ exceptions.
 
 First, several changes were made related to the defined terms so as to
 reflect the fact that such defined terms need to align with the
-terminology in CC-BY-SA-4.0 rather than Apache-2.0 (for example, changing
+terminology in CC-BY-SA-4.0 rather than Apache-2.0 (e.g., changing
 “Work” to “Licensed Material”).
 
 Second, the defensive termination clause was changed such that the
@@ -162,10 +162,6 @@ Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@
   handling of arguments to CMSE Entry functions.
 * Added [Requirement #58](#requirement-58) to address a security issue in the
   handling of return values from CMSE Non-secure calls.
-
-#### Changes for next release
-
-* Textual improvements (non-functional changes).
 
 ## References
 
