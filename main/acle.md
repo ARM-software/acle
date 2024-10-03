@@ -417,6 +417,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Unified Function Multi Versioning features ssbs and ssbs2.
 * Unified Function Multi Versioning features memtag and memtag2.
+* Unified Function Multi Versioning features aes and pmull.
+* Unified Function Multi Versioning features sve2-aes and sve2-pmull128.
 
 ### References
 
@@ -2784,8 +2786,7 @@ The following table lists the architectures feature mapping for AArch64
    | 110           | `FEAT_CRC32`             | crc           | ```ID_AA64ISAR0_EL1.CRC32 >= 0b0001```    |
    | 130           | `FEAT_SHA1`, `FEAT_SHA256` | sha2        | ```ID_AA64ISAR0_EL1.SHA2 >= 0b0001```     |
    | 140           | `FEAT_SHA512`, `FEAT_SHA3` | sha3        | ```ID_AA64ISAR0_EL1.SHA3 >= 0b0001```     |
-   | 150           | `FEAT_AES`               | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0001```      |
-   | 160           | `FEAT_PMULL`             | pmull         | ```ID_AA64ISAR0_EL1.AES >= 0b0010```      |
+   | 150           | `FEAT_AES`, `FEAT_PMULL` | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0010```      |
    | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
    | 175           | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM >= 0b0001```      |
    | 180           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT >= 0b0001```       |
@@ -2809,8 +2810,7 @@ The following table lists the architectures feature mapping for AArch64
    | 350           | `FEAT_F32MM`             | f32mm         | ```ID_AA64ZFR0_EL1.F32MM >= 0b00001```    |
    | 360           | `FEAT_F64MM`             | f64mm         | ```ID_AA64ZFR0_EL1.F64MM >= 0b00001```    |
    | 370           | `FEAT_SVE2`              | sve2          | ```ID_AA64ZFR0_EL1.SVEver >= 0b0001```    |
-   | 380           | `FEAT_SVE_AES`           | sve2-aes      | ```ID_AA64ZFR0_EL1.AES >= 0b0001```       |
-   | 390           | `FEAT_SVE_PMULL128`      | sve2-pmull128 | ```ID_AA64ZFR0_EL1.AES >= 0b0010```       |
+   | 380           | `FEAT_SVE_AES`, <br> `FEAT_SVE_PMULL128` | sve2-aes | ```ID_AA64ZFR0_EL1.AES >= 0b0010``` |
    | 400           | `FEAT_SVE_BitPerm`       | sve2-bitperm  | ```ID_AA64ZFR0_EL1.BitPerm >= 0b0001```   |
    | 410           | `FEAT_SVE_SHA3`          | sve2-sha3     | ```ID_AA64ZFR0_EL1.SHA3 >= 0b0001```      |
    | 420           | `FEAT_SM3`, `FEAT_SVE_SM4` | sve2-sm4    | ```ID_AA64ZFR0_EL1.SM4 >= 0b0001```       |
