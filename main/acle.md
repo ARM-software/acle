@@ -419,6 +419,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Unified Function Multi Versioning features memtag and memtag2.
 * Unified Function Multi Versioning features aes and pmull.
 * Unified Function Multi Versioning features sve2-aes and sve2-pmull128.
+* Removed Function Multi Versioning features sve-bf16, sve-ebf16, and sve-i8mm.
 * Removed Function Multi Versioning features ebf16, memtag3, and rpres.
 * Removed Function Multi Versioning feature dgh.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
@@ -2807,9 +2808,6 @@ The following table lists the architectures feature mapping for AArch64
    | 270           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM >= 0b0001```     |
    | 280           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 >= 0b0001```     |
    | 310           | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE >= 0b0001```       |
-   | 320           | `FEAT_BF16`              | sve-bf16      | ```ID_AA64ZFR0_EL1.BF16 >= 0b0001```      |
-   | 330           | `FEAT_EBF16`             | sve-ebf16     | ```ID_AA64ZFR0_EL1.BF16 >= 0b0010```      |
-   | 340           | `FEAT_I8MM`              | sve-i8mm      | ```ID_AA64ZFR0_EL1.I8MM >= 0b00001```     |
    | 350           | `FEAT_F32MM`             | f32mm         | ```ID_AA64ZFR0_EL1.F32MM >= 0b00001```    |
    | 360           | `FEAT_F64MM`             | f64mm         | ```ID_AA64ZFR0_EL1.F64MM >= 0b00001```    |
    | 370           | `FEAT_SVE2`              | sve2          | ```ID_AA64ZFR0_EL1.SVEver >= 0b0001```    |
