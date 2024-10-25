@@ -403,7 +403,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   level of the [Function Multi Versioning](#function-multi-versioning).
 * Unified Function Multi Versioning features sha1 and sha2.
 * Unified Function Multi Versioning features ls64, ls64_v, and ls64_accdata.
-* Unified Function Multi Versioning features ssbs and ssbs2.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SME2.1 (FEAT_SME2p1).
 * Removed requirement to add preprocessor guards for header files.
@@ -413,6 +412,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added Release support level for the [Custom Datapath Extension](#custom-datapath-extension).
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for modal 8-bit floating point intrinsics.
+
+#### Changes for next release
+
+* Unified Function Multi Versioning features ssbs and ssbs2.
 
 ### References
 
