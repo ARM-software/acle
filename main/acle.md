@@ -401,6 +401,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added a requirement for function version declaration in Function Multi Versioning.
 * Added `__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` to indicate the support
   level of the [Function Multi Versioning](#function-multi-versioning).
+* Removed Function Multi Versioning features sve-bf16, sve-ebf16, and sve-i8mm.
 * Unified Function Multi Versioning features sha1 and sha2.
 * Unified Function Multi Versioning features ls64, ls64_v, and ls64_accdata.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
@@ -2804,9 +2805,6 @@ The following table lists the architectures feature mapping for AArch64
    | 290           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 >= 0b0010```     |
    | 300           | `FEAT_RPRES`             | rpres         | ```ID_AA64ISAR2_EL1.RPRES >= 0b0001```    |
    | 310           | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE >= 0b0001```       |
-   | 320           | `FEAT_BF16`              | sve-bf16      | ```ID_AA64ZFR0_EL1.BF16 >= 0b0001```      |
-   | 330           | `FEAT_EBF16`             | sve-ebf16     | ```ID_AA64ZFR0_EL1.BF16 >= 0b0010```      |
-   | 340           | `FEAT_I8MM`              | sve-i8mm      | ```ID_AA64ZFR0_EL1.I8MM >= 0b00001```     |
    | 350           | `FEAT_F32MM`             | f32mm         | ```ID_AA64ZFR0_EL1.F32MM >= 0b00001```    |
    | 360           | `FEAT_F64MM`             | f64mm         | ```ID_AA64ZFR0_EL1.F64MM >= 0b00001```    |
    | 370           | `FEAT_SVE2`              | sve2          | ```ID_AA64ZFR0_EL1.SVEver >= 0b0001```    |
