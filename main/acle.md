@@ -416,6 +416,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 #### Changes for next release
 
 * Unified Function Multi Versioning features ssbs and ssbs2.
+* Unified Function Multi Versioning features memtag and memtag2.
 
 ### References
 
@@ -2814,8 +2815,7 @@ The following table lists the architectures feature mapping for AArch64
    | 410           | `FEAT_SVE_SHA3`          | sve2-sha3     | ```ID_AA64ZFR0_EL1.SHA3 >= 0b0001```      |
    | 420           | `FEAT_SM3`, `FEAT_SVE_SM4` | sve2-sm4    | ```ID_AA64ZFR0_EL1.SM4 >= 0b0001```       |
    | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME >= 0b0001```       |
-   | 440           | `FEAT_MTE`               | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0001```       |
-   | 450           | `FEAT_MTE2`              | memtag2       | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
+   | 440           | `FEAT_MTE`, `FEAT_MTE2`  | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
    | 460           | `FEAT_MTE3`              | memtag3       | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
    | 470           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB >= 0b0001```       |
    | 480           | `FEAT_SPECRES`           | predres       | ```ID_AA64ISAR1_EL1.SPECRES >= 0b0001```  |
