@@ -420,6 +420,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Unified Function Multi Versioning features aes and pmull.
 * Unified Function Multi Versioning features sve2-aes and sve2-pmull128.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
+* Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 
 ### References
 
@@ -9188,8 +9189,8 @@ Gather Load Quadword.
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
    svint16_t svld1q_gather_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index);
-   svint8_t svld1q_gather[_u64base]_index_s8(svbool_t pg, svuint64_t zn, int64_t index);
-```
+   svint16_t svld1q_gather[_u64base]_index_s16(svbool_t pg, svuint64_t zn, int64_t index);
+   ```
 
 #### LD2Q, LD3Q, LD4Q
 
@@ -9281,8 +9282,8 @@ Scatter store quadwords.
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
-   void svst1q_scatter[_u64base]_index[_s8](svbool_t pg, svuint64_t zn, int64_t index, svint8_t data);
-   void svst1q_scatter_[u64]index_[s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
+   void svst1q_scatter_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
+   void svst1q_scatter[_u64base]_index[_s16](svbool_t pg, svuint64_t zn, int64_t index, svint16_t data);
 ```
 
 #### ST2Q, ST3Q, ST4Q
