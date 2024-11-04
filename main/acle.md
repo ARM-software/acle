@@ -419,6 +419,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Unified Function Multi Versioning features memtag and memtag2.
 * Unified Function Multi Versioning features aes and pmull.
 * Unified Function Multi Versioning features sve2-aes and sve2-pmull128.
+* Removed Function Multi Versioning feature dgh.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 
@@ -2800,7 +2801,6 @@ The following table lists the architectures feature mapping for AArch64
    | 240           | `FEAT_LRCPC2`            | rcpc2         | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0010```    |
    | 241           | `FEAT_LRCPC3`            | rcpc3         | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0011```    |
    | 250           | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS >= 0b0001```  |
-   | 260           | `FEAT_DGH`               | dgh           | ```ID_AA64ISAR1_EL1.DGH >= 0b0001```      |
    | 270           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM >= 0b0001```     |
    | 280           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 >= 0b0001```     |
    | 290           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 >= 0b0010```     |
