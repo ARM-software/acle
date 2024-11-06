@@ -419,6 +419,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Unified Function Multi Versioning features memtag and memtag2.
 * Unified Function Multi Versioning features aes and pmull.
 * Unified Function Multi Versioning features sve2-aes and sve2-pmull128.
+* Removed Function Multi Versioning features ebf16, memtag3, and rpres.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 
@@ -2803,8 +2804,6 @@ The following table lists the architectures feature mapping for AArch64
    | 260           | `FEAT_DGH`               | dgh           | ```ID_AA64ISAR1_EL1.DGH >= 0b0001```      |
    | 270           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM >= 0b0001```     |
    | 280           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 >= 0b0001```     |
-   | 290           | `FEAT_EBF16`             | ebf16         | ```ID_AA64ISAR1_EL1.BF16 >= 0b0010```     |
-   | 300           | `FEAT_RPRES`             | rpres         | ```ID_AA64ISAR2_EL1.RPRES >= 0b0001```    |
    | 310           | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE >= 0b0001```       |
    | 320           | `FEAT_BF16`              | sve-bf16      | ```ID_AA64ZFR0_EL1.BF16 >= 0b0001```      |
    | 330           | `FEAT_EBF16`             | sve-ebf16     | ```ID_AA64ZFR0_EL1.BF16 >= 0b0010```      |
@@ -2818,7 +2817,6 @@ The following table lists the architectures feature mapping for AArch64
    | 420           | `FEAT_SM3`, `FEAT_SVE_SM4` | sve2-sm4    | ```ID_AA64ZFR0_EL1.SM4 >= 0b0001```       |
    | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME >= 0b0001```       |
    | 440           | `FEAT_MTE`, `FEAT_MTE2`  | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
-   | 460           | `FEAT_MTE3`              | memtag3       | ```ID_AA64PFR1_EL1.MTE >= 0b0011```       |
    | 470           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB >= 0b0001```       |
    | 480           | `FEAT_SPECRES`           | predres       | ```ID_AA64ISAR1_EL1.SPECRES >= 0b0001```  |
    | 490           | `FEAT_SSBS`, `FEAT_SSBS2`| ssbs          | ```ID_AA64PFR1_EL1.SSBS >= 0b0010```      |
