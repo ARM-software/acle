@@ -10094,6 +10094,86 @@ an [`__arm_streaming`](#arm_streaming) type.
 See [Changing streaming mode locally](#changing-streaming-mode-locally)
 for more information.
 
+### C++ mangling of SME keywords
+
+SME keyword attributes which apply to function types must be included
+in the name mangling of the type, if the mangling would normally include
+the return type of the function.
+
+SME attributes are mangled in the same way as a template:
+
+``` c
+  template<typename, unsigned, unsigned, unsigned> __SME_ATTRS;
+```
+
+with the arguments:
+
+``` c
+  __SME_ATTRS<normal_function_type, streaming_mode, za_state, zt0_state>;
+```
+
+where:
+
+* normal_function_type is the function type without any SME attributes.
+
+* streaming_mode is an integer representing the streaming-mode of the function:
+
+  +------------------------+--------------------------+
+  | Interface Type         | Value                    |
+  +========================+==========================+
+  | Normal (default)       | 0                        |
+  +------------------------+--------------------------+
+  | Streaming Mode         | 1                        |
+  +------------------------+--------------------------+
+  | Streaming-Compatible   | 2                        |
+  +------------------------+--------------------------+
+
+* za_state is an integer representing the ZA state of the function:
+
+  +------------------------+--------------------------+
+  | Interface Type         | Value                    |
+  +========================+==========================+
+  | No ZA State (default)  | 0                        |
+  +------------------------+--------------------------+
+  | ZA-In                  | 1                        |
+  +------------------------+--------------------------+
+  | ZA-InOut               | 2                        |
+  +------------------------+--------------------------+
+  | ZA-Out                 | 3                        |
+  +------------------------+--------------------------+
+  | ZA-Preserved           | 4                        |
+  +------------------------+--------------------------+
+
+* zt0_state is an integer representing the ZT0 state of the function:
+
+  +------------------------+--------------------------+
+  | Interface Type         | Value                    |
+  +========================+==========================+
+  | No ZT0 State (default) | 0                        |
+  +------------------------+--------------------------+
+  | ZT0-In                 | 1                        |
+  +------------------------+--------------------------+
+  | ZT0-InOut              | 2                        |
+  +------------------------+--------------------------+
+  | ZT0-Out                | 3                        |
+  +------------------------+--------------------------+
+  | ZT0-Preserved          | 4                        |
+  +------------------------+--------------------------+
+
+For example:
+
+``` c
+
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj1ELj0ELj0EE
+  void f(svint8_t (*fn)() __arm_streaming) { fn(); }
+
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj2ELj2ELj0EE
+  void f(svint8_t (*fn)() __arm_streaming_compatible __arm_inout("za")) { fn(); }
+
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj0ELj0ELj3EE
+  void f(svint8_t (*fn)() __arm_out("zt0")) { fn(); }
+```
+
 ## SME types
 
 ### Predicate-as-counter
