@@ -422,6 +422,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed Function Multi Versioning features ebf16, memtag3, and rpres.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
+* Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
 
 ### References
 
@@ -13098,7 +13099,7 @@ floating-point.
 Single-precision convert, narrow, and interleave to 8-bit floating-point (top and bottom).
 ``` c
   svmfloat8_t svcvtnt_mf8[_f32_x2]_fpm(svmfloat8_t zd, svfloat32x2_t zn, fpm_t fpm);
-  svmfloat8_t svcvtnb_mf8[_f32_x2]_fpm(svmfloat8_t zd, svfloat32x2_t zn, fpm_t fpm);
+  svmfloat8_t svcvtnb_mf8[_f32_x2]_fpm(svfloat32x2_t zn, fpm_t fpm);
 ```
 
 #### FDOT (4-way, vectors)
