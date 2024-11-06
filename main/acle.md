@@ -421,6 +421,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Unified Function Multi Versioning features sve2-aes and sve2-pmull128.
 * Removed Function Multi Versioning features ebf16, memtag3, and rpres.
 * Removed Function Multi Versioning feature dgh.
+* Document Function Multi Versioning feature dependencies.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
@@ -2674,8 +2675,6 @@ The following attributes trigger the multi version code generation:
 * The `default` version means the version of the function that would
   be generated without these attributes.
 * `name` is the dependent features from the tables below.
-  * If a feature depends on another feature as defined by the Architecture
-    Reference Manual then no need to explicitly state in the attribute[^fmv-note-names].
 * The dependent features could be joined by the `+` sign.
 * None of these attributes will enable the corresponding ACLE feature(s)
   associated to the `name` expressed in the attribute.
@@ -2684,9 +2683,6 @@ The following attributes trigger the multi version code generation:
 * If only the `default` version exist it should be linked directly.
 * FMV may be disabled in compile time by a compiler flag. In this
   case the `default` version shall be used.
-
-[^fmv-note-names]: For example the `sve_bf16` feature depends on `sve`
-  but it is enough to say `target_version("sve_bf16")` in the code.
 
 The attribute `__attribute__((target_version("name")))` expresses the
 following:
@@ -2829,6 +2825,50 @@ The following table lists the architectures feature mapping for AArch64
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
    | 580           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SMEver >= 0b0001```    |
    | 650           | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
+
+### Dependencies
+
+If a feature depends on another feature as defined by the table below then:
+
+* the depended-on feature *need not* be specified in the attribute,
+* the depended-on feature *may* be specified in the attribute.
+
+These dependencies are taken into account transitively when selecting the
+most appropriate version of a function (see section [Selection](#selection)).
+The following table lists the feature dependencies for AArch64.
+
+   | **Feature**      | **Depends on**    |
+   | ---------------- | ----------------- |
+   | flagm2           | flagm             |
+   | simd             | fp                |
+   | dotprod          | simd              |
+   | sm4              | simd              |
+   | rdm              | simd              |
+   | sha2             | simd              |
+   | sha3             | sha2              |
+   | aes              | simd              |
+   | fp16             | fp                |
+   | fp16fml          | simd, fp16        |
+   | dpb2             | dpb               |
+   | jscvt            | fp                |
+   | fcma             | simd              |
+   | rcpc2            | rcpc              |
+   | rcpc3            | rcpc2             |
+   | frintts          | fp                |
+   | i8mm             | simd              |
+   | bf16             | simd              |
+   | sve              | fp16              |
+   | f32mm            | sve               |
+   | f64mm            | sve               |
+   | sve2             | sve               |
+   | sve2-aes         | sve2, aes         |
+   | sve2-bitperm     | sve2              |
+   | sve2-sha3        | sve2, sha3        |
+   | sve2-sm4         | sve2, sm4         |
+   | sme              | fp16, bf16        |
+   | sme-f64f64       | sme               |
+   | sme-i16i64       | sme               |
+   | sme2             | sme               |
 
 ### Selection
 
