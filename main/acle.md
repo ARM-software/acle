@@ -423,6 +423,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
+* Function Multi Versioning clarified rules about declaration scope and signatures.
 
 ### References
 
@@ -2682,6 +2683,10 @@ The following attributes trigger the multi version code generation:
 * If only the `default` version exist it should be linked directly.
 * FMV may be disabled in compile time by a compiler flag. In this
   case the `default` version shall be used.
+* Scope for a group of multiversioned functions is the scope of the default
+  version declarations.
+* Dispatiching routines can only be optimized out within the translation unit
+  containing the default implimentation.
 
 [^fmv-note-names]: For example the `sve_bf16` feature depends on `sve`
   but it is enough to say `target_version("sve_bf16")` in the code.
@@ -2696,10 +2701,12 @@ following:
   in one of the translation units.
   * Implicitly, without this attribute,
   * or explicitly providing the `default` in the attribute.
-* All instances of the versions shall share the same function
-  signature and calling convention.
+* All instances of the versions shall share the same calling convention 
+* All function declarations shall share compatible function signatures 
+  that are combined to a single signature for all versions.
 * All the function versions must be declared at the translation
   unit in which the definition of the default version resides.
+* All function declarations must be at file scope level.
 
 The attribute `__attribute__((target_clones("name",...)))` expresses the
 following:
