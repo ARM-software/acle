@@ -10104,7 +10104,7 @@ the return type of the function.
 SME attributes are mangled in the same way as a template:
 
 ``` c
-  template<typename, unsigned> __SME_ATTRS;
+  template<typename, uint64_t> __SME_ATTRS;
 ```
 
 with the arguments:
@@ -10117,25 +10117,23 @@ where:
 
 * normal_function_type is the function type without any SME attributes.
 
-* sme_state is an unsigned 64-bit integer representing the streaming mode, ZA state and ZT0 state of the function.
+* sme_state is an unsigned 64-bit integer representing the streaming and ZA properties of the function's interface.
 
 The bits are defined as follows:
 
-| **Bit** | **Value** | ** Interface Type **   |
-| ------- | --------- | ---------------------- |
-| 0       | 0x001     | Streaming Mode         |
-| 1       | 0x002     | Streaming-Compatible   |
-| 2       | 0x004     | ZA-In                  |
-| 3       | 0x008     | ZA-InOut               |
-| 4       | 0x010     | ZA-Out                 |
-| 5       | 0x020     | ZA-Preserved           |
-| 6       | 0x040     | ZT0-In                 |
-| 7       | 0x080     | ZT0-Out                |
-| 8       | 0x100     | ZT0-InOut              |
-| 9       | 0x200     | ZT0-Preserved          |
-| 10      | 0x400     | ZA State Agnostic      |
+| **Bit** | **Value** | ** Interface Type **           |
+| ------- | --------- | ------------------------------ |
+| 0       | 0x001     | __arm_streaming                |
+| 1       | 0x002     | __arm_streaming_compatible     |
+| 2       | 0x004     | __arm_agnostic("sme_za_state") |
+| 3       | 0x008     | __arm_in("za")                 |
+| 4       | 0x010     | __arm_out("za")                |
+| 5       | 0x020     | __arm_preserved("za")          |
+| 6       | 0x040     | __arm_in("zt0")                |
+| 7       | 0x080     | __arm_out("zt0")               |
+| 8       | 0x100     | __arm_preserved("zt0")         |
 
-The upper bits 11-63 are defined as leading zeroes, reserved for representing any future interface types.
+Bits 9-63 are defined to be zero by this revision of the ACLE and are reserved for future type attributes.
 
 For example:
 
@@ -10143,7 +10141,7 @@ For example:
   // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj1EE
   void f(svint8_t (*fn)() __arm_streaming) { fn(); }
 
-  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj10EE
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj26EE
   void f(svint8_t (*fn)() __arm_streaming_compatible __arm_inout("za")) { fn(); }
 
   // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj128EE
