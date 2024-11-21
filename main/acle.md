@@ -10121,17 +10121,19 @@ where:
 
 The bits are defined as follows:
 
-| **Bit** | **Value** | ** Interface Type **           |
-| ------- | --------- | ------------------------------ |
-| 0       | 0x001     | __arm_streaming                |
-| 1       | 0x002     | __arm_streaming_compatible     |
-| 2       | 0x004     | __arm_agnostic("sme_za_state") |
-| 3       | 0x008     | __arm_in("za")                 |
-| 4       | 0x010     | __arm_out("za")                |
-| 5       | 0x020     | __arm_preserved("za")          |
-| 6       | 0x040     | __arm_in("zt0")                |
-| 7       | 0x080     | __arm_out("zt0")               |
-| 8       | 0x100     | __arm_preserved("zt0")         |
+| **Bits** | **Value** | ** Interface Type **           |
+| -------- | --------- | ------------------------------ |
+| 0        | 0b1       | __arm_streaming                |
+| 1        | 0b1       | __arm_streaming_compatible     |
+| 2        | 0b1       | __arm_agnostic("sme_za_state") |
+| 3-5      | 0b001     | __arm_in("za")                 |
+|          | 0b010     | __arm_out("za")                |
+|          | 0b011     | __arm_inout("za")              |
+|          | 0b100     | __arm_preserves("za")          |
+| 6-8      | 0b001     | __arm_in("zt0")                |
+|          | 0b010     | __arm_out("zt0")               |
+|          | 0b011     | __arm_inout("zt0")             |
+|          | 0b100     | __arm_preserves("zt0")         |
 
 Bits 9-63 are defined to be zero by this revision of the ACLE and are reserved for future type attributes.
 
