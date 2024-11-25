@@ -423,6 +423,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
+* Fixed urls.
 
 ### References
 
@@ -2584,7 +2585,7 @@ be found in [[BA]](#BA).
 
 This section describes ACLE features that use GNU-style attributes.
 The general rules for attribute syntax are described in the GCC
-documentation <https://gcc.gnu.org/onlinedocs/gcc/extensions-to-the-c-language-family/attribute-syntax.html>.
+documentation <https://gcc.gnu.org/onlinedocs/gcc/Attribute-Syntax.html>.
 Briefly, for this declaration:
 
 ``` c
