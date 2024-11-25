@@ -2685,8 +2685,6 @@ The following attributes trigger the multi version code generation:
   case the `default` version shall be used.
 * Scope for a group of multiversioned functions is the scope of the default
   version declarations.
-* Dispatiching routines can only be optimized out within the translation unit
-  containing the default implimentation.
 
 [^fmv-note-names]: For example the `sve_bf16` feature depends on `sve`
   but it is enough to say `target_version("sve_bf16")` in the code.
