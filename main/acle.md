@@ -10117,25 +10117,29 @@ where:
 
 * normal_function_type is the function type without any SME attributes.
 
-* sme_state is an unsigned 64-bit integer representing the streaming and ZA properties of the function's interface.
+* sme_state is an unsigned 64-bit integer representing the streaming and ZA
+  properties of the function's interface.
 
 The bits are defined as follows:
 
-| **Bits** | **Value** | ** Interface Type **           |
+| **Bits** | **Value** | **Interface Type**             |
 | -------- | --------- | ------------------------------ |
 | 0        | 0b1       | __arm_streaming                |
 | 1        | 0b1       | __arm_streaming_compatible     |
 | 2        | 0b1       | __arm_agnostic("sme_za_state") |
-| 3-5      | 0b001     | __arm_in("za")                 |
+| 3-5      | 0b000     | No ZA state (default)          |
+|          | 0b001     | __arm_in("za")                 |
 |          | 0b010     | __arm_out("za")                |
 |          | 0b011     | __arm_inout("za")              |
 |          | 0b100     | __arm_preserves("za")          |
-| 6-8      | 0b001     | __arm_in("zt0")                |
+| 6-8      | 0b000     | No ZT0 state (default)         |
+|          | 0b001     | __arm_in("zt0")                |
 |          | 0b010     | __arm_out("zt0")               |
 |          | 0b011     | __arm_inout("zt0")             |
 |          | 0b100     | __arm_preserves("zt0")         |
 
-Bits 9-63 are defined to be zero by this revision of the ACLE and are reserved for future type attributes.
+Bits 9-63 are defined to be zero by this revision of the ACLE and are reserved
+for future type attributes.
 
 For example:
 
