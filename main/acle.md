@@ -424,6 +424,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
 * Fixed urls.
+* Changed name mangling of function types to include SME attributes.
 
 ### References
 
@@ -10093,6 +10094,65 @@ an [`__arm_streaming`](#arm_streaming) type.
 
 See [Changing streaming mode locally](#changing-streaming-mode-locally)
 for more information.
+
+### C++ mangling of SME keywords
+
+SME keyword attributes which apply to function types must be included
+in the name mangling of the type, if the mangling would normally include
+the return type of the function.
+
+SME attributes are mangled in the same way as a template:
+
+``` c
+  template<typename, uint64_t> __SME_ATTRS;
+```
+
+with the arguments:
+
+``` c
+  __SME_ATTRS<normal_function_type, sme_state>;
+```
+
+where:
+
+* normal_function_type is the function type without any SME attributes.
+
+* sme_state is an unsigned 64-bit integer representing the streaming and ZA
+  properties of the function's interface.
+
+The bits are defined as follows:
+
+| **Bits** | **Value** | **Interface Type**             |
+| -------- | --------- | ------------------------------ |
+| 0        | 0b1       | __arm_streaming                |
+| 1        | 0b1       | __arm_streaming_compatible     |
+| 2        | 0b1       | __arm_agnostic("sme_za_state") |
+| 3-5      | 0b000     | No ZA state (default)          |
+|          | 0b001     | __arm_in("za")                 |
+|          | 0b010     | __arm_out("za")                |
+|          | 0b011     | __arm_inout("za")              |
+|          | 0b100     | __arm_preserves("za")          |
+| 6-8      | 0b000     | No ZT0 state (default)         |
+|          | 0b001     | __arm_in("zt0")                |
+|          | 0b010     | __arm_out("zt0")               |
+|          | 0b011     | __arm_inout("zt0")             |
+|          | 0b100     | __arm_preserves("zt0")         |
+
+Bits 9-63 are defined to be zero by this revision of the ACLE and are reserved
+for future type attributes.
+
+For example:
+
+``` c
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj1EE
+  void f(svint8_t (*fn)() __arm_streaming) { fn(); }
+
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj26EE
+  void f(svint8_t (*fn)() __arm_streaming_compatible __arm_inout("za")) { fn(); }
+
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj128EE
+  void f(svint8_t (*fn)() __arm_out("zt0")) { fn(); }
+```
 
 ## SME types
 
