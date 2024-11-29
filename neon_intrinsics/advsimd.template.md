@@ -1,7 +1,7 @@
 ---
 title: Arm Neon Intrinsics Reference
-version: 2023Q2
-date-of-issue: 04 August 2023
+version: 2024Q3
+date-of-issue: 30 September 2024
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{{\\nameref{{copyright}}}}{{Copyright}}."
@@ -125,6 +125,7 @@ for more information about Arm’s trademarks.
 | I     | 30 September 2021 | 2021Q3               |
 | J     | 11 January 2022   | 2021Q4               |
 | K     | 04 August 2023    | 2023Q2               |
+| L     | 30 September 2024 | 2024Q3               |
 
 ### Changes between 2021Q2 and 2021Q3
 
@@ -146,9 +147,9 @@ for more information about Arm’s trademarks.
 
 * Added support for FEAT_LRCPC3 LDAP1/STL1 intrinsics.
 
-### Changes for next release
+### Changes between 2023Q2 and 2024Q3
 
-* Textual improvements (non-functional changes).
+* Fixed the range of the ``lane`` immediate argument for ``vst2q_lane_f64``.
 
 <!---
 **** Do not remove! ****
