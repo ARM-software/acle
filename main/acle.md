@@ -241,7 +241,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   specifications in [Cortex-M Security Extension
   (CMSE)](#cortex-m-security-extension-cmse).
 * Added specification for [NEON-SVE Bridge](#neon-sve-bridge) and
-  [NEON-SVE Bridge macros](#neon-sve-bridge-macros).
+  [NEON-SVE Bridge macros](#neon-sve-bridge-macro).
 * Added feature detection macro for the memcpy family of memory
   operations (MOPS) at [memcpy family of memory operations
   standarization instructions -
@@ -425,6 +425,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
 * Fixed urls.
 * Changed name mangling of function types to include SME attributes.
+* Changed `__ARM_NEON_SVE_BRIDGE` to refer to the availability of the
+  [`arm_neon_sve_bridge.h`](#arm_neon_sve_bridge.h) header file, rather
+  than the [NEON-SVE bridge](#neon-sve-bridge) intrinsics.
 
 ### References
 
@@ -1928,14 +1931,10 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
-#### NEON-SVE Bridge macros
+#### NEON-SVE Bridge macro
 
-`__ARM_NEON_SVE_BRIDGE` is defined to 1 if [NEON-SVE Bridge](#neon-sve-bridge)
-intrinsics are available. This implies that the following macros are nonzero:
-
-* `__ARM_NEON`
-* `__ARM_NEON_FP`
-* `__ARM_FEATURE_SVE`
+`__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
+header file is available.
 
 #### Scalable Matrix Extension (SME)
 
@@ -2570,7 +2569,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FP_FENV_ROUNDING`](#floating-point-model)                                                                                                       | Rounding is configurable at runtime                                                                | 1           |
 | [`__ARM_NEON`](#advanced-simd-architecture-extension-neon)                                                                                              | Advanced SIMD (Neon) extension                                                                     | 1           |
 | [`__ARM_NEON_FP`](#neon-floating-point)                                                                                                                 | Advanced SIMD (Neon) floating-point                                                                | 0x04        |
-| [`__ARM_NEON_SVE_BRIDGE`](#neon-sve-bridge-macros)                                                                                                      | Moving data between Neon and SVE data types                                                        | 1           |
+| [`__ARM_NEON_SVE_BRIDGE`](#neon-sve-bridge-macro)                                                                                                       | Availability of [`arm_neon_sve_brdge.h`](#arm_neon_sve_bridge.h)                                   | 1           |
 | [`__ARM_PCS`](#procedure-call-standard)                                                                                                                 | Arm procedure call standard (32-bit-only)                                                          | 0x01        |
 | [`__ARM_PCS_AAPCS64`](#procedure-call-standard)                                                                                                         | Arm PCS for AArch64.                                                                               | 1           |
 | [`__ARM_PCS_VFP`](#procedure-call-standard)                                                                                                             | Arm PCS hardware FP variant in use (32-bit-only)                                                   | 1           |
