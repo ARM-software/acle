@@ -4856,7 +4856,8 @@ The `__arm_agnostic` [keyword attribute](#keyword-attributes) applies to
 
 *   The use of `__arm_agnostic("sme_za_state")` allows writing functions that
     are compatible with ZA state without having to share ZA state with the
-    caller, as required by `__arm_preserves`.
+    caller, as required by `__arm_preserves`. The use of this attribute
+    does not imply that SME is available.
 
 *   It is not valid for a function declaration with
     `__arm_agnostic("sme_za_state")` to [share](#shares-state) PSTATE.ZA state
@@ -4875,23 +4876,27 @@ interfaces:
 
 <span id="agnostic-za"></span>
 
-*   a "agnostic-ZA" interface
+*   an "agnostic-ZA" interface
 
-If a C or C++ function F forms part of the object code's ABI, that
-object code function has a shared-ZA interface if and only if at least
-one of the following is true:
+If a C or C++ function F forms part of the object code's ABI:
 
-*   F shares ZA with its caller
+* the object code function has a shared-ZA interface if and only if at least
+  one of the following is true:
 
-*   F shares ZT0 with its caller
+  * F shares ZA with its caller
 
-All other functions have either a private-ZA or an agnostic-ZA interface.
+  * F shares ZT0 with its caller
 
-If F implements an agnostic-ZA interface and PSTATE.ZA is available at runtime,
-then a call to F must return with its ZA state unchanged in accordance
-to the [[AAPCS64]](#AAPCS64). In practice this means that calls to F don't have
-to emit code to set up a lazy-save for ZA or to preserve other state like ZT0
-when such state is live at the call site.
+* the object code function has an agnostic-ZA interface if and only if F's type
+  has an `__arm_agnostic("sme_za_state")` attribute.
+
+All other functions have a private-ZA interface.
+
+If F implements an agnostic-ZA interface and ZA is active, then a call to F must
+return with its ZA state unchanged in accordance with the [[AAPCS64]](#AAPCS64).
+In practice this means that calls to F don't have to emit code to set up a
+lazy-save for ZA or to preserve other state like ZT0 when such state is live at
+the call site.
 
 The implementation of F must not make any assumptions on the availability of
 PSTATE.ZA or any architectural state associated with it.
@@ -4981,6 +4986,8 @@ following is true:
 *   F [uses](#uses-state) `"za"`
 
 *   F [uses](#uses-state) `"zt0"`
+
+*   F implements an [agnostic ZA](#agnostic-za) interface.
 
 Otherwise, ZA can be off or dormant on entry to A, as for what AAPCS64
 calls “private-ZA” functions.
