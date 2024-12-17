@@ -433,6 +433,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   than the [NEON-SVE bridge](#neon-sve-bridge) intrinsics.
 * Removed extraneous `const` from SVE2.1 store intrinsics.
 * Added [`__arm_agnostic`](#arm_agnostic) keyword attribute.
+* Refined function versioning scope and signature rules to use the default
+  version scope and signature.
 
 ### References
 
@@ -2675,10 +2677,12 @@ The following attributes trigger the multi version code generation:
 `__attribute__((target_version("name")))` and
 `__attribute__((target_clones("name",...)))`.
 
+* Functions are allowed to have the same name and signature when
+  annotated with these attributes.
 * These attributes can be mixed with each other.
+* `name` is the dependent features from the tables below.
 * The `default` version means the version of the function that would
   be generated without these attributes.
-* `name` is the dependent features from the tables below.
 * The dependent features could be joined by the `+` sign.
 * None of these attributes will enable the corresponding ACLE feature(s)
   associated to the `name` expressed in the attribute.
@@ -2687,21 +2691,46 @@ The following attributes trigger the multi version code generation:
 * If only the `default` version exist it should be linked directly.
 * FMV may be disabled in compile time by a compiler flag. In this
   case the `default` version shall be used.
+* All function versions must be declared at the same scope level.
+* The default version signature is the signature for calling
+  the multiversioned functions. Therefore, a versioned function
+  cannot be called unless the declaration of the default version
+  is visible in the scope of the call site.
+* Non-default versions shall have a type that is convertible to the
+  type of the default version.
+* All the function versions must be declared at the translation
+  unit in which the definition of the default version resides.
 
 The attribute `__attribute__((target_version("name")))` expresses the
 following:
 
-* when applied to a function it becomes one of the versions. Function
-  with the same name may exist with multiple versions in the same
-  or in different translation units.
+* When applied to a function it becomes one of the versions.
+* Multiple function versions may exist in the same or in different
+  translation units.
 * One `default` version of the function is required to be provided
   in one of the translation units.
   * Implicitly, without this attribute,
   * or explicitly providing the `default` in the attribute.
-* All instances of the versions shall share the same function
-  signature and calling convention.
-* All the function versions must be declared at the translation
-  unit in which the definition of the default version resides.
+
+For example, the below is valid and 2 is used as the default
+value for `c` when calling the multiversioned function `f`.
+
+```cpp
+int __attribute__((target_version("simd"))) f (int c = 1);
+int __attribute__((target_version("default"))) f (int c = 2);
+int __attribute__((target_version("sve"))) f (int c = 3);
+
+int g() { return f(); }
+```
+
+Additionally, the below is not valid as the two statements declare
+the same entity (the `default` version of `f`) with conflicting
+signatures.
+
+```cpp
+int f (int c = 1);
+int __attribute__((target_version("default"))) f (int c = 2);
+```
 
 The attribute `__attribute__((target_clones("name",...)))` expresses the
 following:
