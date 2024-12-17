@@ -430,6 +430,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed `__ARM_NEON_SVE_BRIDGE` to refer to the availability of the
   [`arm_neon_sve_bridge.h`](#arm_neon_sve_bridge.h) header file, rather
   than the [NEON-SVE bridge](#neon-sve-bridge) intrinsics.
+* Refined function versioning scope and signature rules to use the default
+  version scope and signature.
 
 ### References
 
@@ -2685,6 +2687,9 @@ The following attributes trigger the multi version code generation:
 * If only the `default` version exist it should be linked directly.
 * FMV may be disabled in compile time by a compiler flag. In this
   case the `default` version shall be used.
+* The scope for calling the versioned function is the scope of the
+  default version.
+* All function versions must be declared at the same scope level.
 
 [^fmv-note-names]: For example the `sve_bf16` feature depends on `sve`
   but it is enough to say `target_version("sve_bf16")` in the code.
@@ -2699,10 +2704,33 @@ following:
   in one of the translation units.
   * Implicitly, without this attribute,
   * or explicitly providing the `default` in the attribute.
-* All instances of the versions shall share the same function
-  signature and calling convention.
+* The default version signature is the signature for calling
+  the multiversioned functions.
+* Non-default versions shall share the same calling convention
+  of the default version and have a type that is convertible to the type
+  of the default version.
+
 * All the function versions must be declared at the translation
   unit in which the definition of the default version resides.
+
+For example, the below is valid and 2 is passed as the
+value for `c` when calling `f`.
+
+```c++
+int __attribute__((target_version("simd"))) f (int c = 1);
+int __attribute__((target_version("default"))) f (int c = 2);
+int __attribute__((target_version("sve"))) f (int c = 3);
+
+int g() { return f(); }
+```
+
+Additionally, the below is not valid as the two statements define
+the same entity with conflicting definitions.
+
+```c++
+int f (int c = 1);
+int __attribute__((target_version("default"))) f (int c = 2);
+```
 
 The attribute `__attribute__((target_clones("name",...)))` expresses the
 following:
