@@ -431,6 +431,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed `__ARM_NEON_SVE_BRIDGE` to refer to the availability of the
   [`arm_neon_sve_bridge.h`](#arm_neon_sve_bridge.h) header file, rather
   than the [NEON-SVE bridge](#neon-sve-bridge) intrinsics.
+* Removed extraneous `const` from SVE2.1 store intrinsics.
 
 ### References
 
@@ -9221,11 +9222,13 @@ Gather Load Quadword.
    // _mf8, _bf16, _f16, _f32, _f64
    svint8_t svld1q_gather[_u64base]_s8(svbool_t pg, svuint64_t zn);
    svint8_t svld1q_gather[_u64base]_offset_s8(svbool_t pg, svuint64_t zn, int64_t offset);
+   svint8_t svld1q_gather_[s64]offset[_s8](svbool_t pg, const int8_t *base, svint64_t offset);
    svint8_t svld1q_gather_[u64]offset[_s8](svbool_t pg, const int8_t *base, svuint64_t offset);
 
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
+   svint16_t svld1q_gather_[s64]index[_s16](svbool_t pg, const int16_t *base, svint64_t index);
    svint16_t svld1q_gather_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index);
    svint16_t svld1q_gather[_u64base]_index_s16(svbool_t pg, svuint64_t zn, int64_t index);
    ```
@@ -9295,14 +9298,14 @@ Contiguous store of single vector operand, truncating from quadword.
 ``` c
    // Variants are also available for:
    // _u32, _s32
-   void svst1wq[_f32](svbool_t, const float32_t *ptr, svfloat32_t data);
-   void svst1wq_vnum[_f32](svbool_t, const float32_t *ptr, int64_t vnum, svfloat32_t data);
+   void svst1wq[_f32](svbool_t, float32_t *ptr, svfloat32_t data);
+   void svst1wq_vnum[_f32](svbool_t, float32_t *ptr, int64_t vnum, svfloat32_t data);
  
 
    // Variants are also available for:
    // _u64, _s64
-   void svst1dq[_f64](svbool_t, const float64_t *ptr, svfloat64_t data);
-   void svst1dq_vnum[_f64](svbool_t, const float64_t *ptr, int64_t vnum, svfloat64_t data);
+   void svst1dq[_f64](svbool_t, float64_t *ptr, svfloat64_t data);
+   void svst1dq_vnum[_f64](svbool_t, float64_t *ptr, int64_t vnum, svfloat64_t data);
    ```
 
 #### ST1Q
@@ -9315,12 +9318,14 @@ Scatter store quadwords.
    // _mf8, _bf16, _f16, _f32, _f64
    void svst1q_scatter[_u64base][_s8](svbool_t pg, svuint64_t zn, svint8_t data);
    void svst1q_scatter[_u64base]_offset[_s8](svbool_t pg, svuint64_t zn, int64_t offset, svint8_t data);
-   void svst1q_scatter_[u64]offset[_s8](svbool_t pg, const uint8_t *base, svuint64_t offset, svint8_t data);
+   void svst1q_scatter_[s64]offset[_s8](svbool_t pg, uint8_t *base, svint64_t offset, svint8_t data);
+   void svst1q_scatter_[u64]offset[_s8](svbool_t pg, uint8_t *base, svuint64_t offset, svint8_t data);
 
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
-   void svst1q_scatter_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
+   void svst1q_scatter_[s64]index[_s16](svbool_t pg, int16_t *base, svint64_t index, svint16_t data);
+   void svst1q_scatter_[u64]index[_s16](svbool_t pg, int16_t *base, svuint64_t index, svint16_t data);
    void svst1q_scatter[_u64base]_index[_s16](svbool_t pg, svuint64_t zn, int64_t index, svint16_t data);
 ```
 
