@@ -432,6 +432,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   [`arm_neon_sve_bridge.h`](#arm_neon_sve_bridge.h) header file, rather
   than the [NEON-SVE bridge](#neon-sve-bridge) intrinsics.
 * Removed extraneous `const` from SVE2.1 store intrinsics.
+* Added [`__arm_agnostic`](#arm_agnostic) keyword attribute.
 
 ### References
 
@@ -861,6 +862,7 @@ predefine the associated macro to a nonzero value.
 
 | **Name**                                                    | **Target**            | **Predefined macro**              |
 | ----------------------------------------------------------- | --------------------- | --------------------------------- |
+| [`__arm_agnostic`](#arm_agnostic)                           | function type         | `__ARM_FEATURE_SME`               |
 | [`__arm_locally_streaming`](#arm_locally_streaming)         | function declaration  | `__ARM_FEATURE_LOCALLY_STREAMING` |
 | [`__arm_in`](#ways-of-sharing-state)                        | function type         | Argument-dependent                |
 | [`__arm_inout`](#ways-of-sharing-state)                     | function type         | Argument-dependent                |
@@ -5059,6 +5061,31 @@ if such a restoration is necessary. For example:
    }
 ```
 
+## `__arm_agnostic`
+
+A function with the `__arm_agnostic` [keyword attribute](#keyword-attributes)
+must preserve the architectural state that is specified by its arguments when
+such state exists at runtime. The function is otherwise unconcerned with this
+state.
+
+The `__arm_agnostic` [keyword attribute](#keyword-attributes) applies to
+**function types** and accepts the following arguments:
+
+```"sme_za_state"```
+
+*   This attribute affects the ABI of a function, which must implement an
+    [agnostic-ZA interface](#agnostic-za). It is the compiler's responsibility
+    to ensure that the function's object code honors the ABI requirements.
+
+*   The use of `__arm_agnostic("sme_za_state")` allows writing functions that
+    are compatible with ZA state without having to share ZA state with the
+    caller, as required by `__arm_preserves`. The use of this attribute
+    does not imply that SME is available.
+
+*   It is not valid for a function declaration with
+    `__arm_agnostic("sme_za_state")` to [share](#shares-state) PSTATE.ZA state
+    with its caller.
+
 ## Mapping to the Procedure Call Standard
 
 [[AAPCS64]](#AAPCS64) classifies functions as having one of the following
@@ -5070,13 +5097,21 @@ interfaces:
 
 *   a “shared-ZA” interface
 
-If a C or C++ function F forms part of the object code's ABI, that
-object code function has a shared-ZA interface if and only if at least
-one of the following is true:
+<span id="agnostic-za"></span>
 
-*   F shares ZA with its caller
+*   an "agnostic-ZA" interface
 
-*   F shares ZT0 with its caller
+If a C or C++ function F forms part of the object code's ABI:
+
+* the object code function has a shared-ZA interface if and only if at least
+  one of the following is true:
+
+  * F shares ZA with its caller
+
+  * F shares ZT0 with its caller
+
+* the object code function has an agnostic-ZA interface if and only if F's type
+  has an `__arm_agnostic("sme_za_state")` attribute.
 
 All other functions have a private-ZA interface.
 
@@ -5161,12 +5196,15 @@ function F if at least one of the following is true:
 Otherwise, ZA can be in any state on entry to A if at least one of the
 following is true:
 
-*   F [uses](#uses-state) `"za"`
+*   F [uses](#uses-state) `"za"`.
 
-*   F [uses](#uses-state) `"zt0"`
+*   F [uses](#uses-state) `"zt0"`.
 
-Otherwise, ZA can be off or dormant on entry to A, as for what AAPCS64
-calls “private-ZA” functions.
+*   F's type has an [`__arm_agnostic("sme_za_state")` attribute](#agnostic-za)
+    and A's clobber-list includes neither `"za"` nor `"zt0"`.
+
+Otherwise, ZA can be off or dormant on entry to A, in the same way as if F were
+to call what the [[AAPCS64]](#AAPCS64) describes as a "private-ZA" function.
 
 If ZA is active on entry to A then A's instructions must ensure that
 ZA is also active when the asm finishes.
@@ -5193,7 +5231,11 @@ depend on ZT0 as well as ZA.
 | off                   | off                  | F's uses and A's clobbers are disjoint |
 | dormant               | dormant              | " " "                                  |
 | dormant               | off                  | " " ", and A clobbers `"za"`           |
-| active                | active               | F uses `"za"` and/or `"zt0"`           |
+| active                | active               | F uses `"za"` and/or `"zt0"`, or       |
+|                       |                      | F's type has an                        |
+|                       |                      | `__arm_agnostic("sme_za_state")`       |
+|                       |                      | attribute with A's clobber-list        |
+|                       |                      | including neither `"za"` nor `"zt0"`   |
 
 The [`__ARM_STATE` macros](#state-strings) indicate whether a compiler
 is guaranteed to support a particular clobber string. For example,
