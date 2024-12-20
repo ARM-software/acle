@@ -4892,15 +4892,6 @@ If a C or C++ function F forms part of the object code's ABI:
 
 All other functions have a private-ZA interface.
 
-If F implements an agnostic-ZA interface and ZA is active, then a call to F must
-return with its ZA state unchanged in accordance with the [[AAPCS64]](#AAPCS64).
-In practice this means that calls to F don't have to emit code to set up a
-lazy-save for ZA or to preserve other state like ZT0 when such state is live at
-the call site.
-
-The implementation of F must not make any assumptions on the availability of
-PSTATE.ZA or any architectural state associated with it.
-
 
 ## Function definitions
 
@@ -4983,14 +4974,22 @@ function F if at least one of the following is true:
 Otherwise, ZA can be in any state on entry to A if at least one of the
 following is true:
 
-*   F [uses](#uses-state) `"za"`
+*   F [uses](#uses-state) `"za"`.
 
-*   F [uses](#uses-state) `"zt0"`
+*   F [uses](#uses-state) `"zt0"`.
 
-*   F implements an [agnostic ZA](#agnostic-za) interface.
+*   F is what the [[AAPCS64]](#AAPCS64) calls an ["agnostic-ZA"](#agnostic-za)
+    function and A's clobber-list does not include `"za"` or `"zt0"`.
 
-Otherwise, ZA can be off or dormant on entry to A, as for what AAPCS64
-calls “private-ZA” functions.
+Otherwise, ZA can be off or dormant on entry to A if at least one of the
+following is true:
+
+*   F is what the [[AAPCS64]](#AAPCS64) calls a "private-ZA" function.
+
+*   F is what the [[AAPCS64]](#AAPCS64) calls an ["agnostic-ZA"](#agnostic-za)
+    function and A's clobber list includes `"za"` or `"zt0"`.
+
+Otherwise, ZA is off on entry to A.
 
 If ZA is active on entry to A then A's instructions must ensure that
 ZA is also active when the asm finishes.
@@ -5015,9 +5014,16 @@ depend on ZT0 as well as ZA.
 | **ZA state before A** | **ZA state after A** | **Possible if…**                       |
 | --------------------- | -------------------- | -------------------------------------- |
 | off                   | off                  | F's uses and A's clobbers are disjoint |
-| dormant               | dormant              | " " "                                  |
-| dormant               | off                  | " " ", and A clobbers `"za"`           |
-| active                | active               | F uses `"za"` and/or `"zt0"`           |
+|                       |                      | or F is an                             |
+|                       |                      | ["#agnostic-ZA"](#agnostic-za)         |
+|                       |                      | function.                              |
+| dormant               | dormant              | "" "" ""                               |
+| dormant               | off                  | A clobbers `"za"`, but F does not      |
+|                       |                      | [use](#uses-state) `"za"`or `"zt0"`.   |
+| active                | active               | F uses `"za"` and/or `"zt0"`, or       |
+|                       |                      | F is an ["#agnostic-ZA"](#agnostic-za) |
+|                       |                      | function and A's clobbers do not       |
+|                       |                      | contain `"za"` or `"zt0"`.             |
 
 The [`__ARM_STATE` macros](#state-strings) indicate whether a compiler
 is guaranteed to support a particular clobber string. For example,
