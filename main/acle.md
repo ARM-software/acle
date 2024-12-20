@@ -4978,18 +4978,11 @@ following is true:
 
 *   F [uses](#uses-state) `"zt0"`.
 
-*   F is what the [[AAPCS64]](#AAPCS64) calls an ["agnostic-ZA"](#agnostic-za)
-    function and A's clobber-list does not include `"za"` or `"zt0"`.
+*   F's type has an [`__arm_agnostic("sme_za_state")` attribute](#agnostic-za)
+    and A's clobber-list includes neither `"za"` nor `"zt0"`.
 
-Otherwise, ZA can be off or dormant on entry to A if at least one of the
-following is true:
-
-*   F is what the [[AAPCS64]](#AAPCS64) calls a "private-ZA" function.
-
-*   F is what the [[AAPCS64]](#AAPCS64) calls an ["agnostic-ZA"](#agnostic-za)
-    function and A's clobber list includes `"za"` or `"zt0"`.
-
-Otherwise, ZA is off on entry to A.
+Otherwise, ZA can be off or dormant on entry to A, in the same way as if F were
+to call what the [[AAPCS64]](#AAPCS64) describes as a "private-ZA" function.
 
 If ZA is active on entry to A then A's instructions must ensure that
 ZA is also active when the asm finishes.
@@ -5014,16 +5007,13 @@ depend on ZT0 as well as ZA.
 | **ZA state before A** | **ZA state after A** | **Possible if…**                       |
 | --------------------- | -------------------- | -------------------------------------- |
 | off                   | off                  | F's uses and A's clobbers are disjoint |
-|                       |                      | or F is an                             |
-|                       |                      | ["#agnostic-ZA"](#agnostic-za)         |
-|                       |                      | function.                              |
-| dormant               | dormant              | "" "" ""                               |
-| dormant               | off                  | A clobbers `"za"`, but F does not      |
-|                       |                      | [use](#uses-state) `"za"`or `"zt0"`.   |
+| dormant               | dormant              | " " "                                  |
+| dormant               | off                  | " " ", and A clobbers `"za"`           |
 | active                | active               | F uses `"za"` and/or `"zt0"`, or       |
-|                       |                      | F is an ["#agnostic-ZA"](#agnostic-za) |
-|                       |                      | function and A's clobbers do not       |
-|                       |                      | contain `"za"` or `"zt0"`.             |
+|                       |                      | F's type has an                        |
+|                       |                      | `__arm_agnostic("sme_za_state")`       |
+|                       |                      | attribute with A's clobber-list        |
+|                       |                      | including neither `"za"` nor `"zt0"`   |
 
 The [`__ARM_STATE` macros](#state-strings) indicate whether a compiler
 is guaranteed to support a particular clobber string. For example,
