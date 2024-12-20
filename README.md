@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-37-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -130,6 +130,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/pratlucas"><img src="https://avatars.githubusercontent.com/u/7014318?v=4?s=100" width="100px;" alt="Lucas Duarte Prates"/><br /><sub><b>Lucas Duarte Prates</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=pratlucas" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/andrewcarlotti"><img src="https://avatars.githubusercontent.com/u/11681428?v=4?s=100" width="100px;" alt="Andrew Carlotti"/><br /><sub><b>Andrew Carlotti</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Aandrewcarlotti" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/labrinea"><img src="https://avatars.githubusercontent.com/u/9527365?v=4?s=100" width="100px;" alt="Alexandros Lamprineas"/><br /><sub><b>Alexandros Lamprineas</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=labrinea" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Lukacma"><img src="https://avatars.githubusercontent.com/u/46606997?v=4?s=100" width="100px;" alt="Lukacma"/><br /><sub><b>Lukacma</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=Lukacma" title="Documentation">📖</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/v01dXYZ"><img src="https://avatars.githubusercontent.com/u/14996868?v=4?s=100" width="100px;" alt="Robert Dazi"/><br /><sub><b>Robert Dazi</b></sub></a><br /><a href="#content-v01dXYZ" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/SpencerAbson"><img src="https://avatars.githubusercontent.com/u/76910239?v=4?s=100" width="100px;" alt="SpencerAbson"/><br /><sub><b>SpencerAbson</b></sub></a><br /><a href="#content-SpencerAbson" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>

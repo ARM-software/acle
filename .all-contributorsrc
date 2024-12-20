@@ -324,6 +324,33 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Lukacma",
+      "name": "Lukacma",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46606997?v=4",
+      "profile": "https://github.com/Lukacma",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "v01dXYZ",
+      "name": "Robert Dazi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14996868?v=4",
+      "profile": "https://github.com/v01dXYZ",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "SpencerAbson",
+      "name": "SpencerAbson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76910239?v=4",
+      "profile": "https://github.com/SpencerAbson",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
