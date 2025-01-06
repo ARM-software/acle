@@ -12157,85 +12157,97 @@ Lookup table read with 2-bit and 4-bit indexes
 Move multi-vectors to/from ZA
 
 ``` c
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_hor_za8_s8_vg4(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_ver_za8_s8_vg2(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_ver_za8_s8_vg4(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svread_za8_s8_vg1x2(uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svread_za8_s8_vg1x4(uint32_t slice)
     __arm_streaming __arm_in("za");
 
 
-  // Variants are also available for _za8[_u8], _za8[_mf8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
+  // Variants are also available for _za8[_u8], _za8[_mf8],
+  // _za16[_s16], _za16[_u16], _za16[_f16], _za16[_bf16],
+  // _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_hor_za8[_s8]_vg2(uint64_t tile, uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za8[_mf8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
+  // Variants are also available for _za8[_u8], _za8[_mf8],
+  // _za16[_s16], _za16[_u16], _za16[_f16], _za16[_bf16],
+  // _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_hor_za8[_s8]_vg4(uint64_t tile, uint32_t slice, svint8x4_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za8[_mf8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
+  // Variants are also available for _za8[_u8], _za8[_mf8],
+  // _za16[_s16], _za16[_u16], _za16[_f16], _za16[_bf16],
+  // _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_ver_za8[_s8]_vg2(uint64_t tile, uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za8[_mf8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
+  // Variants are also available for _za8[_u8], _za8[_mf8],
+  // _za16[_s16], _za16[_u16], _za16[_f16], _za16[_bf16],
+  // _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_ver_za8[_s8]_vg4(uint64_t tile, uint32_t slice, svint8x4_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], _za8[_mf8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
+  // Variants are also available for _za8[_u8], _za8[_mf8],
+  // _za16[_s16], _za16[_u16], _za16[_f16], _za16[_bf16],
+  // _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_za8[_s8]_vg1x2(uint32_t slice, svint8x2_t zn)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8[_u8], za8[_mf8], _za16[_s16], _za16[_u16],
-  // _za16[_f16], _za16[_bf16], _za32[_s32], _za32[_u32], _za32[_f32],
+  // Variants are also available for _za8[_u8], za8[_mf8],
+  // _za16[_s16], _za16[_u16], _za16[_f16], _za16[_bf16],
+  // _za32[_s32], _za32[_u32], _za32[_f32],
   // _za64[_s64], _za64[_u64] and _za64[_f64]
   void svwrite_za8[_s8]_vg1x4(uint32_t slice, svint8x4_t zn)
     __arm_streaming __arm_inout("za");
@@ -12558,29 +12570,33 @@ Move and zero ZA tile slice to vector register.
 Move and zero multiple ZA tile slices to vector registers
 
 ``` c
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svreadz_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svreadz_hor_za8_s8_vg4(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svreadz_ver_za8_s8_vg2(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svreadz_ver_za8_s8_vg4(uint64_t tile, uint32_t slice)
     __arm_streaming __arm_inout("za");
@@ -12591,15 +12607,17 @@ Move and zero multiple ZA tile slices to vector registers
 Move and zero multiple ZA single-vector groups to vector registers
 
 ```
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x2_t svreadz_za8_s8_vg1x2(uint32_t slice)
     __arm_streaming __arm_inout("za");
 
 
-  // Variants are also available for _za8_u8, _za8_mf8, _za16_s16, _za16_u16,
-  // _za16_f16, _za16_bf16, _za32_s32, _za32_u32, _za32_f32,
+  // Variants are also available for _za8_u8, _za8_mf8,
+  // _za16_s16, _za16_u16, _za16_f16, _za16_bf16,
+  // _za32_s32, _za32_u32, _za32_f32,
   // _za64_s64, _za64_u64 and _za64_f64
   svint8x4_t svreadz_za8_s8_vg1x4(uint32_t slice)
     __arm_streaming __arm_inout("za");
