@@ -424,6 +424,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed Function Multi Versioning feature dgh.
 * Document Function Multi Versioning feature dependencies.
 * Clarify Function Multi Versioning feature dependency rule.
+* Simplified Function Multi Versioning version selection rules.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
@@ -2911,14 +2912,11 @@ the selection algorithm is platform dependent, where with platform means
 CPU/Vendor/OS as in the target triplet.
 2. The selection is permanent for the
 lifetime of the process.
-3. Only those versions could be considered where all
-dependent features are available.
-
-Rules of version selection are in order:
-
-4. Select the most specific version else
-5. select the version with the highest priority else
-6. `"default"` is selected if no other versions are suitable.
+3. Among any two versions, the higher priority version is determined by
+identifying the highest priority feature that is specified in exactly one of
+the versions, and selecting that version.
+4. The selection algorithm must select the highest priority versions whose
+dependent features are all available.
 
 ## Weak linkage
 
