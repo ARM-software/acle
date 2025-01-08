@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-36-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-37-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -134,6 +134,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/v01dXYZ"><img src="https://avatars.githubusercontent.com/u/14996868?v=4?s=100" width="100px;" alt="Robert Dazi"/><br /><sub><b>Robert Dazi</b></sub></a><br /><a href="#content-v01dXYZ" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/SpencerAbson"><img src="https://avatars.githubusercontent.com/u/76910239?v=4?s=100" width="100px;" alt="SpencerAbson"/><br /><sub><b>SpencerAbson</b></sub></a><br /><a href="#content-SpencerAbson" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>

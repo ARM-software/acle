@@ -241,7 +241,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   specifications in [Cortex-M Security Extension
   (CMSE)](#cortex-m-security-extension-cmse).
 * Added specification for [NEON-SVE Bridge](#neon-sve-bridge) and
-  [NEON-SVE Bridge macros](#neon-sve-bridge-macros).
+  [NEON-SVE Bridge macros](#neon-sve-bridge-macro).
 * Added feature detection macro for the memcpy family of memory
   operations (MOPS) at [memcpy family of memory operations
   standarization instructions -
@@ -419,12 +419,25 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Unified Function Multi Versioning features memtag and memtag2.
 * Unified Function Multi Versioning features aes and pmull.
 * Unified Function Multi Versioning features sve2-aes and sve2-pmull128.
+* Removed Function Multi Versioning features sve-bf16, sve-ebf16, and sve-i8mm.
 * Removed Function Multi Versioning features ebf16, memtag3, and rpres.
+* Removed Function Multi Versioning feature dgh.
+* Document Function Multi Versioning feature dependencies.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
+* Fixed urls.
+* Changed name mangling of function types to include SME attributes.
+* Changed `__ARM_NEON_SVE_BRIDGE` to refer to the availability of the
+  [`arm_neon_sve_bridge.h`](#arm_neon_sve_bridge.h) header file, rather
+  than the [NEON-SVE bridge](#neon-sve-bridge) intrinsics.
+* Removed extraneous `const` from SVE2.1 store intrinsics.
+* Added [`__arm_agnostic`](#arm_agnostic) keyword attribute.
+* Refined function versioning scope and signature rules to use the default
+  version scope and signature.
 * Changed the status of the SME2p1 ACLE from Alpha to Beta.
 * Changed the status of the SVE2p1 ACLE from Alpha to Beta.
+
 
 ### References
 
@@ -854,6 +867,7 @@ predefine the associated macro to a nonzero value.
 
 | **Name**                                                    | **Target**            | **Predefined macro**              |
 | ----------------------------------------------------------- | --------------------- | --------------------------------- |
+| [`__arm_agnostic`](#arm_agnostic)                           | function type         | `__ARM_FEATURE_SME`               |
 | [`__arm_locally_streaming`](#arm_locally_streaming)         | function declaration  | `__ARM_FEATURE_LOCALLY_STREAMING` |
 | [`__arm_in`](#ways-of-sharing-state)                        | function type         | Argument-dependent                |
 | [`__arm_inout`](#ways-of-sharing-state)                     | function type         | Argument-dependent                |
@@ -1928,14 +1942,10 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
-#### NEON-SVE Bridge macros
+#### NEON-SVE Bridge macro
 
-`__ARM_NEON_SVE_BRIDGE` is defined to 1 if [NEON-SVE Bridge](#neon-sve-bridge)
-intrinsics are available. This implies that the following macros are nonzero:
-
-* `__ARM_NEON`
-* `__ARM_NEON_FP`
-* `__ARM_FEATURE_SVE`
+`__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
+header file is available.
 
 #### Scalable Matrix Extension (SME)
 
@@ -2570,7 +2580,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FP_FENV_ROUNDING`](#floating-point-model)                                                                                                       | Rounding is configurable at runtime                                                                | 1           |
 | [`__ARM_NEON`](#advanced-simd-architecture-extension-neon)                                                                                              | Advanced SIMD (Neon) extension                                                                     | 1           |
 | [`__ARM_NEON_FP`](#neon-floating-point)                                                                                                                 | Advanced SIMD (Neon) floating-point                                                                | 0x04        |
-| [`__ARM_NEON_SVE_BRIDGE`](#neon-sve-bridge-macros)                                                                                                      | Moving data between Neon and SVE data types                                                        | 1           |
+| [`__ARM_NEON_SVE_BRIDGE`](#neon-sve-bridge-macro)                                                                                                       | Availability of [`arm_neon_sve_brdge.h`](#arm_neon_sve_bridge.h)                                   | 1           |
 | [`__ARM_PCS`](#procedure-call-standard)                                                                                                                 | Arm procedure call standard (32-bit-only)                                                          | 0x01        |
 | [`__ARM_PCS_AAPCS64`](#procedure-call-standard)                                                                                                         | Arm PCS for AArch64.                                                                               | 1           |
 | [`__ARM_PCS_VFP`](#procedure-call-standard)                                                                                                             | Arm PCS hardware FP variant in use (32-bit-only)                                                   | 1           |
@@ -2586,7 +2596,7 @@ be found in [[BA]](#BA).
 
 This section describes ACLE features that use GNU-style attributes.
 The general rules for attribute syntax are described in the GCC
-documentation <https://gcc.gnu.org/onlinedocs/gcc/extensions-to-the-c-language-family/attribute-syntax.html>.
+documentation <https://gcc.gnu.org/onlinedocs/gcc/Attribute-Syntax.html>.
 Briefly, for this declaration:
 
 ``` c
@@ -2670,12 +2680,12 @@ The following attributes trigger the multi version code generation:
 `__attribute__((target_version("name")))` and
 `__attribute__((target_clones("name",...)))`.
 
+* Functions are allowed to have the same name and signature when
+  annotated with these attributes.
 * These attributes can be mixed with each other.
+* `name` is the dependent features from the tables below.
 * The `default` version means the version of the function that would
   be generated without these attributes.
-* `name` is the dependent features from the tables below.
-  * If a feature depends on another feature as defined by the Architecture
-    Reference Manual then no need to explicitly state in the attribute[^fmv-note-names].
 * The dependent features could be joined by the `+` sign.
 * None of these attributes will enable the corresponding ACLE feature(s)
   associated to the `name` expressed in the attribute.
@@ -2684,24 +2694,46 @@ The following attributes trigger the multi version code generation:
 * If only the `default` version exist it should be linked directly.
 * FMV may be disabled in compile time by a compiler flag. In this
   case the `default` version shall be used.
-
-[^fmv-note-names]: For example the `sve_bf16` feature depends on `sve`
-  but it is enough to say `target_version("sve_bf16")` in the code.
+* All function versions must be declared at the same scope level.
+* The default version signature is the signature for calling
+  the multiversioned functions. Therefore, a versioned function
+  cannot be called unless the declaration of the default version
+  is visible in the scope of the call site.
+* Non-default versions shall have a type that is convertible to the
+  type of the default version.
+* All the function versions must be declared at the translation
+  unit in which the definition of the default version resides.
 
 The attribute `__attribute__((target_version("name")))` expresses the
 following:
 
-* when applied to a function it becomes one of the versions. Function
-  with the same name may exist with multiple versions in the same
-  or in different translation units.
+* When applied to a function it becomes one of the versions.
+* Multiple function versions may exist in the same or in different
+  translation units.
 * One `default` version of the function is required to be provided
   in one of the translation units.
   * Implicitly, without this attribute,
   * or explicitly providing the `default` in the attribute.
-* All instances of the versions shall share the same function
-  signature and calling convention.
-* All the function versions must be declared at the translation
-  unit in which the definition of the default version resides.
+
+For example, the below is valid and 2 is used as the default
+value for `c` when calling the multiversioned function `f`.
+
+```cpp
+int __attribute__((target_version("simd"))) f (int c = 1);
+int __attribute__((target_version("default"))) f (int c = 2);
+int __attribute__((target_version("sve"))) f (int c = 3);
+
+int g() { return f(); }
+```
+
+Additionally, the below is not valid as the two statements declare
+the same entity (the `default` version of `f`) with conflicting
+signatures.
+
+```cpp
+int f (int c = 1);
+int __attribute__((target_version("default"))) f (int c = 2);
+```
 
 The attribute `__attribute__((target_clones("name",...)))` expresses the
 following:
@@ -2804,13 +2836,9 @@ The following table lists the architectures feature mapping for AArch64
    | 240           | `FEAT_LRCPC2`            | rcpc2         | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0010```    |
    | 241           | `FEAT_LRCPC3`            | rcpc3         | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0011```    |
    | 250           | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS >= 0b0001```  |
-   | 260           | `FEAT_DGH`               | dgh           | ```ID_AA64ISAR1_EL1.DGH >= 0b0001```      |
    | 270           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM >= 0b0001```     |
    | 280           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 >= 0b0001```     |
    | 310           | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE >= 0b0001```       |
-   | 320           | `FEAT_BF16`              | sve-bf16      | ```ID_AA64ZFR0_EL1.BF16 >= 0b0001```      |
-   | 330           | `FEAT_EBF16`             | sve-ebf16     | ```ID_AA64ZFR0_EL1.BF16 >= 0b0010```      |
-   | 340           | `FEAT_I8MM`              | sve-i8mm      | ```ID_AA64ZFR0_EL1.I8MM >= 0b00001```     |
    | 350           | `FEAT_F32MM`             | f32mm         | ```ID_AA64ZFR0_EL1.F32MM >= 0b00001```    |
    | 360           | `FEAT_F64MM`             | f64mm         | ```ID_AA64ZFR0_EL1.F64MM >= 0b00001```    |
    | 370           | `FEAT_SVE2`              | sve2          | ```ID_AA64ZFR0_EL1.SVEver >= 0b0001```    |
@@ -2830,6 +2858,50 @@ The following table lists the architectures feature mapping for AArch64
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
    | 580           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SMEver >= 0b0001```    |
    | 650           | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
+
+### Dependencies
+
+If a feature depends on another feature as defined by the table below then:
+
+* the depended-on feature *need not* be specified in the attribute,
+* the depended-on feature *may* be specified in the attribute.
+
+These dependencies are taken into account transitively when selecting the
+most appropriate version of a function (see section [Selection](#selection)).
+The following table lists the feature dependencies for AArch64.
+
+   | **Feature**      | **Depends on**    |
+   | ---------------- | ----------------- |
+   | flagm2           | flagm             |
+   | simd             | fp                |
+   | dotprod          | simd              |
+   | sm4              | simd              |
+   | rdm              | simd              |
+   | sha2             | simd              |
+   | sha3             | sha2              |
+   | aes              | simd              |
+   | fp16             | fp                |
+   | fp16fml          | simd, fp16        |
+   | dpb2             | dpb               |
+   | jscvt            | fp                |
+   | fcma             | simd              |
+   | rcpc2            | rcpc              |
+   | rcpc3            | rcpc2             |
+   | frintts          | fp                |
+   | i8mm             | simd              |
+   | bf16             | simd              |
+   | sve              | fp16              |
+   | f32mm            | sve               |
+   | f64mm            | sve               |
+   | sve2             | sve               |
+   | sve2-aes         | sve2, aes         |
+   | sve2-bitperm     | sve2              |
+   | sve2-sha3        | sve2, sha3        |
+   | sve2-sm4         | sve2, sm4         |
+   | sme              | fp16, bf16        |
+   | sme-f64f64       | sme               |
+   | sme-i16i64       | sme               |
+   | sme2             | sme               |
 
 ### Selection
 
@@ -5021,6 +5093,31 @@ if such a restoration is necessary. For example:
    }
 ```
 
+## `__arm_agnostic`
+
+A function with the `__arm_agnostic` [keyword attribute](#keyword-attributes)
+must preserve the architectural state that is specified by its arguments when
+such state exists at runtime. The function is otherwise unconcerned with this
+state.
+
+The `__arm_agnostic` [keyword attribute](#keyword-attributes) applies to
+**function types** and accepts the following arguments:
+
+```"sme_za_state"```
+
+*   This attribute affects the ABI of a function, which must implement an
+    [agnostic-ZA interface](#agnostic-za). It is the compiler's responsibility
+    to ensure that the function's object code honors the ABI requirements.
+
+*   The use of `__arm_agnostic("sme_za_state")` allows writing functions that
+    are compatible with ZA state without having to share ZA state with the
+    caller, as required by `__arm_preserves`. The use of this attribute
+    does not imply that SME is available.
+
+*   It is not valid for a function declaration with
+    `__arm_agnostic("sme_za_state")` to [share](#shares-state) PSTATE.ZA state
+    with its caller.
+
 ## Mapping to the Procedure Call Standard
 
 [[AAPCS64]](#AAPCS64) classifies functions as having one of the following
@@ -5032,13 +5129,21 @@ interfaces:
 
 *   a “shared-ZA” interface
 
-If a C or C++ function F forms part of the object code's ABI, that
-object code function has a shared-ZA interface if and only if at least
-one of the following is true:
+<span id="agnostic-za"></span>
 
-*   F shares ZA with its caller
+*   an "agnostic-ZA" interface
 
-*   F shares ZT0 with its caller
+If a C or C++ function F forms part of the object code's ABI:
+
+* the object code function has a shared-ZA interface if and only if at least
+  one of the following is true:
+
+  * F shares ZA with its caller
+
+  * F shares ZT0 with its caller
+
+* the object code function has an agnostic-ZA interface if and only if F's type
+  has an `__arm_agnostic("sme_za_state")` attribute.
 
 All other functions have a private-ZA interface.
 
@@ -5123,12 +5228,15 @@ function F if at least one of the following is true:
 Otherwise, ZA can be in any state on entry to A if at least one of the
 following is true:
 
-*   F [uses](#uses-state) `"za"`
+*   F [uses](#uses-state) `"za"`.
 
-*   F [uses](#uses-state) `"zt0"`
+*   F [uses](#uses-state) `"zt0"`.
 
-Otherwise, ZA can be off or dormant on entry to A, as for what AAPCS64
-calls “private-ZA” functions.
+*   F's type has an [`__arm_agnostic("sme_za_state")` attribute](#agnostic-za)
+    and A's clobber-list includes neither `"za"` nor `"zt0"`.
+
+Otherwise, ZA can be off or dormant on entry to A, in the same way as if F were
+to call what the [[AAPCS64]](#AAPCS64) describes as a "private-ZA" function.
 
 If ZA is active on entry to A then A's instructions must ensure that
 ZA is also active when the asm finishes.
@@ -5155,7 +5263,11 @@ depend on ZT0 as well as ZA.
 | off                   | off                  | F's uses and A's clobbers are disjoint |
 | dormant               | dormant              | " " "                                  |
 | dormant               | off                  | " " ", and A clobbers `"za"`           |
-| active                | active               | F uses `"za"` and/or `"zt0"`           |
+| active                | active               | F uses `"za"` and/or `"zt0"`, or       |
+|                       |                      | F's type has an                        |
+|                       |                      | `__arm_agnostic("sme_za_state")`       |
+|                       |                      | attribute with A's clobber-list        |
+|                       |                      | including neither `"za"` nor `"zt0"`   |
 
 The [`__ARM_STATE` macros](#state-strings) indicate whether a compiler
 is guaranteed to support a particular clobber string. For example,
@@ -9184,11 +9296,13 @@ Gather Load Quadword.
    // _mf8, _bf16, _f16, _f32, _f64
    svint8_t svld1q_gather[_u64base]_s8(svbool_t pg, svuint64_t zn);
    svint8_t svld1q_gather[_u64base]_offset_s8(svbool_t pg, svuint64_t zn, int64_t offset);
+   svint8_t svld1q_gather_[s64]offset[_s8](svbool_t pg, const int8_t *base, svint64_t offset);
    svint8_t svld1q_gather_[u64]offset[_s8](svbool_t pg, const int8_t *base, svuint64_t offset);
 
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
+   svint16_t svld1q_gather_[s64]index[_s16](svbool_t pg, const int16_t *base, svint64_t index);
    svint16_t svld1q_gather_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index);
    svint16_t svld1q_gather[_u64base]_index_s16(svbool_t pg, svuint64_t zn, int64_t index);
    ```
@@ -9258,14 +9372,14 @@ Contiguous store of single vector operand, truncating from quadword.
 ``` c
    // Variants are also available for:
    // _u32, _s32
-   void svst1wq[_f32](svbool_t, const float32_t *ptr, svfloat32_t data);
-   void svst1wq_vnum[_f32](svbool_t, const float32_t *ptr, int64_t vnum, svfloat32_t data);
+   void svst1wq[_f32](svbool_t, float32_t *ptr, svfloat32_t data);
+   void svst1wq_vnum[_f32](svbool_t, float32_t *ptr, int64_t vnum, svfloat32_t data);
  
 
    // Variants are also available for:
    // _u64, _s64
-   void svst1dq[_f64](svbool_t, const float64_t *ptr, svfloat64_t data);
-   void svst1dq_vnum[_f64](svbool_t, const float64_t *ptr, int64_t vnum, svfloat64_t data);
+   void svst1dq[_f64](svbool_t, float64_t *ptr, svfloat64_t data);
+   void svst1dq_vnum[_f64](svbool_t, float64_t *ptr, int64_t vnum, svfloat64_t data);
    ```
 
 #### ST1Q
@@ -9278,12 +9392,14 @@ Scatter store quadwords.
    // _mf8, _bf16, _f16, _f32, _f64
    void svst1q_scatter[_u64base][_s8](svbool_t pg, svuint64_t zn, svint8_t data);
    void svst1q_scatter[_u64base]_offset[_s8](svbool_t pg, svuint64_t zn, int64_t offset, svint8_t data);
-   void svst1q_scatter_[u64]offset[_s8](svbool_t pg, const uint8_t *base, svuint64_t offset, svint8_t data);
+   void svst1q_scatter_[s64]offset[_s8](svbool_t pg, uint8_t *base, svint64_t offset, svint8_t data);
+   void svst1q_scatter_[u64]offset[_s8](svbool_t pg, uint8_t *base, svuint64_t offset, svint8_t data);
 
    // Variants are also available for:
    // _u16, _u32, _s32, _u64, _s64
    // _bf16, _f16, _f32, _f64
-   void svst1q_scatter_[u64]index[_s16](svbool_t pg, const int16_t *base, svuint64_t index, svint16_t data);
+   void svst1q_scatter_[s64]index[_s16](svbool_t pg, int16_t *base, svint64_t index, svint16_t data);
+   void svst1q_scatter_[u64]index[_s16](svbool_t pg, int16_t *base, svuint64_t index, svint16_t data);
    void svst1q_scatter[_u64base]_index[_s16](svbool_t pg, svuint64_t zn, int64_t index, svint16_t data);
 ```
 
@@ -10094,6 +10210,65 @@ an [`__arm_streaming`](#arm_streaming) type.
 
 See [Changing streaming mode locally](#changing-streaming-mode-locally)
 for more information.
+
+### C++ mangling of SME keywords
+
+SME keyword attributes which apply to function types must be included
+in the name mangling of the type, if the mangling would normally include
+the return type of the function.
+
+SME attributes are mangled in the same way as a template:
+
+``` c
+  template<typename, uint64_t> __SME_ATTRS;
+```
+
+with the arguments:
+
+``` c
+  __SME_ATTRS<normal_function_type, sme_state>;
+```
+
+where:
+
+* normal_function_type is the function type without any SME attributes.
+
+* sme_state is an unsigned 64-bit integer representing the streaming and ZA
+  properties of the function's interface.
+
+The bits are defined as follows:
+
+| **Bits** | **Value** | **Interface Type**             |
+| -------- | --------- | ------------------------------ |
+| 0        | 0b1       | __arm_streaming                |
+| 1        | 0b1       | __arm_streaming_compatible     |
+| 2        | 0b1       | __arm_agnostic("sme_za_state") |
+| 3-5      | 0b000     | No ZA state (default)          |
+|          | 0b001     | __arm_in("za")                 |
+|          | 0b010     | __arm_out("za")                |
+|          | 0b011     | __arm_inout("za")              |
+|          | 0b100     | __arm_preserves("za")          |
+| 6-8      | 0b000     | No ZT0 state (default)         |
+|          | 0b001     | __arm_in("zt0")                |
+|          | 0b010     | __arm_out("zt0")               |
+|          | 0b011     | __arm_inout("zt0")             |
+|          | 0b100     | __arm_preserves("zt0")         |
+
+Bits 9-63 are defined to be zero by this revision of the ACLE and are reserved
+for future type attributes.
+
+For example:
+
+``` c
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj1EE
+  void f(svint8_t (*fn)() __arm_streaming) { fn(); }
+
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj26EE
+  void f(svint8_t (*fn)() __arm_streaming_compatible __arm_inout("za")) { fn(); }
+
+  // Mangled as _Z1fP11__SME_ATTRSIFu10__SVInt8_tvELj128EE
+  void f(svint8_t (*fn)() __arm_out("zt0")) { fn(); }
+```
 
 ## SME types
 
