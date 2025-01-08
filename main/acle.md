@@ -423,6 +423,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed Function Multi Versioning features ebf16, memtag3, and rpres.
 * Removed Function Multi Versioning feature dgh.
 * Document Function Multi Versioning feature dependencies.
+* Clarify Function Multi Versioning feature dependency rule.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
@@ -2861,7 +2862,8 @@ The following table lists the architectures feature mapping for AArch64
 If a feature depends on another feature as defined by the table below then:
 
 * the depended-on feature *need not* be specified in the attribute,
-* the depended-on feature *may* be specified in the attribute.
+* the depended-on feature *may* be specified in the attribute,
+* the depended-on feature *must* be of lower priority.
 
 These dependencies are taken into account transitively when selecting the
 most appropriate version of a function (see section [Selection](#selection)).
