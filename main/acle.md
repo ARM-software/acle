@@ -436,6 +436,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [`__arm_agnostic`](#arm_agnostic) keyword attribute.
 * Refined function versioning scope and signature rules to use the default
   version scope and signature.
+* Changed the status of the SME2p1 ACLE from Alpha to Beta.
+* Changed the status of the SVE2p1 ACLE from Alpha to Beta.
+
 
 ### References
 
@@ -1948,7 +1951,7 @@ header file is available.
 #### Scalable Matrix Extension (SME)
 
 The specification for SME2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and the
+[**Beta** state](#current-status-and-anticipated-changes) and the
 specification for the rest of SME is in
 [**Beta** state](#current-status-and-anticipated-changes).  The
 specifications may change or be extended in the future.
@@ -2026,7 +2029,7 @@ defined to a nonzero value.
 #### Half-precision floating-point SME intrinsics
 
 The specification for SME2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_F16F16` is defined to `1` if there is hardware support
@@ -9192,7 +9195,7 @@ BFloat16 floating-point multiply vectors.
 ### SVE2.1 instruction intrinsics
 
 The specification for SVE2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 The functions in this section are defined by the header file
@@ -12496,7 +12499,7 @@ element types.
 ### SME2.1 instruction intrinsics
 
 The specification for SME2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or
+[**Beta** state](#current-status-and-anticipated-changes) and might change or
 be extended in the future.
 
 The intrinsics in this section are defined by the header file
@@ -12653,7 +12656,7 @@ are named after. All of the functions have external linkage.
 ### SVE2.1 and SME2 instruction intrinsics
 
 The specification for SVE2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 The functions in this section are defined by either the header file
