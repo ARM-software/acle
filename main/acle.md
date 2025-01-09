@@ -445,6 +445,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
+* Changed the Function Multi Versioning default version rules to be more explicit.
 
 ### References
 
@@ -2721,6 +2722,12 @@ The following attributes trigger the multi version code generation:
   type of the default version.
 * All the function versions must be declared at the translation
   unit in which the definition of the default version resides.
+* One `default` version of the function is required to be provided
+  in one of the translation units.
+  * Implicitly, as a definition without any attribute,
+  * as a function annotated with `target_version("default")`,
+  * or, as a function annotated with `target_clones(...)` where one
+    of the versions is `default`.
 
 The attribute `__attribute__((target_version("name")))` expresses the
 following:
@@ -2728,10 +2735,6 @@ following:
 * When applied to a function it becomes one of the versions.
 * Multiple function versions may exist in the same or in different
   translation units.
-* One `default` version of the function is required to be provided
-  in one of the translation units.
-  * Implicitly, without this attribute,
-  * or explicitly providing the `default` in the attribute.
 
 For example, the below is valid and 2 is used as the default
 value for `c` when calling the multiversioned function `f`.
@@ -2758,11 +2761,6 @@ following:
 
 * when applied to a function the compiler emits multiple versions
   based on the arguments.
-  * One of them is implicitly the `default`.
-  * If the `default` matches with another explicitly provided
-    version in the same translation unit, then the compiler can
-    emit only one function instead of the two. The explicitly
-    provided version shall be preferred.
 * If a name is not recognized the compiler should ignore it[^fmv-note-ignore].
 
 [^fmv-note-ignore]: The intention is to support the usecase of newer code if
