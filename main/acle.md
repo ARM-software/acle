@@ -437,6 +437,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [`__arm_agnostic`](#arm_agnostic) keyword attribute.
 * Refined function versioning scope and signature rules to use the default
   version scope and signature.
+* Added `_n` forms of the SVE2p1 and SME2 `svdot` intrinsics.
 * Changed the status of the SME2p1 ACLE from Alpha to Beta.
 * Changed the status of the SVE2p1 ACLE from Alpha to Beta.
 
@@ -12703,6 +12704,8 @@ Multi-vector dot-product (2-way)
   // Variants are also available for _s32_s16 and _u32_u16
   svfloat32_t svdot[_f32_f16](svfloat32_t zda, svfloat16_t zn,
                               svfloat16_t zm);
+  svfloat32_t svdot[_n_f32_f16](svfloat32_t zda, svfloat16_t zn,
+                                float16_t zm);
   ```
 
 #### UDOT, SDOT, FDOT (indexed)
