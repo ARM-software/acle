@@ -423,6 +423,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed Function Multi Versioning features ebf16, memtag3, and rpres.
 * Removed Function Multi Versioning feature dgh.
 * Document Function Multi Versioning feature dependencies.
+* Clarify Function Multi Versioning feature dependency rule.
+* Simplified Function Multi Versioning version selection rules.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
@@ -435,6 +437,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [`__arm_agnostic`](#arm_agnostic) keyword attribute.
 * Refined function versioning scope and signature rules to use the default
   version scope and signature.
+* Added `_n` forms of the SVE2p1 and SME2 `svdot` intrinsics.
+* Changed the status of the SME2p1 from Alpha to Beta.
+* Changed the status of the SVE2p1 from Alpha to Beta.
 * Added mf8 variants of SME 2.1 intrinsics.
 
 ### References
@@ -1948,7 +1953,7 @@ header file is available.
 #### Scalable Matrix Extension (SME)
 
 The specification for SME2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and the
+[**Beta** state](#current-status-and-anticipated-changes) and the
 specification for the rest of SME is in
 [**Beta** state](#current-status-and-anticipated-changes).  The
 specifications may change or be extended in the future.
@@ -2026,7 +2031,7 @@ defined to a nonzero value.
 #### Half-precision floating-point SME intrinsics
 
 The specification for SME2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_F16F16` is defined to `1` if there is hardware support
@@ -2862,7 +2867,8 @@ The following table lists the architectures feature mapping for AArch64
 If a feature depends on another feature as defined by the table below then:
 
 * the depended-on feature *need not* be specified in the attribute,
-* the depended-on feature *may* be specified in the attribute.
+* the depended-on feature *may* be specified in the attribute,
+* the depended-on feature *must* be of lower priority.
 
 These dependencies are taken into account transitively when selecting the
 most appropriate version of a function (see section [Selection](#selection)).
@@ -2910,14 +2916,11 @@ the selection algorithm is platform dependent, where with platform means
 CPU/Vendor/OS as in the target triplet.
 2. The selection is permanent for the
 lifetime of the process.
-3. Only those versions could be considered where all
-dependent features are available.
-
-Rules of version selection are in order:
-
-4. Select the most specific version else
-5. select the version with the highest priority else
-6. `"default"` is selected if no other versions are suitable.
+3. Among any two versions, the higher priority version is determined by
+identifying the highest priority feature that is specified in exactly one of
+the versions, and selecting that version.
+4. The selection algorithm must select the highest priority versions whose
+dependent features are all available.
 
 ## Weak linkage
 
@@ -9195,7 +9198,7 @@ BFloat16 floating-point multiply vectors.
 ### SVE2.1 instruction intrinsics
 
 The specification for SVE2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 The functions in this section are defined by the header file
@@ -12511,7 +12514,7 @@ element types.
 ### SME2.1 instruction intrinsics
 
 The specification for SME2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or
+[**Beta** state](#current-status-and-anticipated-changes) and might change or
 be extended in the future.
 
 The intrinsics in this section are defined by the header file
@@ -12676,7 +12679,7 @@ are named after. All of the functions have external linkage.
 ### SVE2.1 and SME2 instruction intrinsics
 
 The specification for SVE2.1 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 The functions in this section are defined by either the header file
@@ -12721,6 +12724,8 @@ Multi-vector dot-product (2-way)
   // Variants are also available for _s32_s16 and _u32_u16
   svfloat32_t svdot[_f32_f16](svfloat32_t zda, svfloat16_t zn,
                               svfloat16_t zm);
+  svfloat32_t svdot[_n_f32_f16](svfloat32_t zda, svfloat16_t zn,
+                                float16_t zm);
   ```
 
 #### UDOT, SDOT, FDOT (indexed)

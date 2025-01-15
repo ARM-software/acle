@@ -151,6 +151,11 @@ for more information about Arm’s trademarks.
 
 * Fixed the range of the ``lane`` immediate argument for ``vst2q_lane_f64``.
 
+#### Changes for next release
+
+* Added `mf8` forms of the `vbsl`, `vluti2` and `vluti4` families of
+  intrinsics.
+
 <!---
 **** Do not remove! ****
 The line following this comment is necessary to generate custom geometry settings
