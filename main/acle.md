@@ -441,6 +441,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed the status of the SME2p1 from Alpha to Beta.
 * Changed the status of the SVE2p1 from Alpha to Beta.
 * Added mf8 variants of SME 2.1 intrinsics.
+* Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 
 ### References
 
@@ -13308,6 +13309,7 @@ Single-precision convert, narrow, and interleave to 8-bit floating-point (top an
 ``` c
   // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8DOT4) || __ARM_FEATURE_SSVE_FP8DOT4
   svfloat32_t svdot[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+  svfloat32_t svdot[_n_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, mfloat8_t zm, fpm_t fpm);
 ```
 
 #### FDOT (4-way, indexed)
@@ -13325,6 +13327,7 @@ Single-precision convert, narrow, and interleave to 8-bit floating-point (top an
 ``` c
   // Only if (__ARM_FEATURE_SVE2  && __ARM_FEATURE_FP8DOT2) || __ARM_FEATURE_SSVE_FP8DOT2
   svfloat16_t svdot[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+  svfloat16_t svdot[_n_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, mfloat8_t zm, fpm_t fpm);
 ```
 
 #### FDOT (2-way, indexed, FP8 to FP16)
