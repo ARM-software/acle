@@ -442,6 +442,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed the status of the SVE2p1 from Alpha to Beta.
 * Added mf8 variants of SME 2.1 intrinsics.
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
+* Added Guarded Control Stack (GCS) at
+  [**Beta**](#current-status-and-anticipated-changes) quality level.
 
 ### References
 
@@ -4926,6 +4928,8 @@ The tag bits in the input pointers are ignored for this operation.
 This section describes the intrinsics for the instructions of the
 Guarded Control Stack (GCS) extension. The GCS instructions are present
 in the AArch64 execution state only.
+
+The specification for Guarded Control Stack is at Beta level.
 
 When GCS protection is enabled then function calls also save the return
 address to a separate stack, the GCS, that is checked against the actual
