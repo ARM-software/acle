@@ -444,6 +444,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
+* Added [**Beta**](#current-status-and-anticipated-changes) support 
+  for structured sparsity outer product intrinsics 
 
 ### References
 
@@ -2370,6 +2372,17 @@ support for the SME double precision floating-point outer product
 (FEAT_SME_F64F64) instructions and if their associated intrinsics are
 available. This implies that `__ARM_FEATURE_SME` is nonzero.
 
+#### Structured sparsity outer product intrinsics
+
+The specification for SME is in
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
+
+`__ARM_FEATURE_SME_TMOP` is defined to `1` if there is hardware
+support for the SME structured sparsity outer product (FEAT_SME_TMOP)
+instructions and if their associated intrinsics are
+available. This implies that `__ARM_FEATURE_SME2` is nonzero.
+
 ## Floating-point model
 
 These macros test the floating-point model implemented by the compiler
@@ -2566,6 +2579,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SME_F8F16`](#modal-8-bit-floating-point-extensions)                                                                                     | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SME_F8F32`](#modal-8-bit-floating-point-extensions)                                                                                     | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SME_I16I64`](#16-bit-to-64-bit-integer-widening-outer-product-intrinsics)                                                               | 16-bit to 64-bit integer widening outer product intrinsics (FEAT_SME_I16I64)                       | 1           |
+| [`__ARM_FEATURE_SME_TMOP`](#structured-sparsity-outer-product-intrinsics)                                                               | Structured sparsity outer product intrinsics (FEAT_SME_TMOP)                       | 1           |
 | [`__ARM_FEATURE_SME_LOCALLY_STREAMING`](#scalable-matrix-extension-sme)                                                                                 | Support for the `arm_locally_streaming` attribute                                                  | 1           |
 | [`__ARM_FEATURE_SME_LUTv2`](#lookup-table-extensions)                                                                                                   | Lookup table extensions (FEAT_SME_LUTv2)                                                           | 1           |
 | [`__ARM_FEATURE_SSVE_FP8DOT2`](#modal-8-bit-floating-point-extensions)                                                                                  | Modal 8-bit floating-point extensions                                                              | 1           |
@@ -10853,6 +10867,48 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
   //   _za64[_f64]_m (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmops_za32[_f32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svfloat32_t zn, svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### BFTMOPA, FTMOPA, STMOPA, UTMOPA
+
+``` c
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_bf16_bf16]
+  //   _za32[_f16_f16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  void svtmopa_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                              svuint8_t zk, uint64_t imm_idx)
+    __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F16 != 0
+  void svtmopa_za16[_f8_f8](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                            svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+  
+  // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F32 != 0
+  void svtmopa__za32[_f8_f8](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                              svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### SUTMOPA, USTMOPA
+
+``` c
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  void svtmopa_za32[_s8_u8](uint64_t tile, svint8x2_t zn, svuint8_t zm, 
+                            svuint8_t zk, uint64_t imm_idx)
+    __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  void svtmopa_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, svint8_t zm, 
+                            svuint8_t zk, uint64_t imm_idx)
     __arm_streaming __arm_inout("za");
 ```
 
