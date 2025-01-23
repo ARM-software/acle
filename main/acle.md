@@ -422,6 +422,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed Function Multi Versioning features sve-bf16, sve-ebf16, and sve-i8mm.
 * Removed Function Multi Versioning features ebf16, memtag3, and rpres.
 * Removed Function Multi Versioning feature dgh.
+* Removed Function Multi Versioning features ls64 and predres.
 * Document Function Multi Versioning feature dependencies.
 * Clarify Function Multi Versioning feature dependency rule.
 * Simplified Function Multi Versioning version selection rules.
@@ -2866,10 +2867,8 @@ The following table lists the architectures feature mapping for AArch64
    | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME >= 0b0001```       |
    | 440           | `FEAT_MTE`, `FEAT_MTE2`  | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
    | 470           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB >= 0b0001```       |
-   | 480           | `FEAT_SPECRES`           | predres       | ```ID_AA64ISAR1_EL1.SPECRES >= 0b0001```  |
    | 490           | `FEAT_SSBS`, `FEAT_SSBS2`| ssbs          | ```ID_AA64PFR1_EL1.SSBS >= 0b0010```      |
    | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.BT >= 0b0001```        |
-   | 520           | `FEAT_LS64`, `FEAT_LS64_V`, <br> `FEAT_LS64_ACCDATA` | ls64 | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011``` |
    | 550           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT >= 0b0010```     |
    | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64 == 0b1```      |
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
