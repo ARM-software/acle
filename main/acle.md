@@ -10533,42 +10533,47 @@ ZA array vectors. The intrinsics model this in the following way:
     This level of detail is not exposed to the C/C++ intrinsics or types. It is
     left up to the compiler to choose the most optimal form.
 
-*   Intrinsic functions have a `_x2` or `_x4` suffix if the
-    function\'s widest type is a vector tuple of 2 or 4 data vectors
-    and the function operates purely on vectors, not on the matrix array or
-    tile slices. The suffix is only present on overloaded names if it cannot
-    be inferred from arguments.
+*   Intrinsic functions that operate on groups of SVE vectors, ZA tile slices or
+    ZA array vectors have one of the following suffixes added to them. These are 
+    selected according to the first matching rule (first suffix whose description 
+    matches the situation gets used):
 
-*   Intrinsic functions have a `_vg2` or `_vg4` suffix if the function
-    operates on groups of 2 or 4 ZA tile slices.  For example:
+  *   Intrinsic functions have a `_vg2` or `_vg4` suffix if the function
+      operates on groups of 2 or 4 ZA tile slices. For example:
 
-``` c
-    // Reads 2 consecutive horizontal tile slices from ZA into multi-vector.
-    svint8x2_t svread_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
-      __arm_streaming __arm_in("za");
-```
+  ``` c
+      // Reads 2 consecutive horizontal tile slices from ZA into multi-vector.
+      svint8x2_t svread_hor_za8_s8_vg2(uint64_t tile, uint32_t slice)
+        __arm_streaming __arm_in("za");
+  ```
 
-*   Intrinsic functions have a `_vg1x2`, `_vg1x4` suffix if the function
-    operates on 2 or 4 single-vector groups within the ZA array.
+  *   Intrinsic functions have a `_vg1x2`, `_vg1x4` suffix if the function
+      operates on 2 or 4 single-vector groups within the ZA array.
 
-*   Intrinsic functions have a `_vg2x1`, `_vg2x2`, `_vg2x4` suffix if
-    the function operates on 1, 2 or 4 double-vector groups within the ZA array.
+  *   Intrinsic functions have a `_vg2x1`, `_vg2x2`, `_vg2x4` suffix if
+      the function operates on 1, 2 or 4 double-vector groups within the ZA array.
 
-*   Intrinsic functions have a `_vg4x1`, `_vg4x2`, `_vg4x4` suffix if the
-    function operates on 1, 2 or 4 quad-vector groups within the ZA array.
-    For example:
+  *   Intrinsic functions have a `_vg4x1`, `_vg4x2`, `_vg4x4` suffix if the
+      function operates on 1, 2 or 4 quad-vector groups within the ZA array.
+      For example:
 
-``` c
-    // SMLAL intrinsic for 2 quad-vector groups.
-    void svmla_lane_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
-                                    svint8_t zm, uint64_t imm_idx)
-      __arm_streaming __arm_inout("za");
-```
+  ``` c
+      // SMLAL intrinsic for 2 quad-vector groups.
+      void svmla_lane_za32[_s8]_vg4x2(uint32_t slice, svint8x2_t zn,
+                                      svint8_t zm, uint64_t imm_idx)
+        __arm_streaming __arm_inout("za");
+  ```
+
+  *   Intrinsic functions have a `_x2` or `_x4` suffix if the
+      function\'s widest type is a vector tuple of 2 or 4 data vectors. 
+      The suffix is only present on overloaded names if it cannot
+      be inferred from arguments.
+
 
 *   Intrinsic functions that take a multi-vector operand may have additional
     suffixes to distinguish them from other forms for the same intrinsic:
-    *   a `_single` suffix if they take one multi-vector operand and one
-        (single) vector operand.
+    *   a `_single` suffix if the last  vector operand is a single vector
+    *   a `_multi` suffix if the last vector operand is a multi-vector
     *   a `_lane` suffix if they take one multi-vector operand and one
         indexed vector operand with an immediate to specify the indexed
         elements.
@@ -11446,49 +11451,49 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+  //   _za16[_f16_f16_x2] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16_x2] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16_x2]
+  //   _za32[_bf16_bf16_x2]
+  //   _za32[_s16_s16_x2]
+  //   _za32[_u16_u16_x2]
+  //   _za32[_s8_s8_x2]
+  //   _za32[_u8_u8_x2]
+  //   _za64[_f64_f64_x2] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa_za32[_f32_f32_x2](uint64_t tile, svfloat32x2_t zn, 
                              svfloat32x2_t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+  //   _za16[_f16_f16_x2] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16_x2] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16_x2]
+  //   _za32[_bf16_bf16_x2]
+  //   _za32[_s16_s16_x2]
+  //   _za32[_u16_u16_x2]
+  //   _za32[_s8_s8_x2]
+  //   _za32[_u8_u8_x2]
+  //   _za64[_f64_f64_x2] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa[_single]_za32[_f32_f32_x2](uint64_t tile, svfloat32x2_t zn, 
                                       svfloat32_t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+  //   _za16[_f16_f16_x2] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16_x2] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16_x2]
+  //   _za32[_bf16_bf16_x2]
+  //   _za32[_s16_s16_x2]
+  //   _za32[_u16_u16_x2]
+  //   _za32[_s8_s8_x2]
+  //   _za32[_u8_u8_x2]
+  //   _za64[_f64_f64_x2] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa[_multi]_za32[_f32_f32_x2](uint64_t tile, svfloat32_t zn, 
                                       svfloat32x2_t zm)
     __arm_streaming __arm_inout("za");
   ```
@@ -11514,49 +11519,49 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+  //   _za16[_f16_f16_x2] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16_x2] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16_x2]
+  //   _za32[_bf16_bf16_x2]
+  //   _za32[_s16_s16_x2]
+  //   _za32[_u16_u16_x2]
+  //   _za32[_s8_s8_x2]
+  //   _za32[_u8_u8_x2]
+  //   _za64[_f64_f64_x2] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops_za32[_f32_f32_x2](uint64_t tile, svfloat32x2_t zn, 
                              svfloat32x2_t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+  //   _za16[_f16_f16_x2] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16_x2] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16_x2]
+  //   _za32[_bf16_bf16_x2]
+  //   _za32[_s16_s16_x2]
+  //   _za32[_u16_u16_x2]
+  //   _za32[_s8_s8_x2]
+  //   _za32[_u8_u8_x2]
+  //   _za64[_f64_f64_x2] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops[_single]_za32[_f32_f32_x2](uint64_t tile, svfloat32x2_t zn, 
                                       svfloat32_t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+  //   _za16[_f16_f16_x2] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16_x2] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16_x2]
+  //   _za32[_bf16_bf16_x2]
+  //   _za32[_s16_s16_x2]
+  //   _za32[_u16_u16_x2]
+  //   _za32[_s8_s8_x2]
+  //   _za32[_u8_u8_x2]
+  //   _za64[_f64_f64_x2] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops[_multi]_za32[_f32_f32_x2](uint64_t tile, svfloat32_t zn, 
                                       svfloat32x2_t zm)
     __arm_streaming __arm_inout("za");
 ```
@@ -11573,22 +11578,22 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+  //   _za64[_s16_u16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa_za32[_s8_u8_x2](uint64_t tile, svint8x2_t zn, 
                            svuint8x2_t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+  //   _za64[_s16_u16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa[_single]_za32[_s8_u8_x2](uint64_t tile, svint8x2_t zn, 
                                     svuint8__t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+  //   _za64[_s16_u16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa[_multi]_za32[_s8_u8_x2](uint64_t tile, svint8_t zn, 
                                     svuint8x2_t zm)
     __arm_streaming __arm_inout("za");
 ```
@@ -11605,22 +11610,22 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+  //   _za64[_s16_u16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops_za32[_s8_u8_x2](uint64_t tile, svint8x2_t zn, 
                            svuint8x2_t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+  //   _za64[_s16_u16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops[_single]_za32[_s8_u8_x2](uint64_t tile, svint8x2_t zn, 
                                     svuint8__t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+  //   _za64[_s16_u16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops[_multi]_za32[_s8_u8_x2](uint64_t tile, svint8_t zn, 
                                     svuint8x2_t zm)
     __arm_streaming __arm_inout("za");
 ```
@@ -11637,22 +11642,22 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0 
   // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+  //   _za64[_u16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa_za32[_u8_s8_x2](uint64_t tile, svuint8x2_t zn, 
                            svint8x2_t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+  //   _za64[_u16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa[_single]_za32[_u8_s8_x2](uint64_t tile, svuint8x2_t zn, 
                                     svint8__t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+  //   _za64[_u16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmopa[_multi]_za32[_u8_s8_x2](uint64_t tile, svuint8_t zn, 
                                     svint8x2_t zm)
     __arm_streaming __arm_inout("za");
 ```
@@ -11669,22 +11674,22 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0 
   // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+  //   _za64[_u16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops_za32[_u8_s8_x2](uint64_t tile, svuint8x2_t zn, 
                            svint8x2_t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+  //   _za64[_u16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops[_single]_za32[_u8_s8_x2](uint64_t tile, svuint8x2_t zn, 
                                     svint8__t zm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0
   // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+  //   _za64[_u16_s16_x2] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmops[_multi]_za32[_u8_s8_x2](uint64_t tile, svuint8_t zn, 
                                     svint8x2_t zm)
     __arm_streaming __arm_inout("za");
 ```
@@ -11694,33 +11699,33 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
 ``` c
   // Only if __ARM_FEATURE_SME_MOP4 != 0 
   // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmopa_za32[_f8](uint64_t tile, svmfloat8_t zn, 
+  //   _za16[_f8_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_f8_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmopa_za32[_f8_f8](uint64_t tile, svmfloat8_t zn, 
                         svmfloat8_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0 
   // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmopa_za32[_f8](uint64_t tile, svmfloat8x2_t zn, 
+  //   _za16[_f8_f8_x2] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_f8_f8_x2] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmopa_za32[_f8_f8_x2](uint64_t tile, svmfloat8x2_t zn, 
                         svmfloat8x2_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0 
   // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmopa[_single]_za32[_f8](uint64_t tile, svmfloat8x2_t zn,
+  //   _za16[_f8_f8_x2] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_f8_f8_x2] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmopa[_single]_za32[_f8_f8_x2](uint64_t tile, svmfloat8x2_t zn,
                                  svmfloat8_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_MOP4 != 0 
   // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmopa[_single]_za32[_f8](uint64_t tile, svmfloat8_t zn,
+  //   _za16[_f8_f8_x2] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_f8_f8_x2] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmopa[_multi]_za32[_f8_f8_x2](uint64_t tile, svmfloat8_t zn,
                                  svmfloat8x2_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 ```
