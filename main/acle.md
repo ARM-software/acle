@@ -10883,17 +10883,17 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
   //   _za32[_u16_u16]
   //   _za32[_s8_s8]
   //   _za32[_u8_u8]
-  void svtmopa_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+  void svtmopa_lane_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
                               svuint8_t zk, uint64_t imm_idx)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F16 != 0
-  void svtmopa_za16[_f8_f8](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+  void svtmopa_lane_za16[_f8_f8](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
                             svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
     __arm_streaming __arm_inout("za");
   
   // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F32 != 0
-  void svtmopa__za32[_f8_f8](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+  void svtmopa_lane_za32[_f8_f8](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
                               svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 ```
@@ -10902,12 +10902,12 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
 
 ``` c
   // Only if __ARM_FEATURE_SME_TMOP != 0
-  void svtmopa_za32[_s8_u8](uint64_t tile, svint8x2_t zn, svuint8_t zm, 
+  void svtmopa_lane_za32[_s8_u8](uint64_t tile, svint8x2_t zn, svuint8_t zm, 
                             svuint8_t zk, uint64_t imm_idx)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_TMOP != 0
-  void svtmopa_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, svint8_t zm, 
+  void svtmopa_lane_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, svint8_t zm, 
                             svuint8_t zk, uint64_t imm_idx)
     __arm_streaming __arm_inout("za");
 ```
