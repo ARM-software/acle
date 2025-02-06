@@ -444,7 +444,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
-* Added [**Beta**](#current-status-and-anticipated-changes) support 
+* Added [**Alpha**](#current-status-and-anticipated-changes) support 
   for structured sparsity outer product intrinsics 
 
 ### References
@@ -2375,7 +2375,7 @@ available. This implies that `__ARM_FEATURE_SME` is nonzero.
 #### Structured sparsity outer product intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_TMOP` is defined to `1` if there is hardware
