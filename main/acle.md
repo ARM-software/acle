@@ -11425,305 +11425,6 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
     __arm_streaming __arm_inout("za");
   ```
 
-#### FMOP4A (non-FP8), BFMOP4A, SMOP4A, UMOP4A
-
-``` c
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
-                             svfloat32_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
-                             svfloat32x2_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
-                                      svfloat32_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
-                                      svfloat32x2_t zm)
-    __arm_streaming __arm_inout("za");
-  ```
-
-#### FMOP4S (non-FP8), BFMOP4S, SMOP4S, UMOP4S
-
-``` c
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
-                             svfloat32_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
-                             svfloat32x2_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
-                                      svfloat32_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
-  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
-  //   _za32[_f16_f16]
-  //   _za32[_bf16_bf16]
-  //   _za32[_s16_s16]
-  //   _za32[_u16_u16]
-  //   _za32[_s8_s8]
-  //   _za32[_u8_u8]
-  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
-  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
-                                      svfloat32x2_t zm)
-    __arm_streaming __arm_inout("za");
-```
-
-#### SUMOP4A
-
-``` c
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_s8_u8](uint64_t tile, svint8_t zn, 
-                           svuint8_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
-                           svuint8x2_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
-                                    svuint8__t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
-                                    svuint8x2_t zm)
-    __arm_streaming __arm_inout("za");
-```
-
-#### SUMOP4S
-
-``` c
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_s8_u8](uint64_t tile, svint8_t zn, 
-                           svuint8_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
-                           svuint8x2_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
-                                    svuint8__t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
-                                    svuint8x2_t zm)
-    __arm_streaming __arm_inout("za");
-```
-
-#### USMOP4A
-
-``` c
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
-                           svint8_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0 
-  // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
-                           svint8x2_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
-                                    svint8__t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmopa[_single]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
-                                    svint8x2_t zm)
-    __arm_streaming __arm_inout("za");
-```
-
-#### USMOP4S
-
-``` c
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
-                           svint8_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0 
-  // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
-                           svint8x2_t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
-                                    svint8__t zm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0
-  // Variants are also available for:
-  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
-  void svmops[_single]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
-                                    svint8x2_t zm)
-    __arm_streaming __arm_inout("za");
-```
-
-#### FMOP4A (FP8)
-
-``` c
-  // Only if __ARM_FEATURE_SME_MOP4 != 0 
-  // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmopa_za32[_f8](uint64_t tile, svmfloat8_t zn, 
-                        svmfloat8_t zm, fpm_t fpm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0 
-  // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmopa_za32[_f8](uint64_t tile, svmfloat8x2_t zn, 
-                        svmfloat8x2_t zm, fpm_t fpm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0 
-  // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmopa[_single]_za32[_f8](uint64_t tile, svmfloat8x2_t zn,
-                                 svmfloat8_t zm, fpm_t fpm)
-    __arm_streaming __arm_inout("za");
-
-  // Only if __ARM_FEATURE_SME_MOP4 != 0 
-  // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmopa[_single]_za32[_f8](uint64_t tile, svmfloat8_t zn,
-                                 svmfloat8x2_t zm, fpm_t fpm)
-    __arm_streaming __arm_inout("za");
-```
 
 #### BFMLA, BFMLS, FMLA, FMLS (single)
 
@@ -14035,6 +13736,288 @@ Multi-vector 8-bit floating-point multiply-add long.
     void svmopa_za32[_mf8]_m_fpm(uint64_t tile, svbool_t pn, svbool_t pm,
                                  svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm)
                                  __arm_streaming __arm_inout("za");
+```
+
+### SME2 mop4 intrinsics
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` and
+`__ARM_FEATURE_SME_MOP4` are defined. Individual intrinsics may have
+additional target feature requirements.
+
+These intrinsics use an additional '_{1,2}x{1,2}' suffix in 
+non-overloaded names to indicate which vector argument is a vector register pair.
+
+#### FMOP4A (non-FP8), BFMOP4A, SMOP4A, UMOP4A
+
+``` c
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x1]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+                             svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x2]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+                             svfloat32x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x1]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+                                      svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x2]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+                                      svfloat32x2_t zm)
+    __arm_streaming __arm_inout("za");
+  ```
+
+#### FMOP4S (non-FP8), BFMOP4S, SMOP4S, UMOP4S
+
+``` c
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x1]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+                             svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x2]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+                             svfloat32x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x1]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+                                      svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x2]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+                                      svfloat32x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### SUMOP4A
+
+``` c
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x1]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+                           svuint8_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x2]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+                           svuint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x1]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+                                    svuint8__t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x2]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+                                    svuint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### SUMOP4S
+
+``` c
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x1]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+                           svuint8_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x2]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+                           svuint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x1]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+                                    svuint8__t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x2]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+                                    svuint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### USMOP4A
+
+``` c
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x1]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+                           svint8_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x2]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+                           svint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x1]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+                                    svint8__t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x2]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+                                    svint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### USMOP4S
+
+``` c
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x1]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+                           svint8_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x2]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+                           svint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x1]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+                                    svint8__t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x2]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+                                    svint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### FMOP4A (FP8)
+
+``` c
+  // Variants are also available for:
+  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_1x1]_za32[_f8](uint64_t tile, svmfloat8_t zn, 
+                        svmfloat8_t zm, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_2x2]_za32[_f8](uint64_t tile, svmfloat8x2_t zn, 
+                        svmfloat8x2_t zm, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_2x1]_za32[_f8](uint64_t tile, svmfloat8x2_t zn,
+                                 svmfloat8_t zm, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_1x2]_za32[_f8](uint64_t tile, svmfloat8_t zn,
+                                 svmfloat8x2_t zm, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
 ```
 
 # M-profile Vector Extension (MVE) intrinsics
