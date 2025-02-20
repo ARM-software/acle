@@ -3349,6 +3349,8 @@ int32_t vget_lane_s32(int32x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> V
 int64_t vget_lane_s64(int64x1_t v, __builtin_constant_p(lane))	lane==0;v -> Vn.1D	UMOV Rd,Vn.D[lane]	Rd -> result	v7/A32/A64
 poly8_t vget_lane_p8(poly8x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8B	UMOV Rd,Vn.B[lane]	Rd -> result	v7/A32/A64
 poly16_t vget_lane_p16(poly16x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> Vn.4H	UMOV Rd,Vn.H[lane]	Rd -> result	v7/A32/A64
+mfloat8_t vget_lane_mf8(mfloat8x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8B	DUP Bd,Vn.B[lane]	Bd -> result	v7/A32/A64
+float16_t vget_lane_f16(float16x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> Vn.4H	DUP Hd,Vn.H[lane]	Hd -> result	v7/A32/A64
 float32_t vget_lane_f32(float32x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> Vn.2S	DUP Sd,Vn.S[lane]	Sd -> result	v7/A32/A64
 float64_t vget_lane_f64(float64x1_t v, __builtin_constant_p(lane))	lane==0;v -> Vn.1D	DUP Dd,Vn.D[lane]	Dd -> result	A64
 uint8_t vgetq_lane_u8(uint8x16_t v, __builtin_constant_p(lane))	0<=lane<=15;v -> Vn.16B	UMOV Rd,Vn.B[lane]	Rd -> result	v7/A32/A64
@@ -3362,7 +3364,7 @@ int32_t vgetq_lane_s32(int32x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> 
 int64_t vgetq_lane_s64(int64x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> Vn.2D	UMOV Rd,Vn.D[lane]	Rd -> result	v7/A32/A64
 poly8_t vgetq_lane_p8(poly8x16_t v, __builtin_constant_p(lane))	0<=lane<=15;v -> Vn.16B	UMOV Rd,Vn.B[lane]	Rd -> result	v7/A32/A64
 poly16_t vgetq_lane_p16(poly16x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8H	UMOV Rd,Vn.H[lane]	Rd -> result	v7/A32/A64
-float16_t vget_lane_f16(float16x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> Vn.4H	DUP Hd,Vn.H[lane]	Hd -> result	v7/A32/A64
+mfloat8_t vgetq_lane_mf8(mfloat8x16_t v, __builtin_constant_p(lane))	0<=lane<=15;v -> Vn.16B	DUP Bd,Vn.B[lane]	Bd -> result	v7/A32/A64
 float16_t vgetq_lane_f16(float16x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8H	DUP Hd,Vn.H[lane]	Hd -> result	v7/A32/A64
 float32_t vgetq_lane_f32(float32x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> Vn.4S	DUP Sd,Vn.S[lane]	Sd -> result	v7/A32/A64
 float64_t vgetq_lane_f64(float64x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> Vn.2D	DUP Dd,Vn.D[lane]	Dd -> result	A64
