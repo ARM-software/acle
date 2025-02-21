@@ -444,7 +444,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
-*  Added [**Beta**](#current-status-and-anticipated-changes) support 
+*  Added [**Alpha**](#current-status-and-anticipated-changes) support 
    for quarter-tile outer product intrinsics.
 
 ### References
@@ -11425,7 +11425,6 @@ Bitwise exclusive NOR population count outer product and accumulate/subtract
     __arm_streaming __arm_inout("za");
   ```
 
-
 #### BFMLA, BFMLS, FMLA, FMLS (single)
 
 Multi-vector floating-point fused multiply-add/subtract
@@ -13745,7 +13744,7 @@ The intrinsics in this section are defined by the header file
 `__ARM_FEATURE_SME_MOP4` are defined. Individual intrinsics may have
 additional target feature requirements.
 
-These intrinsics use an additional '_{1,2}x{1,2}' suffix in 
+These intrinsics have an additional '_{1,2}x{1,2}' suffix in 
 non-overloaded names to indicate which vector argument is a vector register pair.
 
 #### FMOP4A (non-FP8), BFMOP4A, SMOP4A, UMOP4A
@@ -13762,6 +13761,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za32[_u8_u8]
   //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4a[_1x1]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
                              svfloat32_t zm)
     __arm_streaming __arm_inout("za");
@@ -13777,6 +13777,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za32[_u8_u8]
   //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4a[_2x2]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
                              svfloat32x2_t zm)
     __arm_streaming __arm_inout("za");
@@ -13792,6 +13793,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za32[_u8_u8]
   //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4a[_2x1]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
                                       svfloat32_t zm)
     __arm_streaming __arm_inout("za");
@@ -13807,6 +13809,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za32[_u8_u8]
   //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4a[_1x2]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
                                       svfloat32x2_t zm)
     __arm_streaming __arm_inout("za");
@@ -13826,6 +13829,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za32[_u8_u8]
   //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4s[_1x1]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
                              svfloat32_t zm)
     __arm_streaming __arm_inout("za");
@@ -13840,6 +13844,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za32[_s8_s8]
   //   _za32[_u8_u8]
   //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4s[_2x2]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
                              svfloat32x2_t zm)
@@ -13856,6 +13861,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za32[_u8_u8]
   //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4s[_2x1]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
                                       svfloat32_t zm)
     __arm_streaming __arm_inout("za");
@@ -13871,6 +13877,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za32[_u8_u8]
   //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4s[_1x2]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
                                       svfloat32x2_t zm)
     __arm_streaming __arm_inout("za");
@@ -13991,31 +13998,31 @@ non-overloaded names to indicate which vector argument is a vector register pair
 #### FMOP4A (FP8)
 
 ``` c
-  // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmop4a[_1x1]_za32[_f8](uint64_t tile, svmfloat8_t zn, 
+    // Variants are also available for:
+  //   _za16[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_1x1]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8_t zn, 
                         svmfloat8_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 
   // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmop4a[_2x2]_za32[_f8](uint64_t tile, svmfloat8x2_t zn, 
+  //   _za16[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_2x2]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8x2_t zn, 
                         svmfloat8x2_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 
   // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmop4a[_2x1]_za32[_f8](uint64_t tile, svmfloat8x2_t zn,
+  //   _za16[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_2x1]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8x2_t zn,
                                  svmfloat8_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 
   // Variants are also available for:
-  //   _za16[_f8] (only if __ARM_FEATURE_SME_F8F16 != 0)
-  //   _za32[_f8] (only if __ARM_FEATURE_SME_F8F32 != 0)
-  void svmop4a[_1x2]_za32[_f8](uint64_t tile, svmfloat8_t zn,
+  //   _za16[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_1x2]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8_t zn,
                                  svmfloat8x2_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 ```
