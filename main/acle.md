@@ -2375,7 +2375,7 @@ available. This implies that `__ARM_FEATURE_SME` is nonzero.
 #### Quarter-tile outer product intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_MOP4` is defined to `1` if there is hardware
