@@ -2807,7 +2807,7 @@ features (duplication of features is not allowed).
 
 For example:
 ``` c
-__attribute__((target_clones("crc32", "aes+sha1")))
+__attribute__((target_clones("default", "crc32", "aes+sha1")))
 int foo(){..}
 ```
 will produce these mangled names for C language: `foo.default`, `foo._Mcrc32`,
