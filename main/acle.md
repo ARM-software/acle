@@ -444,6 +444,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
+* Upgrade to [**Beta**] (#current-status-and-anticipated-changes)
+  support for modal 8-bit floating point intrinsics.
 
 ### References
 
@@ -5886,7 +5888,7 @@ each architecture includes its predecessor instruction set.
 # About FP8 intrinsics
 
 The specification for FP8 intrinsics is in
-[**Alpha** state](#current-status-and-anticipated-changes).
+[**Beta** state](#current-status-and-anticipated-changes).
 
 Each 8-bit floating point intrinsic call has a parameter to define the format
 and scale of the operands, and the overflow behavior, as applicable to each
