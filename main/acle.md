@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2024Q3
-date-of-issue: 30 September 2024
+version: 2024Q4
+date-of-issue: 21 February 2025
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
@@ -179,6 +179,7 @@ unless a different support level is specified in the text.
 | 2024Q1       | 11 April 2024     | Arm    | See [Changes between ACLE Q2 2023 and ACLE Q1 2024](#changes-between-acle-q2-2023-and-acle-q1-2024)                  |
 | 2024Q2       | 21 June 2024      | Arm    | See [Changes between ACLE Q1 2024 and ACLE Q2 2024](#changes-between-acle-q1-2024-and-acle-q2-2024)                  |
 | 2024Q3       | 30 September 2024 | Arm    | See [Changes between ACLE Q2 2024 and ACLE Q3 2024](#changes-between-acle-q2-2024-and-acle-q3-2024)                  |
+| 2024Q4       | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -413,7 +414,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for modal 8-bit floating point intrinsics.
 
-#### Changes for next release
+#### Changes between ACLE Q3 2024 and ACLE Q4 2024
 
 * Unified Function Multi Versioning features ssbs and ssbs2.
 * Unified Function Multi Versioning features memtag and memtag2.
@@ -422,13 +423,13 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed Function Multi Versioning features sve-bf16, sve-ebf16, and sve-i8mm.
 * Removed Function Multi Versioning features ebf16, memtag3, and rpres.
 * Removed Function Multi Versioning feature dgh.
+* Removed Function Multi Versioning features ls64 and predres.
 * Document Function Multi Versioning feature dependencies.
 * Clarify Function Multi Versioning feature dependency rule.
 * Simplified Function Multi Versioning version selection rules.
 * Fixed range of operand `o0` (too small) in AArch64 system register designations.
 * Fixed SVE2.1 quadword gather load/scatter store intrinsics.
 * Removed unnecessary Zd argument from `svcvtnb_mf8[_f32_x2]_fpm`.
-* Fixed urls.
 * Changed name mangling of function types to include SME attributes.
 * Changed `__ARM_NEON_SVE_BRIDGE` to refer to the availability of the
   [`arm_neon_sve_bridge.h`](#arm_neon_sve_bridge.h) header file, rather
@@ -444,6 +445,12 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
+
+#### Changes for next release
+
+* Changed the Function Multi Versioning default version rules to be more explicit.
+* Added [**Alpha**](#current-status-and-anticipated-changes) support
+  for structured sparsity outer product intrinsics
 * Added [**Alpha**](#current-status-and-anticipated-changes) support 
   for quarter-tile outer product intrinsics.
 
@@ -821,7 +828,7 @@ start with the prefix `__ARM`.
 ## Keyword attributes
 
 This section is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 ACLE adds several non-standard keywords to C and C++. These keywords
@@ -2045,7 +2052,7 @@ defined to a nonzero value.
 #### Half-precision floating-point SME intrinsics
 
 The specification for SME2.1 is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_F16F16` is defined to `1` if there is hardware support
@@ -2080,7 +2087,7 @@ of half-precision brain floating-point types.
 #### Non-widening brain 16-bit floating-point support
 
 The specification for B16B16 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_B16B16` is defined to `1` if there is hardware support
@@ -2353,7 +2360,7 @@ nonzero.
 #### 16-bit to 64-bit integer widening outer product intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_I16I64` is defined to `1` if there is hardware
@@ -2364,13 +2371,24 @@ available. This implies that `__ARM_FEATURE_SME` is nonzero.
 #### Double precision floating-point outer product intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_F64F64` is defined to `1` if there is hardware
 support for the SME double precision floating-point outer product
 (FEAT_SME_F64F64) instructions and if their associated intrinsics are
 available. This implies that `__ARM_FEATURE_SME` is nonzero.
+
+#### Structured sparsity outer product intrinsics
+
+The specification for SME is in
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
+
+`__ARM_FEATURE_SME_TMOP` is defined to `1` if there is hardware
+support for the SME structured sparsity outer product (FEAT_SME_TMOP)
+instructions and if their associated intrinsics are
+available. This implies that `__ARM_FEATURE_SME2` is nonzero.
 
 #### Quarter-tile outer product intrinsics
 
@@ -2379,7 +2397,7 @@ The specification for SME is in
 extended in the future.
 
 `__ARM_FEATURE_SME_MOP4` is defined to `1` if there is hardware
-support for the SME quarter-tile outer product(FEAT_SME_MOP4) 
+support for the SME quarter-tile outer product (FEAT_SME_MOP4)
 instructions and if their associated intrinsics are
 available. This implies that `__ARM_FEATURE_SME2` is nonzero.
 
@@ -2579,6 +2597,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SME_F8F16`](#modal-8-bit-floating-point-extensions)                                                                                     | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SME_F8F32`](#modal-8-bit-floating-point-extensions)                                                                                     | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SME_I16I64`](#16-bit-to-64-bit-integer-widening-outer-product-intrinsics)                                                               | 16-bit to 64-bit integer widening outer product intrinsics (FEAT_SME_I16I64)                       | 1           |
+| [`__ARM_FEATURE_SME_TMOP`](#structured-sparsity-outer-product-intrinsics)                                                                               | Structured sparsity outer product intrinsics (FEAT_SME_TMOP)                                       | 1           |
 | [`__ARM_FEATURE_SME_MOP4`](#quarter-tile-outer-product-intrinsics)                                                                                      | quarter-tile outer product intrinsics (FEAT_SME_MOP4)                                              | 1           |
 | [`__ARM_FEATURE_SME_LOCALLY_STREAMING`](#scalable-matrix-extension-sme)                                                                                 | Support for the `arm_locally_streaming` attribute                                                  | 1           |
 | [`__ARM_FEATURE_SME_LUTv2`](#lookup-table-extensions)                                                                                                   | Lookup table extensions (FEAT_SME_LUTv2)                                                           | 1           |
@@ -2714,17 +2733,18 @@ The following attributes trigger the multi version code generation:
 * Functions are allowed to have the same name and signature when
   annotated with these attributes.
 * These attributes can be mixed with each other.
-* `name` is the dependent features from the tables below.
+* `name` is the dependent features from the tables in the [Mapping](#mapping)
+  section.
 * The `default` version means the version of the function that would
   be generated without these attributes.
 * The dependent features could be joined by the `+` sign.
-* None of these attributes will enable the corresponding ACLE feature(s)
+* None of these attributes enable the corresponding ACLE feature(s)
   associated to the `name` expressed in the attribute.
 * These attributes have no effect on the calling convention.
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
-* FMV may be disabled in compile time by a compiler flag. In this
-  case the `default` version shall be used.
+* FMV might be disabled in compile time by a compiler flag. In this
+  case, the `default` version shall be used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
   the multiversioned functions. Therefore, a versioned function
@@ -2734,6 +2754,12 @@ The following attributes trigger the multi version code generation:
   type of the default version.
 * All the function versions must be declared at the translation
   unit in which the definition of the default version resides.
+* One `default` version of the function is required to be provided
+  in one of the translation units.
+  * Implicitly, as a definition without any attribute,
+  * as a function annotated with `target_version("default")`,
+  * or, as a function annotated with `target_clones(...)` where one
+    of the versions is `default`.
 
 The attribute `__attribute__((target_version("name")))` expresses the
 following:
@@ -2741,12 +2767,8 @@ following:
 * When applied to a function it becomes one of the versions.
 * Multiple function versions may exist in the same or in different
   translation units.
-* One `default` version of the function is required to be provided
-  in one of the translation units.
-  * Implicitly, without this attribute,
-  * or explicitly providing the `default` in the attribute.
 
-For example, the below is valid and 2 is used as the default
+The following example is valid and 2 is used as the default
 value for `c` when calling the multiversioned function `f`.
 
 ```cpp
@@ -2757,8 +2779,8 @@ int __attribute__((target_version("sve"))) f (int c = 3);
 int g() { return f(); }
 ```
 
-Additionally, the below is not valid as the two statements declare
-the same entity (the `default` version of `f`) with conflicting
+Additionally, the following example is not valid because the two statements
+declare the same entity (the `default` version of `f`) with conflicting
 signatures.
 
 ```cpp
@@ -2771,11 +2793,6 @@ following:
 
 * when applied to a function the compiler emits multiple versions
   based on the arguments.
-  * One of them is implicitly the `default`.
-  * If the `default` matches with another explicitly provided
-    version in the same translation unit, then the compiler can
-    emit only one function instead of the two. The explicitly
-    provided version shall be preferred.
 * If a name is not recognized the compiler should ignore it[^fmv-note-ignore].
 
 [^fmv-note-ignore]: The intention is to support the usecase of newer code if
@@ -2880,10 +2897,8 @@ The following table lists the architectures feature mapping for AArch64
    | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME >= 0b0001```       |
    | 440           | `FEAT_MTE`, `FEAT_MTE2`  | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
    | 470           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB >= 0b0001```       |
-   | 480           | `FEAT_SPECRES`           | predres       | ```ID_AA64ISAR1_EL1.SPECRES >= 0b0001```  |
    | 490           | `FEAT_SSBS`, `FEAT_SSBS2`| ssbs          | ```ID_AA64PFR1_EL1.SSBS >= 0b0010```      |
    | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.BT >= 0b0001```        |
-   | 520           | `FEAT_LS64`, `FEAT_LS64_V`, <br> `FEAT_LS64_ACCDATA` | ls64 | ```ID_AA64ISAR1_EL1.LS64 >= 0b0011``` |
    | 550           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT >= 0b0010```     |
    | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64 == 0b1```      |
    | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
@@ -2892,10 +2907,10 @@ The following table lists the architectures feature mapping for AArch64
 
 ### Dependencies
 
-If a feature depends on another feature as defined by the table below then:
+If a feature depends on another feature as defined by the following table then:
 
 * the depended-on feature *need not* be specified in the attribute,
-* the depended-on feature *may* be specified in the attribute,
+* the depended-on feature *might* be specified in the attribute,
 * the depended-on feature *must* be of lower priority.
 
 These dependencies are taken into account transitively when selecting the
@@ -3387,12 +3402,14 @@ when compiling for AArch32.
 
 Checks for hardware features at runtime using the CHKFEAT hint instruction.
 `__chkfeat` returns a bitmask where a bit is set if the same bit in the
-input argument is set and the corresponding feature is enabled. (Note: for
-usability reasons the return value differs from how the CHKFEAT instruction
-sets X16.) It can be used with predefined macros:
+input argument is set and the corresponding feature is enabled. It can be
+used with predefined macros:
 
 | **Macro name**           | **Value**           | **Meaning**                                        |
 | ``_CHKFEAT_GCS``         | 1                   | Guarded Control Stack (GCS) protection is enabled. |
+
+Note: for usability reasons the return value differs from how the CHKFEAT
+instruction sets X16.
 
 ## Swap
 
@@ -4937,22 +4954,20 @@ The tag bits in the input pointers are ignored for this operation.
 
 # Guarded Control Stack intrinsics
 
-## Introduction
-
 This section describes the intrinsics for the instructions of the
 Guarded Control Stack (GCS) extension. The GCS instructions are present
 in the AArch64 execution state only.
 
 The specification for Guarded Control Stack is at Beta level.
 
-When GCS protection is enabled then function calls also save the return
+When GCS protection is enabled, then function calls also save the return
 address to a separate stack, the GCS, that is checked against the actual
-return address when the function returns. At runtime GCS protection can
+return address when the function returns. At runtime, GCS protection can
 be disabled and then calls and returns do not access the GCS. The GCS
 grows down and a GCS pointer points to the last entry of the GCS.
 Each thread has a separate GCS and GCS pointer.
 
-To use the intrinsics, `arm_acle.h` needs to be included.
+To use the intrinsics, `arm_acle.h` must be included.
 
 These intrinsics are available when GCS instructions are supported.
 The `__chkfeat` intrinsics with `_CHKFEAT_GCS` can be used to check
@@ -4969,8 +4984,8 @@ instructions are supported.
 
 Returns the GCS pointer of the current thread. The GCS pointer is represented
 with the `void *` type. While normal stores do not work on GCS memory, this
-pointer may be writable via the `GCSSS` operation or the `GCSSTR` instruction
-when enabled.
+pointer might be writable through the `GCSSS` operation or the `GCSSTR`
+instruction when enabled.
 
 ``` c
   uint64_t __gcspopm(void);
@@ -4994,7 +5009,7 @@ disabled then it has no side effect and returns `NULL`.
 # State management
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 ## Introduction
@@ -5204,8 +5219,8 @@ The `__arm_agnostic` [keyword attribute](#keyword-attributes) applies to
 ```"sme_za_state"```
 
 *   This attribute affects the ABI of a function, which must implement an
-    [agnostic-ZA interface](#agnostic-za). It is the compiler's responsibility
-    to ensure that the function's object code honors the ABI requirements.
+    [agnostic-ZA interface](#agnostic-za). It is the responsibility of the compiler
+    to ensure that the object code of the function honors the ABI requirements.
 
 *   The use of `__arm_agnostic("sme_za_state")` allows writing functions that
     are compatible with ZA state without having to share ZA state with the
@@ -5231,16 +5246,16 @@ interfaces:
 
 *   an "agnostic-ZA" interface
 
-If a C or C++ function F forms part of the object code's ABI:
+If a C or C++ function F forms part of ABI for the object code:
 
-* the object code function has a shared-ZA interface if and only if at least
+* the object code function has a shared-ZA interface only if at least
   one of the following is true:
 
   * F shares ZA with its caller
 
   * F shares ZT0 with its caller
 
-* the object code function has an agnostic-ZA interface if and only if F's type
+* the object code function has an agnostic-ZA interface only if the type for F
   has an `__arm_agnostic("sme_za_state")` attribute.
 
 All other functions have a private-ZA interface.
@@ -5928,7 +5943,7 @@ The bits of an argument to an `fpm` parameter are interpreted as follows:
 | 32-37         | `lscale2`      | downscaling value for conversions of the second input stream       |
 | 38-63         |                | must be zero                                                       |
 
-Bit patterns other than as described above are invalid. Passing an invalid value as an argument
+Bit patterns other than those described in this table are invalid. Passing an invalid value as an argument
 to an FP8 intrinsic results in undefined behavior.
 
 The ACLE declares several helper types and intrinsics to
@@ -5943,10 +5958,10 @@ The helper types and intrinsics are available after including any of
 [`<arm_neon.h>`](#arm_neon.h), [`<arm_sve.h>`](#arm_sve.h), or
 [`<arm_sme.h>`](#arm_sme.h).
 
-Note: where a helper intrinsic description refers to "updating the FP8 mode" it
+Note: where a helper intrinsic description refers to updating the FP8 mode it
 means the intrinsic only modifies the bits of the input `fpm_t` parameter that
-correspond to the new mode and returns the resulting value. No side effects
-(such as changing processor state) occur.
+correspond to the new mode and returns the resulting value. No side effects, such
+as changing processor state, occur.
 
 Individual FP8 intrinsics are described in their respective
 Advanced SIMD (NEON), SVE, and SME sections.
@@ -5970,10 +5985,10 @@ enum __ARM_FPM_OVERFLOW {
 ```c
   fpm_t __arm_fpm_init();
 ```
-Initializes a value, suitable for use as an `fpm` argument ("FP8 mode").
+Initializes a value, suitable for use as an `fpm` argument in FP8 mode.
 The value corresponds to a mode of operation where:
   * The source and destination operands are interpreted as E5M2.
-  * Overflow behavior is to yield infinity or NaN (depending on operation).
+  * Overflow behavior is to yield infinity or NaN, depending on operation.
   * No scaling occurs.
 
 ```c
@@ -9164,7 +9179,7 @@ when move instructions are required.
 ### SVE2 BFloat16 data-processing instructions.
 
 The specification for B16B16 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The instructions in this section are available when `__ARM_FEATURE_SVE_B16B16`
@@ -9295,7 +9310,7 @@ BFloat16 floating-point multiply vectors.
 ### SVE2.1 instruction intrinsics
 
 The specification for SVE2.1 is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The functions in this section are defined by the header file
@@ -9633,7 +9648,7 @@ Lookup table read with 4-bit indices.
 # SME language extensions and intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 ## Controlling the use of streaming mode
@@ -10311,9 +10326,9 @@ for more information.
 
 ### C++ mangling of SME keywords
 
-SME keyword attributes which apply to function types must be included
-in the name mangling of the type, if the mangling would normally include
-the return type of the function.
+If the mangling would normally include the return type of the function, then
+the SME keyword attributes that apply to function types must be included in the
+name mangling of the type.
 
 SME attributes are mangled in the same way as a template:
 
@@ -10332,7 +10347,7 @@ where:
 * normal_function_type is the function type without any SME attributes.
 
 * sme_state is an unsigned 64-bit integer representing the streaming and ZA
-  properties of the function's interface.
+  properties of the interface of the function.
 
 The bits are defined as follows:
 
@@ -10867,6 +10882,48 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
   //   _za64[_f64]_m (only if __ARM_FEATURE_SME_F64F64 != 0)
   void svmops_za32[_f32]_m(uint64_t tile, svbool_t pn, svbool_t pm,
                            svfloat32_t zn, svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### BFTMOPA, FTMOPA, STMOPA, UTMOPA
+
+``` c
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_bf16_bf16]
+  //   _za32[_f16_f16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  void svtmopa_lane_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                              svuint8_t zk, uint64_t imm_idx)
+    __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F16 != 0
+  void svtmopa_lane_za16[_mf8_mf8]_fpm(uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                            svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F32 != 0
+  void svtmopa_lane_za32[_mf8_mf8]_fpm(uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                              svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### SUTMOPA, USTMOPA
+
+``` c
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  void svtmopa_lane_za32[_s8_u8](uint64_t tile, svint8x2_t zn, svuint8_t zm, 
+                            svuint8_t zk, uint64_t imm_idx)
+    __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  void svtmopa_lane_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, svint8_t zm, 
+                            svuint8_t zk, uint64_t imm_idx)
     __arm_streaming __arm_inout("za");
 ```
 
@@ -12776,7 +12833,7 @@ are named after. All of the functions have external linkage.
 ### SVE2.1 and SME2 instruction intrinsics
 
 The specification for SVE2.1 is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The functions in this section are defined by either the header file

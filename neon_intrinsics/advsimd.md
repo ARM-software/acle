@@ -1,7 +1,7 @@
 ---
 title: Arm Neon Intrinsics Reference
-version: 2024Q3
-date-of-issue: 30 September 2024
+version: 2024Q4
+date-of-issue: 21 February 2025
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
@@ -126,6 +126,7 @@ for more information about Arm’s trademarks.
 | J     | 11 January 2022   | 2021Q4               |
 | K     | 04 August 2023    | 2023Q2               |
 | L     | 30 September 2024 | 2024Q3               |
+| M     | 21 February 2025  | 2024Q4               |
 
 ### Changes between 2021Q2 and 2021Q3
 
@@ -151,7 +152,7 @@ for more information about Arm’s trademarks.
 
 * Fixed the range of the ``lane`` immediate argument for ``vst2q_lane_f64``.
 
-#### Changes for next release
+### Changes between 2024Q3 and 2024Q4
 
 * Added `mf8` forms of the `vbsl`, `vluti2` and `vluti4` families of
   intrinsics.
@@ -3411,6 +3412,8 @@ The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 | <code>int64_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_s64" target="_blank">vget_lane_s64</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int64x1_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>            | `lane==0`<br>`v -> Vn.1D`            | `UMOV Rd,Vn.D[lane]`  | `Rd -> result` | `v7/A32/A64`              |
 | <code>poly8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_p8" target="_blank">vget_lane_p8</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; poly8x8_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>              | `0<=lane<=7`<br>`v -> Vn.8B`         | `UMOV Rd,Vn.B[lane]`  | `Rd -> result` | `v7/A32/A64`              |
 | <code>poly16_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_p16" target="_blank">vget_lane_p16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; poly16x4_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>          | `0<=lane<=3`<br>`v -> Vn.4H`         | `UMOV Rd,Vn.H[lane]`  | `Rd -> result` | `v7/A32/A64`              |
+| <code>mfloat8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_mf8" target="_blank">vget_lane_mf8</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8x8_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>        | `0<=lane<=7`<br>`v -> Vn.8B`         | `DUP Bd,Vn.B[lane]`   | `Bd -> result` | `v7/A32/A64`              |
+| <code>float16_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_f16" target="_blank">vget_lane_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x4_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>        | `0<=lane<=3`<br>`v -> Vn.4H`         | `DUP Hd,Vn.H[lane]`   | `Hd -> result` | `v7/A32/A64`              |
 | <code>float32_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_f32" target="_blank">vget_lane_f32</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x2_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>        | `0<=lane<=1`<br>`v -> Vn.2S`         | `DUP Sd,Vn.S[lane]`   | `Sd -> result` | `v7/A32/A64`              |
 | <code>float64_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_f64" target="_blank">vget_lane_f64</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float64x1_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>        | `lane==0`<br>`v -> Vn.1D`            | `DUP Dd,Vn.D[lane]`   | `Dd -> result` | `A64`                     |
 | <code>uint8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_u8" target="_blank">vgetq_lane_u8</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint8x16_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>           | `0<=lane<=15`<br>`v -> Vn.16B`       | `UMOV Rd,Vn.B[lane]`  | `Rd -> result` | `v7/A32/A64`              |
@@ -3424,7 +3427,7 @@ The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 | <code>int64_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_s64" target="_blank">vgetq_lane_s64</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int64x2_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>          | `0<=lane<=1`<br>`v -> Vn.2D`         | `UMOV Rd,Vn.D[lane]`  | `Rd -> result` | `v7/A32/A64`              |
 | <code>poly8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_p8" target="_blank">vgetq_lane_p8</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; poly8x16_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>           | `0<=lane<=15`<br>`v -> Vn.16B`       | `UMOV Rd,Vn.B[lane]`  | `Rd -> result` | `v7/A32/A64`              |
 | <code>poly16_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_p16" target="_blank">vgetq_lane_p16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; poly16x8_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>        | `0<=lane<=7`<br>`v -> Vn.8H`         | `UMOV Rd,Vn.H[lane]`  | `Rd -> result` | `v7/A32/A64`              |
-| <code>float16_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_f16" target="_blank">vget_lane_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x4_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>        | `0<=lane<=3`<br>`v -> Vn.4H`         | `DUP Hd,Vn.H[lane]`   | `Hd -> result` | `v7/A32/A64`              |
+| <code>mfloat8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_mf8" target="_blank">vgetq_lane_mf8</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8x16_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>     | `0<=lane<=15`<br>`v -> Vn.16B`       | `DUP Bd,Vn.B[lane]`   | `Bd -> result` | `v7/A32/A64`              |
 | <code>float16_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_f16" target="_blank">vgetq_lane_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>      | `0<=lane<=7`<br>`v -> Vn.8H`         | `DUP Hd,Vn.H[lane]`   | `Hd -> result` | `v7/A32/A64`              |
 | <code>float32_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_f32" target="_blank">vgetq_lane_f32</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x4_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>      | `0<=lane<=3`<br>`v -> Vn.4S`         | `DUP Sd,Vn.S[lane]`   | `Sd -> result` | `v7/A32/A64`              |
 | <code>float64_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_f64" target="_blank">vgetq_lane_f64</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float64x2_t v,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>      | `0<=lane<=1`<br>`v -> Vn.2D`         | `DUP Dd,Vn.D[lane]`   | `Dd -> result` | `A64`                     |

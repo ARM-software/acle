@@ -1,7 +1,7 @@
 ---
 title: Arm Neon Intrinsics Reference
-version: 2024Q3
-date-of-issue: 30 September 2024
+version: 2024Q4
+date-of-issue: 21 February 2025
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{{\\nameref{{copyright}}}}{{Copyright}}."
@@ -126,6 +126,7 @@ for more information about Arm’s trademarks.
 | J     | 11 January 2022   | 2021Q4               |
 | K     | 04 August 2023    | 2023Q2               |
 | L     | 30 September 2024 | 2024Q3               |
+| M     | 21 February 2025  | 2024Q4               |
 
 ### Changes between 2021Q2 and 2021Q3
 
@@ -151,7 +152,7 @@ for more information about Arm’s trademarks.
 
 * Fixed the range of the ``lane`` immediate argument for ``vst2q_lane_f64``.
 
-#### Changes for next release
+### Changes between 2024Q3 and 2024Q4
 
 * Added `mf8` forms of the `vbsl`, `vluti2` and `vluti4` families of
   intrinsics.

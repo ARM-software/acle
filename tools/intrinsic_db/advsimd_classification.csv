@@ -3348,6 +3348,8 @@ vget_lane_s32	Vector manipulation|Extract one element from vector
 vget_lane_s64	Vector manipulation|Extract one element from vector
 vget_lane_p8	Vector manipulation|Extract one element from vector
 vget_lane_p16	Vector manipulation|Extract one element from vector
+vget_lane_mf8	Vector manipulation|Extract one element from vector
+vget_lane_f16	Vector manipulation|Extract one element from vector
 vget_lane_f32	Vector manipulation|Extract one element from vector
 vget_lane_f64	Vector manipulation|Extract one element from vector
 vgetq_lane_u8	Vector manipulation|Extract one element from vector
@@ -3361,7 +3363,7 @@ vgetq_lane_s32	Vector manipulation|Extract one element from vector
 vgetq_lane_s64	Vector manipulation|Extract one element from vector
 vgetq_lane_p8	Vector manipulation|Extract one element from vector
 vgetq_lane_p16	Vector manipulation|Extract one element from vector
-vget_lane_f16	Vector manipulation|Extract one element from vector
+vgetq_lane_mf8	Vector manipulation|Extract one element from vector
 vgetq_lane_f16	Vector manipulation|Extract one element from vector
 vgetq_lane_f32	Vector manipulation|Extract one element from vector
 vgetq_lane_f64	Vector manipulation|Extract one element from vector
