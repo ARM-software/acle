@@ -444,8 +444,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
-*  Added [**Alpha**](#current-status-and-anticipated-changes) support 
-   for quarter-tile outer product intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes) support 
+  for quarter-tile outer product intrinsics.
 
 ### References
 
@@ -2579,7 +2579,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SME_F8F16`](#modal-8-bit-floating-point-extensions)                                                                                     | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SME_F8F32`](#modal-8-bit-floating-point-extensions)                                                                                     | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SME_I16I64`](#16-bit-to-64-bit-integer-widening-outer-product-intrinsics)                                                               | 16-bit to 64-bit integer widening outer product intrinsics (FEAT_SME_I16I64)                       | 1           |
-| [`__ARM_FEATURE_SME_MOP4`](#quarter-tile-outer-product-intrinsics)                                                               | quarter-tile outer product intrinsics (FEAT_SME_MOP4)                       | 1           |
+| [`__ARM_FEATURE_SME_MOP4`](#quarter-tile-outer-product-intrinsics)                                                                                      | quarter-tile outer product intrinsics (FEAT_SME_MOP4)                                              | 1           |
 | [`__ARM_FEATURE_SME_LOCALLY_STREAMING`](#scalable-matrix-extension-sme)                                                                                 | Support for the `arm_locally_streaming` attribute                                                  | 1           |
 | [`__ARM_FEATURE_SME_LUTv2`](#lookup-table-extensions)                                                                                                   | Lookup table extensions (FEAT_SME_LUTv2)                                                           | 1           |
 | [`__ARM_FEATURE_SSVE_FP8DOT2`](#modal-8-bit-floating-point-extensions)                                                                                  | Modal 8-bit floating-point extensions                                                              | 1           |
