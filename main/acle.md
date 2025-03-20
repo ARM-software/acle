@@ -2844,7 +2844,7 @@ of the versioned functions.
 
 ### Mapping
 
-The following table lists the architectures feature mapping for AArch32
+The following table lists the architectures feature mapping for AArch32.
 
    | **Architecture name**            | **Name**        | **Dependent feature registers** |
    | -------------------------------- | --------------- | ------------------------------- |
