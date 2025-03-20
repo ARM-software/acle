@@ -453,6 +453,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   for structured sparsity outer product intrinsics
 * Added [**Alpha**](#current-status-and-anticipated-changes) support 
   for quarter-tile outer product intrinsics.
+* Removed the priority column from the mapping tables of Function Multi Versioning.
 
 ### References
 
