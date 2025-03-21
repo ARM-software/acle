@@ -454,6 +454,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes) support 
   for quarter-tile outer product intrinsics.
 * Removed the priority column from the mapping tables of Function Multi Versioning.
+* Added Function Multi Versioning feature cssc.
 
 ### References
 
@@ -2905,6 +2906,7 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
    | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SMEver >= 0b0001```    |
    | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
+   | `FEAT_CSSC`              | cssc          | ```ID_AA64ISAR2_EL1.CSSC >= 0b0001```     |
 
 The tables are sorted by priority, starting from features of lowest priority ending with features of highest priority.
 
