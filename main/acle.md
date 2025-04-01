@@ -445,8 +445,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
-* Upgrade to [**Beta**] (#current-status-and-anticipated-changes)
-  support for modal 8-bit floating point intrinsics.
 
 #### Changes for next release
 
@@ -457,6 +455,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   for quarter-tile outer product intrinsics.
 * Removed the priority column from the mapping tables of Function Multi Versioning.
 * Added Function Multi Versioning feature cssc.
+* Added feature test macro for FEAT_SSVE_BitPerm.
+* Upgrade to [**Beta**] (#current-status-and-anticipated-changes)
+  support for modal 8-bit floating point intrinsics.
 
 ### References
 
@@ -2359,6 +2360,9 @@ the SVE2 bit permute (FEAT_SVE_BitPerm) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_SVE2` is
 nonzero.
 
+`__ARM_FEATURE_SSVE_BITPERM` is defined to 1 if there is hardware support for
+the SVE2 bit permute instructions in Streaming SVE mode (FEAT_SSVE_BitPerm) and if the associated ACLE intrinsics are available.
+
 <span id="16-bit-to-64-bit-integer-widening-outer-product-intrinsics"></span>
 
 #### 16-bit to 64-bit integer widening outer product intrinsics
@@ -2619,7 +2623,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
-| [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension (FEAT_SVE2_BitPerm)                                                     | 1           |
+| [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
+| [`__ARM_FEATURE_SSVE_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SVE2_SHA3`](#sha3-extension)                                                                                                            | SVE2 support for the SHA3 cryptographic extension (FEAT_SVE_SHA3)                                   | 1           |
 | [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 cryptographic extension (FEAT_SVE_SM3)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
