@@ -449,7 +449,15 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 #### Changes for next release
 
 * Changed the Function Multi Versioning default version rules to be more explicit.
+* Added [**Alpha**](#current-status-and-anticipated-changes) support
+  for structured sparsity outer product intrinsics
+* Added [**Alpha**](#current-status-and-anticipated-changes) support 
+  for quarter-tile outer product intrinsics.
+* Removed the priority column from the mapping tables of Function Multi Versioning.
+* Added Function Multi Versioning feature cssc.
 * Added feature test macro for FEAT_SSVE_BitPerm.
+* Upgrade to [**Beta**] (#current-status-and-anticipated-changes)
+  support for modal 8-bit floating point intrinsics.
 
 ### References
 
@@ -2379,6 +2387,28 @@ support for the SME double precision floating-point outer product
 (FEAT_SME_F64F64) instructions and if their associated intrinsics are
 available. This implies that `__ARM_FEATURE_SME` is nonzero.
 
+#### Structured sparsity outer product intrinsics
+
+The specification for SME is in
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
+
+`__ARM_FEATURE_SME_TMOP` is defined to `1` if there is hardware
+support for the SME structured sparsity outer product (FEAT_SME_TMOP)
+instructions and if their associated intrinsics are
+available. This implies that `__ARM_FEATURE_SME2` is nonzero.
+
+#### Quarter-tile outer product intrinsics
+
+The specification for SME is in
+[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+extended in the future.
+
+`__ARM_FEATURE_SME_MOP4` is defined to `1` if there is hardware
+support for the SME quarter-tile outer product (FEAT_SME_MOP4)
+instructions and if their associated intrinsics are
+available. This implies that `__ARM_FEATURE_SME2` is nonzero.
+
 ## Floating-point model
 
 These macros test the floating-point model implemented by the compiler
@@ -2575,6 +2605,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SME_F8F16`](#modal-8-bit-floating-point-extensions)                                                                                     | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SME_F8F32`](#modal-8-bit-floating-point-extensions)                                                                                     | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SME_I16I64`](#16-bit-to-64-bit-integer-widening-outer-product-intrinsics)                                                               | 16-bit to 64-bit integer widening outer product intrinsics (FEAT_SME_I16I64)                       | 1           |
+| [`__ARM_FEATURE_SME_TMOP`](#structured-sparsity-outer-product-intrinsics)                                                                               | Structured sparsity outer product intrinsics (FEAT_SME_TMOP)                                       | 1           |
+| [`__ARM_FEATURE_SME_MOP4`](#quarter-tile-outer-product-intrinsics)                                                                                      | quarter-tile outer product intrinsics (FEAT_SME_MOP4)                                              | 1           |
 | [`__ARM_FEATURE_SME_LOCALLY_STREAMING`](#scalable-matrix-extension-sme)                                                                                 | Support for the `arm_locally_streaming` attribute                                                  | 1           |
 | [`__ARM_FEATURE_SME_LUTv2`](#lookup-table-extensions)                                                                                                   | Lookup table extensions (FEAT_SME_LUTv2)                                                           | 1           |
 | [`__ARM_FEATURE_SSVE_FP8DOT2`](#modal-8-bit-floating-point-extensions)                                                                                  | Modal 8-bit floating-point extensions                                                              | 1           |
@@ -2812,7 +2844,7 @@ features (duplication of features is not allowed).
 
 For example:
 ``` c
-__attribute__((target_clones("crc32", "aes+sha1")))
+__attribute__((target_clones("default", "crc32", "aes+sha1")))
 int foo(){..}
 ```
 will produce these mangled names for C language: `foo.default`, `foo._Mcrc32`,
@@ -2821,66 +2853,69 @@ of the versioned functions.
 
 ### Mapping
 
-The following table lists the architectures feature mapping for AArch32
+The following table lists the architectures feature mapping for AArch32.
 
-   | **Priority** | **Architecture name**            | **Name**        | **Dependent feature registers** |
-   | ------------ | -------------------------------- | --------------- | ------------------------------- |
-   | 0            | N/A                              | default         | N/A                             |
-   | 90           | CRC32 instructions               | crc             | ```ID_ISAR5.CRC32 == 0b0001```  |
-   | 100          | SHA1 instructions                | sha1            | ```ID_ISAR5.SHA1 == 0b0001```   |
-   | 110          | SHA2 instructions                | sha2            | ```ID_ISAR5.SHA2 == 0b0001```   |
-   | 120          | AES instructions                 | aes             | ```ID_ISAR5.AES >= 0b0001```    |
-   | 130          | VMULL (polynomial) instructions  | vmull           | ```ID_ISAR5.AES == 0b0002```    |
+   | **Architecture name**            | **Name**        | **Dependent feature registers** |
+   | -------------------------------- | --------------- | ------------------------------- |
+   | N/A                              | default         | N/A                             |
+   | CRC32 instructions               | crc             | ```ID_ISAR5.CRC32 == 0b0001```  |
+   | SHA1 instructions                | sha1            | ```ID_ISAR5.SHA1 == 0b0001```   |
+   | SHA2 instructions                | sha2            | ```ID_ISAR5.SHA2 == 0b0001```   |
+   | AES instructions                 | aes             | ```ID_ISAR5.AES >= 0b0001```    |
+   | VMULL (polynomial) instructions  | vmull           | ```ID_ISAR5.AES == 0b0002```    |
 
-The following table lists the architectures feature mapping for AArch64
+The following table lists the architectures feature mapping for AArch64.
 
-   | **Priority**  | **Architecture name**    | **Name**      | **Dependent feature registers**           |
-   | ------------- | ------------------------ | ------------- | ----------------------------------------- |
-   | 0             | N/A                      | default       | N/A                                       |
-   | 10            | `FEAT_RNG`               | rng           | ```ID_AA64ISAR0_EL1.RNDR >= 0b0001```     |
-   | 20            | `FEAT_FlagM`             | flagm         | ```ID_AA64ISAR0_EL1.TS >= 0b0001```       |
-   | 30            | `FEAT_FlagM2`            | flagm2        | ```ID_AA64ISAR0_EL1.TS >= 0b0010```       |
-   | 80            | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic >= 0b0010```   |
-   | 90            | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
-   | 100           | `FEAT_AdvSIMD`           | simd          | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
-   | 104           | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP >= 0b0001```       |
-   | 106           | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 >= 0b0001```      |
-   | 108           | `FEAT_RDM`               | rdm, rdma     | ```ID_AA64ISAR0_EL1.RDM >= 0b0001```      |
-   | 110           | `FEAT_CRC32`             | crc           | ```ID_AA64ISAR0_EL1.CRC32 >= 0b0001```    |
-   | 130           | `FEAT_SHA1`, `FEAT_SHA256` | sha2        | ```ID_AA64ISAR0_EL1.SHA2 >= 0b0001```     |
-   | 140           | `FEAT_SHA512`, `FEAT_SHA3` | sha3        | ```ID_AA64ISAR0_EL1.SHA3 >= 0b0001```     |
-   | 150           | `FEAT_AES`, `FEAT_PMULL` | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0010```      |
-   | 170           | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
-   | 175           | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM >= 0b0001```      |
-   | 180           | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT >= 0b0001```       |
-   | 190           | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
-   | 200           | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB >= 0b0010```      |
-   | 210           | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT >= 0b0001```    |
-   | 220           | `FEAT_FCMA`              | fcma          | ```ID_AA64ISAR1_EL1.FCMA >= 0b0001```     |
-   | 230           | `FEAT_LRCPC`             | rcpc          | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0001```    |
-   | 240           | `FEAT_LRCPC2`            | rcpc2         | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0010```    |
-   | 241           | `FEAT_LRCPC3`            | rcpc3         | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0011```    |
-   | 250           | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS >= 0b0001```  |
-   | 270           | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM >= 0b0001```     |
-   | 280           | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 >= 0b0001```     |
-   | 310           | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE >= 0b0001```       |
-   | 350           | `FEAT_F32MM`             | f32mm         | ```ID_AA64ZFR0_EL1.F32MM >= 0b00001```    |
-   | 360           | `FEAT_F64MM`             | f64mm         | ```ID_AA64ZFR0_EL1.F64MM >= 0b00001```    |
-   | 370           | `FEAT_SVE2`              | sve2          | ```ID_AA64ZFR0_EL1.SVEver >= 0b0001```    |
-   | 380           | `FEAT_SVE_AES`, <br> `FEAT_SVE_PMULL128` | sve2-aes | ```ID_AA64ZFR0_EL1.AES >= 0b0010``` |
-   | 400           | `FEAT_SVE_BitPerm`       | sve2-bitperm  | ```ID_AA64ZFR0_EL1.BitPerm >= 0b0001```   |
-   | 410           | `FEAT_SVE_SHA3`          | sve2-sha3     | ```ID_AA64ZFR0_EL1.SHA3 >= 0b0001```      |
-   | 420           | `FEAT_SM3`, `FEAT_SVE_SM4` | sve2-sm4    | ```ID_AA64ZFR0_EL1.SM4 >= 0b0001```       |
-   | 430           | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME >= 0b0001```       |
-   | 440           | `FEAT_MTE`, `FEAT_MTE2`  | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
-   | 470           | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB >= 0b0001```       |
-   | 490           | `FEAT_SSBS`, `FEAT_SSBS2`| ssbs          | ```ID_AA64PFR1_EL1.SSBS >= 0b0010```      |
-   | 510           | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.BT >= 0b0001```        |
-   | 550           | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT >= 0b0010```     |
-   | 560           | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64 == 0b1```      |
-   | 570           | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
-   | 580           | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SMEver >= 0b0001```    |
-   | 650           | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
+   | **Architecture name**    | **Name**      | **Dependent feature registers**           |
+   | ------------------------ | ------------- | ----------------------------------------- |
+   | N/A                      | default       | N/A                                       |
+   | `FEAT_RNG`               | rng           | ```ID_AA64ISAR0_EL1.RNDR >= 0b0001```     |
+   | `FEAT_FlagM`             | flagm         | ```ID_AA64ISAR0_EL1.TS >= 0b0001```       |
+   | `FEAT_FlagM2`            | flagm2        | ```ID_AA64ISAR0_EL1.TS >= 0b0010```       |
+   | `FEAT_LSE`               | lse           | ```ID_AA64ISAR0_EL1.Atomic >= 0b0010```   |
+   | Floating-point           | fp            | ```ID_AA64PFR0_EL1.FP != 0b1111```        |
+   | `FEAT_AdvSIMD`           | simd          | ```ID_AA64PFR0_EL1.AdvSIMD != 0b1111```   |
+   | `FEAT_DotProd`           | dotprod       | ```ID_AA64ISAR0_EL1.DP >= 0b0001```       |
+   | `FEAT_SM3`, `FEAT_SM4`   | sm4           | ```ID_AA64ISAR0_EL1.SM4 >= 0b0001```      |
+   | `FEAT_RDM`               | rdm, rdma     | ```ID_AA64ISAR0_EL1.RDM >= 0b0001```      |
+   | `FEAT_CRC32`             | crc           | ```ID_AA64ISAR0_EL1.CRC32 >= 0b0001```    |
+   | `FEAT_SHA1`, `FEAT_SHA256` | sha2        | ```ID_AA64ISAR0_EL1.SHA2 >= 0b0001```     |
+   | `FEAT_SHA512`, `FEAT_SHA3` | sha3        | ```ID_AA64ISAR0_EL1.SHA3 >= 0b0001```     |
+   | `FEAT_AES`, `FEAT_PMULL` | aes           | ```ID_AA64ISAR0_EL1.AES >= 0b0010```      |
+   | `FEAT_FP16`              | fp16          | ```ID_AA64PFR0_EL1.FP == 0b0001```        |
+   | `FEAT_FHM`               | fp16fml       | ```ID_AA64ISAR0_EL1.FHM >= 0b0001```      |
+   | `FEAT_DIT`               | dit           | ```ID_AA64PFR0_EL1.DIT >= 0b0001```       |
+   | `FEAT_DPB`               | dpb           | ```ID_AA64ISAR1_EL1.DPB >= 0b0001```      |
+   | `FEAT_DPB2`              | dpb2          | ```ID_AA64ISAR1_EL1.DPB >= 0b0010```      |
+   | `FEAT_JSCVT`             | jscvt         | ```ID_AA64ISAR1_EL1.JSCVT >= 0b0001```    |
+   | `FEAT_FCMA`              | fcma          | ```ID_AA64ISAR1_EL1.FCMA >= 0b0001```     |
+   | `FEAT_LRCPC`             | rcpc          | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0001```    |
+   | `FEAT_LRCPC2`            | rcpc2         | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0010```    |
+   | `FEAT_LRCPC3`            | rcpc3         | ```ID_AA64ISAR1_EL1.LRCPC >= 0b0011```    |
+   | `FEAT_FRINTTS`           | frintts       | ```ID_AA64ISAR1_EL1.FRINTTS >= 0b0001```  |
+   | `FEAT_I8MM`              | i8mm          | ```ID_AA64ISAR1_EL1.I8MM >= 0b0001```     |
+   | `FEAT_BF16`              | bf16          | ```ID_AA64ISAR1_EL1.BF16 >= 0b0001```     |
+   | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE >= 0b0001```       |
+   | `FEAT_F32MM`             | f32mm         | ```ID_AA64ZFR0_EL1.F32MM >= 0b00001```    |
+   | `FEAT_F64MM`             | f64mm         | ```ID_AA64ZFR0_EL1.F64MM >= 0b00001```    |
+   | `FEAT_SVE2`              | sve2          | ```ID_AA64ZFR0_EL1.SVEver >= 0b0001```    |
+   | `FEAT_SVE_AES`, <br> `FEAT_SVE_PMULL128` | sve2-aes | ```ID_AA64ZFR0_EL1.AES >= 0b0010``` |
+   | `FEAT_SVE_BitPerm`       | sve2-bitperm  | ```ID_AA64ZFR0_EL1.BitPerm >= 0b0001```   |
+   | `FEAT_SVE_SHA3`          | sve2-sha3     | ```ID_AA64ZFR0_EL1.SHA3 >= 0b0001```      |
+   | `FEAT_SM3`, `FEAT_SVE_SM4` | sve2-sm4    | ```ID_AA64ZFR0_EL1.SM4 >= 0b0001```       |
+   | `FEAT_SME`               | sme           | ```ID_AA64PFR1_EL1.SME >= 0b0001```       |
+   | `FEAT_MTE`, `FEAT_MTE2`  | memtag        | ```ID_AA64PFR1_EL1.MTE >= 0b0010```       |
+   | `FEAT_SB`                | sb            | ```ID_AA64ISAR1_EL1.SB >= 0b0001```       |
+   | `FEAT_SSBS`, `FEAT_SSBS2`| ssbs          | ```ID_AA64PFR1_EL1.SSBS >= 0b0010```      |
+   | `FEAT_BTI`               | bti           | ```ID_AA64PFR1_EL1.BT >= 0b0001```        |
+   | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT >= 0b0010```     |
+   | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64 == 0b1```      |
+   | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
+   | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SMEver >= 0b0001```    |
+   | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
+   | `FEAT_CSSC`              | cssc          | ```ID_AA64ISAR2_EL1.CSSC >= 0b0001```     |
+
+The tables are sorted by priority, starting from features of lowest priority ending with features of highest priority.
 
 ### Dependencies
 
@@ -5892,7 +5927,7 @@ each architecture includes its predecessor instruction set.
 # About FP8 intrinsics
 
 The specification for FP8 intrinsics is in
-[**Alpha** state](#current-status-and-anticipated-changes).
+[**Beta** state](#current-status-and-anticipated-changes).
 
 Each 8-bit floating point intrinsic call has a parameter to define the format
 and scale of the operands, and the overflow behavior, as applicable to each
@@ -10862,6 +10897,48 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
     __arm_streaming __arm_inout("za");
 ```
 
+#### BFTMOPA, FTMOPA, STMOPA, UTMOPA
+
+``` c
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_bf16_bf16]
+  //   _za32[_f16_f16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  void svtmopa_lane_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                              svuint8_t zk, uint64_t imm_idx)
+    __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F16 != 0
+  void svtmopa_lane_za16[_mf8_mf8]_fpm(uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                            svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F32 != 0
+  void svtmopa_lane_za32[_mf8_mf8]_fpm(uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+                              svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### SUTMOPA, USTMOPA
+
+``` c
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  void svtmopa_lane_za32[_s8_u8](uint64_t tile, svint8x2_t zn, svuint8_t zm, 
+                            svuint8_t zk, uint64_t imm_idx)
+    __arm_streaming __arm_inout("za");
+
+  // Only if __ARM_FEATURE_SME_TMOP != 0
+  void svtmopa_lane_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, svint8_t zm, 
+                            svuint8_t zk, uint64_t imm_idx)
+    __arm_streaming __arm_inout("za");
+```
+
 #### RDSVL
 
 The following intrinsics read the length of a streaming vector:
@@ -13727,6 +13804,296 @@ Multi-vector 8-bit floating-point multiply-add long.
     void svmopa_za32[_mf8]_m_fpm(uint64_t tile, svbool_t pn, svbool_t pm,
                                  svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm)
                                  __arm_streaming __arm_inout("za");
+```
+
+### SME2 mop4 intrinsics
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` and
+`__ARM_FEATURE_SME_MOP4` are defined. Individual intrinsics may have
+additional target feature requirements.
+
+These intrinsics have an additional '_{1,2}x{1,2}' suffix in 
+non-overloaded names to indicate which vector argument is a vector register pair.
+
+#### FMOP4A (non-FP8), BFMOP4A, SMOP4A, UMOP4A
+
+``` c
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x1]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+                             svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x2]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+                             svfloat32x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x1]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+                                      svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x2]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+                                      svfloat32x2_t zm)
+    __arm_streaming __arm_inout("za");
+  ```
+
+#### FMOP4S (non-FP8), BFMOP4S, SMOP4S, UMOP4S
+
+``` c
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x1]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+                             svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x2]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+                             svfloat32x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x1]_za32[_f32_f32](uint64_t tile, svfloat32x2_t zn, 
+                                      svfloat32_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_f16_f16] (only if __ARM_FEATURE_SME_F16F16 != 0)
+  //   _za16[_bf16_bf16] (only if __ARM_FEATURE_SME_B16B16 != 0)
+  //   _za32[_f16_f16]
+  //   _za32[_bf16_bf16]
+  //   _za32[_s16_s16]
+  //   _za32[_u16_u16]
+  //   _za32[_s8_s8]
+  //   _za32[_u8_u8]
+  //   _za64[_f64_f64] (only if __ARM_FEATURE_SME_F64F64 != 0)
+  //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x2]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
+                                      svfloat32x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### SUMOP4A
+
+``` c
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x1]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+                           svuint8_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x2]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+                           svuint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x1]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+                                    svuint8__t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x2]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+                                    svuint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### SUMOP4S
+
+``` c
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x1]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+                           svuint8_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x2]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+                           svuint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x1]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
+                                    svuint8__t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x2]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
+                                    svuint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### USMOP4A
+
+``` c
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x1]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+                           svint8_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x2]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+                           svint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_2x1]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+                                    svint8__t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4a[_1x2]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+                                    svint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### USMOP4S
+
+``` c
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x1]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+                           svint8_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x2]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+                           svint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_2x1]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
+                                    svint8__t zm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
+  void svmop4s[_1x2]_za32[_u8_s8](uint64_t tile, svuint8_t zn, 
+                                    svint8x2_t zm)
+    __arm_streaming __arm_inout("za");
+```
+
+#### FMOP4A (FP8)
+
+``` c
+    // Variants are also available for:
+  //   _za16[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_1x1]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8_t zn, 
+                        svmfloat8_t zm, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_2x2]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8x2_t zn, 
+                        svmfloat8x2_t zm, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_2x1]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8x2_t zn,
+                                 svmfloat8_t zm, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
+
+  // Variants are also available for:
+  //   _za16[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F16 != 0)
+  //   _za32[_mf8_mf8] (only if __ARM_FEATURE_SME_F8F32 != 0)
+  void svmop4a[_1x2]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8_t zn,
+                                 svmfloat8x2_t zm, fpm_t fpm)
+    __arm_streaming __arm_inout("za");
 ```
 
 # M-profile Vector Extension (MVE) intrinsics
