@@ -458,6 +458,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added feature test macro for FEAT_SSVE_BitPerm.
 * Upgrade to [**Beta**] (#current-status-and-anticipated-changes)
   support for modal 8-bit floating point intrinsics.
+* Added feature test macro for FEAT_SSVE_FEXPA.
 
 ### References
 
@@ -2365,6 +2366,10 @@ the SVE2 bit permute instructions in Streaming SVE mode (FEAT_SSVE_BitPerm) and 
 
 <span id="16-bit-to-64-bit-integer-widening-outer-product-intrinsics"></span>
 
+#### Streaming SVE FEXPA extension
+
+`__ARM_FEATURE_SSVE_FEXPA` is defined to 1 if there is hardware support for the SVE FEXPA instruction in Streaming SVE mode (FEAT_SSVE_FEXPA) and if the associated ACLE intrinsics are available.
+
 #### 16-bit to 64-bit integer widening outer product intrinsics
 
 The specification for SME is in
@@ -2625,6 +2630,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
+| [`__ARM_FEATURE_SSVE_FEXPA`](#streaming-sve-fexpa-extension)                                                                                            | Streaming SVE FEXPA extension                                                 | 1           |
 | [`__ARM_FEATURE_SVE2_SHA3`](#sha3-extension)                                                                                                            | SVE2 support for the SHA3 cryptographic extension (FEAT_SVE_SHA3)                                   | 1           |
 | [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 cryptographic extension (FEAT_SVE_SM3)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
