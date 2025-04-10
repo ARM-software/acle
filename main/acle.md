@@ -10915,12 +10915,12 @@ Replacing `_hor` with `_ver` gives the associated vertical forms.
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F16 != 0
-  void svtmopa_lane_za16[_mf8_mf8]_fpm(uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+  void svtmopa_lane_za16[_mf8_mf8]_fpm(uint64_t tile, svmfloat8x2_t zn, svmfloat8_t zm, 
                             svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 
   // Only if __ARM_FEATURE_SME_TMOP != 0 && __ARM_FEATURE_SME_F8F32 != 0
-  void svtmopa_lane_za32[_mf8_mf8]_fpm(uint64_t tile, svfloat32x2_t zn, svfloat32_t zm, 
+  void svtmopa_lane_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8x2_t zn,svmfloat8_t zm, 
                               svuint8_t zk, uint64_t imm_idx, fpm_t fpm)
     __arm_streaming __arm_inout("za");
 ```
