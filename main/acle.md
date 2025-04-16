@@ -13948,7 +13948,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   //   _za64[_s16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   //   _za64[_u16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4s[_1x2]_za32[_f32_f32](uint64_t tile, svfloat32_t zn, 
-                                      svfloat32x2_t zm)
+                                    svfloat32x2_t zm)
     __arm_streaming __arm_inout("za");
 ```
 
@@ -13998,13 +13998,13 @@ non-overloaded names to indicate which vector argument is a vector register pair
   // Variants are also available for:
   //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4s[_2x1]_za32[_s8_u8](uint64_t tile, svint8x2_t zn, 
-                                  svuint8__t zm)
+                                  svuint8_t zm)
     __arm_streaming __arm_inout("za");
 
   // Variants are also available for:
   //   _za64[_s16_u16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4s[_1x2]_za32[_s8_u8](uint64_t tile, svint8_t zn, 
-                                  vuint8x2_t zm)
+                                  svuint8x2_t zm)
     __arm_streaming __arm_inout("za");
 ```
 
@@ -14054,7 +14054,7 @@ non-overloaded names to indicate which vector argument is a vector register pair
   // Variants are also available for:
   //   _za64[_u16_s16] (only if __ARM_FEATURE_SME_I16I64 != 0)
   void svmop4s[_2x1]_za32[_u8_s8](uint64_t tile, svuint8x2_t zn, 
-                                  svint8__t zm)
+                                  svint8_t zm)
     __arm_streaming __arm_inout("za");
 
   // Variants are also available for:
