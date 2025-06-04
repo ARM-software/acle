@@ -1,10 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: 2024Q4
-date-of-issue: 21 February 2025
+version: 2025Q2
+date-of-issue: 06 June 2025
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -180,6 +180,7 @@ unless a different support level is specified in the text.
 | 2024Q2       | 21 June 2024      | Arm    | See [Changes between ACLE Q1 2024 and ACLE Q2 2024](#changes-between-acle-q1-2024-and-acle-q2-2024)                  |
 | 2024Q3       | 30 September 2024 | Arm    | See [Changes between ACLE Q2 2024 and ACLE Q3 2024](#changes-between-acle-q2-2024-and-acle-q3-2024)                  |
 | 2024Q4       | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
+| 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -446,7 +447,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
 
-#### Changes for next release
+#### Changes between ACLE Q4 2024 and ACLE Q2 2025
 
 * Changed the Function Multi Versioning default version rules to be more explicit.
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
@@ -456,7 +457,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed the priority column from the mapping tables of Function Multi Versioning.
 * Added Function Multi Versioning feature cssc.
 * Added feature test macro for FEAT_SSVE_BitPerm.
-* Upgrade to [**Beta**] (#current-status-and-anticipated-changes)
+* Upgrade to [**Beta**](#current-status-and-anticipated-changes)
   support for modal 8-bit floating point intrinsics.
 
 ### References
