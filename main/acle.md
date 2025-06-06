@@ -463,6 +463,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 #### Changes for next release
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
+* Added feature test macro for FEAT_CSSC.
 
 ### References
 
@@ -2418,6 +2419,13 @@ support for the SME quarter-tile outer product (FEAT_SME_MOP4)
 instructions and if their associated intrinsics are
 available. This implies that `__ARM_FEATURE_SME2` is nonzero.
 
+#### CSSC Extension
+
+`__ARM_FEATURE_CSSC` is defined to `1` if there is hardware
+support for common short sequence compression instructions.
+This includes the instructions ABS, CNT, CTZ and SMAX, SMIN, UMAX, UMIN
+(register/immediate).
+
 ## Floating-point model
 
 These macros test the floating-point model implemented by the compiler
@@ -2570,6 +2578,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_COPROC`](#coprocessor-intrinsics)                                                                                                       | Coprocessor Intrinsics                                                                             | 1           |
 | [`__ARM_FEATURE_CRC32`](#crc32-extension)                                                                                                               | CRC32 extension                                                                                    | 1           |
 | [`__ARM_FEATURE_CRYPTO`](#crypto-extension)                                                                                                             | Crypto extension                                                                                   | 1           |
+| [`__ARM_FEATURE_CSSC`](#cssc-extension)                                                                                                                 | CSSC extension                                                                                     | 1           |
 | [`__ARM_FEATURE_DIRECTED_ROUNDING`](#directed-rounding)                                                                                                 | Directed Rounding                                                                                  | 1           |
 | [`__ARM_FEATURE_DOTPROD`](#availability-of-dot-product-intrinsics)                                                                                      | Dot product extension (ARM v8.2-A)                                                                 | 1           |
 | [`__ARM_FEATURE_DSP`](#dsp-instructions)                                                                                                                | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
