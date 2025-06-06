@@ -141,6 +141,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yury-khrustalev"><img src="https://avatars.githubusercontent.com/u/47541527?v=4?s=100" width="100px;" alt="Yury Khrustalev"/><br /><sub><b>Yury Khrustalev</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=yury-khrustalev" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.rdfm.org/"><img src="https://avatars.githubusercontent.com/u/111884?v=4?s=100" width="100px;" alt="Claudio Bantaloukas"/><br /><sub><b>Claudio Bantaloukas</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=rockdreamer" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/AlfieRichardsArm"><img src="https://avatars.githubusercontent.com/u/156316945?v=4?s=100" width="100px;" alt="Alfie Richards"/><br /><sub><b>Alfie Richards</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=AlfieRichardsArm" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
