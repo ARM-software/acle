@@ -360,6 +360,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "momchil-velikov",
+      "name": "Momchil Velikov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5541560?v=4",
+      "profile": "https://github.com/momchil-velikov",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
