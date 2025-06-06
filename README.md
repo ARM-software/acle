@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-44-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-45-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -144,6 +144,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/AlfieRichardsArm"><img src="https://avatars.githubusercontent.com/u/156316945?v=4?s=100" width="100px;" alt="Alfie Richards"/><br /><sub><b>Alfie Richards</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=AlfieRichardsArm" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MartinWehking"><img src="https://avatars.githubusercontent.com/u/9721817?v=4?s=100" width="100px;" alt="Martin Wehking"/><br /><sub><b>Martin Wehking</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=MartinWehking" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/CarolineConcatto"><img src="https://avatars.githubusercontent.com/u/51754594?v=4?s=100" width="100px;" alt="CarolineConcatto"/><br /><sub><b>CarolineConcatto</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=CarolineConcatto" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
