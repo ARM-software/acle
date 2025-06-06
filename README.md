@@ -6,7 +6,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-38-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-39-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Continuous Integration](https://github.com/ARM-software/acle/actions/workflows/ci.yml/badge.svg)
 
@@ -136,6 +136,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/v01dXYZ"><img src="https://avatars.githubusercontent.com/u/14996868?v=4?s=100" width="100px;" alt="Robert Dazi"/><br /><sub><b>Robert Dazi</b></sub></a><br /><a href="#content-v01dXYZ" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/SpencerAbson"><img src="https://avatars.githubusercontent.com/u/76910239?v=4?s=100" width="100px;" alt="SpencerAbson"/><br /><sub><b>SpencerAbson</b></sub></a><br /><a href="#content-SpencerAbson" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/philgee-oss"><img src="https://avatars.githubusercontent.com/u/56538781?v=4?s=100" width="100px;" alt="philgee-oss"/><br /><sub><b>philgee-oss</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Aphilgee-oss" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.rdfm.org/"><img src="https://avatars.githubusercontent.com/u/111884?v=4?s=100" width="100px;" alt="Claudio Bantaloukas"/><br /><sub><b>Claudio Bantaloukas</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=rockdreamer" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
