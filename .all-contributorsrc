@@ -360,6 +360,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "kmclaughlin-arm",
+      "name": "Kerry McLaughlin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56965690?v=4",
+      "profile": "https://github.com/kmclaughlin-arm",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
