@@ -139,6 +139,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kmclaughlin-arm"><img src="https://avatars.githubusercontent.com/u/56965690?v=4?s=100" width="100px;" alt="Kerry McLaughlin"/><br /><sub><b>Kerry McLaughlin</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=kmclaughlin-arm" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/momchil-velikov"><img src="https://avatars.githubusercontent.com/u/5541560?v=4?s=100" width="100px;" alt="Momchil Velikov"/><br /><sub><b>Momchil Velikov</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=momchil-velikov" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yury-khrustalev"><img src="https://avatars.githubusercontent.com/u/47541527?v=4?s=100" width="100px;" alt="Yury Khrustalev"/><br /><sub><b>Yury Khrustalev</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=yury-khrustalev" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.rdfm.org/"><img src="https://avatars.githubusercontent.com/u/111884?v=4?s=100" width="100px;" alt="Claudio Bantaloukas"/><br /><sub><b>Claudio Bantaloukas</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=rockdreamer" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
