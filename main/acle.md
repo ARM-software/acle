@@ -3018,19 +3018,19 @@ the selection algorithm is platform dependent, where with platform means
 CPU/Vendor/OS as in the target triplet.
 2. The selection is permanent for the
 lifetime of the process.
-3. The selection algorithm must select the the highest precedence
-version whose dependent features are all available.
+3. The selection algorithm must select the version with the highest
+precedence whose dependent features are all available.
 
 The precedence for two target version strings is determined by:
 
 1. If both target version strings specify a `priority`, with different values,
 then the version with the higher `priority` has precedence.
-2. If only one target version strings specify a `priority`, this version has
+2. If only one target version string specifies a `priority`, this version has
 precedence.
-3. Otherwise, if neither target version strings specify a `priority` or specify
-the same value, then precedence is decided by identifying the highest priority
-feature that is specified in exactly one of the versions, and selecting that
-version.
+3. Otherwise, if neither target version string specifies a `priority` or both
+specify the same value, then precedence is decided by identifying the highest
+priority feature that is specified in exactly one of the versions, and selecting
+that version.
 
 ## Weak linkage
 
