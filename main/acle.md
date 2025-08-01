@@ -464,6 +464,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Added support for producer-consumer data placement hints.
 
 ### References
 
@@ -1826,6 +1827,12 @@ The `__ARM_FEATURE_SYSREG128` macro can only be implemented in the AArch64
 execution state. Intrinsics for the use of these instructions are specified in
 [Special register intrinsics](#special-register-intrinsics).
 
+### Producer-consumer data placement hints
+
+`__ARM_FEATURE_PCDPHINT` is defined to `1` if the producer-consumer
+data placement hints (FEAT_PCDPHINT) instructions and their associated
+intrinsics are available on the target.
+
 ## Floating-point and vector hardware
 
 ### Hardware floating point
@@ -2604,6 +2611,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
 | [`__ARM_FEATURE_PAUTH`](#pointer-authentication)                                                                                                        | Pointer Authentication Extension (FEAT_PAuth)                                                      | 1           |
 | [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5-A Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                         | 1           |
+| [`__ARM_FEATURE_PCDPHINT`](#producer-consumer-data-placement-hints)                                                                                     | Producer-consumer data placement hint instructions (FEAT_PCDPHINT)                                 | 1           |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
@@ -3573,6 +3581,16 @@ as in `__pldx`.
 
 `__pldx` and `__plix` arguments cache level and retention policy
 are ignored on unsupported targets.
+
+### Intent to read prefetch
+
+``` c
+  void __pldir(void const volatile *addr);
+```
+Generates an intent to read on update prefetch instruction. The argument should
+be any expression that may designate a data address. This intrinsic does
+not require specification of cache level or retention policy. Support for this
+intrinsic is indicated by `__ARM_FEATURE_PCDPHINT`.
 
 ## NOP
 
@@ -4745,6 +4763,34 @@ Performs the same operation as `__arm_st64bv`, except that the data
 stored to memory is modified by replacing the low 32 bits of
 `value.val[0]` with the contents of the `ACCDATA_EL1` system register.
 The returned value is the same as for `__arm_st64bv`.
+
+## Atomic store with PCDPHINT intrinsics
+
+This intrinsic provides an atomic store, which will
+make use of the `STSHH` hint instruction immediately followed by the
+associated store instruction. This intrinsic is type generic and 
+supports scalar types from 8-64 bits and is available when
+`__ARM_FEATURE_PCDPHINT` is defined.
+
+To access this intrinsic, `<arm_acle.h>` should be included.
+
+``` c
+  void __arm_atomic_store_with_stshh(type *ptr,
+                                     type data,
+                                     int memory_order,
+                                     int ret); /* Retention Policy */
+```
+
+The first argument in this intrinsic is a pointer `ptr` which is the location to store to.
+The second argument `data` is the data which is to be stored.
+The third argument `mem` can be one of 3 memory ordering variables supported by atomic_store:
+__ATOMIC_RELAXED, __ATOMIC_SEQ_CST, and __ATOMIC_RELEASE.
+The fourth argument can contain the following values:
+
+| **Retention Policy** | **Value** | **Summary**                                                                       |
+| -------------------- | --------- | --------------------------------------------------------------------------------- |
+| KEEP                 | 0         | Signals to retain the updated location in the local cache of the updating PE.     |
+| STRM                 | 1         | Signals to not retain the updated location in the local cache of the updating PE. |
 
 # Custom Datapath Extension
 
