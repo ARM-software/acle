@@ -2843,14 +2843,14 @@ For example, it can be implemented as:
 
 ### Target version strings
 
-A target version string is of the following form:
+A target version string has the following form:
 
 ```
 <target version string>    := 'default'
                             | <version string>
-<version string>           := <priority string> ';' <arch strings>
+<version string>           :=  <arch strings> ';' <priority string>
                             | <arch strings>
-<priority string>          := 'priority=[1-31]'
+<priority string>          := 'priority=[1-255]'
 <arch strings>             := <arch strings> '+' arch extension
                             | arch extension
 ```
@@ -2863,8 +2863,8 @@ Valid string examples are given below
 default
 dotprod
 dotprod+flagm
-priority=5;sve
-priority=23;sve2+sme2
+sve;priority=5
+sve2+sme2;priority=23
 ```
 
 ### Name mangling
@@ -2883,7 +2883,7 @@ the [[cxxabi]](#cxxabi), and it is defined as follows:
 <vendor specific suffix> := `_` followed by token obtained from the tables below and prefixed with `M`
 ```
 
-Note, priority values do not affect mangling.
+Priority values do not affect mangling.
 
 If multiple features are requested then those shall be appended in lexicographic
 order and prefixed with `M`. The mangled name shall contain a unique set of
