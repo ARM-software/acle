@@ -446,6 +446,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
+* Add Function Multi Versioning feature priority syntax.
 
 #### Changes between ACLE Q4 2024 and ACLE Q2 2025
 
@@ -2755,8 +2756,8 @@ function may be in the final binary. The compiler generates all
 supported versions and the runtime makes the selection at load time.
 
 The following attributes trigger the multi version code generation:
-`__attribute__((target_version("name")))` and
-`__attribute__((target_clones("name",...)))`.
+`__attribute__((target_version("<target version string>")))` and
+`__attribute__((target_clones("<target version string>",...)))`.
 
 * Functions are allowed to have the same name and signature when
   annotated with these attributes.
@@ -2765,7 +2766,6 @@ The following attributes trigger the multi version code generation:
   section.
 * The `default` version means the version of the function that would
   be generated without these attributes.
-* The dependent features could be joined by the `+` sign.
 * None of these attributes enable the corresponding ACLE feature(s)
   associated to the `name` expressed in the attribute.
 * These attributes have no effect on the calling convention.
@@ -2789,7 +2789,7 @@ The following attributes trigger the multi version code generation:
   * or, as a function annotated with `target_clones(...)` where one
     of the versions is `default`.
 
-The attribute `__attribute__((target_version("name")))` expresses the
+The attribute `__attribute__((target_version("<target version string>")))` expresses the
 following:
 
 * When applied to a function it becomes one of the versions.
@@ -2816,7 +2816,7 @@ int f (int c = 1);
 int __attribute__((target_version("default"))) f (int c = 2);
 ```
 
-The attribute `__attribute__((target_clones("name",...)))` expresses the
+The attribute `__attribute__((target_clones("<target version string>",...)))` expresses the
 following:
 
 * when applied to a function the compiler emits multiple versions
@@ -2841,6 +2841,32 @@ For example, it can be implemented as:
 #define __FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL __ARM_ACLE_VERSION(2024, 3, 0)
 ```
 
+### Target version strings
+
+A target version string has the following form:
+
+```
+<target version string>    := 'default'
+                            | <version string>
+<version string>           :=  <arch strings> ';' <priority string>
+                            | <arch strings>
+<priority string>          := 'priority=[1-255]'
+<arch strings>             := <arch strings> '+' arch extension
+                            | arch extension
+```
+
+where `arch extension` is any Names value from the Mapping table below.
+
+Valid string examples are given below
+
+```
+default
+dotprod
+dotprod+flagm
+sve;priority=5
+sve2+sme2;priority=23
+```
+
 ### Name mangling
 
 The `"default"` version is mangled with `".default"` on top of the
@@ -2856,6 +2882,8 @@ the [[cxxabi]](#cxxabi), and it is defined as follows:
 <c/c++ mangling> := function name mangling for c/c++
 <vendor specific suffix> := `_` followed by token obtained from the tables below and prefixed with `M`
 ```
+
+Priority values do not affect mangling.
 
 If multiple features are requested then those shall be appended in lexicographic
 order and prefixed with `M`. The mangled name shall contain a unique set of
@@ -2990,11 +3018,19 @@ the selection algorithm is platform dependent, where with platform means
 CPU/Vendor/OS as in the target triplet.
 2. The selection is permanent for the
 lifetime of the process.
-3. Among any two versions, the higher priority version is determined by
-identifying the highest priority feature that is specified in exactly one of
-the versions, and selecting that version.
-4. The selection algorithm must select the highest priority versions whose
-dependent features are all available.
+3. The selection algorithm must select the version with the highest
+precedence whose dependent features are all available.
+
+The precedence for two target version strings is determined by:
+
+1. If both target version strings specify a `priority`, with different values,
+then the version with the higher `priority` has precedence.
+2. If only one target version string specifies a `priority`, this version has
+precedence.
+3. Otherwise, if neither target version string specifies a `priority` or both
+specify the same value, then precedence is decided by identifying the highest
+priority feature that is specified in exactly one of the versions, and selecting
+that version.
 
 ## Weak linkage
 
