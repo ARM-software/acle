@@ -465,6 +465,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Added [**Alpha**](#current-status-and-anticipated-changes) support
+  for Brain 16-bit floating-point vector multiplication intrinsics.
 
 ### References
 
@@ -2122,6 +2124,20 @@ are available.  Specifically, if this macro is defined to `1`, then:
 for the FEAT_SME_B16B16 instructions and if their associated intrinsics
 are available.
 
+#### Brain 16-bit floating-point vector multiplication support
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_SVE_BFSCALE` is defined to `1` if there is hardware
+support for the SVE BF16 vector multiplication extensions and if the
+associated ACLE intrinsics are available.
+
+See [Half-precision brain
+floating-point](#half-precision-brain-floating-point) for details
+of half-precision brain floating-point types.
+
 ### Cryptographic extensions
 
 #### “Crypto” extension
@@ -2634,6 +2650,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE`](#scalable-vector-extension-sve)                                                                                                   | Scalable Vector Extension (FEAT_SVE)                                                               | 1           |
 | [`__ARM_FEATURE_SVE_B16B16`](#non-widening-brain-16-bit-floating-point-support)                                                                         | Non-widening brain 16-bit floating-point intrinsics (FEAT_SVE_B16B16)                              | 1           |
 | [`__ARM_FEATURE_SVE_BF16`](#brain-16-bit-floating-point-support)                                                                                        | SVE support for the 16-bit brain floating-point extension (FEAT_BF16)                              | 1           |
+| [`__ARM_FEATURE_SVE_BFSCALE`](#brain-16-bit-floating-point-vector-multiplication-support)                                                               | SVE support for the 16-bit brain floating-point vector multiplication extension (FEAT_SVE_BFSCALE) | 1           |
 | [`__ARM_FEATURE_SVE_BITS`](#scalable-vector-extension-sve)                                                                                              | The number of bits in an SVE vector, when known in advance                                         | 256         |
 | [`__ARM_FEATURE_SVE_MATMUL_FP32`](#multiplication-of-32-bit-floating-point-matrices)                                                                    | 32-bit floating-point matrix multiply extension (FEAT_F32MM)                                       | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_FP64`](#multiplication-of-64-bit-floating-point-matrices)                                                                    | 64-bit floating-point matrix multiply extension (FEAT_F64MM)                                       | 1           |
@@ -11639,7 +11656,7 @@ Multi-vector floating-point fused multiply-add/subtract
     __arm_streaming __arm_inout("za");
   ```
 
-#### BFMLA. BFMLS, FMLA, FMLS (indexed)
+#### BFMLA, BFMLS, FMLA, FMLS (indexed)
 
 Multi-vector floating-point fused multiply-add/subtract
 
@@ -12731,6 +12748,30 @@ element types.
   // _bf16_x4, _u32_x4, _s32_x4, _f32_x4, _u64_x4, _s64_x4 and _f64_x4
   svint8x4_t svuzpq[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
+
+#### BFMUL
+
+BFloat16 Multi-vector floating-point multiply
+
+``` c
+  // Only if __ARM_FEATURE_SVE_BFSCALE != 0
+   svbfloat16x2_t svmul[_bf16_x2](svbfloat16x2_t zd, svbfloat16x2_t zm) __arm_streaming;
+   svbfloat16x2_t svmul[_single_bf16_x2](svbfloat16x2_t zd, svbfloat16_t zm) __arm_streaming;
+   svbfloat16x4_t svmul[_bf16_x4](svbfloat16x4_t zd, svbfloat16x4_t zm) __arm_streaming;
+   svbfloat16x4_t svmul[_single_bf16_x4](svbfloat16x4_t zd, svbfloat16_t zm) __arm_streaming;
+   ```
+
+#### BFSCALE
+
+BFloat16 floating-point adjust exponent vectors.
+
+``` c
+  // Only if __ARM_FEATURE_SVE_BFSCALE != 0
+   svbfloat16x2_t svscale[_bf16_x2](svbfloat16x2_t zdn, svint16x2_t zm);
+   svbfloat16x2_t svscale[_single_bf16_x2](svbfloat16x2_t zn, svint16_t zm);
+   svbfloat16x4_t svscale[_bf16_x4](svbfloat16x4_t zdn, svint16x4_t zm);
+   svbfloat16x4_t svscale[_single_bf16_x4](svbfloat16x4_t zn, svint16_t zm);
+   ```
 
 ### SME2.1 instruction intrinsics
 
