@@ -467,6 +467,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added feature test macro for FEAT_CSSC.
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.2 (FEAT_SVE2p2)
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SME2.2 (FEAT_SME2p2).
 
 ### References
 
@@ -1980,6 +1984,10 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
+`__ARM_FEATURE_SVE2p2` is defined to 1 if the FEAT_SVE2p2 instructions
+ are available and if the associated [ACLE features]
+(#sme-language-extensions-and-intrinsics) are supported.
+
 #### NEON-SVE Bridge macro
 
 `__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
@@ -2002,6 +2010,7 @@ of SME has an associated preprocessor macro, given in the table below:
 | FEAT_SME    | __ARM_FEATURE_SME          |
 | FEAT_SME2   | __ARM_FEATURE_SME2         |
 | FEAT_SME2p1 | __ARM_FEATURE_SME2p1       |
+| FEAT_SME2p2 | __ARM_FEATURE_SME2p2       |
 
 Each macro is defined if there is hardware support for the associated
 architecture feature and if all of the [ACLE
@@ -2674,6 +2683,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 cryptographic extension (FEAT_SVE_SM3)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
 | [`__ARM_FEATURE_SVE2p1`](#sve2)                                                                                                                         | SVE version 2.1 (FEAT_SVE2p1)
+| [`__ARM_FEATURE_SVE2p2`](#sve2)                                                                                                                         | SVE version 2.2 (FEAT_SVE2p2)
 | [`__ARM_FEATURE_SYSREG128`](#bit-system-registers)                                                                                                      | Support for 128-bit system registers (FEAT_SYSREG128)                                              | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
@@ -12927,6 +12937,33 @@ Zero ZA vector groups
     __arm_streaming __arm_inout("za");
 ```
 
+### SME2.2 instruction intrinsics
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p2` is defined.
+
+#### FMUL
+
+Multi-vector floating-point multiply
+
+``` c
+  // Variants are also available for:
+  // [_single_f32_x2]
+  // [_single_f64_x2]
+  // [_single_f16_x4]
+  // [_single_f32_x4]
+  // [_single_f64_x4]
+  svfloat16x2_t svmul[_single_f16_x2](svfloat16x2_t zd, svfloat16_t zm) __arm_streaming;
+
+  // Variants are also available for:
+  // [_f32_x2]
+  // [_f64_x2]
+  // [_f16_x4]
+  // [_f32_x4]
+  // [_f64_x4]
+  svfloat16x2_t svmul[_f16_x2](svfloat16x2_t zd, svfloat16x2_t zm) __arm_streaming;
+```
+
 ### Streaming-compatible versions of standard routines
 
 ACLE provides the following streaming-compatible functions,
@@ -13475,6 +13512,56 @@ While (resulting in predicate tuple)
   // _b64[_u64]_x2
   svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
 ```
+
+### SVE2.2 and SME2.2 instruction intrinsics
+
+The functions in this section are defined by either the header file
+ [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
+when `__ARM_FEATURE_SVE2p2` or `__ARM_FEATURE_SME2p2` is defined, respectively.
+
+#### COMPACT, EXPAND
+
+Copy active vector elements to/from lower-numbered elements.
+
+These intrinsics can be called from streaming code only if the
+`__ARM_FEATURE_SME2p2` feature macro is defined.
+
+They can be called from non-streaming code if the `__ARM_FEATURE_SVE2p2` feature
+macro is defined or both the `__ARM_FEATURE_SVE` and `__ARM_FEATURE_SME2p2`
+feature macros are defined.
+
+``` c
+  // Variants are available for:
+  // _s8, _s16, _u16, _mf8, _bf16, _f16
+  svuint8_t svcompact[_u8](svbool_t pg, svuint8_t zn);
+
+  // Variants are available for:
+  // _s8, _s16, _u16, _s32, _u32, _s64, _u64
+  // _mf8, _bf16, _f16, _f32, _f64
+  svuint8_t svexpand[_u8](svbool_t pg, svuint8_t zn);
+
+  ```
+
+#### FIRSTP, LASTP
+
+Scalar index of first/last true predicate element (predicated).
+
+These intrinsics can be called from streaming mode if either of the feature
+macros `__ARM_FEATURE_SVE` or `__ARM_FEATURE_SME` are defined.
+
+They can be called from non-streaming code only if  the `__ARM_FEATURE_SVE`
+feature macro is defined.
+
+``` c
+  // Variants are available for:
+  // _b16, _b32, _b64
+  int64_t svfirstp_b8(svbool_t pg, svbool_t op);
+
+  // Variants are available for:
+  // _b16, _b32, _b64
+  int64_t svlastp_b8(svbool_t pg, svbool_t op);
+
+  ```
 
 
 ### SME2 maximum and minimum absolute value
