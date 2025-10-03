@@ -465,6 +465,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Added support for FEAT_FPRCVT intrinsics and `__ARM_FEATURE_FPRCVT`.
+* Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
 
 ### References
 
@@ -2207,6 +2210,13 @@ ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 floating-point absolute minimum and maximum instructions (FEAT_FAMINMAX)
 and if the associated ACLE intrinsics are available.
 
+### FPRCVT extension
+
+`__ARM_FEATURE_FPRCVT` is defined to `1` if there is hardware
+support for floating-point to/from integer convertion instructions
+with only scalar SIMD&FP register operands and results having
+different input and output register sizes.
+
 ### Lookup table extensions
 
 `__ARM_FEATURE_LUT` is defined to 1 if there is hardware support for
@@ -2345,6 +2355,26 @@ In addition, `__ARM_FEATURE_SVE_MATMUL_INT8` is defined to `1` if there
 is hardware support for the SVE forms of these instructions and if the
 associated ACLE intrinsics are available. This implies that
 `__ARM_FEATURE_MATMUL_INT8` and `__ARM_FEATURE_SVE` are both nonzero.
+
+##### Multiplication of modal 8-bit floating-point matrices
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
+for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to half-precision (FEAT_F8F16MM)
+instructions and if the associated ACLE intrinsics are available.
+
+`__ARM_FEATURE_F8F32MM` is defined to `1` if there is hardware support
+for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to single-precision (FEAT_F8F32MM)
+instructions and if the associated ACLE intrinsics are available.
+
+##### Multiplication of 16-bit floating-point matrices
+
+`__ARM_FEATURE_SVE_F16F32MM` is defined to `1` if there is hardware support
+for the SVE 16-bit floating-point to 32-bit floating-point matrix multiply and add
+(FEAT_SVE_F16F32MM) instructions and if the associated ACLE intrinsics are available.
 
 ##### Multiplication of 32-bit floating-point matrices
 
@@ -2590,6 +2620,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_FP8DOT2`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8DOT4`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8FMA`](#modal-8-bit-floating-point-extensions)                                                                                        | Modal 8-bit floating-point extensions                                                              | 1           |
+| [`__ARM_FEATURE_FPRCVT`](#fprcvt-extension)                                                                                                             | FPRCVT extension                                                                                   | 1           |
 | [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_GCS`](#guarded-control-stack)                                                                                                           | Guarded Control Stack                                                                              | 1           |
 | [`__ARM_FEATURE_GCS_DEFAULT`](#guarded-control-stack)                                                                                                   | Guarded Control Stack protection can be enabled                                                    | 1           |
@@ -2637,6 +2668,9 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_BITS`](#scalable-vector-extension-sve)                                                                                              | The number of bits in an SVE vector, when known in advance                                         | 256         |
 | [`__ARM_FEATURE_SVE_MATMUL_FP32`](#multiplication-of-32-bit-floating-point-matrices)                                                                    | 32-bit floating-point matrix multiply extension (FEAT_F32MM)                                       | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_FP64`](#multiplication-of-64-bit-floating-point-matrices)                                                                    | 64-bit floating-point matrix multiply extension (FEAT_F64MM)                                       | 1           |
+| [`__ARM_FEATURE_F8F16MM`](#multiplication-of-modal-8-bit-floating-point-matrices)                                                                       | Modal 8-bit floating-point matrix multiply-accumulate to half-precision extension (FEAT_F8F16MM)   | 1           |
+| [`__ARM_FEATURE_F8F32MM`](#multiplication-of-modal-8-bit-floating-point-matrices)                                                                       | Modal 8-bit floating-point matrix multiply-accumulate to single-precision extension (FEAT_F8F32MM) | 1           |
+| [`__ARM_FEATURE_SVE_F16F32MM`](#multiplication-of-16-bit-floating-point-matrices)                                                                       | 16-bit floating-point matrix multiply-accumulate to single-precision extension (FEAT_SVE_F16F32MM) | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_INT8`](#multiplication-of-8-bit-integer-matrices)                                                                            | SVE support for the integer matrix multiply extension (FEAT_I8MM)                                  | 1           |
 | [`__ARM_FEATURE_SVE_PREDICATE_OPERATORS`](#scalable-vector-extension-sve)                                                                               | Level of support for C and C++ operators on SVE vector types                                        | 1           |
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
@@ -9373,6 +9407,31 @@ BFloat16 floating-point multiply vectors.
    svbfloat16_t svmul_lane[_bf16](svbfloat16_t zn, svbfloat16_t zm,
                                   uint64_t imm_idx);
    ```
+
+### SVE2 floating-point matrix multiply-accumulate instructions.
+
+#### FMMLA (widening, FP8 to FP16)
+
+Modal 8-bit floating-point matrix multiply-accumulate to half-precision.
+```c
+  // Only if (__ARM_FEATURE_SVE2 && __ARM_FEATURE_F8F16MM)
+  svfloat16_t svmmla[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+```
+
+#### FMMLA (widening, FP8 to FP32)
+
+Modal 8-bit floating-point matrix multiply-accumulate to single-precision.
+```c
+  // Only if (__ARM_FEATURE_SVE2 && __ARM_FEATURE_F8F32MM)
+  svfloat32_t svmmla[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+```
+#### FMMLA (widening, FP16 to FP32)
+
+16-bit floating-point matrix multiply-accumulate to single-precision.
+```c
+  // Only if __ARM_FEATURE_SVE_F16F32MM
+  svfloat32_t svmmla[_f32_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
+```
 
 ### SVE2.1 instruction intrinsics
 

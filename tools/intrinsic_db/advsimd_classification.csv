@@ -1167,15 +1167,25 @@ vcvtaq_s32_f32	Data type conversion|Conversions
 vcvta_u32_f32	Data type conversion|Conversions
 vcvtaq_u32_f32	Data type conversion|Conversions
 vcvts_s32_f32	Data type conversion|Conversions
+vcvts_s64_f32	Data type conversion|Conversions
 vcvts_u32_f32	Data type conversion|Conversions
+vcvts_u64_f32	Data type conversion|Conversions
 vcvtns_s32_f32	Data type conversion|Conversions
+vcvtns_s64_f32	Data type conversion|Conversions
 vcvtns_u32_f32	Data type conversion|Conversions
+vcvtns_u64_f32	Data type conversion|Conversions
 vcvtms_s32_f32	Data type conversion|Conversions
+vcvtms_s64_f32	Data type conversion|Conversions
 vcvtms_u32_f32	Data type conversion|Conversions
+vcvtms_u64_f32	Data type conversion|Conversions
 vcvtps_s32_f32	Data type conversion|Conversions
+vcvtps_s64_f32	Data type conversion|Conversions
 vcvtps_u32_f32	Data type conversion|Conversions
+vcvtps_u64_f32	Data type conversion|Conversions
 vcvtas_s32_f32	Data type conversion|Conversions
+vcvtas_s64_f32	Data type conversion|Conversions
 vcvtas_u32_f32	Data type conversion|Conversions
+vcvtas_u64_f32	Data type conversion|Conversions
 vcvt_s64_f64	Data type conversion|Conversions
 vcvtq_s64_f64	Data type conversion|Conversions
 vcvt_u64_f64	Data type conversion|Conversions
@@ -1196,15 +1206,25 @@ vcvta_s64_f64	Data type conversion|Conversions
 vcvtaq_s64_f64	Data type conversion|Conversions
 vcvta_u64_f64	Data type conversion|Conversions
 vcvtaq_u64_f64	Data type conversion|Conversions
+vcvtd_s32_f64	Data type conversion|Conversions
 vcvtd_s64_f64	Data type conversion|Conversions
+vcvtd_u32_f64	Data type conversion|Conversions
 vcvtd_u64_f64	Data type conversion|Conversions
+vcvtnd_s32_f64	Data type conversion|Conversions
 vcvtnd_s64_f64	Data type conversion|Conversions
+vcvtnd_u32_f64	Data type conversion|Conversions
 vcvtnd_u64_f64	Data type conversion|Conversions
+vcvtmd_s32_f64	Data type conversion|Conversions
 vcvtmd_s64_f64	Data type conversion|Conversions
+vcvtmd_u32_f64	Data type conversion|Conversions
 vcvtmd_u64_f64	Data type conversion|Conversions
+vcvtpd_s32_f64	Data type conversion|Conversions
 vcvtpd_s64_f64	Data type conversion|Conversions
+vcvtpd_u32_f64	Data type conversion|Conversions
 vcvtpd_u64_f64	Data type conversion|Conversions
+vcvtad_s32_f64	Data type conversion|Conversions
 vcvtad_s64_f64	Data type conversion|Conversions
+vcvtad_u32_f64	Data type conversion|Conversions
 vcvtad_u64_f64	Data type conversion|Conversions
 vcvt_n_s32_f32	Data type conversion|Conversions
 vcvtq_n_s32_f32	Data type conversion|Conversions
@@ -4697,3 +4717,5 @@ vmlalltbq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and wi
 vmlalltbq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
 vmlallttq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
 vmlallttq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
+vmmlaq_f16_mf8	Vector arithmetic|Matrix multiply
+vmmlaq_f32_mf8	Vector arithmetic|Matrix multiply
