@@ -12,7 +12,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2014-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2014-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
@@ -107,7 +107,7 @@ for more information about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2014-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
+* Copyright 2014-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
 * Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 
 ## Document history
@@ -161,13 +161,6 @@ for more information about Arm’s trademarks.
 ### Changes between 2024Q4 and 2025Q2
 
 * Added `fp8` version of the `vget_lane` intrinsic.
-
-### Changes between 2025Q2 and 2025Q3
-
-* Added support for FEAT_FPRCVT intrinsics.
-* Fixed typos in the "AArch64 Instruction" and "Result" fields of
-  floating point conversion intrinsics from "Half Precision to 32-bit"
-  and "Half Precision to 64-bit".
 
 <!---
 **** Do not remove! ****
