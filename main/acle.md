@@ -465,6 +465,15 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Added support for FEAT_FPRCVT intrinsics and `__ARM_FEATURE_FPRCVT`.
+* Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added support for Brain 16-bit floating-point vector multiplication intrinsics.
+* Added support for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.2 (FEAT_SVE2p2)
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SME2.2 (FEAT_SME2p2).
 
 ### References
 
@@ -1978,6 +1987,10 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
+`__ARM_FEATURE_SVE2p2` is defined to 1 if the FEAT_SVE2p2 instructions
+ are available and if the associated [ACLE features]
+(#sme-language-extensions-and-intrinsics) are supported.
+
 #### NEON-SVE Bridge macro
 
 `__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
@@ -2000,6 +2013,7 @@ of SME has an associated preprocessor macro, given in the table below:
 | FEAT_SME    | __ARM_FEATURE_SME          |
 | FEAT_SME2   | __ARM_FEATURE_SME2         |
 | FEAT_SME2p1 | __ARM_FEATURE_SME2p1       |
+| FEAT_SME2p2 | __ARM_FEATURE_SME2p2       |
 
 Each macro is defined if there is hardware support for the associated
 architecture feature and if all of the [ACLE
@@ -2122,6 +2136,16 @@ are available.  Specifically, if this macro is defined to `1`, then:
 for the FEAT_SME_B16B16 instructions and if their associated intrinsics
 are available.
 
+#### Brain 16-bit floating-point vector multiplication support
+
+`__ARM_FEATURE_SVE_BFSCALE` is defined to `1` if there is hardware
+support for the SVE BF16 vector multiplication extensions and if the
+associated ACLE intrinsics are available.
+
+See [Half-precision brain
+floating-point](#half-precision-brain-floating-point) for details
+of half-precision brain floating-point types.
+
 ### Cryptographic extensions
 
 #### “Crypto” extension
@@ -2146,6 +2170,15 @@ In addition, `__ARM_FEATURE_SVE2_AES` is defined to `1` if there is hardware
 support for the SVE2 AES (FEAT_SVE_AES) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_AES`
 and `__ARM_FEATURE_SVE2` are both nonzero.
+
+In addition, `__ARM_FEATURE_SVE2_AES2` is defined to `1` if there is hardware
+support for the SVE2 AES2 (FEAT_SVE_AES2) instructions and if the associated
+ACLE intrinsics are available. This implies that `__ARM_FEATURE_AES`
+and `__ARM_FEATURE_SVE2` are both nonzero.
+
+`__ARM_FEATURE_SSVE_AES2` is defined to 1 if there is hardware support for
+SVE2 AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
+and if the associated ACLE intrinsics are available.
 
 #### SHA2 extension
 
@@ -2206,6 +2239,13 @@ ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 `__ARM_FEATURE_FAMINMAX` is defined to 1 if there is hardware support for
 floating-point absolute minimum and maximum instructions (FEAT_FAMINMAX)
 and if the associated ACLE intrinsics are available.
+
+### FPRCVT extension
+
+`__ARM_FEATURE_FPRCVT` is defined to `1` if there is hardware
+support for floating-point to/from integer convertion instructions
+with only scalar SIMD&FP register operands and results having
+different input and output register sizes.
 
 ### Lookup table extensions
 
@@ -2345,6 +2385,26 @@ In addition, `__ARM_FEATURE_SVE_MATMUL_INT8` is defined to `1` if there
 is hardware support for the SVE forms of these instructions and if the
 associated ACLE intrinsics are available. This implies that
 `__ARM_FEATURE_MATMUL_INT8` and `__ARM_FEATURE_SVE` are both nonzero.
+
+##### Multiplication of modal 8-bit floating-point matrices
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
+for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to half-precision (FEAT_F8F16MM)
+instructions and if the associated ACLE intrinsics are available.
+
+`__ARM_FEATURE_F8F32MM` is defined to `1` if there is hardware support
+for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to single-precision (FEAT_F8F32MM)
+instructions and if the associated ACLE intrinsics are available.
+
+##### Multiplication of 16-bit floating-point matrices
+
+`__ARM_FEATURE_SVE_F16F32MM` is defined to `1` if there is hardware support
+for the SVE 16-bit floating-point to 32-bit floating-point matrix multiply and add
+(FEAT_SVE_F16F32MM) instructions and if the associated ACLE intrinsics are available.
 
 ##### Multiplication of 32-bit floating-point matrices
 
@@ -2590,6 +2650,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_FP8DOT2`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8DOT4`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8FMA`](#modal-8-bit-floating-point-extensions)                                                                                        | Modal 8-bit floating-point extensions                                                              | 1           |
+| [`__ARM_FEATURE_FPRCVT`](#fprcvt-extension)                                                                                                             | FPRCVT extension                                                                                   | 1           |
 | [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_GCS`](#guarded-control-stack)                                                                                                           | Guarded Control Stack                                                                              | 1           |
 | [`__ARM_FEATURE_GCS_DEFAULT`](#guarded-control-stack)                                                                                                   | Guarded Control Stack protection can be enabled                                                    | 1           |
@@ -2634,14 +2695,20 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE`](#scalable-vector-extension-sve)                                                                                                   | Scalable Vector Extension (FEAT_SVE)                                                               | 1           |
 | [`__ARM_FEATURE_SVE_B16B16`](#non-widening-brain-16-bit-floating-point-support)                                                                         | Non-widening brain 16-bit floating-point intrinsics (FEAT_SVE_B16B16)                              | 1           |
 | [`__ARM_FEATURE_SVE_BF16`](#brain-16-bit-floating-point-support)                                                                                        | SVE support for the 16-bit brain floating-point extension (FEAT_BF16)                              | 1           |
+| [`__ARM_FEATURE_SVE_BFSCALE`](#brain-16-bit-floating-point-vector-multiplication-support)                                                               | SVE support for the 16-bit brain floating-point vector multiplication extension (FEAT_SVE_BFSCALE) | 1           |
 | [`__ARM_FEATURE_SVE_BITS`](#scalable-vector-extension-sve)                                                                                              | The number of bits in an SVE vector, when known in advance                                         | 256         |
 | [`__ARM_FEATURE_SVE_MATMUL_FP32`](#multiplication-of-32-bit-floating-point-matrices)                                                                    | 32-bit floating-point matrix multiply extension (FEAT_F32MM)                                       | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_FP64`](#multiplication-of-64-bit-floating-point-matrices)                                                                    | 64-bit floating-point matrix multiply extension (FEAT_F64MM)                                       | 1           |
+| [`__ARM_FEATURE_F8F16MM`](#multiplication-of-modal-8-bit-floating-point-matrices)                                                                       | Modal 8-bit floating-point matrix multiply-accumulate to half-precision extension (FEAT_F8F16MM)   | 1           |
+| [`__ARM_FEATURE_F8F32MM`](#multiplication-of-modal-8-bit-floating-point-matrices)                                                                       | Modal 8-bit floating-point matrix multiply-accumulate to single-precision extension (FEAT_F8F32MM) | 1           |
+| [`__ARM_FEATURE_SVE_F16F32MM`](#multiplication-of-16-bit-floating-point-matrices)                                                                       | 16-bit floating-point matrix multiply-accumulate to single-precision extension (FEAT_SVE_F16F32MM) | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_INT8`](#multiplication-of-8-bit-integer-matrices)                                                                            | SVE support for the integer matrix multiply extension (FEAT_I8MM)                                  | 1           |
 | [`__ARM_FEATURE_SVE_PREDICATE_OPERATORS`](#scalable-vector-extension-sve)                                                                               | Level of support for C and C++ operators on SVE vector types                                        | 1           |
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
+| [`__ARM_FEATURE_SVE2_AES2`](#aes-extension)                                                                                                             | SVE2 support for the SVE multi-vector AES cryptographic extension (FEAT_SVE_AES2)                   | 1           |
+| [`__ARM_FEATURE_SSVE_AES2`](#aes-extension)                                                                                                             | SVE2 support for the SVE multi-vector AES cryptographic extension (FEAT_SSVE_AES)                   | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_FEXPA`](#streaming-sve-fexpa-extension)                                                                                            | Streaming SVE FEXPA extension                                                 | 1           |
@@ -2649,6 +2716,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 cryptographic extension (FEAT_SVE_SM3)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
 | [`__ARM_FEATURE_SVE2p1`](#sve2)                                                                                                                         | SVE version 2.1 (FEAT_SVE2p1)
+| [`__ARM_FEATURE_SVE2p2`](#sve2)                                                                                                                         | SVE version 2.2 (FEAT_SVE2p2)
 | [`__ARM_FEATURE_SYSREG128`](#bit-system-registers)                                                                                                      | Support for 128-bit system registers (FEAT_SYSREG128)                                              | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
@@ -9374,6 +9442,31 @@ BFloat16 floating-point multiply vectors.
                                   uint64_t imm_idx);
    ```
 
+### SVE2 floating-point matrix multiply-accumulate instructions.
+
+#### FMMLA (widening, FP8 to FP16)
+
+Modal 8-bit floating-point matrix multiply-accumulate to half-precision.
+```c
+  // Only if (__ARM_FEATURE_SVE2 && __ARM_FEATURE_F8F16MM)
+  svfloat16_t svmmla[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+```
+
+#### FMMLA (widening, FP8 to FP32)
+
+Modal 8-bit floating-point matrix multiply-accumulate to single-precision.
+```c
+  // Only if (__ARM_FEATURE_SVE2 && __ARM_FEATURE_F8F32MM)
+  svfloat32_t svmmla[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+```
+#### FMMLA (widening, FP16 to FP32)
+
+16-bit floating-point matrix multiply-accumulate to single-precision.
+```c
+  // Only if __ARM_FEATURE_SVE_F16F32MM
+  svfloat32_t svmmla[_f32_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
+```
+
 ### SVE2.1 instruction intrinsics
 
 The specification for SVE2.1 is in
@@ -9404,6 +9497,30 @@ to work with `svboolx2_t` and `svboolx4_t`.  For example:
     svboolx2_t svcreate2[_b](svbool_t x, svbool_t y);
     svboolx2_t svundef2_b();
 ```
+
+#### AESE, AESD, AESEMC, AESDIMC
+
+Multi-vector Advanced Encryption Standard instructions
+
+svuint8x2_t    svaese[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+svuint8x4_t    svaese[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+svuint8x2_t    svaesd[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+svuint8x4_t    svaesd[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+svuint8x2_t    svaesemc[_u8_x2]   (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+svuint8x4_t    svaesemc[_u8_x4]   (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+svuint8x2_t    svaesdimc[_u8_x2]  (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+svuint8x4_t    svaesdimc[_u8_x4]  (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+
+#### PMULL, PMLAL
+
+Multi-vector 128-bit polynomial multiply long instructions
+
+``` c
+  // Variants are also available for:
+  // _s64x2, _f64x2
+  svuint64x2_t svpmull[_u64x2](svuint64_t zn, svuint64_t zm);
+  svuint64x2_t svpmlal[_u64x2](svuint64_t zn, svuint64_t zm);
+  ```
 
 #### ADDQV, FADDQV
 
@@ -11639,7 +11756,7 @@ Multi-vector floating-point fused multiply-add/subtract
     __arm_streaming __arm_inout("za");
   ```
 
-#### BFMLA. BFMLS, FMLA, FMLS (indexed)
+#### BFMLA, BFMLS, FMLA, FMLS (indexed)
 
 Multi-vector floating-point fused multiply-add/subtract
 
@@ -12732,6 +12849,29 @@ element types.
   svint8x4_t svuzpq[_s8_x4](svint8x4_t zn) __arm_streaming;
   ```
 
+#### BFMUL
+
+BFloat16 Multi-vector floating-point multiply
+
+``` c
+  // Only if __ARM_FEATURE_SVE_BFSCALE != 0
+   svbfloat16x2_t svmul[_bf16_x2](svbfloat16x2_t zd, svbfloat16x2_t zm) __arm_streaming;
+   svbfloat16x2_t svmul[_single_bf16_x2](svbfloat16x2_t zd, svbfloat16_t zm) __arm_streaming;
+   svbfloat16x4_t svmul[_bf16_x4](svbfloat16x4_t zd, svbfloat16x4_t zm) __arm_streaming;
+   svbfloat16x4_t svmul[_single_bf16_x4](svbfloat16x4_t zd, svbfloat16_t zm) __arm_streaming;
+   ```
+
+#### BFSCALE
+BFloat16 floating-point adjust exponent vectors.
+
+``` c
+  // Only if __ARM_FEATURE_SVE_BFSCALE != 0
+   svbfloat16x2_t svscale[_bf16_x2](svbfloat16x2_t zdn, svint16x2_t zm);
+   svbfloat16x2_t svscale[_single_bf16_x2](svbfloat16x2_t zn, svint16_t zm);
+   svbfloat16x4_t svscale[_bf16_x4](svbfloat16x4_t zdn, svint16x4_t zm);
+   svbfloat16x4_t svscale[_single_bf16_x4](svbfloat16x4_t zn, svint16_t zm);
+   ```
+
 ### SME2.1 instruction intrinsics
 
 The specification for SME2.1 is in
@@ -12875,6 +13015,33 @@ Zero ZA vector groups
 
   void svzero_za64_vg4x4(uint32_t slice)
     __arm_streaming __arm_inout("za");
+```
+
+### SME2.2 instruction intrinsics
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p2` is defined.
+
+#### FMUL
+
+Multi-vector floating-point multiply
+
+``` c
+  // Variants are also available for:
+  // [_single_f32_x2]
+  // [_single_f64_x2]
+  // [_single_f16_x4]
+  // [_single_f32_x4]
+  // [_single_f64_x4]
+  svfloat16x2_t svmul[_single_f16_x2](svfloat16x2_t zd, svfloat16_t zm) __arm_streaming;
+
+  // Variants are also available for:
+  // [_f32_x2]
+  // [_f64_x2]
+  // [_f16_x4]
+  // [_f32_x4]
+  // [_f64_x4]
+  svfloat16x2_t svmul[_f16_x2](svfloat16x2_t zd, svfloat16x2_t zm) __arm_streaming;
 ```
 
 ### Streaming-compatible versions of standard routines
@@ -13425,6 +13592,56 @@ While (resulting in predicate tuple)
   // _b64[_u64]_x2
   svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
 ```
+
+### SVE2.2 and SME2.2 instruction intrinsics
+
+The functions in this section are defined by either the header file
+ [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
+when `__ARM_FEATURE_SVE2p2` or `__ARM_FEATURE_SME2p2` is defined, respectively.
+
+#### COMPACT, EXPAND
+
+Copy active vector elements to/from lower-numbered elements.
+
+These intrinsics can be called from streaming code only if the
+`__ARM_FEATURE_SME2p2` feature macro is defined.
+
+They can be called from non-streaming code if the `__ARM_FEATURE_SVE2p2` feature
+macro is defined or both the `__ARM_FEATURE_SVE` and `__ARM_FEATURE_SME2p2`
+feature macros are defined.
+
+``` c
+  // Variants are available for:
+  // _s8, _s16, _u16, _mf8, _bf16, _f16
+  svuint8_t svcompact[_u8](svbool_t pg, svuint8_t zn);
+
+  // Variants are available for:
+  // _s8, _s16, _u16, _s32, _u32, _s64, _u64
+  // _mf8, _bf16, _f16, _f32, _f64
+  svuint8_t svexpand[_u8](svbool_t pg, svuint8_t zn);
+
+  ```
+
+#### FIRSTP, LASTP
+
+Scalar index of first/last true predicate element (predicated).
+
+These intrinsics can be called from streaming mode if either of the feature
+macros `__ARM_FEATURE_SVE` or `__ARM_FEATURE_SME` are defined.
+
+They can be called from non-streaming code only if  the `__ARM_FEATURE_SVE`
+feature macro is defined.
+
+``` c
+  // Variants are available for:
+  // _b16, _b32, _b64
+  int64_t svfirstp_b8(svbool_t pg, svbool_t op);
+
+  // Variants are available for:
+  // _b16, _b32, _b64
+  int64_t svlastp_b8(svbool_t pg, svbool_t op);
+
+  ```
 
 
 ### SME2 maximum and minimum absolute value
