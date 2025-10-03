@@ -423,6 +423,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "amilendra",
+      "name": "amilendra",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10149464?v=4",
+      "profile": "https://github.com/amilendra",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
