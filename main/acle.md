@@ -2150,10 +2150,9 @@ and `__ARM_FEATURE_SVE2` are both nonzero.
 
 In addition, `__ARM_FEATURE_SVE2_AES2` is defined to `1` if there is hardware
 support for the SVE2 AES2 (FEAT_SVE_AES2) instructions and if the associated
-ACLE intrinsics are available. This implies that `__ARM_FEATURE_AES`
-and `__ARM_FEATURE_SVE2` are both nonzero.
+ACLE intrinsics are available.
 
-`__ARM_FEATURE_SSVE_AES2` is defined to 1 if there is hardware support for
+`__ARM_FEATURE_SSVE_AES` is defined to 1 if there is hardware support for
 SVE2 AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
 and if the associated ACLE intrinsics are available.
 
@@ -2652,8 +2651,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
-| [`__ARM_FEATURE_SVE2_AES2`](#aes-extension)                                                                                                             | SVE2 support for the SVE multi-vector AES cryptographic extension (FEAT_SVE_AES2)                   | 1           |
-| [`__ARM_FEATURE_SSVE_AES2`](#aes-extension)                                                                                                             | SVE2 support for the SVE multi-vector AES cryptographic extension (FEAT_SSVE_AES)                   | 1           |
+| [`__ARM_FEATURE_SVE2_AES2`](#aes-extension)                                                                                                             | SVE2 support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SVE_AES2)  | 1           |
+| [`__ARM_FEATURE_SSVE_AES`](#aes-extension)                                                                                                              | SVE2 support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SSVE_AES)  | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_FEXPA`](#streaming-sve-fexpa-extension)                                                                                            | Streaming SVE FEXPA extension                                                 | 1           |
@@ -9417,30 +9416,6 @@ to work with `svboolx2_t` and `svboolx4_t`.  For example:
     svboolx2_t svundef2_b();
 ```
 
-#### AESE, AESD, AESEMC, AESDIMC
-
-Multi-vector Advanced Encryption Standard instructions
-
-svuint8x2_t    svaese[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-svuint8x4_t    svaese[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-svuint8x2_t    svaesd[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-svuint8x4_t    svaesd[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-svuint8x2_t    svaesemc[_u8_x2]   (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-svuint8x4_t    svaesemc[_u8_x4]   (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-svuint8x2_t    svaesdimc[_u8_x2]  (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-svuint8x4_t    svaesdimc[_u8_x4]  (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-
-#### PMULL, PMLAL
-
-Multi-vector 128-bit polynomial multiply long instructions
-
-``` c
-  // Variants are also available for:
-  // _s64x2, _f64x2
-  svuint64x2_t svpmull[_u64x2](svuint64_t zn, svuint64_t zm);
-  svuint64x2_t svpmlal[_u64x2](svuint64_t zn, svuint64_t zm);
-  ```
-
 #### ADDQV, FADDQV
 
 Unsigned/FP add reduction of quadword vector segments.
@@ -9747,6 +9722,39 @@ Lookup table read with 4-bit indices.
   svint16_t svluti4_lane[_s16](svint16_t table, svuint8_t indices, uint64_t imm_idx);
   svint16_t svluti4_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
 ```
+
+### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
+
+
+#### AESE, AESD, AESEMC, AESDIMC
+
+Multi-vector Advanced Encryption Standard instructions
+
+```c
+  // Only if __ARM_FEATURE_SVE2_AES2 != 0 or __ARM_FEATURE_SSVE_AES != 0
+
+  svuint8x2_t    svaese[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaese[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesd[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesd[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesemc[_u8_x2]   (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesemc[_u8_x4]   (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesdimc[_u8_x2]  (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesdimc[_u8_x4]  (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+```
+
+#### PMULL, PMLAL
+
+Multi-vector 128-bit polynomial multiply long instructions
+
+``` c
+  // Only if __ARM_FEATURE_SVE2_AES2 != 0 or __ARM_FEATURE_SSVE_AES != 0
+
+  // Variants are also available for:
+  // _s64x2, _f64x2
+  svuint64x2_t svpmull[_u64x2](svuint64_t zn, svuint64_t zm);
+  svuint64x2_t svpmlal[_u64x2](svuint64_t zn, svuint64_t zm);
+  ```
 
 # SME language extensions and intrinsics
 
