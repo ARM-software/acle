@@ -12939,6 +12939,10 @@ Zero ZA vector groups
 
 ### SME2.2 instruction intrinsics
 
+The specification for SME2.2 are in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
 The intrinsics in this section are defined by the header file
 [`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p2` is defined.
 
@@ -13514,6 +13518,10 @@ While (resulting in predicate tuple)
 ```
 
 ### SVE2.2 and SME2.2 instruction intrinsics
+
+The specification for SVE2.2 and SME2.2 are in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
 
 The functions in this section are defined by either the header file
  [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
