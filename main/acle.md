@@ -465,7 +465,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
-* Added support for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes) support
+  for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
 
 ### References
 
@@ -2155,6 +2156,10 @@ ACLE intrinsics are available.
 `__ARM_FEATURE_SSVE_AES` is defined to 1 if there is hardware support for
 SVE2 AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
 and if the associated ACLE intrinsics are available.
+
+The specification for SVE2 AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
 
 #### SHA2 extension
 
@@ -9725,6 +9730,9 @@ Lookup table read with 4-bit indices.
 
 ### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
 
+The specification for SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
 
 #### AESE, AESD, AESEMC, AESDIMC
 
