@@ -13531,13 +13531,6 @@ when `__ARM_FEATURE_SVE2p2` or `__ARM_FEATURE_SME2p2` is defined, respectively.
 
 Copy active vector elements to/from lower-numbered elements.
 
-These intrinsics can be called from streaming code only if the
-`__ARM_FEATURE_SME2p2` feature macro is defined.
-
-They can be called from non-streaming code if the `__ARM_FEATURE_SVE2p2` feature
-macro is defined or both the `__ARM_FEATURE_SVE` and `__ARM_FEATURE_SME2p2`
-feature macros are defined.
-
 ``` c
   // Variants are available for:
   // _s8, _s16, _u16, _mf8, _bf16, _f16
@@ -13554,12 +13547,6 @@ feature macros are defined.
 
 Scalar index of first/last true predicate element (predicated).
 
-These intrinsics can be called from streaming mode if either of the feature
-macros `__ARM_FEATURE_SVE` or `__ARM_FEATURE_SME` are defined.
-
-They can be called from non-streaming code only if  the `__ARM_FEATURE_SVE`
-feature macro is defined.
-
 ``` c
   // Variants are available for:
   // _b16, _b32, _b64
@@ -13570,7 +13557,6 @@ feature macro is defined.
   int64_t svlastp_b8(svbool_t pg, svbool_t op);
 
   ```
-
 
 ### SME2 maximum and minimum absolute value
 
