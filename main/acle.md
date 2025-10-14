@@ -474,6 +474,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added restrictions of Function Multi Versioning's use with other extensions.
 * Upgrade Function Multi Versioning to Release support level.
 * Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
+* Re-document implementation defined aspect of the VMLA/VMLS intrinsics for floats.
 
 ### References
 
