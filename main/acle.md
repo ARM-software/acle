@@ -465,6 +465,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Re-document implementation defined aspect of the VMLA/VMLS intrinsics for floats.
 
 ### References
 
