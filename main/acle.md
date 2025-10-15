@@ -2149,7 +2149,7 @@ support for the SVE2 AES (FEAT_SVE_AES) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_AES`
 and `__ARM_FEATURE_SVE2` are both nonzero.
 
-In addition, `__ARM_FEATURE_SVE2_AES2` is defined to `1` if there is hardware
+In addition, `__ARM_FEATURE_SVE_AES2` is defined to `1` if there is hardware
 support for the SVE2 AES2 (FEAT_SVE_AES2) instructions and if the associated
 ACLE intrinsics are available.
 
@@ -2656,7 +2656,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
-| [`__ARM_FEATURE_SVE2_AES2`](#aes-extension)                                                                                                             | SVE2 support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SVE_AES2)  | 1           |
+| [`__ARM_FEATURE_SVE_AES2`](#aes-extension)                                                                                                              | SVE2 support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SVE_AES2)  | 1           |
 | [`__ARM_FEATURE_SSVE_AES`](#aes-extension)                                                                                                              | SVE2 support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SSVE_AES)  | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
@@ -9739,16 +9739,16 @@ extended in the future.
 Multi-vector Advanced Encryption Standard instructions
 
 ```c
-  // Only if __ARM_FEATURE_SVE2_AES2 != 0 or __ARM_FEATURE_SSVE_AES != 0
+  // Only if __ARM_FEATURE_SVE_AES2 != 0
 
-  svuint8x2_t    svaese[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-  svuint8x4_t    svaese[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-  svuint8x2_t    svaesd[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-  svuint8x4_t    svaesd[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-  svuint8x2_t    svaesemc[_u8_x2]   (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-  svuint8x4_t    svaesemc[_u8_x4]   (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-  svuint8x2_t    svaesdimc[_u8_x2]  (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-  svuint8x4_t    svaesdimc[_u8_x4]  (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaese_lane[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaese_lane[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesd_lane[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesd_lane[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesemc_lane[_u8_x2]   (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesemc_lane[_u8_x4]   (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesdimc_lane[_u8_x2]  (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesdimc_lane[_u8_x4]  (svuint8x4_t op1, svuint64_t op2, uint64_t index);
 ```
 
 #### PMULL, PMLAL
@@ -9756,7 +9756,7 @@ Multi-vector Advanced Encryption Standard instructions
 Multi-vector 128-bit polynomial multiply long instructions
 
 ``` c
-  // Only if __ARM_FEATURE_SVE2_AES2 != 0 or __ARM_FEATURE_SSVE_AES != 0
+  // Only if __ARM_FEATURE_SVE_AES2 != 0
 
   // Variants are also available for:
   // _s64x2, _f64x2
