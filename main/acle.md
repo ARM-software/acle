@@ -465,6 +465,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Added [**Alpha**](#current-status-and-anticipated-changes) support
+  for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
 
 ### References
 
@@ -2147,6 +2149,18 @@ support for the SVE2 AES (FEAT_SVE_AES) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_AES`
 and `__ARM_FEATURE_SVE2` are both nonzero.
 
+In addition, `__ARM_FEATURE_SVE_AES2` is defined to `1` if there is hardware
+support for the SVE AES2 (FEAT_SVE_AES2) instructions and if the associated
+ACLE intrinsics are available.
+
+`__ARM_FEATURE_SSVE_AES` is defined to 1 if there is hardware support for
+SVE AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
+and if the associated ACLE intrinsics are available.
+
+The specification for SVE AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
 #### SHA2 extension
 
 `__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2-256 Crypto
@@ -2642,6 +2656,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
+| [`__ARM_FEATURE_SVE_AES2`](#aes-extension)                                                                                                              | SVE support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SVE_AES2)   | 1           |
+| [`__ARM_FEATURE_SSVE_AES`](#aes-extension)                                                                                                              | SVE support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SSVE_AES)   | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_FEXPA`](#streaming-sve-fexpa-extension)                                                                                            | Streaming SVE FEXPA extension                                                 | 1           |
@@ -9711,6 +9727,42 @@ Lookup table read with 4-bit indices.
   svint16_t svluti4_lane[_s16](svint16_t table, svuint8_t indices, uint64_t imm_idx);
   svint16_t svluti4_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
 ```
+
+### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
+
+The specification for SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+#### AESE, AESD, AESEMC, AESDIMC
+
+Multi-vector Advanced Encryption Standard instructions
+
+```c
+  // Only if __ARM_FEATURE_SVE_AES2 != 0
+
+  svuint8x2_t    svaese_lane[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaese_lane[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesd_lane[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesd_lane[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesemc_lane[_u8_x2]   (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesemc_lane[_u8_x4]   (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaesdimc_lane[_u8_x2]  (svuint8x2_t op1, svuint64_t op2, uint64_t index);
+  svuint8x4_t    svaesdimc_lane[_u8_x4]  (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+```
+
+#### PMULL, PMLAL
+
+Multi-vector 128-bit polynomial multiply long instructions
+
+``` c
+  // Only if __ARM_FEATURE_SVE_AES2 != 0
+
+  // Variants are also available for:
+  // _s64x2, _f64x2
+  svuint64x2_t svpmull[_u64x2](svuint64_t zn, svuint64_t zm);
+  svuint64x2_t svpmlal[_u64x2](svuint64x2_t zda, svuint64_t zn, svuint64_t zm);
+  ```
 
 # SME language extensions and intrinsics
 
