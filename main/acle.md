@@ -9391,6 +9391,26 @@ BFloat16 floating-point multiply vectors.
                                   uint64_t imm_idx);
    ```
 
+### SVE2 BFloat16 floating-point adjust exponent vectors instructions.
+
+The specification for SVE2 BFloat16 floating-point adjust exponent vectors instructions is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+#### BFSCALE
+
+BFloat16 floating-point adjust exponent vectors.
+
+``` c
+  // Only if __ARM_FEATURE_SVE_BFSCALE != 0
+  svbfloat16_t svscale[_bf16]_m (svbool_t pg, svbfloat16_t zdn, svbfloat16_t zm);
+  svbfloat16_t svscale[_bf16]_x (svbool_t pg, svbfloat16_t zdn, svbfloat16_t zm);
+  svbfloat16_t svscale[_bf16]_z (svbool_t pg, svbfloat16_t zdn, svbfloat16_t zm);
+  svbfloat16_t svscale[_n_bf16]_m (svbool_t pg, svbfloat16_t zdn, bfloat16_t zm);
+  svbfloat16_t svscale[_n_bf16]_x (svbool_t pg, svbfloat16_t zdn, bfloat16_t zm);
+  svbfloat16_t svscale[_n_bf16]_z (svbool_t pg, svbfloat16_t zdn, bfloat16_t zm);
+  ```
+
 ### SVE2.1 instruction intrinsics
 
 The specification for SVE2.1 is in
