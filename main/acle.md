@@ -2150,14 +2150,14 @@ ACLE intrinsics are available. This implies that `__ARM_FEATURE_AES`
 and `__ARM_FEATURE_SVE2` are both nonzero.
 
 In addition, `__ARM_FEATURE_SVE_AES2` is defined to `1` if there is hardware
-support for the SVE2 AES2 (FEAT_SVE_AES2) instructions and if the associated
+support for the SVE AES2 (FEAT_SVE_AES2) instructions and if the associated
 ACLE intrinsics are available.
 
 `__ARM_FEATURE_SSVE_AES` is defined to 1 if there is hardware support for
-SVE2 AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
+SVE AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
 and if the associated ACLE intrinsics are available.
 
-The specification for SVE2 AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
+The specification for SVE AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
 [**Alpha** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
@@ -2656,8 +2656,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
-| [`__ARM_FEATURE_SVE_AES2`](#aes-extension)                                                                                                              | SVE2 support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SVE_AES2)  | 1           |
-| [`__ARM_FEATURE_SSVE_AES`](#aes-extension)                                                                                                              | SVE2 support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SSVE_AES)  | 1           |
+| [`__ARM_FEATURE_SVE_AES2`](#aes-extension)                                                                                                              | SVE support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SVE_AES2)   | 1           |
+| [`__ARM_FEATURE_SSVE_AES`](#aes-extension)                                                                                                              | SVE support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SSVE_AES)   | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_FEXPA`](#streaming-sve-fexpa-extension)                                                                                            | Streaming SVE FEXPA extension                                                 | 1           |
