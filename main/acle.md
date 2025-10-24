@@ -12954,18 +12954,22 @@ Multi-vector floating-point multiply
   // Variants are also available for:
   // [_single_f32_x2]
   // [_single_f64_x2]
-  // [_single_f16_x4]
+  svfloat16x2_t svmul[_single_f16_x2](svfloat16x2_t zd, svfloat16_t zm) __arm_streaming;
+
+  // Variants are also available for:
   // [_single_f32_x4]
   // [_single_f64_x4]
-  svfloat16x2_t svmul[_single_f16_x2](svfloat16x2_t zd, svfloat16_t zm) __arm_streaming;
+  svfloat16x4_t svmul[_single_f16_x4](svfloat16x4_t zd, svfloat16_t zm) __arm_streaming;
 
   // Variants are also available for:
   // [_f32_x2]
   // [_f64_x2]
-  // [_f16_x4]
+  svfloat16x2_t svmul[_f16_x2](svfloat16x2_t zd, svfloat16x2_t zm) __arm_streaming;
+
+  // Variants are also available for:
   // [_f32_x4]
   // [_f64_x4]
-  svfloat16x2_t svmul[_f16_x2](svfloat16x2_t zd, svfloat16x2_t zm) __arm_streaming;
+  svfloat16x4_t svmul[_f16_x4](svfloat16x4_t zd, svfloat16x4_t zm) __arm_streaming;
 ```
 
 ### Streaming-compatible versions of standard routines
@@ -13550,11 +13554,11 @@ Scalar index of first/last true predicate element (predicated).
 ``` c
   // Variants are available for:
   // _b16, _b32, _b64
-  int64_t svfirstp_b8(svbool_t pg, svbool_t op);
+  int64_t svfirstp_b8(svbool_t pg, svbool_t pn);
 
   // Variants are available for:
   // _b16, _b32, _b64
-  int64_t svlastp_b8(svbool_t pg, svbool_t op);
+  int64_t svlastp_b8(svbool_t pg, svbool_t pn);
 
   ```
 
