@@ -9741,14 +9741,14 @@ Multi-vector Advanced Encryption Standard instructions
 ```c
   // Only if __ARM_FEATURE_SVE_AES2 != 0
 
-  svuint8x2_t    svaese_lane[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-  svuint8x4_t    svaese_lane[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-  svuint8x2_t    svaesd_lane[_u8_x2]     (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-  svuint8x4_t    svaesd_lane[_u8_x4]     (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-  svuint8x2_t    svaesemc_lane[_u8_x2]   (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-  svuint8x4_t    svaesemc_lane[_u8_x4]   (svuint8x4_t op1, svuint64_t op2, uint64_t index);
-  svuint8x2_t    svaesdimc_lane[_u8_x2]  (svuint8x2_t op1, svuint64_t op2, uint64_t index);
-  svuint8x4_t    svaesdimc_lane[_u8_x4]  (svuint8x4_t op1, svuint64_t op2, uint64_t index);
+  svuint8x2_t    svaese_lane[_u8_x2]     (svuint8x2_t zdn, svuint64_t zm, uint64_t index);
+  svuint8x4_t    svaese_lane[_u8_x4]     (svuint8x4_t zdn, svuint64_t zm, uint64_t index);
+  svuint8x2_t    svaesd_lane[_u8_x2]     (svuint8x2_t zdn, svuint64_t zm, uint64_t index);
+  svuint8x4_t    svaesd_lane[_u8_x4]     (svuint8x4_t zdn, svuint64_t zm, uint64_t index);
+  svuint8x2_t    svaesemc_lane[_u8_x2]   (svuint8x2_t zdn, svuint64_t zm, uint64_t index);
+  svuint8x4_t    svaesemc_lane[_u8_x4]   (svuint8x4_t zdn, svuint64_t zm, uint64_t index);
+  svuint8x2_t    svaesdimc_lane[_u8_x2]  (svuint8x2_t zdn, svuint64_t zm, uint64_t index);
+  svuint8x4_t    svaesdimc_lane[_u8_x4]  (svuint8x4_t zdn, svuint64_t zm, uint64_t index);
 ```
 
 #### PMULL, PMLAL
