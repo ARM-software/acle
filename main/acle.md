@@ -9760,8 +9760,11 @@ Multi-vector 128-bit polynomial multiply long instructions
 
   // Variants are also available for:
   // _s64x2, _f64x2
-  svuint64x2_t svpmull[_u64x2](svuint64_t zn, svuint64_t zm);
+  svuint64x2_t svpmull_u64x2(svuint64_t zn, svuint64_t zm);
+  svuint64x2_t svpmull[_n]_u64x2(svuint64_t zn, uint64_t zm);
+
   svuint64x2_t svpmlal[_u64x2](svuint64x2_t zda, svuint64_t zn, svuint64_t zm);
+  svuint64x2_t svpmlal[_n_u64x2](svuint64x2_t zda, svuint64_t zn, uint64_t zm);
   ```
 
 # SME language extensions and intrinsics
