@@ -13564,8 +13564,6 @@ svfloat32_t frint64z[_f32]_z(svbool_t pg, svfloat32_t zn);
 svfloat32_t frint64z[_f32]_x(svbool_t pg, svfloat32_t zn);
 //Variant is available for _f64
 svfloat32_t frint64z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
-
-
 ```
 
 #### COMPACT, EXPAND
