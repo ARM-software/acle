@@ -13531,6 +13531,43 @@ The functions in this section are defined by either the header file
  [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
 when `__ARM_FEATURE_SVE2p2` or `__ARM_FEATURE_SME2p2` is defined, respectively.
 
+#### FRINT32X, FRINT32Z, FRINT64X, FRINT64Z 
+
+Round to integral floating-point values.
+
+```c
+
+//Variant is available for _f64
+svfloat32_t frint32x[_f32]_z(svbool_t pg, svfloat32_t zn);
+//Variant is available for _f64
+svfloat32_t frint32x[_f32]_x(svbool_t pg, svfloat32_t zn);
+//Variant is available for _f64
+svfloat32_t frint32x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+//Variant is available for _f64
+svfloat32_t frint32z[_f32]_z(svbool_t pg, svfloat32_t zn);
+//Variant is available for _f64
+svfloat32_t frint32z[_f32]_x(svbool_t pg, svfloat32_t zn);
+//Variant is available for _f64
+svfloat32_t frint32z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+//Variant is available for _f64
+svfloat32_t frint64x[_f32]_z(svbool_t pg, svfloat32_t zn);
+//Variant is available for _f64
+svfloat32_t frint64x[_f32]_x(svbool_t pg, svfloat32_t zn);
+//Variant is available for _f64
+svfloat32_t frint64x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+//Variant is available for _f64
+svfloat32_t frint64z[_f32]_z(svbool_t pg, svfloat32_t zn);
+//Variant is available for _f64
+svfloat32_t frint64z[_f32]_x(svbool_t pg, svfloat32_t zn);
+//Variant is available for _f64
+svfloat32_t frint64z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+
+```
+
 #### COMPACT, EXPAND
 
 Copy active vector elements to/from lower-numbered elements.
