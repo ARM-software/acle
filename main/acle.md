@@ -471,6 +471,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added support for range prefetch intrinsic when `__ARM_FEATURE_RPRFM` is defined.
 
 ### References
 
@@ -3612,6 +3613,51 @@ values.
 | -------------------- | --------- | -------------------------------------------------------------------------- |
 | KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
 | STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
+
+The following intrinsic is also available when `__ARM_FEATURE_RPRFM` is defined:
+
+``` c
+  void __rpld(/*constant*/ unsigned int /*access_kind*/,
+              /*constant*/ unsigned int /*retention_policy*/,
+              /*constant*/ unsigned int /*reuse distance*/,
+              /*constant*/ signed int   /*stride*/,
+              /*constant*/ unsigned int /*count*/,
+              /*constant*/ signed int   /*length*/,
+              void const volatile *addr);
+```
+
+Generates a data prefetch instruction from a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. This intrinsic allows the specification of the
+expected access kind (read or write), the data retention policy (temporal or
+streaming) and the reuse distance, stride, count and length metadata values.
+
+The access kind and data retention policy arguments can only be one of the
+following values.
+
+| **Access Kind** | **Value** | **Summary**                              |
+| --------------- | --------- | ---------------------------------------- |
+| PLD             | 0         | Fetch the addressed location for reading |
+| PST             | 1         | Fetch the addressed location for writing |
+
+| **Retention Policy** | **Value** | **Summary**                                                                |
+| -------------------- | --------- | -------------------------------------------------------------------------- |
+| KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
+| STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
+
+The table below describes the ranges of the reuse distance, stride, count and length arguments.
+
+| **Metadata**   | **Range**         | **Summary**                                                          |
+| -------------- | ----------------- | -------------------------------------------------------------------- |
+| Reuse Distance | 0 to 15           | Maximum number of bytes to be accessed before executing the          |
+|                |                   | next RPRFM instruction that specifies the same range. Values         |
+|                |                   | from 1 to 15 represent decreasing powers of two in the range         |
+|                |                   | 512MiB to 32KiB. A value of 0 indicates distance not known.          |
+|                |                   | Note: This value is ignored if a streaming prefetch is specified.    |
+| Stride         | -2MiB to +2MiB-1B | Number of bytes to advance the block address by after `Length`       |
+|                |                   | bytes have been accessed. Note: This value is ignored if Count is 0. |
+| Count          | 0 to 65535        | Number of blocks to be accessed, minus 1.                            |
+| Length         | -2MiB to +2MiB-1B | Number of contiguous bytes to be accessed.                           |
 
 ### Instruction prefetch
 
