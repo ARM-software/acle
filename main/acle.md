@@ -13531,38 +13531,54 @@ The functions in this section are defined by either the header file
  [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
 when `__ARM_FEATURE_SVE2p2` or `__ARM_FEATURE_SME2p2` is defined, respectively.
 
+#### FCVTXNT, FCVTLT, FCVTNT, BFCVTNT
+
+Zeroing forms of convert instructions.
+
+```c
+
+// Variant is available for _f64_f32
+svfloat32_t	svcvtlt_f32[_f16]_z	(svbool_t pg, svfloat16_t op);
+
+// Variants are available for:
+// _f32_f64, _bf16_f32
+svfloat16_t	svcvtnt_f16[_f32]_z	(svfloat16_t even, svbool_t pg, svfloat32_t op)
+
+svfloat32_t	svcvtxnt_f32[_f64]_z	(svfloat32_t even, svbool_t pg, svfloat64_t op);
+```
+
 #### FRINT32X, FRINT32Z, FRINT64X, FRINT64Z 
 
 Round to integral floating-point values.
 
 ```c
 
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint32x[_f32]_z(svbool_t pg, svfloat32_t zn);
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint32x[_f32]_x(svbool_t pg, svfloat32_t zn);
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint32x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
 
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint32z[_f32]_z(svbool_t pg, svfloat32_t zn);
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint32z[_f32]_x(svbool_t pg, svfloat32_t zn);
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint32z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
 
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint64x[_f32]_z(svbool_t pg, svfloat32_t zn);
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint64x[_f32]_x(svbool_t pg, svfloat32_t zn);
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint64x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
 
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint64z[_f32]_z(svbool_t pg, svfloat32_t zn);
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint64z[_f32]_x(svbool_t pg, svfloat32_t zn);
-//Variant is available for _f64
+// Variant is available for _f64
 svfloat32_t frint64z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
 ```
 
