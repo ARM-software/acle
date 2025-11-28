@@ -13542,9 +13542,9 @@ svfloat32_t	svcvtlt_f32[_f16]_z	(svbool_t pg, svfloat16_t op);
 
 // Variants are available for:
 // _f32_f64, _bf16_f32
-svfloat16_t	svcvtnt_f16[_f32]_z	(svfloat16_t even, svbool_t pg, svfloat32_t op)
+svfloat16_t	svcvtnt_f16[_f32]_z	(svfloat16_t even, svbool_t pg, svfloat32_t op);
 
-svfloat32_t	svcvtxnt_f32[_f64]_z	(svfloat32_t even, svbool_t pg, svfloat64_t op);
+svfloat32_t	svcvtxnt_f32[_f64]_z (svfloat32_t even, svbool_t pg, svfloat64_t op);
 ```
 
 #### FRINT32X, FRINT32Z, FRINT64X, FRINT64Z 
@@ -13554,32 +13554,32 @@ Round to integral floating-point values.
 ```c
 
 // Variant is available for _f64
-svfloat32_t frint32x[_f32]_z(svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint32x[_f32]_z(svbool_t pg, svfloat32_t zn);
 // Variant is available for _f64
-svfloat32_t frint32x[_f32]_x(svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint32x[_f32]_x(svbool_t pg, svfloat32_t zn);
 // Variant is available for _f64
-svfloat32_t frint32x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint32x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
 
 // Variant is available for _f64
-svfloat32_t frint32z[_f32]_z(svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint32z[_f32]_z(svbool_t pg, svfloat32_t zn);
 // Variant is available for _f64
-svfloat32_t frint32z[_f32]_x(svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint32z[_f32]_x(svbool_t pg, svfloat32_t zn);
 // Variant is available for _f64
-svfloat32_t frint32z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint32z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
 
 // Variant is available for _f64
-svfloat32_t frint64x[_f32]_z(svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint64x[_f32]_z(svbool_t pg, svfloat32_t zn);
 // Variant is available for _f64
-svfloat32_t frint64x[_f32]_x(svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint64x[_f32]_x(svbool_t pg, svfloat32_t zn);
 // Variant is available for _f64
-svfloat32_t frint64x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint64x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
 
 // Variant is available for _f64
-svfloat32_t frint64z[_f32]_z(svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint64z[_f32]_z(svbool_t pg, svfloat32_t zn);
 // Variant is available for _f64
-svfloat32_t frint64z[_f32]_x(svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint64z[_f32]_x(svbool_t pg, svfloat32_t zn);
 // Variant is available for _f64
-svfloat32_t frint64z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+svfloat32_t svrint64z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
 ```
 
 #### COMPACT, EXPAND
