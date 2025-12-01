@@ -9736,7 +9736,7 @@ extended in the future.
 
 #### AESE, AESD, AESEMC, AESDIMC
 
-Multi-vector Advanced Encryption Standard instructions
+Multi-vector Advanced Encryption Standard instructions.
 
 ```c
   // Only if __ARM_FEATURE_SVE_AES2 != 0
@@ -9753,7 +9753,7 @@ Multi-vector Advanced Encryption Standard instructions
 
 #### PMULL, PMLAL
 
-Multi-vector 128-bit polynomial multiply long instructions
+Multi-vector 128-bit polynomial multiply long instructions.
 
 ``` c
   // Only if __ARM_FEATURE_SVE_AES2 != 0
