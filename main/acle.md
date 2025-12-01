@@ -9758,8 +9758,6 @@ Multi-vector 128-bit polynomial multiply long instructions
 ``` c
   // Only if __ARM_FEATURE_SVE_AES2 != 0
 
-  // Variants are also available for:
-  // _s64x2, _f64x2
   svuint64x2_t svpmull_pair[_u64_x2](svuint64_t zn, svuint64_t zm);
   svuint64x2_t svpmull_pair[_n_u64_x2](svuint64_t zn, uint64_t zm);
 
