@@ -3655,7 +3655,7 @@ The table below describes the ranges of the reuse distance, stride, count and le
 |                |                   | 512MiB to 32KiB. A value of 0 indicates distance not known.          |
 |                |                   | Note: This value is ignored if a streaming prefetch is specified.    |
 | Stride         | -2MiB to +2MiB-1B | Number of bytes to advance the block address by after `Length`       |
-|                |                   | bytes have been accessed. Note: This value is ignored if Count is 0. |
+|                |                   | bytes have been accessed. Note: This value is ignored if Count is 1. |
 | Count          | 1 to 65536        | Number of blocks to be accessed.                                     |
 | Length         | -2MiB to +2MiB-1B | Number of contiguous bytes to be accessed.                           |
 
