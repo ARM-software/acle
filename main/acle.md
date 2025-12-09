@@ -3617,16 +3617,16 @@ values.
 The following intrinsic is also available when `__ARM_FEATURE_RPRFM` is defined:
 
 ``` c
-  void __rpld(/*constant*/ unsigned int /*access_kind*/,
-              /*constant*/ unsigned int /*retention_policy*/,
-              /*constant*/ unsigned int /*reuse distance*/,
-              /*constant*/ signed int   /*stride*/,
-              /*constant*/ unsigned int /*count*/,
-              /*constant*/ signed int   /*length*/,
-              void const volatile *addr);
+  void __pld_range(/*constant*/ unsigned int /*access_kind*/,
+                   /*constant*/ unsigned int /*retention_policy*/,
+                   size_t       /*reuse distance*/,
+                   signed int   /*stride*/,
+                   unsigned int /*count*/,
+                   signed int   /*length*/,
+                   void const volatile *addr);
 ```
 
-Generates a data prefetch instruction from a range of addresses starting from a
+Generates a data prefetch instruction for a range of addresses starting from a
 given base address. Locations within the specified address ranges are prefetched
 into one or more caches. This intrinsic allows the specification of the
 expected access kind (read or write), the data retention policy (temporal or
@@ -3647,17 +3647,17 @@ following values.
 
 The table below describes the ranges of the reuse distance, stride, count and length arguments.
 
-| **Metadata**   | **Range**         | **Summary**                                                          |
-| -------------- | ----------------- | -------------------------------------------------------------------- |
-| Reuse Distance | 0 to 15           | Maximum number of bytes to be accessed before executing the          |
-|                |                   | next RPRFM instruction that specifies the same range. Values         |
-|                |                   | from 1 to 15 represent decreasing powers of two in the range         |
-|                |                   | 512MiB to 32KiB. A value of 0 indicates distance not known.          |
-|                |                   | Note: This value is ignored if a streaming prefetch is specified.    |
-| Stride         | -2MiB to +2MiB-1B | Number of bytes to advance the block address by after `Length`       |
-|                |                   | bytes have been accessed. Note: This value is ignored if Count is 1. |
-| Count          | 1 to 65536        | Number of blocks to be accessed.                                     |
-| Length         | -2MiB to +2MiB-1B | Number of contiguous bytes to be accessed.                           |
+| **Metadata**   | **Range**           | **Summary**                                                          |
+| -------------- | ------------------- | -------------------------------------------------------------------- |
+| Reuse Distance | 0 or [2**15, 2**29] | Maximum number of bytes to be accessed before executing the          |
+|                |                     | next RPRFM instruction that specifies the same range. Values         |
+|                |                     | are powers of two representing the number of bytes in the range      |
+|                |                     | 32KiB to 512MiB. A value of 0 indicates distance not known.          |
+|                |                     | Note: This value is ignored if a streaming prefetch is specified.    |
+| Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
+|                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
+| Count          | [1, 65536]          | Number of blocks to be accessed.                                     |
+| Length         | [-2MiB, +2MiB)      | Number of contiguous bytes to be accessed.                           |
 
 ### Instruction prefetch
 
