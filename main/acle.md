@@ -3617,13 +3617,13 @@ values.
 The following intrinsic is also available when `__ARM_FEATURE_RPRFM` is defined:
 
 ``` c
-  void __pld_range(/*constant*/ unsigned int /*access_kind*/,
-                   /*constant*/ unsigned int /*retention_policy*/,
-                   size_t       /*reuse distance*/,
-                   signed int   /*stride*/,
-                   unsigned int /*count*/,
-                   signed int   /*length*/,
-                   void const volatile *addr);
+  void __pldx_range(/*constant*/ unsigned int /*access_kind*/,
+                    /*constant*/ unsigned int /*retention_policy*/,
+                    /*constant*/ size_t       /*reuse distance*/,
+                    /*constant*/ signed int   /*stride*/,
+                    /*constant*/ unsigned int /*count*/,
+                    /*constant*/ signed int   /*length*/,
+                    void const volatile *addr);
 ```
 
 Generates a data prefetch instruction for a range of addresses starting from a
@@ -3650,14 +3650,43 @@ The table below describes the ranges of the reuse distance, stride, count and le
 | **Metadata**   | **Range**           | **Summary**                                                          |
 | -------------- | ------------------- | -------------------------------------------------------------------- |
 | Reuse Distance | 0 or [2**15, 2**29] | Maximum number of bytes to be accessed before executing the          |
-|                |                     | next RPRFM instruction that specifies the same range. Values         |
-|                |                     | are powers of two representing the number of bytes in the range      |
-|                |                     | 32KiB to 512MiB. A value of 0 indicates distance not known.          |
+|                |                     | next RPRFM instruction that specifies the same range. This value     |
+|                |                     | represents a number of bytes in the range 32KiB to 512MiB. When the  |
+|                |                     | given number of bytes is not a power of 2, the next closest power of |
+|                |                     | 2 higher than the value specified will be chosen. Values exceeding   |
+|                |                     | the maximum will be represented by 0, indicating distance not known. |
 |                |                     | Note: This value is ignored if a streaming prefetch is specified.    |
 | Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
 |                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
 | Count          | [1, 65536]          | Number of blocks to be accessed.                                     |
 | Length         | [-2MiB, +2MiB)      | Number of contiguous bytes to be accessed.                           |
+
+``` c
+  void __pld_range(/*constant*/ unsigned int /*access_kind*/,
+                    /*constant*/ unsigned int /*retention_policy*/,
+                    unsigned long /*metadata*/,
+                    void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. The access kind and retention policy arguments can
+have the same values as in `__pldx_range`. The bits of the metadata argument
+are interpreted as follows:
+
+| **Metadata**   | **Bits** | **Range**       | **Summary**                                                  |
+| -------------- | -------- | --------------- | ------------------------------------------------------------ |
+| Length         | 0-21     | [-2MiB, +2MiB)  | Signed integer representing the number of contiguous         |
+|                |          |                 | bytes to be accessed.                                        |
+| Count          | 37-22    | [0, 65535]      | Unsigned integer representing number of blocks of data       |
+|                |          |                 | to be accessed, minus 1.                                     |
+| Stride         | 59-38    | [-2MiB, +2MiB)  | Signed integer representing the number of bytes to advance   |
+|                |          |                 | the block address by after `Length` bytes have been          |
+|                |          |                 | accessed. This value is ignored if Count is 0.               |
+| Reuse Distance | 63-60    | [0, 15]         | Indicates the maximum number of bytes to be accessed before  |
+|                |          |                 | executing the next RPRFM instruction that specifies the same |
+|                |          |                 | range. Bits encode decreasing powers of two in the range     |
+|                |          |                 | 1 (512MiB) to 15 (32KiB). 0 indicates distance not known.    |
 
 ### Instruction prefetch
 
