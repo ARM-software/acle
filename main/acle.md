@@ -3649,12 +3649,11 @@ The table below describes the ranges of the reuse distance, stride, count and le
 
 | **Metadata**   | **Range**           | **Summary**                                                          |
 | -------------- | ------------------- | -------------------------------------------------------------------- |
-| Reuse Distance | 0 or [2**15, 2**29] | Maximum number of bytes to be accessed before executing the          |
-|                |                     | next RPRFM instruction that specifies the same range. This value     |
-|                |                     | represents a number of bytes in the range 32KiB to 512MiB. When the  |
-|                |                     | given number of bytes is not a power of 2, the next closest power of |
-|                |                     | 2 higher than the value specified will be chosen. Values exceeding   |
-|                |                     | the maximum will be represented by 0, indicating distance not known. |
+| Reuse Distance |                     | Maximum number of bytes to be accessed before executing the next     |
+|                |                     | RPRFM instruction that specifies the same range. All values are      |
+|                |                     | rounded up to the nearest power of 2 in the range 32KiB to 512MiB.   |
+|                |                     | Values exceeding the maximum of 512MiB will be represented by 0,     |
+|                |                     | indicating distance not known.                                       |
 |                |                     | Note: This value is ignored if a streaming prefetch is specified.    |
 | Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
 |                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
@@ -3663,9 +3662,9 @@ The table below describes the ranges of the reuse distance, stride, count and le
 
 ``` c
   void __pld_range(/*constant*/ unsigned int /*access_kind*/,
-                    /*constant*/ unsigned int /*retention_policy*/,
-                    unsigned long /*metadata*/,
-                    void const volatile *addr);
+                   /*constant*/ unsigned int /*retention_policy*/,
+                   unsigned long /*metadata*/,
+                   void const volatile *addr);
 ```
 
 Generates a data prefetch instruction for a range of addresses starting from a
