@@ -3614,7 +3614,8 @@ values.
 | KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
 | STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
 
-The following intrinsic is also available when `__ARM_FEATURE_RPRFM` is defined:
+The `__ARM_PREFETCH_RANGE` macro can be used to test for the presence of the
+following range prefetch intrinsics:
 
 ``` c
   void __pldx_range(/*constant*/ unsigned int /*access_kind*/,
