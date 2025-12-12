@@ -471,6 +471,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Upgrade Function Multi Versioning to Release support level.
 
 ### References
 
@@ -2774,10 +2775,6 @@ or compiler-generated functions.
 This attribute does not apply to AArch64.
 
 ## Function Multi Versioning
-
-The specification for Function Multi Versioning is in [**Beta**
-state](#current-status-and-anticipated-changes) and might change or be
-extended in the future.
 
 Function Multi Versioning provides a convenient way to select the most
 appropriate version of a function at runtime. All versions of the
