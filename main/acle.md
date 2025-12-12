@@ -3620,10 +3620,10 @@ following range prefetch intrinsics:
 ``` c
   void __pldx_range(/*constant*/ unsigned int /*access_kind*/,
                     /*constant*/ unsigned int /*retention_policy*/,
-                    /*constant*/ size_t       /*reuse distance*/,
-                    /*constant*/ signed int   /*stride*/,
-                    /*constant*/ unsigned int /*count*/,
                     /*constant*/ signed int   /*length*/,
+                    /*constant*/ unsigned int /*count*/,
+                    /*constant*/ signed int   /*stride*/,
+                    /*constant*/ size_t       /*reuse distance*/,
                     void const volatile *addr);
 ```
 
@@ -3631,7 +3631,7 @@ Generates a data prefetch instruction for a range of addresses starting from a
 given base address. Locations within the specified address ranges are prefetched
 into one or more caches. This intrinsic allows the specification of the
 expected access kind (read or write), the data retention policy (temporal or
-streaming) and the reuse distance, stride, count and length metadata values.
+streaming) and the length, count, stride and reuse distance metadata values.
 
 The access kind and data retention policy arguments can only be one of the
 following values.
@@ -3646,20 +3646,20 @@ following values.
 | KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
 | STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
 
-The table below describes the ranges of the reuse distance, stride, count and length arguments.
+The table below describes the ranges of the length, count, stride and reuse distance arguments.
 
 | **Metadata**   | **Range**           | **Summary**                                                          |
 | -------------- | ------------------- | -------------------------------------------------------------------- |
+| Length         | [-2MiB, +2MiB)      | Number of contiguous bytes to be accessed.                           |
+| Count          | [1, 65536]          | Number of blocks to be accessed.                                     |
+| Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
+|                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
 | Reuse Distance |                     | Maximum number of bytes to be accessed before executing the next     |
 |                |                     | RPRFM instruction that specifies the same range. All values are      |
 |                |                     | rounded up to the nearest power of 2 in the range 32KiB to 512MiB.   |
 |                |                     | Values exceeding the maximum of 512MiB will be represented by 0,     |
 |                |                     | indicating distance not known.                                       |
 |                |                     | Note: This value is ignored if a streaming prefetch is specified.    |
-| Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
-|                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
-| Count          | [1, 65536]          | Number of blocks to be accessed.                                     |
-| Length         | [-2MiB, +2MiB)      | Number of contiguous bytes to be accessed.                           |
 
 ``` c
   void __pld_range(/*constant*/ unsigned int /*access_kind*/,
