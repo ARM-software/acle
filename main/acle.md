@@ -2771,7 +2771,7 @@ The following attributes trigger the multi version code generation:
 * These attributes have no effect on the calling convention.
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
-* Function Multi Versioning might be disabled in compile time by a compiler
+* Function Multi Versioning might be disabled at compile time by a compiler
   flag. In this case, the `default` version shall be used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
