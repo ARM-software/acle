@@ -471,6 +471,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added restrictions of Function Multi Versioning's use with other extensions.
 * Upgrade Function Multi Versioning to Release support level.
 
 ### References
@@ -2797,8 +2798,8 @@ The following attributes trigger the multi version code generation:
 * These attributes have no effect on the calling convention.
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
-* FMV might be disabled in compile time by a compiler flag. In this
-  case, the `default` version shall be used.
+* Function Multi Versioning might be disabled at compile time by a compiler
+  flag. In this case, the `default` version shall be used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
   the multiversioned functions. Therefore, a versioned function
@@ -2814,6 +2815,8 @@ The following attributes trigger the multi version code generation:
   * as a function annotated with `target_version("default")`,
   * or, as a function annotated with `target_clones(...)` where one
     of the versions is `default`.
+* Using any C/C++ extensions or attributes that affect function name mangling,
+  or that clone functions alongside Function Multi Versioning is not supported.
 
 The attribute `__attribute__((target_version("<target version string>")))` expresses the
 following:
