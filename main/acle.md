@@ -4,7 +4,7 @@ version: 2025Q3
 date-of-issue: 14 November 2025
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: false
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -471,6 +471,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added restrictions of Function Multi Versioning's use with other extensions.
 
 ### References
 
@@ -2817,6 +2818,8 @@ The following attributes trigger the multi version code generation:
   * as a function annotated with `target_version("default")`,
   * or, as a function annotated with `target_clones(...)` where one
     of the versions is `default`.
+* Using any C/C++ extensions or attributes that affect function name mangling,
+  or that clone functions alongside Function Multi Versioning is not supported.
 
 The attribute `__attribute__((target_version("<target version string>")))` expresses the
 following:
