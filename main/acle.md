@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2025Q2
-date-of-issue: 06 June 2025
+version: 2025Q3
+date-of-issue: 14 November 2025
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
@@ -181,6 +181,7 @@ unless a different support level is specified in the text.
 | 2024Q3       | 30 September 2024 | Arm    | See [Changes between ACLE Q2 2024 and ACLE Q3 2024](#changes-between-acle-q2-2024-and-acle-q3-2024)                  |
 | 2024Q4       | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
 | 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
+| 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -446,7 +447,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
-* Add Function Multi Versioning feature priority syntax.
 
 #### Changes between ACLE Q4 2024 and ACLE Q2 2025
 
@@ -461,12 +461,18 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Upgrade to [**Beta**](#current-status-and-anticipated-changes)
   support for modal 8-bit floating point intrinsics.
 
-#### Changes for next release
+#### Changes between ACLE Q2 2025 and ACLE Q3 2025
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Added Function Multi Versioning feature priority syntax.
+
+#### Changes for next release
+
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added restrictions of Function Multi Versioning's use with other extensions.
+* Upgrade Function Multi Versioning to Release support level.
 * Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
 
 ### References
@@ -2772,10 +2778,6 @@ This attribute does not apply to AArch64.
 
 ## Function Multi Versioning
 
-The specification for Function Multi Versioning is in [**Beta**
-state](#current-status-and-anticipated-changes) and might change or be
-extended in the future.
-
 Function Multi Versioning provides a convenient way to select the most
 appropriate version of a function at runtime. All versions of the
 function may be in the final binary. The compiler generates all
@@ -2797,8 +2799,8 @@ The following attributes trigger the multi version code generation:
 * These attributes have no effect on the calling convention.
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
-* FMV might be disabled in compile time by a compiler flag. In this
-  case, the `default` version shall be used.
+* Function Multi Versioning might be disabled at compile time by a compiler
+  flag. In this case, the `default` version shall be used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
   the multiversioned functions. Therefore, a versioned function
@@ -2814,6 +2816,8 @@ The following attributes trigger the multi version code generation:
   * as a function annotated with `target_version("default")`,
   * or, as a function annotated with `target_clones(...)` where one
     of the versions is `default`.
+* Using any C/C++ extensions or attributes that affect function name mangling,
+  or that clone functions alongside Function Multi Versioning is not supported.
 
 The attribute `__attribute__((target_version("<target version string>")))` expresses the
 following:
