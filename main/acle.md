@@ -473,6 +473,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added restrictions of Function Multi Versioning's use with other extensions.
 * Upgrade Function Multi Versioning to Release support level.
+* Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
 
 ### References
 
@@ -13845,7 +13846,7 @@ Multi-vector 8-bit floating-point multiply-add long.
                                        svmfloat8_t zm, uint64_t imm_idx
                                        fpm_t fpm) __arm_streaming __arm_inout("za");
 
-  void svmla[_single]_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
+  void svmla_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
                                            svmfloat8_t zm, fpm_t fpm)
                                            __arm_streaming __arm_inout("za");
 
@@ -13881,7 +13882,7 @@ Multi-vector 8-bit floating-point multiply-add long.
                                        svmfloat8_t zm, uint64_t imm_idx,
                                        fpm_t fpm)__arm_streaming __arm_inout("za");
 
-  void svmla[_single]_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
+  void svmla_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
                                            svmfloat8_t zm, fpm_t fpm)
                                            __arm_streaming __arm_inout("za");
 
