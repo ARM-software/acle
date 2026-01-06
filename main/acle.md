@@ -4,7 +4,7 @@ version: 2025Q3
 date-of-issue: 14 November 2025
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: false
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -3664,7 +3664,7 @@ The table below describes the ranges of the length, count, stride and reuse dist
 ``` c
   void __pld_range(/*constant*/ unsigned int /*access_kind*/,
                    /*constant*/ unsigned int /*retention_policy*/,
-                   unsigned long /*metadata*/,
+                   uint64_t /*metadata*/,
                    void const volatile *addr);
 ```
 
