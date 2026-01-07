@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2025Q2
-date-of-issue: 06 June 2025
+version: 2025Q3
+date-of-issue: 14 November 2025
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
@@ -181,6 +181,7 @@ unless a different support level is specified in the text.
 | 2024Q3       | 30 September 2024 | Arm    | See [Changes between ACLE Q2 2024 and ACLE Q3 2024](#changes-between-acle-q2-2024-and-acle-q3-2024)                  |
 | 2024Q4       | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
 | 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
+| 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -446,7 +447,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
-* Add Function Multi Versioning feature priority syntax.
 
 #### Changes between ACLE Q4 2024 and ACLE Q2 2025
 
@@ -461,10 +461,20 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Upgrade to [**Beta**](#current-status-and-anticipated-changes)
   support for modal 8-bit floating point intrinsics.
 
-#### Changes for next release
+#### Changes between ACLE Q2 2025 and ACLE Q3 2025
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Added Function Multi Versioning feature priority syntax.
+
+#### Changes for next release
+
+* Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added restrictions of Function Multi Versioning's use with other extensions.
+* Upgrade Function Multi Versioning to Release support level.
+* Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
+* Improve documentation for VMLA/VMLS intrinsics for floats.
 * Added support for FEAT_FPRCVT intrinsics and `__ARM_FEATURE_FPRCVT`.
 
 ### References
@@ -2354,6 +2364,26 @@ is hardware support for the SVE forms of these instructions and if the
 associated ACLE intrinsics are available. This implies that
 `__ARM_FEATURE_MATMUL_INT8` and `__ARM_FEATURE_SVE` are both nonzero.
 
+##### Multiplication of modal 8-bit floating-point matrices
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
+for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to half-precision (FEAT_F8F16MM)
+instructions and if the associated ACLE intrinsics are available.
+
+`__ARM_FEATURE_F8F32MM` is defined to `1` if there is hardware support
+for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to single-precision (FEAT_F8F32MM)
+instructions and if the associated ACLE intrinsics are available.
+
+##### Multiplication of 16-bit floating-point matrices
+
+`__ARM_FEATURE_SVE_F16F32MM` is defined to `1` if there is hardware support
+for the SVE 16-bit floating-point to 32-bit floating-point matrix multiply and add
+(FEAT_SVE_F16F32MM) instructions and if the associated ACLE intrinsics are available.
+
 ##### Multiplication of 32-bit floating-point matrices
 
 `__ARM_FEATURE_SVE_MATMUL_FP32` is defined to `1` if there is hardware support
@@ -2646,6 +2676,9 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_BITS`](#scalable-vector-extension-sve)                                                                                              | The number of bits in an SVE vector, when known in advance                                         | 256         |
 | [`__ARM_FEATURE_SVE_MATMUL_FP32`](#multiplication-of-32-bit-floating-point-matrices)                                                                    | 32-bit floating-point matrix multiply extension (FEAT_F32MM)                                       | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_FP64`](#multiplication-of-64-bit-floating-point-matrices)                                                                    | 64-bit floating-point matrix multiply extension (FEAT_F64MM)                                       | 1           |
+| [`__ARM_FEATURE_F8F16MM`](#multiplication-of-modal-8-bit-floating-point-matrices)                                                                       | Modal 8-bit floating-point matrix multiply-accumulate to half-precision extension (FEAT_F8F16MM)   | 1           |
+| [`__ARM_FEATURE_F8F32MM`](#multiplication-of-modal-8-bit-floating-point-matrices)                                                                       | Modal 8-bit floating-point matrix multiply-accumulate to single-precision extension (FEAT_F8F32MM) | 1           |
+| [`__ARM_FEATURE_SVE_F16F32MM`](#multiplication-of-16-bit-floating-point-matrices)                                                                       | 16-bit floating-point matrix multiply-accumulate to single-precision extension (FEAT_SVE_F16F32MM) | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_INT8`](#multiplication-of-8-bit-integer-matrices)                                                                            | SVE support for the integer matrix multiply extension (FEAT_I8MM)                                  | 1           |
 | [`__ARM_FEATURE_SVE_PREDICATE_OPERATORS`](#scalable-vector-extension-sve)                                                                               | Level of support for C and C++ operators on SVE vector types                                        | 1           |
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
@@ -2755,10 +2788,6 @@ This attribute does not apply to AArch64.
 
 ## Function Multi Versioning
 
-The specification for Function Multi Versioning is in [**Beta**
-state](#current-status-and-anticipated-changes) and might change or be
-extended in the future.
-
 Function Multi Versioning provides a convenient way to select the most
 appropriate version of a function at runtime. All versions of the
 function may be in the final binary. The compiler generates all
@@ -2780,8 +2809,8 @@ The following attributes trigger the multi version code generation:
 * These attributes have no effect on the calling convention.
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
-* FMV might be disabled in compile time by a compiler flag. In this
-  case, the `default` version shall be used.
+* Function Multi Versioning might be disabled at compile time by a compiler
+  flag. In this case, the `default` version shall be used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
   the multiversioned functions. Therefore, a versioned function
@@ -2797,6 +2826,8 @@ The following attributes trigger the multi version code generation:
   * as a function annotated with `target_version("default")`,
   * or, as a function annotated with `target_clones(...)` where one
     of the versions is `default`.
+* Using any C/C++ extensions or attributes that affect function name mangling,
+  or that clone functions alongside Function Multi Versioning is not supported.
 
 The attribute `__attribute__((target_version("<target version string>")))` expresses the
 following:
@@ -9383,6 +9414,31 @@ BFloat16 floating-point multiply vectors.
                                   uint64_t imm_idx);
    ```
 
+### SVE2 floating-point matrix multiply-accumulate instructions.
+
+#### FMMLA (widening, FP8 to FP16)
+
+Modal 8-bit floating-point matrix multiply-accumulate to half-precision.
+```c
+  // Only if (__ARM_FEATURE_SVE2 && __ARM_FEATURE_F8F16MM)
+  svfloat16_t svmmla[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+```
+
+#### FMMLA (widening, FP8 to FP32)
+
+Modal 8-bit floating-point matrix multiply-accumulate to single-precision.
+```c
+  // Only if (__ARM_FEATURE_SVE2 && __ARM_FEATURE_F8F32MM)
+  svfloat32_t svmmla[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+```
+#### FMMLA (widening, FP16 to FP32)
+
+16-bit floating-point matrix multiply-accumulate to single-precision.
+```c
+  // Only if __ARM_FEATURE_SVE_F16F32MM
+  svfloat32_t svmmla[_f32_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
+```
+
 ### SVE2.1 instruction intrinsics
 
 The specification for SVE2.1 is in
@@ -13800,7 +13856,7 @@ Multi-vector 8-bit floating-point multiply-add long.
                                        svmfloat8_t zm, uint64_t imm_idx
                                        fpm_t fpm) __arm_streaming __arm_inout("za");
 
-  void svmla[_single]_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
+  void svmla_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
                                            svmfloat8_t zm, fpm_t fpm)
                                            __arm_streaming __arm_inout("za");
 
@@ -13836,7 +13892,7 @@ Multi-vector 8-bit floating-point multiply-add long.
                                        svmfloat8_t zm, uint64_t imm_idx,
                                        fpm_t fpm)__arm_streaming __arm_inout("za");
 
-  void svmla[_single]_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
+  void svmla_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
                                            svmfloat8_t zm, fpm_t fpm)
                                            __arm_streaming __arm_inout("za");
 
