@@ -475,6 +475,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Upgrade Function Multi Versioning to Release support level.
 * Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
 * Improve documentation for VMLA/VMLS intrinsics for floats.
+* Added support for FEAT_FPRCVT intrinsics and `__ARM_FEATURE_FPRCVT`.
 
 ### References
 
@@ -2217,6 +2218,13 @@ ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 floating-point absolute minimum and maximum instructions (FEAT_FAMINMAX)
 and if the associated ACLE intrinsics are available.
 
+### FPRCVT extension
+
+`__ARM_FEATURE_FPRCVT` is defined to `1` if there is hardware
+support for floating-point to/from integer conversion instructions
+with only scalar SIMD&FP register operands and results, and with
+different input and output register sizes.
+
 ### Lookup table extensions
 
 `__ARM_FEATURE_LUT` is defined to 1 if there is hardware support for
@@ -2620,6 +2628,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_FP8DOT2`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8DOT4`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8FMA`](#modal-8-bit-floating-point-extensions)                                                                                        | Modal 8-bit floating-point extensions                                                              | 1           |
+| [`__ARM_FEATURE_FPRCVT`](#fprcvt-extension)                                                                                                             | FPRCVT extension                                                                                   | 1           |
 | [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_GCS`](#guarded-control-stack)                                                                                                           | Guarded Control Stack                                                                              | 1           |
 | [`__ARM_FEATURE_GCS_DEFAULT`](#guarded-control-stack)                                                                                                   | Guarded Control Stack protection can be enabled                                                    | 1           |
