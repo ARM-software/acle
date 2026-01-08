@@ -471,7 +471,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
-* Added support for range prefetch intrinsic when `__ARM_FEATURE_RPRFM` is defined.
+* Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
 
 ### References
 
