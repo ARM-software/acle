@@ -4717,5 +4717,5 @@ vmlalltbq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and wi
 vmlalltbq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
 vmlallttq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
 vmlallttq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
-vmmlaq_f16_mf8	Vector arithmetic|Matrix multiply
-vmmlaq_f32_mf8	Vector arithmetic|Matrix multiply
+vmmlaq_f16_mf8_fpm	Vector arithmetic|Matrix multiply
+vmmlaq_f32_mf8_fpm	Vector arithmetic|Matrix multiply

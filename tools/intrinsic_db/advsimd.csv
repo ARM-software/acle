@@ -4832,5 +4832,5 @@ float32x4_t vmlallttq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x
 float32x4_t vmlallttq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
 
 <SECTION>	Matrix multiplication intrinsics from Armv9.6-A
-float16x8_t vmmlaq_f16_mf8(float16x8_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.4H;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.4H, Vn.16B, Vm.16B	Vd.4H -> result	A64
-float32x4_t vmmlaq_f32_mf8(float32x4_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.4S;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.4S, Vn.16B, Vm.16B	Vd.4S -> result	A64
+float16x8_t vmmlaq_f16_mf8_fpm(float16x8_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.8H;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.8H, Vn.16B, Vm.16B	Vd.8H -> result	A64
+float32x4_t vmmlaq_f32_mf8_fpm(float32x4_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.4S;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.4S, Vn.16B, Vm.16B	Vd.4S -> result	A64
