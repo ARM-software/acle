@@ -484,6 +484,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
 * Added support for FEAT_FPRCVT intrinsics and `__ARM_FEATURE_FPRCVT`.
+* Removed all references to Transactional Memory Extension (TME).
 
 ### References
 
@@ -1785,13 +1786,6 @@ extension is available on the target. It is undefined otherwise.
 the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported on this target.
 Note: It is strongly recommended that standardized C11/C++11 atomics are used to
 implement atomic operations in user code.
-
-### Transactional Memory Extension
-
-`__ARM_FEATURE_TME` is defined to `1` if the Transactional Memory
-Extension instructions are supported in hardware and intrinsics defined
-in [Transactional Memory Extension (TME)
-intrinsics](#transactional-memory-extension-tme-intrinsics) are available.
 
 ### Armv8.7-A Load/Store 64 Byte extension
 
@@ -14810,119 +14804,6 @@ undefined behavior to the semantics of an intrinsic.
 The MVE load and store instructions provide for alignment assertions, which may
 speed up access to aligned data (and will fault access to unaligned data).  The
 MVE intrinsics do not directly provide a means for asserting alignment.
-
-# Transactional Memory Extension (TME) intrinsics
-
-## Introduction
-
-This section describes the intrinsics for the instructions of the
-Transactional Memory Extension (TME). TME adds support for transactional
-execution where transactions are started and
-committed by a set of new instructions. The TME instructions are present
-in the AArch64 execution state only.
-
-TME is designed to improve performance in cases where larger system scaling
-requires atomic and isolated access to data structures whose composition is
-dynamic in nature and therefore not readily amenable to fine-grained locking
-or lock-free approaches.
-
-TME transactions are *isolated*. This means that transactional stores are
-hidden from other observers, and transactional loads cannot see stores from
-other observers until the transaction commits. Also, if the transaction fails
-then stores to memory and writes to registers by the transaction are discarded
-and the processor returns to the state it had when the transaction started.
-
-TME transactions are *best-effort*. This means that the architecture does not
-guarantee success for any transaction. The architecture requires that all
-transactions specify a failure handler allowing the software to fallback to a
-non-transactional alternative to provide guarantees of forward progress.
-
-TME defines *flattened nesting* of transactions, where nested transactions are
-subsumed by the outer transaction. This means that the effects of a nested
-transaction do not become visible to other observers until the outer
-transaction commits. When a nested transaction fails it causes the
-outer transaction, and all nested transactions within, to fail.
-
-The TME intrinsics are available when `__ARM_FEATURE_TME` is defined.
-
-## Failure definitions
-
-Transactions can fail due to various causes. The following macros
-are defined to help use or detect these causes.
-
-``` c
-  #define _TMFAILURE_REASON 0x00007fffu
-  #define _TMFAILURE_RTRY   0x00008000u
-  #define _TMFAILURE_CNCL   0x00010000u
-  #define _TMFAILURE_MEM    0x00020000u
-  #define _TMFAILURE_IMP    0x00040000u
-  #define _TMFAILURE_ERR    0x00080000u
-  #define _TMFAILURE_SIZE   0x00100000u
-  #define _TMFAILURE_NEST   0x00200000u
-  #define _TMFAILURE_DBG    0x00400000u
-  #define _TMFAILURE_INT    0x00800000u
-  #define _TMFAILURE_TRIVIAL    0x01000000u
-```
-
-## Intrinsics
-
-``` c
-  uint64_t __tstart (void);
-```
-
-Starts a new transaction. When the transaction starts successfully the return
-value is 0. If the transaction fails, all state modifications are discarded
-and a cause of the failure is encoded in the return value. The macros
-defined in [Failure definitions](#failure-definitions) can be used
-to detect the cause of the failure.
-
-``` c
-  void __tcommit (void);
-```
-
-Commits the current transaction. For a nested transaction, the only effect
-is that the transactional nesting depth is decreased. For an outer transaction,
-the state modifications performed transactionally are committed to the
-architectural state.
-
-``` c
-  void __tcancel (/*constant*/ uint64_t);
-```
-
-Cancels the current transaction and discards all state modifications that
-were performed transactionally. The intrinsic takes a 16-bit immediate input that encodes
-the cancellation reason. This input could be given as
-
-``` c
-  __tcancel (_TMFAILURE_RTRY | (failure_reason & _TMFAILURE_REASON));
-```
-
-if retry is true or
-
-``` c
-  __tcancel (failure_reason & _TMFAILURE_REASON);
-```
-
-if retry is false.
-
-``` c
-  uint64_t __ttest (void);
-```
-
-Tests if executing inside a transaction. If no transaction is currently
-executing, the return value is 0. Otherwise, this intrinsic returns the depth of the
-transaction.
-
-## Instructions
-
-| **Intrinsics**                                | **Argument**     | **Result**     | **Instruction**   |
-| --------------------------------------------- | ---------------- | -------------- | ----------------- |
-| uint64_t __tstart (void)                      | -                | Xt -> result   | tstart <Xt>       |
-| void __tcommit (void)                         | -                | -              | tcommit           |
-| void __tcancel (/*constant*/ uint64_t reason) | reason -> #<imm> | -              | tcancel #<imm>    |
-| uint64_t __ttest (void)                       | -                | Xt -> result   | ttest <Xt>        |
-
-These intrinsics are available when `arm_acle.h` is included.
 
 # memcpy family of operations intrinsics - MOPS
 
