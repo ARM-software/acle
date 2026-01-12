@@ -1,4 +1,4 @@
-<COMMENT>	SPDX-FileCopyrightText: Copyright 2014-2024 Arm Limited <open-source-office@arm.com>
+<COMMENT>	SPDX-FileCopyrightText: Copyright 2014-2025 Arm Limited <open-source-office@arm.com>
 <COMMENT>	SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 <COMMENT>	SPDX-License-Identifier: Apache-2.0
 <COMMENT>	
@@ -1168,15 +1168,25 @@ int32x4_t vcvtaq_s32_f32(float32x4_t a)	a -> Vn.4S	FCVTAS Vd.4S,Vn.4S	Vd.4S -> r
 uint32x2_t vcvta_u32_f32(float32x2_t a)	a -> Vn.2S	FCVTAU Vd.2S,Vn.2S	Vd.2S -> result	A32/A64
 uint32x4_t vcvtaq_u32_f32(float32x4_t a)	a -> Vn.4S	FCVTAU Vd.4S,Vn.4S	Vd.4S -> result	A32/A64
 int32_t vcvts_s32_f32(float32_t a)	a -> Sn	FCVTZS Sd,Sn	Sd -> result	A64
+int64_t vcvts_s64_f32(float32_t a)	a -> Sn	FCVTZS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvts_u32_f32(float32_t a)	a -> Sn	FCVTZU Sd,Sn	Sd -> result	A64
+uint64_t vcvts_u64_f32(float32_t a)	a -> Sn	FCVTZU Dd/Xd,Sn	Dd/Xd -> result	A64
 int32_t vcvtns_s32_f32(float32_t a)	a -> Sn	FCVTNS Sd,Sn	Sd -> result	A64
+int64_t vcvtns_s64_f32(float32_t a)	a -> Sn	FCVTNS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvtns_u32_f32(float32_t a)	a -> Sn	FCVTNU Sd,Sn	Sd -> result	A64
+uint64_t vcvtns_u64_f32(float32_t a)	a -> Sn	FCVTNU Dd/Xd,Sn	Dd/Xd -> result	A64
 int32_t vcvtms_s32_f32(float32_t a)	a -> Sn	FCVTMS Sd,Sn	Sd -> result	A64
+int64_t vcvtms_s64_f32(float32_t a)	a -> Sn	FCVTMS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvtms_u32_f32(float32_t a)	a -> Sn	FCVTMU Sd,Sn	Sd -> result	A64
+uint64_t vcvtms_u64_f32(float32_t a)	a -> Sn	FCVTMU Dd/Xd,Sn	Dd/Xd -> result	A64
 int32_t vcvtps_s32_f32(float32_t a)	a -> Sn	FCVTPS Sd,Sn	Sd -> result	A64
+int64_t vcvtps_s64_f32(float32_t a)	a -> Sn	FCVTPS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvtps_u32_f32(float32_t a)	a -> Sn	FCVTPU Sd,Sn	Sd -> result	A64
+uint64_t vcvtps_u64_f32(float32_t a)	a -> Sn	FCVTPU Dd/Xd,Sn	Dd/Xd -> result	A64
 int32_t vcvtas_s32_f32(float32_t a)	a -> Sn	FCVTAS Sd,Sn	Sd -> result	A64
+int64_t vcvtas_s64_f32(float32_t a)	a -> Sn	FCVTAS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvtas_u32_f32(float32_t a)	a -> Sn	FCVTAU Sd,Sn	Sd -> result	A64
+uint64_t vcvtas_u64_f32(float32_t a)	a -> Sn	FCVTAU Dd/Xd,Sn	Dd/Xd -> result	A64
 int64x1_t vcvt_s64_f64(float64x1_t a)	a -> Dn	FCVTZS Dd,Dn	Dd -> result	A64
 int64x2_t vcvtq_s64_f64(float64x2_t a)	a -> Vn.2D	FCVTZS Vd.2D,Vn.2D	Vd.2D -> result	A64
 uint64x1_t vcvt_u64_f64(float64x1_t a)	a -> Dn	FCVTZU Dd,Dn	Dd -> result	A64
@@ -1197,15 +1207,25 @@ int64x1_t vcvta_s64_f64(float64x1_t a)	a -> Dn	FCVTAS Dd,Dn	Dd -> result	A64
 int64x2_t vcvtaq_s64_f64(float64x2_t a)	a -> Vn.2D	FCVTAS Vd.2D,Vn.2D	Vd.2D -> result	A64
 uint64x1_t vcvta_u64_f64(float64x1_t a)	a -> Dn	FCVTAU Dd,Dn	Dd -> result	A64
 uint64x2_t vcvtaq_u64_f64(float64x2_t a)	a -> Vn.2D	FCVTAU Vd.2D,Vn.2D	Vd.2D -> result	A64
+int32_t vcvtd_s32_f64(float64_t a)	a -> Dn	FCVTZS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtd_s64_f64(float64_t a)	a -> Dn	FCVTZS Dd,Dn	Dd -> result	A64
+uint32_t vcvtd_u32_f64(float64_t a)	a -> Dn	FCVTZU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtd_u64_f64(float64_t a)	a -> Dn	FCVTZU Dd,Dn	Dd -> result	A64
+int32_t vcvtnd_s32_f64(float64_t a)	a -> Dn	FCVTNS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtnd_s64_f64(float64_t a)	a -> Dn	FCVTNS Dd,Dn	Dd -> result	A64
+uint32_t vcvtnd_u32_f64(float64_t a)	a -> Dn	FCVTNU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtnd_u64_f64(float64_t a)	a -> Dn	FCVTNU Dd,Dn	Dd -> result	A64
+int32_t vcvtmd_s32_f64(float64_t a)	a -> Dn	FCVTMS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtmd_s64_f64(float64_t a)	a -> Dn	FCVTMS Dd,Dn	Dd -> result	A64
+uint32_t vcvtmd_u32_f64(float64_t a)	a -> Dn	FCVTMU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtmd_u64_f64(float64_t a)	a -> Dn	FCVTMU Dd,Dn	Dd -> result	A64
+int32_t vcvtpd_s32_f64(float64_t a)	a -> Dn	FCVTPS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtpd_s64_f64(float64_t a)	a -> Dn	FCVTPS Dd,Dn	Dd -> result	A64
+uint32_t vcvtpd_u32_f64(float64_t a)	a -> Dn	FCVTPU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtpd_u64_f64(float64_t a)	a -> Dn	FCVTPU Dd,Dn	Dd -> result	A64
+int32_t vcvtad_s32_f64(float64_t a)	a -> Dn	FCVTAS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtad_s64_f64(float64_t a)	a -> Dn	FCVTAS Dd,Dn	Dd -> result	A64
+uint32_t vcvtad_u32_f64(float64_t a)	a -> Dn	FCVTAU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtad_u64_f64(float64_t a)	a -> Dn	FCVTAU Dd,Dn	Dd -> result	A64
 int32x2_t vcvt_n_s32_f32(float32x2_t a, __builtin_constant_p(n))	a -> Vn.2S;1 <= n <= 32	FCVTZS Vd.2S,Vn.2S,#n	Vd.2S -> result	v7/A32/A64
 int32x4_t vcvtq_n_s32_f32(float32x4_t a, __builtin_constant_p(n))	a -> Vn.4S;1 <= n <= 32	FCVTZS Vd.4S,Vn.4S,#n	Vd.4S -> result	v7/A32/A64
@@ -4083,35 +4103,35 @@ float16_t vcvth_f16_u16(uint16_t a)	a -> Hn	UCVTF Hd,Hn	Hd -> result	A64
 float16_t vcvth_f16_u32(uint32_t a)	a -> Hn	UCVTF Hd,Hn	Hd -> result	A32/A64
 float16_t vcvth_f16_u64(uint64_t a)	a -> Hn	UCVTF Hd,Hn	Hd -> result	A64
 int16_t vcvth_s16_f16(float16_t a)	a -> Hn	FCVTZS Hd,Hn	Hd -> result	A64
-int32_t vcvth_s32_f16(float16_t a)	a -> Hn	FCVTZS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvth_s64_f16(float16_t a)	a -> Hn	FCVTZS Hd,Hn	Hd -> result	A64
+int32_t vcvth_s32_f16(float16_t a)	a -> Hn	FCVTZS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvth_s64_f16(float16_t a)	a -> Hn	FCVTZS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvth_u16_f16(float16_t a)	a -> Hn	FCVTZU Hd,Hn	Hd -> result	A64
-uint32_t vcvth_u32_f16(float16_t a)	a -> Hn	FCVTZU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvth_u64_f16(float16_t a)	a -> Hn	FCVTZU Hd,Hn	Hd -> result	A64
+uint32_t vcvth_u32_f16(float16_t a)	a -> Hn	FCVTZU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvth_u64_f16(float16_t a)	a -> Hn	FCVTZU Dd/Xd,Hn	Dd/Xd -> result	A64
 int16_t vcvtah_s16_f16(float16_t a)	a -> Hn	FCVTAS Hd,Hn	Hd -> result	A64
-int32_t vcvtah_s32_f16(float16_t a)	a -> Hn	FCVTAS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvtah_s64_f16(float16_t a)	a -> Hn	FCVTAS Hd,Hn	Hd -> result	A64
+int32_t vcvtah_s32_f16(float16_t a)	a -> Hn	FCVTAS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvtah_s64_f16(float16_t a)	a -> Hn	FCVTAS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvtah_u16_f16(float16_t a)	a -> Hn	FCVTAU Hd,Hn	Hd -> result	A64
-uint32_t vcvtah_u32_f16(float16_t a)	a -> Hn	FCVTAU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvtah_u64_f16(float16_t a)	a -> Hn	FCVTAU Hd,Hn	Hd -> result	A64
+uint32_t vcvtah_u32_f16(float16_t a)	a -> Hn	FCVTAU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvtah_u64_f16(float16_t a)	a -> Hn	FCVTAU Dd/Xd,Hn	Dd/Xd -> result	A64
 int16_t vcvtmh_s16_f16(float16_t a)	a -> Hn	FCVTMS Hd,Hn	Hd -> result	A64
-int32_t vcvtmh_s32_f16(float16_t a)	a -> Hn	FCVTMS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvtmh_s64_f16(float16_t a)	a -> Hn	FCVTMS Hd,Hn	Hd -> result	A64
+int32_t vcvtmh_s32_f16(float16_t a)	a -> Hn	FCVTMS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvtmh_s64_f16(float16_t a)	a -> Hn	FCVTMS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvtmh_u16_f16(float16_t a)	a -> Hn	FCVTMU Hd,Hn	Hd -> result	A64
-uint32_t vcvtmh_u32_f16(float16_t a)	a -> Hn	FCVTMU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvtmh_u64_f16(float16_t a)	a -> Hn	FCVTMU Hd,Hn	Hd -> result	A64
+uint32_t vcvtmh_u32_f16(float16_t a)	a -> Hn	FCVTMU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvtmh_u64_f16(float16_t a)	a -> Hn	FCVTMU Dd/Xd,Hn	Dd/Xd -> result	A64
 int16_t vcvtnh_s16_f16(float16_t a)	a -> Hn	FCVTNS Hd,Hn	Hd -> result	A64
-int32_t vcvtnh_s32_f16(float16_t a)	a -> Hn	FCVTNS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvtnh_s64_f16(float16_t a)	a -> Hn	FCVTNS Hd,Hn	Hd -> result	A64
+int32_t vcvtnh_s32_f16(float16_t a)	a -> Hn	FCVTNS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvtnh_s64_f16(float16_t a)	a -> Hn	FCVTNS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvtnh_u16_f16(float16_t a)	a -> Hn	FCVTNU Hd,Hn	Hd -> result	A64
-uint32_t vcvtnh_u32_f16(float16_t a)	a -> Hn	FCVTNU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvtnh_u64_f16(float16_t a)	a -> Hn	FCVTNU Hd,Hn	Hd -> result	A64
+uint32_t vcvtnh_u32_f16(float16_t a)	a -> Hn	FCVTNU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvtnh_u64_f16(float16_t a)	a -> Hn	FCVTNU Dd/Xd,Hn	Dd/Xd -> result	A64
 int16_t vcvtph_s16_f16(float16_t a)	a -> Hn	FCVTPS Hd,Hn	Hd -> result	A64
-int32_t vcvtph_s32_f16(float16_t a)	a -> Hn	FCVTPS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvtph_s64_f16(float16_t a)	a -> Hn	FCVTPS Hd,Hn	Hd -> result	A64
+int32_t vcvtph_s32_f16(float16_t a)	a -> Hn	FCVTPS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvtph_s64_f16(float16_t a)	a -> Hn	FCVTPS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvtph_u16_f16(float16_t a)	a -> Hn	FCVTPU Hd,Hn	Hd -> result	A64
-uint32_t vcvtph_u32_f16(float16_t a)	a -> Hn	FCVTPU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvtph_u64_f16(float16_t a)	a -> Hn	FCVTPU Hd,Hn	Hd -> result	A64
+uint32_t vcvtph_u32_f16(float16_t a)	a -> Hn	FCVTPU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvtph_u64_f16(float16_t a)	a -> Hn	FCVTPU Dd/Xd,Hn	Dd/Xd -> result	A64
 float16_t vnegh_f16(float16_t a)	a -> Hn	FNEG Hd,Hn	Hd -> result	A32/A64
 float16_t vrecpeh_f16(float16_t a)	a -> Hn	FRECPE Hd,Hn	Hd -> result	A64
 float16_t vrecpxh_f16(float16_t a)	a -> Hn	FRECPX Hd,Hn	Hd -> result	A64
