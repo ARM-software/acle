@@ -475,6 +475,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Upgrade Function Multi Versioning to Release support level.
 * Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
 * Improve documentation for VMLA/VMLS intrinsics for floats.
+* Added support for producer-consumer data placement hints.
+* Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.2 (FEAT_SVE2p2)
 * Added [**Alpha**](#current-status-and-anticipated-changes)
@@ -1841,6 +1843,12 @@ The `__ARM_FEATURE_SYSREG128` macro can only be implemented in the AArch64
 execution state. Intrinsics for the use of these instructions are specified in
 [Special register intrinsics](#special-register-intrinsics).
 
+### Producer-consumer data placement hints
+
+`__ARM_FEATURE_PCDPHINT` is defined to `1` if the producer-consumer
+data placement hints (FEAT_PCDPHINT) instructions and their associated
+intrinsics are available on the target.
+
 ## Floating-point and vector hardware
 
 ### Hardware floating point
@@ -2644,6 +2652,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
 | [`__ARM_FEATURE_PAUTH`](#pointer-authentication)                                                                                                        | Pointer Authentication Extension (FEAT_PAuth)                                                      | 1           |
 | [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5-A Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                         | 1           |
+| [`__ARM_FEATURE_PCDPHINT`](#producer-consumer-data-placement-hints)                                                                                     | Producer-consumer data placement hint instructions (FEAT_PCDPHINT)                                 | 1           |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
@@ -3625,6 +3634,80 @@ values.
 | KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
 | STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
 
+The `__ARM_PREFETCH_RANGE` macro can be used to test for the presence of the
+following range prefetch intrinsics:
+
+``` c
+  void __pldx_range(/*constant*/ unsigned int /*access_kind*/,
+                    /*constant*/ unsigned int /*retention_policy*/,
+                    /*constant*/ signed int   /*length*/,
+                    /*constant*/ unsigned int /*count*/,
+                    /*constant*/ signed int   /*stride*/,
+                    /*constant*/ size_t       /*reuse distance*/,
+                    void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. This intrinsic allows the specification of the
+expected access kind (read or write), the data retention policy (temporal or
+streaming) and the length, count, stride and reuse distance metadata values.
+
+The access kind and data retention policy arguments can only be one of the
+following values.
+
+| **Access Kind** | **Value** | **Summary**                              |
+| --------------- | --------- | ---------------------------------------- |
+| PLD             | 0         | Fetch the addressed location for reading |
+| PST             | 1         | Fetch the addressed location for writing |
+
+| **Retention Policy** | **Value** | **Summary**                                                                |
+| -------------------- | --------- | -------------------------------------------------------------------------- |
+| KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
+| STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
+
+The table below describes the ranges of the length, count, stride and reuse distance arguments.
+
+| **Metadata**   | **Range**           | **Summary**                                                          |
+| -------------- | ------------------- | -------------------------------------------------------------------- |
+| Length         | [-2MiB, +2MiB)      | Number of contiguous bytes to be accessed.                           |
+| Count          | [1, 65536]          | Number of blocks to be accessed.                                     |
+| Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
+|                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
+| Reuse Distance |                     | Maximum number of bytes to be accessed before executing the next     |
+|                |                     | RPRFM instruction that specifies the same range. All values are      |
+|                |                     | rounded up to the nearest power of 2 in the range 32KiB to 512MiB.   |
+|                |                     | Values exceeding the maximum of 512MiB will be represented by 0,     |
+|                |                     | indicating distance not known.                                       |
+|                |                     | Note: This value is ignored if a streaming prefetch is specified.    |
+
+``` c
+  void __pld_range(/*constant*/ unsigned int /*access_kind*/,
+                   /*constant*/ unsigned int /*retention_policy*/,
+                   uint64_t /*metadata*/,
+                   void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. The access kind and retention policy arguments can
+have the same values as in `__pldx_range`. The bits of the metadata argument
+are interpreted as follows:
+
+| **Metadata**   | **Bits** | **Range**       | **Summary**                                                  |
+| -------------- | -------- | --------------- | ------------------------------------------------------------ |
+| Length         | 0-21     | [-2MiB, +2MiB)  | Signed integer representing the number of contiguous         |
+|                |          |                 | bytes to be accessed.                                        |
+| Count          | 37-22    | [0, 65535]      | Unsigned integer representing number of blocks of data       |
+|                |          |                 | to be accessed, minus 1.                                     |
+| Stride         | 59-38    | [-2MiB, +2MiB)  | Signed integer representing the number of bytes to advance   |
+|                |          |                 | the block address by after `Length` bytes have been          |
+|                |          |                 | accessed. This value is ignored if Count is 0.               |
+| Reuse Distance | 63-60    | [0, 15]         | Indicates the maximum number of bytes to be accessed before  |
+|                |          |                 | executing the next RPRFM instruction that specifies the same |
+|                |          |                 | range. Bits encode decreasing powers of two in the range     |
+|                |          |                 | 1 (512MiB) to 15 (32KiB). 0 indicates distance not known.    |
+
 ### Instruction prefetch
 
 ``` c
@@ -3650,6 +3733,16 @@ as in `__pldx`.
 
 `__pldx` and `__plix` arguments cache level and retention policy
 are ignored on unsupported targets.
+
+### Intent to read prefetch
+
+``` c
+  void __pldir(void const volatile *addr);
+```
+Generates an intent to read on update prefetch instruction. The argument should
+be any expression that may designate a data address. This intrinsic does
+not require specification of cache level or retention policy. Support for this
+intrinsic is indicated by `__ARM_FEATURE_PCDPHINT`.
 
 ## NOP
 
@@ -4822,6 +4915,34 @@ Performs the same operation as `__arm_st64bv`, except that the data
 stored to memory is modified by replacing the low 32 bits of
 `value.val[0]` with the contents of the `ACCDATA_EL1` system register.
 The returned value is the same as for `__arm_st64bv`.
+
+## Atomic store with PCDPHINT intrinsics
+
+This intrinsic provides an atomic store, which will
+make use of the `STSHH` hint instruction immediately followed by the
+associated store instruction. This intrinsic is type generic and 
+supports scalar types from 8-64 bits and is available when
+`__ARM_FEATURE_PCDPHINT` is defined.
+
+To access this intrinsic, `<arm_acle.h>` should be included.
+
+``` c
+  void __arm_atomic_store_with_stshh(type *ptr,
+                                     type data,
+                                     int memory_order,
+                                     int ret); /* Retention Policy */
+```
+
+The first argument in this intrinsic is a pointer `ptr` which is the location to store to.
+The second argument `data` is the data which is to be stored.
+The third argument `mem` can be one of 3 memory ordering variables supported by atomic_store:
+__ATOMIC_RELAXED, __ATOMIC_SEQ_CST, and __ATOMIC_RELEASE.
+The fourth argument can contain the following values:
+
+| **Retention Policy** | **Value** | **Summary**                                                                       |
+| -------------------- | --------- | --------------------------------------------------------------------------------- |
+| KEEP                 | 0         | Signals to retain the updated location in the local cache of the updating PE.     |
+| STRM                 | 1         | Signals to not retain the updated location in the local cache of the updating PE. |
 
 # Custom Datapath Extension
 
