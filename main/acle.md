@@ -475,6 +475,12 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Upgrade Function Multi Versioning to Release support level.
 * Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
 * Improve documentation for VMLA/VMLS intrinsics for floats.
+* Added support for producer-consumer data placement hints.
+* Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.2 (FEAT_SVE2p2)
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SME2.2 (FEAT_SME2p2).
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
 
@@ -1839,6 +1845,12 @@ The `__ARM_FEATURE_SYSREG128` macro can only be implemented in the AArch64
 execution state. Intrinsics for the use of these instructions are specified in
 [Special register intrinsics](#special-register-intrinsics).
 
+### Producer-consumer data placement hints
+
+`__ARM_FEATURE_PCDPHINT` is defined to `1` if the producer-consumer
+data placement hints (FEAT_PCDPHINT) instructions and their associated
+intrinsics are available on the target.
+
 ## Floating-point and vector hardware
 
 ### Hardware floating point
@@ -1990,6 +2002,10 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
+`__ARM_FEATURE_SVE2p2` is defined to 1 if the FEAT_SVE2p2 instructions
+ are available and if the associated [ACLE features]
+(#sme-language-extensions-and-intrinsics) are supported.
+
 #### NEON-SVE Bridge macro
 
 `__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
@@ -2012,6 +2028,7 @@ of SME has an associated preprocessor macro, given in the table below:
 | FEAT_SME    | __ARM_FEATURE_SME          |
 | FEAT_SME2   | __ARM_FEATURE_SME2         |
 | FEAT_SME2p1 | __ARM_FEATURE_SME2p1       |
+| FEAT_SME2p2 | __ARM_FEATURE_SME2p2       |
 
 Each macro is defined if there is hardware support for the associated
 architecture feature and if all of the [ACLE
@@ -2649,6 +2666,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
 | [`__ARM_FEATURE_PAUTH`](#pointer-authentication)                                                                                                        | Pointer Authentication Extension (FEAT_PAuth)                                                      | 1           |
 | [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5-A Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                         | 1           |
+| [`__ARM_FEATURE_PCDPHINT`](#producer-consumer-data-placement-hints)                                                                                     | Producer-consumer data placement hint instructions (FEAT_PCDPHINT)                                 | 1           |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
@@ -2698,6 +2716,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 cryptographic extension (FEAT_SVE_SM3)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
 | [`__ARM_FEATURE_SVE2p1`](#sve2)                                                                                                                         | SVE version 2.1 (FEAT_SVE2p1)
+| [`__ARM_FEATURE_SVE2p2`](#sve2)                                                                                                                         | SVE version 2.2 (FEAT_SVE2p2)
 | [`__ARM_FEATURE_SYSREG128`](#bit-system-registers)                                                                                                      | Support for 128-bit system registers (FEAT_SYSREG128)                                              | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
@@ -3631,6 +3650,80 @@ values.
 | KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
 | STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
 
+The `__ARM_PREFETCH_RANGE` macro can be used to test for the presence of the
+following range prefetch intrinsics:
+
+``` c
+  void __pldx_range(/*constant*/ unsigned int /*access_kind*/,
+                    /*constant*/ unsigned int /*retention_policy*/,
+                    /*constant*/ signed int   /*length*/,
+                    /*constant*/ unsigned int /*count*/,
+                    /*constant*/ signed int   /*stride*/,
+                    /*constant*/ size_t       /*reuse distance*/,
+                    void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. This intrinsic allows the specification of the
+expected access kind (read or write), the data retention policy (temporal or
+streaming) and the length, count, stride and reuse distance metadata values.
+
+The access kind and data retention policy arguments can only be one of the
+following values.
+
+| **Access Kind** | **Value** | **Summary**                              |
+| --------------- | --------- | ---------------------------------------- |
+| PLD             | 0         | Fetch the addressed location for reading |
+| PST             | 1         | Fetch the addressed location for writing |
+
+| **Retention Policy** | **Value** | **Summary**                                                                |
+| -------------------- | --------- | -------------------------------------------------------------------------- |
+| KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
+| STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
+
+The table below describes the ranges of the length, count, stride and reuse distance arguments.
+
+| **Metadata**   | **Range**           | **Summary**                                                          |
+| -------------- | ------------------- | -------------------------------------------------------------------- |
+| Length         | [-2MiB, +2MiB)      | Number of contiguous bytes to be accessed.                           |
+| Count          | [1, 65536]          | Number of blocks to be accessed.                                     |
+| Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
+|                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
+| Reuse Distance |                     | Maximum number of bytes to be accessed before executing the next     |
+|                |                     | RPRFM instruction that specifies the same range. All values are      |
+|                |                     | rounded up to the nearest power of 2 in the range 32KiB to 512MiB.   |
+|                |                     | Values exceeding the maximum of 512MiB will be represented by 0,     |
+|                |                     | indicating distance not known.                                       |
+|                |                     | Note: This value is ignored if a streaming prefetch is specified.    |
+
+``` c
+  void __pld_range(/*constant*/ unsigned int /*access_kind*/,
+                   /*constant*/ unsigned int /*retention_policy*/,
+                   uint64_t /*metadata*/,
+                   void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. The access kind and retention policy arguments can
+have the same values as in `__pldx_range`. The bits of the metadata argument
+are interpreted as follows:
+
+| **Metadata**   | **Bits** | **Range**       | **Summary**                                                  |
+| -------------- | -------- | --------------- | ------------------------------------------------------------ |
+| Length         | 0-21     | [-2MiB, +2MiB)  | Signed integer representing the number of contiguous         |
+|                |          |                 | bytes to be accessed.                                        |
+| Count          | 37-22    | [0, 65535]      | Unsigned integer representing number of blocks of data       |
+|                |          |                 | to be accessed, minus 1.                                     |
+| Stride         | 59-38    | [-2MiB, +2MiB)  | Signed integer representing the number of bytes to advance   |
+|                |          |                 | the block address by after `Length` bytes have been          |
+|                |          |                 | accessed. This value is ignored if Count is 0.               |
+| Reuse Distance | 63-60    | [0, 15]         | Indicates the maximum number of bytes to be accessed before  |
+|                |          |                 | executing the next RPRFM instruction that specifies the same |
+|                |          |                 | range. Bits encode decreasing powers of two in the range     |
+|                |          |                 | 1 (512MiB) to 15 (32KiB). 0 indicates distance not known.    |
+
 ### Instruction prefetch
 
 ``` c
@@ -3656,6 +3749,16 @@ as in `__pldx`.
 
 `__pldx` and `__plix` arguments cache level and retention policy
 are ignored on unsupported targets.
+
+### Intent to read prefetch
+
+``` c
+  void __pldir(void const volatile *addr);
+```
+Generates an intent to read on update prefetch instruction. The argument should
+be any expression that may designate a data address. This intrinsic does
+not require specification of cache level or retention policy. Support for this
+intrinsic is indicated by `__ARM_FEATURE_PCDPHINT`.
 
 ## NOP
 
@@ -4828,6 +4931,34 @@ Performs the same operation as `__arm_st64bv`, except that the data
 stored to memory is modified by replacing the low 32 bits of
 `value.val[0]` with the contents of the `ACCDATA_EL1` system register.
 The returned value is the same as for `__arm_st64bv`.
+
+## Atomic store with PCDPHINT intrinsics
+
+This intrinsic provides an atomic store, which will
+make use of the `STSHH` hint instruction immediately followed by the
+associated store instruction. This intrinsic is type generic and 
+supports scalar types from 8-64 bits and is available when
+`__ARM_FEATURE_PCDPHINT` is defined.
+
+To access this intrinsic, `<arm_acle.h>` should be included.
+
+``` c
+  void __arm_atomic_store_with_stshh(type *ptr,
+                                     type data,
+                                     int memory_order,
+                                     int ret); /* Retention Policy */
+```
+
+The first argument in this intrinsic is a pointer `ptr` which is the location to store to.
+The second argument `data` is the data which is to be stored.
+The third argument `mem` can be one of 3 memory ordering variables supported by atomic_store:
+__ATOMIC_RELAXED, __ATOMIC_SEQ_CST, and __ATOMIC_RELEASE.
+The fourth argument can contain the following values:
+
+| **Retention Policy** | **Value** | **Summary**                                                                       |
+| -------------------- | --------- | --------------------------------------------------------------------------------- |
+| KEEP                 | 0         | Signals to retain the updated location in the local cache of the updating PE.     |
+| STRM                 | 1         | Signals to not retain the updated location in the local cache of the updating PE. |
 
 # Custom Datapath Extension
 
@@ -12986,6 +13117,41 @@ Zero ZA vector groups
     __arm_streaming __arm_inout("za");
 ```
 
+### SME2.2 instruction intrinsics
+
+The specification for SME2.2 are in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p2` is defined.
+
+#### FMUL
+
+Multi-vector floating-point multiply
+
+``` c
+  // Variants are also available for:
+  // [_single_f32_x2]
+  // [_single_f64_x2]
+  svfloat16x2_t svmul[_single_f16_x2](svfloat16x2_t zd, svfloat16_t zm) __arm_streaming;
+
+  // Variants are also available for:
+  // [_single_f32_x4]
+  // [_single_f64_x4]
+  svfloat16x4_t svmul[_single_f16_x4](svfloat16x4_t zd, svfloat16_t zm) __arm_streaming;
+
+  // Variants are also available for:
+  // [_f32_x2]
+  // [_f64_x2]
+  svfloat16x2_t svmul[_f16_x2](svfloat16x2_t zd, svfloat16x2_t zm) __arm_streaming;
+
+  // Variants are also available for:
+  // [_f32_x4]
+  // [_f64_x4]
+  svfloat16x4_t svmul[_f16_x4](svfloat16x4_t zd, svfloat16x4_t zm) __arm_streaming;
+```
+
 ### Streaming-compatible versions of standard routines
 
 ACLE provides the following streaming-compatible functions,
@@ -13535,6 +13701,97 @@ While (resulting in predicate tuple)
   svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
 ```
 
+### SVE2.2 and SME2.2 instruction intrinsics
+
+The specification for SVE2.2 and SME2.2 are in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+The functions in this section are defined by either the header file
+ [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
+when `__ARM_FEATURE_SVE2p2` or `__ARM_FEATURE_SME2p2` is defined, respectively.
+
+#### FCVTXNT, FCVTLT, FCVTNT, BFCVTNT
+
+Zeroing forms of convert instructions.
+
+```c
+
+// Variant is available for _f64_f32
+svfloat32_t	svcvtlt_f32[_f16]_z	(svbool_t pg, svfloat16_t op);
+
+// Variants are available for:
+// _f32_f64, _bf16_f32
+svfloat16_t	svcvtnt_f16[_f32]_z	(svfloat16_t even, svbool_t pg, svfloat32_t op);
+
+svfloat32_t	svcvtxnt_f32[_f64]_z (svfloat32_t even, svbool_t pg, svfloat64_t op);
+```
+
+#### FRINT32X, FRINT32Z, FRINT64X, FRINT64Z 
+
+Round to integral floating-point values.
+
+```c
+
+// Variant is available for _f64
+svfloat32_t svrint32x[_f32]_z(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint32x[_f32]_x(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint32x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+// Variant is available for _f64
+svfloat32_t svrint32z[_f32]_z(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint32z[_f32]_x(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint32z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+// Variant is available for _f64
+svfloat32_t svrint64x[_f32]_z(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint64x[_f32]_x(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint64x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+// Variant is available for _f64
+svfloat32_t svrint64z[_f32]_z(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint64z[_f32]_x(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint64z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+```
+
+#### COMPACT, EXPAND
+
+Copy active vector elements to/from lower-numbered elements.
+
+``` c
+  // Variants are available for:
+  // _s8, _s16, _u16, _mf8, _bf16, _f16
+  svuint8_t svcompact[_u8](svbool_t pg, svuint8_t zn);
+
+  // Variants are available for:
+  // _s8, _s16, _u16, _s32, _u32, _s64, _u64
+  // _mf8, _bf16, _f16, _f32, _f64
+  svuint8_t svexpand[_u8](svbool_t pg, svuint8_t zn);
+
+  ```
+
+#### FIRSTP, LASTP
+
+Scalar index of first/last true predicate element (predicated).
+
+``` c
+  // Variants are available for:
+  // _b16, _b32, _b64
+  int64_t svfirstp_b8(svbool_t pg, svbool_t pn);
+
+  // Variants are available for:
+  // _b16, _b32, _b64
+  int64_t svlastp_b8(svbool_t pg, svbool_t pn);
+
+  ```
 
 ### SME2 maximum and minimum absolute value
 
