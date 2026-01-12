@@ -5,7 +5,7 @@ date-of-issue: 21 June 2024
 set-quote-highlight: true
 # LaTeX specific variables
 copyright-text: Copyright 2019, 2021-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: false
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true

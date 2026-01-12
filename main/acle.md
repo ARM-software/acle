@@ -471,6 +471,11 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added restrictions of Function Multi Versioning's use with other extensions.
+* Upgrade Function Multi Versioning to Release support level.
+* Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
+* Improve documentation for VMLA/VMLS intrinsics for floats.
+* Added support for producer-consumer data placement hints.
 * Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
 
 ### References
@@ -1834,6 +1839,12 @@ The `__ARM_FEATURE_SYSREG128` macro can only be implemented in the AArch64
 execution state. Intrinsics for the use of these instructions are specified in
 [Special register intrinsics](#special-register-intrinsics).
 
+### Producer-consumer data placement hints
+
+`__ARM_FEATURE_PCDPHINT` is defined to `1` if the producer-consumer
+data placement hints (FEAT_PCDPHINT) instructions and their associated
+intrinsics are available on the target.
+
 ## Floating-point and vector hardware
 
 ### Hardware floating point
@@ -2632,6 +2643,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
 | [`__ARM_FEATURE_PAUTH`](#pointer-authentication)                                                                                                        | Pointer Authentication Extension (FEAT_PAuth)                                                      | 1           |
 | [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5-A Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                         | 1           |
+| [`__ARM_FEATURE_PCDPHINT`](#producer-consumer-data-placement-hints)                                                                                     | Producer-consumer data placement hint instructions (FEAT_PCDPHINT)                                 | 1           |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
@@ -2776,10 +2788,6 @@ This attribute does not apply to AArch64.
 
 ## Function Multi Versioning
 
-The specification for Function Multi Versioning is in [**Beta**
-state](#current-status-and-anticipated-changes) and might change or be
-extended in the future.
-
 Function Multi Versioning provides a convenient way to select the most
 appropriate version of a function at runtime. All versions of the
 function may be in the final binary. The compiler generates all
@@ -2801,8 +2809,8 @@ The following attributes trigger the multi version code generation:
 * These attributes have no effect on the calling convention.
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
-* FMV might be disabled in compile time by a compiler flag. In this
-  case, the `default` version shall be used.
+* Function Multi Versioning might be disabled at compile time by a compiler
+  flag. In this case, the `default` version shall be used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
   the multiversioned functions. Therefore, a versioned function
@@ -2818,6 +2826,8 @@ The following attributes trigger the multi version code generation:
   * as a function annotated with `target_version("default")`,
   * or, as a function annotated with `target_clones(...)` where one
     of the versions is `default`.
+* Using any C/C++ extensions or attributes that affect function name mangling,
+  or that clone functions alongside Function Multi Versioning is not supported.
 
 The attribute `__attribute__((target_version("<target version string>")))` expresses the
 following:
@@ -3713,6 +3723,16 @@ as in `__pldx`.
 
 `__pldx` and `__plix` arguments cache level and retention policy
 are ignored on unsupported targets.
+
+### Intent to read prefetch
+
+``` c
+  void __pldir(void const volatile *addr);
+```
+Generates an intent to read on update prefetch instruction. The argument should
+be any expression that may designate a data address. This intrinsic does
+not require specification of cache level or retention policy. Support for this
+intrinsic is indicated by `__ARM_FEATURE_PCDPHINT`.
 
 ## NOP
 
@@ -4885,6 +4905,34 @@ Performs the same operation as `__arm_st64bv`, except that the data
 stored to memory is modified by replacing the low 32 bits of
 `value.val[0]` with the contents of the `ACCDATA_EL1` system register.
 The returned value is the same as for `__arm_st64bv`.
+
+## Atomic store with PCDPHINT intrinsics
+
+This intrinsic provides an atomic store, which will
+make use of the `STSHH` hint instruction immediately followed by the
+associated store instruction. This intrinsic is type generic and 
+supports scalar types from 8-64 bits and is available when
+`__ARM_FEATURE_PCDPHINT` is defined.
+
+To access this intrinsic, `<arm_acle.h>` should be included.
+
+``` c
+  void __arm_atomic_store_with_stshh(type *ptr,
+                                     type data,
+                                     int memory_order,
+                                     int ret); /* Retention Policy */
+```
+
+The first argument in this intrinsic is a pointer `ptr` which is the location to store to.
+The second argument `data` is the data which is to be stored.
+The third argument `mem` can be one of 3 memory ordering variables supported by atomic_store:
+__ATOMIC_RELAXED, __ATOMIC_SEQ_CST, and __ATOMIC_RELEASE.
+The fourth argument can contain the following values:
+
+| **Retention Policy** | **Value** | **Summary**                                                                       |
+| -------------------- | --------- | --------------------------------------------------------------------------------- |
+| KEEP                 | 0         | Signals to retain the updated location in the local cache of the updating PE.     |
+| STRM                 | 1         | Signals to not retain the updated location in the local cache of the updating PE. |
 
 # Custom Datapath Extension
 
@@ -13920,7 +13968,7 @@ Multi-vector 8-bit floating-point multiply-add long.
                                        svmfloat8_t zm, uint64_t imm_idx
                                        fpm_t fpm) __arm_streaming __arm_inout("za");
 
-  void svmla[_single]_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
+  void svmla_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
                                            svmfloat8_t zm, fpm_t fpm)
                                            __arm_streaming __arm_inout("za");
 
@@ -13956,7 +14004,7 @@ Multi-vector 8-bit floating-point multiply-add long.
                                        svmfloat8_t zm, uint64_t imm_idx,
                                        fpm_t fpm)__arm_streaming __arm_inout("za");
 
-  void svmla[_single]_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
+  void svmla_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
                                            svmfloat8_t zm, fpm_t fpm)
                                            __arm_streaming __arm_inout("za");
 
