@@ -476,6 +476,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
 * Improve documentation for VMLA/VMLS intrinsics for floats.
 * Added support for producer-consumer data placement hints.
+* Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
 
 ### References
 
@@ -3622,6 +3623,80 @@ values.
 | -------------------- | --------- | -------------------------------------------------------------------------- |
 | KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
 | STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
+
+The `__ARM_PREFETCH_RANGE` macro can be used to test for the presence of the
+following range prefetch intrinsics:
+
+``` c
+  void __pldx_range(/*constant*/ unsigned int /*access_kind*/,
+                    /*constant*/ unsigned int /*retention_policy*/,
+                    /*constant*/ signed int   /*length*/,
+                    /*constant*/ unsigned int /*count*/,
+                    /*constant*/ signed int   /*stride*/,
+                    /*constant*/ size_t       /*reuse distance*/,
+                    void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. This intrinsic allows the specification of the
+expected access kind (read or write), the data retention policy (temporal or
+streaming) and the length, count, stride and reuse distance metadata values.
+
+The access kind and data retention policy arguments can only be one of the
+following values.
+
+| **Access Kind** | **Value** | **Summary**                              |
+| --------------- | --------- | ---------------------------------------- |
+| PLD             | 0         | Fetch the addressed location for reading |
+| PST             | 1         | Fetch the addressed location for writing |
+
+| **Retention Policy** | **Value** | **Summary**                                                                |
+| -------------------- | --------- | -------------------------------------------------------------------------- |
+| KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
+| STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
+
+The table below describes the ranges of the length, count, stride and reuse distance arguments.
+
+| **Metadata**   | **Range**           | **Summary**                                                          |
+| -------------- | ------------------- | -------------------------------------------------------------------- |
+| Length         | [-2MiB, +2MiB)      | Number of contiguous bytes to be accessed.                           |
+| Count          | [1, 65536]          | Number of blocks to be accessed.                                     |
+| Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
+|                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
+| Reuse Distance |                     | Maximum number of bytes to be accessed before executing the next     |
+|                |                     | RPRFM instruction that specifies the same range. All values are      |
+|                |                     | rounded up to the nearest power of 2 in the range 32KiB to 512MiB.   |
+|                |                     | Values exceeding the maximum of 512MiB will be represented by 0,     |
+|                |                     | indicating distance not known.                                       |
+|                |                     | Note: This value is ignored if a streaming prefetch is specified.    |
+
+``` c
+  void __pld_range(/*constant*/ unsigned int /*access_kind*/,
+                   /*constant*/ unsigned int /*retention_policy*/,
+                   uint64_t /*metadata*/,
+                   void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. The access kind and retention policy arguments can
+have the same values as in `__pldx_range`. The bits of the metadata argument
+are interpreted as follows:
+
+| **Metadata**   | **Bits** | **Range**       | **Summary**                                                  |
+| -------------- | -------- | --------------- | ------------------------------------------------------------ |
+| Length         | 0-21     | [-2MiB, +2MiB)  | Signed integer representing the number of contiguous         |
+|                |          |                 | bytes to be accessed.                                        |
+| Count          | 37-22    | [0, 65535]      | Unsigned integer representing number of blocks of data       |
+|                |          |                 | to be accessed, minus 1.                                     |
+| Stride         | 59-38    | [-2MiB, +2MiB)  | Signed integer representing the number of bytes to advance   |
+|                |          |                 | the block address by after `Length` bytes have been          |
+|                |          |                 | accessed. This value is ignored if Count is 0.               |
+| Reuse Distance | 63-60    | [0, 15]         | Indicates the maximum number of bytes to be accessed before  |
+|                |          |                 | executing the next RPRFM instruction that specifies the same |
+|                |          |                 | range. Bits encode decreasing powers of two in the range     |
+|                |          |                 | 1 (512MiB) to 15 (32KiB). 0 indicates distance not known.    |
 
 ### Instruction prefetch
 
