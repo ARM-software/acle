@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2025Q2
-date-of-issue: 06 June 2025
+version: 2025Q3
+date-of-issue: 14 November 2025
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
@@ -181,6 +181,7 @@ unless a different support level is specified in the text.
 | 2024Q3       | 30 September 2024 | Arm    | See [Changes between ACLE Q2 2024 and ACLE Q3 2024](#changes-between-acle-q2-2024-and-acle-q3-2024)                  |
 | 2024Q4       | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
 | 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
+| 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -446,7 +447,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
   [**Beta**](#current-status-and-anticipated-changes) quality level.
-* Add Function Multi Versioning feature priority syntax.
 
 #### Changes between ACLE Q4 2024 and ACLE Q2 2025
 
@@ -461,10 +461,30 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Upgrade to [**Beta**](#current-status-and-anticipated-changes)
   support for modal 8-bit floating point intrinsics.
 
-#### Changes for next release
+#### Changes between ACLE Q2 2025 and ACLE Q3 2025
 
 * Added feature test macro for FEAT_SSVE_FEXPA.
 * Added feature test macro for FEAT_CSSC.
+* Added Function Multi Versioning feature priority syntax.
+
+#### Changes for next release
+
+* Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
+* Added restrictions of Function Multi Versioning's use with other extensions.
+* Upgrade Function Multi Versioning to Release support level.
+* Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
+* Improve documentation for VMLA/VMLS intrinsics for floats.
+* Added support for producer-consumer data placement hints.
+* Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.2 (FEAT_SVE2p2)
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SME2.2 (FEAT_SME2p2).
+* Added [**Alpha**](#current-status-and-anticipated-changes) support
+  for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
+* Added support for FEAT_FPRCVT intrinsics and `__ARM_FEATURE_FPRCVT`.
+* Removed all references to Transactional Memory Extension (TME).
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
 
@@ -1769,13 +1789,6 @@ the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported on this targe
 Note: It is strongly recommended that standardized C11/C++11 atomics are used to
 implement atomic operations in user code.
 
-### Transactional Memory Extension
-
-`__ARM_FEATURE_TME` is defined to `1` if the Transactional Memory
-Extension instructions are supported in hardware and intrinsics defined
-in [Transactional Memory Extension (TME)
-intrinsics](#transactional-memory-extension-tme-intrinsics) are available.
-
 ### Armv8.7-A Load/Store 64 Byte extension
 
 `__ARM_FEATURE_LS64` is defined to 1 if the Armv8.7-A `LD64B`,
@@ -1828,6 +1841,12 @@ architecture updates to support 128-bit system register accesses.
 The `__ARM_FEATURE_SYSREG128` macro can only be implemented in the AArch64
 execution state. Intrinsics for the use of these instructions are specified in
 [Special register intrinsics](#special-register-intrinsics).
+
+### Producer-consumer data placement hints
+
+`__ARM_FEATURE_PCDPHINT` is defined to `1` if the producer-consumer
+data placement hints (FEAT_PCDPHINT) instructions and their associated
+intrinsics are available on the target.
 
 ## Floating-point and vector hardware
 
@@ -1980,6 +1999,10 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
+`__ARM_FEATURE_SVE2p2` is defined to 1 if the FEAT_SVE2p2 instructions
+ are available and if the associated [ACLE features]
+(#sme-language-extensions-and-intrinsics) are supported.
+
 #### NEON-SVE Bridge macro
 
 `__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
@@ -2002,6 +2025,7 @@ of SME has an associated preprocessor macro, given in the table below:
 | FEAT_SME    | __ARM_FEATURE_SME          |
 | FEAT_SME2   | __ARM_FEATURE_SME2         |
 | FEAT_SME2p1 | __ARM_FEATURE_SME2p1       |
+| FEAT_SME2p2 | __ARM_FEATURE_SME2p2       |
 
 Each macro is defined if there is hardware support for the associated
 architecture feature and if all of the [ACLE
@@ -2163,6 +2187,18 @@ support for the SVE2 AES (FEAT_SVE_AES) instructions and if the associated
 ACLE intrinsics are available. This implies that `__ARM_FEATURE_AES`
 and `__ARM_FEATURE_SVE2` are both nonzero.
 
+In addition, `__ARM_FEATURE_SVE_AES2` is defined to `1` if there is hardware
+support for the SVE AES2 (FEAT_SVE_AES2) instructions and if the associated
+ACLE intrinsics are available.
+
+`__ARM_FEATURE_SSVE_AES` is defined to 1 if there is hardware support for
+SVE AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
+and if the associated ACLE intrinsics are available.
+
+The specification for SVE AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
 #### SHA2 extension
 
 `__ARM_FEATURE_SHA2` is defined to 1 if the SHA1 & SHA2-256 Crypto
@@ -2222,6 +2258,13 @@ ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 `__ARM_FEATURE_FAMINMAX` is defined to 1 if there is hardware support for
 floating-point absolute minimum and maximum instructions (FEAT_FAMINMAX)
 and if the associated ACLE intrinsics are available.
+
+### FPRCVT extension
+
+`__ARM_FEATURE_FPRCVT` is defined to `1` if there is hardware
+support for floating-point to/from integer conversion instructions
+with only scalar SIMD&FP register operands and results, and with
+different input and output register sizes.
 
 ### Lookup table extensions
 
@@ -2361,6 +2404,26 @@ In addition, `__ARM_FEATURE_SVE_MATMUL_INT8` is defined to `1` if there
 is hardware support for the SVE forms of these instructions and if the
 associated ACLE intrinsics are available. This implies that
 `__ARM_FEATURE_MATMUL_INT8` and `__ARM_FEATURE_SVE` are both nonzero.
+
+##### Multiplication of modal 8-bit floating-point matrices
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
+for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to half-precision (FEAT_F8F16MM)
+instructions and if the associated ACLE intrinsics are available.
+
+`__ARM_FEATURE_F8F32MM` is defined to `1` if there is hardware support
+for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to single-precision (FEAT_F8F32MM)
+instructions and if the associated ACLE intrinsics are available.
+
+##### Multiplication of 16-bit floating-point matrices
+
+`__ARM_FEATURE_SVE_F16F32MM` is defined to `1` if there is hardware support
+for the SVE 16-bit floating-point to 32-bit floating-point matrix multiply and add
+(FEAT_SVE_F16F32MM) instructions and if the associated ACLE intrinsics are available.
 
 ##### Multiplication of 32-bit floating-point matrices
 
@@ -2606,6 +2669,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_FP8DOT2`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8DOT4`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8FMA`](#modal-8-bit-floating-point-extensions)                                                                                        | Modal 8-bit floating-point extensions                                                              | 1           |
+| [`__ARM_FEATURE_FPRCVT`](#fprcvt-extension)                                                                                                             | FPRCVT extension                                                                                   | 1           |
 | [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_GCS`](#guarded-control-stack)                                                                                                           | Guarded Control Stack                                                                              | 1           |
 | [`__ARM_FEATURE_GCS_DEFAULT`](#guarded-control-stack)                                                                                                   | Guarded Control Stack protection can be enabled                                                    | 1           |
@@ -2621,6 +2685,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
 | [`__ARM_FEATURE_PAUTH`](#pointer-authentication)                                                                                                        | Pointer Authentication Extension (FEAT_PAuth)                                                      | 1           |
 | [`__ARM_FEATURE_PAUTH_LR`](#pointer-authentication)                                                                                                     | Armv9.5-A Enhancements to Pointer Authentication Extension (FEAT_PAuth_LR)                         | 1           |
+| [`__ARM_FEATURE_PCDPHINT`](#producer-consumer-data-placement-hints)                                                                                     | Producer-consumer data placement hint instructions (FEAT_PCDPHINT)                                 | 1           |
 | [`__ARM_FEATURE_QBIT`](#q-saturation-flag)                                                                                                              | Q (saturation) flag (32-bit-only)                                                                  | 1           |
 | [`__ARM_FEATURE_QRDMX`](#rounding-doubling-multiplies)                                                                                                  | SQRDMLxH instructions and associated intrinsics availability                                       | 1           |
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
@@ -2654,11 +2719,16 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE_BITS`](#scalable-vector-extension-sve)                                                                                              | The number of bits in an SVE vector, when known in advance                                         | 256         |
 | [`__ARM_FEATURE_SVE_MATMUL_FP32`](#multiplication-of-32-bit-floating-point-matrices)                                                                    | 32-bit floating-point matrix multiply extension (FEAT_F32MM)                                       | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_FP64`](#multiplication-of-64-bit-floating-point-matrices)                                                                    | 64-bit floating-point matrix multiply extension (FEAT_F64MM)                                       | 1           |
+| [`__ARM_FEATURE_F8F16MM`](#multiplication-of-modal-8-bit-floating-point-matrices)                                                                       | Modal 8-bit floating-point matrix multiply-accumulate to half-precision extension (FEAT_F8F16MM)   | 1           |
+| [`__ARM_FEATURE_F8F32MM`](#multiplication-of-modal-8-bit-floating-point-matrices)                                                                       | Modal 8-bit floating-point matrix multiply-accumulate to single-precision extension (FEAT_F8F32MM) | 1           |
+| [`__ARM_FEATURE_SVE_F16F32MM`](#multiplication-of-16-bit-floating-point-matrices)                                                                       | 16-bit floating-point matrix multiply-accumulate to single-precision extension (FEAT_SVE_F16F32MM) | 1           |
 | [`__ARM_FEATURE_SVE_MATMUL_INT8`](#multiplication-of-8-bit-integer-matrices)                                                                            | SVE support for the integer matrix multiply extension (FEAT_I8MM)                                  | 1           |
 | [`__ARM_FEATURE_SVE_PREDICATE_OPERATORS`](#scalable-vector-extension-sve)                                                                               | Level of support for C and C++ operators on SVE vector types                                        | 1           |
 | [`__ARM_FEATURE_SVE_VECTOR_OPERATORS`](#scalable-vector-extension-sve)                                                                                  | Level of support for C and C++ operators on SVE predicate types                                     | 1           |
 | [`__ARM_FEATURE_SVE2`](#sve2)                                                                                                                           | SVE version 2 (FEAT_SVE2)                                                                          | 1           |
 | [`__ARM_FEATURE_SVE2_AES`](#aes-extension)                                                                                                              | SVE2 support for the AES cryptographic extension (FEAT_SVE_AES)                                     | 1           |
+| [`__ARM_FEATURE_SVE_AES2`](#aes-extension)                                                                                                              | SVE support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SVE_AES2)   | 1           |
+| [`__ARM_FEATURE_SSVE_AES`](#aes-extension)                                                                                                              | Streaming SVE support for the multi-vector AES cryptographic and 128-bit polynomial multiply long extension (FEAT_SSVE_AES)   | 1           |
 | [`__ARM_FEATURE_SVE2_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_BITPERM`](#bit-permute-extension)                                                                                                  | SVE2 bit permute extension                                                    | 1           |
 | [`__ARM_FEATURE_SSVE_FEXPA`](#streaming-sve-fexpa-extension)                                                                                            | Streaming SVE FEXPA extension                                                 | 1           |
@@ -2666,6 +2736,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE2_SM3`](#sm3-extension)                                                                                                              | SVE2 support for the SM3 cryptographic extension (FEAT_SVE_SM3)                                     | 1           |
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
 | [`__ARM_FEATURE_SVE2p1`](#sve2)                                                                                                                         | SVE version 2.1 (FEAT_SVE2p1)
+| [`__ARM_FEATURE_SVE2p2`](#sve2)                                                                                                                         | SVE version 2.2 (FEAT_SVE2p2)
 | [`__ARM_FEATURE_SYSREG128`](#bit-system-registers)                                                                                                      | Support for 128-bit system registers (FEAT_SYSREG128)                                              | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
@@ -2763,10 +2834,6 @@ This attribute does not apply to AArch64.
 
 ## Function Multi Versioning
 
-The specification for Function Multi Versioning is in [**Beta**
-state](#current-status-and-anticipated-changes) and might change or be
-extended in the future.
-
 Function Multi Versioning provides a convenient way to select the most
 appropriate version of a function at runtime. All versions of the
 function may be in the final binary. The compiler generates all
@@ -2788,8 +2855,8 @@ The following attributes trigger the multi version code generation:
 * These attributes have no effect on the calling convention.
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
-* FMV might be disabled in compile time by a compiler flag. In this
-  case, the `default` version shall be used.
+* Function Multi Versioning might be disabled at compile time by a compiler
+  flag. In this case, the `default` version shall be used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
   the multiversioned functions. Therefore, a versioned function
@@ -2805,6 +2872,8 @@ The following attributes trigger the multi version code generation:
   * as a function annotated with `target_version("default")`,
   * or, as a function annotated with `target_clones(...)` where one
     of the versions is `default`.
+* Using any C/C++ extensions or attributes that affect function name mangling,
+  or that clone functions alongside Function Multi Versioning is not supported.
 
 The attribute `__attribute__((target_version("<target version string>")))` expresses the
 following:
@@ -3601,6 +3670,80 @@ values.
 | KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
 | STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
 
+The `__ARM_PREFETCH_RANGE` macro can be used to test for the presence of the
+following range prefetch intrinsics:
+
+``` c
+  void __pldx_range(/*constant*/ unsigned int /*access_kind*/,
+                    /*constant*/ unsigned int /*retention_policy*/,
+                    /*constant*/ signed int   /*length*/,
+                    /*constant*/ unsigned int /*count*/,
+                    /*constant*/ signed int   /*stride*/,
+                    /*constant*/ size_t       /*reuse distance*/,
+                    void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. This intrinsic allows the specification of the
+expected access kind (read or write), the data retention policy (temporal or
+streaming) and the length, count, stride and reuse distance metadata values.
+
+The access kind and data retention policy arguments can only be one of the
+following values.
+
+| **Access Kind** | **Value** | **Summary**                              |
+| --------------- | --------- | ---------------------------------------- |
+| PLD             | 0         | Fetch the addressed location for reading |
+| PST             | 1         | Fetch the addressed location for writing |
+
+| **Retention Policy** | **Value** | **Summary**                                                                |
+| -------------------- | --------- | -------------------------------------------------------------------------- |
+| KEEP                 | 0         | Temporal fetch of the addressed location (that is, allocate in cache normally) |
+| STRM                 | 1         | Streaming fetch of the addressed location (that is, memory used only once)     |
+
+The table below describes the ranges of the length, count, stride and reuse distance arguments.
+
+| **Metadata**   | **Range**           | **Summary**                                                          |
+| -------------- | ------------------- | -------------------------------------------------------------------- |
+| Length         | [-2MiB, +2MiB)      | Number of contiguous bytes to be accessed.                           |
+| Count          | [1, 65536]          | Number of blocks to be accessed.                                     |
+| Stride         | [-2MiB, +2MiB)      | Number of bytes to advance the block address by after `Length`       |
+|                |                     | bytes have been accessed. Note: This value is ignored if Count is 1. |
+| Reuse Distance |                     | Maximum number of bytes to be accessed before executing the next     |
+|                |                     | RPRFM instruction that specifies the same range. All values are      |
+|                |                     | rounded up to the nearest power of 2 in the range 32KiB to 512MiB.   |
+|                |                     | Values exceeding the maximum of 512MiB will be represented by 0,     |
+|                |                     | indicating distance not known.                                       |
+|                |                     | Note: This value is ignored if a streaming prefetch is specified.    |
+
+``` c
+  void __pld_range(/*constant*/ unsigned int /*access_kind*/,
+                   /*constant*/ unsigned int /*retention_policy*/,
+                   uint64_t /*metadata*/,
+                   void const volatile *addr);
+```
+
+Generates a data prefetch instruction for a range of addresses starting from a
+given base address. Locations within the specified address ranges are prefetched
+into one or more caches. The access kind and retention policy arguments can
+have the same values as in `__pldx_range`. The bits of the metadata argument
+are interpreted as follows:
+
+| **Metadata**   | **Bits** | **Range**       | **Summary**                                                  |
+| -------------- | -------- | --------------- | ------------------------------------------------------------ |
+| Length         | 0-21     | [-2MiB, +2MiB)  | Signed integer representing the number of contiguous         |
+|                |          |                 | bytes to be accessed.                                        |
+| Count          | 37-22    | [0, 65535]      | Unsigned integer representing number of blocks of data       |
+|                |          |                 | to be accessed, minus 1.                                     |
+| Stride         | 59-38    | [-2MiB, +2MiB)  | Signed integer representing the number of bytes to advance   |
+|                |          |                 | the block address by after `Length` bytes have been          |
+|                |          |                 | accessed. This value is ignored if Count is 0.               |
+| Reuse Distance | 63-60    | [0, 15]         | Indicates the maximum number of bytes to be accessed before  |
+|                |          |                 | executing the next RPRFM instruction that specifies the same |
+|                |          |                 | range. Bits encode decreasing powers of two in the range     |
+|                |          |                 | 1 (512MiB) to 15 (32KiB). 0 indicates distance not known.    |
+
 ### Instruction prefetch
 
 ``` c
@@ -3626,6 +3769,16 @@ as in `__pldx`.
 
 `__pldx` and `__plix` arguments cache level and retention policy
 are ignored on unsupported targets.
+
+### Intent to read prefetch
+
+``` c
+  void __pldir(void const volatile *addr);
+```
+Generates an intent to read on update prefetch instruction. The argument should
+be any expression that may designate a data address. This intrinsic does
+not require specification of cache level or retention policy. Support for this
+intrinsic is indicated by `__ARM_FEATURE_PCDPHINT`.
 
 ## NOP
 
@@ -4798,6 +4951,34 @@ Performs the same operation as `__arm_st64bv`, except that the data
 stored to memory is modified by replacing the low 32 bits of
 `value.val[0]` with the contents of the `ACCDATA_EL1` system register.
 The returned value is the same as for `__arm_st64bv`.
+
+## Atomic store with PCDPHINT intrinsics
+
+This intrinsic provides an atomic store, which will
+make use of the `STSHH` hint instruction immediately followed by the
+associated store instruction. This intrinsic is type generic and 
+supports scalar types from 8-64 bits and is available when
+`__ARM_FEATURE_PCDPHINT` is defined.
+
+To access this intrinsic, `<arm_acle.h>` should be included.
+
+``` c
+  void __arm_atomic_store_with_stshh(type *ptr,
+                                     type data,
+                                     int memory_order,
+                                     int ret); /* Retention Policy */
+```
+
+The first argument in this intrinsic is a pointer `ptr` which is the location to store to.
+The second argument `data` is the data which is to be stored.
+The third argument `mem` can be one of 3 memory ordering variables supported by atomic_store:
+__ATOMIC_RELAXED, __ATOMIC_SEQ_CST, and __ATOMIC_RELEASE.
+The fourth argument can contain the following values:
+
+| **Retention Policy** | **Value** | **Summary**                                                                       |
+| -------------------- | --------- | --------------------------------------------------------------------------------- |
+| KEEP                 | 0         | Signals to retain the updated location in the local cache of the updating PE.     |
+| STRM                 | 1         | Signals to not retain the updated location in the local cache of the updating PE. |
 
 # Custom Datapath Extension
 
@@ -9411,6 +9592,31 @@ BFloat16 floating-point adjust exponent vectors.
   svbfloat16_t svscale[_n_bf16]_z (svbool_t pg, svbfloat16_t zdn, int16_t zm);
   ```
 
+### SVE2 floating-point matrix multiply-accumulate instructions.
+
+#### FMMLA (widening, FP8 to FP16)
+
+Modal 8-bit floating-point matrix multiply-accumulate to half-precision.
+```c
+  // Only if (__ARM_FEATURE_SVE2 && __ARM_FEATURE_F8F16MM)
+  svfloat16_t svmmla[_f16_mf8]_fpm(svfloat16_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+```
+
+#### FMMLA (widening, FP8 to FP32)
+
+Modal 8-bit floating-point matrix multiply-accumulate to single-precision.
+```c
+  // Only if (__ARM_FEATURE_SVE2 && __ARM_FEATURE_F8F32MM)
+  svfloat32_t svmmla[_f32_mf8]_fpm(svfloat32_t zda, svmfloat8_t zn, svmfloat8_t zm, fpm_t fpm);
+```
+#### FMMLA (widening, FP16 to FP32)
+
+16-bit floating-point matrix multiply-accumulate to single-precision.
+```c
+  // Only if __ARM_FEATURE_SVE_F16F32MM
+  svfloat32_t svmmla[_f32_f16](svfloat32_t zda, svfloat16_t zn, svfloat16_t zm);
+```
+
 ### SVE2.1 instruction intrinsics
 
 The specification for SVE2.1 is in
@@ -9748,6 +9954,43 @@ Lookup table read with 4-bit indices.
   svint16_t svluti4_lane[_s16](svint16_t table, svuint8_t indices, uint64_t imm_idx);
   svint16_t svluti4_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
 ```
+
+### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
+
+The specification for SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+#### AESE, AESD, AESEMC, AESDIMC
+
+Multi-vector Advanced Encryption Standard instructions.
+
+```c
+  // Only if __ARM_FEATURE_SVE_AES2 != 0
+
+  svuint8x2_t    svaese_lane[_u8_x2]     (svuint8x2_t zdn, svuint8_t zm, uint64_t index);
+  svuint8x4_t    svaese_lane[_u8_x4]     (svuint8x4_t zdn, svuint8_t zm, uint64_t index);
+  svuint8x2_t    svaesd_lane[_u8_x2]     (svuint8x2_t zdn, svuint8_t zm, uint64_t index);
+  svuint8x4_t    svaesd_lane[_u8_x4]     (svuint8x4_t zdn, svuint8_t zm, uint64_t index);
+  svuint8x2_t    svaesemc_lane[_u8_x2]   (svuint8x2_t zdn, svuint8_t zm, uint64_t index);
+  svuint8x4_t    svaesemc_lane[_u8_x4]   (svuint8x4_t zdn, svuint8_t zm, uint64_t index);
+  svuint8x2_t    svaesdimc_lane[_u8_x2]  (svuint8x2_t zdn, svuint8_t zm, uint64_t index);
+  svuint8x4_t    svaesdimc_lane[_u8_x4]  (svuint8x4_t zdn, svuint8_t zm, uint64_t index);
+```
+
+#### PMULL, PMLAL
+
+Multi-vector 128-bit polynomial multiply long instructions.
+
+``` c
+  // Only if __ARM_FEATURE_SVE_AES2 != 0
+
+  svuint64x2_t svpmull_pair[_u64_x2](svuint64_t zn, svuint64_t zm);
+  svuint64x2_t svpmull_pair[_n_u64_x2](svuint64_t zn, uint64_t zm);
+
+  svuint64x2_t svpmlal_pair[_u64_x2](svuint64x2_t zda, svuint64_t zn, svuint64_t zm);
+  svuint64x2_t svpmlal_pair[_n_u64_x2](svuint64x2_t zda, svuint64_t zn, uint64_t zm);
+  ```
 
 # SME language extensions and intrinsics
 
@@ -12938,6 +13181,41 @@ Zero ZA vector groups
     __arm_streaming __arm_inout("za");
 ```
 
+### SME2.2 instruction intrinsics
+
+The specification for SME2.2 are in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p2` is defined.
+
+#### FMUL
+
+Multi-vector floating-point multiply
+
+``` c
+  // Variants are also available for:
+  // [_single_f32_x2]
+  // [_single_f64_x2]
+  svfloat16x2_t svmul[_single_f16_x2](svfloat16x2_t zd, svfloat16_t zm) __arm_streaming;
+
+  // Variants are also available for:
+  // [_single_f32_x4]
+  // [_single_f64_x4]
+  svfloat16x4_t svmul[_single_f16_x4](svfloat16x4_t zd, svfloat16_t zm) __arm_streaming;
+
+  // Variants are also available for:
+  // [_f32_x2]
+  // [_f64_x2]
+  svfloat16x2_t svmul[_f16_x2](svfloat16x2_t zd, svfloat16x2_t zm) __arm_streaming;
+
+  // Variants are also available for:
+  // [_f32_x4]
+  // [_f64_x4]
+  svfloat16x4_t svmul[_f16_x4](svfloat16x4_t zd, svfloat16x4_t zm) __arm_streaming;
+```
+
 ### Streaming-compatible versions of standard routines
 
 ACLE provides the following streaming-compatible functions,
@@ -13487,6 +13765,97 @@ While (resulting in predicate tuple)
   svboolx2_t svwhilelt_b8[_s64]_x2(int64_t rn, int64_t rm);
 ```
 
+### SVE2.2 and SME2.2 instruction intrinsics
+
+The specification for SVE2.2 and SME2.2 are in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+The functions in this section are defined by either the header file
+ [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
+when `__ARM_FEATURE_SVE2p2` or `__ARM_FEATURE_SME2p2` is defined, respectively.
+
+#### FCVTXNT, FCVTLT, FCVTNT, BFCVTNT
+
+Zeroing forms of convert instructions.
+
+```c
+
+// Variant is available for _f64_f32
+svfloat32_t	svcvtlt_f32[_f16]_z	(svbool_t pg, svfloat16_t op);
+
+// Variants are available for:
+// _f32_f64, _bf16_f32
+svfloat16_t	svcvtnt_f16[_f32]_z	(svfloat16_t even, svbool_t pg, svfloat32_t op);
+
+svfloat32_t	svcvtxnt_f32[_f64]_z (svfloat32_t even, svbool_t pg, svfloat64_t op);
+```
+
+#### FRINT32X, FRINT32Z, FRINT64X, FRINT64Z 
+
+Round to integral floating-point values.
+
+```c
+
+// Variant is available for _f64
+svfloat32_t svrint32x[_f32]_z(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint32x[_f32]_x(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint32x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+// Variant is available for _f64
+svfloat32_t svrint32z[_f32]_z(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint32z[_f32]_x(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint32z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+// Variant is available for _f64
+svfloat32_t svrint64x[_f32]_z(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint64x[_f32]_x(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint64x[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+
+// Variant is available for _f64
+svfloat32_t svrint64z[_f32]_z(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint64z[_f32]_x(svbool_t pg, svfloat32_t zn);
+// Variant is available for _f64
+svfloat32_t svrint64z[_f32]_m(svfloat32_t inactive, svbool_t pg, svfloat32_t zn);
+```
+
+#### COMPACT, EXPAND
+
+Copy active vector elements to/from lower-numbered elements.
+
+``` c
+  // Variants are available for:
+  // _s8, _s16, _u16, _mf8, _bf16, _f16
+  svuint8_t svcompact[_u8](svbool_t pg, svuint8_t zn);
+
+  // Variants are available for:
+  // _s8, _s16, _u16, _s32, _u32, _s64, _u64
+  // _mf8, _bf16, _f16, _f32, _f64
+  svuint8_t svexpand[_u8](svbool_t pg, svuint8_t zn);
+
+  ```
+
+#### FIRSTP, LASTP
+
+Scalar index of first/last true predicate element (predicated).
+
+``` c
+  // Variants are available for:
+  // _b16, _b32, _b64
+  int64_t svfirstp_b8(svbool_t pg, svbool_t pn);
+
+  // Variants are available for:
+  // _b16, _b32, _b64
+  int64_t svlastp_b8(svbool_t pg, svbool_t pn);
+
+  ```
 
 ### SME2 maximum and minimum absolute value
 
@@ -13852,7 +14221,7 @@ Multi-vector 8-bit floating-point multiply-add long.
                                        svmfloat8_t zm, uint64_t imm_idx
                                        fpm_t fpm) __arm_streaming __arm_inout("za");
 
-  void svmla[_single]_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
+  void svmla_za16[_mf8]_vg2x1_fpm(uint32_t slice, svmfloat8_t zn,
                                            svmfloat8_t zm, fpm_t fpm)
                                            __arm_streaming __arm_inout("za");
 
@@ -13888,7 +14257,7 @@ Multi-vector 8-bit floating-point multiply-add long.
                                        svmfloat8_t zm, uint64_t imm_idx,
                                        fpm_t fpm)__arm_streaming __arm_inout("za");
 
-  void svmla[_single]_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
+  void svmla_za32[_mf8]_vg4x1_fpm(uint32_t slice, svmfloat8_t zn,
                                            svmfloat8_t zm, fpm_t fpm)
                                            __arm_streaming __arm_inout("za");
 
@@ -14496,119 +14865,6 @@ undefined behavior to the semantics of an intrinsic.
 The MVE load and store instructions provide for alignment assertions, which may
 speed up access to aligned data (and will fault access to unaligned data).  The
 MVE intrinsics do not directly provide a means for asserting alignment.
-
-# Transactional Memory Extension (TME) intrinsics
-
-## Introduction
-
-This section describes the intrinsics for the instructions of the
-Transactional Memory Extension (TME). TME adds support for transactional
-execution where transactions are started and
-committed by a set of new instructions. The TME instructions are present
-in the AArch64 execution state only.
-
-TME is designed to improve performance in cases where larger system scaling
-requires atomic and isolated access to data structures whose composition is
-dynamic in nature and therefore not readily amenable to fine-grained locking
-or lock-free approaches.
-
-TME transactions are *isolated*. This means that transactional stores are
-hidden from other observers, and transactional loads cannot see stores from
-other observers until the transaction commits. Also, if the transaction fails
-then stores to memory and writes to registers by the transaction are discarded
-and the processor returns to the state it had when the transaction started.
-
-TME transactions are *best-effort*. This means that the architecture does not
-guarantee success for any transaction. The architecture requires that all
-transactions specify a failure handler allowing the software to fallback to a
-non-transactional alternative to provide guarantees of forward progress.
-
-TME defines *flattened nesting* of transactions, where nested transactions are
-subsumed by the outer transaction. This means that the effects of a nested
-transaction do not become visible to other observers until the outer
-transaction commits. When a nested transaction fails it causes the
-outer transaction, and all nested transactions within, to fail.
-
-The TME intrinsics are available when `__ARM_FEATURE_TME` is defined.
-
-## Failure definitions
-
-Transactions can fail due to various causes. The following macros
-are defined to help use or detect these causes.
-
-``` c
-  #define _TMFAILURE_REASON 0x00007fffu
-  #define _TMFAILURE_RTRY   0x00008000u
-  #define _TMFAILURE_CNCL   0x00010000u
-  #define _TMFAILURE_MEM    0x00020000u
-  #define _TMFAILURE_IMP    0x00040000u
-  #define _TMFAILURE_ERR    0x00080000u
-  #define _TMFAILURE_SIZE   0x00100000u
-  #define _TMFAILURE_NEST   0x00200000u
-  #define _TMFAILURE_DBG    0x00400000u
-  #define _TMFAILURE_INT    0x00800000u
-  #define _TMFAILURE_TRIVIAL    0x01000000u
-```
-
-## Intrinsics
-
-``` c
-  uint64_t __tstart (void);
-```
-
-Starts a new transaction. When the transaction starts successfully the return
-value is 0. If the transaction fails, all state modifications are discarded
-and a cause of the failure is encoded in the return value. The macros
-defined in [Failure definitions](#failure-definitions) can be used
-to detect the cause of the failure.
-
-``` c
-  void __tcommit (void);
-```
-
-Commits the current transaction. For a nested transaction, the only effect
-is that the transactional nesting depth is decreased. For an outer transaction,
-the state modifications performed transactionally are committed to the
-architectural state.
-
-``` c
-  void __tcancel (/*constant*/ uint64_t);
-```
-
-Cancels the current transaction and discards all state modifications that
-were performed transactionally. The intrinsic takes a 16-bit immediate input that encodes
-the cancellation reason. This input could be given as
-
-``` c
-  __tcancel (_TMFAILURE_RTRY | (failure_reason & _TMFAILURE_REASON));
-```
-
-if retry is true or
-
-``` c
-  __tcancel (failure_reason & _TMFAILURE_REASON);
-```
-
-if retry is false.
-
-``` c
-  uint64_t __ttest (void);
-```
-
-Tests if executing inside a transaction. If no transaction is currently
-executing, the return value is 0. Otherwise, this intrinsic returns the depth of the
-transaction.
-
-## Instructions
-
-| **Intrinsics**                                | **Argument**     | **Result**     | **Instruction**   |
-| --------------------------------------------- | ---------------- | -------------- | ----------------- |
-| uint64_t __tstart (void)                      | -                | Xt -> result   | tstart <Xt>       |
-| void __tcommit (void)                         | -                | -              | tcommit           |
-| void __tcancel (/*constant*/ uint64_t reason) | reason -> #<imm> | -              | tcancel #<imm>    |
-| uint64_t __ttest (void)                       | -                | Xt -> result   | ttest <Xt>        |
-
-These intrinsics are available when `arm_acle.h` is included.
 
 # memcpy family of operations intrinsics - MOPS
 

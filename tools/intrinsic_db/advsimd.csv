@@ -1,4 +1,4 @@
-<COMMENT>	SPDX-FileCopyrightText: Copyright 2014-2024 Arm Limited <open-source-office@arm.com>
+<COMMENT>	SPDX-FileCopyrightText: Copyright 2014-2025 Arm Limited <open-source-office@arm.com>
 <COMMENT>	SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 <COMMENT>	SPDX-License-Identifier: Apache-2.0
 <COMMENT>	
@@ -209,10 +209,10 @@ uint16x4_t vmla_u16(uint16x4_t a, uint16x4_t b, uint16x4_t c)	a -> Vd.4H;b -> Vn
 uint16x8_t vmlaq_u16(uint16x8_t a, uint16x8_t b, uint16x8_t c)	a -> Vd.8H;b -> Vn.8H;c -> Vm.8H	MLA Vd.8H,Vn.8H,Vm.8H	Vd.8H -> result	v7/A32/A64
 uint32x2_t vmla_u32(uint32x2_t a, uint32x2_t b, uint32x2_t c)	a -> Vd.2S;b -> Vn.2S;c -> Vm.2S	MLA Vd.2S,Vn.2S,Vm.2S	Vd.2S -> result	v7/A32/A64
 uint32x4_t vmlaq_u32(uint32x4_t a, uint32x4_t b, uint32x4_t c)	a -> Vd.4S;b -> Vn.4S;c -> Vm.4S	MLA Vd.4S,Vn.4S,Vm.4S	Vd.4S -> result	v7/A32/A64
-float32x2_t vmla_f32(float32x2_t a, float32x2_t b, float32x2_t c)	N/A	RESULT[I] = a[i] + (b[i] * c[i]) for i = 0 to 1	N/A	v7/A32/A64
-float32x4_t vmlaq_f32(float32x4_t a, float32x4_t b, float32x4_t c)	N/A	RESULT[I] = a[i] + (b[i] * c[i]) for i = 0 to 3	N/A	v7/A32/A64
-float64x1_t vmla_f64(float64x1_t a, float64x1_t b, float64x1_t c)	N/A	RESULT[I] = a[i] + (b[i] * c[i]) for i = 0	N/A	A64
-float64x2_t vmlaq_f64(float64x2_t a, float64x2_t b, float64x2_t c)	N/A	RESULT[I] = a[i] + (b[i] * c[i]) for i = 0 to 1	N/A	A64
+float32x2_t vmla_f32(float32x2_t a, float32x2_t b, float32x2_t c)	N/A	result = vadd(a, vmul(b, c))	N/A	v7/A32/A64
+float32x4_t vmlaq_f32(float32x4_t a, float32x4_t b, float32x4_t c)	N/A	result = vadd(a, vmul(b, c))	N/A	v7/A32/A64
+float64x1_t vmla_f64(float64x1_t a, float64x1_t b, float64x1_t c)	N/A	result = vadd(a, vmul(b, c))	N/A	A64
+float64x2_t vmlaq_f64(float64x2_t a, float64x2_t b, float64x2_t c)	N/A	result = vadd(a, vmul(b, c))	N/A	A64
 int16x8_t vmlal_s8(int16x8_t a, int8x8_t b, int8x8_t c)	a -> Vd.8H;b -> Vn.8B;c -> Vm.8B	SMLAL Vd.8H,Vn.8B,Vm.8B	Vd.8H -> result	v7/A32/A64
 int32x4_t vmlal_s16(int32x4_t a, int16x4_t b, int16x4_t c)	a -> Vd.4S;b -> Vn.4H;c -> Vm.4H	SMLAL Vd.4S,Vn.4H,Vm.4H	Vd.4S -> result	v7/A32/A64
 int64x2_t vmlal_s32(int64x2_t a, int32x2_t b, int32x2_t c)	a -> Vd.2D;b -> Vn.2S;c -> Vm.2S	SMLAL Vd.2D,Vn.2S,Vm.2S	Vd.2D -> result	v7/A32/A64
@@ -237,10 +237,10 @@ uint16x4_t vmls_u16(uint16x4_t a, uint16x4_t b, uint16x4_t c)	a -> Vd.4H;b -> Vn
 uint16x8_t vmlsq_u16(uint16x8_t a, uint16x8_t b, uint16x8_t c)	a -> Vd.8H;b -> Vn.8H;c -> Vm.8H	MLS Vd.8H,Vn.8H,Vm.8H	Vd.8H -> result	v7/A32/A64
 uint32x2_t vmls_u32(uint32x2_t a, uint32x2_t b, uint32x2_t c)	a -> Vd.2S;b -> Vn.2S;c -> Vm.2S	MLS Vd.2S,Vn.2S,Vm.2S	Vd.2S -> result	v7/A32/A64
 uint32x4_t vmlsq_u32(uint32x4_t a, uint32x4_t b, uint32x4_t c)	a -> Vd.4S;b -> Vn.4S;c -> Vm.4S	MLS Vd.4S,Vn.4S,Vm.4S	Vd.4S -> result	v7/A32/A64
-float32x2_t vmls_f32(float32x2_t a, float32x2_t b, float32x2_t c)	N/A	RESULT[I] = a[i] - (b[i] * c[i]) for i = 0 to 1	N/A	v7/A32/A64
-float32x4_t vmlsq_f32(float32x4_t a, float32x4_t b, float32x4_t c)	N/A	RESULT[I] = a[i] - (b[i] * c[i]) for i = 0 to 3	N/A	v7/A32/A64
-float64x1_t vmls_f64(float64x1_t a, float64x1_t b, float64x1_t c)	N/A	RESULT[I] = a[i] - (b[i] * c[i]) for i = 0	N/A	A64
-float64x2_t vmlsq_f64(float64x2_t a, float64x2_t b, float64x2_t c)	N/A	RESULT[I] = a[i] - (b[i] * c[i]) for i = 0 to 1	N/A	A64
+float32x2_t vmls_f32(float32x2_t a, float32x2_t b, float32x2_t c)	N/A	result = vsub(a, vmul(b, c))	N/A	v7/A32/A64
+float32x4_t vmlsq_f32(float32x4_t a, float32x4_t b, float32x4_t c)	N/A	result = vsub(a, vmul(b, c))	N/A	v7/A32/A64
+float64x1_t vmls_f64(float64x1_t a, float64x1_t b, float64x1_t c)	N/A	result = vsub(a, vmul(b, c))	N/A	A64
+float64x2_t vmlsq_f64(float64x2_t a, float64x2_t b, float64x2_t c)	N/A	result = vsub(a, vmul(b, c))	N/A	A64
 int16x8_t vmlsl_s8(int16x8_t a, int8x8_t b, int8x8_t c)	a -> Vd.8H;b -> Vn.8B;c -> Vm.8B	SMLSL Vd.8H,Vn.8B,Vm.8B	Vd.8H -> result	v7/A32/A64
 int32x4_t vmlsl_s16(int32x4_t a, int16x4_t b, int16x4_t c)	a -> Vd.4S;b -> Vn.4H;c -> Vm.4H	SMLSL Vd.4S,Vn.4H,Vm.4H	Vd.4S -> result	v7/A32/A64
 int64x2_t vmlsl_s32(int64x2_t a, int32x2_t b, int32x2_t c)	a -> Vd.2D;b -> Vn.2S;c -> Vm.2S	SMLSL Vd.2D,Vn.2S,Vm.2S	Vd.2D -> result	v7/A32/A64
@@ -1168,15 +1168,25 @@ int32x4_t vcvtaq_s32_f32(float32x4_t a)	a -> Vn.4S	FCVTAS Vd.4S,Vn.4S	Vd.4S -> r
 uint32x2_t vcvta_u32_f32(float32x2_t a)	a -> Vn.2S	FCVTAU Vd.2S,Vn.2S	Vd.2S -> result	A32/A64
 uint32x4_t vcvtaq_u32_f32(float32x4_t a)	a -> Vn.4S	FCVTAU Vd.4S,Vn.4S	Vd.4S -> result	A32/A64
 int32_t vcvts_s32_f32(float32_t a)	a -> Sn	FCVTZS Sd,Sn	Sd -> result	A64
+int64_t vcvts_s64_f32(float32_t a)	a -> Sn	FCVTZS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvts_u32_f32(float32_t a)	a -> Sn	FCVTZU Sd,Sn	Sd -> result	A64
+uint64_t vcvts_u64_f32(float32_t a)	a -> Sn	FCVTZU Dd/Xd,Sn	Dd/Xd -> result	A64
 int32_t vcvtns_s32_f32(float32_t a)	a -> Sn	FCVTNS Sd,Sn	Sd -> result	A64
+int64_t vcvtns_s64_f32(float32_t a)	a -> Sn	FCVTNS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvtns_u32_f32(float32_t a)	a -> Sn	FCVTNU Sd,Sn	Sd -> result	A64
+uint64_t vcvtns_u64_f32(float32_t a)	a -> Sn	FCVTNU Dd/Xd,Sn	Dd/Xd -> result	A64
 int32_t vcvtms_s32_f32(float32_t a)	a -> Sn	FCVTMS Sd,Sn	Sd -> result	A64
+int64_t vcvtms_s64_f32(float32_t a)	a -> Sn	FCVTMS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvtms_u32_f32(float32_t a)	a -> Sn	FCVTMU Sd,Sn	Sd -> result	A64
+uint64_t vcvtms_u64_f32(float32_t a)	a -> Sn	FCVTMU Dd/Xd,Sn	Dd/Xd -> result	A64
 int32_t vcvtps_s32_f32(float32_t a)	a -> Sn	FCVTPS Sd,Sn	Sd -> result	A64
+int64_t vcvtps_s64_f32(float32_t a)	a -> Sn	FCVTPS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvtps_u32_f32(float32_t a)	a -> Sn	FCVTPU Sd,Sn	Sd -> result	A64
+uint64_t vcvtps_u64_f32(float32_t a)	a -> Sn	FCVTPU Dd/Xd,Sn	Dd/Xd -> result	A64
 int32_t vcvtas_s32_f32(float32_t a)	a -> Sn	FCVTAS Sd,Sn	Sd -> result	A64
+int64_t vcvtas_s64_f32(float32_t a)	a -> Sn	FCVTAS Dd/Xd,Sn	Dd/Xd -> result	A64
 uint32_t vcvtas_u32_f32(float32_t a)	a -> Sn	FCVTAU Sd,Sn	Sd -> result	A64
+uint64_t vcvtas_u64_f32(float32_t a)	a -> Sn	FCVTAU Dd/Xd,Sn	Dd/Xd -> result	A64
 int64x1_t vcvt_s64_f64(float64x1_t a)	a -> Dn	FCVTZS Dd,Dn	Dd -> result	A64
 int64x2_t vcvtq_s64_f64(float64x2_t a)	a -> Vn.2D	FCVTZS Vd.2D,Vn.2D	Vd.2D -> result	A64
 uint64x1_t vcvt_u64_f64(float64x1_t a)	a -> Dn	FCVTZU Dd,Dn	Dd -> result	A64
@@ -1197,15 +1207,25 @@ int64x1_t vcvta_s64_f64(float64x1_t a)	a -> Dn	FCVTAS Dd,Dn	Dd -> result	A64
 int64x2_t vcvtaq_s64_f64(float64x2_t a)	a -> Vn.2D	FCVTAS Vd.2D,Vn.2D	Vd.2D -> result	A64
 uint64x1_t vcvta_u64_f64(float64x1_t a)	a -> Dn	FCVTAU Dd,Dn	Dd -> result	A64
 uint64x2_t vcvtaq_u64_f64(float64x2_t a)	a -> Vn.2D	FCVTAU Vd.2D,Vn.2D	Vd.2D -> result	A64
+int32_t vcvtd_s32_f64(float64_t a)	a -> Dn	FCVTZS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtd_s64_f64(float64_t a)	a -> Dn	FCVTZS Dd,Dn	Dd -> result	A64
+uint32_t vcvtd_u32_f64(float64_t a)	a -> Dn	FCVTZU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtd_u64_f64(float64_t a)	a -> Dn	FCVTZU Dd,Dn	Dd -> result	A64
+int32_t vcvtnd_s32_f64(float64_t a)	a -> Dn	FCVTNS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtnd_s64_f64(float64_t a)	a -> Dn	FCVTNS Dd,Dn	Dd -> result	A64
+uint32_t vcvtnd_u32_f64(float64_t a)	a -> Dn	FCVTNU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtnd_u64_f64(float64_t a)	a -> Dn	FCVTNU Dd,Dn	Dd -> result	A64
+int32_t vcvtmd_s32_f64(float64_t a)	a -> Dn	FCVTMS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtmd_s64_f64(float64_t a)	a -> Dn	FCVTMS Dd,Dn	Dd -> result	A64
+uint32_t vcvtmd_u32_f64(float64_t a)	a -> Dn	FCVTMU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtmd_u64_f64(float64_t a)	a -> Dn	FCVTMU Dd,Dn	Dd -> result	A64
+int32_t vcvtpd_s32_f64(float64_t a)	a -> Dn	FCVTPS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtpd_s64_f64(float64_t a)	a -> Dn	FCVTPS Dd,Dn	Dd -> result	A64
+uint32_t vcvtpd_u32_f64(float64_t a)	a -> Dn	FCVTPU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtpd_u64_f64(float64_t a)	a -> Dn	FCVTPU Dd,Dn	Dd -> result	A64
+int32_t vcvtad_s32_f64(float64_t a)	a -> Dn	FCVTAS Sd/Wd,Dn	Sd/Wd -> result	A64
 int64_t vcvtad_s64_f64(float64_t a)	a -> Dn	FCVTAS Dd,Dn	Dd -> result	A64
+uint32_t vcvtad_u32_f64(float64_t a)	a -> Dn	FCVTAU Sd/Wd,Dn	Sd/Wd -> result	A64
 uint64_t vcvtad_u64_f64(float64_t a)	a -> Dn	FCVTAU Dd,Dn	Dd -> result	A64
 int32x2_t vcvt_n_s32_f32(float32x2_t a, __builtin_constant_p(n))	a -> Vn.2S;1 <= n <= 32	FCVTZS Vd.2S,Vn.2S,#n	Vd.2S -> result	v7/A32/A64
 int32x4_t vcvtq_n_s32_f32(float32x4_t a, __builtin_constant_p(n))	a -> Vn.4S;1 <= n <= 32	FCVTZS Vd.4S,Vn.4S,#n	Vd.4S -> result	v7/A32/A64
@@ -1342,8 +1362,8 @@ uint16x4_t vmla_lane_u16(uint16x4_t a, uint16x4_t b, uint16x4_t v, __builtin_con
 uint16x8_t vmlaq_lane_u16(uint16x8_t a, uint16x8_t b, uint16x4_t v, __builtin_constant_p(lane))	a -> Vd.8H;b -> Vn.8H;v -> Vm.4H;0 <= lane <= 3	MLA Vd.8H,Vn.8H,Vm.H[lane]	Vd.8H -> result	v7/A32/A64
 uint32x2_t vmla_lane_u32(uint32x2_t a, uint32x2_t b, uint32x2_t v, __builtin_constant_p(lane))	a -> Vd.2S;b -> Vn.2S;v -> Vm.2S;0 <= lane <= 1	MLA Vd.2S,Vn.2S,Vm.S[lane]	Vd.2S -> result	v7/A32/A64
 uint32x4_t vmlaq_lane_u32(uint32x4_t a, uint32x4_t b, uint32x2_t v, __builtin_constant_p(lane))	a -> Vd.4S;b -> Vn.4S;v -> Vm.2S;0 <= lane <= 1	MLA Vd.4S,Vn.4S,Vm.S[lane]	Vd.4S -> result	v7/A32/A64
-float32x2_t vmla_lane_f32(float32x2_t a, float32x2_t b, float32x2_t v, __builtin_constant_p(lane))	0 <= lane <= 1	RESULT[I] = a[i] + (b[i] * v[lane]) for i = 0 to 1	N/A	v7/A32/A64
-float32x4_t vmlaq_lane_f32(float32x4_t a, float32x4_t b, float32x2_t v, __builtin_constant_p(lane))	0 <= lane <= 1	RESULT[I] = a[i] + (b[i] * v[lane]) for i = 0 to 3	N/A	v7/A32/A64
+float32x2_t vmla_lane_f32(float32x2_t a, float32x2_t b, float32x2_t v, __builtin_constant_p(lane))	0 <= lane <= 1	result = vadd(a, vmul(b, v[lane]))	N/A	v7/A32/A64
+float32x4_t vmlaq_lane_f32(float32x4_t a, float32x4_t b, float32x2_t v, __builtin_constant_p(lane))	0 <= lane <= 1	result = vadd(a, vmul(b, v[lane]))	N/A	v7/A32/A64
 int16x4_t vmla_laneq_s16(int16x4_t a, int16x4_t b, int16x8_t v, __builtin_constant_p(lane))	a -> Vd.4H;b -> Vn.4H;v -> Vm.8H;0 <= lane <= 7	MLA Vd.4H,Vn.4H,Vm.H[lane]	Vd.4H -> result	A64
 int16x8_t vmlaq_laneq_s16(int16x8_t a, int16x8_t b, int16x8_t v, __builtin_constant_p(lane))	a -> Vd.8H;b -> Vn.8H;v -> Vm.8H;0 <= lane <= 7	MLA Vd.8H,Vn.8H,Vm.H[lane]	Vd.8H -> result	A64
 int32x2_t vmla_laneq_s32(int32x2_t a, int32x2_t b, int32x4_t v, __builtin_constant_p(lane))	a -> Vd.2S;b -> Vn.2S;v -> Vm.4S;0 <= lane <= 3	MLA Vd.2S,Vn.2S,Vm.S[lane]	Vd.2S -> result	A64
@@ -1352,8 +1372,8 @@ uint16x4_t vmla_laneq_u16(uint16x4_t a, uint16x4_t b, uint16x8_t v, __builtin_co
 uint16x8_t vmlaq_laneq_u16(uint16x8_t a, uint16x8_t b, uint16x8_t v, __builtin_constant_p(lane))	a -> Vd.8H;b -> Vn.8H;v -> Vm.8H;0 <= lane <= 7	MLA Vd.8H,Vn.8H,Vm.H[lane]	Vd.8H -> result	A64
 uint32x2_t vmla_laneq_u32(uint32x2_t a, uint32x2_t b, uint32x4_t v, __builtin_constant_p(lane))	a -> Vd.2S;b -> Vn.2S;v -> Vm.4S;0 <= lane <= 3	MLA Vd.2S,Vn.2S,Vm.S[lane]	Vd.2S -> result	A64
 uint32x4_t vmlaq_laneq_u32(uint32x4_t a, uint32x4_t b, uint32x4_t v, __builtin_constant_p(lane))	a -> Vd.4S;b -> Vn.4S;v -> Vm.4S;0 <= lane <= 3	MLA Vd.4S,Vn.4S,Vm.S[lane]	Vd.4S -> result	A64
-float32x2_t vmla_laneq_f32(float32x2_t a, float32x2_t b, float32x4_t v, __builtin_constant_p(lane))	0 <= lane <= 3	RESULT[I] = a[i] + (b[i] * v[lane]) for i = 0 to 1	N/A	A64
-float32x4_t vmlaq_laneq_f32(float32x4_t a, float32x4_t b, float32x4_t v, __builtin_constant_p(lane))	0 <= lane <= 3	RESULT[I] = a[i] + (b[i] * v[lane]) for i = 0 to 3	N/A	A64
+float32x2_t vmla_laneq_f32(float32x2_t a, float32x2_t b, float32x4_t v, __builtin_constant_p(lane))	0 <= lane <= 3	result = vadd(a, vmul(b, v[lane]))	N/A	A64
+float32x4_t vmlaq_laneq_f32(float32x4_t a, float32x4_t b, float32x4_t v, __builtin_constant_p(lane))	0 <= lane <= 3	result = vadd(a, vmul(b, v[lane]))	N/A	A64
 int32x4_t vmlal_lane_s16(int32x4_t a, int16x4_t b, int16x4_t v, __builtin_constant_p(lane))	a -> Vd.4S;b -> Vn.4H;v -> Vm.4H;0 <= lane <= 3	SMLAL Vd.4S,Vn.4H,Vm.H[lane]	Vd.4S -> result	v7/A32/A64
 int64x2_t vmlal_lane_s32(int64x2_t a, int32x2_t b, int32x2_t v, __builtin_constant_p(lane))	a -> Vd.2D;b -> Vn.2S;v -> Vm.2S;0 <= lane <= 1	SMLAL Vd.2D,Vn.2S,Vm.S[lane]	Vd.2D -> result	v7/A32/A64
 uint32x4_t vmlal_lane_u16(uint32x4_t a, uint16x4_t b, uint16x4_t v, __builtin_constant_p(lane))	a -> Vd.4S;b -> Vn.4H;v -> Vm.4H;0 <= lane <= 3	UMLAL Vd.4S,Vn.4H,Vm.H[lane]	Vd.4S -> result	v7/A32/A64
@@ -1390,8 +1410,8 @@ uint16x4_t vmls_lane_u16(uint16x4_t a, uint16x4_t b, uint16x4_t v, __builtin_con
 uint16x8_t vmlsq_lane_u16(uint16x8_t a, uint16x8_t b, uint16x4_t v, __builtin_constant_p(lane))	a -> Vd.8H;b -> Vn.8H;v -> Vm.4H;0 <= lane <= 3	MLS Vd.8H,Vn.8H,Vm.H[lane]	Vd.8H -> result	v7/A32/A64
 uint32x2_t vmls_lane_u32(uint32x2_t a, uint32x2_t b, uint32x2_t v, __builtin_constant_p(lane))	a -> Vd.2S;b -> Vn.2S;v -> Vm.2S;0 <= lane <= 1	MLS Vd.2S,Vn.2S,Vm.S[lane]	Vd.2S -> result	v7/A32/A64
 uint32x4_t vmlsq_lane_u32(uint32x4_t a, uint32x4_t b, uint32x2_t v, __builtin_constant_p(lane))	a -> Vd.4S;b -> Vn.4S;v -> Vm.2S;0 <= lane <= 1	MLS Vd.4S,Vn.4S,Vm.S[lane]	Vd.4S -> result	v7/A32/A64
-float32x2_t vmls_lane_f32(float32x2_t a, float32x2_t b, float32x2_t v, __builtin_constant_p(lane))	0 <= lane <= 1	RESULT[I] = a[i] - (b[i] * v[lane]) for i = 0 to 1	N/A	v7/A32/A64
-float32x4_t vmlsq_lane_f32(float32x4_t a, float32x4_t b, float32x2_t v, __builtin_constant_p(lane))	0 <= lane <= 1	RESULT[I] = a[i] - (b[i] * v[lane]) for i = 0 to 3	N/A	v7/A32/A64
+float32x2_t vmls_lane_f32(float32x2_t a, float32x2_t b, float32x2_t v, __builtin_constant_p(lane))	0 <= lane <= 1	result = vsub(a, vmul(b, v[lane]))	N/A	v7/A32/A64
+float32x4_t vmlsq_lane_f32(float32x4_t a, float32x4_t b, float32x2_t v, __builtin_constant_p(lane))	0 <= lane <= 1	result = vsub(a, vmul(b, v[lane]))	N/A	v7/A32/A64
 int16x4_t vmls_laneq_s16(int16x4_t a, int16x4_t b, int16x8_t v, __builtin_constant_p(lane))	a -> Vd.4H;b -> Vn.4H;v -> Vm.8H;0 <= lane <= 7	MLS Vd.4H,Vn.4H,Vm.H[lane]	Vd.4H -> result	A64
 int16x8_t vmlsq_laneq_s16(int16x8_t a, int16x8_t b, int16x8_t v, __builtin_constant_p(lane))	a -> Vd.8H;b -> Vn.8H;v -> Vm.8H;0 <= lane <= 7	MLS Vd.8H,Vn.8H,Vm.H[lane]	Vd.8H -> result	A64
 int32x2_t vmls_laneq_s32(int32x2_t a, int32x2_t b, int32x4_t v, __builtin_constant_p(lane))	a -> Vd.2S;b -> Vn.2S;v -> Vm.4S;0 <= lane <= 3	MLS Vd.2S,Vn.2S,Vm.S[lane]	Vd.2S -> result	A64
@@ -1400,8 +1420,8 @@ uint16x4_t vmls_laneq_u16(uint16x4_t a, uint16x4_t b, uint16x8_t v, __builtin_co
 uint16x8_t vmlsq_laneq_u16(uint16x8_t a, uint16x8_t b, uint16x8_t v, __builtin_constant_p(lane))	a -> Vd.8H;b -> Vn.8H;v -> Vm.8H;0 <= lane <= 7	MLS Vd.8H,Vn.8H,Vm.H[lane]	Vd.8H -> result	A64
 uint32x2_t vmls_laneq_u32(uint32x2_t a, uint32x2_t b, uint32x4_t v, __builtin_constant_p(lane))	a -> Vd.2S;b -> Vn.2S;v -> Vm.4S;0 <= lane <= 3	MLS Vd.2S,Vn.2S,Vm.S[lane]	Vd.2S -> result	A64
 uint32x4_t vmlsq_laneq_u32(uint32x4_t a, uint32x4_t b, uint32x4_t v, __builtin_constant_p(lane))	a -> Vd.4S;b -> Vn.4S;v -> Vm.4S;0 <= lane <= 3	MLS Vd.4S,Vn.4S,Vm.S[lane]	Vd.4S -> result	A64
-float32x2_t vmls_laneq_f32(float32x2_t a, float32x2_t b, float32x4_t v, __builtin_constant_p(lane))	0 <= lane <= 3	RESULT[I] = a[i] - (b[i] * v[lane]) for i = 0 to 1	N/A	A64
-float32x4_t vmlsq_laneq_f32(float32x4_t a, float32x4_t b, float32x4_t v, __builtin_constant_p(lane))	0 <= lane <= 3	RESULT[I] = a[i] - (b[i] * v[lane]) for i = 0 to 3	N/A	A64
+float32x2_t vmls_laneq_f32(float32x2_t a, float32x2_t b, float32x4_t v, __builtin_constant_p(lane))	0 <= lane <= 3	result = vsub(a, vmul(b, v[lane]))	N/A	A64
+float32x4_t vmlsq_laneq_f32(float32x4_t a, float32x4_t b, float32x4_t v, __builtin_constant_p(lane))	0 <= lane <= 3	result = vsub(a, vmul(b, v[lane]))	N/A	A64
 int32x4_t vmlsl_lane_s16(int32x4_t a, int16x4_t b, int16x4_t v, __builtin_constant_p(lane))	a -> Vd.4S;b -> Vn.4H;v -> Vm.4H;0 <= lane <= 3	SMLSL Vd.4S,Vn.4H,Vm.H[lane]	Vd.4S -> result	v7/A32/A64
 int64x2_t vmlsl_lane_s32(int64x2_t a, int32x2_t b, int32x2_t v, __builtin_constant_p(lane))	a -> Vd.2D;b -> Vn.2S;v -> Vm.2S;0 <= lane <= 1	SMLSL Vd.2D,Vn.2S,Vm.S[lane]	Vd.2D -> result	v7/A32/A64
 uint32x4_t vmlsl_lane_u16(uint32x4_t a, uint16x4_t b, uint16x4_t v, __builtin_constant_p(lane))	a -> Vd.4S;b -> Vn.4H;v -> Vm.4H;0 <= lane <= 3	UMLSL Vd.4S,Vn.4H,Vm.H[lane]	Vd.4S -> result	v7/A32/A64
@@ -1550,8 +1570,8 @@ uint16x4_t vmla_n_u16(uint16x4_t a, uint16x4_t b, uint16_t c)	a -> Vd.4H;b -> Vn
 uint16x8_t vmlaq_n_u16(uint16x8_t a, uint16x8_t b, uint16_t c)	a -> Vd.8H;b -> Vn.8H;c -> Vm.H[0]	MLA Vd.8H,Vn.8H,Vm.H[0]	Vd.8H -> result	v7/A32/A64
 uint32x2_t vmla_n_u32(uint32x2_t a, uint32x2_t b, uint32_t c)	a -> Vd.2S;b -> Vn.2S;c -> Vm.S[0]	MLA Vd.2S,Vn.2S,Vm.S[0]	Vd.2S -> result	v7/A32/A64
 uint32x4_t vmlaq_n_u32(uint32x4_t a, uint32x4_t b, uint32_t c)	a -> Vd.4S;b -> Vn.4S;c -> Vm.S[0]	MLA Vd.4S,Vn.4S,Vm.S[0]	Vd.4S -> result	v7/A32/A64
-float32x2_t vmla_n_f32(float32x2_t a, float32x2_t b, float32_t c)	N/A	RESULT[I] = a[i] + (b[i] * c) for i = 0 to 1	N/A	v7/A32/A64
-float32x4_t vmlaq_n_f32(float32x4_t a, float32x4_t b, float32_t c)	N/A	RESULT[I] = a[i] + (b[i] * c) for i = 0 to 3	N/A	v7/A32/A64
+float32x2_t vmla_n_f32(float32x2_t a, float32x2_t b, float32_t c)	N/A	result = vadd(a, vmul(b, c))	N/A	v7/A32/A64
+float32x4_t vmlaq_n_f32(float32x4_t a, float32x4_t b, float32_t c)	N/A	result = vadd(a, vmul(b, c))	N/A	v7/A32/A64
 int32x4_t vmlal_n_s16(int32x4_t a, int16x4_t b, int16_t c)	a -> Vd.4S;b -> Vn.4H;c -> Vm.H[0]	SMLAL Vd.4S,Vn.4H,Vm.H[0]	Vd.4S -> result	v7/A32/A64
 int64x2_t vmlal_n_s32(int64x2_t a, int32x2_t b, int32_t c)	a -> Vd.2D;b -> Vn.2S;c -> Vm.S[0]	SMLAL Vd.2D,Vn.2S,Vm.S[0]	Vd.2D -> result	v7/A32/A64
 uint32x4_t vmlal_n_u16(uint32x4_t a, uint16x4_t b, uint16_t c)	a -> Vd.4S;b -> Vn.4H;c -> Vm.H[0]	UMLAL Vd.4S,Vn.4H,Vm.H[0]	Vd.4S -> result	v7/A32/A64
@@ -1572,8 +1592,8 @@ uint16x4_t vmls_n_u16(uint16x4_t a, uint16x4_t b, uint16_t c)	a -> Vd.4H;b -> Vn
 uint16x8_t vmlsq_n_u16(uint16x8_t a, uint16x8_t b, uint16_t c)	a -> Vd.8H;b -> Vn.8H;c -> Vm.H[0]	MLS Vd.8H,Vn.8H,Vm.H[0]	Vd.8H -> result	v7/A32/A64
 uint32x2_t vmls_n_u32(uint32x2_t a, uint32x2_t b, uint32_t c)	a -> Vd.2S;b -> Vn.2S;c -> Vm.S[0]	MLS Vd.2S,Vn.2S,Vm.S[0]	Vd.2S -> result	v7/A32/A64
 uint32x4_t vmlsq_n_u32(uint32x4_t a, uint32x4_t b, uint32_t c)	a -> Vd.4S;b -> Vn.4S;c -> Vm.S[0]	MLS Vd.4S,Vn.4S,Vm.S[0]	Vd.4S -> result	v7/A32/A64
-float32x2_t vmls_n_f32(float32x2_t a, float32x2_t b, float32_t c)	N/A	RESULT[I] = a[i] - (b[i] * c) for i = 0 to 1	N/A	v7/A32/A64
-float32x4_t vmlsq_n_f32(float32x4_t a, float32x4_t b, float32_t c)	N/A	RESULT[I] = a[i] - (b[i] * c) for i = 0 to 3	N/A	v7/A32/A64
+float32x2_t vmls_n_f32(float32x2_t a, float32x2_t b, float32_t c)	N/A	result = vsub(a, vmul(b, c))	N/A	v7/A32/A64
+float32x4_t vmlsq_n_f32(float32x4_t a, float32x4_t b, float32_t c)	N/A	result = vsub(a, vmul(b, c))	N/A	v7/A32/A64
 int32x4_t vmlsl_n_s16(int32x4_t a, int16x4_t b, int16_t c)	a -> Vd.4S;b -> Vn.4H;c -> Vm.H[0]	SMLSL Vd.4S,Vn.4H,Vm.H[0]	Vd.4S -> result	v7/A32/A64
 int64x2_t vmlsl_n_s32(int64x2_t a, int32x2_t b, int32_t c)	a -> Vd.2D;b -> Vn.2S;c -> Vm.S[0]	SMLSL Vd.2D,Vn.2S,Vm.S[0]	Vd.2D -> result	v7/A32/A64
 uint32x4_t vmlsl_n_u16(uint32x4_t a, uint16x4_t b, uint16_t c)	a -> Vd.4S;b -> Vn.4H;c -> Vm.H[0]	UMLSL Vd.4S,Vn.4H,Vm.H[0]	Vd.4S -> result	v7/A32/A64
@@ -4083,35 +4103,35 @@ float16_t vcvth_f16_u16(uint16_t a)	a -> Hn	UCVTF Hd,Hn	Hd -> result	A64
 float16_t vcvth_f16_u32(uint32_t a)	a -> Hn	UCVTF Hd,Hn	Hd -> result	A32/A64
 float16_t vcvth_f16_u64(uint64_t a)	a -> Hn	UCVTF Hd,Hn	Hd -> result	A64
 int16_t vcvth_s16_f16(float16_t a)	a -> Hn	FCVTZS Hd,Hn	Hd -> result	A64
-int32_t vcvth_s32_f16(float16_t a)	a -> Hn	FCVTZS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvth_s64_f16(float16_t a)	a -> Hn	FCVTZS Hd,Hn	Hd -> result	A64
+int32_t vcvth_s32_f16(float16_t a)	a -> Hn	FCVTZS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvth_s64_f16(float16_t a)	a -> Hn	FCVTZS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvth_u16_f16(float16_t a)	a -> Hn	FCVTZU Hd,Hn	Hd -> result	A64
-uint32_t vcvth_u32_f16(float16_t a)	a -> Hn	FCVTZU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvth_u64_f16(float16_t a)	a -> Hn	FCVTZU Hd,Hn	Hd -> result	A64
+uint32_t vcvth_u32_f16(float16_t a)	a -> Hn	FCVTZU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvth_u64_f16(float16_t a)	a -> Hn	FCVTZU Dd/Xd,Hn	Dd/Xd -> result	A64
 int16_t vcvtah_s16_f16(float16_t a)	a -> Hn	FCVTAS Hd,Hn	Hd -> result	A64
-int32_t vcvtah_s32_f16(float16_t a)	a -> Hn	FCVTAS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvtah_s64_f16(float16_t a)	a -> Hn	FCVTAS Hd,Hn	Hd -> result	A64
+int32_t vcvtah_s32_f16(float16_t a)	a -> Hn	FCVTAS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvtah_s64_f16(float16_t a)	a -> Hn	FCVTAS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvtah_u16_f16(float16_t a)	a -> Hn	FCVTAU Hd,Hn	Hd -> result	A64
-uint32_t vcvtah_u32_f16(float16_t a)	a -> Hn	FCVTAU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvtah_u64_f16(float16_t a)	a -> Hn	FCVTAU Hd,Hn	Hd -> result	A64
+uint32_t vcvtah_u32_f16(float16_t a)	a -> Hn	FCVTAU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvtah_u64_f16(float16_t a)	a -> Hn	FCVTAU Dd/Xd,Hn	Dd/Xd -> result	A64
 int16_t vcvtmh_s16_f16(float16_t a)	a -> Hn	FCVTMS Hd,Hn	Hd -> result	A64
-int32_t vcvtmh_s32_f16(float16_t a)	a -> Hn	FCVTMS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvtmh_s64_f16(float16_t a)	a -> Hn	FCVTMS Hd,Hn	Hd -> result	A64
+int32_t vcvtmh_s32_f16(float16_t a)	a -> Hn	FCVTMS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvtmh_s64_f16(float16_t a)	a -> Hn	FCVTMS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvtmh_u16_f16(float16_t a)	a -> Hn	FCVTMU Hd,Hn	Hd -> result	A64
-uint32_t vcvtmh_u32_f16(float16_t a)	a -> Hn	FCVTMU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvtmh_u64_f16(float16_t a)	a -> Hn	FCVTMU Hd,Hn	Hd -> result	A64
+uint32_t vcvtmh_u32_f16(float16_t a)	a -> Hn	FCVTMU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvtmh_u64_f16(float16_t a)	a -> Hn	FCVTMU Dd/Xd,Hn	Dd/Xd -> result	A64
 int16_t vcvtnh_s16_f16(float16_t a)	a -> Hn	FCVTNS Hd,Hn	Hd -> result	A64
-int32_t vcvtnh_s32_f16(float16_t a)	a -> Hn	FCVTNS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvtnh_s64_f16(float16_t a)	a -> Hn	FCVTNS Hd,Hn	Hd -> result	A64
+int32_t vcvtnh_s32_f16(float16_t a)	a -> Hn	FCVTNS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvtnh_s64_f16(float16_t a)	a -> Hn	FCVTNS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvtnh_u16_f16(float16_t a)	a -> Hn	FCVTNU Hd,Hn	Hd -> result	A64
-uint32_t vcvtnh_u32_f16(float16_t a)	a -> Hn	FCVTNU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvtnh_u64_f16(float16_t a)	a -> Hn	FCVTNU Hd,Hn	Hd -> result	A64
+uint32_t vcvtnh_u32_f16(float16_t a)	a -> Hn	FCVTNU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvtnh_u64_f16(float16_t a)	a -> Hn	FCVTNU Dd/Xd,Hn	Dd/Xd -> result	A64
 int16_t vcvtph_s16_f16(float16_t a)	a -> Hn	FCVTPS Hd,Hn	Hd -> result	A64
-int32_t vcvtph_s32_f16(float16_t a)	a -> Hn	FCVTPS Hd,Hn	Hd -> result	A32/A64
-int64_t vcvtph_s64_f16(float16_t a)	a -> Hn	FCVTPS Hd,Hn	Hd -> result	A64
+int32_t vcvtph_s32_f16(float16_t a)	a -> Hn	FCVTPS Sd/Wd,Hn	Sd/Wd -> result	A64
+int64_t vcvtph_s64_f16(float16_t a)	a -> Hn	FCVTPS Dd/Xd,Hn	Dd/Xd -> result	A64
 uint16_t vcvtph_u16_f16(float16_t a)	a -> Hn	FCVTPU Hd,Hn	Hd -> result	A64
-uint32_t vcvtph_u32_f16(float16_t a)	a -> Hn	FCVTPU Hd,Hn	Hd -> result	A32/A64
-uint64_t vcvtph_u64_f16(float16_t a)	a -> Hn	FCVTPU Hd,Hn	Hd -> result	A64
+uint32_t vcvtph_u32_f16(float16_t a)	a -> Hn	FCVTPU Sd/Wd,Hn	Sd/Wd -> result	A64
+uint64_t vcvtph_u64_f16(float16_t a)	a -> Hn	FCVTPU Dd/Xd,Hn	Dd/Xd -> result	A64
 float16_t vnegh_f16(float16_t a)	a -> Hn	FNEG Hd,Hn	Hd -> result	A32/A64
 float16_t vrecpeh_f16(float16_t a)	a -> Hn	FRECPE Hd,Hn	Hd -> result	A64
 float16_t vrecpxh_f16(float16_t a)	a -> Hn	FRECPX Hd,Hn	Hd -> result	A64
@@ -4810,3 +4830,7 @@ float32x4_t vmlalltbq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x
 float32x4_t vmlalltbq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
 float32x4_t vmlallttq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
 float32x4_t vmlallttq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+
+<SECTION>	Matrix multiplication intrinsics from Armv9.6-A
+float16x8_t vmmlaq_f16_mf8_fpm(float16x8_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.8H;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.8H, Vn.16B, Vm.16B	Vd.8H -> result	A64
+float32x4_t vmmlaq_f32_mf8_fpm(float32x4_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.4S;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.4S, Vn.16B, Vm.16B	Vd.4S -> result	A64
