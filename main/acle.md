@@ -501,6 +501,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 absolute difference accumulation
   intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
 
 ### References
 
@@ -13640,6 +13642,7 @@ Multi-vector saturating rounding shift right narrow and interleave
 
 ``` c
   // Variants are also available for _u16[_u32_x2]
+  // and also _s8[_s16_x2] and _u8[_u16_x2] if __ARM_FEATURE_SVE2p3 || __ARM_FEATURE_SME2p3.
   svint16_t svqrshrn[_n]_s16[_s32_x2](svint32x2_t zn, uint64_t imm);
   ```
 
@@ -13648,6 +13651,7 @@ Multi-vector saturating rounding shift right narrow and interleave
 Multi-vector saturating rounding shift right unsigned narrow and interleave
 
 ``` c
+  // Variant for _u8[_s16_x2] is available if __ARM_FEATURE_SVE2p3 || __ARM_FEATURE_SME2p3.
   svuint16_t svqrshrun[_n]_u16[_s32_x2](svint32x2_t zn, uint64_t imm);
   ```
 
@@ -14022,6 +14026,24 @@ Integer convert to floating-point (top and bottom).
   svfloat16_t svcvtt_f16[_s8](svint8_t zn);
   svfloat16_t svcvtb_f16[_s8](svint8_t zn);
 ```
+
+#### SQSHRN, UQSHRN
+
+Multi-vector saturating shift right narrow and interleave.
+
+``` c
+  // Variants are also available for _s8[_s16_x2], _u16[_u32_x2] and _u8[_u16_x2].
+  svint16_t svqshrn[_n]_s16[_s32_x2](svint32x2_t zn, uint64_t imm);
+  ```
+
+#### SQSHRUN
+
+Signed saturating shift right narrow by immediate to interleaved unsigned integer.
+
+``` c
+  // Variant for _u8[_s16_x2] is also available.
+  svuint16_t svqshrun[_n]_u16[_s32_x2](svint32x2_t zn, uint64_t imm);
+  ```
 
 #### SUBP
 
