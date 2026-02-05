@@ -4843,3 +4843,9 @@ float32x2_t vfdot_lane_f32_f16(float32x2_t r, float16x4_t a, float16x4_t b, __bu
 float32x4_t vfdotq_laneq_f32_f16(float32x4_t r, float16x8_t a, float16x8_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.8H;b -> Vm.8H;0 <= lane <= 3	FDOT Vd.4S,Vn.8H,Vm.2H[lane]	Vd.4S -> result	A64
 float32x2_t vfdot_laneq_f32_f16(float32x2_t r, float16x4_t a, float16x8_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.4H;b -> Vm.8H;0 <= lane <= 3	FDOT Vd.2S,Vn.4H,Vm.2H[lane]	Vd.2S -> result	A64
 float32x4_t vfdotq_lane_f32_f16(float32x4_t r, float16x8_t a, float16x4_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.8H;b -> Vm.4H;0 <= lane <= 1	FDOT Vd.4S,Vn.8H,Vm.2H[lane]	Vd.4S -> result	A64
+
+<SECTION>	Half-precision matrix multiply accumulating to single-precision instruction from Armv9.7-A. Requires the +f16f32mm architecture extension.
+float32x4_t vmmlaq_f32_f16(float32x4_t r, float16x8_t a, float16x8_t b)	r -> Vd.4S;a -> Vn.8H;b -> Vm.8H	FMMLA Vd.4S, Vn.8H, Vm.8H	Vd.4S -> result	A64
+
+<SECTION>	Non-widening half-precision matrix multiply instruction. Requires the +f16mm architecture extension.
+float16x8_t vmmlaq_f16_f16(float16x8_t r, float16x8_t a, float16x8_t b)	r -> Vd.8H;a -> Vn.8H;b -> Vm.8H	FMMLA Vd.8H, Vn.8H, Vm.8H	Vd.8H -> result	A64

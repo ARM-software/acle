@@ -4725,3 +4725,5 @@ vfdot_lane_f32_f16	Vector arithmetic|Dot product
 vfdotq_laneq_f32_f16	Vector arithmetic|Dot product
 vfdot_laneq_f32_f16	Vector arithmetic|Dot product
 vfdotq_lane_f32_f16	Vector arithmetic|Dot product
+vmmlaq_f32_f16	Vector arithmetic|Matrix multiply
+vmmlaq_f16_f16	Vector arithmetic|Matrix multiply

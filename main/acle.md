@@ -490,6 +490,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
   dot product intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
 
 ### References
 
@@ -2170,6 +2172,20 @@ See [Half-precision brain
 floating-point](#half-precision-brain-floating-point) for details
 of half-precision brain floating-point types.
 
+#### Brain 16-bit floating-point matrix multiplication support
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_SVE_B16MM` is defined to `1` if there is hardware
+support for the SVE BF16 matrix multiply extension and if the
+associated ACLE intrinsics are available.
+
+See [Half-precision brain
+floating-point](#half-precision-brain-floating-point) for details
+of half-precision brain floating-point types.
+
 ### Cryptographic extensions
 
 #### “Crypto” extension
@@ -2445,6 +2461,21 @@ instructions and if the associated ACLE intrinsics are available.
 for the SVE 16-bit floating-point to 32-bit floating-point matrix multiply and add
 (FEAT_SVE_F16F32MM) instructions and if the associated ACLE intrinsics are available.
 
+##### Multiplication of 16-bit floating-point matrices (AdvSIMD)
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_F16F32MM` is defined if the NEON half-precision matrix multiply
+accumulating to single-precision instruction is supported. Note that this implies:
+
+  * `__ARM_NEON == 1`
+
+`__ARM_FEATURE_F16MM` is defined if the NEON non-widening half-precision matrix multiply instruction instruction is supported. Note that this implies:
+
+  * `__ARM_NEON == 1`
+
 ##### Multiplication of 32-bit floating-point matrices
 
 `__ARM_FEATURE_SVE_MATMUL_FP32` is defined to `1` if there is hardware support
@@ -2683,6 +2714,8 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_DOTPROD`](#availability-of-dot-product-intrinsics)                                                                                      | Dot product extension (ARM v8.2-A)                                                                 | 1           |
 | [`__ARM_FEATURE_DSP`](#dsp-instructions)                                                                                                                | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
 | [`__ARM_FEATURE_F16F32DOT`](#half-precision-to-single-precision-dot-product-extension)                                                                  | Half-precision to single-precision dot product extension (FEAT_F16F32DOT)                          | 1           |
+| [`__ARM_FEATURE_F16F32MM`](#multiplication-of-16-bit-floating-point-matrices-advsimd)                                                                   | Half-precision to single-precision matrix multiply accumulating extension (FEAT_F16F32MM).         | 1           |
+| [`__ARM_FEATURE_F16MM`](#multiplication-of-16-bit-floating-point-matrices-advsimd)                                                                      | Half-precision matrix multiply accumulating extension (FEAT_F16MM)                                 | 1           |
 | [`__ARM_FEATURE_FAMINMAX`](#floating-point-absolute-minimum-and-maximum-extension)                                                                      | Floating-point absolute minimum and maximum extension                                              | 1           |
 | [`__ARM_FEATURE_FMA`](#fused-multiply-accumulate-fma)                                                                                                   | Floating-point fused multiply-accumulate                                                           | 1           |
 | [`__ARM_FEATURE_FP16_FML`](#fp16-fml-extension)                                                                                                         | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
@@ -2735,6 +2768,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SSVE_FP8FMA`](#modal-8-bit-floating-point-extensions)                                                                                   | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SVE`](#scalable-vector-extension-sve)                                                                                                   | Scalable Vector Extension (FEAT_SVE)                                                               | 1           |
 | [`__ARM_FEATURE_SVE_B16B16`](#non-widening-brain-16-bit-floating-point-support)                                                                         | Non-widening brain 16-bit floating-point intrinsics (FEAT_SVE_B16B16)                              | 1           |
+| [`__ARM_FEATURE_SVE_B16MM`](#brain-16-bit-floating-point-matrix-multiplication-support)                                                                 | SVE brain 16-bit floating-point matrix multiply extension (FEAT_SVE_B16MM)                         | 1           |
 | [`__ARM_FEATURE_SVE_BF16`](#brain-16-bit-floating-point-support)                                                                                        | SVE support for the 16-bit brain floating-point extension (FEAT_BF16)                              | 1           |
 | [`__ARM_FEATURE_SVE_BFSCALE`](#brain-16-bit-floating-point-vector-multiplication-support)                                                               | SVE support for the 16-bit brain floating-point vector multiplication extension (FEAT_SVE_BFSCALE) | 1           |
 | [`__ARM_FEATURE_SVE_BITS`](#scalable-vector-extension-sve)                                                                                              | The number of bits in an SVE vector, when known in advance                                         | 256         |
@@ -9615,6 +9649,15 @@ BFloat16 floating-point adjust exponent vectors.
   ```
 
 ### SVE2 floating-point matrix multiply-accumulate instructions.
+
+#### BFMMLA, FMMLA (non-widening)
+
+16-bit floating-point matrix multiply-accumulate.
+```c
+  // Only if __ARM_FEATURE_SVE_B16MM
+  // Variant also available for _f16 if (__ARM_FEATURE_SVE2p2 && __ARM_FEATURE_F16MM).
+  svbfloat16_t svmmla[_bf16](svbfloat16_t zda, svbfloat16_t zn, svbfloat16_t zm);
+```
 
 #### FMMLA (widening, FP8 to FP16)
 
