@@ -496,6 +496,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 conversion intrinsics.
 
 ### References
 
@@ -13982,6 +13984,29 @@ Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
   // Variants are also available for _u16_x2 and _f16_x2.
   svint16_t svluti6_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
   ```
+
+#### FCVTZSN, FCVTZUN
+
+Floating-point narrowing convert to interleaved integer, rounding toward zero.
+
+``` c
+  // Variants are also available for
+  //               _s16[_f32_x2], _s32[_f64_x2],
+  // _u8[_f16_x2], _u16[_f32_x2], _u32[_f64_x2].
+  svint8_t svcvtzn_s8[_f16_x2](svfloat16x2_t zn);
+```
+
+#### SCVTF, SCVTFLT, UCVTF, UCVTFLT
+
+Integer convert to floating-point (top and bottom).
+
+``` c
+  // Variants are also available for
+  //            _f32[_s16], _f64[_s32],
+  // _f16[_u8], _f32[_u16], _f64[_u32].
+  svfloat16_t svcvtt_f16[_s8](svint8_t zn);
+  svfloat16_t svcvtb_f16[_s8](svint8_t zn);
+```
 
 #### SUBP
 
