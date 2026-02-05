@@ -494,6 +494,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
 
 ### References
 
@@ -13952,6 +13954,24 @@ The functions in this section are defined by either the header file
  [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
 when `__ARM_FEATURE_SVE2p3` or `__ARM_FEATURE_SME2p3` is defined, respectively.
 
+#### ADDQP
+
+Add pairwise within quadword vector segments.
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64.
+  svint8_t svaddqp[_s8](svint8_t zn, svint8_t zm);
+  ```
+
+#### ADDSUBP
+
+Add subtract pairwise.
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64.
+  svint8_t svaddsubp[_s8](svint8_t zn, svint8_t zm);
+  ```
+
 #### LUTI6
 
 Lookup table read with 6-bit indices (16-bit).
@@ -13961,6 +13981,17 @@ Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
 ``` c
   // Variants are also available for _u16_x2 and _f16_x2.
   svint16_t svluti6_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
+  ```
+
+#### SUBP
+
+Subtract pairwise.
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64.
+  svint8_t svsubp[_s8]_m (svbool_t pg, svint8_t zdn, svint8_t zm);
+  svint8_t svsubp[_s8]_x (svbool_t pg, svint8_t zdn, svint8_t zm);
+  svint8_t svsubp[_s8]_z (svbool_t pg, svint8_t zdn, svint8_t zm);
   ```
 
 ### SME2 maximum and minimum absolute value
