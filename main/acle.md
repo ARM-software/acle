@@ -492,6 +492,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   dot product intrinsics.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
 
 ### References
 
@@ -10004,7 +10006,7 @@ Lookup table read with 2-bit indices.
   // Variant is  also available for: _u8
   svint8_t svluti2_lane[_s8](svint8_t table, svuint8_t indices, uint64_t imm_idx);
 
-  // Variant are also available for: _u16, _f16 and _bf16
+  // Variants are also available for: _u16, _f16 and _bf16
   svint16_t svluti2_lane[_s16]( svint16_t table, svuint8_t indices, uint64_t imm_idx);
 ```
 
@@ -10015,9 +10017,25 @@ Lookup table read with 4-bit indices.
   // Variant is also available for: _u8
   svint8_t svluti4_lane[_s8](svint8_t table, svuint8_t indices, uint64_t imm_idx);
 
-  // Variant are also available for: _u16, _f16, _bf16
+  // Variants are also available for: _u16, _f16, _bf16
   svint16_t svluti4_lane[_s16](svint16_t table, svuint8_t indices, uint64_t imm_idx);
   svint16_t svluti4_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
+```
+
+### SVE2.3 lookup table
+
+The intrinsics in this section are defined by the header file
+[`<arm_sve.h>`](#arm_sve.h) when `__ARM_FEATURE_SVE2p3` is defined to 1.
+
+#### LUTI6
+
+Lookup table read with 6-bit indices (8-bit).
+
+Use of this intrinsic if `svcntb() * 8 < 256` results in undefined behaviour.
+
+```c
+  // Variant is  also available for: _u8 _mf8
+  svint8_t svluti6[_s8](svint8x2_t table, svuint8_t indices);
 ```
 
 ### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
@@ -13924,6 +13942,27 @@ Scalar index of first/last true predicate element (predicated).
 
   ```
 
+### SVE2.3 and SME2.3 instruction intrinsics
+
+The specification for SVE2.3 and SME2.3 are in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+The functions in this section are defined by either the header file
+ [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
+when `__ARM_FEATURE_SVE2p3` or `__ARM_FEATURE_SME2p3` is defined, respectively.
+
+#### LUTI6
+
+Lookup table read with 6-bit indices (16-bit).
+
+Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
+
+``` c
+  // Variants are also available for _u16_x2 and _f16_x2.
+  svint16_t svluti6_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
+  ```
+
 ### SME2 maximum and minimum absolute value
 
 The intrinsics in this section are defined by the header file
@@ -14646,6 +14685,36 @@ non-overloaded names to indicate which vector argument is a vector register pair
   void svmop4a[_1x2]_za32[_mf8_mf8]_fpm(uint64_t tile, svmfloat8_t zn,
                                         svmfloat8x2_t zm, fpm_t fpm)
     __arm_streaming __arm_inout("za");
+```
+
+### SME2.3 lookup table
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p3` is defined to 1.
+
+#### LUTI6
+
+Lookup table read with 6-bit indices (16-bit).
+
+Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
+
+```c
+  // Variants are also available for: _u16, _f16 and _bf16.
+  svint16x4_t svluti6_lane_s16_x4[_s16_x2](svint16x2_t table, svuint8x2_t indices, uint64_t imm_idx);
+```
+
+Lookup table read with 6-bit indices (four registers, 8-bit).
+
+``` c
+  // Variants are also available for: _u8 and _mf8.
+  svint8x4_t svluti6_zt_s8_x4(uint64_t zt0, svuint8x3_t zn) __arm_streaming __arm_in("zt0");
+```
+
+Lookup table read with 6-bit indices (table, single, 8-bit).
+
+``` c
+  // Variants are also available for: _u8 and _mf8.
+  svint8_t svluti6_zt_s8(uint64_t zt0, svuint8_t zn) __arm_streaming __arm_in("zt0");
 ```
 
 # M-profile Vector Extension (MVE) intrinsics
