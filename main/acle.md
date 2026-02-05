@@ -498,6 +498,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 conversion intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 absolute difference accumulation
+  intrinsics.
 
 ### References
 
@@ -13994,6 +13997,18 @@ Floating-point narrowing convert to interleaved integer, rounding toward zero.
   //               _s16[_f32_x2], _s32[_f64_x2],
   // _u8[_f16_x2], _u16[_f32_x2], _u32[_f64_x2].
   svint8_t svcvtzn_s8[_f16_x2](svfloat16x2_t zn);
+```
+
+#### SABAL, UABAL
+
+Two-way absolute difference sum and accumulate long.
+
+``` c
+  // Variants are also available for
+  //       _s32, _s64,
+  // _u16, _u32, _u64.
+  svint16_t svabal[_s16](svint16_t zda, svint8_t zn, svint8_t zm);
+  svint16_t svabal[_n_s16](svint16_t zda, svint8_t zn, int8_t zm);
 ```
 
 #### SCVTF, SCVTFLT, UCVTF, UCVTFLT
