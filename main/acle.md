@@ -487,6 +487,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed all references to Transactional Memory Extension (TME).
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
+  dot product intrinsics.
 
 ### References
 
@@ -2003,6 +2006,10 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
+`__ARM_FEATURE_SVE2p3` is defined to 1 if the FEAT_SVE2p3 instructions
+ are available and if the associated [ACLE features]
+(#sme-language-extensions-and-intrinsics) are supported.
+
 #### NEON-SVE Bridge macro
 
 `__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
@@ -2026,6 +2033,7 @@ of SME has an associated preprocessor macro, given in the table below:
 | FEAT_SME2   | __ARM_FEATURE_SME2         |
 | FEAT_SME2p1 | __ARM_FEATURE_SME2p1       |
 | FEAT_SME2p2 | __ARM_FEATURE_SME2p2       |
+| FEAT_SME2p3 | __ARM_FEATURE_SME2p3       |
 
 Each macro is defined if there is hardware support for the associated
 architecture feature and if all of the [ACLE
@@ -2380,6 +2388,18 @@ this implies:
 
   * `__ARM_NEON == 1`
 
+#### Half-precision to single-precision dot product extension
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_F16F32DOT` is defined if the half-precision dot product
+accumulating to single-precision instructions are supported and the vector
+intrinsics are available. Note that this implies:
+
+  * `__ARM_NEON == 1`
+
 #### Complex number intrinsics
 
 `__ARM_FEATURE_COMPLEX` is defined if the complex addition and complex
@@ -2662,6 +2682,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_DIRECTED_ROUNDING`](#directed-rounding)                                                                                                 | Directed Rounding                                                                                  | 1           |
 | [`__ARM_FEATURE_DOTPROD`](#availability-of-dot-product-intrinsics)                                                                                      | Dot product extension (ARM v8.2-A)                                                                 | 1           |
 | [`__ARM_FEATURE_DSP`](#dsp-instructions)                                                                                                                | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
+| [`__ARM_FEATURE_F16F32DOT`](#half-precision-to-single-precision-dot-product-extension)                                                                  | Half-precision to single-precision dot product extension (FEAT_F16F32DOT)                          | 1           |
 | [`__ARM_FEATURE_FAMINMAX`](#floating-point-absolute-minimum-and-maximum-extension)                                                                      | Floating-point absolute minimum and maximum extension                                              | 1           |
 | [`__ARM_FEATURE_FMA`](#fused-multiply-accumulate-fma)                                                                                                   | Floating-point fused multiply-accumulate                                                           | 1           |
 | [`__ARM_FEATURE_FP16_FML`](#fp16-fml-extension)                                                                                                         | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
@@ -2737,6 +2758,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
 | [`__ARM_FEATURE_SVE2p1`](#sve2)                                                                                                                         | SVE version 2.1 (FEAT_SVE2p1)
 | [`__ARM_FEATURE_SVE2p2`](#sve2)                                                                                                                         | SVE version 2.2 (FEAT_SVE2p2)
+| [`__ARM_FEATURE_SVE2p3`](#sve2)                                                                                                                         | SVE version 2.3 (FEAT_SVE2p3)
 | [`__ARM_FEATURE_SYSREG128`](#bit-system-registers)                                                                                                      | Support for 128-bit system registers (FEAT_SYSREG128)                                              | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
@@ -13281,7 +13303,8 @@ Set scalar to count from predicate-as-counter. ``vl`` is expected to be 2 or 4.
 Multi-vector dot-product (2-way)
 
 ``` c
-  // Variants are also available for _s32_s16 and _u32_u16
+  // Variants are also available for _s32_s16, _u32_u16
+  // and also for _s16_s8 and _u16_u8 if (__ARM_FEATURE_SVE2p3 || __ARM_FEATURE_SME2p3).
   svfloat32_t svdot[_f32_f16](svfloat32_t zda, svfloat16_t zn,
                               svfloat16_t zm);
   svfloat32_t svdot[_n_f32_f16](svfloat32_t zda, svfloat16_t zn,
@@ -13293,7 +13316,8 @@ Multi-vector dot-product (2-way)
 Multi-vector dot-product (2-way)
 
 ``` c
-  // Variants are also available for _s32_s16 and _u32_u16
+  // Variants are also available for _s32_s16, _u32_u16
+  // and also for _s16_s8 and _u16_u8  if (__ARM_FEATURE_SVE2p3 || __ARM_FEATURE_SME2p3).
   svfloat32_t svdot_lane[_f32_f16](svfloat32_t zda, svfloat16_t zn,
                                    svfloat16_t zm, uint64_t imm_idx);
   ```
