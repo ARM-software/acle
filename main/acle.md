@@ -243,8 +243,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added reference to the *Cortex-M Security Extension (CMSE)*
   specifications in [Cortex-M Security Extension
   (CMSE)](#cortex-m-security-extension-cmse).
-* Added specification for [NEON-SVE Bridge](#neon-sve-bridge) and
-  [NEON-SVE Bridge macros](#neon-sve-bridge-macro).
+* Added specification for [Neon-SVE Bridge](#neon-sve-bridge) and
+  [Neon-SVE Bridge macros](#neon-sve-bridge-macro).
 * Added feature detection macro for the memcpy family of memory
   operations (MOPS) at [memcpy family of memory operations
   standarization instructions -
@@ -435,7 +435,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed name mangling of function types to include SME attributes.
 * Changed `__ARM_NEON_SVE_BRIDGE` to refer to the availability of the
   [`arm_neon_sve_bridge.h`](#arm_neon_sve_bridge.h) header file, rather
-  than the [NEON-SVE bridge](#neon-sve-bridge) intrinsics.
+  than the [Neon-SVE bridge](#neon-sve-bridge) intrinsics.
 * Removed extraneous `const` from SVE2.1 store intrinsics.
 * Added [`__arm_agnostic`](#arm_agnostic) keyword attribute.
 * Refined function versioning scope and signature rules to use the default
@@ -1125,7 +1125,7 @@ Including `<arm_sve.h>` also includes the following header files:
 ### `<arm_neon_sve_bridge.h>`
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
-Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
+Neon and SVE vector types; see [Neon-SVE Bridge](#neon-sve-bridge)
 for details. Before including the header, you should test the
 `__ARM_NEON_SVE_BRIDGE` macro.
 :
@@ -2023,7 +2023,7 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
-#### NEON-SVE Bridge macro
+#### Neon-SVE Bridge macro
 
 `__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
 header file is available.
@@ -2459,11 +2459,11 @@ This section is in
 extended in the future.
 
 `__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
-for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to half-precision (FEAT_F8F16MM)
+for the Neon and SVE modal 8-bit floating-point matrix multiply-accumulate to half-precision (FEAT_F8F16MM)
 instructions and if the associated ACLE intrinsics are available.
 
 `__ARM_FEATURE_F8F32MM` is defined to `1` if there is hardware support
-for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to single-precision (FEAT_F8F32MM)
+for the Neon and SVE modal 8-bit floating-point matrix multiply-accumulate to single-precision (FEAT_F8F32MM)
 instructions and if the associated ACLE intrinsics are available.
 
 ##### Multiplication of 16-bit floating-point matrices
@@ -2478,12 +2478,12 @@ This section is in
 [**Alpha** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
-`__ARM_FEATURE_F16F32MM` is defined if the NEON half-precision matrix multiply
+`__ARM_FEATURE_F16F32MM` is defined if the Neon half-precision matrix multiply
 accumulating to single-precision instruction is supported. Note that this implies:
 
   * `__ARM_NEON == 1`
 
-`__ARM_FEATURE_F16MM` is defined if the NEON non-widening half-precision matrix multiply instruction instruction is supported. Note that this implies:
+`__ARM_FEATURE_F16MM` is defined if the Neon non-widening half-precision matrix multiply instruction instruction is supported. Note that this implies:
 
   * `__ARM_NEON == 1`
 
@@ -6296,7 +6296,7 @@ correspond to the new mode and returns the resulting value. No side effects, suc
 as changing processor state, occur.
 
 Individual FP8 intrinsics are described in their respective
-Advanced SIMD (NEON), SVE, and SME sections.
+Advanced SIMD (Neon), SVE, and SME sections.
 
 ## Support enumerations
 
@@ -15138,9 +15138,9 @@ Similarly to C's `memset`, this intrinsic returns the `tagged_address` pointer.
 
 # Architectural Extension Bridges
 
-## NEON-SVE Bridge
+## Neon-SVE Bridge
 
-The NEON_SVE Bridge adds intrinsics that allow conversions between NEON and
+The NEON_SVE Bridge adds intrinsics that allow conversions between Neon and
 SVE vectors.
 
 The [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h) header should be
@@ -15162,7 +15162,7 @@ SVE vector.  Using `svld1` to load elements would instead put the
 first memory element in lane 0 of the returned SVE vector.
 
 When `svundef` is passed as the `vec` parameter, compilers are able
-to reuse the SVE register overlapping the NEON input without generating
+to reuse the SVE register overlapping the Neon input without generating
 additional instructions.
 
 | **Instances**                                                            |
@@ -15184,7 +15184,7 @@ additional instructions.
 ### `svget_neonq`
 
 These intrinsics get the first 128 bit subvector of SVE vector `vec` as a
-NEON vector.
+Neon vector.
 
 | **Instances**                                       |
 |-----------------------------------------------------|
@@ -15205,7 +15205,7 @@ NEON vector.
 ### `svdup_neonq`
 
 These intrinsics return an SVE vector with all SVE subvectors containing the
-duplicated NEON vector `vec`.
+duplicated Neon vector `vec`.
 
 | **Instances**                                       |
 |-----------------------------------------------------|
