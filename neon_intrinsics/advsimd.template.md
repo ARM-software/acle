@@ -4,7 +4,7 @@ version: 2025Q2
 date-of-issue: 06 June 2025
 # LaTeX specific variables
 landscape: true
-copyright-text: "Copyright: see section \\texorpdfstring{{\\nameref{{copyright}}}}{{Copyright}}."
+copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
 # Jekyll specific variables
 header_counter: true
@@ -12,7 +12,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2014-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2014-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
@@ -25,7 +25,7 @@ to generate the Table of Contents via Jekyll.
 They are automatically removed by the scripts that generate the pdfs.
 -->
 * TOC
-{{:toc}}
+{:toc}
 # Preface
 
 ## Abstract
@@ -179,4 +179,4 @@ It is automatically removed by the scripts that generate the pdfs.
 
 # List of Intrinsics
 
-{intrinsic_table}
+REPLACE_INTRINSIC_TABLE_HERE

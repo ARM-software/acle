@@ -964,7 +964,8 @@ if __name__ == "__main__":
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
     intrinsic_table = process_db(intrinsics_db, classification_map, cli_args.workflow)
-    md_output = doc_template.format(intrinsic_table=intrinsic_table)
+    assert "REPLACE_INTRINSIC_TABLE_HERE" in doc_template, "The template file should contain the placeholder 'REPLACE_INTRINSIC_TABLE_HERE' for the intrinsic table."
+    md_output = doc_template.replace("REPLACE_INTRINSIC_TABLE_HERE", intrinsic_table)
     with (open(cli_args.outfile, 'w')) as f:
         f.write(md_output)
     # Always run the unit tests.
