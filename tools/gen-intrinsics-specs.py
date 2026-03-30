@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# SPDX-FileCopyrightText: Copyright 2021, 2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,7 @@ import tabulate as tbl
 import argparse
 import csv
 import doctest
+import re
 from urllib.parse import urljoin
 from urllib.parse import quote
 
@@ -48,6 +49,13 @@ __SECTION_TEXT_KEYWORD = '__section_text'
 
 __SECTION_KEYWORDS = [__INTRINSIC_TABLE_KEYWORD, __SECTION_TEXT_KEYWORD]
 __ARMDEVELOPER = "https://developer.arm.com/architectures/instruction-sets/intrinsics/"
+
+
+def parse_numeric_version(version):
+  match = re.match(r"(\d+)\.(\d+)\.(\d+)", version)
+  if not match:
+    raise ValueError(f"Unsupported version format: {version}")
+  return tuple(int(part) for part in match.groups())
 
 
 def md_literal_quote(mapping, workflow):
@@ -955,9 +963,17 @@ if __name__ == "__main__":
 
     # We require version 0.8.6 to be able to print multi-line records
     # in tables.
-    if tbl.__version__ < "0.8.6":
+    required_tabulate_version = "0.8.6"
+    try:
+      installed_tabulate_version = parse_numeric_version(tbl.__version__)
+    except ValueError:
+      print(f"Unable to parse installed tabulate version ({tbl.__version__}).",
+          file=sys.stderr)
+      exit(1)
+
+    if installed_tabulate_version < parse_numeric_version(required_tabulate_version):
         print(f"Your version of package tabulate is too old ({tbl.__version__}). "
-              "Update it to be greater or equal to 0.8.6.", file=sys.stderr)
+          f"Update it to be greater or equal to {required_tabulate_version}.", file=sys.stderr)
         exit(1)
 
     classification_map = get_classification_map(cli_args.classification)
