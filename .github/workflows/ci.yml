@@ -20,10 +20,24 @@ jobs:
 
   build-github-pages:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/github/pages-gem:latest
     steps:
-    - uses: actions/checkout@v4.1.7
+    - uses: actions/checkout@v6.0.2
     - name: generate the GitHub Pages locally in order to check for errors
-      run: ./tools/build-github-pages.sh build
+      run:  |
+        echo -e "plugins:\n \
+          - jekyll-coffeescript\n \
+          - jekyll-default-layout\n \
+          - jekyll-gist\n \
+          - jekyll-github-metadata\n \
+          - jekyll-optional-front-matter\n \
+          - jekyll-paginate\n \
+          - jekyll-readme-index\n \
+          - jekyll-titles-from-headings\n \
+          - jekyll-relative-links\n" >> _config.yml
+        SITE=.
+        jekyll build
 
   markdown-link-check:
     runs-on: ubuntu-latest
