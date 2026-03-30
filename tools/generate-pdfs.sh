@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-# SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,7 +42,11 @@ function generate_pdfs_from_md() {
 mkdir -p pdfs tmp
 
 # Convert svg image to pdf for use in pdf generation via pandoc.
-inkscape -z Arm_logo_blue_RGB.svg  -e tmp/Arm-logo-blue-RGB.pdf
+inkscape \
+  --batch-process \
+  --export-type=pdf \
+  --export-filename=tmp/Arm-logo-blue-RGB.pdf \
+  Arm_logo_blue_RGB.svg 
 
 generate_pdfs_from_md ./cmse/cmse.md ./pdfs/cmse.pdf
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
