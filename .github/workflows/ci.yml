@@ -12,9 +12,9 @@ jobs:
       image: docker.io/library/ubuntu:24.04
     steps:
     - uses: actions/checkout@v6.0.2
-    - name: check the correctness of the sources and generate the PDFs
+    # The step below is equivalent to the Dockerfile in tools/docker
+    - name: Install required dependencies
       run: |
-        # This is equivalent to the Dockerfile in tools/docker
         apt-get update \
         && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
           texlive-latex-base \
@@ -29,16 +29,16 @@ jobs:
           librsvg2-bin \
           nodejs
 
-        # this is equivalent to the entrypoint of the Dockerfile in tools/docker
+    # The steps below are equivalent to the entrypoint of the Dockerfile in tools/docker
+    - name: Check that the internal links in the markdown files are correct
+      run: ./tools/hyperref-check.sh || exit 1
 
-        # Check that the internal links in the markdown files are correct
-        ./tools/hyperref-check.sh || exit 1
+    - name: Recreate the full markdown files from the templates and check that the saved ones are consistent.
+      run: ./tools/generate-intrinsics-specs.sh || exit 1
+        
+    - name: Create PDFs
+      run: ./tools/generate-pdfs.sh || exit 1
 
-        # Recreate the full markdown files from the templates and check that the saved ones are consistent.
-        ./tools/generate-intrinsics-specs.sh || exit 1
-        
-        ./tools/generate-pdfs.sh || exit 1
-        
     - uses: actions/upload-artifact@v7
       with:
         name: pdfs
