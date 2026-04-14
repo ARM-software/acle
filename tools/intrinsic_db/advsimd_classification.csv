@@ -4719,11 +4719,11 @@ vmlallttq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and wi
 vmlallttq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
 vmmlaq_f16_mf8_fpm	Vector arithmetic|Matrix multiply
 vmmlaq_f32_mf8_fpm	Vector arithmetic|Matrix multiply
-vfdot_f32_f16	Vector arithmetic|Dot product
-vfdotq_f32_f16	Vector arithmetic|Dot product
-vfdot_lane_f32_f16	Vector arithmetic|Dot product
-vfdotq_laneq_f32_f16	Vector arithmetic|Dot product
-vfdot_laneq_f32_f16	Vector arithmetic|Dot product
-vfdotq_lane_f32_f16	Vector arithmetic|Dot product
+vdot_f32_f16	Vector arithmetic|Dot product
+vdotq_f32_f16	Vector arithmetic|Dot product
+vdot_lane_f32_f16	Vector arithmetic|Dot product
+vdotq_laneq_f32_f16	Vector arithmetic|Dot product
+vdot_laneq_f32_f16	Vector arithmetic|Dot product
+vdotq_lane_f32_f16	Vector arithmetic|Dot product
 vmmlaq_f32_f16	Vector arithmetic|Matrix multiply
 vmmlaq_f16_f16	Vector arithmetic|Matrix multiply
