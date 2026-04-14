@@ -10044,7 +10044,7 @@ Use of this intrinsic if `svcntb() * 8 < 256` results in undefined behaviour.
 
 ```c
   // Variant is  also available for: _u8 _mf8
-  svint8_t svluti6[_s8](svint8x2_t table, svuint8_t indices);
+  svint8_t svluti6[_s8_x2](svint8x2_t table, svuint8_t indices);
 ```
 
 ### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
@@ -14793,7 +14793,9 @@ Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
 
 ```c
   // Variants are also available for: _u16, _f16 and _bf16.
-  svint16x4_t svluti6_lane_s16_x4[_s16_x2](svint16x2_t table, svuint8x2_t indices, uint64_t imm_idx);
+  svint16x4_t svluti6_lane_s16_x4[_s16_x2](svint16x2_t table,
+                                           svuint8x2_t indices,
+                                           uint64_t imm_idx) __arm_streaming;
 ```
 
 Lookup table read with 6-bit indices (four registers, 8-bit).
