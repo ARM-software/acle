@@ -14053,7 +14053,6 @@ Subtract pairwise.
   // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64.
   svint8_t svsubp[_s8]_m (svbool_t pg, svint8_t zdn, svint8_t zm);
   svint8_t svsubp[_s8]_x (svbool_t pg, svint8_t zdn, svint8_t zm);
-  svint8_t svsubp[_s8]_z (svbool_t pg, svint8_t zdn, svint8_t zm);
   ```
 
 ### SME2 maximum and minimum absolute value
