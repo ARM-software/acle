@@ -1,10 +1,10 @@
 ---
 title: Arm C Language Extensions
-version: 2025Q3
-date-of-issue: 14 November 2025
+version: 2026Q1
+date-of-issue: 15 May 2026
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
+draftversion: false
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -182,6 +182,7 @@ unless a different support level is specified in the text.
 | 2024Q4       | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
 | 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
 | 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
+| 2026Q1       | 15 May 2026       | Arm    | See [Changes between ACLE Q3 2025 and ACLE Q1 2026](#changes-between-acle-q3-2025-and-acle-q1-2026)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -467,14 +468,14 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added feature test macro for FEAT_CSSC.
 * Added Function Multi Versioning feature priority syntax.
 
-#### Changes for next release
+#### Changes between ACLE Q3 2025 and ACLE Q1 2026
 
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added restrictions of Function Multi Versioning's use with other extensions.
-* Upgrade Function Multi Versioning to Release support level.
+* Upgraded Function Multi Versioning to Release support level.
 * Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
-* Improve documentation for VMLA/VMLS intrinsics for floats.
+* Improved documentation for VMLA/VMLS intrinsics for floats.
 * Added support for producer-consumer data placement hints.
 * Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
@@ -2857,7 +2858,7 @@ The following attributes trigger the multi version code generation:
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
 * Function Multi Versioning might be disabled at compile time by a compiler
-  flag. In this case, the `default` version shall be used.
+  flag. In this case, the `default` version is used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
   the multiversioned functions. Therefore, a versioned function
