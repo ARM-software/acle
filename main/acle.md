@@ -114,7 +114,7 @@ about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2011-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+* Copyright 2011-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 * Copyright 2022 Google LLC.
 
 ## About this document
@@ -487,6 +487,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Removed all references to Transactional Memory Extension (TME).
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
+* Redesigned atomic store with hints intrinsics.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
   dot product intrinsics.
@@ -5019,33 +5020,38 @@ stored to memory is modified by replacing the low 32 bits of
 `value.val[0]` with the contents of the `ACCDATA_EL1` system register.
 The returned value is the same as for `__arm_st64bv`.
 
-## Atomic store with PCDPHINT intrinsics
+## Atomic store with hints intrinsics
 
-This intrinsic provides an atomic store, which will
-make use of the `STSHH` hint instruction immediately followed by the
-associated store instruction. This intrinsic is type generic and 
-supports scalar types from 8-64 bits and is available when
-`__ARM_FEATURE_PCDPHINT` is defined.
+This intrinsic provides an atomic store together with a hint value.
+The hint is a suggestion to the compiler and maps directly to a
+specific hint instruction variant in the ISA. The compiler may use this hint
+when selecting code sequences, but it is not required to emit a specific
+hint instruction or a specific instruction sequence. This intrinsic is
+type generic and supports scalar integral and floating-point types of 8, 16, 32, and 64 bits.
 
 To access this intrinsic, `<arm_acle.h>` should be included.
 
 ``` c
-  void __arm_atomic_store_with_stshh(type *ptr,
-                                     type data,
-                                     int memory_order,
-                                     int ret); /* Retention Policy */
+  void __arm_atomic_store_with_hint(type *ptr,
+                                    type data,
+                                    int memory_order,
+                                    int hint);
 ```
 
-The first argument in this intrinsic is a pointer `ptr` which is the location to store to.
-The second argument `data` is the data which is to be stored.
-The third argument `mem` can be one of 3 memory ordering variables supported by atomic_store:
-__ATOMIC_RELAXED, __ATOMIC_SEQ_CST, and __ATOMIC_RELEASE.
-The fourth argument can contain the following values:
+The first argument `ptr` is the location to store to. The second
+argument `data` is the value to be stored. The third argument
+`memory_order` can be one of the memory ordering values supported by
+`atomic_store`: `__ATOMIC_RELAXED`, `__ATOMIC_SEQ_CST`, and
+`__ATOMIC_RELEASE`.
 
-| **Retention Policy** | **Value** | **Summary**                                                                       |
-| -------------------- | --------- | --------------------------------------------------------------------------------- |
-| KEEP                 | 0         | Signals to retain the updated location in the local cache of the updating PE.     |
-| STRM                 | 1         | Signals to not retain the updated location in the local cache of the updating PE. |
+The fourth argument `hint` selects the requested hint. The set of valid
+hint values depends on the architectural features supported by the
+target. The following hint values are defined:
+
+| **Hint**         | **Value** | **Feature**                | **Summary**                                                                       |
+| ---------------- | --------- | -------------------------- | --------------------------------------------------------------------------------- |
+| HINT_STSHH_KEEP  | 0         | `__ARM_FEATURE_PCDPHINT`   | Requests retention of the updated location in the local cache of the updating PE. |
+| HINT_STSHH_STRM  | 1         | `__ARM_FEATURE_PCDPHINT`   | Requests that the updated location not be retained in the local cache of the updating PE. |
 
 # Custom Datapath Extension
 
