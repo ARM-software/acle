@@ -172,6 +172,7 @@ for more information about Arm’s trademarks.
 ### Changes for next release
 
 * Added support for FEAT_F16F32DOT
+* Added support for FEAT_F16F32MM and FEAT_F16MM
 
 <!---
 **** Do not remove! ****
