@@ -4156,17 +4156,17 @@ uint16_t vcgth_f16(float16_t a, float16_t b)	a -> Hn;b -> Hm	FCMGT Hd,Hn,Hm	Hd -
 uint16_t vcleh_f16(float16_t a, float16_t b)	a -> Hn;b -> Hm	FCMGE Hd,Hn,Hm	Hd -> result	A64
 uint16_t vclth_f16(float16_t a, float16_t b)	a -> Hn;b -> Hm	FCMGT Hd,Hn,Hm	Hd -> result	A64
 float16_t vcvth_n_f16_s16(int16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	SCVTF Hd,Hn,#n	Hd -> result	A64
-float16_t vcvth_n_f16_s32(int32_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	SCVTF Hd,Hn,#n	Hd -> result	A32/A64
-float16_t vcvth_n_f16_s64(int64_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	SCVTF Hd,Hn,#n	Hd -> result	A64
+float16_t vcvth_n_f16_s32(int32_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	SCVTF Hd,Wn,#n	Hd -> result	A64
+float16_t vcvth_n_f16_s64(int64_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	SCVTF Hd,Xn,#n	Hd -> result	A64
 float16_t vcvth_n_f16_u16(uint16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	UCVTF Hd,Hn,#n	Hd -> result	A64
-float16_t vcvth_n_f16_u32(uint32_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	UCVTF Hd,Hn,#n	Hd -> result	A32/A64
-float16_t vcvth_n_f16_u64(uint64_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	UCVTF Hd,Hn,#n	Hd -> result	A64
+float16_t vcvth_n_f16_u32(uint32_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	UCVTF Hd,Wn,#n	Hd -> result	A64
+float16_t vcvth_n_f16_u64(uint64_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	UCVTF Hd,Xn,#n	Hd -> result	A64
 int16_t vcvth_n_s16_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZS Hd,Hn,#n	Hd -> result	A64
-int32_t vcvth_n_s32_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZS Hd,Hn,#n	Hd -> result	A32/A64
-int64_t vcvth_n_s64_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZS Hd,Hn,#n	Hd -> result	A64
+int32_t vcvth_n_s32_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZS Wd,Hn,#n	Hd -> result	A64
+int64_t vcvth_n_s64_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZS Xd,Hn,#n	Hd -> result	A64
 uint16_t vcvth_n_u16_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZU Hd,Hn,#n	Hd -> result	A64
-uint32_t vcvth_n_u32_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZU Hd,Hn,#n	Hd -> result	A32/A64
-uint64_t vcvth_n_u64_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZU Hd,Hn,#n	Hd -> result	A64
+uint32_t vcvth_n_u32_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZU Wd,Hn,#n	Hd -> result	A64
+uint64_t vcvth_n_u64_f16(float16_t a, __builtin_constant_p(n))	a -> Hn;1 <= n <= 16	FCVTZU Xd,Hn,#n	Hd -> result	A64
 float16_t vdivh_f16(float16_t a, float16_t b)	a -> Hn;b -> Hm	FDIV Hd,Hn,Hm	Hd -> result	A32/A64
 float16_t vmaxh_f16(float16_t a, float16_t b)	a -> Hn;b -> Hm	FMAX Hd,Hn,Hm	Hd -> result	A64
 float16_t vmaxnmh_f16(float16_t a, float16_t b)	a -> Hn;b -> Hm	FMAXNM Hd,Hn,Hm	Hd -> result	A32/A64
