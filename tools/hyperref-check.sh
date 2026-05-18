@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 
 set -ex
 
 # Convert svg image to pdf for use in pdf generation via pandoc.
 mkdir -p pdfs tmp
-inkscape -z Arm_logo_blue_RGB.svg  -e tmp/Arm-logo-blue-RGB.pdf
+inkscape \
+  --batch-process \
+  --export-type=pdf \
+  --export-filename=tmp/Arm-logo-blue-RGB.pdf \
+  Arm_logo_blue_RGB.svg
 
 # Extracting all broken hyperref detected by PDFTex
 for file in "./main/acle.md" "./morello/morello.md" "./mve_intrinsics/mve.md" "./neon_intrinsics/advsimd.md" \

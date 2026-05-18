@@ -33,10 +33,6 @@ set -x
 
 ROOTDIR=$(realpath "$(dirname "$(realpath "$0")")/..")
 TEMPDIR=$(mktemp -d)
-cd $TEMPDIR
-git clone --depth 1 https://github.com/github/pages-gem.git
-cd pages-gem
-docker build -t gh-pages --build-arg RUBY_VERSION=3.2 .
 cd $ROOTDIR
 echo -e "plugins:\n \
         - jekyll-coffeescript\n \
@@ -52,7 +48,7 @@ cd $TEMPDIR/pages-gem
 
 if [ "$1" == "build" ]; then
     SITE=$ROOTDIR
-    docker run --rm -p 4000:4000 -v `realpath ${SITE}`:/src/site gh-pages jekyll build
+    docker run --rm -p 4000:4000 -v `realpath ${SITE}`:/src/site ghcr.io/github/pages-gem:latest jekyll build
 elif [ "$1" == "serve" ]; then
     SITE=$ROOTDIR make server
 fi

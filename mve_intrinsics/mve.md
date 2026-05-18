@@ -4,7 +4,7 @@ version: 2021Q4
 date-of-issue: 11 January 2022
 # LaTeX specific variables
 landscape: true
-copyright-text: Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
+copyright-text: Copyright 2019-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 draftversion: true
 # Jekyll specific variables
 header_counter: true
@@ -12,7 +12,7 @@ toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2019-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2019-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->

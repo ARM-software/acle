@@ -4,7 +4,7 @@ version: 2026Q1
 date-of-issue: 15 May 2026
 # LaTeX specific variables
 landscape: true
-copyright-text: "Copyright: see section \\texorpdfstring{{\\nameref{{copyright}}}}{{Copyright}}."
+copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
 # Jekyll specific variables
 header_counter: true
@@ -25,7 +25,7 @@ to generate the Table of Contents via Jekyll.
 They are automatically removed by the scripts that generate the pdfs.
 -->
 * TOC
-{{:toc}}
+{:toc}
 # Preface
 
 ## Abstract
@@ -180,4 +180,4 @@ It is automatically removed by the scripts that generate the pdfs.
 
 # List of Intrinsics
 
-{intrinsic_table}
+REPLACE_INTRINSIC_TABLE_HERE

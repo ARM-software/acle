@@ -6,30 +6,70 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  build-pdfs:
     runs-on: ubuntu-latest
-
+    container:
+      image: docker.io/library/ubuntu:24.04
     steps:
-    - uses: actions/checkout@v4.1.7
-    - name: check the correctness of the sources and generate the PDFs
-      run: ./build_with_docker.sh
-    - uses: actions/upload-artifact@v4.4.0
+    - uses: actions/checkout@v6.0.2
+    # The step below is equivalent to the Dockerfile in tools/docker
+    - name: Install required dependencies
+      run: |
+        apt-get update \
+        && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+          texlive-latex-base \
+          texlive-fonts-recommended \
+          texlive-fonts-extra \
+          texlive-latex-extra \
+          lmodern \
+          pandoc \
+          inkscape \
+          python3 \
+          python3-tabulate \
+          librsvg2-bin \
+          nodejs
+
+    # The steps below are equivalent to the entrypoint of the Dockerfile in tools/docker
+    - name: Check that the internal links in the markdown files are correct
+      run: ./tools/hyperref-check.sh || exit 1
+
+    - name: Recreate the full markdown files from the templates and check that the saved ones are consistent.
+      run: ./tools/generate-intrinsics-specs.sh || exit 1
+        
+    - name: Create PDFs
+      run: ./tools/generate-pdfs.sh || exit 1
+
+    - uses: actions/upload-artifact@v7
       with:
         name: pdfs
         path: pdfs
 
   build-github-pages:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/github/pages-gem:latest
     steps:
-    - uses: actions/checkout@v4.1.7
+    - uses: actions/checkout@v6.0.2
     - name: generate the GitHub Pages locally in order to check for errors
-      run: ./tools/build-github-pages.sh build
+      run:  |
+        echo -e "plugins:\n \
+          - jekyll-coffeescript\n \
+          - jekyll-default-layout\n \
+          - jekyll-gist\n \
+          - jekyll-github-metadata\n \
+          - jekyll-optional-front-matter\n \
+          - jekyll-paginate\n \
+          - jekyll-readme-index\n \
+          - jekyll-titles-from-headings\n \
+          - jekyll-relative-links\n" >> _config.yml
+        SITE=.
+        jekyll build
 
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.1.7
-    - uses: gaurav-nelson/github-action-markdown-link-check@v1
+    - uses: actions/checkout@v6.0.2
+    - uses: tcort/github-action-markdown-link-check@v1
       with:
           config-file: '.github/workflows/markdown-link-check.json'
 
