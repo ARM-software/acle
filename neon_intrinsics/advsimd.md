@@ -5,7 +5,7 @@ date-of-issue: 15 May 2026
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: false
+draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
