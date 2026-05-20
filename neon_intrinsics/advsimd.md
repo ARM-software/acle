@@ -1,7 +1,7 @@
 ---
 title: Arm Neon Intrinsics Reference
-version: 2025Q2
-date-of-issue: 06 June 2025
+version: 2026Q1
+date-of-issue: 15 May 2026
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
@@ -107,7 +107,7 @@ for more information about Arm’s trademarks.
 
 ## Copyright
 
-* Copyright 2014-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
+* Copyright 2014-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 * Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 
 ## Document history
@@ -128,6 +128,7 @@ for more information about Arm’s trademarks.
 | L     | 30 September 2024 | 2024Q3               |
 | M     | 21 February 2025  | 2024Q4               |
 | N     | 06 June 2025      | 2025Q2               |
+| O     | 15 May 2026       | 2026Q1               |
 
 ### Changes between 2021Q2 and 2021Q3
 
@@ -162,7 +163,7 @@ for more information about Arm’s trademarks.
 
 * Added `fp8` version of the `vget_lane` intrinsic.
 
-### Changes between 2025Q2 and 2025Q3
+### Changes between 2025Q2 and 2026Q1
 
 * Added support for FEAT_FPRCVT intrinsics.
 * Fixed typos in the "AArch64 Instruction" and "Result" fields of
