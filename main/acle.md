@@ -5000,7 +5000,7 @@ target. The following hint values are defined:
 These intrinsics provide some atomic fetch operations, which will
 make use of hint instructions immediately followed by the
 associated fetch instructions. These intrinsics are type generic and 
-supports scalar integral and floating-point types of 8, 16, 32, and 64 bits.
+support scalar integral types of 8, 16, 32, and 64 bits.
 
 To access these intrinsics, `<arm_acle.h>` should be included.
 
@@ -5012,8 +5012,8 @@ To access these intrinsics, `<arm_acle.h>` should be included.
   type __arm_atomic_fetch_or_with_hint(type *ptr, type data, int memory_order, int hint);
 ```
 
-The first argument in these intrinsic is a pointer `ptr` which is the location to store to.
-The second argument `data` is the data which is to be stored.
+The first argument in these intrinsic is a pointer `ptr` which is the location for read-modify-write.
+The second argument `data` is the data which is to be used in the RMW operation.
 The third argument `mem` can be one of 6 memory ordering variables supported by atomic_fetch:
 __ATOMIC_RELAXED, __ATOMIC_SEQ_CST, __ATOMIC_ACQUIRE, __ATOMIC_CONSUME, __ATOMIC_ACQ_REL and __ATOMIC_RELEASE.
 
