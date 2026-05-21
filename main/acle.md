@@ -14007,7 +14007,7 @@ Floating-point narrowing convert to interleaved integer, rounding toward zero.
   // Variants are also available for
   //               _s16[_f32_x2], _s32[_f64_x2],
   // _u8[_f16_x2], _u16[_f32_x2], _u32[_f64_x2].
-  svint8_t svcvtzn_s8[_f16_x2](svfloat16x2_t zn);
+  svint8_t svcvtn_s8[_f16_x2](svfloat16x2_t zn);
 ```
 
 #### SABAL, UABAL
