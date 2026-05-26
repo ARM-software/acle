@@ -489,6 +489,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
 * Redesigned atomic store with hints intrinsics.
+* Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
 
 ### References
 
@@ -2153,7 +2154,7 @@ are available.
 #### Brain 16-bit floating-point vector multiplication support
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_BFSCALE` is defined to `1` if there is hardware
@@ -2410,7 +2411,7 @@ associated ACLE intrinsics are available. This implies that
 ##### Multiplication of modal 8-bit floating-point matrices
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
@@ -9582,7 +9583,7 @@ BFloat16 floating-point multiply vectors.
 ### SVE BFloat16 floating-point adjust exponent vectors instructions.
 
 The specification for SVE BFloat16 floating-point adjust exponent vectors instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### BFSCALE
@@ -9965,7 +9966,7 @@ Lookup table read with 4-bit indices.
 ### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
 
 The specification for SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### AESE, AESD, AESEMC, AESDIMC
@@ -13191,7 +13192,7 @@ Zero ZA vector groups
 ### SME2.2 instruction intrinsics
 
 The specification for SME2.2 are in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The intrinsics in this section are defined by the header file
@@ -13775,7 +13776,7 @@ While (resulting in predicate tuple)
 ### SVE2.2 and SME2.2 instruction intrinsics
 
 The specification for SVE2.2 and SME2.2 are in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The functions in this section are defined by either the header file
