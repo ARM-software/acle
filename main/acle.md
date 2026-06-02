@@ -2199,7 +2199,7 @@ SVE AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
 and if the associated ACLE intrinsics are available.
 
 The specification for SVE AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### SHA2 extension
@@ -2494,7 +2494,7 @@ available. This implies that `__ARM_FEATURE_SME2` is nonzero.
 #### Quarter-tile outer product intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_MOP4` is defined to `1` if there is hardware
