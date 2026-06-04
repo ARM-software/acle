@@ -489,6 +489,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
 * Redesigned atomic store with hints intrinsics.
+
+#### Changes after ACLE Q1 2026
 * Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
 
 ### References
