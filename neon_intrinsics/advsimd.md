@@ -170,6 +170,11 @@ for more information about Arm’s trademarks.
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
 
+### Changes for next release
+
+* Added support for FEAT_F16F32DOT
+* Added support for FEAT_F16F32MM and FEAT_F16MM
+
 <!---
 **** Do not remove! ****
 The line following this comment is necessary to generate custom geometry settings
@@ -6214,3 +6219,38 @@ The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|-------------------------------|-------------------|---------------------------|
 | <code>float16x8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vmmlaq_f16_mf8_fpm" target="_blank">vmmlaq_f16_mf8_fpm</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8x16_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8x16_t b,<br>&nbsp;&nbsp;&nbsp;&nbsp; fpm_t fpm)</code> | `r -> Vd.8H`<br>`a -> Vn.16B`<br>`b -> Vm.16B` | `FMMLA Vd.8H, Vn.16B, Vm.16B` | `Vd.8H -> result` | `A64`                     |
 | <code>float32x4_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vmmlaq_f32_mf8_fpm" target="_blank">vmmlaq_f32_mf8_fpm</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x4_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8x16_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8x16_t b,<br>&nbsp;&nbsp;&nbsp;&nbsp; fpm_t fpm)</code> | `r -> Vd.4S`<br>`a -> Vn.16B`<br>`b -> Vm.16B` | `FMMLA Vd.4S, Vn.16B, Vm.16B` | `Vd.4S -> result` | `A64`                     |
+
+## Half-precision dot product to single-precision instructions from Armv9.7-A. Requires the +f16f32dot architecture extension.
+
+### Vector arithmetic
+
+#### Dot product
+
+| Intrinsic                                                                                                                                                                                                                                                                                                                                        | Argument preparation                                             | AArch64 Instruction            | Result            | Supported architectures   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|--------------------------------|-------------------|---------------------------|
+| <code>float32x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vdot_f32_f16" target="_blank">vdot_f32_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x2_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x4_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x4_t b)</code>                                                           | `r -> Vd.2S`<br>`a -> Vn.4H`<br>`b -> Vm.4H`                     | `FDOT Vd.2S,Vn.4H,Vm.4H`       | `Vd.2S -> result` | `A64`                     |
+| <code>float32x4_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vdotq_f32_f16" target="_blank">vdotq_f32_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x4_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t b)</code>                                                         | `r -> Vd.4S`<br>`a -> Vn.8H`<br>`b -> Vm.8H`                     | `FDOT Vd.4S,Vn.8H,Vm.8H`       | `Vd.4S -> result` | `A64`                     |
+| <code>float32x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vdot_lane_f32_f16" target="_blank">vdot_lane_f32_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x2_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x4_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x4_t b,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>     | `r -> Vd.2S`<br>`a -> Vn.4H`<br>`b -> Vm.4H`<br>`0 <= lane <= 1` | `FDOT Vd.2S,Vn.4H,Vm.2H[lane]` | `Vd.2S -> result` | `A64`                     |
+| <code>float32x4_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vdotq_laneq_f32_f16" target="_blank">vdotq_laneq_f32_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x4_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t b,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code> | `r -> Vd.4S`<br>`a -> Vn.8H`<br>`b -> Vm.8H`<br>`0 <= lane <= 3` | `FDOT Vd.4S,Vn.8H,Vm.2H[lane]` | `Vd.4S -> result` | `A64`                     |
+| <code>float32x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vdot_laneq_f32_f16" target="_blank">vdot_laneq_f32_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x2_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x4_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t b,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>   | `r -> Vd.2S`<br>`a -> Vn.4H`<br>`b -> Vm.8H`<br>`0 <= lane <= 3` | `FDOT Vd.2S,Vn.4H,Vm.2H[lane]` | `Vd.2S -> result` | `A64`                     |
+| <code>float32x4_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vdotq_lane_f32_f16" target="_blank">vdotq_lane_f32_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x4_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x4_t b,<br>&nbsp;&nbsp;&nbsp;&nbsp; const int lane)</code>   | `r -> Vd.4S`<br>`a -> Vn.8H`<br>`b -> Vm.4H`<br>`0 <= lane <= 1` | `FDOT Vd.4S,Vn.8H,Vm.2H[lane]` | `Vd.4S -> result` | `A64`                     |
+
+## Half-precision matrix multiply accumulating to single-precision instruction from Armv9.7-A. Requires the +f16f32mm architecture extension.
+
+### Vector arithmetic
+
+#### Matrix multiply
+
+| Intrinsic                                                                                                                                                                                                                                                                                  | Argument preparation                         | AArch64 Instruction         | Result            | Supported architectures   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|-----------------------------|-------------------|---------------------------|
+| <code>float32x4_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vmmlaq_f32_f16" target="_blank">vmmlaq_f32_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x4_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t b)</code> | `r -> Vd.4S`<br>`a -> Vn.8H`<br>`b -> Vm.8H` | `FMMLA Vd.4S, Vn.8H, Vm.8H` | `Vd.4S -> result` | `A64`                     |
+
+## Non-widening half-precision matrix multiply instruction. Requires the +f16mm architecture extension.
+
+### Vector arithmetic
+
+#### Matrix multiply
+
+| Intrinsic                                                                                                                                                                                                                                                                                  | Argument preparation                         | AArch64 Instruction         | Result            | Supported architectures   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|-----------------------------|-------------------|---------------------------|
+| <code>float16x8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vmmlaq_f16_f16" target="_blank">vmmlaq_f16_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t b)</code> | `r -> Vd.8H`<br>`a -> Vn.8H`<br>`b -> Vm.8H` | `FMMLA Vd.8H, Vn.8H, Vm.8H` | `Vd.8H -> result` | `A64`                     |

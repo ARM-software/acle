@@ -170,6 +170,11 @@ for more information about Arm’s trademarks.
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
 
+### Changes for next release
+
+* Added support for FEAT_F16F32DOT
+* Added support for FEAT_F16F32MM and FEAT_F16MM
+
 <!---
 **** Do not remove! ****
 The line following this comment is necessary to generate custom geometry settings
