@@ -13998,7 +13998,7 @@ Lookup table read with 6-bit indices (16-bit).
 Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
 
 ``` c
-  // Variants are also available for _u16_x2 and _f16_x2.
+  // Variants are also available for _u16_x2, _bf16_x2 and _f16_x2.
   svint16_t svluti6_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
   ```
 
