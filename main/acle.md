@@ -506,6 +506,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
 
+#### Changes after ACLE Q1 2026
+* Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
+
 ### References
 
 This document refers to the following documents.
@@ -2174,7 +2177,7 @@ are available.
 #### Brain 16-bit floating-point vector multiplication support
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_BFSCALE` is defined to `1` if there is hardware
@@ -2233,7 +2236,7 @@ SVE AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
 and if the associated ACLE intrinsics are available.
 
 The specification for SVE AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### SHA2 extension
@@ -2457,7 +2460,7 @@ associated ACLE intrinsics are available. This implies that
 ##### Multiplication of modal 8-bit floating-point matrices
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
@@ -2555,7 +2558,7 @@ available. This implies that `__ARM_FEATURE_SME2` is nonzero.
 #### Quarter-tile outer product intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_MOP4` is defined to `1` if there is hardware
@@ -9649,7 +9652,7 @@ BFloat16 floating-point multiply vectors.
 ### SVE BFloat16 floating-point adjust exponent vectors instructions.
 
 The specification for SVE BFloat16 floating-point adjust exponent vectors instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### BFSCALE
@@ -10057,7 +10060,7 @@ Use of this intrinsic if `svcntb() * 8 < 256` results in undefined behaviour.
 ### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
 
 The specification for SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### AESE, AESD, AESEMC, AESDIMC
@@ -13283,7 +13286,7 @@ Zero ZA vector groups
 ### SME2.2 instruction intrinsics
 
 The specification for SME2.2 are in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The intrinsics in this section are defined by the header file
@@ -13871,7 +13874,7 @@ While (resulting in predicate tuple)
 ### SVE2.2 and SME2.2 instruction intrinsics
 
 The specification for SVE2.2 and SME2.2 are in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The functions in this section are defined by either the header file
