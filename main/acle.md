@@ -489,6 +489,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
 * Redesigned atomic store with hints intrinsics.
+
+#### Changes after ACLE Q1 2026
+
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
   dot product intrinsics.
@@ -505,8 +508,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   intrinsics.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
-
-#### Changes after ACLE Q1 2026
 * Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
 
 ### References
@@ -13998,7 +13999,7 @@ Lookup table read with 6-bit indices (16-bit).
 Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
 
 ``` c
-  // Variants are also available for _u16_x2 and _f16_x2.
+  // Variants are also available for _u16_x2, _bf16_x2 and _f16_x2.
   svint16_t svluti6_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
   ```
 
