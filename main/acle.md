@@ -509,7 +509,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
 * Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
-* Added support for producer-consumer data placement hints. [**Alpha** state]
+* Added support for producer-consumer data placement hints.
 
 ### References
 
@@ -1871,7 +1871,7 @@ execution state. Intrinsics for the use of these instructions are specified in
 data placement hints (FEAT_PCDPHINT) instructions and their associated
 intrinsics are available on the target.
 
-### Contention Management hints [**Alpha** state]
+### Contention Management hints
 
 `__ARM_FEATURE_CMH` is defined to `1` if the Contention Management hints
 (FEAT_CMH) instructions and their associated intrinsics are available on the target.
@@ -5068,7 +5068,7 @@ target. The following hint values are defined:
 | HINT_SHUH        | 3         | `__ARM_FEATURE_CMH`        | Informs that the next instruction generates an effect in a location that one or more other threads of execution are likely to subsequently update. |
 | HINT_SHUH_PH     | 4         | `__ARM_FEATURE_CMH`        | PH adds the effects of STCPH to SHUH. |
 
-## Atomic fetch with hints intrinsics [**Alpha** state]
+## Atomic fetch with hints intrinsics
 
 These intrinsics provide some atomic fetch operations, which will
 make use of hint instructions immediately followed by the
