@@ -509,6 +509,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
 * Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
+* Added support for producer-consumer data placement hints.
 
 ### References
 
@@ -1870,6 +1871,11 @@ execution state. Intrinsics for the use of these instructions are specified in
 data placement hints (FEAT_PCDPHINT) instructions and their associated
 intrinsics are available on the target.
 
+### Contention Management hints
+
+`__ARM_FEATURE_CMH` is defined to `1` if the Contention Management hints
+(FEAT_CMH) instructions and their associated intrinsics are available on the target.
+
 ## Floating-point and vector hardware
 
 ### Hardware floating point
@@ -2722,6 +2728,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_CDE`](#custom-datapath-extension)                                                                                                       | Custom Datapath Extension                                                                          | 0x01        |
 | [`__ARM_FEATURE_CDE_COPROC`](#custom-datapath-extension)                                                                                                | Custom Datapath Extension                                                                          | 0xf         |
 | [`__ARM_FEATURE_CLZ`](#clz)                                                                                                                             | CLZ instruction                                                                                    | 1           |
+| [`__ARM_FEATURE_CMH`](#contention-management-hints)                                                                                                     | Contention management hints                                                                        | 1           |
 | [`__ARM_FEATURE_COMPLEX`](#complex-number-intrinsics)                                                                                                   | Armv8.3-A extension                                                                                | 1           |
 | [`__ARM_FEATURE_COPROC`](#coprocessor-intrinsics)                                                                                                       | Coprocessor Intrinsics                                                                             | 1           |
 | [`__ARM_FEATURE_CRC32`](#crc32-extension)                                                                                                               | CRC32 extension                                                                                    | 1           |
@@ -5057,6 +5064,40 @@ target. The following hint values are defined:
 | ---------------- | --------- | -------------------------- | --------------------------------------------------------------------------------- |
 | HINT_STSHH_KEEP  | 0         | `__ARM_FEATURE_PCDPHINT`   | Requests retention of the updated location in the local cache of the updating PE. |
 | HINT_STSHH_STRM  | 1         | `__ARM_FEATURE_PCDPHINT`   | Requests that the updated location not be retained in the local cache of the updating PE. |
+| HINT_STCPH       | 2         | `__ARM_FEATURE_CMH`        | Ensures that the memory write effect of the next instruction occurs before any other effects from other threads.|
+| HINT_SHUH        | 3         | `__ARM_FEATURE_CMH`        | Informs that the next instruction generates an effect in a location that one or more other threads of execution are likely to subsequently update. |
+| HINT_SHUH_PH     | 4         | `__ARM_FEATURE_CMH`        | PH adds the effects of STCPH to SHUH. |
+
+## Atomic fetch with hints intrinsics
+
+These intrinsics provide some atomic fetch operations, which will
+make use of hint instructions immediately followed by the
+associated fetch instructions. These intrinsics are type generic and 
+support scalar integral types of 8, 16, 32, and 64 bits.
+
+To access these intrinsics, `<arm_acle.h>` should be included.
+
+``` c
+  type __arm_atomic_fetch_add_with_hint(type *ptr, type data, int memory_order, int hint);
+  type __arm_atomic_fetch_sub_with_hint(type *ptr, type data, int memory_order, int hint);
+  type __arm_atomic_fetch_and_with_hint(type *ptr, type data, int memory_order, int hint);
+  type __arm_atomic_fetch_xor_with_hint(type *ptr, type data, int memory_order, int hint);
+  type __arm_atomic_fetch_or_with_hint(type *ptr, type data, int memory_order, int hint);
+```
+
+The first argument in these intrinsic is a pointer `ptr` which is the location for read-modify-write.
+The second argument `data` is the data which is to be used in the RMW operation.
+The third argument `mem` can be one of 6 memory ordering variables supported by atomic_fetch:
+__ATOMIC_RELAXED, __ATOMIC_SEQ_CST, __ATOMIC_ACQUIRE, __ATOMIC_CONSUME, __ATOMIC_ACQ_REL and __ATOMIC_RELEASE.
+
+The fourth argument `hint` selects the requested hint. The set of valid
+hint values depends on the architectural features supported by the
+target. The following hint values are defined:
+
+| **Hint**         | **Value** | **Feature**                | **Summary**                                                                       |
+| ---------------- | --------- | -------------------------- | --------------------------------------------------------------------------------- |
+| HINT_SHUH        | 0         | `__ARM_FEATURE_CMH`        | Informs that the next instruction generates an effect in a location that one or more other threads of execution are likely to subsequently update. |
+| HINT_SHUH_PH     | 1         | `__ARM_FEATURE_CMH`        | PH adds the effects of STCPH to SHUH. |
 
 # Custom Datapath Extension
 
