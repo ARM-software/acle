@@ -1,4 +1,4 @@
-<COMMENT>	SPDX-FileCopyrightText: Copyright 2021, 2024 Arm Limited <open-source-office@arm.com>
+<COMMENT>	SPDX-FileCopyrightText: Copyright 2021-2026 Arm Limited <open-source-office@arm.com>
 <COMMENT>	SPDX-License-Identifier: Apache-2.0
 <COMMENT>	
 <COMMENT>	Licensed under the Apache License, Version 2.0 (the "License");
@@ -4719,3 +4719,11 @@ vmlallttq_lane_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and wi
 vmlallttq_laneq_f32_mf8_fpm	Vector arithmetic|Multiply|Multiply-accumulate and widen
 vmmlaq_f16_mf8_fpm	Vector arithmetic|Matrix multiply
 vmmlaq_f32_mf8_fpm	Vector arithmetic|Matrix multiply
+vdot_f32_f16	Vector arithmetic|Dot product
+vdotq_f32_f16	Vector arithmetic|Dot product
+vdot_lane_f32_f16	Vector arithmetic|Dot product
+vdotq_laneq_f32_f16	Vector arithmetic|Dot product
+vdot_laneq_f32_f16	Vector arithmetic|Dot product
+vdotq_lane_f32_f16	Vector arithmetic|Dot product
+vmmlaq_f32_f16	Vector arithmetic|Matrix multiply
+vmmlaq_f16_f16	Vector arithmetic|Matrix multiply

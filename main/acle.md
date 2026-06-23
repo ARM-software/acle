@@ -1,7 +1,7 @@
 ---
 title: Arm C Language Extensions
-version: 2025Q3
-date-of-issue: 14 November 2025
+version: 2026Q1
+date-of-issue: 15 May 2026
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 draftversion: true
@@ -182,6 +182,7 @@ unless a different support level is specified in the text.
 | 2024Q4       | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
 | 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
 | 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
+| 2026Q1       | 15 May 2026       | Arm    | See [Changes between ACLE Q3 2025 and ACLE Q1 2026](#changes-between-acle-q3-2025-and-acle-q1-2026)                  |
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -243,8 +244,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added reference to the *Cortex-M Security Extension (CMSE)*
   specifications in [Cortex-M Security Extension
   (CMSE)](#cortex-m-security-extension-cmse).
-* Added specification for [NEON-SVE Bridge](#neon-sve-bridge) and
-  [NEON-SVE Bridge macros](#neon-sve-bridge-macro).
+* Added specification for [Neon-SVE Bridge](#neon-sve-bridge) and
+  [Neon-SVE Bridge macros](#neon-sve-bridge-macro).
 * Added feature detection macro for the memcpy family of memory
   operations (MOPS) at [memcpy family of memory operations
   standarization instructions -
@@ -435,7 +436,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Changed name mangling of function types to include SME attributes.
 * Changed `__ARM_NEON_SVE_BRIDGE` to refer to the availability of the
   [`arm_neon_sve_bridge.h`](#arm_neon_sve_bridge.h) header file, rather
-  than the [NEON-SVE bridge](#neon-sve-bridge) intrinsics.
+  than the [Neon-SVE bridge](#neon-sve-bridge) intrinsics.
 * Removed extraneous `const` from SVE2.1 store intrinsics.
 * Added [`__arm_agnostic`](#arm_agnostic) keyword attribute.
 * Refined function versioning scope and signature rules to use the default
@@ -467,14 +468,14 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added feature test macro for FEAT_CSSC.
 * Added Function Multi Versioning feature priority syntax.
 
-#### Changes for next release
+#### Changes between ACLE Q3 2025 and ACLE Q1 2026
 
 * Added support for modal 8-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added support for 16-bit floating point matrix multiply-accumulate widening intrinsics.
 * Added restrictions of Function Multi Versioning's use with other extensions.
-* Upgrade Function Multi Versioning to Release support level.
+* Upgraded Function Multi Versioning to Release support level.
 * Removed _single from svmla_za16[_mf8]_vg2x1_fpm and svmla_za32[_mf8]_vg4x1_fpm.
-* Improve documentation for VMLA/VMLS intrinsics for floats.
+* Improved documentation for VMLA/VMLS intrinsics for floats.
 * Added support for producer-consumer data placement hints.
 * Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
 * Added [**Alpha**](#current-status-and-anticipated-changes)
@@ -488,7 +489,28 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
 * Redesigned atomic store with hints intrinsics.
+
+#### Changes after ACLE Q1 2026
+
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
+  dot product intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 conversion intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 absolute difference accumulation
+  intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
+* Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
 * Added support for producer-consumer data placement hints. [**Alpha** state]
+
 ### References
 
 This document refers to the following documents.
@@ -1110,7 +1132,7 @@ Including `<arm_sve.h>` also includes the following header files:
 ### `<arm_neon_sve_bridge.h>`
 
 `<arm_neon_sve_bridge.h>` defines intrinsics for moving data between
-Neon and SVE vector types; see [NEON-SVE Bridge](#neon-sve-bridge)
+Neon and SVE vector types; see [Neon-SVE Bridge](#neon-sve-bridge)
 for details. Before including the header, you should test the
 `__ARM_NEON_SVE_BRIDGE` macro.
 :
@@ -2009,7 +2031,11 @@ are available. This implies that `__ARM_FEATURE_SVE` is nonzero.
  are available and if the associated [ACLE features]
 (#sme-language-extensions-and-intrinsics) are supported.
 
-#### NEON-SVE Bridge macro
+`__ARM_FEATURE_SVE2p3` is defined to 1 if the FEAT_SVE2p3 instructions
+ are available and if the associated [ACLE features]
+(#sme-language-extensions-and-intrinsics) are supported.
+
+#### Neon-SVE Bridge macro
 
 `__ARM_NEON_SVE_BRIDGE` is defined to 1 if the [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h)
 header file is available.
@@ -2032,6 +2058,7 @@ of SME has an associated preprocessor macro, given in the table below:
 | FEAT_SME2   | __ARM_FEATURE_SME2         |
 | FEAT_SME2p1 | __ARM_FEATURE_SME2p1       |
 | FEAT_SME2p2 | __ARM_FEATURE_SME2p2       |
+| FEAT_SME2p3 | __ARM_FEATURE_SME2p3       |
 
 Each macro is defined if there is hardware support for the associated
 architecture feature and if all of the [ACLE
@@ -2157,11 +2184,25 @@ are available.
 #### Brain 16-bit floating-point vector multiplication support
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_BFSCALE` is defined to `1` if there is hardware
 support for the SVE BF16 vector multiplication extensions and if the
+associated ACLE intrinsics are available.
+
+See [Half-precision brain
+floating-point](#half-precision-brain-floating-point) for details
+of half-precision brain floating-point types.
+
+#### Brain 16-bit floating-point matrix multiplication support
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_SVE_B16MM` is defined to `1` if there is hardware
+support for the SVE BF16 matrix multiply extension and if the
 associated ACLE intrinsics are available.
 
 See [Half-precision brain
@@ -2202,7 +2243,7 @@ SVE AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
 and if the associated ACLE intrinsics are available.
 
 The specification for SVE AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### SHA2 extension
@@ -2386,6 +2427,18 @@ this implies:
 
   * `__ARM_NEON == 1`
 
+#### Half-precision to single-precision dot product extension
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_F16F32DOT` is defined if the half-precision dot product
+accumulating to single-precision instructions are supported and the vector
+intrinsics are available. Note that this implies:
+
+  * `__ARM_NEON == 1`
+
 #### Complex number intrinsics
 
 `__ARM_FEATURE_COMPLEX` is defined if the complex addition and complex
@@ -2414,15 +2467,15 @@ associated ACLE intrinsics are available. This implies that
 ##### Multiplication of modal 8-bit floating-point matrices
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
-for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to half-precision (FEAT_F8F16MM)
+for the Neon and SVE modal 8-bit floating-point matrix multiply-accumulate to half-precision (FEAT_F8F16MM)
 instructions and if the associated ACLE intrinsics are available.
 
 `__ARM_FEATURE_F8F32MM` is defined to `1` if there is hardware support
-for the NEON and SVE modal 8-bit floating-point matrix multiply-accumulate to single-precision (FEAT_F8F32MM)
+for the Neon and SVE modal 8-bit floating-point matrix multiply-accumulate to single-precision (FEAT_F8F32MM)
 instructions and if the associated ACLE intrinsics are available.
 
 ##### Multiplication of 16-bit floating-point matrices
@@ -2430,6 +2483,21 @@ instructions and if the associated ACLE intrinsics are available.
 `__ARM_FEATURE_SVE_F16F32MM` is defined to `1` if there is hardware support
 for the SVE 16-bit floating-point to 32-bit floating-point matrix multiply and add
 (FEAT_SVE_F16F32MM) instructions and if the associated ACLE intrinsics are available.
+
+##### Multiplication of 16-bit floating-point matrices (AdvSIMD)
+
+This section is in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+`__ARM_FEATURE_F16F32MM` is defined if the Neon half-precision matrix multiply
+accumulating to single-precision instruction is supported. Note that this implies:
+
+  * `__ARM_NEON == 1`
+
+`__ARM_FEATURE_F16MM` is defined if the Neon non-widening half-precision matrix multiply instruction instruction is supported. Note that this implies:
+
+  * `__ARM_NEON == 1`
 
 ##### Multiplication of 32-bit floating-point matrices
 
@@ -2497,7 +2565,7 @@ available. This implies that `__ARM_FEATURE_SME2` is nonzero.
 #### Quarter-tile outer product intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#current-status-and-anticipated-changes) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_MOP4` is defined to `1` if there is hardware
@@ -2669,6 +2737,9 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_DIRECTED_ROUNDING`](#directed-rounding)                                                                                                 | Directed Rounding                                                                                  | 1           |
 | [`__ARM_FEATURE_DOTPROD`](#availability-of-dot-product-intrinsics)                                                                                      | Dot product extension (ARM v8.2-A)                                                                 | 1           |
 | [`__ARM_FEATURE_DSP`](#dsp-instructions)                                                                                                                | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
+| [`__ARM_FEATURE_F16F32DOT`](#half-precision-to-single-precision-dot-product-extension)                                                                  | Half-precision to single-precision dot product extension (FEAT_F16F32DOT)                          | 1           |
+| [`__ARM_FEATURE_F16F32MM`](#multiplication-of-16-bit-floating-point-matrices-advsimd)                                                                   | Half-precision to single-precision matrix multiply accumulating extension (FEAT_F16F32MM).         | 1           |
+| [`__ARM_FEATURE_F16MM`](#multiplication-of-16-bit-floating-point-matrices-advsimd)                                                                      | Half-precision matrix multiply accumulating extension (FEAT_F16MM)                                 | 1           |
 | [`__ARM_FEATURE_FAMINMAX`](#floating-point-absolute-minimum-and-maximum-extension)                                                                      | Floating-point absolute minimum and maximum extension                                              | 1           |
 | [`__ARM_FEATURE_FMA`](#fused-multiply-accumulate-fma)                                                                                                   | Floating-point fused multiply-accumulate                                                           | 1           |
 | [`__ARM_FEATURE_FP16_FML`](#fp16-fml-extension)                                                                                                         | FP16 FML extension (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                     | 1           |
@@ -2721,6 +2792,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SSVE_FP8FMA`](#modal-8-bit-floating-point-extensions)                                                                                   | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_SVE`](#scalable-vector-extension-sve)                                                                                                   | Scalable Vector Extension (FEAT_SVE)                                                               | 1           |
 | [`__ARM_FEATURE_SVE_B16B16`](#non-widening-brain-16-bit-floating-point-support)                                                                         | Non-widening brain 16-bit floating-point intrinsics (FEAT_SVE_B16B16)                              | 1           |
+| [`__ARM_FEATURE_SVE_B16MM`](#brain-16-bit-floating-point-matrix-multiplication-support)                                                                 | SVE brain 16-bit floating-point matrix multiply extension (FEAT_SVE_B16MM)                         | 1           |
 | [`__ARM_FEATURE_SVE_BF16`](#brain-16-bit-floating-point-support)                                                                                        | SVE support for the 16-bit brain floating-point extension (FEAT_BF16)                              | 1           |
 | [`__ARM_FEATURE_SVE_BFSCALE`](#brain-16-bit-floating-point-vector-multiplication-support)                                                               | SVE support for the 16-bit brain floating-point vector multiplication extension (FEAT_SVE_BFSCALE) | 1           |
 | [`__ARM_FEATURE_SVE_BITS`](#scalable-vector-extension-sve)                                                                                              | The number of bits in an SVE vector, when known in advance                                         | 256         |
@@ -2744,6 +2816,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_SVE2_SM4`](#sm4-extension)                                                                                                              | SVE2 support for the SM4 cryptographic extension (FEAT_SVE_SM4)                                     | 1           |
 | [`__ARM_FEATURE_SVE2p1`](#sve2)                                                                                                                         | SVE version 2.1 (FEAT_SVE2p1)
 | [`__ARM_FEATURE_SVE2p2`](#sve2)                                                                                                                         | SVE version 2.2 (FEAT_SVE2p2)
+| [`__ARM_FEATURE_SVE2p3`](#sve2)                                                                                                                         | SVE version 2.3 (FEAT_SVE2p3)
 | [`__ARM_FEATURE_SYSREG128`](#bit-system-registers)                                                                                                      | Support for 128-bit system registers (FEAT_SYSREG128)                                              | 1           |
 | [`__ARM_FEATURE_UNALIGNED`](#unaligned-access-supported-in-hardware)                                                                                    | Hardware support for unaligned access                                                              | 1           |
 | [`__ARM_FP`](#hardware-floating-point)                                                                                                                  | Hardware floating-point                                                                            | 1           |
@@ -2863,7 +2936,7 @@ The following attributes trigger the multi version code generation:
 * All versions must use the same calling convention.
 * If only the `default` version exist it should be linked directly.
 * Function Multi Versioning might be disabled at compile time by a compiler
-  flag. In this case, the `default` version shall be used.
+  flag. In this case, the `default` version is used.
 * All function versions must be declared at the same scope level.
 * The default version signature is the signature for calling
   the multiversioned functions. Therefore, a versioned function
@@ -6275,7 +6348,7 @@ correspond to the new mode and returns the resulting value. No side effects, suc
 as changing processor state, occur.
 
 Individual FP8 intrinsics are described in their respective
-Advanced SIMD (NEON), SVE, and SME sections.
+Advanced SIMD (Neon), SVE, and SME sections.
 
 ## Support enumerations
 
@@ -9621,7 +9694,7 @@ BFloat16 floating-point multiply vectors.
 ### SVE BFloat16 floating-point adjust exponent vectors instructions.
 
 The specification for SVE BFloat16 floating-point adjust exponent vectors instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### BFSCALE
@@ -9639,6 +9712,15 @@ BFloat16 floating-point adjust exponent vectors.
   ```
 
 ### SVE2 floating-point matrix multiply-accumulate instructions.
+
+#### BFMMLA, FMMLA (non-widening)
+
+16-bit floating-point matrix multiply-accumulate.
+```c
+  // Only if __ARM_FEATURE_SVE_B16MM
+  // Variant also available for _f16 if (__ARM_FEATURE_SVE2p2 && __ARM_FEATURE_F16MM).
+  svbfloat16_t svmmla[_bf16](svbfloat16_t zda, svbfloat16_t zn, svbfloat16_t zm);
+```
 
 #### FMMLA (widening, FP8 to FP16)
 
@@ -9985,7 +10067,7 @@ Lookup table read with 2-bit indices.
   // Variant is  also available for: _u8
   svint8_t svluti2_lane[_s8](svint8_t table, svuint8_t indices, uint64_t imm_idx);
 
-  // Variant are also available for: _u16, _f16 and _bf16
+  // Variants are also available for: _u16, _f16 and _bf16
   svint16_t svluti2_lane[_s16]( svint16_t table, svuint8_t indices, uint64_t imm_idx);
 ```
 
@@ -9996,15 +10078,31 @@ Lookup table read with 4-bit indices.
   // Variant is also available for: _u8
   svint8_t svluti4_lane[_s8](svint8_t table, svuint8_t indices, uint64_t imm_idx);
 
-  // Variant are also available for: _u16, _f16, _bf16
+  // Variants are also available for: _u16, _f16, _bf16
   svint16_t svluti4_lane[_s16](svint16_t table, svuint8_t indices, uint64_t imm_idx);
   svint16_t svluti4_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
+```
+
+### SVE2.3 lookup table
+
+The intrinsics in this section are defined by the header file
+[`<arm_sve.h>`](#arm_sve.h) when `__ARM_FEATURE_SVE2p3` is defined to 1.
+
+#### LUTI6
+
+Lookup table read with 6-bit indices (8-bit).
+
+Use of this intrinsic if `svcntb() * 8 < 256` results in undefined behaviour.
+
+```c
+  // Variant is  also available for: _u8 _mf8
+  svint8_t svluti6[_s8_x2](svint8x2_t table, svuint8_t indices);
 ```
 
 ### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
 
 The specification for SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 #### AESE, AESD, AESEMC, AESDIMC
@@ -13230,7 +13328,7 @@ Zero ZA vector groups
 ### SME2.2 instruction intrinsics
 
 The specification for SME2.2 are in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The intrinsics in this section are defined by the header file
@@ -13327,7 +13425,8 @@ Set scalar to count from predicate-as-counter. ``vl`` is expected to be 2 or 4.
 Multi-vector dot-product (2-way)
 
 ``` c
-  // Variants are also available for _s32_s16 and _u32_u16
+  // Variants are also available for _s32_s16, _u32_u16
+  // and also for _s16_s8 and _u16_u8 if (__ARM_FEATURE_SVE2p3 || __ARM_FEATURE_SME2p3).
   svfloat32_t svdot[_f32_f16](svfloat32_t zda, svfloat16_t zn,
                               svfloat16_t zm);
   svfloat32_t svdot[_n_f32_f16](svfloat32_t zda, svfloat16_t zn,
@@ -13339,7 +13438,8 @@ Multi-vector dot-product (2-way)
 Multi-vector dot-product (2-way)
 
 ``` c
-  // Variants are also available for _s32_s16 and _u32_u16
+  // Variants are also available for _s32_s16, _u32_u16
+  // and also for _s16_s8 and _u16_u8  if (__ARM_FEATURE_SVE2p3 || __ARM_FEATURE_SME2p3).
   svfloat32_t svdot_lane[_f32_f16](svfloat32_t zda, svfloat16_t zn,
                                    svfloat16_t zm, uint64_t imm_idx);
   ```
@@ -13594,6 +13694,7 @@ Multi-vector saturating rounding shift right narrow and interleave
 
 ``` c
   // Variants are also available for _u16[_u32_x2]
+  // and also _s8[_s16_x2] and _u8[_u16_x2] if __ARM_FEATURE_SVE2p3 || __ARM_FEATURE_SME2p3.
   svint16_t svqrshrn[_n]_s16[_s32_x2](svint32x2_t zn, uint64_t imm);
   ```
 
@@ -13602,6 +13703,7 @@ Multi-vector saturating rounding shift right narrow and interleave
 Multi-vector saturating rounding shift right unsigned narrow and interleave
 
 ``` c
+  // Variant for _u8[_s16_x2] is available if __ARM_FEATURE_SVE2p3 || __ARM_FEATURE_SME2p3.
   svuint16_t svqrshrun[_n]_u16[_s32_x2](svint32x2_t zn, uint64_t imm);
   ```
 
@@ -13814,7 +13916,7 @@ While (resulting in predicate tuple)
 ### SVE2.2 and SME2.2 instruction intrinsics
 
 The specification for SVE2.2 and SME2.2 are in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#current-status-and-anticipated-changes) and might change or be
 extended in the future.
 
 The functions in this section are defined by either the header file
@@ -13901,6 +14003,108 @@ Scalar index of first/last true predicate element (predicated).
   // _b16, _b32, _b64
   int64_t svlastp_b8(svbool_t pg, svbool_t pn);
 
+  ```
+
+### SVE2.3 and SME2.3 instruction intrinsics
+
+The specification for SVE2.3 and SME2.3 are in
+[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+extended in the future.
+
+The functions in this section are defined by either the header file
+ [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
+when `__ARM_FEATURE_SVE2p3` or `__ARM_FEATURE_SME2p3` is defined, respectively.
+
+#### ADDQP
+
+Add pairwise within quadword vector segments.
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64.
+  svint8_t svaddqp[_s8](svint8_t zn, svint8_t zm);
+  ```
+
+#### ADDSUBP
+
+Add subtract pairwise.
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64.
+  svint8_t svaddsubp[_s8](svint8_t zn, svint8_t zm);
+  ```
+
+#### LUTI6
+
+Lookup table read with 6-bit indices (16-bit).
+
+Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
+
+``` c
+  // Variants are also available for _u16_x2, _bf16_x2 and _f16_x2.
+  svint16_t svluti6_lane[_s16_x2](svint16x2_t table, svuint8_t indices, uint64_t imm_idx);
+  ```
+
+#### FCVTZSN, FCVTZUN
+
+Floating-point narrowing convert to interleaved integer, rounding toward zero.
+
+``` c
+  // Variants are also available for
+  //               _s16[_f32_x2], _s32[_f64_x2],
+  // _u8[_f16_x2], _u16[_f32_x2], _u32[_f64_x2].
+  svint8_t svcvtn_s8[_f16_x2](svfloat16x2_t zn);
+```
+
+#### SABAL, UABAL
+
+Two-way absolute difference sum and accumulate long.
+
+``` c
+  // Variants are also available for
+  //       _s32, _s64,
+  // _u16, _u32, _u64.
+  svint16_t svabal[_s16](svint16_t zda, svint8_t zn, svint8_t zm);
+  svint16_t svabal[_n_s16](svint16_t zda, svint8_t zn, int8_t zm);
+```
+
+#### SCVTF, SCVTFLT, UCVTF, UCVTFLT
+
+Integer convert to floating-point (top and bottom).
+
+``` c
+  // Variants are also available for
+  //            _f32[_s16], _f64[_s32],
+  // _f16[_u8], _f32[_u16], _f64[_u32].
+  svfloat16_t svcvtt_f16[_s8](svint8_t zn);
+  svfloat16_t svcvtb_f16[_s8](svint8_t zn);
+```
+
+#### SQSHRN, UQSHRN
+
+Multi-vector saturating shift right narrow and interleave.
+
+``` c
+  // Variants are also available for _s8[_s16_x2], _u16[_u32_x2] and _u8[_u16_x2].
+  svint16_t svqshrn[_n]_s16[_s32_x2](svint32x2_t zn, uint64_t imm);
+  ```
+
+#### SQSHRUN
+
+Signed saturating shift right narrow by immediate to interleaved unsigned integer.
+
+``` c
+  // Variant for _u8[_s16_x2] is also available.
+  svuint16_t svqshrun[_n]_u16[_s32_x2](svint32x2_t zn, uint64_t imm);
+  ```
+
+#### SUBP
+
+Subtract pairwise.
+
+``` c
+  // Variants are also available for _s16, _s32, _s64, _u8, _u16, _u32 and _u64.
+  svint8_t svsubp[_s8]_m (svbool_t pg, svint8_t zdn, svint8_t zm);
+  svint8_t svsubp[_s8]_x (svbool_t pg, svint8_t zdn, svint8_t zm);
   ```
 
 ### SME2 maximum and minimum absolute value
@@ -14627,6 +14831,40 @@ non-overloaded names to indicate which vector argument is a vector register pair
     __arm_streaming __arm_inout("za");
 ```
 
+### SME2.3 lookup table
+
+The intrinsics in this section are defined by the header file
+[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p3` is defined to 1.
+
+#### LUTI6
+
+Lookup table read with 6-bit indices (16-bit).
+
+Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
+
+```c
+  // Variants are also available for:
+  //   _u16_x2_u8_x2, _f16_x2_u8_x2, _bf16_x2_u8_x2
+  //   _s16_x2_u8_x3, _u16_x2_u8_x3, _f16_x2_u8_x3, _bf16_x2_u8_x3
+  svint16x4_t svluti6_lane_s16_x4[_s16_x2_u8_x2](svint16x2_t table,
+                                                 svuint8x2_t indices,
+                                                 uint64_t imm_idx) __arm_streaming;
+```
+
+Lookup table read with 6-bit indices (four registers, 8-bit).
+
+``` c
+  // Variants are also available for: _u8 and _mf8.
+  svint8x4_t svluti6_zt_s8_x4(uint64_t zt0, svuint8x3_t zn) __arm_streaming __arm_in("zt0");
+```
+
+Lookup table read with 6-bit indices (table, single, 8-bit).
+
+``` c
+  // Variants are also available for: _u8 and _mf8.
+  svint8_t svluti6_zt_s8(uint64_t zt0, svuint8_t zn) __arm_streaming __arm_in("zt0");
+```
+
 # M-profile Vector Extension (MVE) intrinsics
 
 The M-profile Vector Extension (MVE) [[MVE-spec]](#MVE-spec) instructions provide packed Single
@@ -14955,9 +15193,9 @@ Similarly to C's `memset`, this intrinsic returns the `tagged_address` pointer.
 
 # Architectural Extension Bridges
 
-## NEON-SVE Bridge
+## Neon-SVE Bridge
 
-The NEON_SVE Bridge adds intrinsics that allow conversions between NEON and
+The NEON_SVE Bridge adds intrinsics that allow conversions between Neon and
 SVE vectors.
 
 The [`<arm_neon_sve_bridge.h>`](#arm_neon_sve_bridge.h) header should be
@@ -14979,7 +15217,7 @@ SVE vector.  Using `svld1` to load elements would instead put the
 first memory element in lane 0 of the returned SVE vector.
 
 When `svundef` is passed as the `vec` parameter, compilers are able
-to reuse the SVE register overlapping the NEON input without generating
+to reuse the SVE register overlapping the Neon input without generating
 additional instructions.
 
 | **Instances**                                                            |
@@ -15001,7 +15239,7 @@ additional instructions.
 ### `svget_neonq`
 
 These intrinsics get the first 128 bit subvector of SVE vector `vec` as a
-NEON vector.
+Neon vector.
 
 | **Instances**                                       |
 |-----------------------------------------------------|
@@ -15022,7 +15260,7 @@ NEON vector.
 ### `svdup_neonq`
 
 These intrinsics return an SVE vector with all SVE subvectors containing the
-duplicated NEON vector `vec`.
+duplicated Neon vector `vec`.
 
 | **Instances**                                       |
 |-----------------------------------------------------|

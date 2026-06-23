@@ -1,4 +1,4 @@
-<COMMENT>	SPDX-FileCopyrightText: Copyright 2014-2025 Arm Limited <open-source-office@arm.com>
+<COMMENT>	SPDX-FileCopyrightText: Copyright 2014-2026 Arm Limited <open-source-office@arm.com>
 <COMMENT>	SPDX-FileCopyrightText: Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 <COMMENT>	SPDX-License-Identifier: Apache-2.0
 <COMMENT>	
@@ -4834,3 +4834,18 @@ float32x4_t vmlallttq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8
 <SECTION>	Matrix multiplication intrinsics from Armv9.6-A
 float16x8_t vmmlaq_f16_mf8_fpm(float16x8_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.8H;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.8H, Vn.16B, Vm.16B	Vd.8H -> result	A64
 float32x4_t vmmlaq_f32_mf8_fpm(float32x4_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.4S;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.4S, Vn.16B, Vm.16B	Vd.4S -> result	A64
+
+<SECTION>	Half-precision dot product to single-precision instructions from Armv9.7-A. Requires the +f16f32dot architecture extension.
+float32x2_t vdot_f32_f16(float32x2_t r, float16x4_t a, float16x4_t b)	r -> Vd.2S;a -> Vn.4H;b -> Vm.4H	FDOT Vd.2S,Vn.4H,Vm.4H	Vd.2S -> result	A64
+float32x4_t vdotq_f32_f16(float32x4_t r, float16x8_t a, float16x8_t b)	r -> Vd.4S;a -> Vn.8H;b -> Vm.8H	FDOT Vd.4S,Vn.8H,Vm.8H	Vd.4S -> result	A64
+
+float32x2_t vdot_lane_f32_f16(float32x2_t r, float16x4_t a, float16x4_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.4H;b -> Vm.4H;0 <= lane <= 1	FDOT Vd.2S,Vn.4H,Vm.2H[lane]	Vd.2S -> result	A64
+float32x4_t vdotq_laneq_f32_f16(float32x4_t r, float16x8_t a, float16x8_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.8H;b -> Vm.8H;0 <= lane <= 3	FDOT Vd.4S,Vn.8H,Vm.2H[lane]	Vd.4S -> result	A64
+float32x2_t vdot_laneq_f32_f16(float32x2_t r, float16x4_t a, float16x8_t b, __builtin_constant_p(lane))	r -> Vd.2S;a -> Vn.4H;b -> Vm.8H;0 <= lane <= 3	FDOT Vd.2S,Vn.4H,Vm.2H[lane]	Vd.2S -> result	A64
+float32x4_t vdotq_lane_f32_f16(float32x4_t r, float16x8_t a, float16x4_t b, __builtin_constant_p(lane))	r -> Vd.4S;a -> Vn.8H;b -> Vm.4H;0 <= lane <= 1	FDOT Vd.4S,Vn.8H,Vm.2H[lane]	Vd.4S -> result	A64
+
+<SECTION>	Half-precision matrix multiply accumulating to single-precision instruction from Armv9.7-A. Requires the +f16f32mm architecture extension.
+float32x4_t vmmlaq_f32_f16(float32x4_t r, float16x8_t a, float16x8_t b)	r -> Vd.4S;a -> Vn.8H;b -> Vm.8H	FMMLA Vd.4S, Vn.8H, Vm.8H	Vd.4S -> result	A64
+
+<SECTION>	Non-widening half-precision matrix multiply instruction. Requires the +f16mm architecture extension.
+float16x8_t vmmlaq_f16_f16(float16x8_t r, float16x8_t a, float16x8_t b)	r -> Vd.8H;a -> Vn.8H;b -> Vm.8H	FMMLA Vd.8H, Vn.8H, Vm.8H	Vd.8H -> result	A64

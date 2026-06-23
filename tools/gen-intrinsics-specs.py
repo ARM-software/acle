@@ -22,6 +22,7 @@ import csv
 import doctest
 from urllib.parse import urljoin
 from urllib.parse import quote
+from packaging.version import Version
 
 def quote_literal(val, workflow):
     if len(val) > 0:
@@ -955,7 +956,7 @@ if __name__ == "__main__":
 
     # We require version 0.8.6 to be able to print multi-line records
     # in tables.
-    if tbl.__version__ < "0.8.6":
+    if Version(tbl.__version__) < Version("0.8.6"):
         print(f"Your version of package tabulate is too old ({tbl.__version__}). "
               "Update it to be greater or equal to 0.8.6.", file=sys.stderr)
         exit(1)
