@@ -127,6 +127,7 @@ for more information about Arm’s trademarks.
 | M     | 21 February 2025  | 2024Q4               |
 | N     | 06 June 2025      | 2025Q2               |
 | O     | 15 May 2026       | 2026Q1               |
+| P     | 07 July 2026      | 2026Q2               |
 
 ### Changes between 2021Q2 and 2021Q3
 
@@ -173,6 +174,7 @@ for more information about Arm’s trademarks.
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
 * Renamed vmmlaq_f16_f16 to vmmlaq_f16
+* Added documentation for missing Neon intrinsics
 
 <!---
 **** Do not remove! ****
