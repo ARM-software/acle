@@ -4848,4 +4848,4 @@ float32x4_t vdotq_lane_f32_f16(float32x4_t r, float16x8_t a, float16x4_t b, __bu
 float32x4_t vmmlaq_f32_f16(float32x4_t r, float16x8_t a, float16x8_t b)	r -> Vd.4S;a -> Vn.8H;b -> Vm.8H	FMMLA Vd.4S, Vn.8H, Vm.8H	Vd.4S -> result	A64
 
 <SECTION>	Non-widening half-precision matrix multiply instruction. Requires the +f16mm architecture extension.
-float16x8_t vmmlaq_f16_f16(float16x8_t r, float16x8_t a, float16x8_t b)	r -> Vd.8H;a -> Vn.8H;b -> Vm.8H	FMMLA Vd.8H, Vn.8H, Vm.8H	Vd.8H -> result	A64
+float16x8_t vmmlaq_f16(float16x8_t r, float16x8_t a, float16x8_t b)	r -> Vd.8H;a -> Vn.8H;b -> Vm.8H	FMMLA Vd.8H, Vn.8H, Vm.8H	Vd.8H -> result	A64

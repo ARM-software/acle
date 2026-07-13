@@ -170,10 +170,11 @@ for more information about Arm’s trademarks.
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
 
-### Changes for next release
+### Changes since 2026Q1
 
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
+* Renamed vmmlaq_f16_f16 to vmmlaq_f16
 
 <!---
 **** Do not remove! ****
@@ -6251,6 +6252,6 @@ The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 
 #### Matrix multiply
 
-| Intrinsic                                                                                                                                                                                                                                                                                  | Argument preparation                         | AArch64 Instruction         | Result            | Supported architectures   |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|-----------------------------|-------------------|---------------------------|
-| <code>float16x8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vmmlaq_f16_f16" target="_blank">vmmlaq_f16_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t b)</code> | `r -> Vd.8H`<br>`a -> Vn.8H`<br>`b -> Vm.8H` | `FMMLA Vd.8H, Vn.8H, Vm.8H` | `Vd.8H -> result` | `A64`                     |
+| Intrinsic                                                                                                                                                                                                                                                                          | Argument preparation                         | AArch64 Instruction         | Result            | Supported architectures   |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|-----------------------------|-------------------|---------------------------|
+| <code>float16x8_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vmmlaq_f16" target="_blank">vmmlaq_f16</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t r,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t a,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8_t b)</code> | `r -> Vd.8H`<br>`a -> Vn.8H`<br>`b -> Vm.8H` | `FMMLA Vd.8H, Vn.8H, Vm.8H` | `Vd.8H -> result` | `A64`                     |

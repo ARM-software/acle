@@ -170,10 +170,11 @@ for more information about Arm’s trademarks.
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
 
-### Changes for next release
+### Changes since 2026Q1
 
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
+* Renamed vmmlaq_f16_f16 to vmmlaq_f16
 
 <!---
 **** Do not remove! ****
