@@ -510,6 +510,9 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
 * Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
 * Added support for producer-consumer data placement hints.
+* Clarified interaction between SME keyword attributes and a common compiler
+  extension whereby type attributes can be inherited between subsequent
+  duplicate decls.
 
 ### References
 
@@ -10741,6 +10744,35 @@ The function type attributes cannot be used with K&R-style
   int f1() ATTR { ... }        // Likewise
   typedef int ft2(void) ATTR;  // OK
   int f2(void) ATTR { ... }    // OK
+```
+
+Some implementations may, as an extension, accept code such as:
+
+```c
+void f(void) [[attr1, attr2, ..., attrN]];
+void f(void);
+```
+
+where the second declaration inherits the type attributes from the
+first, even if the declarations would otherwise be incompatible.
+
+However, this specification considers such code invalid if the first
+declaration is annotated with an SME keyword attribute which would make
+the declarations incompatible (as above), due to its absence from the
+second declaration.
+
+Thus, e.g. all of the following (otherwise duplicate) declarations are
+ill-formed:
+
+```c
+void f(void) __arm_streaming;
+void f(void); // Ill-formed
+
+void g(void) __arm_streaming_compatible;
+void g(void) {} // Ill-formed
+
+void h(void) __arm_streaming __arm_inout("za");
+void h(void); // Ill-formed
 ```
 
 ### SME keyword attributes related to streaming mode
