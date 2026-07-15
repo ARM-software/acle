@@ -127,7 +127,6 @@ for more information about Arm’s trademarks.
 | M     | 21 February 2025  | 2024Q4               |
 | N     | 06 June 2025      | 2025Q2               |
 | O     | 15 May 2026       | 2026Q1               |
-| P     | 07 July 2026      | 2026Q2               |
 
 ### Changes between 2021Q2 and 2021Q3
 
