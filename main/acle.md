@@ -3127,9 +3127,24 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT >= 0b0010```     |
    | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64 == 0b1```      |
    | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
-   | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SMEver >= 0b0001```    |
+   | `FEAT_SME2`              | sme2          | ```ID_AA64SMFR0_EL1.SMEver >= 0b0001```   |
    | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
    | `FEAT_CSSC`              | cssc          | ```ID_AA64ISAR2_EL1.CSSC >= 0b0001```     |
+   | `FEAT_FP8`               | fp8           | ```ID_AA64FPFR0_EL1.F8CVT == 0b1```       |
+   | `FEAT_F8F32MM`           | f8f32mm       | ```ID_AA64FPFR0_EL1.F8MM8 == 0b1```       |
+   | `FEAT_FP8DOT4`           | fp8dot4       | ```ID_AA64FPFR0_EL1.F8DP4 == 0b1```       |
+   | `FEAT_FP8FMA`            | fp8fma        | ```ID_AA64FPFR0_EL1.F8FMA == 0b1```       |
+   | `FEAT_SME_F8F32`         | sme-f8f32     | ```ID_AA64SMFR0_EL1.F8F32 == 0b1```       |
+   | `FEAT_SSVE_FP8DOT4`      | ssve-fp8dot4  | ```ID_AA64SMFR0_EL1.SF8DP4 == 0b1```      |
+   | `FEAT_SSVE_FP8FMA`       | ssve-fp8fma   | ```ID_AA64SMFR0_EL1.SF8FMA == 0b1```      |
+   | `FEAT_SSVE_BitPerm`      | ssve-bitperm  | ```ID_AA64SMFR0_EL1.SBitPerm == 0b1```    |
+   | `FEAT_LUT`               | lut           | ```ID_AA64ISAR2_EL1.LUT >= 0b0001```      |
+   | `FEAT_FAMINMAX`          | faminmax      | ```ID_AA64ISAR3_EL1.FAMINMAX >= 0b0001``` |
+   | `FEAT_SME_LUTv2`         | sme-lutv2     | ```ID_AA64SMFR0_EL1.LUTv2 == 0b1```       |
+   | `FEAT_SME2p1`            | sme2p1        | ```ID_AA64SMFR0_EL1.SMEver >= 0b0010```   |
+   | `FEAT_SME2p2`            | sme2p2        | ```ID_AA64SMFR0_EL1.SMEver >= 0b0011```   |
+   | `FEAT_SVE2p1`            | sve2p1        | ```ID_AA64ZFR0_EL1.SVEver >= 0b0010```    |
+   | `FEAT_SVE2p2`            | sve2p2        | ```ID_AA64ZFR0_EL1.SVEver >= 0b0011```    |
 
 The tables are sorted by priority, starting from features of lowest priority ending with features of highest priority.
 
@@ -3177,6 +3192,21 @@ The following table lists the feature dependencies for AArch64.
    | sme-f64f64       | sme               |
    | sme-i16i64       | sme               |
    | sme2             | sme               |
+   | fp8              | simd              |
+   | f8f32mm          | simd, fp8         |
+   | fp8dot4          | fp8               |
+   | fp8fma           | fp8               |
+   | sme-f8f32        | sme2, fp8         |
+   | ssve-fp8dot4     | sme2, fp8         |
+   | ssve-fp8fma      | sme2, fp8         |
+   | ssve-bitperm     | sme2              |
+   | lut              | simd              |
+   | faminmax         | simd              |
+   | sme-lutv2        | sme2              |
+   | sme2p1           | sme2              |
+   | sme2p2           | sme2p1            |
+   | sve2p1           | sve2              |
+   | sve2p2           | sve2p1            |
 
 ### Selection
 
