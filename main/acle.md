@@ -513,6 +513,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Clarified interaction between SME keyword attributes and a common compiler
   extension whereby type attributes can be inherited between subsequent
   duplicate decls.
+* Added Function Multi Versioning support for more features.
 
 ### References
 
