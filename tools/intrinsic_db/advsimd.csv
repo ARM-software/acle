@@ -1969,7 +1969,7 @@ poly8x8_t vmov_n_p8(poly8_t value)	value -> rn	DUP Vd.8B,rn	Vd.8B -> result	v7/A
 poly8x16_t vmovq_n_p8(poly8_t value)	value -> rn	DUP Vd.16B,rn	Vd.16B -> result	v7/A32/A64
 poly16x4_t vmov_n_p16(poly16_t value)	value -> rn	DUP Vd.4H,rn	Vd.4H -> result	v7/A32/A64
 poly16x8_t vmovq_n_p16(poly16_t value)	value -> rn	DUP Vd.8H,rn	Vd.8H -> result	v7/A32/A64
-poly64x1_t vmov_n_p64(poly64_t value)	value -> rn	INS Dd.D[0],xn	Vd.1D -> result	A32/A64
+poly64x1_t vmov_n_p64(poly64_t value)	value -> rn	FMOV Dd,rn	Vd.1D -> result	A32/A64
 poly64x2_t vmovq_n_p64(poly64_t value)	value -> rn	DUP Vd.2D,rn	Vd.2D -> result	A32/A64
 float64x1_t vmov_n_f64(float64_t value)	value -> rn	DUP Vd.1D,rn	Vd.1D -> result	A64
 float64x2_t vmovq_n_f64(float64_t value)	value -> rn	DUP Vd.2D,rn	Vd.2D -> result	A64
