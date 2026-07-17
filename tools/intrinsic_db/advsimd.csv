@@ -1923,7 +1923,7 @@ int16x4_t vdup_n_s16(int16_t value)	value -> rn	DUP Vd.4H,rn	Vd.4H -> result	v7/
 int16x8_t vdupq_n_s16(int16_t value)	value -> rn	DUP Vd.8H,rn	Vd.8H -> result	v7/A32/A64
 int32x2_t vdup_n_s32(int32_t value)	value -> rn	DUP Vd.2S,rn	Vd.2S -> result	v7/A32/A64
 int32x4_t vdupq_n_s32(int32_t value)	value -> rn	DUP Vd.4S,rn	Vd.4S -> result	v7/A32/A64
-int64x1_t vdup_n_s64(int64_t value)	value -> rn	INS Dd.D[0],xn	Vd.1D -> result	v7/A32/A64
+int64x1_t vdup_n_s64(int64_t value)	value -> Xn	FMOV Dd,Xn	Vd.1D -> result	v7/A32/A64
 int64x2_t vdupq_n_s64(int64_t value)	value -> rn	DUP Vd.2D,rn	Vd.2D -> result	v7/A32/A64
 uint8x8_t vdup_n_u8(uint8_t value)	value -> rn	DUP Vd.8B,rn	Vd.8B -> result	v7/A32/A64
 uint8x16_t vdupq_n_u8(uint8_t value)	value -> rn	DUP Vd.16B,rn	Vd.16B -> result	v7/A32/A64
@@ -1931,9 +1931,9 @@ uint16x4_t vdup_n_u16(uint16_t value)	value -> rn	DUP Vd.4H,rn	Vd.4H -> result	v
 uint16x8_t vdupq_n_u16(uint16_t value)	value -> rn	DUP Vd.8H,rn	Vd.8H -> result	v7/A32/A64
 uint32x2_t vdup_n_u32(uint32_t value)	value -> rn	DUP Vd.2S,rn	Vd.2S -> result	v7/A32/A64
 uint32x4_t vdupq_n_u32(uint32_t value)	value -> rn	DUP Vd.4S,rn	Vd.4S -> result	v7/A32/A64
-uint64x1_t vdup_n_u64(uint64_t value)	value -> rn	INS Dd.D[0],xn	Vd.1D -> result	v7/A32/A64
+uint64x1_t vdup_n_u64(uint64_t value)	value -> Xn	FMOV Dd,Xn	Vd.1D -> result	v7/A32/A64
 uint64x2_t vdupq_n_u64(uint64_t value)	value -> rn	DUP Vd.2D,rn	Vd.2D -> result	v7/A32/A64
-poly64x1_t vdup_n_p64(poly64_t value)	value -> rn	INS Dd.D[0],xn	Vd.1D -> result	A32/A64
+poly64x1_t vdup_n_p64(poly64_t value)	value -> Xn	FMOV Dd,Xn	Vd.1D -> result	A32/A64
 poly64x2_t vdupq_n_p64(poly64_t value)	value -> rn	DUP Vd.2D,rn	Vd.2D -> result	A32/A64
 float32x2_t vdup_n_f32(float32_t value)	value -> rn	DUP Vd.2S,rn	Vd.2S -> result	v7/A32/A64
 float32x4_t vdupq_n_f32(float32_t value)	value -> rn	DUP Vd.4S,rn	Vd.4S -> result	v7/A32/A64
@@ -1941,7 +1941,7 @@ poly8x8_t vdup_n_p8(poly8_t value)	value -> rn	DUP Vd.8B,rn	Vd.8B -> result	v7/A
 poly8x16_t vdupq_n_p8(poly8_t value)	value -> rn	DUP Vd.16B,rn	Vd.16B -> result	v7/A32/A64
 poly16x4_t vdup_n_p16(poly16_t value)	value -> rn	DUP Vd.4H,rn	Vd.4H -> result	v7/A32/A64
 poly16x8_t vdupq_n_p16(poly16_t value)	value -> rn	DUP Vd.8H,rn	Vd.8H -> result	v7/A32/A64
-float64x1_t vdup_n_f64(float64_t value)	value -> rn	INS Dd.D[0],xn	Vd.1D -> result	A64
+float64x1_t vdup_n_f64(float64_t value)	value -> Xn	FMOV Dd,Xn	Vd.1D -> result	A64
 float64x2_t vdupq_n_f64(float64_t value)	value -> rn	DUP Vd.2D,rn	Vd.2D -> result	A64
 mfloat8x8_t vdup_n_mf8(mfloat8_t value)	value -> rn	DUP Vd.8B,rn	Vd.8B -> result	A64
 mfloat8x16_t vdupq_n_mf8(mfloat8_t value)	value -> rn	DUP Vd.16B,rn	Vd.16B -> result	A64
@@ -3928,10 +3928,6 @@ uint64x2_t vreinterpretq_u64_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.2D -> result	A3
 int64x2_t vreinterpretq_s64_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.2D -> result	A32/A64
 float64x2_t vreinterpretq_f64_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.2D -> result	A64
 float16x8_t vreinterpretq_f16_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.8H -> result	A32/A64
-mfloat8x8_t vreinterpret_mf8_u8(uint8x8_t a)	a -> Vd.8B	NOP	Vd.8B -> result	A64
-mfloat8x16_t vreinterpretq_mf8_u8(uint8x16_t a)	a -> Vd.16B	NOP	Vd.16B -> result	A64
-uint8x8_t vreinterpret_u8_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.8B -> result	A64
-uint8x16_t vreinterpretq_u8_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.16B -> result	A64
 poly128_t vldrq_p128(poly128_t const *ptr)	ptr -> Xn	LDR Qd,[Xn]	Qd -> result	A32/A64
 void vstrq_p128(poly128_t *ptr, poly128_t val)	val -> Qt;ptr -> Xn	STR Qt,[Xn]		A32/A64
 
