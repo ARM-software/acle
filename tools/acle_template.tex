@@ -39,12 +39,12 @@
 
 \sectionfont{\color{armblue}}
 $if(finalversion)$
-  \newcommand{\versiontext}{$commithash$}
+  \newcommand{\versiontext}{\href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}}
 $else$
   $if(cleanrepo)$
-    \newcommand{\versiontext}{\textcolor{red}{Development version based on $commithash$}}
+    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}}
   $else$
-    \newcommand{\versiontext}{\textcolor{red}{Development version based on $commithash$, with modifications}}
+    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}, with modifications}}
   $endif$
 $endif$
 \newcommand{\dateofissue}{$if(draftversion)$TBD$else$$date-of-issue$$endif$}
