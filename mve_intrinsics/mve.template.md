@@ -24,7 +24,7 @@ to generate the Table of Contents via Jekyll.
 They are automatically removed by the scripts that generate the pdfs.
 -->
 * TOC
-{{:toc}}
+{:toc}
 # Preface                                                                  
 
 ## Abstract
