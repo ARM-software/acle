@@ -112,23 +112,25 @@ for more information about Arm’s trademarks.
 
 ## Document history
 
-| Issue | Date              | Change               |
-| ----- | ----------------- | -------------------- |
-| A     | 09 May 2014       | First release        |
-| B     | 24 March 2016     | Updated for ARMv8.1  |
-| C     | 30 March 2019     | Version ACLE Q1 2019 |
-| D     | 30 June 2019      | Version ACLE Q2 2019 |
-| E     | 30 Sept 2019      | Version ACLE Q3 2019 |
-| F     | 30 May 2020       | Version ACLE Q2 2020 |
-| G     | 30 October 2020   | Version ACLE Q3 2020 |
-| H     | 02 July 2021      | 2021Q2               |
-| I     | 30 September 2021 | 2021Q3               |
-| J     | 11 January 2022   | 2021Q4               |
-| K     | 04 August 2023    | 2023Q2               |
-| L     | 30 September 2024 | 2024Q3               |
-| M     | 21 February 2025  | 2024Q4               |
-| N     | 06 June 2025      | 2025Q2               |
-| O     | 15 May 2026       | 2026Q1               |
+| Issue            | Date              | Change                                            |
+| ---------------- | ----------------- | ------------------------------------------------- |
+| A                | 09 May 2014       | First release                                     |
+| B                | 24 March 2016     | Updated for ARMv8.1                               |
+| C                | 30 March 2019     | Version ACLE Q1 2019                              |
+| D                | 30 June 2019      | Version ACLE Q2 2019                              |
+| E                | 30 Sept 2019      | Version ACLE Q3 2019                              |
+| F                | 30 May 2020       | Version ACLE Q2 2020                              |
+| G                | 30 October 2020   | Version ACLE Q3 2020                              |
+| H                | 02 July 2021      | 2021Q2                                            |
+| I                | 30 September 2021 | 2021Q3                                            |
+| J                | 11 January 2022   | 2021Q4                                            |
+| K                | 04 August 2023    | 2023Q2                                            |
+| L                | 30 September 2024 | 2024Q3                                            |
+| M                | 21 February 2025  | 2024Q4                                            |
+| N                | 06 June 2025      | 2025Q2                                            |
+| O                | 15 May 2026       | 2026Q1                                            |
+| O                | 15 May 2026       | 2026Q1                                            |
+| Rolling releases | Every commit      | See [Changes after 2026Q1](#changes-after-2026q1) |
 
 ### Changes between 2021Q2 and 2021Q3
 
@@ -170,7 +172,7 @@ for more information about Arm’s trademarks.
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
 
-### Changes since 2026Q1
+### Changes after 2026Q1
 
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
