@@ -66,7 +66,7 @@ if [ "$1" == "build" ]; then
     docker run $docker_run_params build
 elif [ "$1" == "serve" ]; then
     SITE=$ROOTDIR
-    docker run -p 4000:4000 $docker_run_params serve --host 0.0.0.0
+    docker run --network host $docker_run_params serve --host 127.0.0.1 --port 4000
 fi
 
 return_code=$?
