@@ -965,7 +965,8 @@ if __name__ == "__main__":
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
     intrinsic_table = process_db(intrinsics_db, classification_map, cli_args.workflow)
-    md_output = doc_template.format(intrinsic_table=intrinsic_table)
+    normalized_template = doc_template.replace("{{", "{").replace("}}", "}")
+    md_output = normalized_template.replace("{intrinsic_table}", intrinsic_table)
     with (open(cli_args.outfile, 'w')) as f:
         f.write(md_output)
     # Always run the unit tests.
