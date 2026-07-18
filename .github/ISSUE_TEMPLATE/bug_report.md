@@ -21,8 +21,7 @@ useful for layout problems in the PDF or HTML pages.
 
 **Our commitment**
 
-We will work to solve the bug report in time for the upcoming
-release. However, we would like to encourage you to submit the fix
-yourself, if possible. If you intend to do so and this is your first
+We will work to solve the bug report timely. However, we encourage you to submit
+the fix yourself, if possible. If you intend to do so and this is your first
 contribution, we recommend reading our [contribution
 guidelines](https://github.com/ARM-software/acle/blob/main/CONTRIBUTING.md).
