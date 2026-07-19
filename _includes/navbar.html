@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-FileCopyrightText: Copyright 2021, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 
 <nav id="header">
   <span id="left-side">
@@ -16,7 +16,19 @@
   </span>
   <img id="logo" src="{{site.baseurl}}/assets/images/Arm_logo_white_RGB.svg" alt="Logo">
   <span id="right-side">
-    {% if page.version %} Version: {{ page.version }} &nbsp;:::&nbsp; {% endif %}
+    {% assign hash = site.commithash | default: site.github.build_revision %}
+    {% if hash %}
+      {% assign short_hash = hash | slice: 0, 12 %}
+      {% if site.finalversion %}
+        Version: <a id="link_finalversion" href="https://github.com/ARM-software/acle/commit/{{ hash }}">{{ hash }}</a> &nbsp;:::&nbsp;
+      {% elsif site.cleanrepo %}
+        Version: <span class="dev_version">Dev version (<a id="link_devversion" href="https://github.com/ARM-software/acle/commit/{{ hash }}">{{ short_hash }}</a>)</span> &nbsp;:::&nbsp;
+      {% else %}
+        Version: <span class="dev_version">Dev version (<a id="link_devversion" href="https://github.com/ARM-software/acle/commit/{{ hash }}">{{ short_hash }}</a>), modified</span> &nbsp;:::&nbsp;
+      {% endif %}
+    {% elsif page.version %}
+      Version: {{ page.version }} &nbsp;:::&nbsp;
+    {% endif %}
     {% if page.date-of-issue %} Release Date: {{ page.date-of-issue }} &nbsp;:::&nbsp; {% endif %}
     <a href="https://github.com/ARM-software/acle/issues">
       <button class="navbar_button"> Report a Bug </button>
