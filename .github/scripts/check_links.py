@@ -15,48 +15,119 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
 import subprocess
 import sys
+import tempfile
+import xml.etree.ElementTree as ET
+from pathlib import Path
 from urllib.parse import urlparse
 
-cmd = [
-    "markdown-link-check",
-    "-j",
-    "--config-file",
-    ".github/workflows/markdown-link-check.json",
-    *sys.argv[1:]
-]
 
-proc = subprocess.run(cmd, capture_output=True, text=True)
+CONFIG_FILE = Path(".github/workflows/markdown-link-check.json")
 
-# If the checker itself failed unexpectedly, propagate that.
-if proc.returncode not in (0, 1):
-    print(proc.stdout, end="")
-    print(proc.stderr, end="", file=sys.stderr)
-    sys.exit(proc.returncode)
 
-results = json.loads(proc.stdout)
+def testcase_properties(testcase: ET.Element) -> dict[str, str]:
+	properties: dict[str, str] = {}
 
-failed = False
+	properties_element = testcase.find("properties")
+	if properties_element is None:
+		return properties
 
-for result in results:
-    url = result["link"]
-    status = result["status"]
-    status_code = result.get("statusCode")
+	for prop in properties_element.findall("property"):
+		name = prop.get("name")
+		value = prop.get("value")
 
-    host = urlparse(url).netloc
+		if name is not None and value is not None:
+			properties[name] = value
 
-    if (
-        host == "developer.arm.com"
-        and status == "dead"
-        and status_code == 403
-    ):
-        print(f"IGNORING developer.arm.com 403: {url}")
-        continue
+	return properties
 
-    if status == "dead":
-        failed = True
-        print(f"BROKEN ({status_code}): {url}")
 
-sys.exit(1 if failed else 0)
+def main() -> int:
+	if len(sys.argv) != 2:
+		print(
+			f"Usage: {Path(sys.argv[0]).name} <markdown-file>",
+			file=sys.stderr,
+		)
+		return 2
+
+	markdown_file = Path(sys.argv[1])
+
+	with tempfile.NamedTemporaryFile(
+		suffix=".xml",
+		delete=False,
+	) as report:
+		report_path = Path(report.name)
+
+	cmd = [
+		"markdown-link-check",
+		"--reporters",
+		"junit",
+		"--junit-output",
+		str(report_path),
+		"--config",
+		str(CONFIG_FILE),
+		str(markdown_file),
+	]
+
+	proc = subprocess.run(
+		cmd,
+		text=True,
+		capture_output=True,
+		check=False,
+	)
+
+	if proc.stdout:
+		print(proc.stdout, end="")
+
+	if proc.stderr:
+		print(proc.stderr, end="", file=sys.stderr)
+
+	try:
+		root = ET.parse(report_path).getroot()
+	except (ET.ParseError, OSError) as error:
+		print(
+			f"Could not read markdown-link-check report for "
+			f"{markdown_file}: {error}",
+			file=sys.stderr,
+		)
+		return proc.returncode if proc.returncode != 0 else 2
+	finally:
+		report_path.unlink(missing_ok=True)
+
+	failed = False
+
+	for testcase in root.findall(".//testcase"):
+		properties = testcase_properties(testcase)
+
+		url = properties.get("url", testcase.get("name", "unknown"))
+		status = properties.get("status", "unknown")
+		status_code = properties.get("statusCode")
+
+		parsed_url = urlparse(url)
+
+		is_ignored_developer_arm_403 = (
+			parsed_url.hostname == "developer.arm.com"
+			and status == "dead"
+			and status_code == "403"
+		)
+
+		if is_ignored_developer_arm_403:
+			print(f"IGNORED (403 from developer.arm.com): {url}")
+			continue
+
+		failure = testcase.find("failure")
+		error = testcase.find("error")
+
+		if failure is not None or error is not None:
+			failed = True
+			print(
+				f"BROKEN ({status_code or status}): {url}",
+				file=sys.stderr,
+			)
+
+	return 1 if failed else 0
+
+
+if __name__ == "__main__":
+	sys.exit(main())
