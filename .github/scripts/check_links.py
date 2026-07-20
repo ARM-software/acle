@@ -20,7 +20,13 @@ import subprocess
 import sys
 from urllib.parse import urlparse
 
-cmd = ["markdown-link-check", "-j", *sys.argv[1:]]
+cmd = [
+    "markdown-link-check",
+    "-j",
+    "--config-file",
+    ".github/workflows/markdown-link-check.json",
+    *sys.argv[1:]
+]
 
 proc = subprocess.run(cmd, capture_output=True, text=True)
 

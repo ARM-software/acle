@@ -28,13 +28,13 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4.1.7
     - name: Install markdown-link-check
       run: npm install -g markdown-link-check
-
     - name: Check links
       run: |
         find . -name '*.md' -print0 | \
-          xargs -0 python3 .github/scripts/check_links.py
+          xargs -0 -n 1 python3 .github/scripts/check_links.py
 
   draftversion-check:
     runs-on: ubuntu-latest
