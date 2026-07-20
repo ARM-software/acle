@@ -536,23 +536,23 @@ This document refers to the following documents.
 
 * <span id="ARMARMv81" class="citation-label">ARMARMv81</span> Arm,
   Armv8.1 Extension, [The ARMv8-A architecture and its ongoing
-  development](http://community.arm.com/groups/processors/blog/2014/12/02/the-armv8-a-architecture-and-its-ongoing-development)
+  development](https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/the-armv8-a-architecture-and-its-ongoing-development)
 
 * <span id="ARMARMv82" class="citation-label">ARMARMv82</span> Arm,
   Armv8.2 Extension, [Armv8-A architecture
-  evolution](https://community.arm.com/groups/processors/blog/2016/01/05/armv8-a-architecture-evolution)
+  evolution](https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/armv8-a-architecture-evolution)
 
 * <span id="ARMARMv83" class="citation-label">ARMARMv83</span> Arm,
   Armv8.3 Extension, [Armv8-A architecture: 2016
-  additions](https://community.arm.com/processors/b/blog/posts/armv8-a-architecture-2016-additions)
+  additions](https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/armv8-a-architecture-2016-additions)
 
 * <span id="ARMARMv84" class="citation-label">ARMARMv84</span> Arm,
   Armv8.4 Extension, [Introducing 2017’s extensions to the Arm
-  Architecture](https://community.arm.com/processors/b/blog/posts/introducing-2017s-extensions-to-the-arm-architecture)
+  Architecture](https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/introducing-2017s-extensions-to-the-arm-architecture)
 
 * <span id="ARMARMv85" class="citation-label">ARMARMv85</span> Arm,
   Armv8.5 Extension, [Arm A-Profile Architecture Developments 2018:
-  Armv8.5-A](https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-2018-developments-armv85a)
+  Armv8.5-A](https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/arm-a-profile-architecture-2018-developments-armv85a)
 
 * <span id="ARMv7M" class="citation-label">ARMv7M</span> Arm, Arm
   Architecture Reference Manual (7-M), Arm DDI 0403C
@@ -562,7 +562,7 @@ This document refers to the following documents.
 
 * <span id="Bfloat16" class="citation-label">Bfloat16</span> Arm,
   [BFloat16 processing for Neural Networks on
-  Armv8-A](https://community.arm.com/developer/ip-products/processors/b/ml-ip-blog/posts/bfloat16-processing-for-neural-networks-on-armv8_2d00_a)
+  Armv8-A](https://developer.arm.com/community/arm-community-blogs/b/ai-blog/posts/bfloat16-processing-for-neural-networks-on-armv8_2d00_a)
 
 * <span id="C11" class="citation-label">C11</span> ISO, Standard C
   (based on draft N1570), ISO/IEC 9899:2011
