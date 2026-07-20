@@ -102,7 +102,6 @@ docker_run_params="--rm \
     -w /src/site \
     --entrypoint /usr/local/bin/ruby \
     gh-pages \
-    -r/src/site/tools/jekyll-page-timing.rb \
     /usr/local/bundle/bin/jekyll"
 
 if [ "$mode" == "build" ]; then
