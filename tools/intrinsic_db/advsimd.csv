@@ -1997,7 +1997,7 @@ poly16x4_t vdup_lane_p16(poly16x4_t vec, __builtin_constant_p(lane))	vec -> Vn.4
 poly16x8_t vdupq_lane_p16(poly16x4_t vec, __builtin_constant_p(lane))	vec -> Vn.4H;0 <= lane <= 3	DUP Vd.8H,Vn.H[lane]	Vd.8H -> result	v7/A32/A64
 float64x1_t vdup_lane_f64(float64x1_t vec, __builtin_constant_p(lane))	vec -> Vn.1D;0 <= lane <= 0	DUP Dd,Vn.D[lane]	Dd -> result	A64
 float64x2_t vdupq_lane_f64(float64x1_t vec, __builtin_constant_p(lane))	vec -> Vn.1D;0 <= lane <= 0	DUP Vd.2D,Vn.D[lane]	Vd.2D -> result	A64
-mfloat8x8_t vdup_lane_mf8(mfloat8x8_t vec, __builtin_constant_p(lane))	vec -> Vn.8B;0 <= lane <= 7	DUP Vd.8B,Vn.B[lane]	Vd.8B -> result	/A64
+mfloat8x8_t vdup_lane_mf8(mfloat8x8_t vec, __builtin_constant_p(lane))	vec -> Vn.8B;0 <= lane <= 7	DUP Vd.8B,Vn.B[lane]	Vd.8B -> result	A64
 mfloat8x16_t vdupq_lane_mf8(mfloat8x8_t vec, __builtin_constant_p(lane))	vec -> Vn.8B;0 <= lane <= 7	DUP Vd.16B,Vn.B[lane]	Vd.16B -> result	A64
 int8x8_t vdup_laneq_s8(int8x16_t vec, __builtin_constant_p(lane))	vec -> Vn.16B;0 <= lane <= 15	DUP Vd.8B,Vn.B[lane]	Vd.8B -> result	A64
 int8x16_t vdupq_laneq_s8(int8x16_t vec, __builtin_constant_p(lane))	vec -> Vn.16B;0 <= lane <= 15	DUP Vd.16B,Vn.B[lane]	Vd.16B -> result	A64
