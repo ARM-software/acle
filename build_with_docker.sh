@@ -20,8 +20,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Check if repo is in a clean state
-git diff --quiet && git diff --cached --quiet
-if [[ $? -eq 0 ]]; then
+if [[ -z "$(git -C "$ROOTDIR" status --porcelain)" ]]; then
 	cleanrepo="--cleanrepo"
 fi
 
