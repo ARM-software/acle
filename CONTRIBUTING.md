@@ -66,11 +66,7 @@ Development (bug-fixes, proposals, extensions, and so on) is conducted
 exclusively on the `main` branch. Therefore, please submit your PR against
 `main`.
 
-Branch `latest-release` was formerly used to generate releases. We have
-moved from quarterly to rolling releases, so `latest-release` is now obsolete.
-Do not use.
-
-It is good practice to track changes. In section `Changes since 2026Q1`,
+It is good practice to track changes. In section `Changes after ACLE Q1 2026`,
 please list any changes that you have made to the document. As an example, see
 [this PR](https://github.com/ARM-software/acle/pull/443/changes).
 
