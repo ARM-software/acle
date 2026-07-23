@@ -1500,32 +1500,9 @@ enclose them in parentheses if they are not simple constants.
 
 ## Testing for Arm C Language Extensions
 
-`__ARM_ACLE` is defined as the version of this specification that is
-implemented, formatted as `{YEAR}{QUARTER}{PATCH}`. The `YEAR` segment is
-composed of 4 digits, the `QUARTER` segment is composed of 1 digit, and
-the `PATCH` segment is also composed of 1 digit.
-
-For example:
-
- - An implementation based on the version 2023 Q2 of the ACLE with no
-   further patch releases will define `__ARM_ACLE` as `202320`.
- - An implementation based on a hypothetical version 2024 Q3 of the ACLE
-   with two patch releases will define `__ARM_ACLE` as `202432`.
-
-NOTE: Previously, the macro followed the previous versioning scheme and
-was defined as `100 * major_version + minor_version`, which was the
-version of this specification implemented. For instance, an implementation
-implementing version 2.1 of the ACLE specification defined `__ARM_ACLE`
-as `201`.
-
-`__ARM_ACLE_VERSION(year, quarter, patch)` is defined to express a given
-ACLE version. Returns with the version number in the same format as the
-`__ARM_ACLE` does. Checking the minimum required ACLE version could be
-written as:
-
-``` c
-#if __ARM_ACLE >= __ARM_ACLE_VERSION(2024, 1, 0)
-```
+`__ARM_ACLE` is defined when the implementation supports the Arm C
+Language Extensions. For compatibility with existing code, its
+recommended value is 202420.
 
 ## Endianness
 
@@ -2999,14 +2976,8 @@ following:
 versioning mechanism described in this section is supported by the
 compiler and it is enabled.
 
-`__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` is defined to the currently supported
-version of the ACLE. The value and the format are the same as the `__ARM_ACLE`.
-
-For example, it can be implemented as:
-
-``` c
-#define __FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL __ARM_ACLE_VERSION(2024, 3, 0)
-```
+`__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` is defined to a value corresponding to the
+support levels listed in [Function Multi Versioning feature availability](#function-multi-versioning-feature-availability).
 
 ### Target version strings
 
@@ -3130,6 +3101,70 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_CSSC`              | cssc          | ```ID_AA64ISAR2_EL1.CSSC >= 0b0001```     |
 
 The tables are sorted by priority, starting from features of lowest priority ending with features of highest priority.
+
+### Function Multi Versioning feature availability
+
+The following table lists the Function Multi Versioning support level at
+which each target version name became available.
+
+A Function Multi Versioning target version name is supported when
+`__HAVE_FUNCTION_MULTI_VERSIONING` is defined to `1` and
+`__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` is greater than or equal to
+the support level listed for that name. A given support level includes all
+target version names from earlier support levels unless documented otherwise.
+
+
+   | **Name**      | **Available from support level** |
+   | ------------- | -------------------------------- |
+   | default       | **202210**                       |
+   | sha1          | 202210                           |
+   | aes           | 202210                           |
+   | vmull         | 202210                           |
+   | rng           | 202210                           |
+   | flagm         | 202210                           |
+   | flagm2        | 202210                           |
+   | lse           | 202210                           |
+   | dotprod       | 202210                           |
+   | rdm           | 202210                           |
+   | fp16          | 202210                           |
+   | dit           | 202210                           |
+   | dpb           | 202210                           |
+   | dpb2          | 202210                           |
+   | jscvt         | 202210                           |
+   | fcma          | 202210                           |
+   | frintts       | 202210                           |
+   | sve           | 202210                           |
+   | sve2          | 202210                           |
+   | sme           | 202210                           |
+   | sb            | 202210                           |
+   | ssbs          | 202210                           |
+   | bti           | 202210                           |
+   | crc           | **202240**                       |
+   | sha2          | 202240                           |
+   | fp            | 202240                           |
+   | simd          | 202240                           |
+   | sm4           | 202240                           |
+   | sha3          | 202240                           |
+   | fp16fml       | 202240                           |
+   | rcpc          | 202240                           |
+   | rcpc2         | 202240                           |
+   | i8mm          | 202240                           |
+   | bf16          | 202240                           |
+   | f32mm         | 202240                           |
+   | f64mm         | 202240                           |
+   | sve2-aes      | 202240                           |
+   | sve2-bitperm  | 202240                           |
+   | sve2-sha3     | 202240                           |
+   | sve2-sm4      | 202240                           |
+   | memtag        | 202240                           |
+   | wfxt          | 202240                           |
+   | sme2          | 202240                           |
+   | rcpc3         | **202320**                       |
+   | sme-f64f64    | 202320                           |
+   | sme-i16i64    | 202320                           |
+   | rdma          | **202410**                       |
+   | mops          | 202410                           |
+   | cssc          | **202520**                       |
 
 ### Dependencies
 
