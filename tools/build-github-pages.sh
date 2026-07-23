@@ -8,7 +8,8 @@
 # This script uses Git and Docker to build the GitHub Pages version of the ACLE
 # project locally.
 #
-# It accepts one of two options: build or serve.
+# It accepts one mandatory option (build or serve) and one optional one
+# (--finalversion).
 #
 #  build generates the web pages, but does not launch a web server.
 #  serve generates them and also launches a web server.
@@ -19,13 +20,33 @@
 ###############################################################################
 
 
-if [ $# -ne 1 ]; then
-    echo "Please provide one option: 'build' or 'serve'."
-    exit 1
-fi
+mode=""
+finalversion="false"
 
-if [ "$1" != "build" ] && [ "$1" != "serve" ]; then
-    echo "Unsupported option. It must be either 'build' or 'serve'."
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        build|serve)
+            if [[ -n "$mode" ]]; then
+                echo "Please provide exactly one mode: 'build' or 'serve'."
+                exit 1
+            fi
+            mode="$1"
+            ;;
+        --finalversion)
+            finalversion="true"
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Usage: $0 [build|serve] [--finalversion]"
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+if [[ -z "$mode" ]]; then
+    echo "Please provide one mode: 'build' or 'serve'."
+    echo "Usage: $0 [build|serve] [--finalversion]"
     exit 1
 fi
 
@@ -33,6 +54,30 @@ set -x
 
 ROOTDIR=$(realpath "$(dirname "$(realpath "$0")")/..")
 TEMPDIR=$(mktemp -d)
+VERSION_CONFIG_FILE="$ROOTDIR/_config.version.local.yml"
+
+commithash=$(git -C "$ROOTDIR" rev-parse HEAD)
+
+if [[ -z "$(git -C "$ROOTDIR" status --porcelain)" ]]; then
+    cleanrepo="true"
+else
+    cleanrepo="false"
+fi
+
+cat > "$VERSION_CONFIG_FILE" <<EOF
+commithash: "$commithash"
+finalversion: $finalversion
+cleanrepo: $cleanrepo
+EOF
+
+cleanup() {
+    cd "$ROOTDIR"
+    git restore _config.yml
+    rm -f "$VERSION_CONFIG_FILE"
+}
+
+trap cleanup EXIT
+
 cd $TEMPDIR
 git clone --depth 1 https://github.com/github/pages-gem.git
 cd pages-gem
@@ -61,16 +106,13 @@ docker_run_params="--rm \
     -r/src/site/tools/jekyll-page-timing.rb \
     /usr/local/bundle/bin/jekyll"
 
-if [ "$1" == "build" ]; then
+if [ "$mode" == "build" ]; then
     SITE=$ROOTDIR
-    docker run $docker_run_params build
-elif [ "$1" == "serve" ]; then
+    docker run $docker_run_params build --config _config.yml,_config.version.local.yml
+elif [ "$mode" == "serve" ]; then
     SITE=$ROOTDIR
-    docker run --network host $docker_run_params serve --host 127.0.0.1 --port 4000
+    docker run --network host $docker_run_params serve --host 127.0.0.1 --port 4000 --config _config.yml,_config.version.local.yml
 fi
 
 return_code=$?
-cd $ROOTDIR
-git restore _config.yml
-
 exit $return_code

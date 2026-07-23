@@ -16,6 +16,32 @@ set -ex
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+finalversion=""
+
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+		--finalversion)
+			finalversion="-V finalversion"
+			;;
+		--cleanrepo)
+			cleanrepo="-V cleanrepo"
+			;;
+		--commithash)
+			[[ $# -ge 2 ]] || {
+				echo "Missing argument for --commithash" >&2
+				exit 1
+			}
+			commithash="-V commithash=$2"
+      shift
+			;;
+		*)
+			echo "Unknown option: $1" >&2
+			exit 1
+			;;
+	esac
+	shift
+done
+
 function generate_pdfs_from_md() {
 	inputMdFile=$1
 	if ! [ -f "$inputMdFile" ]; then
@@ -36,7 +62,7 @@ function generate_pdfs_from_md() {
 	# in the specific case of the cmse.md file.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
 	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
-	pandoc --template=tools/acle_template.tex -o $outputPdfFile --resource-path=$(dirname $inputMdFile)
+	pandoc --template=tools/acle_template.tex -o $outputPdfFile --resource-path=$(dirname $inputMdFile) $finalversion $commithash $cleanrepo
 }
 
 mkdir -p pdfs tmp

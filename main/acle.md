@@ -1,10 +1,8 @@
 ---
 title: Arm C Language Extensions
-version: 2026Q1
 date-of-issue: 15 May 2026
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
