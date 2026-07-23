@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# SPDX-FileCopyrightText: Copyright 2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2023, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 
 ########################### BUILD GITHUB PAGES ################################
@@ -81,7 +81,8 @@ trap cleanup EXIT
 cd $TEMPDIR
 git clone --depth 1 https://github.com/github/pages-gem.git
 cd pages-gem
-docker build -t gh-pages --build-arg RUBY_VERSION=3.2 .
+docker image inspect gh-pages >/dev/null 2>&1 || \
+    docker build -t gh-pages --build-arg RUBY_VERSION=3.2 .
 cd $ROOTDIR
 echo -e "plugins:\n \
         - jekyll-coffeescript\n \
@@ -102,6 +103,7 @@ docker_run_params="--rm \
     -w /src/site \
     --entrypoint /usr/local/bin/ruby \
     gh-pages \
+    -r/src/site/tools/jekyll-page-timing.rb \
     /usr/local/bundle/bin/jekyll"
 
 if [ "$mode" == "build" ]; then

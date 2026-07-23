@@ -75,3 +75,4 @@ generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
 generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf
 generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf
 generate_pdfs_from_md ./tmp/advsimd.for-pdf.md ./pdfs/advsimd.pdf
+rm -rf ./tmp
