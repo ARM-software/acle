@@ -29,6 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4.1.7
-    - uses: gaurav-nelson/github-action-markdown-link-check@v1
-      with:
-          config-file: '.github/workflows/markdown-link-check.json'
+    - name: Install markdown-link-check
+      run: npm install -g markdown-link-check
+    - name: Check links
+      run: |
+        find . -name '*.md' -print0 | \
+          xargs -0 -n 1 python3 .github/scripts/check_links.py

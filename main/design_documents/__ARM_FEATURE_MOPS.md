@@ -1,6 +1,6 @@
 # Design Document for `__ARM_FEATURE_MOPS`
 
-Following the announcement of the [2021 Architecture Extensions](https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/arm-a-profile-architecture-developments-2021),
+Following the announcement of the [2021 Architecture Extensions](https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/arm-a-profile-architecture-developments-2021),
 we are extending the ACLE to add support for the new instructions that
 standardise the memcpy family of operations, which were introduced in Armv8.8-A
 and Armv9.3-A.
