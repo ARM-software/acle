@@ -1,5 +1,5 @@
 % Copyright (c) 2014--2021, John MacFarlane
-% SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+% SPDX-FileCopyrightText: Copyright 2021-2022, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 % SPDX-License-Identifier: BSD-3-Clause
 % Based on default.latex template released with Pandoc (www.pandoc.org).
 % See `data/templates` in `COPYRIGHT` at https://github.com/jgm/pandoc
@@ -38,10 +38,14 @@
 \makeatother
 
 \sectionfont{\color{armblue}}
-$if(draftversion)$
-\newcommand{\versiontext}{\textcolor{red}{Development version based on $version$}}
+$if(finalversion)$
+  \newcommand{\versiontext}{\href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}}
 $else$
-\newcommand{\versiontext}{$version$}
+  $if(cleanrepo)$
+    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}}}
+  $else$
+    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}, with modifications}}
+  $endif$
 $endif$
 \newcommand{\dateofissue}{$if(draftversion)$TBD$else$$date-of-issue$$endif$}
 
@@ -127,7 +131,7 @@ $endif$
         \begin{minipage}[t]{14.0cm}
           \begin{flushleft}
             {\huge \bfseries  $title$}\\[2ex]
-            {\large Release Date: \dateofissue}\\[2ex]
+            {\large Issue Date: \dateofissue}\\[2ex]
             {\large \bfseries Version: \versiontext}\\[3ex]
           \end{flushleft}
         \end{minipage}

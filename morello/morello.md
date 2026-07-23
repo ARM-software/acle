@@ -1,10 +1,8 @@
 ---
 title: Morello Supplement to the Arm C Language Extensions
-version: 02alpha
 date-of-issue: 11 January 2022
 # LaTeX specific variables
-copyright-text: Copyright 2020-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: true
+copyright-text: Copyright 2020-2022, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
 header_counter: true
 toc: true
