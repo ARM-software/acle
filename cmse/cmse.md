@@ -130,7 +130,6 @@ Copyright 2019, 2021-2023 Arm Limited and/or its affiliates <open-source-office@
 | 1.2              | 06 April 2022  | Arm  | See [Changes for version 1.2](#changes-for-version-1.2) |
 | 1.3              | 04 August 2023 | Arm  | See [Changes for version 1.3](#changes-for-version-1.3) |
 | 1.4              | 21 June 2024   | Arm  | See [Changes for version 1.4](#changes-for-version-1.4) |
-| Rolling releases | Every commit   | Arm  | None                                                    |
 
 #### Changes for version 1.2
 

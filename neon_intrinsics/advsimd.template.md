@@ -127,7 +127,13 @@ for more information about Arm’s trademarks.
 | M                | 21 February 2025  | 2024Q4                                            |
 | N                | 06 June 2025      | 2025Q2                                            |
 | O                | 15 May 2026       | 2026Q1                                            |
-| Rolling releases | Every commit      | See [Changes after 2026Q1](#changes-after-2026q1) |
+
+#### Continuously updated specification
+
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changes for year 2026](#changes-for-year-2026).
 
 ### Changes between 2021Q2 and 2021Q3
 
@@ -169,7 +175,7 @@ for more information about Arm’s trademarks.
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
 
-### Changes after 2026Q1
+### Changes for year 2026
 
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM

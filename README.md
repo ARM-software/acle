@@ -20,10 +20,10 @@ The latest version of the specifications can be browsed online at
 
 ## Versioning
 
-We have transitioned from a quarterly release schedule to rolling versioning.
-The specifications are now updated on every commit as changes are completed and
-reviewed, providing more timely access to new features, clarifications, and
-corrections.
+We have transitioned from a quarterly release schedule to a continuously updated
+specification. The specification is now updated on every commit as changes are
+completed and reviewed, providing more timely access to new features,
+clarifications, and corrections.
 
 The PDF version of the documents can be retrieved from the
 [releases](https://github.com/ARM-software/acle/releases) page.

@@ -156,7 +156,6 @@ All content in this document is at the **Alpha** quality level.
 | 00alpha          | 30th September 2020 | Alpha release                                   |
 | 01alpha          | 02 July 2021        | Open source release. NFCI.                      |
 | 02alpha          | 11 January 2022     | See [Changes for 02alpha](#changes-for-02alpha) |
-| Rolling releases | Every commit        | None                                            |
 
 ### Changes for 02alpha
 
