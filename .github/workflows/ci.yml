@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 #
 # SPDX-License-Identifier: Apache-2.0
 name: CI
@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4.1.7
     - name: check the correctness of the sources and generate the PDFs
-      run: ./build_with_docker.sh
+      run: ./build_with_docker.sh --finalversion
     - uses: actions/upload-artifact@v4.4.0
       with:
         name: pdfs
@@ -29,16 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4.1.7
-    - uses: gaurav-nelson/github-action-markdown-link-check@v1
-      with:
-          config-file: '.github/workflows/markdown-link-check.json'
-
-  draftversion-check:
-    runs-on: ubuntu-latest
-    if: github.base_ref == 'main' || github.ref == 'refs/heads/main'
-    steps:
-    - uses: actions/checkout@v4.1.7
-      with:
-        fetch-depth: 0
-    - name: Check correctness of draftversion fields
-      run:  python ./tools/acle_draftversion_value_check.py .
+    - name: Install markdown-link-check
+      run: npm install -g markdown-link-check
+    - name: Check links
+      run: |
+        find . -name '*.md' -print0 | \
+          xargs -0 -n 1 python3 .github/scripts/check_links.py

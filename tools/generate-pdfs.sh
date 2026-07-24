@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-# SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021-2022, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +15,32 @@ set -ex
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+finalversion=""
+
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+		--finalversion)
+			finalversion="-V finalversion"
+			;;
+		--cleanrepo)
+			cleanrepo="-V cleanrepo"
+			;;
+		--commithash)
+			[[ $# -ge 2 ]] || {
+				echo "Missing argument for --commithash" >&2
+				exit 1
+			}
+			commithash="-V commithash=$2"
+      shift
+			;;
+		*)
+			echo "Unknown option: $1" >&2
+			exit 1
+			;;
+	esac
+	shift
+done
 
 function generate_pdfs_from_md() {
 	inputMdFile=$1
@@ -36,7 +62,7 @@ function generate_pdfs_from_md() {
 	# in the specific case of the cmse.md file.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
 	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
-	pandoc --template=tools/acle_template.tex -o $outputPdfFile --resource-path=$(dirname $inputMdFile)
+	pandoc --template=tools/acle_template.tex -o $outputPdfFile --resource-path=$(dirname $inputMdFile) $finalversion $commithash $cleanrepo
 }
 
 mkdir -p pdfs tmp
@@ -49,3 +75,4 @@ generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
 generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf
 generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf
 generate_pdfs_from_md ./tmp/advsimd.for-pdf.md ./pdfs/advsimd.pdf
+rm -rf ./tmp

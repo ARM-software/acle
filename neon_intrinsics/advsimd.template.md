@@ -3,7 +3,6 @@ title: Arm Neon Intrinsics Reference
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{{\\nameref{{copyright}}}}{{Copyright}}."
-draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true
@@ -23,7 +22,7 @@ to generate the Table of Contents via Jekyll.
 They are automatically removed by the scripts that generate the pdfs.
 -->
 * TOC
-{{:toc}}
+{:toc}
 # Preface
 
 ## Abstract

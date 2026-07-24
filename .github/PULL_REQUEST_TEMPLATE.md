@@ -4,7 +4,7 @@ about: Technical issues, document format problems, bugs in scripts or feature pr
 
 ---
 
-<!-- SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-FileCopyrightText: Copyright 2021-2022, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 **Thank you for submitting a pull request!**
@@ -60,7 +60,5 @@ Checklist: (mark with ``X`` those which apply)
       correctness of the result in the PDF output (please refer to the
       instructions on [how to build the PDFs
       locally](https://github.com/ARM-software/acle/blob/main/CONTRIBUTING.md#continuous-integration)).
-* [ ] The variable `draftversion` is set to `true` in the YAML header
-      of the sources of the specifications I have modified.
 * [ ] Please *DO NOT* add my GitHub profile to the list of contributors
       in the [README](https://github.com/ARM-software/acle/blob/main/README.md#contributors-) page of the project.

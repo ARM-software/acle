@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# SPDX-FileCopyrightText: Copyright 2021, 2023 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-FileCopyrightText: Copyright 2021, 2023, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -965,7 +965,8 @@ if __name__ == "__main__":
     intrinsics_db = get_intrinsics_db(cli_args.intrinsic_defs)
     doc_template = read_template(cli_args.template)
     intrinsic_table = process_db(intrinsics_db, classification_map, cli_args.workflow)
-    md_output = doc_template.format(intrinsic_table=intrinsic_table)
+    normalized_template = doc_template.replace("{{", "{").replace("}}", "}")
+    md_output = normalized_template.replace("{intrinsic_table}", intrinsic_table)
     with (open(cli_args.outfile, 'w')) as f:
         f.write(md_output)
     # Always run the unit tests.

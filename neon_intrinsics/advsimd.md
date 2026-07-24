@@ -3,7 +3,6 @@ title: Arm Neon Intrinsics Reference
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
-draftversion: true
 # Jekyll specific variables
 header_counter: true
 toc: true

@@ -82,7 +82,7 @@ will retain the copyright.
 # All contributors
 
 This project follows the [allcontributors
-guidelines](https://allcontributors.org/docs/en/overview). We assume
+guidelines](https://allcontributors.org/en/reference/). We assume
 that contributors are happy to be added to the [list of contributors
 in the main README file](README.md#contributors-). Please let us know
 explicitly if that is not the case in the PR or in the issue you have
