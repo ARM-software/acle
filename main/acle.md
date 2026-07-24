@@ -152,34 +152,34 @@ unless a different support level is specified in the text.
 
 #### Change history
 
-| **Issue**        | **Date**          | **By** | **Change**                                                                                                           |
-| ---------------- | ----------------- | ------ | -------------------------------------------------------------------------------------------------------------------- |
-| A                | 11/11/11          | AG     | First release                                                                                                        |
-| B                | 13/11/13          | AG     | Version 1.1. Editorial changes. Corrections and completions to intrinsics as detailed in 3.3. Updated for C11/C++11. |
-| C                | 09/05/14          | TB     | Version 2.0. Updated for Armv8 AArch32 and AArch64.                                                                  |
-| D                | 24/03/16          | TB     | Version 2.1. Updated for Armv8.1 AArch32 and AArch64.                                                                |
-| E                | 02/06/17          | Arm    | Version ACLE Q2 2017. Updated for Armv8.2-A and Armv8.3-A.                                                           |
-| F                | 30/04/18          | Arm    | Version ACLE Q2 2018. Updated for Armv8.4-A.                                                                         |
-| G                | 30/03/19          | Arm    | Version ACLE Q1 2019. Updated for Armv8.5-A and MVE. Various bugfixes.                                               |
-| H                | 30/06/19          | Arm    | Version ACLE Q2 2019. Updated for TME and more Armv8.5-A intrinsics. Various bugfixes.                               |
-| ACLE Q3 2019     | 30/09/19          | Arm    | Version ACLE Q3 2019.                                                                                                |
-| ACLE Q4 2019     | 31/12/19          | Arm    | Version ACLE Q4 2019.                                                                                                |
-| ACLE Q2 2020     | 31/05/20          | Arm    | Version ACLE Q2 2020.                                                                                                |
-| ACLE Q3 2020     | 31/10/20          | Arm    | Version ACLE Q3 2020.                                                                                                |
-| 2021Q2           | 02 July 2021      | Arm    | Version ACLE Q2 2021. Open source version. NFCI.                                                                     |
-| 2021Q3           | 30 September 2021 | Arm    | Minor re-wording. NFCI.                                                                                              |
-| 2021Q4           | 11 January 2022   | Arm    | See [Changes between ACLE Q3 2021 and ACLE Q4 2021](#changes-between-acle-q3-2021-and-acle-q4-2021)                  |
-| 2022Q1           | 06 April 2022     | Arm    | See [Changes between ACLE Q4 2021 and ACLE Q1 2022](#changes-between-acle-q4-2021-and-acle-q1-2022)                  |
-| 2022Q2           | 01 Jul 2022       | Arm    | See [Changes between ACLE Q1 2021 and ACLE Q2 2022](#changes-between-acle-q1-2022-and-acle-q2-2022)                  |
-| 2022Q4           | 23 November 2022  | Arm    | See [Changes between ACLE Q2 2022 and ACLE Q4 2022](#changes-between-acle-q2-2022-and-acle-q4-2022)                  |
-| 2023Q2           | 04 August 2023    | Arm    | See [Changes between ACLE Q4 2022 and ACLE Q2 2023](#changes-between-acle-q4-2022-and-acle-q2-2023)                  |
-| 2024Q1           | 11 April 2024     | Arm    | See [Changes between ACLE Q2 2023 and ACLE Q1 2024](#changes-between-acle-q2-2023-and-acle-q1-2024)                  |
-| 2024Q2           | 21 June 2024      | Arm    | See [Changes between ACLE Q1 2024 and ACLE Q2 2024](#changes-between-acle-q1-2024-and-acle-q2-2024)                  |
-| 2024Q3           | 30 September 2024 | Arm    | See [Changes between ACLE Q2 2024 and ACLE Q3 2024](#changes-between-acle-q2-2024-and-acle-q3-2024)                  |
-| 2024Q4           | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
-| 2025Q2           | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
-| 2025Q3           | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
-| 2026Q1           | 15 May 2026       | Arm    | See [Changes between ACLE Q3 2025 and ACLE Q1 2026](#changes-between-acle-q3-2025-and-acle-q1-2026)                  |
+| **Issue**    | **Date**          | **By** | **Change**                                                                                                           |
+| ------------ | ----------------- | ------ | -------------------------------------------------------------------------------------------------------------------- |
+| A            | 11/11/11          | AG     | First release                                                                                                        |
+| B            | 13/11/13          | AG     | Version 1.1. Editorial changes. Corrections and completions to intrinsics as detailed in 3.3. Updated for C11/C++11. |
+| C            | 09/05/14          | TB     | Version 2.0. Updated for Armv8 AArch32 and AArch64.                                                                  |
+| D            | 24/03/16          | TB     | Version 2.1. Updated for Armv8.1 AArch32 and AArch64.                                                                |
+| E            | 02/06/17          | Arm    | Version ACLE Q2 2017. Updated for Armv8.2-A and Armv8.3-A.                                                           |
+| F            | 30/04/18          | Arm    | Version ACLE Q2 2018. Updated for Armv8.4-A.                                                                         |
+| G            | 30/03/19          | Arm    | Version ACLE Q1 2019. Updated for Armv8.5-A and MVE. Various bugfixes.                                               |
+| H            | 30/06/19          | Arm    | Version ACLE Q2 2019. Updated for TME and more Armv8.5-A intrinsics. Various bugfixes.                               |
+| ACLE Q3 2019 | 30/09/19          | Arm    | Version ACLE Q3 2019.                                                                                                |
+| ACLE Q4 2019 | 31/12/19          | Arm    | Version ACLE Q4 2019.                                                                                                |
+| ACLE Q2 2020 | 31/05/20          | Arm    | Version ACLE Q2 2020.                                                                                                |
+| ACLE Q3 2020 | 31/10/20          | Arm    | Version ACLE Q3 2020.                                                                                                |
+| 2021Q2       | 02 July 2021      | Arm    | Version ACLE Q2 2021. Open source version. NFCI.                                                                     |
+| 2021Q3       | 30 September 2021 | Arm    | Minor re-wording. NFCI.                                                                                              |
+| 2021Q4       | 11 January 2022   | Arm    | See [Changes between ACLE Q3 2021 and ACLE Q4 2021](#changes-between-acle-q3-2021-and-acle-q4-2021)                  |
+| 2022Q1       | 06 April 2022     | Arm    | See [Changes between ACLE Q4 2021 and ACLE Q1 2022](#changes-between-acle-q4-2021-and-acle-q1-2022)                  |
+| 2022Q2       | 01 Jul 2022       | Arm    | See [Changes between ACLE Q1 2021 and ACLE Q2 2022](#changes-between-acle-q1-2022-and-acle-q2-2022)                  |
+| 2022Q4       | 23 November 2022  | Arm    | See [Changes between ACLE Q2 2022 and ACLE Q4 2022](#changes-between-acle-q2-2022-and-acle-q4-2022)                  |
+| 2023Q2       | 04 August 2023    | Arm    | See [Changes between ACLE Q4 2022 and ACLE Q2 2023](#changes-between-acle-q4-2022-and-acle-q2-2023)                  |
+| 2024Q1       | 11 April 2024     | Arm    | See [Changes between ACLE Q2 2023 and ACLE Q1 2024](#changes-between-acle-q2-2023-and-acle-q1-2024)                  |
+| 2024Q2       | 21 June 2024      | Arm    | See [Changes between ACLE Q1 2024 and ACLE Q2 2024](#changes-between-acle-q1-2024-and-acle-q2-2024)                  |
+| 2024Q3       | 30 September 2024 | Arm    | See [Changes between ACLE Q2 2024 and ACLE Q3 2024](#changes-between-acle-q2-2024-and-acle-q3-2024)                  |
+| 2024Q4       | 21 February 2025  | Arm    | See [Changes between ACLE Q3 2024 and ACLE Q4 2024](#changes-between-acle-q3-2024-and-acle-q4-2024)                  |
+| 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
+| 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
+| 2026Q1       | 15 May 2026       | Arm    | See [Changes between ACLE Q3 2025 and ACLE Q1 2026](#changes-between-acle-q3-2025-and-acle-q1-2026)                  |
 
 #### Continuously updated specification
 
