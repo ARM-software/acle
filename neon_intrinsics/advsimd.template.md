@@ -1,6 +1,5 @@
 ---
 title: Arm Neon Intrinsics Reference
-date-of-issue: 15 May 2026
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{{\\nameref{{copyright}}}}{{Copyright}}."
@@ -128,6 +127,13 @@ for more information about Arm’s trademarks.
 | N     | 06 June 2025      | 2025Q2               |
 | O     | 15 May 2026       | 2026Q1               |
 
+#### Continuously updated specification
+
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changes for year 2026](#changes-for-year-2026).
+
 ### Changes between 2021Q2 and 2021Q3
 
 * Fixed the guard macro for the base intrinsics.
@@ -168,7 +174,7 @@ for more information about Arm’s trademarks.
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
 
-### Changes since 2026Q1
+### Changes for year 2026
 
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM

@@ -8,12 +8,11 @@ title: Contribution Guidelines
 
 # Thank you for considering contributing!
 
-Contributions are always welcome. We accept [bug fixes](#bugs),
-[proposals and new ideas](#proposals-for-new-content), or simply [editorial
-improvements](#editorial-improvements).
+Contributions are always welcome. We accept bug fixes, proposals and new ideas,
+or simply editorial improvements.
 
 By submitting a pull request you are implicitly adhering to the
-[contribution agreement](#contribution-agreement)
+contribution agreement below.
 
 ## Bugs
 
@@ -52,14 +51,9 @@ the specifications and stores them in the folder `pdfs`.
 
 # Continuous integration
 
-The continuous integration bot executes the script:
-
-```
- ./build_with_docker.sh
-```
-
-PDFs are generated automatically in response to a pull request. You
-can download the PDFs in the `Actions` tab of any pull request.
+The continuous integration bot executes the script and generates PDFs
+automatically in response to a pull request. You can download the PDFs in the
+`Actions` tab of any pull request.
 
 An additional step uses
 [``markdown-link-check```](https://github.com/tcort/markdown-link-check)
@@ -68,20 +62,13 @@ correctly.
 
 # Branches and pull requests.
 
-The branch `latest-release` is the release branch, which contains the
-code used to build the PDFs of the [latest official
-release](https://github.com/ARM-software/acle/releases/latest). The
-branch `latest-release` is also used to build the [website of the ACLE
-project](https://arm-software.github.io/acle).
+Development (bug-fixes, proposals, extensions, and so on) is conducted
+exclusively on the `main` branch. Therefore, please submit your PR against
+`main`.
 
-New development (bug-fixes, proposals, extensions, and so on) is
-committed on the `main` branch. Therefore, please submit your
-PR against the branch `main`.
-
-It is good practice to track changes. In the section `Changes for next
-release`, please list any changes that you have made to the
-document. For an example, see [this
-PR](https://github.com/ARM-software/acle/pull/19).
+It is good practice to track changes. In section `Changes after ACLE Q1 2026`,
+please list any changes that you have made to the document. As an example, see
+[this PR](https://github.com/ARM-software/acle/pull/443/changes).
 
 # Contribution agreement
 

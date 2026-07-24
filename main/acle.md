@@ -1,6 +1,5 @@
 ---
 title: Arm C Language Extensions
-date-of-issue: 15 May 2026
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 # Jekyll specific variables
@@ -119,7 +118,7 @@ about Arm’s trademarks.
 
 ### Change control
 
-#### Current Status and Anticipated Changes
+#### Current status and anticipated changes
 
 The following support level definitions are used by the ACLE
 specifications:
@@ -181,6 +180,13 @@ unless a different support level is specified in the text.
 | 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
 | 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
 | 2026Q1       | 15 May 2026       | Arm    | See [Changes between ACLE Q3 2025 and ACLE Q1 2026](#changes-between-acle-q3-2025-and-acle-q1-2026)                  |
+
+#### Continuously updated specification
+
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changes for year 2026](#changes-for-year-2026).
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -488,7 +494,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   for Brain 16-bit floating-point vector multiplication intrinsics.
 * Redesigned atomic store with hints intrinsics.
 
-#### Changes after ACLE Q1 2026
+#### Changes for year 2026
 
 * Added [**Alpha**](#current-status-and-anticipated-changes)
   support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
