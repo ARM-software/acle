@@ -684,6 +684,8 @@ vtst_u32	Compare|Bitwise not equal to zero
 vtstq_u32	Compare|Bitwise not equal to zero
 vtst_p8	Compare|Bitwise not equal to zero
 vtstq_p8	Compare|Bitwise not equal to zero
+vtst_p16	Compare|Bitwise not equal to zero
+vtstq_p16	Compare|Bitwise not equal to zero
 vtst_s64	Compare|Bitwise not equal to zero
 vtstq_s64	Compare|Bitwise not equal to zero
 vtst_u64	Compare|Bitwise not equal to zero
@@ -1966,6 +1968,8 @@ vmov_n_p8	Vector manipulation|Set all lanes to the same value
 vmovq_n_p8	Vector manipulation|Set all lanes to the same value
 vmov_n_p16	Vector manipulation|Set all lanes to the same value
 vmovq_n_p16	Vector manipulation|Set all lanes to the same value
+vmov_n_p64	Vector manipulation|Set all lanes to the same value
+vmovq_n_p64	Vector manipulation|Set all lanes to the same value
 vmov_n_f64	Vector manipulation|Set all lanes to the same value
 vmovq_n_f64	Vector manipulation|Set all lanes to the same value
 vmov_n_mf8	Vector manipulation|Set all lanes to the same value
@@ -3594,6 +3598,7 @@ vreinterpret_u8_p8	Data type conversion|Reinterpret casts
 vreinterpret_u16_p8	Data type conversion|Reinterpret casts
 vreinterpret_u32_p8	Data type conversion|Reinterpret casts
 vreinterpret_p16_p8	Data type conversion|Reinterpret casts
+vreinterpret_mf8_p8	Data type conversion|Reinterpret casts
 vreinterpret_u64_p8	Data type conversion|Reinterpret casts
 vreinterpret_s64_p8	Data type conversion|Reinterpret casts
 vreinterpret_f64_p8	Data type conversion|Reinterpret casts
@@ -3607,6 +3612,7 @@ vreinterpret_f32_mf8	Data type conversion|Reinterpret casts
 vreinterpret_u8_mf8	Data type conversion|Reinterpret casts
 vreinterpret_u16_mf8	Data type conversion|Reinterpret casts
 vreinterpret_u32_mf8	Data type conversion|Reinterpret casts
+vreinterpret_p8_mf8	Data type conversion|Reinterpret casts
 vreinterpret_p16_mf8	Data type conversion|Reinterpret casts
 vreinterpret_u64_mf8	Data type conversion|Reinterpret casts
 vreinterpret_s64_mf8	Data type conversion|Reinterpret casts
@@ -3654,6 +3660,7 @@ vreinterpret_p16_s64	Data type conversion|Reinterpret casts
 vreinterpret_mf8_s64	Data type conversion|Reinterpret casts
 vreinterpret_u64_s64	Data type conversion|Reinterpret casts
 vreinterpret_f64_s64	Data type conversion|Reinterpret casts
+vreinterpret_p64_s64	Data type conversion|Reinterpret casts
 vreinterpret_u64_p64	Data type conversion|Reinterpret casts
 vreinterpret_f16_s64	Data type conversion|Reinterpret casts
 vreinterpret_s8_f16	Data type conversion|Reinterpret casts
@@ -3785,6 +3792,7 @@ vreinterpretq_u8_p8	Data type conversion|Reinterpret casts
 vreinterpretq_u16_p8	Data type conversion|Reinterpret casts
 vreinterpretq_u32_p8	Data type conversion|Reinterpret casts
 vreinterpretq_p16_p8	Data type conversion|Reinterpret casts
+vreinterpretq_mf8_p8	Data type conversion|Reinterpret casts
 vreinterpretq_u64_p8	Data type conversion|Reinterpret casts
 vreinterpretq_s64_p8	Data type conversion|Reinterpret casts
 vreinterpretq_f64_p8	Data type conversion|Reinterpret casts
@@ -3799,6 +3807,7 @@ vreinterpretq_f32_mf8	Data type conversion|Reinterpret casts
 vreinterpretq_u8_mf8	Data type conversion|Reinterpret casts
 vreinterpretq_u16_mf8	Data type conversion|Reinterpret casts
 vreinterpretq_u32_mf8	Data type conversion|Reinterpret casts
+vreinterpretq_p8_mf8	Data type conversion|Reinterpret casts
 vreinterpretq_p16_mf8	Data type conversion|Reinterpret casts
 vreinterpretq_u64_mf8	Data type conversion|Reinterpret casts
 vreinterpretq_s64_mf8	Data type conversion|Reinterpret casts
@@ -3897,6 +3906,7 @@ vreinterpretq_f32_f64	Data type conversion|Reinterpret casts
 vreinterpret_s8_p64	Data type conversion|Reinterpret casts
 vreinterpret_s16_p64	Data type conversion|Reinterpret casts
 vreinterpret_s32_p64	Data type conversion|Reinterpret casts
+vreinterpret_f32_p64	Data type conversion|Reinterpret casts
 vreinterpret_u8_p64	Data type conversion|Reinterpret casts
 vreinterpret_u16_p64	Data type conversion|Reinterpret casts
 vreinterpret_u32_p64	Data type conversion|Reinterpret casts
@@ -3909,6 +3919,7 @@ vreinterpret_f16_p64	Data type conversion|Reinterpret casts
 vreinterpretq_s8_p64	Data type conversion|Reinterpret casts
 vreinterpretq_s16_p64	Data type conversion|Reinterpret casts
 vreinterpretq_s32_p64	Data type conversion|Reinterpret casts
+vreinterpretq_f32_p64	Data type conversion|Reinterpret casts
 vreinterpretq_u8_p64	Data type conversion|Reinterpret casts
 vreinterpretq_u16_p64	Data type conversion|Reinterpret casts
 vreinterpretq_u32_p64	Data type conversion|Reinterpret casts
@@ -3917,10 +3928,12 @@ vreinterpretq_p16_p64	Data type conversion|Reinterpret casts
 vreinterpretq_mf8_p64	Data type conversion|Reinterpret casts
 vreinterpretq_s64_p64	Data type conversion|Reinterpret casts
 vreinterpretq_f64_p64	Data type conversion|Reinterpret casts
+vreinterpretq_p128_p64	Data type conversion|Reinterpret casts
 vreinterpretq_f16_p64	Data type conversion|Reinterpret casts
 vreinterpretq_s8_p128	Data type conversion|Reinterpret casts
 vreinterpretq_s16_p128	Data type conversion|Reinterpret casts
 vreinterpretq_s32_p128	Data type conversion|Reinterpret casts
+vreinterpretq_f32_p128	Data type conversion|Reinterpret casts
 vreinterpretq_u8_p128	Data type conversion|Reinterpret casts
 vreinterpretq_u16_p128	Data type conversion|Reinterpret casts
 vreinterpretq_u32_p128	Data type conversion|Reinterpret casts
@@ -3930,6 +3943,7 @@ vreinterpretq_mf8_p128	Data type conversion|Reinterpret casts
 vreinterpretq_u64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_s64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_f64_p128	Data type conversion|Reinterpret casts
+vreinterpretq_p64_p128	Data type conversion|Reinterpret casts
 vreinterpretq_f16_p128	Data type conversion|Reinterpret casts
 vreinterpret_mf8_u8	Data type conversion|Reinterpret casts
 vreinterpretq_mf8_u8	Data type conversion|Reinterpret casts
@@ -4522,6 +4536,7 @@ vld1q_bf16_x4	Load|Stride
 vreinterpret_bf16_s8	Data type conversion|Reinterpret casts
 vreinterpret_bf16_s16	Data type conversion|Reinterpret casts
 vreinterpret_bf16_s32	Data type conversion|Reinterpret casts
+vreinterpret_bf16_f16	Data type conversion|Reinterpret casts
 vreinterpret_bf16_f32	Data type conversion|Reinterpret casts
 vreinterpret_bf16_u8	Data type conversion|Reinterpret casts
 vreinterpret_bf16_u16	Data type conversion|Reinterpret casts
@@ -4534,6 +4549,7 @@ vreinterpret_bf16_s64	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_s8	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_s16	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_s32	Data type conversion|Reinterpret casts
+vreinterpretq_bf16_f16	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_f32	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_u8	Data type conversion|Reinterpret casts
 vreinterpretq_bf16_u16	Data type conversion|Reinterpret casts
@@ -4551,6 +4567,7 @@ vreinterpretq_bf16_p128	Data type conversion|Reinterpret casts
 vreinterpret_s8_bf16	Data type conversion|Reinterpret casts
 vreinterpret_s16_bf16	Data type conversion|Reinterpret casts
 vreinterpret_s32_bf16	Data type conversion|Reinterpret casts
+vreinterpret_f16_bf16	Data type conversion|Reinterpret casts
 vreinterpret_f32_bf16	Data type conversion|Reinterpret casts
 vreinterpret_u8_bf16	Data type conversion|Reinterpret casts
 vreinterpret_u16_bf16	Data type conversion|Reinterpret casts
@@ -4565,6 +4582,7 @@ vreinterpret_p64_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_s8_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_s16_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_s32_bf16	Data type conversion|Reinterpret casts
+vreinterpretq_f16_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_f32_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_u8_bf16	Data type conversion|Reinterpret casts
 vreinterpretq_u16_bf16	Data type conversion|Reinterpret casts
