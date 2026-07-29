@@ -685,6 +685,8 @@ uint32x2_t vtst_u32(uint32x2_t a, uint32x2_t b)	a -> Vn.2S;b -> Vm.2S	CMTST Vd.2
 uint32x4_t vtstq_u32(uint32x4_t a, uint32x4_t b)	a -> Vn.4S;b -> Vm.4S	CMTST Vd.4S,Vn.4S,Vm.4S	Vd.4S -> result	v7/A32/A64
 uint8x8_t vtst_p8(poly8x8_t a, poly8x8_t b)	a -> Vn.8B;b -> Vm.8B	CMTST Vd.8B,Vn.8B,Vm.8B	Vd.8B -> result	v7/A32/A64
 uint8x16_t vtstq_p8(poly8x16_t a, poly8x16_t b)	a -> Vn.16B;b -> Vm.16B	CMTST Vd.16B,Vn.16B,Vm.16B	Vd.16B -> result	v7/A32/A64
+uint16x4_t vtst_p16(poly16x4_t a, poly16x4_t b)	a -> Vn.4H;b -> Vm.4H	CMTST Vd.4H,Vn.4H,Vm.4H	Vd.4H -> result	v7/A32/A64
+uint16x8_t vtstq_p16(poly16x8_t a, poly16x8_t b)	a -> Vn.8H;b -> Vm.8H	CMTST Vd.8H,Vn.8H,Vm.8H	Vd.8H -> result	v7/A32/A64
 uint64x1_t vtst_s64(int64x1_t a, int64x1_t b)	a -> Dn;b -> Dm	CMTST Dd,Dn,Dm	Dd -> result	A64
 uint64x2_t vtstq_s64(int64x2_t a, int64x2_t b)	a -> Vn.2D;b -> Vm.2D	CMTST Vd.2D,Vn.2D,Vm.2D	Vd.2D -> result	A64
 uint64x1_t vtst_u64(uint64x1_t a, uint64x1_t b)	a -> Dn;b -> Dm	CMTST Dd,Dn,Dm	Dd -> result	A64
@@ -1967,6 +1969,8 @@ poly8x8_t vmov_n_p8(poly8_t value)	value -> rn	DUP Vd.8B,rn	Vd.8B -> result	v7/A
 poly8x16_t vmovq_n_p8(poly8_t value)	value -> rn	DUP Vd.16B,rn	Vd.16B -> result	v7/A32/A64
 poly16x4_t vmov_n_p16(poly16_t value)	value -> rn	DUP Vd.4H,rn	Vd.4H -> result	v7/A32/A64
 poly16x8_t vmovq_n_p16(poly16_t value)	value -> rn	DUP Vd.8H,rn	Vd.8H -> result	v7/A32/A64
+poly64x1_t vmov_n_p64(poly64_t value)	value -> Xn	FMOV Dd,Xn	Vd.1D -> result	A32/A64
+poly64x2_t vmovq_n_p64(poly64_t value)	value -> rn	DUP Vd.2D,rn	Vd.2D -> result	A32/A64
 float64x1_t vmov_n_f64(float64_t value)	value -> rn	DUP Vd.1D,rn	Vd.1D -> result	A64
 float64x2_t vmovq_n_f64(float64_t value)	value -> rn	DUP Vd.2D,rn	Vd.2D -> result	A64
 mfloat8x8_t vmov_n_mf8(mfloat8_t value)	value -> rn	DUP Vd.8B,rn	Vd.8B -> result	A64
@@ -3595,6 +3599,7 @@ uint8x8_t vreinterpret_u8_p8(poly8x8_t a)	a -> Vd.8B	NOP	Vd.8B -> result	v7/A32/
 uint16x4_t vreinterpret_u16_p8(poly8x8_t a)	a -> Vd.8B	NOP	Vd.4H -> result	v7/A32/A64
 uint32x2_t vreinterpret_u32_p8(poly8x8_t a)	a -> Vd.8B	NOP	Vd.2S -> result	v7/A32/A64
 poly16x4_t vreinterpret_p16_p8(poly8x8_t a)	a -> Vd.8B	NOP	Vd.4H -> result	v7/A32/A64
+mfloat8x8_t vreinterpret_mf8_p8(poly8x8_t a)	a -> Vd.8B	NOP	Vd.8B -> result	A64
 uint64x1_t vreinterpret_u64_p8(poly8x8_t a)	a -> Vd.8B	NOP	Vd.1D -> result	v7/A32/A64
 int64x1_t vreinterpret_s64_p8(poly8x8_t a)	a -> Vd.8B	NOP	Vd.1D -> result	v7/A32/A64
 float64x1_t vreinterpret_f64_p8(poly8x8_t a)	a -> Vd.8B	NOP	Vd.1D -> result	A64
@@ -3607,6 +3612,7 @@ float32x2_t vreinterpret_f32_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.2S -> result	A
 uint8x8_t vreinterpret_u8_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.8B -> result	A64
 uint16x4_t vreinterpret_u16_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.4H -> result	A64
 uint32x2_t vreinterpret_u32_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.2S -> result	A64
+poly8x8_t vreinterpret_p8_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.8B -> result	A64
 poly16x4_t vreinterpret_p16_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.4H -> result	A64
 uint64x1_t vreinterpret_u64_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.1D -> result	A64
 int64x1_t vreinterpret_s64_mf8(mfloat8x8_t a)	a -> Vd.8B	NOP	Vd.1D -> result	A64
@@ -3653,6 +3659,7 @@ poly16x4_t vreinterpret_p16_s64(int64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	v7/A
 mfloat8x8_t vreinterpret_mf8_s64(int64x1_t a)	a -> Vd.1D	NOP	Vd.8B -> result	A64
 uint64x1_t vreinterpret_u64_s64(int64x1_t a)	a -> Vd.1D	NOP	Vd.1D -> result	v7/A32/A64
 float64x1_t vreinterpret_f64_s64(int64x1_t a)	a -> Vd.1D	NOP	Vd.1D -> result	A64
+poly64x1_t vreinterpret_p64_s64(int64x1_t a)	a -> Vd.1D	NOP	Vd.1D -> result	A32/A64
 uint64x1_t vreinterpret_u64_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.1D -> result	A32/A64
 float16x4_t vreinterpret_f16_s64(int64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	v7/A32/A64
 int8x8_t vreinterpret_s8_f16(float16x4_t a)	a -> Vd.4H	NOP	Vd.8B -> result	v7/A32/A64
@@ -3784,6 +3791,7 @@ uint8x16_t vreinterpretq_u8_p8(poly8x16_t a)	a -> Vd.16B	NOP	Vd.16B -> result	v7
 uint16x8_t vreinterpretq_u16_p8(poly8x16_t a)	a -> Vd.16B	NOP	Vd.8H -> result	v7/A32/A64
 uint32x4_t vreinterpretq_u32_p8(poly8x16_t a)	a -> Vd.16B	NOP	Vd.4S -> result	v7/A32/A64
 poly16x8_t vreinterpretq_p16_p8(poly8x16_t a)	a -> Vd.16B	NOP	Vd.8H -> result	v7/A32/A64
+mfloat8x16_t vreinterpretq_mf8_p8(poly8x16_t a)	a -> Vd.16B	NOP	Vd.16B -> result	A64
 uint64x2_t vreinterpretq_u64_p8(poly8x16_t a)	a -> Vd.16B	NOP	Vd.2D -> result	v7/A32/A64
 int64x2_t vreinterpretq_s64_p8(poly8x16_t a)	a -> Vd.16B	NOP	Vd.2D -> result	v7/A32/A64
 float64x2_t vreinterpretq_f64_p8(poly8x16_t a)	a -> Vd.16B	NOP	Vd.2D -> result	A64
@@ -3797,6 +3805,7 @@ float32x4_t vreinterpretq_f32_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.4S -> resul
 uint8x16_t vreinterpretq_u8_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.16B -> result	A64
 uint16x8_t vreinterpretq_u16_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.8H -> result	A64
 uint32x4_t vreinterpretq_u32_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.4S -> result	A64
+poly8x16_t vreinterpretq_p8_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.16B -> result	A64
 poly16x8_t vreinterpretq_p16_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.8H -> result	A64
 uint64x2_t vreinterpretq_u64_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.2D -> result	A64
 int64x2_t vreinterpretq_s64_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.2D -> result	A64
@@ -3894,6 +3903,7 @@ float32x4_t vreinterpretq_f32_f64(float64x2_t a)	a -> Vd.2D	NOP	Vd.4S -> result	
 int8x8_t vreinterpret_s8_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.8B -> result	A32/A64
 int16x4_t vreinterpret_s16_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	A32/A64
 int32x2_t vreinterpret_s32_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.2S -> result	A32/A64
+float32x2_t vreinterpret_f32_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.2S -> result	A32/A64
 uint8x8_t vreinterpret_u8_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.8B -> result	A32/A64
 uint16x4_t vreinterpret_u16_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	A32/A64
 uint32x2_t vreinterpret_u32_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.2S -> result	A32/A64
@@ -3906,6 +3916,7 @@ float16x4_t vreinterpret_f16_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	A3
 int8x16_t vreinterpretq_s8_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.16B -> result	A32/A64
 int16x8_t vreinterpretq_s16_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.8H -> result	A32/A64
 int32x4_t vreinterpretq_s32_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.4S -> result	A32/A64
+float32x4_t vreinterpretq_f32_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.4S -> result	A32/A64
 uint8x16_t vreinterpretq_u8_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.16B -> result	A32/A64
 uint16x8_t vreinterpretq_u16_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.8H -> result	A32/A64
 uint32x4_t vreinterpretq_u32_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.4S -> result	A32/A64
@@ -3914,10 +3925,12 @@ poly16x8_t vreinterpretq_p16_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.8H -> result	A3
 mfloat8x16_t vreinterpretq_mf8_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.16B -> result	A64
 int64x2_t vreinterpretq_s64_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.2D -> result	A32/A64
 float64x2_t vreinterpretq_f64_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.2D -> result	A64
+poly128_t vreinterpretq_p128_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.1Q -> result	A32/A64
 float16x8_t vreinterpretq_f16_p64(poly64x2_t a)	a -> Vd.2D	NOP	Vd.8H -> result	A32/A64
 int8x16_t vreinterpretq_s8_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.16B -> result	A32/A64
 int16x8_t vreinterpretq_s16_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.8H -> result	A32/A64
 int32x4_t vreinterpretq_s32_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.4S -> result	A32/A64
+float32x4_t vreinterpretq_f32_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.4S -> result	A32/A64
 uint8x16_t vreinterpretq_u8_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.16B -> result	A32/A64
 uint16x8_t vreinterpretq_u16_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.8H -> result	A32/A64
 uint32x4_t vreinterpretq_u32_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.4S -> result	A32/A64
@@ -3927,6 +3940,7 @@ mfloat8x16_t vreinterpretq_mf8_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.16B -> result
 uint64x2_t vreinterpretq_u64_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.2D -> result	A32/A64
 int64x2_t vreinterpretq_s64_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.2D -> result	A32/A64
 float64x2_t vreinterpretq_f64_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.2D -> result	A64
+poly64x2_t vreinterpretq_p64_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.2D -> result	A32/A64
 float16x8_t vreinterpretq_f16_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.8H -> result	A32/A64
 mfloat8x8_t vreinterpret_mf8_u8(uint8x8_t a)	a -> Vd.8B	NOP	Vd.8B -> result	A64
 mfloat8x16_t vreinterpretq_mf8_u8(uint8x16_t a)	a -> Vd.16B	NOP	Vd.16B -> result	A64
@@ -4676,6 +4690,7 @@ bfloat16x8x4_t vld1q_bf16_x4(bfloat16_t const *ptr)	ptr -> Xn	LD1 {Vt.8H - Vt4.8
 bfloat16x4_t vreinterpret_bf16_s8(int8x8_t a)	a -> Vd.8B	NOP	Vd.4H -> result	A32/A64
 bfloat16x4_t vreinterpret_bf16_s16(int16x4_t a)	a -> Vd.4H	NOP	Vd.4H -> result	A32/A64
 bfloat16x4_t vreinterpret_bf16_s32(int32x2_t a)	a -> Vd.2S	NOP	Vd.4H -> result	A32/A64
+bfloat16x4_t vreinterpret_bf16_f16(float16x4_t a)	a -> Vd.4H	NOP	Vd.4H -> result	A32/A64
 bfloat16x4_t vreinterpret_bf16_f32(float32x2_t a)	a -> Vd.2S	NOP	Vd.4H -> result	A32/A64
 bfloat16x4_t vreinterpret_bf16_u8(uint8x8_t a)	a -> Vd.8B	NOP	Vd.4H -> result	A32/A64
 bfloat16x4_t vreinterpret_bf16_u16(uint16x4_t a)	a -> Vd.4H	NOP	Vd.4H -> result	A32/A64
@@ -4688,6 +4703,7 @@ bfloat16x4_t vreinterpret_bf16_s64(int64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	A
 bfloat16x8_t vreinterpretq_bf16_s8(int8x16_t a)	a -> Vd.16B	NOP	Vd.8H -> result	A32/A64
 bfloat16x8_t vreinterpretq_bf16_s16(int16x8_t a)	a -> Vd.8H	NOP	Vd.8H -> result	A32/A64
 bfloat16x8_t vreinterpretq_bf16_s32(int32x4_t a)	a -> Vd.4S	NOP	Vd.8H -> result	A32/A64
+bfloat16x8_t vreinterpretq_bf16_f16(float16x8_t a)	a -> Vd.8H	NOP	Vd.8H -> result	A32/A64
 bfloat16x8_t vreinterpretq_bf16_f32(float32x4_t a)	a -> Vd.4S	NOP	Vd.8H -> result	A32/A64
 bfloat16x8_t vreinterpretq_bf16_u8(uint8x16_t a)	a -> Vd.16B	NOP	Vd.8H -> result	A32/A64
 bfloat16x8_t vreinterpretq_bf16_u16(uint16x8_t a)	a -> Vd.8H	NOP	Vd.8H -> result	A32/A64
@@ -4706,6 +4722,7 @@ bfloat16x8_t vreinterpretq_bf16_p128(poly128_t a)	a -> Vd.1Q	NOP	Vd.8H -> result
 int8x8_t vreinterpret_s8_bf16(bfloat16x4_t a)	a -> Vd.4H	NOP	Vd.8B -> result	A32/A64
 int16x4_t vreinterpret_s16_bf16(bfloat16x4_t a)	a -> Vd.4H	NOP	Vd.4H -> result	A32/A64
 int32x2_t vreinterpret_s32_bf16(bfloat16x4_t a)	a -> Vd.4H	NOP	Vd.2S -> result	A32/A64
+float16x4_t vreinterpret_f16_bf16(bfloat16x4_t a)	a -> Vd.4H	NOP	Vd.4H -> result	A32/A64
 float32x2_t vreinterpret_f32_bf16(bfloat16x4_t a)	a -> Vd.4H	NOP	Vd.2S -> result	A32/A64
 uint8x8_t vreinterpret_u8_bf16(bfloat16x4_t a)	a -> Vd.4H	NOP	Vd.8B -> result	A32/A64
 uint16x4_t vreinterpret_u16_bf16(bfloat16x4_t a)	a -> Vd.4H	NOP	Vd.4H -> result	A32/A64
@@ -4732,6 +4749,7 @@ int64x2_t vreinterpretq_s64_bf16(bfloat16x8_t a)	a -> Vd.8H	NOP	Vd.2D -> result	
 float64x2_t vreinterpretq_f64_bf16(bfloat16x8_t a)	a -> Vd.8H	NOP	Vd.2D -> result	A64
 poly64x2_t vreinterpretq_p64_bf16(bfloat16x8_t a)	a -> Vd.8H	NOP	Vd.2D -> result	A32/A64
 poly128_t vreinterpretq_p128_bf16(bfloat16x8_t a)	a -> Vd.8H	NOP	Vd.1Q -> result	A32/A64
+float16x8_t vreinterpretq_f16_bf16(bfloat16x8_t a)	a -> Vd.8H	NOP	Vd.8H -> result	A32/A64
 
 float32x4_t vcvt_f32_bf16(bfloat16x4_t a)	a -> Vn.8H	SHLL Vd.4S,Vn.8H, #16	Vd.4S -> result	A32/A64
 float32x4_t vcvtq_low_f32_bf16(bfloat16x8_t a)	a -> Vn.8H	SHLL Vd.4S,Vn.8H, #16	Vd.4S -> result	A32/A64
