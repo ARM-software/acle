@@ -3294,10 +3294,10 @@ int8x8_t vtbx3_s8(int8x8_t a, int8x8x3_t b, int8x8_t idx)	b.val[1]:b.val[0] -> V
 uint8x8_t vtbx3_u8(uint8x8_t a, uint8x8x3_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;Zeros(64):b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#24;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B,Vn+1.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	v7/A32/A64
 poly8x8_t vtbx3_p8(poly8x8_t a, poly8x8x3_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;Zeros(64):b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#24;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B,Vn+1.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	v7/A32/A64
 mfloat8x8_t vtbx3_mf8(mfloat8x8_t a, mfloat8x8x3_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;Zeros(64):b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	MOVI Vtmp.8B,#24;CMHS Vtmp.8B,Vm.8B,Vtmp.8B;TBL Vtmp1.8B,{Vn.16B,Vn+1.16B},Vm.8B;BIF Vd.8B,Vtmp1.8B,Vtmp.8B	Vd.8B -> result	A64
-int8x8_t vtbx4_s8(int8x8_t a, int8x8x4_t b, int8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B; c-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
-uint8x8_t vtbx4_u8(uint8x8_t a, uint8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B; c-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
-poly8x8_t vtbx4_p8(poly8x8_t a, poly8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B; c-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
-mfloat8x8_t vtbx4_mf8(mfloat8x8_t a, mfloat8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B; c-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	A64
+int8x8_t vtbx4_s8(int8x8_t a, int8x8x4_t b, int8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B;idx-> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+uint8x8_t vtbx4_u8(uint8x8_t a, uint8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+poly8x8_t vtbx4_p8(poly8x8_t a, poly8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	v7/A32/A64
+mfloat8x8_t vtbx4_mf8(mfloat8x8_t a, mfloat8x8x4_t b, uint8x8_t idx)	b.val[1]:b.val[0] -> Vn.16B;b.val[3]:b.val[2] -> Vn+1.16B;a -> Vd.8B;idx -> Vm.8B	TBX Vd.8B,{Vn.16B,Vn+1.16B},Vm.8B	Vd.8B -> result	A64
 int8x8_t vqtbl1_s8(int8x16_t t, uint8x8_t idx)	t -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
 int8x16_t vqtbl1q_s8(int8x16_t t, uint8x16_t idx)	t -> Vn.16B;idx -> Vm.16B	TBL Vd.16B,{Vn.16B},Vm.16B	Vd.16B -> result	A64
 uint8x8_t vqtbl1_u8(uint8x16_t t, uint8x8_t idx)	t -> Vn.16B;idx -> Vm.8B	TBL Vd.8B,{Vn.16B},Vm.8B	Vd.8B -> result	A64
@@ -4796,7 +4796,7 @@ float16x8_t vcvt1_high_f16_mf8_fpm(mfloat8x16_t vn, fpm_t fpm)	vn -> Vn.16B	F1CV
 float16x8_t vcvt2_high_f16_mf8_fpm(mfloat8x16_t vn, fpm_t fpm)	vn -> Vn.16B	F2CVTL2 Vd.8H,Vn.16B	Vd.8H -> result	A64
 
 mfloat8x8_t vcvt_mf8_f32_fpm(float32x4_t vn, float32x4_t vm, fpm_t fpm)	vn -> Vn.4S;vm -> Vm.4S	FCVTN Vd.8B, Vn.4S, Vm.4S	Vd.8B -> result	A64
-mfloat8x16_t vcvt_high_mf8_f32_fpm(mfloat8x8_t vd, float32x4_t vn, float32x4_t vm, fpm_t fpm)	vn -> Vn.4S;vm -> Vm.4S	FCVTN2 Vd.16B, Vn.4S, Vm.4S	Vd.16B -> result	A64
+mfloat8x16_t vcvt_high_mf8_f32_fpm(mfloat8x8_t vd, float32x4_t vn, float32x4_t vm, fpm_t fpm)	vd -> Vd.8B;vn -> Vn.4S;vm -> Vm.4S	FCVTN2 Vd.16B, Vn.4S, Vm.4S	Vd.16B -> result	A64
 
 mfloat8x8_t vcvt_mf8_f16_fpm(float16x4_t vn, float16x4_t vm, fpm_t fpm)	vn -> Vn.4H;vm -> Vm.4H	FCVTN Vd.8B, Vn.4H, Vm.4H	Vd.8B -> result	A64
 mfloat8x16_t vcvtq_mf8_f16_fpm(float16x8_t vn, float16x8_t vm, fpm_t fpm)	vn -> Vn.8H;vm -> Vm.8H	FCVTN Vd.16B, Vn.8H, Vm.8H	Vd.16B -> result	A64
@@ -4836,14 +4836,14 @@ float32x4_t vmlallbtq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t 
 float32x4_t vmlalltbq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B;vm -> Vm.16B	FMLALLTB Vd.4S, Vn.16B, Vm.16B	Vd.4S -> result	A64
 float32x4_t vmlallttq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B;vm -> Vm.16B	FMLALLTT Vd.4S, Vn.16B, Vm.16B	Vd.4S -> result	A64
 
-float32x4_t vmlallbbq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
-float32x4_t vmlallbbq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
-float32x4_t vmlallbtq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
-float32x4_t vmlallbtq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
-float32x4_t vmlalltbq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
-float32x4_t vmlalltbq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
-float32x4_t vmlallttq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
-float32x4_t vmlallttq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vm -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+float32x4_t vmlallbbq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+float32x4_t vmlallbbq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+float32x4_t vmlallbtq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+float32x4_t vmlallbtq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+float32x4_t vmlalltbq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+float32x4_t vmlalltbq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+float32x4_t vmlallttq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B; vm -> Vm.B; 0 <= lane <= 7	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
+float32x4_t vmlallttq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B; vm -> Vm.B; 0 <= lane <= 15	FMLALLBB Vd.4S, Vn.16B, Vm.B[lane]	Vd.4S -> result	A64
 
 <SECTION>	Matrix multiplication intrinsics from Armv9.6-A
 float16x8_t vmmlaq_f16_mf8_fpm(float16x8_t r, mfloat8x16_t a, mfloat8x16_t b, fpm_t fpm)	r -> Vd.8H;a -> Vn.16B;b -> Vm.16B	FMMLA Vd.8H, Vn.16B, Vm.16B	Vd.8H -> result	A64
