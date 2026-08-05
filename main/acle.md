@@ -3146,6 +3146,16 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_SME2p2`            | sme2p2        | ```ID_AA64SMFR0_EL1.SMEver >= 0b0011```   |
    | `FEAT_SVE2p1`            | sve2p1        | ```ID_AA64ZFR0_EL1.SVEver >= 0b0010```    |
    | `FEAT_SVE2p2`            | sve2p2        | ```ID_AA64ZFR0_EL1.SVEver >= 0b0011```    |
+   | `FEAT_SME_F16F16`        | sme-f16f16    | ```ID_AA64SMFR0_EL1.F16F16 == 0b1```      |
+   | `FEAT_GCS`               | gcs           | ```ID_AA64PFR1_EL1.GCS >= 0b0001```       |
+   | `FEAT_D128`              | d128          | ```ID_AA64MMFR3_EL1.D128 >= 0b0001```     |
+   | `FEAT_FP8DOT2`           | fp8dot2       | ```ID_AA64FPFR0_EL1.F8DP2 == 0b1```       |
+   | `FEAT_SME_F8F16`         | sme-f8f16     | ```ID_AA64SMFR0_EL1.F8F16 == 0b1```       |
+   | `FEAT_F8F16MM`           | f8f16mm       | ```ID_AA64FPFR0_EL1.F8MM4 == 0b1```       |
+   | `FEAT_SVE_AES2`          | sve-aes2      | ```ID_AA64ZFR0_EL1.AES >= 0b0011```       |
+   | `FEAT_SVE_BFSCALE`       | sve-bfscale   | ```ID_AA64ZFR0_EL1.B16B16 >= 0b0010```    |
+   | `FEAT_SVE_F16F32MM`      | sve-f16f32mm  | ```ID_AA64ZFR0_EL1.F16MM >= 0b0001```     |
+   | `FEAT_SME_MOP4`          | sme-mop4      | ```ID_AA64SMFR0_EL1.SMOP4 == 0b1```       |
 
 The tables are sorted by priority, starting from features of lowest priority ending with features of highest priority.
 
@@ -3208,6 +3218,13 @@ The following table lists the feature dependencies for AArch64.
    | sme2p2           | sme2p1            |
    | sve2p1           | sve2              |
    | sve2p2           | sve2p1            |
+   | sme-f16f16       | sme2              |
+   | d128             | lse               |
+   | fp8dot2          | fp8               |
+   | sme-f8f16        | sme2, fp8         |
+   | f8f16mm          | simd, fp8         |
+   | sve-f16f32mm     | sve               |
+   | sme-mop4         | sme2              |
 
 ### Selection
 
