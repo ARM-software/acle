@@ -184,6 +184,7 @@ hash.
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
 * Renamed vmmlaq_f16_f16 to vmmlaq_f16
+* Added documentation for missing Neon intrinsics
 
 <!---
 **** Do not remove! ****

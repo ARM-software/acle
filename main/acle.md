@@ -209,6 +209,13 @@ The changes between legacy releases were as follows:
 | 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
 | 2026Q1       | 15 May 2026       | Arm    | See [Changes between ACLE Q3 2025 and ACLE Q1 2026](#changes-between-acle-q3-2025-and-acle-q1-2026)                  |
 
+#### Continuously updated specification
+
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changes for year 2026](#changes-for-year-2026).
+
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
 Most changes in ACLE Q2 2018 are updates to support features introduced in
