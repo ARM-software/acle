@@ -116,9 +116,7 @@ about Arm’s trademarks.
 
 ## About this document
 
-### Change control
-
-#### Current status and anticipated changes
+### Support levels
 
 The following support level definitions are used by the ACLE
 specifications:
@@ -150,7 +148,36 @@ specifications:
 All content in this document is at the **Release** quality level,
 unless a different support level is specified in the text.
 
-#### Change history
+### Changelog for year 2026
+
+After leagcy release 2026Q1, this specification is published continuously from
+the main branch. Each published version is identified by its Git commit hash.
+
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
+  dot product intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 conversion intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 absolute difference accumulation
+  intrinsics.
+* Added [**Alpha**](#current-status-and-anticipated-changes)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
+* Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
+* Added support for producer-consumer data placement hints.
+* Clarified interaction between SME keyword attributes and a common compiler
+  extension whereby type attributes can be inherited between subsequent
+  duplicate decls.
+
+### Legacy changelog
+
+The changes between legacy releases were as follows:
 
 | **Issue**    | **Date**          | **By** | **Change**                                                                                                           |
 | ------------ | ----------------- | ------ | -------------------------------------------------------------------------------------------------------------------- |
@@ -180,13 +207,6 @@ unless a different support level is specified in the text.
 | 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
 | 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
 | 2026Q1       | 15 May 2026       | Arm    | See [Changes between ACLE Q3 2025 and ACLE Q1 2026](#changes-between-acle-q3-2025-and-acle-q1-2026)                  |
-
-#### Continuously updated specification
-
-After 2026Q1, this specification is published continuously from the
-main branch. Each published version is identified by its Git commit hash.
-
-See [Changes for year 2026](#changes-for-year-2026).
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
@@ -493,30 +513,6 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added [**Alpha**](#current-status-and-anticipated-changes) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
 * Redesigned atomic store with hints intrinsics.
-
-#### Changes for year 2026
-
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
-  dot product intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 conversion intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 absolute difference accumulation
-  intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
-* Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
-* Added support for producer-consumer data placement hints.
-* Clarified interaction between SME keyword attributes and a common compiler
-  extension whereby type attributes can be inherited between subsequent
-  duplicate decls.
 
 ### References
 

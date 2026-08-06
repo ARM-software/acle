@@ -30,8 +30,7 @@ The PDF version of the documents can be retrieved from the
 
 Branch `main` at
 [github.com/ARM-software/acle/](https://github.com/ARM-software/acle/) is
-ACLE's main development branch. Branch `latest-release` tracks the latest
-quarterly release, and is now considered legacy.
+ACLE's main development branch.
 
 ## Legacy releases
 
