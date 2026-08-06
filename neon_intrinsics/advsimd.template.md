@@ -111,8 +111,9 @@ for more information about Arm’s trademarks.
 
 ### Changelog for year 2026
 
-After leagcy release 2026Q1, this specification is published continuously from
-the main branch. Each published version is identified by its Git commit hash.
+After the 2026Q1 release, Arm began publishing this specification continuously
+from the main branch. Each published version is identified by its Git commit
+hash.
 
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM

@@ -62,9 +62,8 @@ correctly.
 
 # Branches and pull requests.
 
-Development (bug-fixes, proposals, extensions, and so on) is conducted
-exclusively on the `main` branch. Therefore, please submit your PR against
-`main`.
+Use branch `main` for bug fixes, proposals, extensions, and other development
+work. Submit all pull requests against `main`.
 
 It is good practice to track changes. In section `Changes after ACLE Q1 2026`,
 please list any changes that you have made to the document. As an example, see

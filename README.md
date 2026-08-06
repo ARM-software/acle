@@ -15,27 +15,25 @@
 This repository contains the source material from which the
 specifications for the Arm C Language Extensions (ACLE) are derived.
 
-The latest version of the specifications can be browsed online at
-[arm-software.github.io/acle/](https://arm-software.github.io/acle/).
+Browse the current specifications on the
+[ACLE website](https://arm-software.github.io/acle/).
 
 ## Versioning
 
-We have transitioned from a quarterly release schedule to a continuously updated
-specification. The specification is now updated on every commit as changes are
-completed and reviewed, providing more timely access to new features,
-clarifications, and corrections.
+Arm no longer publishes quarterly specification releases. We publish the current
+specification after each reviewed change merges into the main branch. This
+process gives users earlier access to new features, clarifications, and
+corrections.
 
 The PDF version of the documents can be retrieved from the
 [releases](https://github.com/ARM-software/acle/releases) page.
 
-Branch `main` at
-[github.com/ARM-software/acle/](https://github.com/ARM-software/acle/) is
-ACLE's main development branch.
+Branch `main` contains the current ACLE specification and ongoing development.
 
 ## Legacy releases
 
-Quarterly releases (now considered legacy) up to 2026Q1 are also present in the
-[releases](https://github.com/ARM-software/acle/releases) page.
+The [releases](https://github.com/ARM-software/acle/releases) page also contains
+the legacy quarterly releases through 2026Q1.
 
 Pre-GitHub versions of the documents were previously released on
 [Arm Developer](https://developer.arm.com), and are also hosted in this
