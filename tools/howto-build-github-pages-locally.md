@@ -4,12 +4,6 @@
 
 # How to build GitHub Pages locally
 
-## Introduction
-
-The GitHub pages are only built when a commit is added to the `latest-release`
-branch. This makes the process of testing the HTML rendering of local changes
-difficult.
-
 This document describes one process to build the GitHub page locally.
 
 ## Script

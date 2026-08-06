@@ -50,12 +50,11 @@ Checklist: (mark with ``X`` those which apply)
       patch will be automatically checked in the Actions of the pull
       request.
 * [ ] I have added an item that describes the changes I have
-      introduced in this PR in the section **Changes for next
-      release** of the section **Change Control**/**Document history**
-      of the document. Create **Changes for next release** if it does
-      not exist. Notice that changes that are not modifying the
-      content and rendering of the specifications (both HTML and PDF)
-      do not need to be listed.
+      introduced in this PR in section **Changes for year 20xx** (this year)
+      of section **Preface**/**About this document**.
+      Create **Changes for year 20xx** if it does not exist. Notice that changes
+      that are not modifying the content and rendering of the specifications
+      (both HTML and PDF) do not need to be listed.
 * [ ] When modifying content and/or its rendering, I have checked the
       correctness of the result in the PDF output (please refer to the
       instructions on [how to build the PDFs

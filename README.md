@@ -15,16 +15,29 @@
 This repository contains the source material from which the
 specifications for the Arm C Language Extensions (ACLE) are derived.
 
-The latest release of the specifications can be browsed online at
-[arm-software.github.io/acle/](https://arm-software.github.io/acle/).
+Browse the current specifications on the
+[ACLE website](https://arm-software.github.io/acle/).
 
-The PDF version of the documents can be retrieved from the [latest
-release](https://github.com/ARM-software/acle/releases/latest) page.
+## Versioning
 
-The development version is stored on the branch `main` at
-[github.com/ARM-software/acle/](https://github.com/ARM-software/acle/),
-while the latest released version is tracked by the branch
-`latest-release`.
+Arm no longer publishes quarterly specification releases. We publish the current
+specification after each reviewed change merges into branch `main`. This
+process gives users earlier access to new features, clarifications, and
+corrections.
+
+The PDF version of the documents can be retrieved from the
+[releases](https://github.com/ARM-software/acle/releases) page.
+
+Branch `main` contains the current ACLE specification and ongoing development.
+
+## Legacy releases
+
+The [releases](https://github.com/ARM-software/acle/releases) page also contains
+the legacy quarterly releases through 2026Q1.
+
+Pre-GitHub versions of the documents were previously released on
+[Arm Developer](https://developer.arm.com), and are also hosted in this
+repository, in [Legacy releases](legacyreleases/README.md).
 
 ## Contributing
 
@@ -43,19 +56,18 @@ an email to arm.acle@arm.com.
 
 ## List of documents
 
-HTML version                                                                                                  | PDF version
----                                                                                                           | ---
-[Arm C Language Extensions](https://arm-software.github.io/acle/main/)                                        | [download](https://github.com/ARM-software/acle/releases/latest)
-[Morello Supplement to the Arm C Language Extensions](https://arm-software.github.io/acle/morello/)           | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm MVE Intrinsics](https://arm-software.github.io/acle/mve_intrinsics/)                                     | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm Neon Intrinsics Reference](https://arm-software.github.io/acle/neon_intrinsics/)                         | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm®v8-M Security Extensions - Requirements on Development Tools](https://arm-software.github.io/acle/cmse/) | [download](https://github.com/ARM-software/acle/releases/latest)
+[Arm C Language Extensions](https://arm-software.github.io/acle/main/)
 
-## Legacy releases
+[Morello Supplement to the Arm C Language Extensions](https://arm-software.github.io/acle/morello/)
 
-Legacy versions of the documents were released on [Arm Developer](https://developer.arm.com).
-They are now also hosted in this repository and are to be found in [Legacy releases](legacyreleases/README.md).
-They follow the same folder naming scheme as the main document folders.
+[Arm MVE Intrinsics](https://arm-software.github.io/acle/mve_intrinsics/)
+
+[Arm Neon Intrinsics Reference](https://arm-software.github.io/acle/neon_intrinsics/)
+
+[Arm®v8-M Security Extensions - Requirements on Development Tools](https://arm-software.github.io/acle/cmse/)
+
+The PDF versions can be found in the latest GitHub
+[release](https://github.com/ARM-software/acle/releases/latest).
 
 # License
 
