@@ -60,12 +60,12 @@ An additional step uses
 to check that all the links in the markdown files are resolving
 correctly.
 
-# Branches and pull requests.
+# Branches and pull requests
 
 Use branch `main` for bug fixes, proposals, extensions, and other development
 work. Submit all pull requests against `main`.
 
-It is good practice to track changes. In section `Changes after ACLE Q1 2026`,
+It is good practice to track changes. In section `Changes for year 20xx`,
 please list any changes that you have made to the document. As an example, see
 [this PR](https://github.com/ARM-software/acle/pull/443/changes).
 

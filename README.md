@@ -21,7 +21,7 @@ Browse the current specifications on the
 ## Versioning
 
 Arm no longer publishes quarterly specification releases. We publish the current
-specification after each reviewed change merges into the main branch. This
+specification after each reviewed change merges into branch `main`. This
 process gives users earlier access to new features, clarifications, and
 corrections.
 
