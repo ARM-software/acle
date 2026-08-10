@@ -65,7 +65,7 @@ correctly.
 Use branch `main` for bug fixes, proposals, extensions, and other development
 work. Submit all pull requests against `main`.
 
-It is good practice to track changes. In section `Changes for year 20xx`,
+It is good practice to track changes. In section `Changelog for year 20xx`,
 please list any changes that you have made to the document. As an example, see
 [this PR](https://github.com/ARM-software/acle/pull/443/changes).
 

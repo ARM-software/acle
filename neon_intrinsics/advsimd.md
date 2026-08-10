@@ -109,15 +109,19 @@ for more information about Arm’s trademarks.
 
 ## About this document
 
-### Changelog for year 2026
+### Continuously updated specification
 
-After the 2026Q1 release, Arm began publishing this specification continuously
-from the main branch. Each published version is identified by its Git commit
-hash.
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changelog for year 2026](#changelog-for-year-2026).
+
+### Changelog for year 2026
 
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
 * Renamed vmmlaq_f16_f16 to vmmlaq_f16
+* Added documentation for missing Neon intrinsics
 
 ### Legacy changelog
 

@@ -109,6 +109,13 @@ for more information about Arm’s trademarks.
 
 ## About this document
 
+### Continuously updated specification
+
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changelog for year 2026](#changelog-for-year-2026).
+
 ### Changelog for year 2026
 
 After the 2026Q1 release, Arm began publishing this specification continuously
@@ -118,6 +125,7 @@ hash.
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
 * Renamed vmmlaq_f16_f16 to vmmlaq_f16
+* Added documentation for missing Neon intrinsics
 
 ### Legacy changelog
 
@@ -178,13 +186,6 @@ hash.
 * Fixed typos in the "AArch64 Instruction" and "Result" fields of
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
-
-### Changes for year 2026
-
-* Added support for FEAT_F16F32DOT
-* Added support for FEAT_F16F32MM and FEAT_F16MM
-* Renamed vmmlaq_f16_f16 to vmmlaq_f16
-* Added documentation for missing Neon intrinsics
 
 <!---
 **** Do not remove! ****

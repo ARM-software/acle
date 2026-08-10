@@ -148,11 +148,14 @@ specifications:
 All content in this document is at the **Release** quality level,
 unless a different support level is specified in the text.
 
-### Changelog for year 2026
+### Continuously updated specification
 
-After the 2026Q1 release, Arm began publishing this specification continuously
-from the main branch. Each published version is identified by its Git commit
-hash.
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changelog for year 2026](#changelog-for-year-2026).
+
+### Changelog for year 2026
 
 * Added [**Alpha**](#support-levels)
   support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
@@ -208,13 +211,6 @@ The changes between legacy releases were as follows:
 | 2025Q2       | 06 June 2025      | Arm    | See [Changes between ACLE Q4 2024 and ACLE Q2 2025](#changes-between-acle-q4-2024-and-acle-q2-2025)                  |
 | 2025Q3       | 14 November 2025  | Arm    | See [Changes between ACLE Q2 2025 and ACLE Q3 2025](#changes-between-acle-q2-2025-and-acle-q3-2025)                  |
 | 2026Q1       | 15 May 2026       | Arm    | See [Changes between ACLE Q3 2025 and ACLE Q1 2026](#changes-between-acle-q3-2025-and-acle-q1-2026)                  |
-
-#### Continuously updated specification
-
-After 2026Q1, this specification is published continuously from the
-main branch. Each published version is identified by its Git commit hash.
-
-See [Changes for year 2026](#changes-for-year-2026).
 
 #### Changes between ACLE Q2 2017 and ACLE Q2 2018
 
