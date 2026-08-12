@@ -43,4 +43,7 @@ docker build -t $IMAGE_NAME --network host tools/docker
 # Run the image, mounting the current folder into the /src folder of
 # the docker image. Run as the host user so that the output files are owned by them.
 docker run --rm -u $(id -u):$(id -g) --mount type=bind,source="$(pwd)",target=/src $IMAGE_NAME $finalversion $commithash $cleanrepo
+
+status=$?
 rm -rf ./tmp
+exit "$status"

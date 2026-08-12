@@ -17,6 +17,7 @@ jobs:
       with:
         name: pdfs
         path: pdfs
+        if-no-files-found: error
 
   build-github-pages:
     runs-on: ubuntu-latest
