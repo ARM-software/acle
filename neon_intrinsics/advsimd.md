@@ -157,7 +157,7 @@ See [Changelog for year 2026](#changelog-for-year-2026).
   used to render the PDF of the specs. The PDF is rendered using the
   standard layout used in Arm specifications.
 * Added missing item for release 2021Q3 in the table with the list of
-  versions in section [Document history](#document-history).
+  versions in section [Legacy changelog](#legacy-changelog).
 
 #### Changes between 2021Q4 and 2023Q2
 

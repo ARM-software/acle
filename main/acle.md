@@ -332,7 +332,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
     bulleted list for the examples.
 
   No functional change intended.
-* Reordered the sections in [Change history](#change-history) in
+* Reordered the sections in [Legacy changelog](#legacy-changelog) in
   chronological order.
 
 #### Changes between ACLE Q1 2022 and ACLE Q2 2022
