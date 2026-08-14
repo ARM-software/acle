@@ -118,10 +118,6 @@ See [Changelog for year 2026](#changelog-for-year-2026).
 
 ### Changelog for year 2026
 
-After the 2026Q1 release, Arm began publishing this specification continuously
-from the main branch. Each published version is identified by its Git commit
-hash.
-
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
 * Renamed vmmlaq_f16_f16 to vmmlaq_f16
@@ -161,7 +157,7 @@ hash.
   used to render the PDF of the specs. The PDF is rendered using the
   standard layout used in Arm specifications.
 * Added missing item for release 2021Q3 in the table with the list of
-  versions in section [Document history](#document-history).
+  versions in section [Legacy changelog](#legacy-changelog).
 
 #### Changes between 2021Q4 and 2023Q2
 
