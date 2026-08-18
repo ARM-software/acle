@@ -1,6 +1,5 @@
 ---
 title: Arm C Language Extensions
-date-of-issue: 15 May 2026
 # LaTeX specific variables
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
 # Jekyll specific variables
@@ -117,9 +116,7 @@ about Arm’s trademarks.
 
 ## About this document
 
-### Change control
-
-#### Current Status and Anticipated Changes
+### Support levels
 
 The following support level definitions are used by the ACLE
 specifications:
@@ -151,7 +148,40 @@ specifications:
 All content in this document is at the **Release** quality level,
 unless a different support level is specified in the text.
 
-#### Change history
+### Continuously updated specification
+
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changelog for year 2026](#changelog-for-year-2026).
+
+### Changelog for year 2026
+
+* Added [**Alpha**](#support-levels)
+  support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
+  dot product intrinsics.
+* Added [**Alpha**](#support-levels)
+  support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
+* Added [**Alpha**](#support-levels)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
+* Added [**Alpha**](#support-levels)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
+* Added [**Alpha**](#support-levels)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 conversion intrinsics.
+* Added [**Alpha**](#support-levels)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 absolute difference accumulation
+  intrinsics.
+* Added [**Alpha**](#support-levels)
+  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
+* Changed the support level for the Armv9.6 intrinsics implementation to [**Beta**](#support-levels)
+* Added support for producer-consumer data placement hints.
+* Clarified interaction between SME keyword attributes and a common compiler
+  extension whereby type attributes can be inherited between subsequent
+  duplicate decls.
+
+### Legacy changelog
+
+The changes between legacy releases were as follows:
 
 | **Issue**    | **Date**          | **By** | **Change**                                                                                                           |
 | ------------ | ----------------- | ------ | -------------------------------------------------------------------------------------------------------------------- |
@@ -281,8 +311,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * In [Data types](#data-types), clarified that `__fp16` and `__bf16` are
   predefined types whereas vector types like `int32x4_t` are not.
 * Moved the [Future directions](#future-directions) chapter to the end.
-* Added a description of support levels in [Current Status and
-  Anticipated Changes](#current-status-and-anticipated-changes).
+* Added a description of [support levels](#support-levels).
 * Support added for [Function Multi Versioning](#function-multi-versioning).
 * The sections [AES extension](#aes-extension), [SHA2
   extension](#sha2-extension) and [SHA512
@@ -290,8 +319,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   specifying the `FEAT_*` tag they refer to from the Arm Architectural
   Reference Manual.
 * Sorted the items in [References](#references).
-* Changed the wording of **Beta** in [Current Status and Anticipated
-  Changes](#current-status-and-anticipated-changes).
+* Changed the wording of **Beta** in [support levels](#support-levels).
 * Sorted the table in [Terms and abbreviations](#terms-and-abbreviations).
 * Formatted `memcpy`, `memmove` and `memset` with fixed-width font all
   throughout the document.
@@ -304,7 +332,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
     bulleted list for the examples.
 
   No functional change intended.
-* Reordered the sections in [Change history](#change-history) in
+* Reordered the sections in [Legacy changelog](#legacy-changelog) in
   chronological order.
 
 #### Changes between ACLE Q1 2022 and ACLE Q2 2022
@@ -322,7 +350,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 #### Changes between ACLE Q2 2022 and ACLE Q4 2022
 
-* Added [**Alpha**](#current-status-and-anticipated-changes)
+* Added [**Alpha**](#support-levels)
   [support for SME](#arm_sme.h).
 * Added feature detection macro `__ARM_FEATURE_RCPC` for RCpc (Release Consistent processor consistent) model at [RCpc](#rcpc).
 * Added two new valid values to the
@@ -394,7 +422,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 #### Changes between ACLE Q1 2024 and ACLE Q2 2024
 * Added new content for the handling of arguments in CMSE Entry functions and
   return values of CMSE Non-secure calls in order to address security issues.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
+* Added [**Alpha**](#support-levels)
   support for SVE2.1 (FEAT_SVE2p1).
 
 #### Changes between ACLE Q2 2024 and ACLE Q3 2024
@@ -405,14 +433,14 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   level of the [Function Multi Versioning](#function-multi-versioning).
 * Unified Function Multi Versioning features sha1 and sha2.
 * Unified Function Multi Versioning features ls64, ls64_v, and ls64_accdata.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
+* Added [**Alpha**](#support-levels)
   support for SME2.1 (FEAT_SME2p1).
 * Removed requirement to add preprocessor guards for header files.
 * Added specifications for floating-point absolute minimum
   and maximum intrinsics (FEAT_FAMINMAX).
 * Added specifications for table lookup intrinsics (FEAT_LUT, FEAT_SME_LUTv2).
 * Added Release support level for the [Custom Datapath Extension](#custom-datapath-extension).
-* Added [**Alpha**](#current-status-and-anticipated-changes)
+* Added [**Alpha**](#support-levels)
   support for modal 8-bit floating point intrinsics.
 
 #### Changes between ACLE Q3 2024 and ACLE Q4 2024
@@ -445,19 +473,19 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added mf8 variants of SME 2.1 intrinsics.
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
-  [**Beta**](#current-status-and-anticipated-changes) quality level.
+  [**Beta**](#support-levels) quality level.
 
 #### Changes between ACLE Q4 2024 and ACLE Q2 2025
 
 * Changed the Function Multi Versioning default version rules to be more explicit.
-* Added [**Alpha**](#current-status-and-anticipated-changes) support
+* Added [**Alpha**](#support-levels) support
   for structured sparsity outer product intrinsics
-* Added [**Alpha**](#current-status-and-anticipated-changes) support 
+* Added [**Alpha**](#support-levels) support 
   for quarter-tile outer product intrinsics.
 * Removed the priority column from the mapping tables of Function Multi Versioning.
 * Added Function Multi Versioning feature cssc.
 * Added feature test macro for FEAT_SSVE_BitPerm.
-* Upgrade to [**Beta**](#current-status-and-anticipated-changes)
+* Upgrade to [**Beta**](#support-levels)
   support for modal 8-bit floating point intrinsics.
 
 #### Changes between ACLE Q2 2025 and ACLE Q3 2025
@@ -476,41 +504,17 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Improved documentation for VMLA/VMLS intrinsics for floats.
 * Added support for producer-consumer data placement hints.
 * Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
+* Added [**Alpha**](#support-levels)
   support for SVE2.2 (FEAT_SVE2p2)
-* Added [**Alpha**](#current-status-and-anticipated-changes)
+* Added [**Alpha**](#support-levels)
   support for SME2.2 (FEAT_SME2p2).
-* Added [**Alpha**](#current-status-and-anticipated-changes) support
+* Added [**Alpha**](#support-levels) support
   for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
 * Added support for FEAT_FPRCVT intrinsics and `__ARM_FEATURE_FPRCVT`.
 * Removed all references to Transactional Memory Extension (TME).
-* Added [**Alpha**](#current-status-and-anticipated-changes) support
+* Added [**Alpha**](#support-levels) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
 * Redesigned atomic store with hints intrinsics.
-
-#### Changes after ACLE Q1 2026
-
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
-  dot product intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 conversion intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 absolute difference accumulation
-  intrinsics.
-* Added [**Alpha**](#current-status-and-anticipated-changes)
-  support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
-* Bumped armv9.6 intrinsics implementation to [**Beta**](#current-status-and-anticipated-changes)
-* Added support for producer-consumer data placement hints.
-* Clarified interaction between SME keyword attributes and a common compiler
-  extension whereby type attributes can be inherited between subsequent
-  duplicate decls.
 
 ### References
 
@@ -886,7 +890,7 @@ start with the prefix `__ARM`.
 ## Keyword attributes
 
 This section is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 ACLE adds several non-standard keywords to C and C++. These keywords
@@ -1172,7 +1176,7 @@ header:
 ### `<arm_sme.h>`
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and may
+[**Beta** state](#support-levels) and may
 change or be extended in the future.
 
 `<arm_sme.h>` declares functions and defines intrinsics for SME
@@ -2020,9 +2024,9 @@ header file is available.
 #### Scalable Matrix Extension (SME)
 
 The specification for SME2.1 is in
-[**Beta** state](#current-status-and-anticipated-changes) and the
+[**Beta** state](#support-levels) and the
 specification for the rest of SME is in
-[**Beta** state](#current-status-and-anticipated-changes).  The
+[**Beta** state](#support-levels).  The
 specifications may change or be extended in the future.
 
 ACLE provides [features](#sme-language-extensions-and-intrinsics)
@@ -2100,7 +2104,7 @@ defined to a nonzero value.
 #### Half-precision floating-point SME intrinsics
 
 The specification for SME2.1 is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_F16F16` is defined to `1` if there is hardware support
@@ -2135,7 +2139,7 @@ of half-precision brain floating-point types.
 #### Non-widening brain 16-bit floating-point support
 
 The specification for B16B16 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Alpha** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_B16B16` is defined to `1` if there is hardware support
@@ -2161,7 +2165,7 @@ are available.
 #### Brain 16-bit floating-point vector multiplication support
 
 This section is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_BFSCALE` is defined to `1` if there is hardware
@@ -2175,7 +2179,7 @@ of half-precision brain floating-point types.
 #### Brain 16-bit floating-point matrix multiplication support
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Alpha** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_B16MM` is defined to `1` if there is hardware
@@ -2220,7 +2224,7 @@ SVE AES2 (FEAT_SVE_AES2) instructions in Streaming SVE mode (FEAT_SSVE_AES)
 and if the associated ACLE intrinsics are available.
 
 The specification for SVE AES2 (FEAT_SVE_AES2, FEAT_SSVE_AES) instructions is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 #### SHA2 extension
@@ -2407,7 +2411,7 @@ this implies:
 #### Half-precision to single-precision dot product extension
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Alpha** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_F16F32DOT` is defined if the half-precision dot product
@@ -2444,7 +2448,7 @@ associated ACLE intrinsics are available. This implies that
 ##### Multiplication of modal 8-bit floating-point matrices
 
 This section is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_F8F16MM` is defined to `1` if there is hardware support
@@ -2464,7 +2468,7 @@ for the SVE 16-bit floating-point to 32-bit floating-point matrix multiply and a
 ##### Multiplication of 16-bit floating-point matrices (AdvSIMD)
 
 This section is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Alpha** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_F16F32MM` is defined if the Neon half-precision matrix multiply
@@ -2509,7 +2513,7 @@ the SVE2 bit permute instructions in Streaming SVE mode (FEAT_SSVE_BitPerm) and 
 #### 16-bit to 64-bit integer widening outer product intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_I16I64` is defined to `1` if there is hardware
@@ -2520,7 +2524,7 @@ available. This implies that `__ARM_FEATURE_SME` is nonzero.
 #### Double precision floating-point outer product intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_F64F64` is defined to `1` if there is hardware
@@ -2531,7 +2535,7 @@ available. This implies that `__ARM_FEATURE_SME` is nonzero.
 #### Structured sparsity outer product intrinsics
 
 The specification for SME is in
-[**Alpha** state](#current-status-and-anticipated-changes) and may change or be
+[**Alpha** state](#support-levels) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_TMOP` is defined to `1` if there is hardware
@@ -2542,7 +2546,7 @@ available. This implies that `__ARM_FEATURE_SME2` is nonzero.
 #### Quarter-tile outer product intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and may change or be
+[**Beta** state](#support-levels) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_MOP4` is defined to `1` if there is hardware
@@ -5429,7 +5433,7 @@ disabled then it has no side effect and returns `NULL`.
 # State management
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 ## Introduction
@@ -6335,7 +6339,7 @@ each architecture includes its predecessor instruction set.
 # About FP8 intrinsics
 
 The specification for FP8 intrinsics is in
-[**Beta** state](#current-status-and-anticipated-changes).
+[**Beta** state](#support-levels).
 
 Each 8-bit floating point intrinsic call has a parameter to define the format
 and scale of the operands, and the overflow behavior, as applicable to each
@@ -9599,7 +9603,7 @@ when move instructions are required.
 ### SVE2 BFloat16 data-processing instructions.
 
 The specification for B16B16 is in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Alpha** state](#support-levels) and might change or be
 extended in the future.
 
 The instructions in this section are available when `__ARM_FEATURE_SVE_B16B16`
@@ -9730,7 +9734,7 @@ BFloat16 floating-point multiply vectors.
 ### SVE BFloat16 floating-point adjust exponent vectors instructions.
 
 The specification for SVE BFloat16 floating-point adjust exponent vectors instructions is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 #### BFSCALE
@@ -9784,7 +9788,7 @@ Modal 8-bit floating-point matrix multiply-accumulate to single-precision.
 ### SVE2.1 instruction intrinsics
 
 The specification for SVE2.1 is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 The functions in this section are defined by the header file
@@ -10138,7 +10142,7 @@ Use of this intrinsic if `svcntb() * 8 < 256` results in undefined behaviour.
 ### SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions
 
 The specification for SVE2 Multi-vector AES and 128-bit polynomial multiply long instructions is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 #### AESE, AESD, AESEMC, AESDIMC
@@ -10175,7 +10179,7 @@ Multi-vector 128-bit polynomial multiply long instructions.
 # SME language extensions and intrinsics
 
 The specification for SME is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 ## Controlling the use of streaming mode
@@ -13248,7 +13252,7 @@ BFloat16 floating-point adjust exponent vectors.
 ### SME2.1 instruction intrinsics
 
 The specification for SME2.1 is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or
+[**Beta** state](#support-levels) and might change or
 be extended in the future.
 
 The intrinsics in this section are defined by the header file
@@ -13393,7 +13397,7 @@ Zero ZA vector groups
 ### SME2.2 instruction intrinsics
 
 The specification for SME2.2 are in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 The intrinsics in this section are defined by the header file
@@ -13448,7 +13452,7 @@ are named after. All of the functions have external linkage.
 ### SVE2.1 and SME2 instruction intrinsics
 
 The specification for SVE2.1 is in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 The functions in this section are defined by either the header file
@@ -13981,7 +13985,7 @@ While (resulting in predicate tuple)
 ### SVE2.2 and SME2.2 instruction intrinsics
 
 The specification for SVE2.2 and SME2.2 are in
-[**Beta** state](#current-status-and-anticipated-changes) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 The functions in this section are defined by either the header file
@@ -14073,7 +14077,7 @@ Scalar index of first/last true predicate element (predicated).
 ### SVE2.3 and SME2.3 instruction intrinsics
 
 The specification for SVE2.3 and SME2.3 are in
-[**Alpha** state](#current-status-and-anticipated-changes) and might change or be
+[**Alpha** state](#support-levels) and might change or be
 extended in the future.
 
 The functions in this section are defined by either the header file

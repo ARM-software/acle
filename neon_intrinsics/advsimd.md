@@ -1,6 +1,5 @@
 ---
 title: Arm Neon Intrinsics Reference
-date-of-issue: 15 May 2026
 # LaTeX specific variables
 landscape: true
 copyright-text: "Copyright: see section \\texorpdfstring{\\nameref{copyright}}{Copyright}."
@@ -108,7 +107,23 @@ for more information about Arm’s trademarks.
 * Copyright 2014-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 * Copyright 2021 Matt P. Dziubinski <matdzb@gmail.com>
 
-## Document history
+## About this document
+
+### Continuously updated specification
+
+After 2026Q1, this specification is published continuously from the
+main branch. Each published version is identified by its Git commit hash.
+
+See [Changelog for year 2026](#changelog-for-year-2026).
+
+### Changelog for year 2026
+
+* Added support for FEAT_F16F32DOT
+* Added support for FEAT_F16F32MM and FEAT_F16MM
+* Renamed vmmlaq_f16_f16 to vmmlaq_f16
+* Added documentation for missing Neon intrinsics
+
+### Legacy changelog
 
 | Issue | Date              | Change               |
 | ----- | ----------------- | -------------------- |
@@ -128,12 +143,12 @@ for more information about Arm’s trademarks.
 | N     | 06 June 2025      | 2025Q2               |
 | O     | 15 May 2026       | 2026Q1               |
 
-### Changes between 2021Q2 and 2021Q3
+#### Changes between 2021Q2 and 2021Q3
 
 * Fixed the guard macro for the base intrinsics.
 * Corrected ``sdot``, ``udot`` and ``usdot`` specification on AArch32.
 
-### Changes between 2021Q3 and 2021Q4.
+#### Changes between 2021Q3 and 2021Q4.
 
 * Fixed typo in signature of ``vaddq_s16``.
 * Updated copyright statement in section [Copyright](#copyright).
@@ -142,38 +157,31 @@ for more information about Arm’s trademarks.
   used to render the PDF of the specs. The PDF is rendered using the
   standard layout used in Arm specifications.
 * Added missing item for release 2021Q3 in the table with the list of
-  versions in section [Document history](#document-history).
+  versions in section [Legacy changelog](#legacy-changelog).
 
-### Changes between 2021Q4 and 2023Q2
+#### Changes between 2021Q4 and 2023Q2
 
 * Added support for FEAT_LRCPC3 LDAP1/STL1 intrinsics.
 
-### Changes between 2023Q2 and 2024Q3
+#### Changes between 2023Q2 and 2024Q3
 
 * Fixed the range of the ``lane`` immediate argument for ``vst2q_lane_f64``.
 
-### Changes between 2024Q3 and 2024Q4
+#### Changes between 2024Q3 and 2024Q4
 
 * Added `mf8` forms of the `vbsl`, `vluti2` and `vluti4` families of
   intrinsics.
 
-### Changes between 2024Q4 and 2025Q2
+#### Changes between 2024Q4 and 2025Q2
 
 * Added `fp8` version of the `vget_lane` intrinsic.
 
-### Changes between 2025Q2 and 2026Q1
+#### Changes between 2025Q2 and 2026Q1
 
 * Added support for FEAT_FPRCVT intrinsics.
 * Fixed typos in the "AArch64 Instruction" and "Result" fields of
   floating point conversion intrinsics from "Half Precision to 32-bit"
   and "Half Precision to 64-bit".
-
-### Changes since 2026Q1
-
-* Added support for FEAT_F16F32DOT
-* Added support for FEAT_F16F32MM and FEAT_F16MM
-* Renamed vmmlaq_f16_f16 to vmmlaq_f16
-* Added documentation for missing Neon intrinsics
 
 <!---
 **** Do not remove! ****

@@ -47,7 +47,7 @@ $else$
     \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}, with modifications}}
   $endif$
 $endif$
-\newcommand{\dateofissue}{$if(draftversion)$TBD$else$$date-of-issue$$endif$}
+\newcommand{\dateofissue}{$date-of-issue$}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -88,7 +88,9 @@ $endif$
 \setcounter{tocdepth}{6}
 \setcounter{secnumdepth}{6}
 
-\date{\dateofissue}
+$if(date-of-issue)$
+  \date{\dateofissue}
+$endif$
 
 \hypersetup{
             colorlinks=true,
@@ -131,7 +133,7 @@ $endif$
         \begin{minipage}[t]{14.0cm}
           \begin{flushleft}
             {\huge \bfseries  $title$}\\[2ex]
-            {\large Issue Date: \dateofissue}\\[2ex]
+            $if(date-of-issue)${\large Issue Date: \dateofissue}\\[2ex]$endif$
             {\large \bfseries Version: \versiontext}\\[3ex]
           \end{flushleft}
         \end{minipage}

@@ -116,7 +116,7 @@ reserved.
 
 ## Change Control
 
-### Current Status and Anticipated Changes
+### Support levels
 
 The following support level definitions are used by the ACLE
 specifications:
