@@ -173,7 +173,7 @@ See [Changelog for year 2026](#changelog-for-year-2026).
   intrinsics.
 * Added [**Alpha**](#support-levels)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
-* Bumped armv9.6 intrinsics implementation to [**Beta**](#support-levels)
+* Changed the support level for the Armv9.6 intrinsics implementation to [**Beta**](#support-levels)
 * Added support for producer-consumer data placement hints.
 * Clarified interaction between SME keyword attributes and a common compiler
   extension whereby type attributes can be inherited between subsequent
