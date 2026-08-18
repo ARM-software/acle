@@ -311,7 +311,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * In [Data types](#data-types), clarified that `__fp16` and `__bf16` are
   predefined types whereas vector types like `int32x4_t` are not.
 * Moved the [Future directions](#future-directions) chapter to the end.
-* Added a description of #support-levels.
+* Added a description of [support levels](#support-levels).
 * Support added for [Function Multi Versioning](#function-multi-versioning).
 * The sections [AES extension](#aes-extension), [SHA2
   extension](#sha2-extension) and [SHA512
@@ -319,7 +319,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   specifying the `FEAT_*` tag they refer to from the Arm Architectural
   Reference Manual.
 * Sorted the items in [References](#references).
-* Changed the wording of **Beta** in #support-levels.
+* Changed the wording of **Beta** in [support levels](#support-levels).
 * Sorted the table in [Terms and abbreviations](#terms-and-abbreviations).
 * Formatted `memcpy`, `memmove` and `memset` with fixed-width font all
   throughout the document.
