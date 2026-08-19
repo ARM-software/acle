@@ -1840,8 +1840,8 @@ poly16x4_t vbsl_p16(uint16x4_t a, poly16x4_t b, poly16x4_t c)	a -> Vd.8B;b -> Vn
 poly16x8_t vbslq_p16(uint16x8_t a, poly16x8_t b, poly16x8_t c)	a -> Vd.16B;b -> Vn.16B;c -> Vm.16B	BSL Vd.16B,Vn.16B,Vm.16B	Vd.16B -> result	v7/A32/A64
 float64x1_t vbsl_f64(uint64x1_t a, float64x1_t b, float64x1_t c)	a -> Vd.8B;b -> Vn.8B;c -> Vm.8B	BSL Vd.8B,Vn.8B,Vm.8B	Vd.8B -> result	A64
 float64x2_t vbslq_f64(uint64x2_t a, float64x2_t b, float64x2_t c)	a -> Vd.16B;b -> Vn.16B;c -> Vm.16B	BSL Vd.16B,Vn.16B,Vm.16B	Vd.16B -> result	A64
-mfloat8x8_t vbsl_mf8(uint8x8_t a, mfloat8x8_t b, mfloat8x8_t c)	a -> Vd.8B;b -> Vn.8B;c -> Vm.8B	BSL Vd.8B,Vn.8B,Vm.8B	Vd.8B -> result	v7/A32/A64
-mfloat8x16_t vbslq_mf8(uint8x16_t a, mfloat8x16_t b, mfloat8x16_t c)	a -> Vd.16B;b -> Vn.16B;c -> Vm.16B	BSL Vd.16B,Vn.16B,Vm.16B	Vd.16B -> result	v7/A32/A64
+mfloat8x8_t vbsl_mf8(uint8x8_t a, mfloat8x8_t b, mfloat8x8_t c)	a -> Vd.8B;b -> Vn.8B;c -> Vm.8B	BSL Vd.8B,Vn.8B,Vm.8B	Vd.8B -> result	A64
+mfloat8x16_t vbslq_mf8(uint8x16_t a, mfloat8x16_t b, mfloat8x16_t c)	a -> Vd.16B;b -> Vn.16B;c -> Vm.16B	BSL Vd.16B,Vn.16B,Vm.16B	Vd.16B -> result	A64
 int8x8_t vcopy_lane_s8(int8x8_t a, __builtin_constant_p(lane1), int8x8_t b, __builtin_constant_p(lane2))	a -> Vd.8B;0 <= lane1 <= 7;b -> Vn.8B;0 <= lane2 <= 7	INS Vd.B[lane1],Vn.B[lane2]	Vd.8B -> result	A64
 int8x16_t vcopyq_lane_s8(int8x16_t a, __builtin_constant_p(lane1), int8x8_t b, __builtin_constant_p(lane2))	a -> Vd.16B;0 <= lane1 <= 15;b -> Vn.8B;0 <= lane2 <= 7	INS Vd.B[lane1],Vn.B[lane2]	Vd.16B -> result	A64
 int16x4_t vcopy_lane_s16(int16x4_t a, __builtin_constant_p(lane1), int16x4_t b, __builtin_constant_p(lane2))	a -> Vd.4H;0 <= lane1 <= 3;b -> Vn.4H;0 <= lane2 <= 3	INS Vd.H[lane1],Vn.H[lane2]	Vd.4H -> result	A64
@@ -1918,7 +1918,7 @@ float32x2_t vcreate_f32(uint64_t a)	a -> Xn	INS Vd.D[0],Xn	Vd.2S -> result	v7/A3
 poly8x8_t vcreate_p8(uint64_t a)	a -> Xn	INS Vd.D[0],Xn	Vd.8B -> result	v7/A32/A64
 poly16x4_t vcreate_p16(uint64_t a)	a -> Xn	INS Vd.D[0],Xn	Vd.4H -> result	v7/A32/A64
 float64x1_t vcreate_f64(uint64_t a)	a -> Xn	INS Vd.D[0],Xn	Vd.1D -> result	A64
-mfloat8x8_t vcreate_mf8(uint64_t a)	a -> Xn	INS Vd.D[0],Xn	Vd.8B -> result	A64
+mfloat8x8_t vcreate_mf8(uint64_t a)	a -> Xn	FMOV Dd,Xn	Vd.8B -> result	A64
 int8x8_t vdup_n_s8(int8_t value)	value -> rn	DUP Vd.8B,rn	Vd.8B -> result	v7/A32/A64
 int8x16_t vdupq_n_s8(int8_t value)	value -> rn	DUP Vd.16B,rn	Vd.16B -> result	v7/A32/A64
 int16x4_t vdup_n_s16(int16_t value)	value -> rn	DUP Vd.4H,rn	Vd.4H -> result	v7/A32/A64
@@ -2045,7 +2045,7 @@ float32x4_t vcombine_f32(float32x2_t low, float32x2_t high)	low -> Vn.2S;high ->
 poly8x16_t vcombine_p8(poly8x8_t low, poly8x8_t high)	low -> Vn.8B;high -> Vm.8B	DUP Vd.1D,Vn.D[0];INS Vd.D[1],Vm.D[0]	Vd.16B -> result	v7/A32/A64
 poly16x8_t vcombine_p16(poly16x4_t low, poly16x4_t high)	low -> Vn.4H;high -> Vm.4H	DUP Vd.1D,Vn.D[0];INS Vd.D[1],Vm.D[0]	Vd.8H -> result	v7/A32/A64
 float64x2_t vcombine_f64(float64x1_t low, float64x1_t high)	low -> Vn.1D;high -> Vm.1D	DUP Vd.1D,Vn.D[0];INS Vd.D[1],Vm.D[0]	Vd.2D -> result	A64
-mfloat8x16_t vcombine_mf8(mfloat8x8_t low, mfloat8x8_t high)	low -> Vn.8B;high -> Vm.8B	DUP Vd.1D,Vn.D[0];INS Vd.D[1],Vm.D[0]	Vd.16B -> result	A64
+mfloat8x16_t vcombine_mf8(mfloat8x8_t low, mfloat8x8_t high)	low -> Vd.8B;high -> Vn.8B	MOV Vd.D[1],Vn.D[0]	Vd.16B -> result	A64
 int8x8_t vget_high_s8(int8x16_t a)	a -> Vn.16B	DUP Vd.1D,Vn.D[1]	Vd.8B -> result	v7/A32/A64
 int16x4_t vget_high_s16(int16x8_t a)	a -> Vn.8H	DUP Vd.1D,Vn.D[1]	Vd.4H -> result	v7/A32/A64
 int32x2_t vget_high_s32(int32x4_t a)	a -> Vn.4S	DUP Vd.1D,Vn.D[1]	Vd.2S -> result	v7/A32/A64
@@ -2060,7 +2060,7 @@ float32x2_t vget_high_f32(float32x4_t a)	a -> Vn.4S	DUP Vd.1D,Vn.D[1]	Vd.2S -> r
 poly8x8_t vget_high_p8(poly8x16_t a)	a -> Vn.16B	DUP Vd.1D,Vn.D[1]	Vd.8B -> result	v7/A32/A64
 poly16x4_t vget_high_p16(poly16x8_t a)	a -> Vn.8H	DUP Vd.1D,Vn.D[1]	Vd.4H -> result	v7/A32/A64
 float64x1_t vget_high_f64(float64x2_t a)	a -> Vn.2D	DUP Vd.1D,Vn.D[1]	Vd.1D -> result	A64
-mfloat8x8_t vget_high_mf8(mfloat8x16_t a)	a -> Vn.16B	DUP Vd.1D,Vn.D[1]	Vd.8B -> result	A64
+mfloat8x8_t vget_high_mf8(mfloat8x16_t a)	a -> Vn.16B	MOV Dd,Vn.D[1]	Vd.8B -> result	A64
 int8x8_t vget_low_s8(int8x16_t a)	a -> Vn.16B	DUP Vd.1D,Vn.D[0]	Vd.8B -> result	v7/A32/A64
 int16x4_t vget_low_s16(int16x8_t a)	a -> Vn.8H	DUP Vd.1D,Vn.D[0]	Vd.4H -> result	v7/A32/A64
 int32x2_t vget_low_s32(int32x4_t a)	a -> Vn.4S	DUP Vd.1D,Vn.D[0]	Vd.2S -> result	v7/A32/A64
@@ -2075,7 +2075,7 @@ float32x2_t vget_low_f32(float32x4_t a)	a -> Vn.4S	DUP Vd.1D,Vn.D[0]	Vd.2S -> re
 poly8x8_t vget_low_p8(poly8x16_t a)	a -> Vn.16B	DUP Vd.1D,Vn.D[0]	Vd.8B -> result	v7/A32/A64
 poly16x4_t vget_low_p16(poly16x8_t a)	a -> Vn.8H	DUP Vd.1D,Vn.D[0]	Vd.4H -> result	v7/A32/A64
 float64x1_t vget_low_f64(float64x2_t a)	a -> Vn.2D	DUP Vd.1D,Vn.D[0]	Vd.1D -> result	A64
-mfloat8x8_t vget_low_mf8(mfloat8x16_t a)	a -> Vn.16B	DUP Vd.1D,Vn.D[0]	Vd.8B -> result	A64
+mfloat8x8_t vget_low_mf8(mfloat8x16_t a)	a -> Vd.16B	NOP	Vd.8B -> result	A64
 int8_t vdupb_lane_s8(int8x8_t vec, __builtin_constant_p(lane))	vec -> Vn.8B;0 <= lane <= 7	DUP Bd,Vn.B[lane]	Bd -> result	A64
 int16_t vduph_lane_s16(int16x4_t vec, __builtin_constant_p(lane))	vec -> Vn.4H;0 <= lane <= 3	DUP Hd,Vn.H[lane]	Hd -> result	A64
 int32_t vdups_lane_s32(int32x2_t vec, __builtin_constant_p(lane))	vec -> Vn.2S;0 <= lane <= 1	DUP Sd,Vn.S[lane]	Sd -> result	A64
@@ -2160,8 +2160,8 @@ poly16x4_t vld1_lane_p16(poly16_t const *ptr, poly16x4_t src, __builtin_constant
 poly16x8_t vld1q_lane_p16(poly16_t const *ptr, poly16x8_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.8H;0 <= lane <= 7	LD1 {Vt.H}[lane],[Xn]	Vt.8H -> result	v7/A32/A64
 float64x1_t vld1_lane_f64(float64_t const *ptr, float64x1_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.1D;0 <= lane <= 0	LD1 {Vt.D}[lane],[Xn]	Vt.1D -> result	A64
 float64x2_t vld1q_lane_f64(float64_t const *ptr, float64x2_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.2D;0 <= lane <= 1	LD1 {Vt.D}[lane],[Xn]	Vt.2D -> result	A64
-mfloat8x8_t vld1_lane_mf8(mfloat8_t const *ptr, mfloat8x8_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.8B;0 <= lane <= 7	LD1 {Vt.b}[lane],[Xn]	Vt.8B -> result	A64
-mfloat8x16_t vld1q_lane_mf8(mfloat8_t const *ptr, mfloat8x16_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.16B;0 <= lane <= 15	LD1 {Vt.b}[lane],[Xn]	Vt.16B -> result	A64
+mfloat8x8_t vld1_lane_mf8(mfloat8_t const *ptr, mfloat8x8_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.8B;0 <= lane <= 7	LD1 {Vt.B}[lane],[Xn]	Vt.8B -> result	A64
+mfloat8x16_t vld1q_lane_mf8(mfloat8_t const *ptr, mfloat8x16_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.16B;0 <= lane <= 15	LD1 {Vt.B}[lane],[Xn]	Vt.16B -> result	A64
 uint64x1_t vldap1_lane_u64(uint64_t const *ptr, uint64x1_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.1D;0 <= lane <= 0	LDAP1 {Vt.D}[lane],[Xn]	Vt.1D -> result	A64
 uint64x2_t vldap1q_lane_u64(uint64_t const *ptr, uint64x2_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.2D;0 <= lane <= 1	LDAP1 {Vt.D}[lane],[Xn]	Vt.2D -> result	A64
 int64x1_t vldap1_lane_s64(int64_t const *ptr, int64x1_t src, __builtin_constant_p(lane))	ptr -> Xn;src -> Vt.1D;0 <= lane <= 0	LDAP1 {Vt.D}[lane],[Xn]	Vt.1D -> result	A64
@@ -3373,7 +3373,7 @@ int32_t vget_lane_s32(int32x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> V
 int64_t vget_lane_s64(int64x1_t v, __builtin_constant_p(lane))	lane==0;v -> Vn.1D	UMOV Rd,Vn.D[lane]	Rd -> result	v7/A32/A64
 poly8_t vget_lane_p8(poly8x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8B	UMOV Rd,Vn.B[lane]	Rd -> result	v7/A32/A64
 poly16_t vget_lane_p16(poly16x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> Vn.4H	UMOV Rd,Vn.H[lane]	Rd -> result	v7/A32/A64
-mfloat8_t vget_lane_mf8(mfloat8x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8B	DUP Bd,Vn.B[lane]	Bd -> result	v7/A32/A64
+mfloat8_t vget_lane_mf8(mfloat8x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8B	DUP Bd,Vn.B[lane]	Bd -> result	A64
 float16_t vget_lane_f16(float16x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> Vn.4H	DUP Hd,Vn.H[lane]	Hd -> result	v7/A32/A64
 float32_t vget_lane_f32(float32x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> Vn.2S	DUP Sd,Vn.S[lane]	Sd -> result	v7/A32/A64
 float64_t vget_lane_f64(float64x1_t v, __builtin_constant_p(lane))	lane==0;v -> Vn.1D	DUP Dd,Vn.D[lane]	Dd -> result	A64
@@ -3388,7 +3388,7 @@ int32_t vgetq_lane_s32(int32x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> 
 int64_t vgetq_lane_s64(int64x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> Vn.2D	UMOV Rd,Vn.D[lane]	Rd -> result	v7/A32/A64
 poly8_t vgetq_lane_p8(poly8x16_t v, __builtin_constant_p(lane))	0<=lane<=15;v -> Vn.16B	UMOV Rd,Vn.B[lane]	Rd -> result	v7/A32/A64
 poly16_t vgetq_lane_p16(poly16x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8H	UMOV Rd,Vn.H[lane]	Rd -> result	v7/A32/A64
-mfloat8_t vgetq_lane_mf8(mfloat8x16_t v, __builtin_constant_p(lane))	0<=lane<=15;v -> Vn.16B	DUP Bd,Vn.B[lane]	Bd -> result	v7/A32/A64
+mfloat8_t vgetq_lane_mf8(mfloat8x16_t v, __builtin_constant_p(lane))	0<=lane<=15;v -> Vn.16B	DUP Bd,Vn.B[lane]	Bd -> result	A64
 float16_t vgetq_lane_f16(float16x8_t v, __builtin_constant_p(lane))	0<=lane<=7;v -> Vn.8H	DUP Hd,Vn.H[lane]	Hd -> result	v7/A32/A64
 float32_t vgetq_lane_f32(float32x4_t v, __builtin_constant_p(lane))	0<=lane<=3;v -> Vn.4S	DUP Sd,Vn.S[lane]	Sd -> result	v7/A32/A64
 float64_t vgetq_lane_f64(float64x2_t v, __builtin_constant_p(lane))	0<=lane<=1;v -> Vn.2D	DUP Dd,Vn.D[lane]	Dd -> result	A64
@@ -3909,7 +3909,7 @@ uint16x4_t vreinterpret_u16_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	A32
 uint32x2_t vreinterpret_u32_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.2S -> result	A32/A64
 poly8x8_t vreinterpret_p8_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.8B -> result	A32/A64
 poly16x4_t vreinterpret_p16_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	A32/A64
-mfloat8x8_t vreinterpret_mf8_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.8B -> result	A32/A64
+mfloat8x8_t vreinterpret_mf8_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.8B -> result	A64
 int64x1_t vreinterpret_s64_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.1D -> result	A32/A64
 float64x1_t vreinterpret_f64_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.1D -> result	A64
 float16x4_t vreinterpret_f16_p64(poly64x1_t a)	a -> Vd.1D	NOP	Vd.4H -> result	A32/A64
@@ -4811,9 +4811,9 @@ float32x2_t vdot_f32_mf8_fpm(float32x2_t vd, mfloat8x8_t vn, mfloat8x8_t vm, fpm
 float32x4_t vdotq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B;vm -> Vm.16B	FDOT Vd.4S, Vn.16B, Vm.16B	Vd.4S -> result	A64
 
 float32x2_t vdot_lane_f32_mf8_fpm(float32x2_t vd, mfloat8x8_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.2S;vn -> Vn.8B;vm -> Vm.4B;0 <= lane <= 1	FDOT Vd.2S, Vn.8B, Vm.4B[lane]	Vd.2S -> result	A64
-float32x2_t vdot_laneq_f32_mf8_fpm(float32x2_t vd, mfloat8x8_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.2S;vn -> Vn.16B;vm -> Vm.4B;0 <= lane <= 3	FDOT Vd.2S, Vn.8B, Vm.4B[lane]	Vd.2S -> result	A64
-float32x4_t vdotq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.8B;vm -> Vm.4B;0 <= lane <= 1	FDOT Vd.4S, Vn.8B, Vm.4B[lane]	Vd.4S -> result	A64
-float32x4_t vdotq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16;vm -> Vm.4B;0 <= lane <= 3	FDOT Vd.4S, Vn.8B, Vm.4B[lane]	Vd.4SB -> result	A64
+float32x2_t vdot_laneq_f32_mf8_fpm(float32x2_t vd, mfloat8x8_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.2S;vn -> Vn.8B;vm -> Vm.4B;0 <= lane <= 3	FDOT Vd.2S, Vn.8B, Vm.4B[lane]	Vd.2S -> result	A64
+float32x4_t vdotq_lane_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x8_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B;vm -> Vm.4B;0 <= lane <= 1	FDOT Vd.4S, Vn.16B, Vm.4B[lane]	Vd.4S -> result	A64
+float32x4_t vdotq_laneq_f32_mf8_fpm(float32x4_t vd, mfloat8x16_t vn, mfloat8x16_t vm, __builtin_constant_p(lane), fpm_t fpm)	vd -> Vd.4S;vn -> Vn.16B;vm -> Vm.4B;0 <= lane <= 3	FDOT Vd.4S, Vn.16B, Vm.4B[lane]	Vd.4S -> result	A64
 
 float16x4_t vdot_f16_mf8_fpm(float16x4_t vd, mfloat8x8_t vn, mfloat8x8_t vm, fpm_t fpm)	vd -> Vd.4H;vn -> Vn.8B;vm -> Vm.8B	FDOT Vd.4H, Vn.8B, Vm.8B	Vd.4H -> result	A64
 float16x8_t vdotq_f16_mf8_fpm(float16x8_t vd, mfloat8x16_t vn, mfloat8x16_t vm, fpm_t fpm)	vd -> Vd.8H;vn -> Vn.16B;vm -> Vm.16B	FDOT Vd.8H, Vn.16B, Vm.16B	Vd.8H -> result	A64
