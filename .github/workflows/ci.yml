@@ -3,23 +3,46 @@
 # SPDX-License-Identifier: Apache-2.0
 name: CI
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
 
 jobs:
-  build:
+  build-pdfs:
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4.1.7
     - name: check the correctness of the sources and generate the PDFs
       run: ./build_with_docker.sh --finalversion
+    - name: Derive short commit hash
+      id: vars
+      run: echo "short_sha=${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+    - name: Rename PDFs with commit hash
+      run: |
+        mv pdfs/acle.pdf "pdfs/acle-${{ steps.vars.outputs.short_sha }}.pdf"
+        mv pdfs/advsimd.pdf "pdfs/advsimd-${{ steps.vars.outputs.short_sha }}.pdf"
+        mv pdfs/cmse.pdf "pdfs/cmse-${{ steps.vars.outputs.short_sha }}.pdf"
+        mv pdfs/morello.pdf "pdfs/morello-${{ steps.vars.outputs.short_sha }}.pdf"
+        mv pdfs/mve.pdf "pdfs/mve-${{ steps.vars.outputs.short_sha }}.pdf"
     - uses: actions/upload-artifact@v4.4.0
       with:
         name: pdfs
-        path: pdfs
+        path: |
+          pdfs/acle-${{ steps.vars.outputs.short_sha }}.pdf
+          pdfs/advsimd-${{ steps.vars.outputs.short_sha }}.pdf
+          pdfs/cmse-${{ steps.vars.outputs.short_sha }}.pdf
+          pdfs/morello-${{ steps.vars.outputs.short_sha }}.pdf
+          pdfs/mve-${{ steps.vars.outputs.short_sha }}.pdf
         if-no-files-found: error
 
   build-github-pages:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4.1.7
@@ -27,6 +50,7 @@ jobs:
       run: ./tools/build-github-pages.sh build
 
   markdown-link-check:
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4.1.7
@@ -36,3 +60,67 @@ jobs:
       run: |
         find . -name '*.md' -print0 | \
           xargs -0 -n 1 python3 .github/scripts/check_links.py
+
+  create-release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'ARM-software/acle'
+    needs:
+      - build-pdfs
+      - markdown-link-check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/download-artifact@v4.1.8
+      with:
+        name: pdfs
+        path: pdfs
+    - name: Derive short commit hash
+      id: vars
+      run: echo "short_sha=${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+    - name: Create GitHub release with PDFs
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: main-${{ github.sha }}
+        name: Main build ${{ github.sha }}
+        target_commitish: ${{ github.sha }}
+        files: |
+          pdfs/acle-${{ steps.vars.outputs.short_sha }}.pdf
+          pdfs/advsimd-${{ steps.vars.outputs.short_sha }}.pdf
+          pdfs/cmse-${{ steps.vars.outputs.short_sha }}.pdf
+          pdfs/morello-${{ steps.vars.outputs.short_sha }}.pdf
+          pdfs/mve-${{ steps.vars.outputs.short_sha }}.pdf
+
+  build-pages-artifact:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'ARM-software/acle'
+    needs:
+      - build-pdfs
+      - markdown-link-check
+      - create-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@v4.1.7
+    - uses: actions/configure-pages@v5
+    - name: Build GitHub Pages site
+      run: ./tools/build-github-pages.sh build
+    - name: Upload GitHub Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: _site
+
+  deploy-pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'ARM-software/acle'
+    needs:
+      - build-pages-artifact
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
