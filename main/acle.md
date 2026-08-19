@@ -2476,7 +2476,7 @@ accumulating to single-precision instruction is supported. Note that this implie
 
   * `__ARM_NEON == 1`
 
-`__ARM_FEATURE_F16MM` is defined if the Neon non-widening half-precision matrix multiply instruction instruction is supported. Note that this implies:
+`__ARM_FEATURE_F16MM` is defined if the Neon non-widening half-precision matrix multiply instruction is supported. Note that this implies:
 
   * `__ARM_NEON == 1`
 
@@ -2915,7 +2915,7 @@ The following attributes trigger the multi version code generation:
   associated to the `name` expressed in the attribute.
 * These attributes have no effect on the calling convention.
 * All versions must use the same calling convention.
-* If only the `default` version exist it should be linked directly.
+* If only the `default` version exists, it should be linked directly.
 * Function Multi Versioning might be disabled at compile time by a compiler
   flag. In this case, the `default` version is used.
 * All function versions must be declared at the same scope level.
@@ -5281,7 +5281,7 @@ and retrieval of the lock values, leaving software to select and set the values
 on allocation and deallocation. The intrinsics are expected to help protect
 heap allocations.
 
-The lock is referred in the text below as `allocation tag` and the key as
+The lock is referred to in the text below as `allocation tag` and the key as
 `logical address tag` (or in short `logical tag`).
 
 ## Terms and implementation details
@@ -5298,7 +5298,7 @@ the reference.  There are 16 available logical tags that can be used.
 These intrinsics are available when `__ARM_FEATURE_MEMORY_TAGGING` is defined.
 Type T below can be any type.
 Where the function return type is specified as T, the return type is determined
-from the input argument which must be also be specified as of type T.
+from the input argument which must also be specified as of type T.
 If the input argument T has qualifiers `const` or  `volatile`, the return
 type T will also have the `const` or `volatile` qualifier.
 
@@ -13465,7 +13465,7 @@ if the appropriate SME feature macro is defined (see previous paragraph).
 They can only be called from streaming-compatible code if they could be called
 from both non-streaming code and streaming code
 
-Most function in this section are SME2 or SVE2.1. However some are available in
+Most functions in this section are SME2 or SVE2.1. However some are available in
 SME. For convenience the ones available in SME will be tagged in the function
 with `[SME]`.
 
