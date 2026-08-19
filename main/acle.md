@@ -276,8 +276,8 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   [Neon-SVE Bridge macros](#neon-sve-bridge-macro).
 * Added feature detection macro for the memcpy family of memory
   operations (MOPS) at [memcpy family of memory operations
-  standarization instructions -
-  MOPS](#memcpy-family-of-memory-operations-standarization-instructions---mops)
+  standardization instructions -
+  MOPS](#memcpy-family-of-memory-operations-standardization-instructions---mops)
 * Added intrinsic for the memcpy family of memory operations (MOPS) at
   [memcpy family of operations intrinsics -
   MOPS](#memcpy-family-of-operations-intrinsics---mops)
@@ -375,7 +375,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Fixes for [Function Multi Versioning](#function-multi-versioning):
   * Renamed features to `sme-f64f64` and `sme-i16i64`
   * Corrected register name to `ID_AA64SMFR0_EL1.I16I64`
-* Removed incorrect optimisation remark in [CMSE](#CMSE-ACLE)'s floating-point
+* Removed incorrect optimization remark in [CMSE](#CMSE-ACLE)'s floating-point
   register clearing.
 * Removed incorrect information about the floating-point ABI used in
   [CMSE](#CMSE-ACLE)'s Arguments on the stack and floating point handling.
@@ -397,10 +397,10 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added description of SVE reinterpret intrinsics.
 * Changes and fixes for [Function Multi Versioning](#function-multi-versioning):
   * Combination of attributes `target_version` and `target_clones` is allowed.
-  * Clarify the existance of a single default version across all translation
+  * Clarify the existence of a single default version across all translation
     units with the explicitly provided version being the preferred in case
     `target_version` and `target_clones` are mixed.
-  * Emphasise that all instances of the versions share the same calling convention.
+  * Emphasize that all instances of the versions share the same calling convention.
   * Changed the mangling rules [Name mangling](#name-mangling), such that
     feature names are appended in lexicographic order, not in priority order.
   * Mangled names contain a unique set of features (no duplicates).
@@ -1333,7 +1333,7 @@ float.
 
 This has implications for the result of operations which would result
 in rounding had the operation taken place in a native 16-bit type. As
-software may rely on this behaviour for correctness, arithmetic
+software may rely on this behavior for correctness, arithmetic
 operations on `__fp16` are defined to promote even when the
 Armv8.2-A fp16 extension is available.
 
@@ -1653,7 +1653,7 @@ mode and emulate it through a trap to a platform routine, or fault it.
 
 ### CLZ
 
-`__ARM_FEATURE_CLZ` is defined to 1 if the CLZ (count leading zeroes)
+`__ARM_FEATURE_CLZ` is defined to 1 if the CLZ (count leading zeros)
 instruction is supported in hardware. Note that ACLE provides the 
 `__clz()` family of intrinsics (see [Miscellaneous data-processing
 intrinsics](#miscellaneous-data-processing-intrinsics)) even
@@ -1802,7 +1802,7 @@ This macro may only ever be defined in the AArch64 execution state.
 Intrinsics for using these instructions are specified in
 [Load/store 64 Byte intrinsics](#loadstore-64-byte-intrinsics).
 
-### memcpy family of memory operations standarization instructions - MOPS
+### memcpy family of memory operations standardization instructions - MOPS
 
 If the `CPYF*`, `CPY*`, `SET*` and `SETG*` instructions are supported,
 `__ARM_FEATURE_MOPS` is defined to 1. These instructions were
@@ -2593,7 +2593,7 @@ including the inexact exception. This macro is specified by [[C99]](#C99)
 (6.10.8).
 
 `__SUPPORT_SNAN__` is defined if the implementation supports
-signalling NaNs. This macro is specified by the C standards proposal
+signaling NaNs. This macro is specified by the C standards proposal
 WG14 N965 Optional support for Signaling NaNs. (Note: this was not
 adopted into C11.)
 
@@ -2738,7 +2738,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_LUT`](#lookup-table-extensions)                                                                                                         | Lookup table extensions (FEAT_LUT)                                                                 | 1           |
 | [`__ARM_FEATURE_MATMUL_INT8`](#availability-of-armv8.6-a-integer-matrix-multiply-intrinsics)                                                            | Integer Matrix Multiply extension (Armv8.6-A, optional Armv8.2-A, Armv8.3-A, Armv8.4-A, Armv8.5-A) | 1           |
 | [`__ARM_FEATURE_MEMORY_TAGGING`](#memory-tagging)                                                                                                       | Memory Tagging (Armv8.5-A)                                                                         | 1           |
-| [`__ARM_FEATURE_MOPS`](#memcpy-family-of-memory-operations-standarization-instructions---mops)                                                          | `memcpy`, `memset`, and `memmove` family of operations standardization instructions               | 1           |
+| [`__ARM_FEATURE_MOPS`](#memcpy-family-of-memory-operations-standardization-instructions---mops)                                                        | `memcpy`, `memset`, and `memmove` family of operations standardization instructions               | 1           |
 | [`__ARM_FEATURE_MVE`](#m-profile-vector-extension)                                                                                                      | M-profile Vector Extension                                                                         | 1           |
 | [`__ARM_FEATURE_NUMERIC_MAXMIN`](#numeric-maximum-and-minimum)                                                                                          | Numeric Maximum and Minimum                                                                        | 1           |
 | [`__ARM_FEATURE_PAC_DEFAULT`](#pointer-authentication)                                                                                                  | Pointer authentication protection                                                                  | 0x5         |
@@ -2970,7 +2970,7 @@ following:
   based on the arguments.
 * If a name is not recognized the compiler should ignore it[^fmv-note-ignore].
 
-[^fmv-note-ignore]: The intention is to support the usecase of newer code if
+[^fmv-note-ignore]: The intention is to support the use case of newer code if
   compiled with an older compiler. The compiler may provide diagnostic messages
   and could block the compilation (for instance, if the `-pedantic` flag is
   present).
@@ -4921,7 +4921,7 @@ that would be representable in a 32-bit or 64-bit signed integer type.
 Out-of-Range values are forced to the Most Negative Integer representable in
 the target size, and an Invalid Operation Floating-Point Exception is
 generated.  The rounding mode can be either the ambient rounding mode
-(for example `__rint32xf`) or towards zero (for example `__rint32zf`).
+(for example `__rint32xf`) or toward zero (for example `__rint32zf`).
 
 These instructions are introduced in the Armv8.5-A extensions
 [[ARMARMv85]](#ARMARMv85) and are available only in the AArch64 execution state.
@@ -6160,7 +6160,7 @@ following cases:
   "System operation".
 
 * When using a register specifier which doesn't apply to the
-  targetted architecture.
+  targeted architecture.
 
 # Instruction generation
 
@@ -6703,7 +6703,7 @@ alternative vector programming models. Consequently, programmers should
 take particular care when combining the Advanced SIMD Intrinsics
 programming model with such programming models.
 
-For example, the GCC vector extensions permit initialising a variable using
+For example, the GCC vector extensions permit initializing a variable using
 array syntax, as so
 
 ``` c
@@ -6937,8 +6937,8 @@ optimizations which preserve the instruction semantics.
 
 Care should be taken by compiler implementers not to introduce the concept of
 undefined behavior to the semantics of an intrinsic. For example, the
-`vabsd_s64` intrinsic has well defined behaviour for all input values,
-while the C99 `llabs` has undefined behaviour if the result would not
+`vabsd_s64` intrinsic has well defined behavior for all input values,
+while the C99 `llabs` has undefined behavior if the result would not
 be representable in a `long long` type. It would thus be incorrect to
 implement `vabsd_s64` as a wrapper function or macro around `llabs`.
 
@@ -10132,7 +10132,7 @@ The intrinsics in this section are defined by the header file
 
 Lookup table read with 6-bit indices (8-bit).
 
-Use of this intrinsic if `svcntb() * 8 < 256` results in undefined behaviour.
+Use of this intrinsic if `svcntb() * 8 < 256` results in undefined behavior.
 
 ```c
   // Variant is  also available for: _u8 _mf8
@@ -10959,7 +10959,7 @@ single sizeless predicate-as-counter type named `svcount_t`.
 `svcount_t` and `svbool_t` are both used to represent predicate masks, but
 they cannot be used interchangeably.
 
-The ACLE allows these types to be casted from one to another using the
+The ACLE allows these types to be cast from one to another using the
 `svcount_t svreinterpret_c(svbool_t)` and `svbool_t svreinterpret_b(svcount_t)`
 intrinsics, although the reinterpreted values may not be sensible in the other
 format. To safely extract a sensible mask from a `svcount_t`, the `svpext`
@@ -13466,7 +13466,7 @@ They can only be called from streaming-compatible code if they could be called
 from both non-streaming code and streaming code
 
 Most function in this section are SME2 or SVE2.1. However some are available in
-SME. For convinience the ones available in SME will be tagged in the function
+SME. For convenience the ones available in SME will be tagged in the function
 with `[SME]`.
 
 #### UCLAMP, SCLAMP, FCLAMP
@@ -13714,7 +13714,7 @@ Predicate select between predicate value or all-false
 
 #### PTRUE, PFALSE
 
-Initialise predicate-as-counter to all active or all inactive.
+Initialize predicate-as-counter to all active or all inactive.
 
 ``` c
   // Variants are also available for _c16, _c32 and _c64
@@ -14106,7 +14106,7 @@ Add subtract pairwise.
 
 Lookup table read with 6-bit indices (16-bit).
 
-Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
+Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behavior.
 
 ``` c
   // Variants are also available for _u16_x2, _bf16_x2 and _f16_x2.
@@ -14909,7 +14909,7 @@ The intrinsics in this section are defined by the header file
 
 Lookup table read with 6-bit indices (16-bit).
 
-Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behaviour.
+Use of this intrinsic if `svcntb() * 8 < 512` results in undefined behavior.
 
 ```c
   // Variants are also available for:
@@ -15014,7 +15014,7 @@ These intrinsics can be recognized by one of the four suffixes:
   in the SIMD operation. For example `vaddvq_p_s8`, where the
   false-predicated lanes are not added to the resulting sum.
 * `_z` (zero) which indicates that false-predicated lanes are filled with
-  zeroes. These are only used for load instructions.
+  zeros. These are only used for load instructions.
 * `_x` (dont-care) which indicates that the false-predicated lanes have
   undefined values. These are syntactic sugar for merge intrinsics with a
   `vuninitializedq` inactive parameter.
@@ -15152,7 +15152,7 @@ ACLE does not specify how the MVE Intrinsics interoperate with alternative
 vector programming models. Consequently, programmers should take particular
 care when combining the MVE programming model with such programming models.
 
-For example, the GCC vector extensions permit initialising a variable using
+For example, the GCC vector extensions permit initializing a variable using
 array syntax, as so
 
 ``` c
@@ -15408,7 +15408,7 @@ One option would be to mark a function prototype with an attribute, for example
   int __attribute__((svc(0xAB))) system_call(int code, void const *params);
 ```
 
-When calling the function, arguments and results would be marshalled
+When calling the function, arguments and results would be marshaled
 according to the AAPCS, the only difference being that the call would be
 invoked as a trap instruction rather than a branch-and-link.
 
