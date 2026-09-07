@@ -5,6 +5,9 @@ name: CI
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -12,10 +15,10 @@ permissions:
 
 jobs:
   build-pdfs:
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.1.7
+    - uses: actions/checkout@v6
     - name: check the correctness of the sources and generate the PDFs
       run: ./build_with_docker.sh --finalversion
     - name: Derive short commit hash
@@ -28,7 +31,7 @@ jobs:
         mv pdfs/cmse.pdf "pdfs/cmse-${{ steps.vars.outputs.short_sha }}.pdf"
         mv pdfs/morello.pdf "pdfs/morello-${{ steps.vars.outputs.short_sha }}.pdf"
         mv pdfs/mve.pdf "pdfs/mve-${{ steps.vars.outputs.short_sha }}.pdf"
-    - uses: actions/upload-artifact@v4.4.0
+    - uses: actions/upload-artifact@v7
       with:
         name: pdfs
         path: |
@@ -43,15 +46,15 @@ jobs:
     if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.1.7
+    - uses: actions/checkout@v6
     - name: generate the GitHub Pages locally in order to check for errors
       run: ./tools/build-github-pages.sh build
 
   markdown-link-check:
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.1.7
+    - uses: actions/checkout@v6
     - name: Install markdown-link-check
       run: npm install -g markdown-link-check
     - name: Check links
@@ -60,26 +63,34 @@ jobs:
           xargs -0 -n 1 python3 .github/scripts/check_links.py
 
   create-tag-and-github-release:
-    if: github.event_name == 'workflow_dispatch' && github.repository == 'ARM-software/acle'
+    if: (github.event_name == 'workflow_dispatch' && github.repository == 'ARM-software/acle') || (github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'ARM-software/acle')
     needs:
       - build-pdfs
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-    - uses: actions/download-artifact@v4.1.8
+    - uses: actions/download-artifact@v7
       with:
         name: pdfs
         path: pdfs
     - name: Derive short commit hash
       id: vars
       run: echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
-    - name: Create tag with PDFs
-      uses: softprops/action-gh-release@v2
+    - name: Delete previous Latest release (if any)
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh api repos/${{ github.repository }}/releases --paginate --jq '.[] | select(.name == "Latest") | .tag_name' | while read -r tag_name; do
+          gh release delete "$tag_name" --repo "${{ github.repository }}" --yes --cleanup-tag
+        done
+    - name: Create Latest release with PDFs
+      uses: softprops/action-gh-release@v3
       with:
         tag_name: main-${{ github.sha }}
         name: Latest
         target_commitish: ${{ github.sha }}
+        body: Build of latest commit (${{ steps.vars.outputs.short_sha }})
         files: |
           pdfs/acle-${{ steps.vars.outputs.short_sha }}.pdf
           pdfs/advsimd-${{ steps.vars.outputs.short_sha }}.pdf
@@ -88,22 +99,24 @@ jobs:
           pdfs/mve-${{ steps.vars.outputs.short_sha }}.pdf
 
   build-pages-artifact:
-    if: github.event_name == 'workflow_dispatch' && github.repository == 'ARM-software/acle'
+    if: (github.event_name == 'workflow_dispatch' && github.repository == 'ARM-software/acle') || (github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'ARM-software/acle')
+    needs:
+      - create-tag-and-github-release
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@v4.1.7
-    - uses: actions/configure-pages@v5
+    - uses: actions/checkout@v6
+    - uses: actions/configure-pages@v6
     - name: Build GitHub Pages site
       run: ./tools/build-github-pages.sh build --finalversion
     - name: Upload GitHub Pages artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v4
       with:
         path: _site
 
   deploy-pages:
-    if: github.event_name == 'workflow_dispatch' && github.repository == 'ARM-software/acle'
+    if: (github.event_name == 'workflow_dispatch' && github.repository == 'ARM-software/acle') || (github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'ARM-software/acle')
     needs:
       - build-pages-artifact
     runs-on: ubuntu-latest
@@ -116,4 +129,4 @@ jobs:
     steps:
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v4
+      uses: actions/deploy-pages@v5

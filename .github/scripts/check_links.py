@@ -112,8 +112,20 @@ def main() -> int:
 			and status_code == "403"
 		)
 
+		is_ignored_gcc_or_sourceware_429 = (
+			parsed_url.hostname in {"gcc.gnu.org", "sourceware.org"}
+			and status == "dead"
+			and status_code == "429"
+		)
+
 		if is_ignored_developer_arm_403:
 			print(f"IGNORED (403 from developer.arm.com): {url}")
+			continue
+
+		if is_ignored_gcc_or_sourceware_429:
+			print(
+				f"IGNORED (429 from {parsed_url.hostname}): {url}",
+			)
 			continue
 
 		failure = testcase.find("failure")
