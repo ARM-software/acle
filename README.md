@@ -25,7 +25,7 @@ specification after each reviewed change merges into branch `main`. This
 process gives users earlier access to new features, clarifications, and
 corrections.
 
-The PDF version of the documents can be retrieved from the
+The PDF versions of the documents can be retrieved from the
 [releases](https://github.com/ARM-software/acle/releases) page.
 
 Branch `main` contains the current ACLE specification and ongoing development.
@@ -86,13 +86,13 @@ The [list below](#contributors) represents the list of people that
 have been contributing since July 2021, when the ACLE specifications
 were released with an open source license.
 
-However, the ACLE is a collective project that was started few years
+However, the ACLE is a collective project that was started a few years
 ago, and that since then has seen the contribution of many people
 before it was released as an open source project.
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/en/reference/emoji-key/)):
+Thanks go to these wonderful people ([emoji key](https://allcontributors.org/en/reference/emoji-key/)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
