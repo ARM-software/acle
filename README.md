@@ -58,11 +58,11 @@ an email to arm.acle@arm.com.
 
 HTML version                                                                                                  | PDF version
 ---                                                                                                           | ---
-[Arm C Language Extensions](https://arm-software.github.io/acle/main/)                                        | [download](https://github.com/ARM-software/acle/releases/latest)
-[Morello Supplement to the Arm C Language Extensions](https://arm-software.github.io/acle/morello/)           | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm MVE Intrinsics](https://arm-software.github.io/acle/mve_intrinsics/)                                     | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm Neon Intrinsics Reference](https://arm-software.github.io/acle/neon_intrinsics/)                         | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm®v8-M Security Extensions - Requirements on Development Tools](https://arm-software.github.io/acle/cmse/) | [download](https://github.com/ARM-software/acle/releases/latest)
+[Arm C Language Extensions](https://arm-software.github.io/acle/main/)                                        | [download](https://github.com/ARM-software/acle/releases/download/main-{{ site.commithash }}/acle-{{ site.commithash | slice: 0, 7 }}.pdf)
+[Morello Supplement to the Arm C Language Extensions](https://arm-software.github.io/acle/morello/)           | [download](https://github.com/ARM-software/acle/releases/download/main-{{ site.commithash }}/morello-{{ site.commithash | slice: 0, 7 }}.pdf)
+[Arm MVE Intrinsics](https://arm-software.github.io/acle/mve_intrinsics/)                                     | [download](https://github.com/ARM-software/acle/releases/download/main-{{ site.commithash }}/mve-{{ site.commithash | slice: 0, 7 }}.pdf)
+[Arm Neon Intrinsics Reference](https://arm-software.github.io/acle/neon_intrinsics/)                         | [download](https://github.com/ARM-software/acle/releases/download/main-{{ site.commithash }}/advsimd-{{ site.commithash | slice: 0, 7 }}.pdf)
+[Arm®v8-M Security Extensions - Requirements on Development Tools](https://arm-software.github.io/acle/cmse/) | [download](https://github.com/ARM-software/acle/releases/download/main-{{ site.commithash }}/cmse-{{ site.commithash | slice: 0, 7 }}.pdf)
 
 # License
 

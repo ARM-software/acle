@@ -73,7 +73,7 @@ jobs:
         path: pdfs
     - name: Derive short commit hash
       id: vars
-      run: echo "short_sha=${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+      run: echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
     - name: Create tag with PDFs
       uses: softprops/action-gh-release@v2
       with:
