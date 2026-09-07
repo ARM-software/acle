@@ -111,7 +111,7 @@ jobs:
     - name: Build GitHub Pages site
       run: ./tools/build-github-pages.sh build --finalversion
     - name: Upload GitHub Pages artifact
-      uses: actions/upload-pages-artifact@v4
+      uses: actions/upload-pages-artifact@v5
       with:
         path: _site
 
