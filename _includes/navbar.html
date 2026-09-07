@@ -18,9 +18,9 @@
   <span id="right-side">
     {% assign hash = site.commithash | default: site.github.build_revision %}
     {% if hash %}
-      {% assign short_hash = hash | slice: 0, 12 %}
+      {% assign short_hash = hash | slice: 0, 7 %}
       {% if site.finalversion %}
-        Version: <a id="link_finalversion" href="https://github.com/ARM-software/acle/commit/{{ hash }}">{{ hash }}</a> &nbsp;:::&nbsp;
+        Version: <a id="link_finalversion" href="https://github.com/ARM-software/acle/commit/{{ hash }}">{{ short_hash }}</a> &nbsp;:::&nbsp;
       {% elsif site.cleanrepo %}
         Version: <span class="dev_version">Dev version (<a id="link_devversion" href="https://github.com/ARM-software/acle/commit/{{ hash }}">{{ short_hash }}</a>)</span> &nbsp;:::&nbsp;
       {% else %}

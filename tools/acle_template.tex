@@ -28,6 +28,7 @@
 \usepackage{graphicx}
 \usepackage[$if(landscape)$landscape,$endif$top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm]{geometry}
 \usepackage{lastpage}
+\usepackage{xstring}
 
 % Add extra space to table rows
 \renewcommand{\arraystretch}{2}
@@ -37,14 +38,16 @@
   \patchcmd{\footrule}{\hrule}{\color{darkgray}\hrule}{}{}
 \makeatother
 
+\StrLeft{$commithash$}{7}[\GitHashShort]
+
 \sectionfont{\color{armblue}}
 $if(finalversion)$
-  \newcommand{\versiontext}{\href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}}
+  \newcommand{\versiontext}{\href{https://github.com/ARM-software/acle/commit/$commithash$}{\GitHashShort}}
 $else$
   $if(cleanrepo)$
-    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}}}
+    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{\GitHashShort}}}
   $else$
-    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{$commithash$}, with modifications}}
+    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{\GitHashShort}, with modifications}}
   $endif$
 $endif$
 \newcommand{\dateofissue}{$date-of-issue$}

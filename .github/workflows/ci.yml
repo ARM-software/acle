@@ -23,7 +23,7 @@ jobs:
       run: ./build_with_docker.sh --finalversion
     - name: Derive short commit hash
       id: vars
-      run: echo "short_sha=${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+      run: echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
     - name: Rename PDFs with commit hash
       run: |
         mv pdfs/acle.pdf "pdfs/acle-${{ steps.vars.outputs.short_sha }}.pdf"
@@ -76,7 +76,7 @@ jobs:
         path: pdfs
     - name: Derive short commit hash
       id: vars
-      run: echo "short_sha=${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+      run: echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
     - name: Delete previous Latest release (if any)
       env:
         GH_TOKEN: ${{ github.token }}
