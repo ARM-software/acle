@@ -3102,33 +3102,33 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SMEver >= 0b0001```    |
    | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
    | `FEAT_CSSC`              | cssc          | ```ID_AA64ISAR2_EL1.CSSC >= 0b0001```     |
+   | `FEAT_GCS`               | gcs           | ```ID_AA64PFR1_EL1.GCS >= 0b0001```       |
+   | `FEAT_D128`              | d128          | ```ID_AA64MMFR3_EL1.D128 >= 0b0001```     |
    | `FEAT_FP8`               | fp8           | ```ID_AA64FPFR0_EL1.F8CVT == 0b1```       |
    | `FEAT_F8F32MM`           | f8f32mm       | ```ID_AA64FPFR0_EL1.F8MM8 == 0b1```       |
    | `FEAT_FP8DOT4`           | fp8dot4       | ```ID_AA64FPFR0_EL1.F8DP4 == 0b1```       |
    | `FEAT_FP8DOT2`           | fp8dot2       | ```ID_AA64FPFR0_EL1.F8DP2 == 0b1```       |
    | `FEAT_FP8FMA`            | fp8fma        | ```ID_AA64FPFR0_EL1.F8FMA == 0b1```       |
-   | `FEAT_SME_F8F32`         | sme-f8f32     | ```ID_AA64SMFR0_EL1.F8F32 == 0b1```       |
-   | `FEAT_SSVE_FP8DOT4`      | ssve-fp8dot4  | ```ID_AA64SMFR0_EL1.SF8DP4 == 0b1```      |
-   | `FEAT_SSVE_FP8FMA`       | ssve-fp8fma   | ```ID_AA64SMFR0_EL1.SF8FMA == 0b1```      |
-   | `FEAT_SSVE_BitPerm`      | ssve-bitperm  | ```ID_AA64SMFR0_EL1.SBitPerm == 0b1```    |
-   | `FEAT_SSVE_FP8DOT2`      | ssve-fp8dot2  | ```ID_AA64SMFR0_EL1.SF8DP2 == 0b1```      |
-   | `FEAT_SSVE_AES`          | ssve-aes      | ```ID_AA64SMFR0_EL1.AES == 0b1```         |
-   | `FEAT_SSVE_FEXPA`        | ssve-fexpa    | ```ID_AA64SMFR0_EL1.SFEXPA == 0b1```      |
    | `FEAT_LUT`               | lut           | ```ID_AA64ISAR2_EL1.LUT >= 0b0001```      |
    | `FEAT_FAMINMAX`          | faminmax      | ```ID_AA64ISAR3_EL1.FAMINMAX >= 0b0001``` |
-   | `FEAT_SME_LUTv2`         | sme-lutv2     | ```ID_AA64SMFR0_EL1.LUTv2 == 0b1```       |
-   | `FEAT_SME2p1`            | sme2p1        | ```ID_AA64PFR1_EL1.SME >= 0b0001 && ID_AA64SMFR0_EL1.SMEver >= 0b0010```|
-   | `FEAT_SME2p2`            | sme2p2        | ```ID_AA64PFR1_EL1.SME >= 0b0001 && ID_AA64SMFR0_EL1.SMEver >= 0b0011```|
+   | `FEAT_F8F16MM`           | f8f16mm       | ```ID_AA64FPFR0_EL1.F8MM4 == 0b1```       |
    | `FEAT_SVE2p1`            | sve2p1        | ```ID_AA64PFR0_EL1.SVE >= 0b0001 && ID_AA64ZFR0_EL1.SVEver >= 0b0010```|
    | `FEAT_SVE2p2`            | sve2p2        | ```ID_AA64PFR0_EL1.SVE >= 0b0001 && ID_AA64ZFR0_EL1.SVEver >= 0b0011```|
-   | `FEAT_SME_F16F16`        | sme-f16f16    | ```ID_AA64SMFR0_EL1.F16F16 == 0b1```      |
-   | `FEAT_GCS`               | gcs           | ```ID_AA64PFR1_EL1.GCS >= 0b0001```       |
-   | `FEAT_D128`              | d128          | ```ID_AA64MMFR3_EL1.D128 >= 0b0001```     |
-   | `FEAT_SME_F8F16`         | sme-f8f16     | ```ID_AA64SMFR0_EL1.F8F16 == 0b1```       |
-   | `FEAT_F8F16MM`           | f8f16mm       | ```ID_AA64FPFR0_EL1.F8MM4 == 0b1```       |
    | `FEAT_SVE_AES2`          | sve-aes2      | ```ID_AA64ZFR0_EL1.AES >= 0b0011```       |
    | `FEAT_SVE_BFSCALE`       | sve-bfscale   | ```ID_AA64ZFR0_EL1.B16B16 >= 0b0010```    |
    | `FEAT_SVE_F16F32MM`      | sve-f16f32mm  | ```ID_AA64ZFR0_EL1.F16MM >= 0b0001```     |
+   | `FEAT_SSVE_FP8DOT4`      | ssve-fp8dot4  | ```ID_AA64SMFR0_EL1.SF8DP4 == 0b1```      |
+   | `FEAT_SSVE_FP8DOT2`      | ssve-fp8dot2  | ```ID_AA64SMFR0_EL1.SF8DP2 == 0b1```      |
+   | `FEAT_SSVE_FP8FMA`       | ssve-fp8fma   | ```ID_AA64SMFR0_EL1.SF8FMA == 0b1```      |
+   | `FEAT_SSVE_BitPerm`      | ssve-bitperm  | ```ID_AA64SMFR0_EL1.SBitPerm == 0b1```    |
+   | `FEAT_SSVE_AES`          | ssve-aes      | ```ID_AA64SMFR0_EL1.AES == 0b1```         |
+   | `FEAT_SSVE_FEXPA`        | ssve-fexpa    | ```ID_AA64SMFR0_EL1.SFEXPA == 0b1```      |
+   | `FEAT_SME_F8F32`         | sme-f8f32     | ```ID_AA64SMFR0_EL1.F8F32 == 0b1```       |
+   | `FEAT_SME_LUTv2`         | sme-lutv2     | ```ID_AA64SMFR0_EL1.LUTv2 == 0b1```       |
+   | `FEAT_SME2p1`            | sme2p1        | ```ID_AA64PFR1_EL1.SME >= 0b0001 && ID_AA64SMFR0_EL1.SMEver >= 0b0010```|
+   | `FEAT_SME2p2`            | sme2p2        | ```ID_AA64PFR1_EL1.SME >= 0b0001 && ID_AA64SMFR0_EL1.SMEver >= 0b0011```|
+   | `FEAT_SME_F16F16`        | sme-f16f16    | ```ID_AA64SMFR0_EL1.F16F16 == 0b1```      |
+   | `FEAT_SME_F8F16`         | sme-f8f16     | ```ID_AA64SMFR0_EL1.F8F16 == 0b1```       |
    | `FEAT_SME_MOP4`          | sme-mop4      | ```ID_AA64SMFR0_EL1.SMOP4 == 0b1```       |
 
 The tables are sorted by priority, starting from features of lowest priority ending with features of highest priority.
@@ -3197,33 +3197,33 @@ unless otherwise specified.
    | rdma          | **202410**                |
    | mops          | 202410                    |
    | cssc          | **202520**                |
-   | fp8           | **202690**                |
+   | gcs           | **202690**                |
+   | d128          | 202690                    |
+   | fp8           | 202690                    |
    | f8f32mm       | 202690                    |
    | fp8dot4       | 202690                    |
+   | fp8dot2       | 202690                    |
    | fp8fma        | 202690                    |
-   | sme-f8f32     | 202690                    |
-   | ssve-fp8dot4  | 202690                    |
-   | ssve-fp8fma   | 202690                    |
-   | ssve-bitperm  | 202690                    |
-   | ssve-fp8dot2  | 202690                    |
-   | ssve-aes      | 202690                    |
-   | ssve-fexpa    | 202690                    |
    | lut           | 202690                    |
    | faminmax      | 202690                    |
-   | sme-lutv2     | 202690                    |
-   | sme2p1        | 202690                    |
-   | sme2p2        | 202690                    |
+   | f8f16mm       | 202690                    |
    | sve2p1        | 202690                    |
    | sve2p2        | 202690                    |
-   | sme-f16f16    | 202690                    |
-   | gcs           | 202690                    |
-   | d128          | 202690                    |
-   | fp8dot2       | 202690                    |
-   | sme-f8f16     | 202690                    |
-   | f8f16mm       | 202690                    |
    | sve-aes2      | 202690                    |
    | sve-bfscale   | 202690                    |
    | sve-f16f32mm  | 202690                    |
+   | ssve-fp8dot4  | 202690                    |
+   | ssve-fp8dot2  | 202690                    |
+   | ssve-fp8fma   | 202690                    |
+   | ssve-bitperm  | 202690                    |
+   | ssve-aes      | 202690                    |
+   | ssve-fexpa    | 202690                    |
+   | sme-f8f32     | 202690                    |
+   | sme-lutv2     | 202690                    |
+   | sme2p1        | 202690                    |
+   | sme2p2        | 202690                    |
+   | sme-f16f16    | 202690                    |
+   | sme-f8f16     | 202690                    |
    | sme-mop4      | 202690                    |
 
 ### Dependencies
@@ -3270,30 +3270,30 @@ The following table lists the feature dependencies for AArch64.
    | sme-f64f64       | sme               |
    | sme-i16i64       | sme               |
    | sme2             | sme               |
+   | d128             | lse               |
    | fp8              | simd              |
    | f8f32mm          | simd, fp8         |
    | fp8dot4          | fp8               |
+   | fp8dot2          | fp8               |
    | fp8fma           | fp8               |
-   | sme-f8f32        | sme2, fp8         |
-   | ssve-fp8dot4     | sme2, fp8         |
-   | ssve-fp8fma      | sme2, fp8         |
-   | ssve-bitperm     | sme2              |
-   | ssve-fp8dot2     | sme2, fp8         |
-   | ssve-aes         | sme2, aes         |
-   | ssve-fexpa       | sme2              |
    | lut              | simd              |
    | faminmax         | simd              |
+   | f8f16mm          | simd, fp8         |
+   | sve2p1           | sve2              |
+   | sve2p2           | sve2p1            |
+   | sve-f16f32mm     | sve               |
+   | ssve-fp8dot4     | sme2, fp8         |
+   | ssve-fp8dot2     | sme2, fp8         |
+   | ssve-fp8fma      | sme2, fp8         |
+   | ssve-bitperm     | sme2              |
+   | ssve-aes         | sme2, aes         |
+   | ssve-fexpa       | sme2              |
+   | sme-f8f32        | sme2, fp8         |
    | sme-lutv2        | sme2              |
    | sme2p1           | sme2              |
    | sme2p2           | sme2p1            |
-   | sve2p1           | sve2              |
-   | sve2p2           | sve2p1            |
    | sme-f16f16       | sme2              |
-   | d128             | lse               |
-   | fp8dot2          | fp8               |
    | sme-f8f16        | sme2, fp8         |
-   | f8f16mm          | simd, fp8         |
-   | sve-f16f32mm     | sve               |
    | sme-mop4         | sme2              |
 
 ### Selection
