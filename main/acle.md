@@ -5136,8 +5136,8 @@ target. The following hint values are defined:
 
 | **Hint**         | **Value** | **Feature**                | **Summary**                                                                       |
 | ---------------- | --------- | -------------------------- | --------------------------------------------------------------------------------- |
-| HINT_SHUH        | 0         | `__ARM_FEATURE_CMH`        | Informs that the next instruction generates an effect in a location that one or more other threads of execution are likely to subsequently update. |
-| HINT_SHUH_PH     | 1         | `__ARM_FEATURE_CMH`        | PH adds the effects of STCPH to SHUH. |
+| HINT_SHUH        | 3         | `__ARM_FEATURE_CMH`        | Informs that the next instruction generates an effect in a location that one or more other threads of execution are likely to subsequently update. |
+| HINT_SHUH_PH     | 4         | `__ARM_FEATURE_CMH`        | PH adds the effects of STCPH to SHUH. |
 
 # Custom Datapath Extension
 
