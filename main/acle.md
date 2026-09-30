@@ -3103,8 +3103,7 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
    | `FEAT_CSSC`              | cssc          | ```ID_AA64ISAR2_EL1.CSSC >= 0b0001```     |
    | `FEAT_GCS`               | gcs           | ```ID_AA64PFR1_EL1.GCS >= 0b0001```       |
-   | `FEAT_D128`              | d128          | ```ID_AA64MMFR3_EL1.D128 >= 0b0001```     |
-   | `FEAT_FP8`               | fp8           | ```ID_AA64FPFR0_EL1.F8CVT == 0b1```       |
+   | `FEAT_FP8`               | fp8           | ```ID_AA64FPFR0_EL1.F8CVT == 0b1 && ID_AA64FPFR0_EL1.F8E4M3 == 0b1 && ID_AA64FPFR0_EL1.F8E5M2 == 0b1```       |
    | `FEAT_F8F32MM`           | f8f32mm       | ```ID_AA64FPFR0_EL1.F8MM8 == 0b1```       |
    | `FEAT_FP8DOT4`           | fp8dot4       | ```ID_AA64FPFR0_EL1.F8DP4 == 0b1```       |
    | `FEAT_FP8DOT2`           | fp8dot2       | ```ID_AA64FPFR0_EL1.F8DP2 == 0b1```       |
@@ -3198,7 +3197,6 @@ unless otherwise specified.
    | mops          | 202410                    |
    | cssc          | **202520**                |
    | gcs           | **202690**                |
-   | d128          | 202690                    |
    | fp8           | 202690                    |
    | f8f32mm       | 202690                    |
    | fp8dot4       | 202690                    |
@@ -3270,7 +3268,6 @@ The following table lists the feature dependencies for AArch64.
    | sme-f64f64       | sme               |
    | sme-i16i64       | sme               |
    | sme2             | sme               |
-   | d128             | lse               |
    | fp8              | simd              |
    | f8f32mm          | simd, fp8         |
    | fp8dot4          | fp8               |
