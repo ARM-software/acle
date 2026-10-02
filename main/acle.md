@@ -1118,6 +1118,8 @@ to be included, if the header files are available:
 `<arm_sve.h>` defines data types and intrinsics for SVE and its
 extensions; see [SVE language extensions and
 intrinsics](#sve-language-extensions-and-intrinsics) for details.
+It also defines intrinsics for SME features that do not access ZA or ZT0.
+
 When `__ARM_FEATURE_SVE` is defined to `1`, the header file is available
 regardless of the context in which the macro is evaluated.
 
@@ -1179,8 +1181,10 @@ The specification for SME is in
 [**Beta** state](#support-levels) and may
 change or be extended in the future.
 
-`<arm_sme.h>` declares functions and defines intrinsics for SME
-and its extensions; see [SME language extensions and intrinsics](#sme-language-extensions-and-intrinsics)
+`<arm_sme.h>` defines SME intrinsics that access ZA or ZT0, and declares SME
+support functions and streaming vector length intrinsics. Include it to use
+these intrinsics and functions; see
+[SME language extensions and intrinsics](#sme-language-extensions-and-intrinsics)
 for details. When `__ARM_FEATURE_SME` is defined to `1`, the header file is
 available regardless of the context in which the macro is evaluated.
 
@@ -1191,6 +1195,8 @@ available regardless of the context in which the macro is evaluated.
 ```
 
 Including `<arm_sme.h>` also includes [`<arm_sve.h>`](#arm_sve.h).
+This means that including `<arm_sme.h>` makes the intrinsics defined
+in either header file available.
 
 ### Predefined feature macros and header files
 
@@ -9791,8 +9797,8 @@ The specification for SVE2.1 is in
 [**Beta** state](#support-levels) and might change or be
 extended in the future.
 
-The functions in this section are defined by the header file
- [`<arm_sve.h>`](#arm_sve.h) when `__ARM_FEATURE_SVE2p1` is defined.
+The functions in this section are available when `__ARM_FEATURE_SVE2p1`
+is defined.
 
 Some instructions overlap with the SME and SME2 architecture extensions and
 are additionally available in Streaming SVE mode when __ARM_FEATURE_SME is
@@ -9802,8 +9808,8 @@ For convenience, the intrinsics for these instructions  are listed in the
 
 #### Multi-vector predicates
 
-When `__ARM_FEATURE_SVE2p1` is defined, [`<arm_sve.h>`](#arm_sve.h) defines the
-tuple types `svboolx2_t` and `svboolx4_t`.
+When `__ARM_FEATURE_SVE2p1` is defined, the tuple types `svboolx2_t` and
+`svboolx4_t` are available.
 
 These are opaque tuple types that can be accessed using the SVE intrinsics
 `svsetN`, `svgetN` and `svcreateN`. `svundef2` and `svundef4` are also extended
@@ -10058,10 +10064,9 @@ Interleave elements from halves of each pair of quadword vector segments.
 
 ### SVE2 maximum and minimum absolute value
 
-The intrinsics in this section are defined by the header file
-[`<arm_sve.h>`](#arm_sve.h) when either `__ARM_FEATURE_SVE2` or
-`__ARM_FEATURE_SME2` is defined to 1, and `__ARM_FEATURE_FAMINMAX`
-is defined to 1.
+The intrinsics in this section are available when either
+`__ARM_FEATURE_SVE2` or `__ARM_FEATURE_SME2` is defined to 1, and
+`__ARM_FEATURE_FAMINMAX` is defined to 1.
 
 #### FAMAX
 
@@ -10095,10 +10100,9 @@ Floating-point absolute minimum (predicated).
 
 ### SVE2 lookup table
 
-The intrinsics in this section are defined by the header file
-[`<arm_sve.h>`](#arm_sve.h) when either `__ARM_FEATURE_SVE2` or
-`__ARM_FEATURE_SME2` is defined to 1, and `__ARM_FEATURE_LUT`
-is defined to 1.
+The intrinsics in this section are available when either
+`__ARM_FEATURE_SVE2` or `__ARM_FEATURE_SME2` is defined to 1, and
+`__ARM_FEATURE_LUT` is defined to 1.
 
 #### LUTI2
 
@@ -10125,8 +10129,8 @@ Lookup table read with 4-bit indices.
 
 ### SVE2.3 lookup table
 
-The intrinsics in this section are defined by the header file
-[`<arm_sve.h>`](#arm_sve.h) when `__ARM_FEATURE_SVE2p3` is defined to 1.
+The intrinsics in this section are available when `__ARM_FEATURE_SVE2p3`
+is defined to 1.
 
 #### LUTI6
 
@@ -10953,8 +10957,8 @@ multiple predicate registers with `K` `true` values followed by all `false`
 values, or `K` `false` values followed by all `true` values, for a given element
 type.
 
-When `__ARM_FEATURE_SME2` is defined,  [`<arm_sme.h>`](#arm_sme.h)  defines a
-single sizeless predicate-as-counter type named `svcount_t`.
+When `__ARM_FEATURE_SME2` is defined, a single sizeless
+predicate-as-counter type named `svcount_t` is available.
 
 `svcount_t` and `svbool_t` are both used to represent predicate masks, but
 they cannot be used interchangeably.
@@ -10967,8 +10971,8 @@ functions should be used.
 
 ### Multi-vector predicates
 
-When `__ARM_FEATURE_SME2` is defined, [`<arm_sme.h>`](#arm_sme.h) defines the
-tuple types `svboolx2_t` and `svboolx4_t`.
+When `__ARM_FEATURE_SME2` is defined, the tuple types `svboolx2_t` and
+`svboolx4_t` are available.
 
 These are opaque tuple types that can be accessed using the SVE intrinsics
 `svsetN`, `svgetN` and `svcreateN`. `svundef2` and `svundef4` are also extended
@@ -10983,8 +10987,8 @@ to work with `svboolx2_t` and `svboolx4_t`. For example:
 
 ## SME functions and intrinsics
 
-[`<arm_sme.h>`](#arm_sme.h) declares various support functions and
-defines various intrinsics. The support functions have
+This section describes various support functions and intrinsics. The support
+functions have
 [external linkage](#external-linkage), like standard C functions such
 as `memcpy` do. However, as noted in [Intrinsics](#intrinsics), it is
 unspecified whether the intrinsics are functions and, if so, what
@@ -11586,8 +11590,8 @@ possible to write these operations using normal C arithmetic. For example:
 
 ### SME2 instruction intrinsics
 
-The intrinsics in this section are defined by the header file
-[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` is defined.
+The intrinsics in this section are available when `__ARM_FEATURE_SME2`
+is defined.
 
 #### ADD, SUB (store into ZA, single)
 
@@ -13255,8 +13259,8 @@ The specification for SME2.1 is in
 [**Beta** state](#support-levels) and might change or
 be extended in the future.
 
-The intrinsics in this section are defined by the header file
-[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p1` is defined.
+The intrinsics in this section are available when `__ARM_FEATURE_SME2p1`
+is defined.
 
 #### MOVAZ (tile to vector, single)
 
@@ -13400,8 +13404,8 @@ The specification for SME2.2 are in
 [**Beta** state](#support-levels) and might change or be
 extended in the future.
 
-The intrinsics in this section are defined by the header file
-[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p2` is defined.
+The intrinsics in this section are available when `__ARM_FEATURE_SME2p2`
+is defined.
 
 #### FMUL
 
@@ -13455,9 +13459,8 @@ The specification for SVE2.1 is in
 [**Beta** state](#support-levels) and might change or be
 extended in the future.
 
-The functions in this section are defined by either the header file
- [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
-when `__ARM_FEATURE_SVE2p1` or `__ARM_FEATURE_SME2` is defined, respectively.
+The functions in this section are available when `__ARM_FEATURE_SVE2p1`
+or `__ARM_FEATURE_SME2` is defined.
 
 These intrinsics can only be called from non-streaming code if
 `__ARM_FEATURE_SVE2p1` is defined. They can only be called from streaming code
@@ -13988,9 +13991,8 @@ The specification for SVE2.2 and SME2.2 are in
 [**Beta** state](#support-levels) and might change or be
 extended in the future.
 
-The functions in this section are defined by either the header file
- [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
-when `__ARM_FEATURE_SVE2p2` or `__ARM_FEATURE_SME2p2` is defined, respectively.
+The functions in this section are available when `__ARM_FEATURE_SVE2p2`
+or `__ARM_FEATURE_SME2p2` is defined.
 
 #### FCVTXNT, FCVTLT, FCVTNT, BFCVTNT
 
@@ -14080,9 +14082,8 @@ The specification for SVE2.3 and SME2.3 are in
 [**Alpha** state](#support-levels) and might change or be
 extended in the future.
 
-The functions in this section are defined by either the header file
- [`<arm_sve.h>`](#arm_sve.h) or [`<arm_sme.h>`](#arm_sme.h)
-when `__ARM_FEATURE_SVE2p3` or `__ARM_FEATURE_SME2p3` is defined, respectively.
+The functions in this section are available when `__ARM_FEATURE_SVE2p3`
+or `__ARM_FEATURE_SME2p3` is defined.
 
 #### ADDQP
 
@@ -14178,9 +14179,8 @@ Subtract pairwise.
 
 ### SME2 maximum and minimum absolute value
 
-The intrinsics in this section are defined by the header file
-[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` is defined to 1
-and `__ARM_FEATURE_FAMINMAX` is defined to 1.
+The intrinsics in this section are available when `__ARM_FEATURE_SME2`
+and `__ARM_FEATURE_FAMINMAX` are both defined to 1.
 
 #### FAMAX
 
@@ -14204,8 +14204,8 @@ Absolute minimum.
 
 ### SME2 lookup table
 
-The intrinsics in this section are defined by the header file
-[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME_LUTv2` is defined to 1.
+The intrinsics in this section are available when
+`__ARM_FEATURE_SME_LUTv2` is defined to 1.
 
 #### MOVT
 
@@ -14232,10 +14232,9 @@ Lookup table read with 4-bit indexes and 8-bit elements.
 
 ### SVE2 and SME2 modal 8-bit floating-point intrinsics
 
-The intrinsics in this section are defined by the header file
-[`<arm_sve.h>`](#arm_sve.h) when `__ARM_FEATURE_FP8` is defined,
-and `__ARM_FEATURE_SVE2` or `__ARM_FEATURE_SME2` is defined. Individual
-intrinsics may have additional target feature requirements.
+The intrinsics in this section are available when `__ARM_FEATURE_FP8`
+is defined, and `__ARM_FEATURE_SVE2` or `__ARM_FEATURE_SME2` is defined.
+Individual intrinsics may have additional target feature requirements.
 
 #### BF1CVT, BF2CVT, F1CVT, F2CVT
 
@@ -14418,8 +14417,7 @@ Single-precision convert, narrow, and interleave to 8-bit floating-point (top an
 
 ### SME2 modal 8-bit floating-point intrinsics
 
-The intrinsics in this section are defined by the header file
-[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` and
+The intrinsics in this section are available when `__ARM_FEATURE_SME2` and
 `__ARM_FEATURE_FP8` are defined. Individual intrinsics may have
 additional target feature requirements.
 
@@ -14612,8 +14610,7 @@ Multi-vector 8-bit floating-point multiply-add long.
 
 ### SME2 mop4 intrinsics
 
-The intrinsics in this section are defined by the header file
-[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2` and
+The intrinsics in this section are available when `__ARM_FEATURE_SME2` and
 `__ARM_FEATURE_SME_MOP4` are defined. Individual intrinsics may have
 additional target feature requirements.
 
@@ -14902,8 +14899,8 @@ non-overloaded names to indicate which vector argument is a vector register pair
 
 ### SME2.3 lookup table
 
-The intrinsics in this section are defined by the header file
-[`<arm_sme.h>`](#arm_sme.h) when `__ARM_FEATURE_SME2p3` is defined to 1.
+The intrinsics in this section are available when `__ARM_FEATURE_SME2p3`
+is defined to 1.
 
 #### LUTI6
 
