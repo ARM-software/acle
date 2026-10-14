@@ -2145,7 +2145,7 @@ of half-precision brain floating-point types.
 #### Non-widening brain 16-bit floating-point support
 
 The specification for B16B16 is in
-[**Alpha** state](#support-levels) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_B16B16` is defined to `1` if there is hardware support
@@ -2540,8 +2540,8 @@ available. This implies that `__ARM_FEATURE_SME` is nonzero.
 
 #### Structured sparsity outer product intrinsics
 
-The specification for SME is in
-[**Alpha** state](#support-levels) and may change or be
+The specification for Structured sparsity outer product intrinsics
+is in [**Beta** state](#support-levels) and may change or be
 extended in the future.
 
 `__ARM_FEATURE_SME_TMOP` is defined to `1` if there is hardware
@@ -9687,7 +9687,7 @@ when move instructions are required.
 ### SVE2 BFloat16 data-processing instructions.
 
 The specification for B16B16 is in
-[**Alpha** state](#support-levels) and might change or be
+[**Beta** state](#support-levels) and might change or be
 extended in the future.
 
 The instructions in this section are available when `__ARM_FEATURE_SVE_B16B16`
