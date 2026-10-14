@@ -3092,7 +3092,7 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_SVE`               | sve           | ```ID_AA64PFR0_EL1.SVE >= 0b0001```       |
    | `FEAT_F32MM`             | f32mm         | ```ID_AA64ZFR0_EL1.F32MM >= 0b00001```    |
    | `FEAT_F64MM`             | f64mm         | ```ID_AA64ZFR0_EL1.F64MM >= 0b00001```    |
-   | `FEAT_SVE2`              | sve2          | ```ID_AA64ZFR0_EL1.SVEver >= 0b0001```    |
+   | `FEAT_SVE2`              | sve2          | ```ID_AA64PFR0_EL1.SVE >= 0b0001 && ID_AA64ZFR0_EL1.SVEver >= 0b0001```|
    | `FEAT_SVE_AES`, <br> `FEAT_SVE_PMULL128` | sve2-aes | ```ID_AA64ZFR0_EL1.AES >= 0b0010``` |
    | `FEAT_SVE_BitPerm`       | sve2-bitperm  | ```ID_AA64ZFR0_EL1.BitPerm >= 0b0001```   |
    | `FEAT_SVE_SHA3`          | sve2-sha3     | ```ID_AA64ZFR0_EL1.SHA3 >= 0b0001```      |
@@ -3105,7 +3105,7 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_WFxT`              | wfxt          | ```ID_AA64ISAR2_EL1.WFxT >= 0b0010```     |
    | `FEAT_SME_F64F64`        | sme-f64f64    | ```ID_AA64SMFR0_EL1.F64F64 == 0b1```      |
    | `FEAT_SME_I16I64`        | sme-i16i64    | ```ID_AA64SMFR0_EL1.I16I64 == 0b1111```   |
-   | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SMEver >= 0b0001```    |
+   | `FEAT_SME2`              | sme2          | ```ID_AA64PFR1_EL1.SME >= 0b0001 && ID_AA64SMFR0_EL1.SMEver >= 0b0001```|
    | `FEAT_MOPS`              | mops          | ```ID_AA64ISAR2_EL1.MOPS >= 0b0001```     |
    | `FEAT_CSSC`              | cssc          | ```ID_AA64ISAR2_EL1.CSSC >= 0b0001```     |
    | `FEAT_GCS`               | gcs           | ```ID_AA64PFR1_EL1.GCS >= 0b0001```       |
