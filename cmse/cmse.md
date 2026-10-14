@@ -1,18 +1,16 @@
 ---
 title: Arm®v8-M Security Extensions <br /> Requirements on Development Tools
-version: 1.4
 date-of-issue: 21 June 2024
 set-quote-highlight: true
 # LaTeX specific variables
-copyright-text: Copyright 2019, 2021-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>.
-draftversion: true
+copyright-text: Copyright 2019, 2021-2024, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>.
 # Jekyll specific variables
 header_counter: true
 toc: true
 ---
 
 <!--
-SPDX-FileCopyrightText: Copyright 2019, 2021-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2019, 2021-2024, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -106,7 +104,7 @@ retain the copyright.
 
 The text of and illustrations in this document are licensed by Arm
 under a Creative Commons Attribution–Share Alike 4.0 International
-license ("CC-BY-SA-4.0”), with an additional clause on patents.
+license ("CC-BY-SA-4.0"), with an additional clause on patents.
 The Arm trademarks featured here are registered trademarks or
 trademarks of Arm Limited (or its subsidiaries) in the US and/or
 elsewhere. All rights reserved. Please visit

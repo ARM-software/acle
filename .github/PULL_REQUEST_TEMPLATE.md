@@ -4,7 +4,7 @@ about: Technical issues, document format problems, bugs in scripts or feature pr
 
 ---
 
-<!-- SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
+<!-- SPDX-FileCopyrightText: Copyright 2021-2022, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com> -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 **Thank you for submitting a pull request!**
@@ -50,17 +50,14 @@ Checklist: (mark with ``X`` those which apply)
       patch will be automatically checked in the Actions of the pull
       request.
 * [ ] I have added an item that describes the changes I have
-      introduced in this PR in the section **Changes for next
-      release** of the section **Change Control**/**Document history**
-      of the document. Create **Changes for next release** if it does
-      not exist. Notice that changes that are not modifying the
-      content and rendering of the specifications (both HTML and PDF)
-      do not need to be listed.
+      introduced in this PR in section **Changelog for year 20xx** (this year)
+      of section **Preface**/**About this document**.
+      Create **Changelog for year 20xx** if it does not exist. Notice that
+      changes that are not modifying the content and rendering of the
+      specifications (both HTML and PDF) do not need to be listed.
 * [ ] When modifying content and/or its rendering, I have checked the
       correctness of the result in the PDF output (please refer to the
       instructions on [how to build the PDFs
       locally](https://github.com/ARM-software/acle/blob/main/CONTRIBUTING.md#continuous-integration)).
-* [ ] The variable `draftversion` is set to `true` in the YAML header
-      of the sources of the specifications I have modified.
 * [ ] Please *DO NOT* add my GitHub profile to the list of contributors
       in the [README](https://github.com/ARM-software/acle/blob/main/README.md#contributors-) page of the project.

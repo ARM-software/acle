@@ -1,5 +1,5 @@
 % Copyright (c) 2014--2021, John MacFarlane
-% SPDX-FileCopyrightText: Copyright 2021-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+% SPDX-FileCopyrightText: Copyright 2021-2022, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 % SPDX-License-Identifier: BSD-3-Clause
 % Based on default.latex template released with Pandoc (www.pandoc.org).
 % See `data/templates` in `COPYRIGHT` at https://github.com/jgm/pandoc
@@ -28,6 +28,7 @@
 \usepackage{graphicx}
 \usepackage[$if(landscape)$landscape,$endif$top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm]{geometry}
 \usepackage{lastpage}
+\usepackage{xstring}
 
 % Add extra space to table rows
 \renewcommand{\arraystretch}{2}
@@ -37,13 +38,19 @@
   \patchcmd{\footrule}{\hrule}{\color{darkgray}\hrule}{}{}
 \makeatother
 
+\StrLeft{$commithash$}{7}[\GitHashShort]
+
 \sectionfont{\color{armblue}}
-$if(draftversion)$
-\newcommand{\versiontext}{\textcolor{red}{Development version based on $version$}}
+$if(finalversion)$
+  \newcommand{\versiontext}{\href{https://github.com/ARM-software/acle/commit/$commithash$}{\GitHashShort}}
 $else$
-\newcommand{\versiontext}{$version$}
+  $if(cleanrepo)$
+    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{\GitHashShort}}}
+  $else$
+    \newcommand{\versiontext}{\textcolor{red}{Development version based on \href{https://github.com/ARM-software/acle/commit/$commithash$}{\GitHashShort}, with modifications}}
+  $endif$
 $endif$
-\newcommand{\dateofissue}{$if(draftversion)$TBD$else$$date-of-issue$$endif$}
+\newcommand{\dateofissue}{$date-of-issue$}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -84,7 +91,9 @@ $endif$
 \setcounter{tocdepth}{6}
 \setcounter{secnumdepth}{6}
 
-\date{\dateofissue}
+$if(date-of-issue)$
+  \date{\dateofissue}
+$endif$
 
 \hypersetup{
             colorlinks=true,
@@ -127,7 +136,7 @@ $endif$
         \begin{minipage}[t]{14.0cm}
           \begin{flushleft}
             {\huge \bfseries  $title$}\\[2ex]
-            {\large Release Date: \dateofissue}\\[2ex]
+            $if(date-of-issue)${\large Issue Date: \dateofissue}\\[2ex]$endif$
             {\large \bfseries Version: \versiontext}\\[3ex]
           \end{flushleft}
         \end{minipage}

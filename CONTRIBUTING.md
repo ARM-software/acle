@@ -8,12 +8,11 @@ title: Contribution Guidelines
 
 # Thank you for considering contributing!
 
-Contributions are always welcome. We accept [bug fixes](#bugs),
-[proposals and new ideas](#proposals-for-new-content), or simply [editorial
-improvements](#editorial-improvements).
+Contributions are always welcome. We accept bug fixes, proposals and new ideas,
+or simply editorial improvements.
 
 By submitting a pull request you are implicitly adhering to the
-[contribution agreement](#contribution-agreement)
+contribution agreement below.
 
 ## Bugs
 
@@ -52,36 +51,23 @@ the specifications and stores them in the folder `pdfs`.
 
 # Continuous integration
 
-The continuous integration bot executes the script:
-
-```
- ./build_with_docker.sh
-```
-
-PDFs are generated automatically in response to a pull request. You
-can download the PDFs in the `Actions` tab of any pull request.
+The continuous integration bot executes the script and generates PDFs
+automatically in response to a pull request. You can download the PDFs in the
+`Actions` tab of any pull request.
 
 An additional step uses
 [``markdown-link-check```](https://github.com/tcort/markdown-link-check)
 to check that all the links in the markdown files are resolving
 correctly.
 
-# Branches and pull requests.
+# Branches and pull requests
 
-The branch `latest-release` is the release branch, which contains the
-code used to build the PDFs of the [latest official
-release](https://github.com/ARM-software/acle/releases/latest). The
-branch `latest-release` is also used to build the [website of the ACLE
-project](https://arm-software.github.io/acle).
+Use branch `main` for bug fixes, proposals, extensions, and other development
+work. Submit all pull requests against `main`.
 
-New development (bug-fixes, proposals, extensions, and so on) is
-committed on the `main` branch. Therefore, please submit your
-PR against the branch `main`.
-
-It is good practice to track changes. In the section `Changes for next
-release`, please list any changes that you have made to the
-document. For an example, see [this
-PR](https://github.com/ARM-software/acle/pull/19).
+It is good practice to track changes. In section `Changelog for year 20xx`,
+please list any changes that you have made to the document. As an example, see
+[this PR](https://github.com/ARM-software/acle/pull/443/changes).
 
 # Contribution agreement
 
@@ -95,7 +81,7 @@ will retain the copyright.
 # All contributors
 
 This project follows the [allcontributors
-guidelines](https://allcontributors.org/docs/en/overview). We assume
+guidelines](https://allcontributors.org/en/reference/). We assume
 that contributors are happy to be added to the [list of contributors
 in the main README file](README.md#contributors-). Please let us know
 explicitly if that is not the case in the PR or in the issue you have

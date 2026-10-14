@@ -6,7 +6,7 @@
 
 The text of and illustrations in this folder are licensed by Arm
 under a Creative Commons Attribution–Share Alike 4.0 International
-license ("CC-BY-SA-4.0”), with an additional clause on patents.
+license ("CC-BY-SA-4.0"), with an additional clause on patents.
 The Arm trademarks featured here are registered trademarks or
 trademarks of Arm Limited (or its subsidiaries) in the US and/or
 elsewhere. All rights reserved. Please visit

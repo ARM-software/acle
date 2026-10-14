@@ -1,5 +1,5 @@
 /*
-SPDX-FileCopyrightText: Copyright 2021 Arm Limited and/or its affiliates <open-source-office@arm.com>
+SPDX-FileCopyrightText: Copyright 2021, 2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
 SPDX-License-Identifier: Apache-2.0
 The colors used for formatting have been added in accordance with corporate guidelines:
 https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
@@ -113,4 +113,18 @@ https://www.arm.com/company/policies/trademarks/guidelines-corporate-logo
 
 #index_logo {
   height: 160px;
+}
+
+#link_finalversion {
+  color: white;
+  text-decoration: underline;
+}
+
+.dev_version {
+  color: red;
+}
+
+#link_devversion {
+  color: red;
+  text-decoration: underline;
 }

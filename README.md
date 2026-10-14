@@ -15,16 +15,29 @@
 This repository contains the source material from which the
 specifications for the Arm C Language Extensions (ACLE) are derived.
 
-The latest release of the specifications can be browsed online at
-[arm-software.github.io/acle/](https://arm-software.github.io/acle/).
+Browse the current specifications on the
+[ACLE website](https://arm-software.github.io/acle/).
 
-The PDF version of the documents can be retrieved from the [latest
-release](https://github.com/ARM-software/acle/releases/latest) page.
+## Versioning
 
-The development version is stored on the branch `main` at
-[github.com/ARM-software/acle/](https://github.com/ARM-software/acle/),
-while the latest released version is tracked by the branch
-`latest-release`.
+Arm no longer publishes quarterly specification releases. We publish the current
+specification after each reviewed change merges into branch `main`. This
+process gives users earlier access to new features, clarifications, and
+corrections.
+
+The PDF versions of the documents can be retrieved from the
+[releases](https://github.com/ARM-software/acle/releases) page.
+
+Branch `main` contains the current ACLE specification and ongoing development.
+
+## Legacy releases
+
+The [releases](https://github.com/ARM-software/acle/releases) page also contains
+the legacy quarterly releases through 2026Q1.
+
+Pre-GitHub versions of the documents were previously released on
+[Arm Developer](https://developer.arm.com), and are also hosted in this
+repository, in [Legacy releases](legacyreleases/README.md).
 
 ## Contributing
 
@@ -43,19 +56,18 @@ an email to arm.acle@arm.com.
 
 ## List of documents
 
-HTML version                                                                                                  | PDF version
----                                                                                                           | ---
-[Arm C Language Extensions](https://arm-software.github.io/acle/main/)                                        | [download](https://github.com/ARM-software/acle/releases/latest)
-[Morello Supplement to the Arm C Language Extensions](https://arm-software.github.io/acle/morello/)           | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm MVE Intrinsics](https://arm-software.github.io/acle/mve_intrinsics/)                                     | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm Neon Intrinsics Reference](https://arm-software.github.io/acle/neon_intrinsics/)                         | [download](https://github.com/ARM-software/acle/releases/latest)
-[Arm®v8-M Security Extensions - Requirements on Development Tools](https://arm-software.github.io/acle/cmse/) | [download](https://github.com/ARM-software/acle/releases/latest)
+[Arm C Language Extensions](https://arm-software.github.io/acle/main/)
 
-## Legacy releases
+[Morello Supplement to the Arm C Language Extensions](https://arm-software.github.io/acle/morello/)
 
-Legacy versions of the documents were released on [Arm Developer](https://developer.arm.com).
-They are now also hosted in this repository and are to be found in [Legacy releases](legacyreleases/README.md).
-They follow the same folder naming scheme as the main document folders.
+[Arm MVE Intrinsics](https://arm-software.github.io/acle/mve_intrinsics/)
+
+[Arm Neon Intrinsics Reference](https://arm-software.github.io/acle/neon_intrinsics/)
+
+[Arm®v8-M Security Extensions - Requirements on Development Tools](https://arm-software.github.io/acle/cmse/)
+
+The PDF versions can be found in the latest GitHub
+[release](https://github.com/ARM-software/acle/releases/latest).
 
 # License
 
@@ -74,13 +86,13 @@ The [list below](#contributors) represents the list of people that
 have been contributing since July 2021, when the ACLE specifications
 were released with an open source license.
 
-However, the ACLE is a collective project that was started few years
+However, the ACLE is a collective project that was started a few years
 ago, and that since then has seen the contribution of many people
 before it was released as an open source project.
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks go to these wonderful people ([emoji key](https://allcontributors.org/en/reference/emoji-key/)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -92,7 +104,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MattPD"><img src="https://avatars.githubusercontent.com/u/130135?v=4?s=100" width="100px;" alt="Matt"/><br /><sub><b>Matt</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=MattPD" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ValeriaDaneva"><img src="https://avatars.githubusercontent.com/u/90907783?v=4?s=100" width="100px;" alt="ValeriaDaneva"/><br /><sub><b>ValeriaDaneva</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=ValeriaDaneva" title="Code">💻</a> <a href="#infra-ValeriaDaneva" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3AValeriaDaneva" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://tubafranz.me/"><img src="https://avatars.githubusercontent.com/u/25690309?v=4?s=100" width="100px;" alt="Francesco Petrogalli"/><br /><sub><b>Francesco Petrogalli</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=fpetrogalli" title="Code">💻</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Afpetrogalli" title="Reviewed Pull Requests">👀</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ktkachov-arm"><img src="https://avatars.githubusercontent.com/u/74917949?v=4?s=100" width="100px;" alt="ktkachov-arm"/><br /><sub><b>ktkachov-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=ktkachov-arm" title="Code">💻</a> <a href="#content-ktkachov-arm" title="Content">🖋</a> <a href="#infra-ktkachov-arm" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Aktkachov-arm" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/74917949?v=4?s=100" width="100px;" alt="ktkachov-arm"/><br /><sub><b>ktkachov-arm</b></sub><br /><a href="https://github.com/ARM-software/acle/commits?author=ktkachov-arm" title="Code">💻</a> <a href="#content-ktkachov-arm" title="Content">🖋</a> <a href="#infra-ktkachov-arm" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Aktkachov-arm" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sallyarmneale"><img src="https://avatars.githubusercontent.com/u/56446080?v=4?s=100" width="100px;" alt="sallyarmneale"/><br /><sub><b>sallyarmneale</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Asallyarmneale" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/statham-arm"><img src="https://avatars.githubusercontent.com/u/54840944?v=4?s=100" width="100px;" alt="Simon Tatham"/><br /><sub><b>Simon Tatham</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Astatham-arm" title="Reviewed Pull Requests">👀</a></td>
     </tr>
@@ -125,10 +137,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/bwmf2"><img src="https://avatars.githubusercontent.com/u/117049336?v=4?s=100" width="100px;" alt="bwmf2"/><br /><sub><b>bwmf2</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=bwmf2" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tmatheson-arm"><img src="https://avatars.githubusercontent.com/u/76168689?v=4?s=100" width="100px;" alt="tmatheson-arm"/><br /><sub><b>tmatheson-arm</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=tmatheson-arm" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/76168689?v=4?s=100" width="100px;" alt="tmatheson-arm"/><br /><sub><b>tmatheson-arm</b></sub><br /><a href="https://github.com/ARM-software/acle/commits?author=tmatheson-arm" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://atrosinenko.github.io"><img src="https://avatars.githubusercontent.com/u/9654772?v=4?s=100" width="100px;" alt="Anatoly Trosinenko"/><br /><sub><b>Anatoly Trosinenko</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=atrosinenko" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/pratlucas"><img src="https://avatars.githubusercontent.com/u/7014318?v=4?s=100" width="100px;" alt="Lucas Duarte Prates"/><br /><sub><b>Lucas Duarte Prates</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=pratlucas" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/andrewcarlotti"><img src="https://avatars.githubusercontent.com/u/11681428?v=4?s=100" width="100px;" alt="Andrew Carlotti"/><br /><sub><b>Andrew Carlotti</b></sub></a><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Aandrewcarlotti" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="14.28%"><img src="https://avatars.githubusercontent.com/u/11681428?v=4?s=100" width="100px;" alt="Andrew Carlotti"/><br /><sub><b>Andrew Carlotti</b></sub><br /><a href="https://github.com/ARM-software/acle/pulls?q=is%3Apr+reviewed-by%3Aandrewcarlotti" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/labrinea"><img src="https://avatars.githubusercontent.com/u/9527365?v=4?s=100" width="100px;" alt="Alexandros Lamprineas"/><br /><sub><b>Alexandros Lamprineas</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=labrinea" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Lukacma"><img src="https://avatars.githubusercontent.com/u/46606997?v=4?s=100" width="100px;" alt="Lukacma"/><br /><sub><b>Lukacma</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=Lukacma" title="Documentation">📖</a></td>
     </tr>
@@ -139,7 +151,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kmclaughlin-arm"><img src="https://avatars.githubusercontent.com/u/56965690?v=4?s=100" width="100px;" alt="Kerry McLaughlin"/><br /><sub><b>Kerry McLaughlin</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=kmclaughlin-arm" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/momchil-velikov"><img src="https://avatars.githubusercontent.com/u/5541560?v=4?s=100" width="100px;" alt="Momchil Velikov"/><br /><sub><b>Momchil Velikov</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=momchil-velikov" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yury-khrustalev"><img src="https://avatars.githubusercontent.com/u/47541527?v=4?s=100" width="100px;" alt="Yury Khrustalev"/><br /><sub><b>Yury Khrustalev</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=yury-khrustalev" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.rdfm.org/"><img src="https://avatars.githubusercontent.com/u/111884?v=4?s=100" width="100px;" alt="Claudio Bantaloukas"/><br /><sub><b>Claudio Bantaloukas</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=rockdreamer" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://rdfm.org/"><img src="https://avatars.githubusercontent.com/u/111884?v=4?s=100" width="100px;" alt="Claudio Bantaloukas"/><br /><sub><b>Claudio Bantaloukas</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=rockdreamer" title="Code">💻</a></td>
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/AlfieRichardsArm"><img src="https://avatars.githubusercontent.com/u/156316945?v=4?s=100" width="100px;" alt="Alfie Richards"/><br /><sub><b>Alfie Richards</b></sub></a><br /><a href="https://github.com/ARM-software/acle/commits?author=AlfieRichardsArm" title="Code">💻</a></td>
