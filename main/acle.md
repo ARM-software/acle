@@ -3135,6 +3135,14 @@ The following table lists the architectures feature mapping for AArch64.
    | `FEAT_SME_F16F16`        | sme-f16f16    | ```ID_AA64SMFR0_EL1.F16F16 == 0b1```      |
    | `FEAT_SME_F8F16`         | sme-f8f16     | ```ID_AA64SMFR0_EL1.F8F16 == 0b1```       |
    | `FEAT_SME_MOP4`          | sme-mop4      | ```ID_AA64SMFR0_EL1.SMOP4 == 0b1```       |
+   | `FEAT_LSE2`              | lse2          | ```ID_AA64MMFR2_EL1.AT >= 0b0001```      |
+   | `FEAT_SVE_B16B16`        | sve-b16b16    | ```ID_AA64ZFR0_EL1.B16B16 >= 0b0001```|
+   | `FEAT_SME_B16B16`        | sme-b16b16    | ```ID_AA64SMFR0_EL1.B16B16 == 0b1```      |
+   | `FEAT_LSE128`            | lse128        | ```ID_AA64ISAR0_EL1.Atomic >= 0b0011```   |
+   | `FEAT_CMPBR`             | cmpbr         | ```ID_AA64ISAR2_EL1.CSSC >= 0b0010```     |
+   | `FEAT_FPRCVT`            | fprcvt        | ```ID_AA64ISAR3_EL1.FPRCVT >= 0b0001```   |
+   | `FEAT_LSFE`              | lsfe          | ```ID_AA64ISAR3_EL1.LSFE >= 0b0001```     |
+   | `FEAT_SME_TMOP`          | sme-tmop      | ```ID_AA64SMFR0_EL1.STMOP == 0b1```       |
 
 The tables are sorted by priority, starting from features of lowest priority ending with features of highest priority.
 
@@ -3229,6 +3237,14 @@ unless otherwise specified.
    | sme-f16f16    | 202690                    |
    | sme-f8f16     | 202690                    |
    | sme-mop4      | 202690                    |
+   | lse2          | 202690                    |
+   | sve-b16b16    | 202690                    |
+   | sme-b16b16    | 202690                    |
+   | lse128        | 202690                    |
+   | cmpbr         | 202690                    |
+   | fprcvt        | 202690                    |
+   | lsfe          | 202690                    |
+   | sme-tmop      | 202690                    |
 
 ### Dependencies
 
@@ -3298,6 +3314,11 @@ The following table lists the feature dependencies for AArch64.
    | sme-f16f16       | sme2              |
    | sme-f8f16        | sme2, fp8         |
    | sme-mop4         | sme2              |
+   | sme-b16b16       | sme2, sve-b16b16   |
+   | lse128           | lse               |
+   | fprcvt           | fp                |
+   | lsfe             | fp                |
+   | sme-tmop         | sme2              |
 
 ### Selection
 
