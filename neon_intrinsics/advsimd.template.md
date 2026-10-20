@@ -118,6 +118,7 @@ See [Changelog for year 2026](#changelog-for-year-2026).
 
 ### Changelog for year 2026
 
+* Added proposed support for FEAT_LSUI LDTNP/STTNP intrinsics.
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
 * Renamed vmmlaq_f16_f16 to vmmlaq_f16
