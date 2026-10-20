@@ -118,6 +118,7 @@ See [Changelog for year 2026](#changelog-for-year-2026).
 
 ### Changelog for year 2026
 
+* Added proposed support for FEAT_LSUI LDTP/STTP intrinsics.
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
 * Renamed vmmlaq_f16_f16 to vmmlaq_f16
@@ -3829,6 +3830,30 @@ The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 
 ### Load
 
+
+
+#### Unprivileged pair
+
+The proposed FEAT_LSUI AArch64 intrinsics expose LDTP and STTP for two 128-bit SIMD&FP registers.
+
+| Intrinsic | Argument preparation | AArch64 Instruction | Result | Supported architectures |
+|---|---|---|---|---|
+| `int8x16x2_t vldtq_s8_x2(int8_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `int16x8x2_t vldtq_s16_x2(int16_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `int32x4x2_t vldtq_s32_x2(int32_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `int64x2x2_t vldtq_s64_x2(int64_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `uint8x16x2_t vldtq_u8_x2(uint8_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `uint16x8x2_t vldtq_u16_x2(uint16_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `uint32x4x2_t vldtq_u32_x2(uint32_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `uint64x2x2_t vldtq_u64_x2(uint64_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `float16x8x2_t vldtq_f16_x2(float16_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `bfloat16x8x2_t vldtq_bf16_x2(bfloat16_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `float32x4x2_t vldtq_f32_x2(float32_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `float64x2x2_t vldtq_f64_x2(float64_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| `mfloat8x16x2_t vldtq_mf8_x2(mfloat8_t const *ptr)` | `ptr -> Xn` | `LDTP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+
+The architectural signed immediate is not exposed by this pointer-only API; normal compiler address formation may be used when an offset is needed.
+
 #### Stride
 
 | Intrinsic                                                                                                                                                                                                                                                                                                  | Argument preparation                                                                                                                        | AArch64 Instruction             | Result                                                                                                              | Supported architectures   |
@@ -4307,6 +4332,24 @@ The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 | <code>poly128_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldrq_p128" target="_blank">vldrq_p128</a>(poly128_t const *ptr)</code> | `ptr -> Xn`            | `LDR Qd,[Xn]`         | `Qd -> result` | `A32/A64`                 |
 
 ### Store
+
+#### Unprivileged pair
+
+| Intrinsic | Argument preparation | AArch64 Instruction | Result | Supported architectures |
+|---|---|---|---|---|
+| `void vsttq_s8_x2(int8_t *ptr, int8x16x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_s16_x2(int16_t *ptr, int16x8x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_s32_x2(int32_t *ptr, int32x4x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_s64_x2(int64_t *ptr, int64x2x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_u8_x2(uint8_t *ptr, uint8x16x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_u16_x2(uint16_t *ptr, uint16x8x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_u32_x2(uint32_t *ptr, uint32x4x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_u64_x2(uint64_t *ptr, uint64x2x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_f16_x2(float16_t *ptr, float16x8x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_bf16_x2(bfloat16_t *ptr, bfloat16x8x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_f32_x2(float32_t *ptr, float32x4x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_f64_x2(float64_t *ptr, float64x2x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
+| `void vsttq_mf8_x2(mfloat8_t *ptr, mfloat8x16x2_t val)` | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTP Qt1,Qt2,[Xn]` |  | `A64` |
 
 #### Stride
 
