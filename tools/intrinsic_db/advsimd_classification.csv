@@ -4745,3 +4745,41 @@ vdot_laneq_f32_f16	Vector arithmetic|Dot product
 vdotq_lane_f32_f16	Vector arithmetic|Dot product
 vmmlaq_f32_f16	Vector arithmetic|Matrix multiply
 vmmlaq_f16	Vector arithmetic|Matrix multiply
+vldn_s32_x2	Load|Stride
+vldn_u32_x2	Load|Stride
+vldn_f32_x2	Load|Stride
+vldn_s64_x2	Load|Stride
+vldn_u64_x2	Load|Stride
+vldn_f64_x2	Load|Stride
+vldnq_s8_x2	Load|Stride
+vldnq_s16_x2	Load|Stride
+vldnq_s32_x2	Load|Stride
+vldnq_s64_x2	Load|Stride
+vldnq_u8_x2	Load|Stride
+vldnq_u16_x2	Load|Stride
+vldnq_u32_x2	Load|Stride
+vldnq_u64_x2	Load|Stride
+vldnq_f16_x2	Load|Stride
+vldnq_bf16_x2	Load|Stride
+vldnq_f32_x2	Load|Stride
+vldnq_f64_x2	Load|Stride
+vldnq_mf8_x2	Load|Stride
+vstn_s32_x2	Store|Stride
+vstn_u32_x2	Store|Stride
+vstn_f32_x2	Store|Stride
+vstn_s64_x2	Store|Stride
+vstn_u64_x2	Store|Stride
+vstn_f64_x2	Store|Stride
+vstnq_s8_x2	Store|Stride
+vstnq_s16_x2	Store|Stride
+vstnq_s32_x2	Store|Stride
+vstnq_s64_x2	Store|Stride
+vstnq_u8_x2	Store|Stride
+vstnq_u16_x2	Store|Stride
+vstnq_u32_x2	Store|Stride
+vstnq_u64_x2	Store|Stride
+vstnq_f16_x2	Store|Stride
+vstnq_bf16_x2	Store|Stride
+vstnq_f32_x2	Store|Stride
+vstnq_f64_x2	Store|Stride
+vstnq_mf8_x2	Store|Stride

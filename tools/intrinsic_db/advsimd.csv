@@ -4863,3 +4863,42 @@ float32x4_t vmmlaq_f32_f16(float32x4_t r, float16x8_t a, float16x8_t b)	r -> Vd.
 
 <SECTION>	Non-widening half-precision matrix multiply instruction. Requires the +f16mm architecture extension.
 float16x8_t vmmlaq_f16(float16x8_t r, float16x8_t a, float16x8_t b)	r -> Vd.8H;a -> Vn.8H;b -> Vm.8H	FMMLA Vd.8H, Vn.8H, Vm.8H	Vd.8H -> result	A64
+<SECTION>	Non-temporal pair load and store intrinsics
+int32x2_t vldn_s32_x2(int32_t const *ptr)	ptr -> Xn	LDNP Wt1,Wt2,[Xn]	Wt2 -> result[1];Wt1 -> result[0]	A64
+uint32x2_t vldn_u32_x2(uint32_t const *ptr)	ptr -> Xn	LDNP Wt1,Wt2,[Xn]	Wt2 -> result[1];Wt1 -> result[0]	A64
+float32x2_t vldn_f32_x2(float32_t const *ptr)	ptr -> Xn	LDNP Wt1,Wt2,[Xn]	Wt2 -> result[1];Wt1 -> result[0]	A64
+int64x2_t vldn_s64_x2(int64_t const *ptr)	ptr -> Xn	LDNP Xt1,Xt2,[Xn]	Xt2 -> result[1];Xt1 -> result[0]	A64
+uint64x2_t vldn_u64_x2(uint64_t const *ptr)	ptr -> Xn	LDNP Xt1,Xt2,[Xn]	Xt2 -> result[1];Xt1 -> result[0]	A64
+float64x2_t vldn_f64_x2(float64_t const *ptr)	ptr -> Xn	LDNP Xt1,Xt2,[Xn]	Xt2 -> result[1];Xt1 -> result[0]	A64
+int8x16x2_t vldnq_s8_x2(int8_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+int16x8x2_t vldnq_s16_x2(int16_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+int32x4x2_t vldnq_s32_x2(int32_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+int64x2x2_t vldnq_s64_x2(int64_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+uint8x16x2_t vldnq_u8_x2(uint8_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+uint16x8x2_t vldnq_u16_x2(uint16_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+uint32x4x2_t vldnq_u32_x2(uint32_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+uint64x2x2_t vldnq_u64_x2(uint64_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+float16x8x2_t vldnq_f16_x2(float16_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+bfloat16x8x2_t vldnq_bf16_x2(bfloat16_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+float32x4x2_t vldnq_f32_x2(float32_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+float64x2x2_t vldnq_f64_x2(float64_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+mfloat8x16x2_t vldnq_mf8_x2(mfloat8_t const *ptr)	ptr -> Xn	LDNP Qt1,Qt2,[Xn]	Qt2 -> result.val[1];Qt1 -> result.val[0]	A64
+void vstn_s32_x2(int32_t *ptr, int32x2_t val)	val.val[1] -> Wt2;val.val[0] -> Wt1;ptr -> Xn	STNP Wt1,Wt2,[Xn]		A64
+void vstn_u32_x2(uint32_t *ptr, uint32x2_t val)	val.val[1] -> Wt2;val.val[0] -> Wt1;ptr -> Xn	STNP Wt1,Wt2,[Xn]		A64
+void vstn_f32_x2(float32_t *ptr, float32x2_t val)	val.val[1] -> Wt2;val.val[0] -> Wt1;ptr -> Xn	STNP Wt1,Wt2,[Xn]		A64
+void vstn_s64_x2(int64_t *ptr, int64x2_t val)	val.val[1] -> Xt2;val.val[0] -> Xt1;ptr -> Xn	STNP Xt1,Xt2,[Xn]		A64
+void vstn_u64_x2(uint64_t *ptr, uint64x2_t val)	val.val[1] -> Xt2;val.val[0] -> Xt1;ptr -> Xn	STNP Xt1,Xt2,[Xn]		A64
+void vstn_f64_x2(float64_t *ptr, float64x2_t val)	val.val[1] -> Xt2;val.val[0] -> Xt1;ptr -> Xn	STNP Xt1,Xt2,[Xn]		A64
+void vstnq_s8_x2(int8_t *ptr, int8x16x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_s16_x2(int16_t *ptr, int16x8x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_s32_x2(int32_t *ptr, int32x4x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_s64_x2(int64_t *ptr, int64x2x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_u8_x2(uint8_t *ptr, uint8x16x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_u16_x2(uint16_t *ptr, uint16x8x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_u32_x2(uint32_t *ptr, uint32x4x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_u64_x2(uint64_t *ptr, uint64x2x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_f16_x2(float16_t *ptr, float16x8x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_bf16_x2(bfloat16_t *ptr, bfloat16x8x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_f32_x2(float32_t *ptr, float32x4x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_f64_x2(float64_t *ptr, float64x2x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
+void vstnq_mf8_x2(mfloat8_t *ptr, mfloat8x16x2_t val)	val.val[1] -> Qt2;val.val[0] -> Qt1;ptr -> Xn	STNP Qt1,Qt2,[Xn]		A64
