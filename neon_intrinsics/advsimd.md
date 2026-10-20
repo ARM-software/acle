@@ -118,6 +118,7 @@ See [Changelog for year 2026](#changelog-for-year-2026).
 
 ### Changelog for year 2026
 
+* Added proposed support for FEAT_LSUI LDTNP/STTNP intrinsics.
 * Added support for FEAT_F16F32DOT
 * Added support for FEAT_F16F32MM and FEAT_F16MM
 * Renamed vmmlaq_f16_f16 to vmmlaq_f16
@@ -3829,6 +3830,27 @@ The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 
 ### Load
 
+
+#### Unprivileged pair with non-temporal hint
+
+
+| Intrinsic                                                                                                                                                                                                                                                                                                  | Argument preparation                                                                                                                        | AArch64 Instruction             | Result                                                                                                              | Supported architectures   |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|---------------------------------------------------------------------------------------------------------------------|---------------------------|
+| <code>int8x16x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_s8_x2" target="_blank">vldtnq_s8_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int8_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>int16x8x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_s16_x2" target="_blank">vldtnq_s16_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int16_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>int32x4x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_s32_x2" target="_blank">vldtnq_s32_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int32_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>int64x2x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_s64_x2" target="_blank">vldtnq_s64_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int64_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>uint8x16x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_u8_x2" target="_blank">vldtnq_u8_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint8_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>uint16x8x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_u16_x2" target="_blank">vldtnq_u16_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint16_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>uint32x4x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_u32_x2" target="_blank">vldtnq_u32_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint32_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>uint64x2x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_u64_x2" target="_blank">vldtnq_u64_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint64_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>float16x8x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_f16_x2" target="_blank">vldtnq_f16_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>bfloat16x8x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_bf16_x2" target="_blank">vldtnq_bf16_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; bfloat16_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>float32x4x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_f32_x2" target="_blank">vldtnq_f32_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>float64x2x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_f64_x2" target="_blank">vldtnq_f64_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float64_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+| <code>mfloat8x16x2_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldtnq_mf8_x2" target="_blank">vldtnq_mf8_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8_t const *ptr)</code> | `ptr -> Xn` | `LDTNP Qt1,Qt2,[Xn]` | `Qt1/Qt2 -> result.val[0]/result.val[1]` | `A64` |
+
+
 #### Stride
 
 | Intrinsic                                                                                                                                                                                                                                                                                                  | Argument preparation                                                                                                                        | AArch64 Instruction             | Result                                                                                                              | Supported architectures   |
@@ -4307,6 +4329,24 @@ The intrinsics in this section are guarded by the macro ``__ARM_NEON``.
 | <code>poly128_t <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vldrq_p128" target="_blank">vldrq_p128</a>(poly128_t const *ptr)</code> | `ptr -> Xn`            | `LDR Qd,[Xn]`         | `Qd -> result` | `A32/A64`                 |
 
 ### Store
+
+#### Unprivileged pair with non-temporal hint
+
+| Intrinsic | Argument preparation | AArch64 Instruction | Result | Supported architectures |
+|-----------|----------------------|---------------------|--------|-------------------------|
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_s8_x2" target="_blank">vsttnq_s8_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int8_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; int8x16x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_s16_x2" target="_blank">vsttnq_s16_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int16_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; int16x8x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_s32_x2" target="_blank">vsttnq_s32_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int32_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; int32x4x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_s64_x2" target="_blank">vsttnq_s64_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; int64_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; int64x2x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_u8_x2" target="_blank">vsttnq_u8_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint8_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; uint8x16x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_u16_x2" target="_blank">vsttnq_u16_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint16_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; uint16x8x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_u32_x2" target="_blank">vsttnq_u32_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint32_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; uint32x4x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_u64_x2" target="_blank">vsttnq_u64_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; uint64_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; uint64x2x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_f16_x2" target="_blank">vsttnq_f16_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float16_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; float16x8x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_bf16_x2" target="_blank">vsttnq_bf16_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; bfloat16_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; bfloat16x8x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_f32_x2" target="_blank">vsttnq_f32_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float32_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; float32x4x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_f64_x2" target="_blank">vsttnq_f64_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; float64_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; float64x2x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
+| <code>void <a href="https://developer.arm.com/architectures/instruction-sets/intrinsics/vsttnq_mf8_x2" target="_blank">vsttnq_mf8_x2</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8_t *ptr,<br>&nbsp;&nbsp;&nbsp;&nbsp; mfloat8x16x2_t val)</code> | `val.val[0]/val.val[1] -> Qt1/Qt2`<br>`ptr -> Xn` | `STTNP Qt1,Qt2,[Xn]` |  | `A64` |
 
 #### Stride
 
