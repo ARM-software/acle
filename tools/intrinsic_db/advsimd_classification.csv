@@ -4745,3 +4745,29 @@ vdot_laneq_f32_f16	Vector arithmetic|Dot product
 vdotq_lane_f32_f16	Vector arithmetic|Dot product
 vmmlaq_f32_f16	Vector arithmetic|Matrix multiply
 vmmlaq_f16	Vector arithmetic|Matrix multiply
+vldtq_s8_x2	Load|Stride
+vldtq_s16_x2	Load|Stride
+vldtq_s32_x2	Load|Stride
+vldtq_s64_x2	Load|Stride
+vldtq_u8_x2	Load|Stride
+vldtq_u16_x2	Load|Stride
+vldtq_u32_x2	Load|Stride
+vldtq_u64_x2	Load|Stride
+vldtq_f16_x2	Load|Stride
+vldtq_bf16_x2	Load|Stride
+vldtq_f32_x2	Load|Stride
+vldtq_f64_x2	Load|Stride
+vldtq_mf8_x2	Load|Stride
+vsttq_s8_x2	Store|Stride
+vsttq_s16_x2	Store|Stride
+vsttq_s32_x2	Store|Stride
+vsttq_s64_x2	Store|Stride
+vsttq_u8_x2	Store|Stride
+vsttq_u16_x2	Store|Stride
+vsttq_u32_x2	Store|Stride
+vsttq_u64_x2	Store|Stride
+vsttq_f16_x2	Store|Stride
+vsttq_bf16_x2	Store|Stride
+vsttq_f32_x2	Store|Stride
+vsttq_f64_x2	Store|Stride
+vsttq_mf8_x2	Store|Stride
