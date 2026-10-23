@@ -2981,6 +2981,12 @@ following:
   and could block the compilation (for instance, if the `-pedantic` flag is
   present).
 
+Alternatively, `[[arm::target_version("<target version string>")]]` and
+`[[arm::target_version("<target version string>")]]` are equivalent to
+the respective attributes
+if  `__FUNCTION_MULTI_VERSIONING_SUPPORT_LEVEL` is greater than
+or equal to `202691`
+
 `__HAVE_FUNCTION_MULTI_VERSIONING` is defined to 1 if the
 versioning mechanism described in this section is supported by the
 compiler and it is enabled.
