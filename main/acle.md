@@ -116,37 +116,28 @@ about Arm’s trademarks.
 
 ## About this document
 
-### Support levels
+### Maturity levels
 
-The following support level definitions are used by the ACLE
-specifications:
-
-**Release**
-
-   Arm considers this specification to have enough implementations,
-   which have received sufficient testing, to verify that it is
-   correct. The details of these criteria are dependent on the scale
-   and complexity of the change over previous versions: small, simple
-   changes might only require one implementation, but more complex
-   changes require multiple independent implementations, which have
-   been rigorously tested for cross-compatibility. Arm anticipates that
-   future changes to this specification will be limited to
-   typographical corrections, clarifications and compatible extensions.
-
-**Beta**
-
-   Arm considers this specification to be complete, but existing
-   implementations do not meet the requirements for confidence in its
-   release quality. Arm might need to make incompatible changes if issues
-   emerge from its implementation.
+The following maturity levels are used by the ACLE specifications:
 
 **Alpha**
 
-   The content of this specification is a draft, and Arm considers the
-   likelihood of future incompatible changes to be significant.
+The content of this specification is a draft, and Arm considers the
+likelihood of future incompatible changes to be significant.
+Implementations may be developed to evaluate its feasibility and correctness.
+Implementors may choose not to define the feature macro to indicate
+that the specification is not fully supported.
 
-All content in this document is at the **Release** quality level,
-unless a different support level is specified in the text.
+**Complete**
+
+Arm considers this specification to be complete. In practice, that means that
+the specification is implemented in major compilers and sufficient time has
+passed since the specification was last changed.
+Arm anticipates that future changes to this specification will be limited to
+typographical corrections, clarifications and compatible extensions.
+
+All content in this document is considered to be at the **Complete** maturity
+level, unless a different maturity level is specified in the text.
 
 ### Continuously updated specification
 
@@ -157,23 +148,26 @@ See [Changelog for year 2026](#changelog-for-year-2026).
 
 ### Changelog for year 2026
 
-* Added [**Alpha**](#support-levels)
+* Replace ACLE specification support levels with maturity levels,
+  and removed **Beta** support level.
+  support level.
+* Added [**Alpha**](#maturity-levels)
   support for SVE2.3 (FEAT_SVE2p3), SME2.3 (FEAT_SME2p3), FEAT_F16F32DOT
   dot product intrinsics.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for FEAT_F16F32MM, FEAT_F16MM and FEAT_SVE_B16MM mmla intrinsics.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 lookup table intrinsics.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 pairwise operation intrinsics.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 conversion intrinsics.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 absolute difference accumulation
   intrinsics.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
-* Changed the support level for the Armv9.6 intrinsics implementation to [**Beta**](#support-levels)
+* Changed the support level for the Armv9.6 intrinsics implementation to **Beta**.
 * Added support for producer-consumer data placement hints.
 * Clarified interaction between SME keyword attributes and a common compiler
   extension whereby type attributes can be inherited between subsequent
@@ -319,7 +313,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   specifying the `FEAT_*` tag they refer to from the Arm Architectural
   Reference Manual.
 * Sorted the items in [References](#references).
-* Changed the wording of **Beta** in [support levels](#support-levels).
+* Changed the wording of **Beta** in the support-level definitions.
 * Sorted the table in [Terms and abbreviations](#terms-and-abbreviations).
 * Formatted `memcpy`, `memmove` and `memset` with fixed-width font all
   throughout the document.
@@ -350,7 +344,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 
 #### Changes between ACLE Q2 2022 and ACLE Q4 2022
 
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   [support for SME](#arm_sme.h).
 * Added feature detection macro `__ARM_FEATURE_RCPC` for RCpc (Release Consistent processor consistent) model at [RCpc](#rcpc).
 * Added two new valid values to the
@@ -422,7 +416,7 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 #### Changes between ACLE Q1 2024 and ACLE Q2 2024
 * Added new content for the handling of arguments in CMSE Entry functions and
   return values of CMSE Non-secure calls in order to address security issues.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SVE2.1 (FEAT_SVE2p1).
 
 #### Changes between ACLE Q2 2024 and ACLE Q3 2024
@@ -433,14 +427,14 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
   level of the [Function Multi Versioning](#function-multi-versioning).
 * Unified Function Multi Versioning features sha1 and sha2.
 * Unified Function Multi Versioning features ls64, ls64_v, and ls64_accdata.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SME2.1 (FEAT_SME2p1).
 * Removed requirement to add preprocessor guards for header files.
 * Added specifications for floating-point absolute minimum
   and maximum intrinsics (FEAT_FAMINMAX).
 * Added specifications for table lookup intrinsics (FEAT_LUT, FEAT_SME_LUTv2).
 * Added Release support level for the [Custom Datapath Extension](#custom-datapath-extension).
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for modal 8-bit floating point intrinsics.
 
 #### Changes between ACLE Q3 2024 and ACLE Q4 2024
@@ -473,19 +467,19 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Added mf8 variants of SME 2.1 intrinsics.
 * Added `svdot[_n_f16_mf8]_fpm` and `svdot[_n_f32_mf8]_fpm`.
 * Added Guarded Control Stack (GCS) at
-  [**Beta**](#support-levels) quality level.
+  **Beta** quality level.
 
 #### Changes between ACLE Q4 2024 and ACLE Q2 2025
 
 * Changed the Function Multi Versioning default version rules to be more explicit.
-* Added [**Alpha**](#support-levels) support
+* Added [**Alpha**](#maturity-levels) support
   for structured sparsity outer product intrinsics
-* Added [**Alpha**](#support-levels) support 
+* Added [**Alpha**](#maturity-levels) support
   for quarter-tile outer product intrinsics.
 * Removed the priority column from the mapping tables of Function Multi Versioning.
 * Added Function Multi Versioning feature cssc.
 * Added feature test macro for FEAT_SSVE_BitPerm.
-* Upgrade to [**Beta**](#support-levels)
+* Upgrade to **Beta**
   support for modal 8-bit floating point intrinsics.
 
 #### Changes between ACLE Q2 2025 and ACLE Q3 2025
@@ -504,15 +498,15 @@ Armv8.4-A [[ARMARMv84]](#ARMARMv84). Support is added for the Dot Product intrin
 * Improved documentation for VMLA/VMLS intrinsics for floats.
 * Added support for producer-consumer data placement hints.
 * Added support for range prefetch intrinsic and `__ARM_PREFETCH_RANGE` macro.
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SVE2.2 (FEAT_SVE2p2)
-* Added [**Alpha**](#support-levels)
+* Added [**Alpha**](#maturity-levels)
   support for SME2.2 (FEAT_SME2p2).
-* Added [**Alpha**](#support-levels) support
+* Added [**Alpha**](#maturity-levels) support
   for FEAT_SVE_AES2, FEAT_SSVE_AES intrinsics.
 * Added support for FEAT_FPRCVT intrinsics and `__ARM_FEATURE_FPRCVT`.
 * Removed all references to Transactional Memory Extension (TME).
-* Added [**Alpha**](#support-levels) support
+* Added [**Alpha**](#maturity-levels) support
   for Brain 16-bit floating-point vector multiplication intrinsics.
 * Redesigned atomic store with hints intrinsics.
 
@@ -2185,7 +2179,7 @@ of half-precision brain floating-point types.
 #### Brain 16-bit floating-point matrix multiplication support
 
 This section is in
-[**Alpha** state](#support-levels) and might change or be
+[**Alpha** state](#maturity-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_SVE_B16MM` is defined to `1` if there is hardware
@@ -2416,8 +2410,8 @@ this implies:
 
 #### Half-precision to single-precision dot product extension
 
-This section is in
-[**Alpha** state](#support-levels) and might change or be
+This section is at
+[**Alpha** state](#maturity-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_F16F32DOT` is defined if the half-precision dot product
@@ -2474,7 +2468,7 @@ for the SVE 16-bit floating-point to 32-bit floating-point matrix multiply and a
 ##### Multiplication of 16-bit floating-point matrices (AdvSIMD)
 
 This section is in
-[**Alpha** state](#support-levels) and might change or be
+[**Alpha** state](#maturity-levels) and might change or be
 extended in the future.
 
 `__ARM_FEATURE_F16F32MM` is defined if the Neon half-precision matrix multiply
@@ -14156,8 +14150,8 @@ Scalar index of first/last true predicate element (predicated).
 
 ### SVE2.3 and SME2.3 instruction intrinsics
 
-The specification for SVE2.3 and SME2.3 are in
-[**Alpha** state](#support-levels) and might change or be
+The specifications for SVE2.3 and SME2.3 are in
+[**Alpha** state](#maturity-levels) and might change or be
 extended in the future.
 
 The functions in this section are available when `__ARM_FEATURE_SVE2p3`
