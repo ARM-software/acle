@@ -9,7 +9,7 @@ toc: true
 
 <!--
 SPDX-FileCopyrightText: Copyright 2011-2026 Arm Limited and/or its affiliates <open-source-office@arm.com>
-SPDX-FileCopyrightText: Copyright 2022 Google LLC.
+SPDX-FileCopyrightText: Copyright 2022, 2026 Google LLC.
 CC-BY-SA-4.0 AND Apache-Patent-License
 See LICENSE.md file for details
 -->
@@ -178,6 +178,8 @@ See [Changelog for year 2026](#changelog-for-year-2026).
 * Clarified interaction between SME keyword attributes and a common compiler
   extension whereby type attributes can be inherited between subsequent
   duplicate decls.
+* Added feature test macro `__ARM_FEATURE_DIT` for Data Independent Timing.
+* Added feature test macro `__ARM_FEATURE_SB` for Speculation Barrier.
 
 ### Legacy changelog
 
@@ -1863,6 +1865,16 @@ intrinsics are available on the target.
 `__ARM_FEATURE_CMH` is defined to `1` if the Contention Management hints
 (FEAT_CMH) instructions and their associated intrinsics are available on the target.
 
+### Speculation Barrier
+
+`__ARM_FEATURE_SB` is defined to `1` if the Speculation Barrier (FEAT_SB)
+instruction is available on the target.
+
+### Data Independent Timing
+
+`__ARM_FEAT_DIT` is defined to `1` if the Data Independent Timing (FEAT_DIT) 
+register is available on the target.
+
 ## Floating-point and vector hardware
 
 ### Hardware floating point
@@ -2721,6 +2733,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_CRC32`](#crc32-extension)                                                                                                               | CRC32 extension                                                                                    | 1           |
 | [`__ARM_FEATURE_CRYPTO`](#crypto-extension)                                                                                                             | Crypto extension                                                                                   | 1           |
 | [`__ARM_FEATURE_CSSC`](#cssc-extension)                                                                                                                 | CSSC extension                                                                                     | 1           |
+| [`__ARM_FEATURE_DIT`](#data-independent-timing)                                                                                                         | Data Independent Timing                                                                            | 1           |
 | [`__ARM_FEATURE_DIRECTED_ROUNDING`](#directed-rounding)                                                                                                 | Directed Rounding                                                                                  | 1           |
 | [`__ARM_FEATURE_DOTPROD`](#availability-of-dot-product-intrinsics)                                                                                      | Dot product extension (ARM v8.2-A)                                                                 | 1           |
 | [`__ARM_FEATURE_DSP`](#dsp-instructions)                                                                                                                | DSP instructions (Arm v5E) (32-bit-only)                                                           | 1           |
@@ -2756,6 +2769,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_RCPC`](#rcpc)                                                                                                                           | Release Consistent processor consistent Model (64-bit-only)                      | 1           |
 | [`__ARM_FEATURE_RNG`](#random-number-generation-extension)                                                                                              | Random Number Generation Extension (Armv8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_SAT`](#saturation-instructions)                                                                                                         | Width-specified saturation instructions (32-bit-only)                                              | 1           |
+| [`__ARM_FEATURE_SB`](#speculation-barrier)                                                                                                              | Speculation Barrier                                                                                | 1           |
 | [`__ARM_FEATURE_SHA2`](#sha2-extension)                                                                                                                 | SHA2 Crypto extension (Arm v8-A)                                                                   | 1           |
 | [`__ARM_FEATURE_SHA3`](#sha3-extension)                                                                                                                 | SHA3 Crypto extension (Arm v8.4-A)                                                                 | 1           |
 | [`__ARM_FEATURE_SHA512`](#sha512-extension)                                                                                                             | SHA2 Crypto ext. (Arm v8.4-A, optional Armv8.2-A, Armv8.3-A)                                       | 1           |
@@ -3644,6 +3658,18 @@ order to unify the caches.)
 
 The only supported argument for the `__isb()` intrinsic is 15,
 corresponding to the SY (full system) scope of the ISB instruction.
+
+``` c
+  void __sb(void);
+```
+
+Generates an SB (Speculation Barrier) instruction. An SB instruction is a
+memory barrier that prevents speculative execution of instructions until after
+the barrier has completed when those instructions could be observed through
+side-channels.
+
+The `__sb()` intrinsic also acts as a compiler barrier of the appropriate
+type.
 
 ### Examples
 
