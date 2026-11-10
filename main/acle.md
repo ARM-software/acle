@@ -178,6 +178,7 @@ See [Changelog for year 2026](#changelog-for-year-2026).
 * Clarified interaction between SME keyword attributes and a common compiler
   extension whereby type attributes can be inherited between subsequent
   duplicate decls.
+* Added feature test macro `__ARM_FEATURE_LSCP` for FEAT_LSCP.
 
 ### Legacy changelog
 
@@ -1799,6 +1800,12 @@ the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported on this targe
 Note: It is strongly recommended that standardized C11/C++11 atomics are used to
 implement atomic operations in user code.
 
+### Load and Store Consistency Pair instructions
+
+`__ARM_FEATURE_LSCP` is defined to 1 if the Load and Store Consistency
+Pair instructions (FEAT_LSCP) are supported on this target. It is undefined
+otherwise.
+
 ### Armv8.7-A Load/Store 64 Byte extension
 
 `__ARM_FEATURE_LS64` is defined to 1 if the Armv8.7-A `LD64B`,
@@ -2741,6 +2748,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_IDIV`](#hardware-integer-divide)                                                                                                        | Hardware Integer Divide                                                                            | 1           |
 | [`__ARM_FEATURE_JCVT`](#javascript-floating-point-conversion)                                                                                           | Javascript conversion (ARMv8.3-A)                                                                  | 1           |
 | [`__ARM_FEATURE_LDREX`](#ldrexstrex) *(Deprecated)*                                                                                                     | Load/store exclusive instructions                                                                  | 0x0F        |
+| [`__ARM_FEATURE_LSCP`](#load-and-store-consistency-pair-instructions)                                                                                   | Load and Store Consistency Pair instructions (FEAT_LSCP)                                           | 1           |
 | [`__ARM_FEATURE_LUT`](#lookup-table-extensions)                                                                                                         | Lookup table extensions (FEAT_LUT)                                                                 | 1           |
 | [`__ARM_FEATURE_MATMUL_INT8`](#availability-of-armv8.6-a-integer-matrix-multiply-intrinsics)                                                            | Integer Matrix Multiply extension (Armv8.6-A, optional Armv8.2-A, Armv8.3-A, Armv8.4-A, Armv8.5-A) | 1           |
 | [`__ARM_FEATURE_MEMORY_TAGGING`](#memory-tagging)                                                                                                       | Memory Tagging (Armv8.5-A)                                                                         | 1           |
