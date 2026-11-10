@@ -178,6 +178,7 @@ See [Changelog for year 2026](#changelog-for-year-2026).
 * Clarified interaction between SME keyword attributes and a common compiler
   extension whereby type attributes can be inherited between subsequent
   duplicate decls.
+* Extended `__ARM_FEATURE_ATOMICS` to distinguish FEAT_LSE and FEAT_LSE2.
 
 ### Legacy changelog
 
@@ -1794,8 +1795,11 @@ extension is available on the target. It is undefined otherwise.
 
 ### Large System Extensions
 
-`__ARM_FEATURE_ATOMICS` is defined if the Large System Extensions introduced in
-the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported on this target.
+`__ARM_FEATURE_ATOMICS` is defined to 1 if the Large System Extensions
+introduced in the Armv8.1-A [[ARMARMv81]](#ARMARMv81) architecture are supported
+on this target, and 2 if the Large System Extensions version 2 introduced in
+the Armv8.4-A [[ARMARMv84]](#ARMARMv84) architecture are supported.
+It is undefined otherwise.
 Note: It is strongly recommended that standardized C11/C++11 atomics are used to
 implement atomic operations in user code.
 
@@ -2709,7 +2713,7 @@ be found in [[BA]](#BA).
 | [`__ARM_BF16_FORMAT_ALTERNATIVE`](#brain-16-bit-floating-point-support)                                                                                 | 16-bit brain floating-point, alternative format                                                    | 1           |
 | [`__ARM_BIG_ENDIAN`](#endianness)                                                                                                                       | Memory is big-endian                                                                               | 1           |
 | [`__ARM_FEATURE_AES`](#aes-extension)                                                                                                                   | AES Crypto extension (Arm v8-A)                                                                    | 1           |
-| [`__ARM_FEATURE_ATOMICS`](#large-system-extensions)                                                                                                     | Large System Extensions                                                                            | 1           |
+| [`__ARM_FEATURE_ATOMICS`](#large-system-extensions)                                                                                                     | Large System Extensions (FEAT_LSE and FEAT_LSE2)                                                   | 2           |
 | [`__ARM_FEATURE_BF16`](#brain-16-bit-floating-point-support)                                                                                            | 16-bit brain floating-point, vector instruction                                                    | 1           |
 | [`__ARM_FEATURE_BTI_DEFAULT`](#branch-target-identification)                                                                                            | Branch Target Identification                                                                       | 1           |
 | [`__ARM_FEATURE_CDE`](#custom-datapath-extension)                                                                                                       | Custom Datapath Extension                                                                          | 0x01        |
