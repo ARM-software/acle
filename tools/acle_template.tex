@@ -4,12 +4,13 @@
 % Based on default.latex template released with Pandoc (www.pandoc.org).
 % See `data/templates` in `COPYRIGHT` at https://github.com/jgm/pandoc
 
-\documentclass[a4,10pt]{report}
+% Base document class and packages for tables, links, and page styling.
+\documentclass[letterpaper,10pt]{report}
 \usepackage[T1]{fontenc}
 \usepackage{xcolor}
 \usepackage{sectsty}
 \usepackage{hyperref}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array,calc}
 \urlstyle{same}  % don't use monospace font for urls
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
@@ -19,13 +20,18 @@
 \usepackage{titleref}
 \usepackage{tikz}
 \makeatletter
+  % Use titleref's heading title so readers can see which section they are in.
   \newcommand*{\currentname}{\TR@currentTitle}
 \makeatother
+% Set serif, sans-serif, and monospace fonts; use sans-serif by default.
 \usepackage{charter}
 \usepackage[defaultsans,scale=0.95]{lato}
 \usepackage{inconsolata}
 \renewcommand*\familydefault{\sfdefault}
 \usepackage{graphicx}
+% Accept Pandoc's image wrapper without applying automatic scaling.
+\providecommand{\pandocbounded}[1]{#1}
+% Set body margins and header/footer spacing for portrait or landscape output.
 \usepackage[$if(landscape)$landscape,$endif$top=3.7cm,bottom=2.7cm,left=3cm,right=2cm,headsep=1.5cm,footskip=.5cm]{geometry}
 \usepackage{lastpage}
 \usepackage{xstring}
@@ -33,11 +39,13 @@
 % Add extra space to table rows
 \renewcommand{\arraystretch}{2}
 
+% Apply dark gray to the footer and footer rule.
 \makeatletter
   \patchcmd{\f@nch@foot}{\rlap}{\color{darkgray}\rlap}{}{}
   \patchcmd{\footrule}{\hrule}{\color{darkgray}\hrule}{}{}
 \makeatother
 
+% Link the version label to the source commit and flag development builds.
 \StrLeft{$commithash$}{7}[\GitHashShort]
 
 \sectionfont{\color{armblue}}
@@ -52,6 +60,7 @@ $else$
 $endif$
 \newcommand{\dateofissue}{$date-of-issue$}
 
+% Use the same running headers and footers on regular and chapter-opening pages.
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small $title$ \\~}
@@ -71,6 +80,7 @@ $endif$
   \renewcommand{\headrulewidth}{0pt}
 }
 
+% Insert Pandoc's syntax-highlighting macros when needed.
 $if(highlighting-macros)$
   $highlighting-macros$
 $endif$
@@ -81,7 +91,7 @@ $endif$
   {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
 \titlespacing*{\chapter}{0pt}{-19pt}{0pt}
 
-% Set the indent level of the paragraphs.
+% Separate paragraphs with vertical space rather than indentation.
 \usepackage{parskip}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
@@ -95,7 +105,10 @@ $if(date-of-issue)$
   \date{\dateofissue}
 $endif$
 
+% Set PDF document metadata and link appearance.
 \hypersetup{
+            pdftitle={$title-meta$},
+            pdflang={en},
             colorlinks=true,
             linkcolor=armblue,
             filecolor=armblue,
@@ -103,15 +116,16 @@ $endif$
             urlcolor=armblue,
             breaklinks=true}
 
+% Support double-column floats and subfigures.
 \usepackage{dblfloatfix}
 \usepackage{subcaption}
 
-% These colours are used for rendering the grid image below
+% Arm colours for headings, links, and the cover grid.
 \definecolor{armgray}{rgb}{0.5,0.5,0.5}
 \definecolor{armlightgray}{rgb}{0.83,0.83,0.83}
 \definecolor{armblue}{HTML}{0091BD}
 
-% This is used to turn block quotes into highlighted text.
+% Optionally render block quotes as numbered requirement boxes.
 $if(set-quote-highlight)$
 \newcounter{rulecounter}
 \setcounter{rulecounter}{0}
@@ -121,6 +135,7 @@ $if(set-quote-highlight)$
 $endif$
 
 
+% Build the cover with its own margins, logo, and publication details.
 \makeatletter
 \renewcommand\maketitle{
     \newgeometry{left=0.0cm,right=0.0cm,top=1.0cm,bottom=0.0cm}
@@ -155,7 +170,7 @@ $endif$
         \end{minipage}
     \end{flushleft}
 
-    % This is the rendering of the grid image used on the title page
+    % Draw one cover grid in portrait mode or two in landscape mode.
     \begin{figure}[hbt!]
 
         \makebox[\paperwidth]{
@@ -203,6 +218,7 @@ $endif$
 }
 \makeatother
 
+% Render the cover and table of contents before Pandoc's document body.
 \color{darkgray}
 \begin{document}
 
