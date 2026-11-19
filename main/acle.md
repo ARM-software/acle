@@ -173,6 +173,9 @@ See [Changelog for year 2026](#changelog-for-year-2026).
   intrinsics.
 * Added [**Alpha**](#support-levels)
   support for SVE2.3 (FEAT_SVE2p3) and SME2.3 shift right narrow intrinsics.
+* Added [**Alpha**](#support-levels) support for SVE2.3 and SME2.3
+  FPv2 (FEAT_FPv2) vector minimum, maximum, reduction, and total-order comparison
+  intrinsics.
 * Changed the support level for the Armv9.6 intrinsics implementation to [**Beta**](#support-levels)
 * Added support for producer-consumer data placement hints.
 * Clarified interaction between SME keyword attributes and a common compiler
@@ -2300,6 +2303,16 @@ ACLE intrinsics are available. This implies that `__ARM_FEATURE_SM4` and
 floating-point absolute minimum and maximum instructions (FEAT_FAMINMAX)
 and if the associated ACLE intrinsics are available.
 
+### FPv2 extension
+
+This section is in [**Alpha** state](#support-levels) and might change or
+be extended in the future.
+
+`__ARM_FEATURE_FPv2` is defined to 1 if there is hardware support for
+the IEEE 754-2019 Floating-point standard
+alignment instructions and if the associated ACLE intrinsics are
+available.
+
 ### FPRCVT extension
 
 `__ARM_FEATURE_FPRCVT` is defined to `1` if there is hardware
@@ -2742,6 +2755,7 @@ be found in [[BA]](#BA).
 | [`__ARM_FEATURE_FP8DOT4`](#modal-8-bit-floating-point-extensions)                                                                                       | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FP8FMA`](#modal-8-bit-floating-point-extensions)                                                                                        | Modal 8-bit floating-point extensions                                                              | 1           |
 | [`__ARM_FEATURE_FPRCVT`](#fprcvt-extension)                                                                                                             | FPRCVT extension                                                                                   | 1           |
+| [`__ARM_FEATURE_FPv2`](#fpv2-extension)                                                                                                                 | IEEE 754-2019 Floating-point standard alignment instructions                                       | 1           |
 | [`__ARM_FEATURE_FRINT`](#availability-of-armv8.5-a-floating-point-rounding-intrinsics)                                                                  | Floating-point rounding extension (Arm v8.5-A)                                                     | 1           |
 | [`__ARM_FEATURE_GCS`](#guarded-control-stack)                                                                                                           | Guarded Control Stack                                                                              | 1           |
 | [`__ARM_FEATURE_GCS_DEFAULT`](#guarded-control-stack)                                                                                                   | Guarded Control Stack protection can be enabled                                                    | 1           |
@@ -14262,6 +14276,117 @@ Subtract pairwise.
   svint8_t svsubp[_s8]_m (svbool_t pg, svint8_t zdn, svint8_t zm);
   svint8_t svsubp[_s8]_x (svbool_t pg, svint8_t zdn, svint8_t zm);
   ```
+
+### SVE2.3 and SME2.3 FPv2 instructions
+
+This section is in [**Alpha** state](#support-levels) and might change or
+be extended in the future.
+
+The intrinsics in this section are available when either
+`__ARM_FEATURE_SVE2p3` or `__ARM_FEATURE_SME2p3` is defined to 1, and
+`__ARM_FEATURE_FPv2` is defined to 1.
+
+#### FMAXMG, FMINMG (vectors)
+
+Floating-point maximum/minimum magnitude (predicated).
+
+``` c
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svmaxmg[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svmaxmg[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svmaxmg[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svminmg[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svminmg[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svminmg[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+```
+
+#### FMAXINM, FMININM (vectors)
+
+Floating-point maximum/minimum number, ignoring signaling NaN (predicated).
+
+``` c
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svmaxinm[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svmaxinm[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svmaxinm[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svmininm[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svmininm[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svmininm[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+```
+
+#### FMAXMGINM, FMINMGINM (vectors)
+
+Floating-point maximum/minimum magnitude number (predicated).
+
+``` c
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svmaxmginm[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svmaxmginm[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svmaxmginm[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svminmginm[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svminmginm[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+  svfloat16_t svminmginm[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+```
+
+#### FMAXMGV, FMINMGV
+
+Floating-point maximum/minimum magnitude recursive reduction to scalar (predicated).
+
+``` c
+  // Variants are also available for: _f32 and _f64
+  float16_t svmaxmgv[_f16](svbool_t pg, svfloat16_t zn);
+
+  // Variants are also available for: _f32 and _f64
+  float16_t svminmgv[_f16](svbool_t pg, svfloat16_t zn);
+```
+
+#### FMAXINMV, FMININMV
+
+Floating-point maximum/minimum number recursive reduction to scalar, ignoring signaling NaN.
+
+``` c
+  // Variants are also available for: _f32 and _f64
+  float16_t svmaxinmv[_f16](svbool_t pg, svfloat16_t zn);
+
+  // Variants are also available for: _f32 and _f64
+  float16_t svmininmv[_f16](svbool_t pg, svfloat16_t zn);
+```
+
+#### FMAXMGINMV, FMINMGINMV
+
+Floating-point maximum/minimum magnitude number recursive reduction to scalar (predicated).
+
+``` c
+  // Variants are also available for: _f32 and _f64
+  float16_t svmaxmginmv[_f16](svbool_t pg, svfloat16_t zn);
+
+  // Variants are also available for: _f32 and _f64
+  float16_t svminmginmv[_f16](svbool_t pg, svfloat16_t zn);
+```
+
+#### FCMTL (vectors)
+
+Floating-point total-order compare.
+
+``` c
+  // Variants are also available for: _f32 and _f64
+  svbool_t svcmtl[_f16](svfloat16_t zn, svfloat16_t zm);
+```
+
+#### FCMTLMG (vectors)
+
+Floating-point total-order magnitude compare.
+
+``` c
+  // Variants are also available for: _f32 and _f64
+  svbool_t svcmtlmg[_f16](svfloat16_t zn, svfloat16_t zm);
+```
 
 ### SME2 maximum and minimum absolute value
 
