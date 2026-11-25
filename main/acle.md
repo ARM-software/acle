@@ -14297,9 +14297,19 @@ Floating-point maximum/minimum magnitude (predicated).
   svfloat16_t svmaxmg[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
 
   // Variants are also available for: _f32 and _f64
+  svfloat16_t svmaxmg[_n_f16]_m(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svmaxmg[_n_f16]_x(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svmaxmg[_n_f16]_z(svbool_t pg, svfloat16_t zdn, float16_t zm);
+
+  // Variants are also available for: _f32 and _f64
   svfloat16_t svminmg[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
   svfloat16_t svminmg[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
   svfloat16_t svminmg[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svminmg[_n_f16]_m(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svminmg[_n_f16]_x(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svminmg[_n_f16]_z(svbool_t pg, svfloat16_t zdn, float16_t zm);
 ```
 
 #### FMAXINM, FMININM (vectors)
@@ -14313,9 +14323,19 @@ Floating-point maximum/minimum number, ignoring signaling NaN (predicated).
   svfloat16_t svmaxinm[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
 
   // Variants are also available for: _f32 and _f64
+  svfloat16_t svmaxinm[_n_f16]_m(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svmaxinm[_n_f16]_x(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svmaxinm[_n_f16]_z(svbool_t pg, svfloat16_t zdn, float16_t zm);
+
+  // Variants are also available for: _f32 and _f64
   svfloat16_t svmininm[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
   svfloat16_t svmininm[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
   svfloat16_t svmininm[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svmininm[_n_f16]_m(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svmininm[_n_f16]_x(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svmininm[_n_f16]_z(svbool_t pg, svfloat16_t zdn, float16_t zm);
 ```
 
 #### FMAXMGINM, FMINMGINM (vectors)
@@ -14329,9 +14349,19 @@ Floating-point maximum/minimum magnitude number (predicated).
   svfloat16_t svmaxmginm[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
 
   // Variants are also available for: _f32 and _f64
+  svfloat16_t svmaxmginm[_n_f16]_m(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svmaxmginm[_n_f16]_x(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svmaxmginm[_n_f16]_z(svbool_t pg, svfloat16_t zdn, float16_t zm);
+
+  // Variants are also available for: _f32 and _f64
   svfloat16_t svminmginm[_f16]_m(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
   svfloat16_t svminmginm[_f16]_x(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
   svfloat16_t svminmginm[_f16]_z(svbool_t pg, svfloat16_t zdn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svfloat16_t svminmginm[_n_f16]_m(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svminmginm[_n_f16]_x(svbool_t pg, svfloat16_t zdn, float16_t zm);
+  svfloat16_t svminmginm[_n_f16]_z(svbool_t pg, svfloat16_t zdn, float16_t zm);
 ```
 
 #### FMAXMGV, FMINMGV
@@ -14377,6 +14407,9 @@ Floating-point total-order compare.
 ``` c
   // Variants are also available for: _f32 and _f64
   svbool_t svcmtl[_f16](svfloat16_t zn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svbool_t svcmtl[_n_f16](svfloat16_t zn, float16_t zm);
 ```
 
 #### FCMTLMG (vectors)
@@ -14386,6 +14419,9 @@ Floating-point total-order magnitude compare.
 ``` c
   // Variants are also available for: _f32 and _f64
   svbool_t svcmtlmg[_f16](svfloat16_t zn, svfloat16_t zm);
+
+  // Variants are also available for: _f32 and _f64
+  svbool_t svcmtlmg[_n_f16](svfloat16_t zn, float16_t zm);
 ```
 
 ### SME2 maximum and minimum absolute value
