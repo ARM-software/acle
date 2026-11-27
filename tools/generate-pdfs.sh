@@ -51,6 +51,7 @@ function generate_pdfs_from_md() {
 	fi
 
 	outputPdfFile=$2
+	shift 2
 	geometryForIntrinsics='\\newgeometry{landscape,top=3.7cm,bottom=2.7cm,left=1cm,right=1cm,headsep=1.5cm,footskip=.5cm}'
 
 	# This line replaces the ToC declaration in the md files with a blank space.
@@ -62,15 +63,15 @@ function generate_pdfs_from_md() {
 	# in the specific case of the cmse.md file.
 	sed -u ':a;N;$!ba;s/\*\sTOC\n{*{:toc}}*//' $inputMdFile | \
 	sed -u "s/<!--latex_geometry_conf-->/$geometryForIntrinsics/" | \
-	pandoc --template=tools/acle_template.tex -o $outputPdfFile --resource-path=$(dirname $inputMdFile) $finalversion $commithash $cleanrepo
+	pandoc --template=tools/acle_template.tex --top-level-division=chapter "$@" -o $outputPdfFile --resource-path=$(dirname $inputMdFile) $finalversion $commithash $cleanrepo
 }
 
 mkdir -p pdfs tmp
 
 # Convert svg image to pdf for use in pdf generation via pandoc.
-inkscape -z Arm_logo_blue_RGB.svg  -e tmp/Arm-logo-blue-RGB.pdf
+rsvg-convert --format=pdf --output=tmp/Arm-logo-blue-RGB.pdf Arm_logo_blue_RGB.svg
 
-generate_pdfs_from_md ./cmse/cmse.md ./pdfs/cmse.pdf
+generate_pdfs_from_md ./cmse/cmse.md ./pdfs/cmse.pdf --lua-filter=tools/cmse-pdf-figures.lua
 generate_pdfs_from_md ./morello/morello.md ./pdfs/morello.pdf
 generate_pdfs_from_md ./main/acle.md ./pdfs/acle.pdf
 generate_pdfs_from_md ./tmp/mve.for-pdf.md ./pdfs/mve.pdf
