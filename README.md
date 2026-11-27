@@ -79,10 +79,6 @@ For more information see [LICENSE](LICENSE.md).
 
 ## Past contributors
 
-The [list below](#contributors) represents the list of people that
-have been contributing since July 2021, when the ACLE specifications
-were released with an open source license.
-
-However, the ACLE is a collective project that was started a few years
+The ACLE is a collective project that was started a few years
 ago, and that since then has seen the contribution of many people
 before it was released as an open source project.
